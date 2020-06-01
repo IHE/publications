@@ -2,6 +2,7 @@
 # publications
 This repository is an experimental project by ITI to work toward publication of Final Text Technical Framework using HTML.
 
+browser ready version can be seen using the "pages site" feature of github at http://ihe.github.io/publications
 
 ## Scope
 
@@ -31,6 +32,9 @@ each todo should have atleast one github issue and atleast one owner
 * List numbering problems
 * How is the home page index.html managed? 
 * What are the publication steps and who is responsible for those steps
+  * approval of pull requests
+  * move from github to IHE defined publication site (likely a S3 bucket)
+  * fixup URL redirects as necessary?
  
 
 
