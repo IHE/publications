@@ -2,17 +2,18 @@
 
 # ITI
 * Final Text Technical Framework
-  * [ITI Volume 1](iti/volume1/index.html)
-  * [ITI volume 2](iti/volume2/index.html)
+  * [ITI Volume 1](ITI/volume1/index.html)
+  * [ITI volume 2](ITI/volume2/index.html)
+  * etc...
 * Trial Implementation Supplements
-  * [MHD](mhd/index.html)
-  * [FormatCodes](Formatcodes/index.html)
+  * [MHD](MHD/index.html)
+  * [FormatCodes](FormatCodes/index.html)
 
 # PCC
 * Final Text Technical Framework
-  * TODO
+  * TODO...
 * Trial Implementation Supplements
-  * [ACDC](acdc/index.html)
+  * [ACDC](PCC/ACDC/index.html)
   
 Legal mumbojumbo
 
