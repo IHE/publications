@@ -1,0 +1,99 @@
+{
+  "resourceType": "CapabilityStatement",
+  "id": "acdc-actor-clinicalknowledgerepository",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>ACDC_ClinicalKnowledgeRepository</h2><div><p>This CapabilityStatement resource demonstrates how a system documents conformance\nas a Clinical Knowledge Resource Repository Actor in the ACDC Profile.</p>\n</div><table><tr><td>Mode</td><td>SERVER</td></tr><tr><td>Description</td><td/></tr><tr><td>Transaction</td><td></td></tr><tr><td>System History</td><td></td></tr><tr><td>System Search</td><td></td></tr></table><table><tr><th><b>Resource Type</b></th><th><b>Profile</b></th><th><b title=\"GET a resource (read interaction)\">Read</b></th><th><b title=\"GET all set of resources of the type (search interaction)\">Search</b></th><th><b title=\"PUT a new resource version (update interaction)\">Update</b></th><th><b title=\"POST a new resource (create interaction)\">Create</b></th></tr><tr><td>Questionnaire</td><td><a href=\"http://ihe.net/fhir/ACDC/StructureDefinition/ihe-acdc-questionnaire\">http://ihe.net/fhir/ACDC/StructureDefinition/ihe-acdc-questionnaire</a></td><td></td><td>y</td><td></td><td></td></tr></table></div>"
+  },
+  "url": "http://ihe.net/fhir/ACDC/CapabilityStatement/acdc-actor-clinicalknowledgerepository",
+  "version": "0.1.0",
+  "name": "ACDC_ClinicalKnowledgeRepository",
+  "status": "active",
+  "date": "2020-02-25T00:00:00+00:00",
+  "publisher": "Integrating the Healthcare Enterprise (IHE)",
+  "contact": [
+    {
+      "name": "IHE Patient Care Coordination",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://www.ihe.net/ihe_domains/patient_care_coordination/"
+        },
+        {
+          "system": "email",
+          "value": "pcc@ihe.net"
+        }
+      ]
+    },
+    {
+      "name": "Keith W. Boone",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "kboone@ainq.com"
+        },
+        {
+          "system": "url",
+          "value": "https://motorcycleguy.blogspot.com"
+        }
+      ]
+    }
+  ],
+  "description": "This CapabilityStatement resource demonstrates how a system documents conformance\nas a Clinical Knowledge Resource Repository Actor in the ACDC Profile.",
+  "kind": "requirements",
+  "fhirVersion": "4.0.1",
+  "format": [
+    "xml",
+    "json"
+  ],
+  "rest": [
+    {
+      "mode": "server",
+      "resource": [
+        {
+          "type": "Questionnaire",
+          "profile": "http://ihe.net/fhir/ACDC/StructureDefinition/ihe-acdc-questionnaire",
+          "documentation": "The Clinical Knowledge Resource Repository Actor responds to Questionnaire read and search interactions",
+          "interaction": [
+            {
+              "code": "search-type",
+              "documentation": "This interaction corresponds to the IHE PCC-71."
+            }
+          ],
+          "searchParam": [
+            {
+              "name": "_summary",
+              "type": "token",
+              "documentation": "For the PCC-71 transaction, the server need only to respond to search requests where\n_summary=true to restrict access to the full questionnaire content."
+            },
+            {
+              "name": "context",
+              "type": "token",
+              "documentation": "This search parameter allows assessment instruments to be located based upon their use context.\nA Clinical Knowledge Resource Repository Actor must support at least one of: context (token), context-quantity (quantity),\ncontext-type (token), context-type-quantity (composite), or context-type-value (composite) to enable users to\nidentify questionnaires based on the context of use. At least one of the above search parameters must be supported\nand documented in the capability statement."
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "documentation": "This search parameter allows assessment instruments to be located based upon their publication date.\nIt must be documented in the capability statement."
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "documentation": "This search parameter allows assessment instruments to be located based upon the text in their description.\nIt must be documented in the capability statement."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "documentation": "This search parameter allows assessment instruments to be located based upon the text in their name.\nIt must be documented in the capability statement."
+            },
+            {
+              "name": "url",
+              "type": "uri",
+              "documentation": "This search parameter allows assessment instruments to be located based upon\ntheir canonical uri and is used with the PCC-71 transaction.\nIt must be documented in the capability statement."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
