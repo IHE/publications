@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol1_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume1</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="7">7 Consistent Time (CT)</h1>
+    <p>
+      The
+      <em>Consistent Time Integration Profile</em>
+      <em>(CT)</em>
+      provides a means to ensure that the system clocks and time stamps of the many computers in a network are well synchronized. This profile specifies synchronization with a median error less than 1 second. This is sufficient for most purposes.
+    </p>
+    <p>The Consistent Time Integration Profile defines mechanisms to synchronize the time base between multiple actors and computers. Various infrastructure, security, and acquisition profiles require use of a consistent time base on multiple computers. The Consistent Time Profile requires the use of the Network Time Protocol (NTP) defined in RFC1305. When the Time Server is grouped with a Time Client to obtain time from a higher tier Time Server, the Time Client shall utilize NTP. For some Time Clients that are not grouped with a Time Server, SNTP may be usable.</p>
+    <p>This profile was previously a portion of the Radiology Basic Security Profile, but it has a variety of other infrastructure uses.</p>
+    <p>Note: This profile corresponds to a portion of the IHE Radiology Technical Framework, Basic Security Profile (now deprecated). It is required by more than just radiology systems. It is needed by several of the profiles in the IHE IT Infrastructure and will also be needed by Cardiology. It is therefore being re-located from IHE Radiology into IHE IT Infrastructure. There are no changes to the requirements, so actors that supported the Radiology Basic Secure Node or Time Server do not need modification.</p>
+    <h2 id="7.1">7.1 CT Actors/Transactions</h2>
+    <p>Figure 7.1-1 shows the actors directly involved in the Consistent Time Profile and the relevant transactions between them. Other actors that may be indirectly involved because of their participation in profiles that require consistent time are not shown.</p>
+    <p>Figure 7.1-1: Consistent Time Profile Actor Diagram</p>
+    <p>Table 7.1-1 lists the transactions for each actor directly involved in the Consistent Time Integration Profile. In order to claim support of this integration profile, an implementation must perform the required transactions (labeled “R”).</p>
+    <p>Table 7.1-1: Consistent Time - Actors and Transactions</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actors</td>
+          <td>Transactions</td>
+          <td>Optionality</td>
+          <td>Section</td>
+        </tr>
+        <tr class="even">
+          <td>Time Server</td>
+          <td>Maintain Time [ITI-1]</td>
+          <td>R</td>
+          <td><a href="../Volume2a/ITI-1.html#3.1">ITI TF-2a: 3.1</a></td>
+        </tr>
+        <tr class="odd">
+          <td>Time Client</td>
+          <td>Maintain Time [ITI-1]</td>
+          <td>R</td>
+          <td><a href="../Volume2a/ITI-1.html#3.1">ITI TF-2a: 3.1</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="7.2">7.2 CT Actor Options</h2>
+    <p>Options that may be selected for this integration profile are listed in the Table 7.2-1 along with the actors to which they apply.</p>
+    <p>Table 7.2-1: Consistent Time - Actors and Options</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actor</td>
+          <td>Options</td>
+          <td>Vol. &amp; Section</td>
+        </tr>
+        <tr class="even">
+          <td>Time Server</td>
+          <td>Secured NTP</td>
+          <td><a href="../Volume2a/ITI-1.html#3.1.4">ITI TF-2a: 3.1.4</a>-1</td>
+        </tr>
+        <tr class="odd">
+          <td>Time Client</td>
+          <td>SNTP, Secured NTP</td>
+          <td><a href="../Volume2a/ITI-1.html#3.1.4">ITI TF-2a: 3.1.4</a>-1</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="7.3">7.3 Consistent Time Process Flow</h2>
+    <p>This section describes the typical flow related to the Consistent Time Profile. In the process flow Figure 7.3-1, the Time Client B and Time Server B have been grouped. When a Client and Server are grouped, they utilize internal communications mechanisms to synchronize their time.</p>
+    <p>Figure 7.3-1: Basic Process Flow in Consistent Time Profile</p>
+    <p>The Time Client B maintains time synchronization with the Time Server A. The Time Server B is internally synchronized with Time Client B. The Time Client C maintains time synchronization with Time Server B.</p>
+    <p>The NTP protocol has been designed to provide network time services for synchronization with this kind of cascaded synchronization. The achievable accuracy is dependent on specific details of network hardware and topology, and on details of computer hardware and software implementation. The Time Server and Time Client are grouped to provide synchronization cascading and reduce network traffic.</p>
+  </body>
+</html>

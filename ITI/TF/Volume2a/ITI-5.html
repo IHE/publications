@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2a_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2a</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.5">3.5 Join Context [ITI-5]</h2>
+    <p>This section corresponds to transaction [ITI-5] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-5] is used by the Patient Context Participant, User Context Participant, Client Authentication Agent and Context Manager Actors.</p>
+    <h3 id="3.5.1">3.5.1 Scope</h3>
+    <p>Any of the context participant actors using this transaction (Patient Context Participant, User Context Participant, and Client Authentication Agent) may locate and join a context management session specific to the workstation on which the instigating user is interacting.</p>
+    <p>
+      A Context Participant shall first locate the instance of the Context Manager via technology specific methods as defined in the
+      <em>HL7 Context Management “CCOW”</em>
+      technology mapping documents. Once the context manager reference is returned, the Context Participant issues a join method to the context manager, which returns a unique participant identifier. User Context Participant and Client Authentication Agent shall use this identifier along with a shared secret as inputs to a two stage secure binding process, which results in the exchange of public keys between the two actors.
+    </p>
+    <p>If an implementation groups two or more context participant actors, this transaction shall be performed only once on a launch of an application in which those actors are grouped. All grouped actors share the same common context. If at least one of the grouped actors is a User Context Participant or a Client Authentication Agent, this transaction shall include the two-stage secure binding process.</p>
+    <p>
+      The semantics of the methods used in this transaction are defined in the documents
+      <em>HL7 Context Management “CCOW” Standard: Component Technology Mapping: ActiveX</em>
+      or
+      <em>HL7 Context Management “CCOW” Standard: Component Technology Mapping: Web</em>
+      . A Context Participant can implement either technology. The Context Manager shall support both technologies in order to interoperate with joining participants implementing the technology of their choice.
+    </p>
+    <h3 id="3.5.2">3.5.2 Use Case Roles</h3>
+    <p>Actor: Patient Context Participant</p>
+    <p>Role: Initiates establishment of context session connection with the Context Manager so as to be able to change and follow Patient Subject changes in the common context.</p>
+    <p>Actor: User Context Participant</p>
+    <p>Role: Initiates establishment of a secure context session connection with the Context Manager so as to be able to follow User Subject changes in the common context.</p>
+    <p>Actor: Client Authentication Agent</p>
+    <p>Role: Initiates establishment of a secure context session connection with the Context Manager so as to be able to perform User Subject changes in the common context.</p>
+    <p>Actor: Context Manager</p>
+    <p>Role: Responds to the request to join the context session from the context participant.</p>
+    <h3 id="3.5.3">3.5.3 Referenced Standard</h3>
+    <p>HL7 Context Management “CCOW” Standard, Version 1.4:</p>
+    <p>Technology and Subject Independent Architecture</p>
+    <p>Component Technology Mapping: ActiveX</p>
+    <p>Component Technology Mapping: Web</p>
+    <h3 id="3.5.4">3.5.4 Messages</h3>
+    <p>The Join Context Transaction involves a different set of messages depending on the type of subjects the context participant is interested in, either Patient subject, User subject or both Patient and User subjects.</p>
+    <p>
+      <img src=".//media/image14.wmf" style="width:4.56528in;height:1.86111in" />
+    </p>
+    <p>Figure 3.5-1: Patient Subject Join Context Interaction Diagram</p>
+    <p>Figure 3.5-2: User Subject Join Context Interaction Diagram</p>
+    <h4 id="3.5.4.1">3.5.4.1 Join Context – Locate Method</h4>
+    <p>
+      To join the common context upon launch of an application, it is necessary for the context participant to locate the Context Manager that supports context management for the user’s workstation. This is achieved by the invocation of the Locate method in accordance with specifications of the
+      <em>HL7 Context Management “CCOW” Standard</em>
+      .
+    </p>
+    <h5 id="3.5.4.1.1">3.5.4.1.1 Trigger Events</h5>
+    <p>The Locate method is triggered by the user launch of an application that contains one of the following actors: Patient Context Participant, User Context Participant or Client Authentication Agent.</p>
+    <h5 id="3.5.4.1.2">3.5.4.1.2 Message Semantics</h5>
+    <p>In a Web/HTTP implementation, Locate is defined as a method of the ContextManagementRegistry interface. The IHE Context Manager provides this interface for the context participants to call upon, and thus implements the CCOW defined Context Management Registry, which is used to locate the appropriate instance of the Context Manager.</p>
+    <p>In an ActiveX implementation, the context participants determine the location of the instance of Context Manager from the operating system registry.</p>
+    <h5 id="3.5.4.1.3">3.5.4.1.3 Expected Actions</h5>
+    <p>
+      The Locate method invocation is specific to the Web technology mapping. In this case, the Content Manager shall return the valid URL of the Context Manager instance or a CCOW defined UnableToLocate exception. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Component Technology Mapping: Web/HTTP</em>
+      , Chapter 3 for the details of the response specifications.
+    </p>
+    <h4 id="3.5.4.2">3.5.4.2 Join Context – JoinCommonContext Method</h4>
+    <p>The JoinCommonContext method is invoked by the one of the following actors: Patient Context Participant, User Context Participant or Client Authentication Agent.</p>
+    <h5 id="3.5.4.2.1">3.5.4.2.1 Trigger Events</h5>
+    <p>The JoinCommonContext method is triggered by the valid response of the Locate method with a reference to the context manager.</p>
+    <h5 id="3.5.4.2.2">3.5.4.2.2 Message Semantics</h5>
+    <p>JoinCommonContext is defined as a method on the ContextManager interface. It shall be invoked by a Context Participant to complete the establishment of the secure context session. A Context Participant shall provide parameters for this method as specified in the CCOW Standard.</p>
+    <p>
+      Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.3, for a detailed description of the parameters associated with this method.
+    </p>
+    <h5 id="3.5.4.2.3">3.5.4.2.3 Expected Actions</h5>
+    <p>If the JoinCommonContext method is successful, the Context Manager shall issue the invoking actor a unique context participant identifier which is to be used until the context session is terminated by either a Context Participant or the Context Manager.</p>
+    <p>If the method fails a descriptive CCOW exception will be returned.</p>
+    <p>
+      After the context session is established, the Context Manager shall periodically verify availability of a Context Participant by invoking the Ping method on the ContextParticipant interface as specified in the CCOW Standard. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.7.6, for a detailed description of the parameters associated with this method.
+    </p>
+    <p>
+      Should the Context Manager need to terminate an established context session (for example, in a case of restart), it shall inform the context participants of such action by invocation of the CommonContextTerminated method on the ContextParticipant interface as specified in the CCOW Standard. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.7.5, for a detailed description of the parameters associated with this method.
+    </p>
+    <p>The success of this method signifies completion of the Join Context Transaction for the actors intending to participate only in the patient context.</p>
+    <h4 id="3.5.4.3">3.5.4.3 Join Context – InitializeBinding Method</h4>
+    <p>The InitializeBinding method is invoked by the one of the following actors intending to participate in a user context: User Context Participant or Client Authentication Agent.</p>
+    <h5 id="3.5.4.3.1">3.5.4.3.1 Trigger Events</h5>
+    <p>The InitializeBinding method is triggered by the valid response of the JoinContext method.</p>
+    <h5 id="3.5.4.3.2">3.5.4.3.2 Message Semantics</h5>
+    <p>InitializeBinding is defined as a method on the SecureBinding interface and allows a Context Participant and Context Manager to verify each other’s identity and supply the Context Manager’s public key to the requesting context participant.</p>
+    <p>In the invocation of this method, context participant supplies the application identification and a digest produced from that identification concatenated with a shared secret. The shared secret is known in CCOW terms as an applications passcode. The passcode shall be site configurable.</p>
+    <p>
+      Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.12.2, for a description of the parameters associated with this method, to be issued by the Context Participant.
+    </p>
+    <h5 id="3.5.4.3.3">3.5.4.3.3 Expected Actions</h5>
+    <p>
+      Performing the InitializeBinding method, the Context Manager verifies the identity of a requesting context participant and responds with the message containing its public key. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.12.2, for the specifics of the response formation.
+    </p>
+    <h4 id="3.5.4.4">3.5.4.4 Join Context – FinalizeBinding Method</h4>
+    <p>The FinalizeBinding method is invoked by the one of the following actors: User Context Participant or Client Authentication Agent.</p>
+    <h5 id="3.5.4.4.1">3.5.4.4.1 Trigger Events</h5>
+    <p>The FinalizeBinding method is triggered by the valid response of the InitializeBinding method.</p>
+    <h5 id="3.5.4.4.2">3.5.4.4.2 Message Semantics</h5>
+    <p>FinalizeBinding is defined as a method on the SecureBinding interface and allows a Context Participant to supply the Context Manager with its public key.</p>
+    <p>In the invocation of this method, the context participant supplies its public key and a digest digitally signed with its private key.</p>
+    <p>
+      Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.12.3, for a description of the parameters associated with this method, to be issued by the Context Participant.
+    </p>
+    <h5 id="3.5.4.4.3">3.5.4.4.3 Expected Actions</h5>
+    <p>
+      Performing the FinalizeBinding method, the Context Manager verifies the identity of a requesting context participant and accepts or rejects its public key. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.12.3, for the specifics of the response formation.
+    </p>
+    <p>The success of this method signifies completion of the Join Context Transaction for the actors intending to participate in the user context.</p>
+  </body>
+</html>

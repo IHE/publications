@@ -1,0 +1,229 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol1_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume1</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="8">8 Patient Demographics Query (PDQ)</h1>
+    <p>The Patient Demographics Query Integration Profile (PDQ) provides ways for multiple distributed applications to query a patient information server for a list of patients, based on user-defined search criteria, and retrieve a patient’s demographic (and, optionally, visit or visit-related) information directly into the application.</p>
+    <h2 id="8.1">8.1 PDQ Actors/Transactions</h2>
+    <p>Figure 8.1-1 shows the actors directly involved in the Patient Demographics Query Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in Patient ID Cross-referencing, etc. are not necessarily shown.</p>
+    <p>Figure 8.1-1: Patient Demographics Query Profile Actor Diagram</p>
+    <p>Table 8.1-1 lists the transactions for each actor directly involved in the Patient Demographics Query Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile and that implementations may choose to support is listed in Section 8.2.</p>
+    <p>Table 8.1-1: Patient Demographics Query Integration Profile - Actors and Transactions</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actors</td>
+          <td>Transactions</td>
+          <td>Optionality</td>
+          <td>Section</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Consumer</td>
+          <td>Patient Demographics Query [ITI-21]</td>
+          <td>R</td>
+          <td><a href="../Volume2a/ITI-21.html#3.21">ITI TF-2a: 3.21</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Patient Demographics and Visit Query [ITI-22]</td>
+          <td>O</td>
+          <td><a href="../Volume2a/ITI-22.html#3.22">ITI TF-2a: 3.22</a></td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Supplier</td>
+          <td>Patient Demographics Query [ITI-21]</td>
+          <td>R</td>
+          <td><a href="../Volume2a/ITI-21.html#3.21">ITI TF-2a: 3.21</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Patient Demographics and Visit Query [ITI-22]</td>
+          <td>O</td>
+          <td><a href="../Volume2a/ITI-22.html#3.22">ITI TF-2a: 3.22</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="8.2">8.2 PDQ Actor Options</h2>
+    <p>Options that may be selected for this Integration Profile are listed in Table 8.2-1 along with the actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
+    <p>Table 8.2-1: Patient Demographics Query - Actors and Options</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actor</td>
+          <td>Options</td>
+          <td>Vol. &amp; Section</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Consumer</td>
+          <td>Patient Demographics and Visit Query</td>
+          <td><a href="../Volume2a/ITI-22.html#3.22">ITI TF-2a: 3.22</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Pediatric Demographics</td>
+          <td><a href="../Volume1/ch-8.html#8.2.1">ITI TF-1: 8.2.1</a></td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Supplier</td>
+          <td>Patient Demographics and Visit Query</td>
+          <td><a href="../Volume2a/ITI-22.html#3.22">ITI TF-2a: 3.22</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Pediatric Demographics</td>
+          <td><a href="../Volume1/ch-8.html#8.2.1">ITI TF-1: 8.2.1</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 id="8.2.1">8.2.1 Pediatric Demographics Option</h3>
+    <p>The experience of immunization registries and other public health population databases has shown that retrieving patient records for an individual person in environments with large proportions of pediatric records requires additional demographic data.</p>
+    <p>Information about the mother of the patient or a household telephone number is helpful in retrieving records in large population databases where data quality may be uneven.</p>
+    <p>Certain other demographics fields are important to include in the query response as they may be used by the Patient Demographics Consumer in verifying the identity of the patient, in particular, they aid in distinguishing records for twins, triplets, and so forth.</p>
+    <p>Pediatric Demographics makes use of the following six additional demographic fields to aid record matching in databases with many pediatric records.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Field</td>
+          <td>Reason for inclusion</td>
+          <td>Value</td>
+        </tr>
+        <tr class="even">
+          <td>Mother’s Maiden Name</td>
+          <td>Any information about the mother is helpful in making a match</td>
+          <td>Helps create true positive matches</td>
+        </tr>
+        <tr class="odd">
+          <td>Patient Home Telephone</td>
+          <td>A telecom helps match into the right household</td>
+          <td>Helps create true positive matches</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Multiple Birth Indicator</td>
+          <td>Indicates this person is a multiple - twin, triplet, etc.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+        <tr class="odd">
+          <td>Patient Birth Order</td>
+          <td>Distinguishes among those multiples.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+        <tr class="even">
+          <td>Last Update Date/Time, Last Update Facility</td>
+          <td>These fields, although not strictly demographic, can effectively substitute when multiple birth indicator and birth order are not collected. They indirectly provide visit information. Provider visits on the same day may likely indicate two children brought to a doctor together.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Patient Demographics Consumer Actors which support the Pediatrics Demographics Option will be able to provide Pediatric Demographics query parameter fields in the Patient Demographics Query [ITI-21] transaction, and shall be able to receive and process any values returned for the fields identified as Pediatric Demographics.</p>
+    <p>Patient Demographics Supplier Actors which support the Pediatrics Demographics Option will be able to match on values provided for any Pediatric Demographics fields in the Patient Demographics Query [ITI-21] transaction and shall return values, when available, for the fields identified as Pediatric Demographics.</p>
+    <p>Pediatric Demographics query parameter fields are:</p>
+    <ul>
+      <li>
+        <p>Mother’s Maiden Name</p>
+      </li>
+      <li>
+        <p>Patient Home Telephone</p>
+      </li>
+    </ul>
+    <p>Pediatric Demographics are defined as all of the following:</p>
+    <ul>
+      <li>
+        <p>Mother’s Maiden Name</p>
+      </li>
+      <li>
+        <p>Patient Home Telephone</p>
+      </li>
+      <li>
+        <p>Patient Multiple Birth Indicator</p>
+      </li>
+      <li>
+        <p>Patient Birth Order</p>
+      </li>
+      <li>
+        <p>Last Update Date/Time</p>
+      </li>
+      <li>
+        <p>Last Update Facility</p>
+      </li>
+    </ul>
+    <h2 id="8.3">8.3 Patient Demographics Query Process Flow</h2>
+    <p>The Patient Demographics Supplier performs the following functions.</p>
+    <ul>
+      <li>
+        <p>
+          It receives patient registration and update messages from other systems in the enterprise (
+          <em>e.g.,</em>
+          ADT Patient Registration systems), which may or may not represent different Patient ID Domains. The method in which the Patient Demographics Supplier obtains the updated patient demographic information is not addressed by this profile.
+        </p>
+      </li>
+      <li>
+        <p>It responds to queries for information.</p>
+      </li>
+    </ul>
+    <p>Specific methods for acquiring demographic information are beyond the scope of this Profile. It is a prerequisite that the Patient Demographics Supplier possess current demographic information. One method by which current demographic information may be obtained is for the Patient Demographic Supplier to be grouped with another IHE actor, such as Order Filler, that either maintains or receives such information.</p>
+    <p>In all cases, the Patient Demographics Supplier receives a Patient Demographics Query or Patient Demographics and Visit Query request from the Patient Demographics Consumer, and returns demographics (and, where appropriate, visit) information from the single domain that is associated with the application to which the query message is sent. Identifier information may be returned from multiple or single domains; see the “Using Patient Data Query (PDQ) in a Multi-Domain Environment” section (<a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a>) for a discussion of the architectural issues involved.</p>
+    <p>Use Case 1: Patient Information Entering at Bedside</p>
+    <p>
+      <em>An admitted patient is assigned to a bed. The patient may or may not be able to provide positive ID information. The nurse needs to enter patient identity information into some bedside equipment to establish the relationship of the assigned bed to the patient. The equipment issues a query for a patient pick list to a patient demographics supplier that provides data for a patient pick list. Search criteria entered by the nurse might include one or more of the following:</em>
+    </p>
+    <ul>
+      <li>
+        <p>Partial or complete patient name (printed on the patient record or told by the patient)</p>
+      </li>
+      <li>
+        <p>Patient ID (this may be obtained from printed barcode, a bed-side chart, etc.)</p>
+      </li>
+      <li>
+        <p>Partial ID entry or scan.</p>
+      </li>
+      <li>
+        <p>Date of birth / age range</p>
+      </li>
+      <li>
+        <p>Bed ID</p>
+      </li>
+    </ul>
+    <p>
+      <em>The system returns a list of patients showing the MRN, full name, age, sex, room/bed, and admit date, and displays the list to the nurse. The nurse then selects the appropriate record to enter the patient identity information into the bedside equipment application.</em>
+    </p>
+    <p>Use Case 2: Patient Identity Information Entering in Physician Offices</p>
+    <p>
+      <em>A patient visits a physician office for the first time. The nurse needs to register the patient; in doing so, it is desired to record the patient’s demographic data in the practice management information system (PMIS). The physician office is connected to a hospital enterprise’s central patient registry. The nurse issues a patient query request to the central patient registry, with some basic patient demographics data as search criteria. In the returned patient list, she picks up an appropriate record for the patient, including the hospital’s patient ID, to enter into the PMIS. (Note that the PMIS uses a different Patient ID domain than that of the central patient registry.)</em>
+    </p>
+    <p>
+      <em>The PMIS uses its own patient identifier, coordinating this identifier with the patient identifier returned in the pick list (sharing the hospital’s Patient ID Domain) to retrieve information from the hospital’s clinical repository.</em>
+    </p>
+    <p>Use Case 3: Patient Demographics Query in an Enterprise with Multiple Patient ID Domains</p>
+    <p>
+      <em>A lab technician enters some basic demographics data (e.g., patient name) into a lab application to query a patient demographics supplier to identify a patient for his lab exams. As the application also needs the patient identifier in another Patient ID Domain in the enterprise for results delivery, the application is configured to receive patient IDs from other domains in the query response.</em>
+    </p>
+    <p>Figure 8.3-1: Basic Process Flow in Patient Demographics Query Profile</p>
+    <h3 id="8.3.1">8.3.1 Combined Use of PDQ with Other IHE Workflow Profiles</h3>
+    <p>
+      When the Patient Demographics Supplier is grouped with actors in other IHE profiles that perform patient information reconciliation activities (
+      <em>e.g.</em>
+      , Radiology PIR), the PDQ Supplier may use the updated information to respond to PDQ Queries. In addition, the Patient Demographics Query Profile may play an integral workflow role in conjunction with other IHE Profiles.
+    </p>
+    <h3 id="8.3.2">8.3.2 Supplier Data Configuration</h3>
+    <p>A Patient Demographics Supplier that holds demographic information for a single Patient ID domain shall provide matches in that domain.</p>
+    <p>
+      In the case where the Patient Demographics Supplier holds demographic information for multiple Patient ID domains, the Patient Demographics Supplier shall return information for the domain associated with
+      <em>MSH-5-Receiving Application</em>
+      and
+      <em>MSH-6-Receiving Facility</em>
+      . See the “Using Patient Data Query (PDQ) in a Multi-Domain Environment” section (<a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a>) for a further discussion of this case and an illustration of the supporting architecture.
+    </p>
+  </body>
+</html>

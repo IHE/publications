@@ -1,0 +1,394 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol1_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume1</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 class="list-paragraph" id="Appendix P">Appendix P: Privacy Access Policies (Informative)</h1>
+    <p>This Appendix provides information about when consent could be automated and consequently when the BPPC Profile could be used. Privacy consent can be summarized as: "I agree on my personal data being disclosed to someone under specific conditions".</p>
+    <p>Conditions are based on various factor(s) for example:</p>
+    <ul>
+      <li>
+        <p>type of person the data is disclosed to;</p>
+      </li>
+      <li>
+        <p>type of data disclosed;</p>
+      </li>
+      <li>
+        <p>type of access (normal access, emergency access...);</p>
+      </li>
+      <li>
+        <p>security level in which the disclosure takes place (weak authentication vs. strong authentication);</p>
+      </li>
+      <li>
+        <p>type of purpose for which the data is disclosed;</p>
+      </li>
+      <li>
+        <p>timeframe (period of validity of the consent, window of disclosure...);</p>
+      </li>
+    </ul>
+    <p>BPPC could be used when conditions can be described with a limited number of factors and when the factors can be defined and be easily interpreted by a Document Consumer implementing the Basic Patient Privacy Enforcement Option.</p>
+    <p>The XDS Affinity Domain Privacy Consent Policies could result in various actions, for example:</p>
+    <ul>
+      <li>
+        <p>limitation of the display of the existence of specific documents to the users of a Document Consumer</p>
+      </li>
+      <li>
+        <p>limitation of the access to specific documents by the users of a Document Consumer</p>
+      </li>
+      <li>
+        <p>display of a warning note (either concerning this access or to inform that further disclosure is not allowed, limited to some defined population, needed further consent...)</p>
+      </li>
+      <li>
+        <p>collection of new consent (oral consent, patient authentication, electronically signed consent, paper consent...)</p>
+      </li>
+    </ul>
+    <h2 id="Appendix P.1">
+      <br />
+      P.1 Consents in a sensitivity labeled and role based access control environment
+    </h2>
+    <p>One possible implementation may have a collection of policies and sensitivity markers that would form an access control matrix. An example simple access control matrix is shown in the table below.</p>
+    <p>Table P-1: Sample Access Control Policies</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Sensitivity</p>
+            <p>Functional Role</p>
+          </th>
+          <th>Billing Information</th>
+          <th>Administrative Information</th>
+          <th>Dietary Restrictions</th>
+          <th>General Clinical Information</th>
+          <th>Sensitive Clinical Information</th>
+          <th>Research Information</th>
+          <th>
+            Mediated by
+            <br />
+            Direct Care Provider
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Administrative Staff</td>
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Dietary Staff</td>
+          <td />
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>General Care Provider</td>
+          <td />
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Direct Care Provider</td>
+          <td />
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td>X</td>
+        </tr>
+        <tr class="odd">
+          <td>Emergency Care Provider</td>
+          <td />
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td>X</td>
+        </tr>
+        <tr class="even">
+          <td>Researcher</td>
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td>X</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient or Legal Representative</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Each instance of the matrix results in a single Patient Privacy Policy. This vocabulary must then be configured in the XDS Affinity Domain. Thus configuring each application in the XDS Affinity Domain to recognize for each Patient Privacy Policy identified, and which sensitivity (confidentialityCode); what types of accesses are allowed. Using the example above, the Patient Privacy Policy might look like.</p>
+    <p>Table P-2: Patient Privacy Policies When Expressed by Document Sensitivity</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Privacy Consent Policy</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Billing Information</td>
+          <td>May be accessed by administrative staff and the patient or their legal representative.</td>
+        </tr>
+        <tr class="even">
+          <td>Administrative Information</td>
+          <td>May be accessed by administrative or dietary staff or general, direct or emergency care providers, the patient or their legal representative.</td>
+        </tr>
+        <tr class="odd">
+          <td>Dietary Restrictions</td>
+          <td>May be accessed by dietary staff, general, direct or emergency care providers, the patient or their legal representative.</td>
+        </tr>
+        <tr class="even">
+          <td>General Clinical Information</td>
+          <td>May be accessed by general, direct or emergency care providers, the patient or their legal representative.</td>
+        </tr>
+        <tr class="odd">
+          <td>Sensitive Information</td>
+          <td>May be accessed by direct or emergency care providers, the patient or their legal representative.</td>
+        </tr>
+        <tr class="even">
+          <td>Research Information</td>
+          <td>May be accessed by researchers.</td>
+        </tr>
+        <tr class="odd">
+          <td>Mediated by Direct Care Provider</td>
+          <td>May be accessed by direct or emergency care providers.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Other divisions of the access control matrix are possible, so long as a Patient Privacy Policy covers each layout of the matrix.</p>
+    <p>The following list of references is provided as good references to understand the terms and concepts presented here. These references are not required by this profile.</p>
+    <ul>
+      <li>
+        <p>ISO/TS 21298 "Health informatics – Functional and structural roles".</p>
+      </li>
+      <li>
+        <p>ISO/TS 22600 "Health Informatics – Privilege Management and Access Controls".</p>
+      </li>
+      <li>
+        <p>CEN prEN 13606-4 "Health informatics — Electronic health record communication — Part 4: Security requirements and distribution rules"</p>
+      </li>
+    </ul>
+    <h2 id="Appendix P.2">P.2 Possible checklist for implementations</h2>
+    <p>General (before anything else)</p>
+    <ul>
+      <li>
+        <p>Granularity of confidentiality implementation:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Granularity of document: all documents, document type, each document.</p>
+      </li>
+      <li>
+        <p>Granularity of user: all users, user type, each type.</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Depth of confidentiality implementation:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Is the existence (metadata) about a document that can't be read by the user shown in a list of available documents for this patient?</p>
+      </li>
+      <li>
+        <p>Is the user informed there are / might be not shown documents and how much?</p>
+      </li>
+      <li>
+        <p>Is there the possibility to manage different depth of confidentiality depending on users or document type?</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>How to identify users, documents and policy?</p>
+      </li>
+      <li>
+        <p>Does confidentiality management spread through further use (once the document is downloaded by a user)</p>
+      </li>
+    </ul>
+    <p>While implementing</p>
+    <ul>
+      <li>
+        <p>Definition of default codes depending on site / hardware, document type, author, patient...</p>
+      </li>
+      <li>
+        <p>Implementing options:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>possibility of a list to choose from and how the list is constituted (out of all the possible value, out of the value acknowledged by patient...)</p>
+      </li>
+      <li>
+        <p>possibility to change default codes prior to publication</p>
+      </li>
+      <li>
+        <p>possibility to use different format depending on the confidentiality policy (only non-downloadable image, pdf, word...)</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Later modification of policy (possible directly when requesting a document or have to be validated before)</p>
+      </li>
+    </ul>
+    <p>Prior to publication</p>
+    <ul>
+      <li>
+        <p>What elements should be checked before publication:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>existence of a policy</p>
+      </li>
+      <li>
+        <p>existence of the policy used</p>
+      </li>
+      <li>
+        <p>existence of a consent for that policy</p>
+      </li>
+      <li>
+        <p>What additional information should be given (general consent policy, patient's specific consent policy...?)</p>
+      </li>
+    </ul>
+    <p>Prior to allowing access to a document</p>
+    <ul>
+      <li>
+        <p>What elements should be checked before publication:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>accessing user role</p>
+      </li>
+      <li>
+        <p>existence of the policy used vs. accessing user</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Specific accesses and impact on confidentiality policy:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>emergency (specific policy, short cut of confidentiality policy...)</p>
+      </li>
+      <li>
+        <p>break glass</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>What additional information should be given (general consent policy, patient' specific consent policy...)</p>
+      </li>
+    </ul>
+    <h2 id="Appendix P.3">P.3 Potential obligations</h2>
+    <p>Possible things that the BPPC policies might include are not fully known at this time. The following is a list that has been discovered through use by researchers, health information exchanges, and vendors. The following are some thoughts of things that might be orchestrated by BPPC Policies.</p>
+    <p>General</p>
+    <ol type="1">
+      <li>
+        <p>Is the existence (metadata) about a document that can't be read by the user shown in a list of available documents for this patient</p>
+      </li>
+    </ol>
+    <ol start="16" type="1">
+      <li>
+        <p>Map local role codes into some Affinity Domain defined role codes</p>
+      </li>
+    </ol>
+    <p>Prior to implementation</p>
+    <ol start="17" type="1">
+      <li>
+        <p>the specific Document Source is configured with one site specific “normal” code to publish all of that Document Source documents against. For example, an automatic blood-pressure device being used by one specific patient.</p>
+      </li>
+      <li>
+        <p>prompt user for the code to apply to the document (drop-down-list)</p>
+      </li>
+      <li>
+        <p>document-type based codes</p>
+      </li>
+    </ol>
+    <p>Prior to publication</p>
+    <ol start="20" type="1">
+      <li>
+        <p>validate that the code to be published against has been acknowledged</p>
+      </li>
+      <li>
+        <p>support for a XDS Affinity Domain Patient Privacy Policy that forbids the publication and/or use of documents in the XDS Affinity Domain (aka Opt-Out).</p>
+      </li>
+    </ol>
+    <p>Prior to allowing access to a document</p>
+    <ol start="22" type="1">
+      <li>
+        <p>should documents with unrecognized codes be shown?</p>
+      </li>
+      <li>
+        <p>prompt the user with some site defined text "do you really want to do this?"</p>
+      </li>
+      <li>
+        <p>allow the user to review the base consent policy</p>
+      </li>
+      <li>
+        <p>allow the user to review the patient's specific Patient Privacy Policy Acknowledgement Documents</p>
+      </li>
+      <li>
+        <p>allow the user to override a consent block (break-glass)</p>
+      </li>
+      <li>
+        <p>require that a new consent be acquired from the patient before using the documents in the XDS Affinity Domain</p>
+      </li>
+      <li>
+        <p>support for a XDS Affinity Domain Patient Privacy Policy that forbids the publication and/or use of documents in the XDS Affinity Domain (aka Opt-Out).</p>
+      </li>
+      <li>
+        <p>validate that the code on the document has been acknowledged</p>
+      </li>
+      <li>
+        <p>confidentialityCode that would indicate that the Document can only be viewed, it cannot be incorporated or copied.</p>
+      </li>
+      <li>
+        <p>use of this document shall result in an ATNA emergency access audit event</p>
+      </li>
+    </ol>
+    <h2 id="Appendix P.4">P.4 Dynamic Use Models</h2>
+    <p>It has also been suggested that documents should simply be published with the expected codes, and that only on use of a document that ALL current Patient Privacy Policy Acknowledgements are evaluated against with the code on the document. In this way revocation is more dynamic.</p>
+  </body>
+</html>

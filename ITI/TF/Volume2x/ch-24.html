@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2x_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2x</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="Appendix X">Appendix X: Basic Unstructured Workflow Definition Example</h1>
+    <p>This appendix contains a Workflow Definition example that is intended to be used in conjunction with XDW Profile.</p>
+    <h2 id="Appendix X.1">X.1 Workflow definition identifier</h2>
+    <p>Basic Unstructured Workflow is a very simple workflow in which a group of physicians/organizations acts on the same patient in an a priori unpredictable way.</p>
+    <p>This workflow is performed to allow the continuity of care for a patient in a generic and flexible way.</p>
+    <p>
+      We expect actual deployment to modify this example when developing basic workflows. It has two simple types of Tasks: the first one is useful for recording and sharing single user actions (“
+      <em>I did this task”</em>
+      ) and the second one used to request that a task be performed by another organization and reporting its completion (
+      <em>“please do this, I did it”</em>
+      ).
+    </p>
+    <p>Any specific workflow can include any combination of these two types of tasks. This example shows no dependencies among the tasks that are explicitly managed.</p>
+    <p>The catalog of task that maybe used in this workflow definition is not specified by this profile, and remains to be agreed in the affinity domain where the workflow is been deployed. This definition will result in a list of names and codes for any potential task.</p>
+    <h2 id="Appendix X.2">X.2 Workflow definition identifier</h2>
+    <p>The workflow definition identifier shall be inserted into the workflowDefinitionReference element of the Workflow Document.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Workflow Definition name</td>
+          <td>workflowDefinitionReference</td>
+        </tr>
+        <tr class="even">
+          <td>Basic Unstructured Workflow</td>
+          <td>An “urn:oid” reference to a Workflow definition Document</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="Appendix X.3">X.3 Workflow opening and closing</h2>
+    <p>The workflow should be opened by a physician or an Organization that participates in the workflow (e.g., continuity of care process). Any participant may choose to close the workflow.</p>
+    <h2 id="Appendix X.4">X.4 Tasks descriptions</h2>
+    <h3 id="Appendix X.4.1">X.4.1 Task type “born completed”</h3>
+    <p>Tasks of the type “born completed” are used by any workflow participant when the workflow is open or at any later point in time. This type is used for a workflow in which a participant want to share some actions perform in his enterprise on the patient. Typical examples can be a visit, or an emergency admission, or a patient self-monitoring event.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Task attributes</td>
+          <td>Rules for the task “born completed”</td>
+        </tr>
+        <tr class="even">
+          <td>Task dependencies</td>
+          <td>none</td>
+        </tr>
+        <tr class="odd">
+          <td>States allowed</td>
+          <td>COMPLETED</td>
+        </tr>
+        <tr class="even">
+          <td>States transactions</td>
+          <td>None</td>
+        </tr>
+        <tr class="odd">
+          <td>input</td>
+          <td>Zero or more clinical document of unconstrained types</td>
+        </tr>
+        <tr class="even">
+          <td>output</td>
+          <td>Zero or more clinical document of unconstrained types</td>
+        </tr>
+        <tr class="odd">
+          <td>owner</td>
+          <td>every physician/organization</td>
+        </tr>
+        <tr class="even">
+          <td>owner changes</td>
+          <td>No</td>
+        </tr>
+        <tr class="odd">
+          <td>&lt;taskEvent&gt;</td>
+          <td>Only one</td>
+        </tr>
+      </tbody>
+    </table>
+    <p />
+    <h3 id="Appendix X.4.2">X.4.2 Task type “two states task”</h3>
+    <p>This type of task is used by any workflow participant when the workflow is open or at any later point in time. This task type is used for a workflow in which a participant wants to share some actions performed in his enterprise on the patient. Typical examples can be a visit, or an emergency admission, or a patient self-monitoring event.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Task attributes</td>
+          <td>Rules for the task “two states task”</td>
+        </tr>
+        <tr class="even">
+          <td>Task dependencies</td>
+          <td>None</td>
+        </tr>
+        <tr class="odd">
+          <td>States allowed</td>
+          <td>
+            <p>CREATED</p>
+            <p>COMPLETED</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>States transactions</td>
+          <td>When a workflow participant request that this task be performed by another workflow participant he places the task in a Workflow Document with CREATED status (no owner). When the requested task is performed by a participant the task status shall be COMPLETED.</td>
+        </tr>
+        <tr class="odd">
+          <td>input</td>
+          <td>Zero or more clinical document of unconstrained types (e.g., eReferral Document, ePrescription)</td>
+        </tr>
+        <tr class="even">
+          <td>output</td>
+          <td>Zero or more clinical document of unconstrained types (e.g., reports, radiological images, advice documents, dispensation documents)</td>
+        </tr>
+        <tr class="odd">
+          <td>owner</td>
+          <td>any physician/organization that process this task in CREATED state</td>
+        </tr>
+        <tr class="even">
+          <td>changes of task owner</td>
+          <td>Allowed</td>
+        </tr>
+        <tr class="odd">
+          <td>&lt;taskEvent&gt;</td>
+          <td>At least two</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

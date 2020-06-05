@@ -1,0 +1,3282 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.30">3.30 Patient Identity Management [ITI-30]</h2>
+    <p>This section corresponds to transaction [ITI-30], “Patient Identity Management” of the IHE IT Infrastructure Technical Framework. Transaction [ITI-30] is used by the actors Patient Demographics Supplier and Patient Demographics Consumer.</p>
+    <h3 id="3.30.1">3.30.1 Scope</h3>
+    <p>
+      This transaction transmits patient demographics in a patient identification domain (
+      <em>i.e.,</em>
+      patient identifiers assigned by the same assigning authority).
+    </p>
+    <p>The term “patient demographics” is intended to convey the patient identification and full identity and also information on persons related to this patient, such as primary caregiver, family doctor, guarantor, next of kin.</p>
+    <p>The transaction contains events for creating, updating, merging, linking and unlinking patients.</p>
+    <p>It enables the sending system to qualify the reliability of a patient identity, and the type of identity used (official name, alias for VIP, unknown patient).</p>
+    <p>
+      The transaction can be used in acute care settings for both inpatients (
+      <em>i.e.</em>
+      , those who are assigned a bed at the facility) and outpatients (
+      <em>i.e.</em>
+      , those who are not assigned a bed at the facility).
+    </p>
+    <p>The transaction can also be used in a pure ambulatory environment.</p>
+    <h3 id="3.30.2">3.30.2 Use Case Roles</h3>
+    <p>Actor: Patient Demographics Supplier</p>
+    <p>Role: Adds and modifies patient demographics.</p>
+    <p>Actor: Patient Demographics Consumer</p>
+    <p>Role: Receives patient demographics.</p>
+    <p>Actor: Patient Identity Source</p>
+    <p>Role: Adds and modifies patient demographics.</p>
+    <p>Actor: Patient Identifier Cross-Reference Manager</p>
+    <p>Role: Receives patient demographics.</p>
+    <h3 id="3.30.3">3.30.3 Referenced Standards</h3>
+    <p>HL7 2.5 Chapters 2, 3, 6, 15</p>
+    <h3 id="3.30.4">3.30.4 Message sets and options</h3>
+    <p>Transaction [ITI-30] supports two options, “Merge” and “Link/Unlink”, in order to accommodate the various methods used by healthcare organizations to reconcile duplicated identities.</p>
+    <p>Any Patient Demographics Supplier or Patient Demographics Consumer Actor SHALL support at least one of the two options “Merge” and “Link/Unlink” or both, according to the IHE national extensions of this transaction. Any implementation framework will mandate both actors to support the same option (see Sections 3.30.4.1 and 3.30.4.2).</p>
+    <p>Patient Identity Source and Patient Identity Cross-Reference Manager Actors may support the Pediatric Demographics Option (see Section 3.30.4.3).</p>
+    <h4 id="3.30.4.1">3.30.4.1 Required message subset with option “Merge”</h4>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Event</td>
+          <td>Trigger</td>
+          <td>Message Static definition</td>
+        </tr>
+        <tr class="even">
+          <td>Create new patient</td>
+          <td>A28</td>
+          <td>ADT^A28^ADT_A05</td>
+        </tr>
+        <tr class="odd">
+          <td>Update patient information</td>
+          <td>A31</td>
+          <td>ADT^A31^ADT_A05</td>
+        </tr>
+        <tr class="even">
+          <td>Change Patient Identifier List</td>
+          <td>A47</td>
+          <td>ADT^A47^ADT_A30</td>
+        </tr>
+        <tr class="odd">
+          <td>Merge two patients</td>
+          <td>A40</td>
+          <td>ADT^A40^ADT_A39</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4 id="3.30.4.2">3.30.4.2 Required message subset with option “Link/Unlink”</h4>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Event</td>
+          <td>Trigger</td>
+          <td>Message Static definition</td>
+        </tr>
+        <tr class="even">
+          <td>Create new patient</td>
+          <td>A28</td>
+          <td>ADT^A28^ADT_A05</td>
+        </tr>
+        <tr class="odd">
+          <td>Update patient information</td>
+          <td>A31</td>
+          <td>ADT^A31^ADT_A05</td>
+        </tr>
+        <tr class="even">
+          <td>Change Patient Identifier List</td>
+          <td>A47</td>
+          <td>ADT^A47^ADT_A30</td>
+        </tr>
+        <tr class="odd">
+          <td>Link Patient Information</td>
+          <td>A24</td>
+          <td>ADT^A24^ADT_A24</td>
+        </tr>
+        <tr class="even">
+          <td>Unlink Patient Information</td>
+          <td>A37</td>
+          <td>ADT^A37^ADT_A37</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4 id="3.30.4.3">3.30.4.3 Optionality of Pediatric Demographics Fields</h4>
+    <p>The Pediatric Demographics Option does not require Patient Identity Source Actors to include any attributes not already required by the corresponding HL7 message (as is described in the following sections). This minimal set of requirements enables inclusion of the largest range of Patient Identity Source Actor systems.</p>
+    <p>The Pediatric Demographics Option does place additional requirements on the Patient Identifier Cross-reference Manager Actor, requiring them to accept and consider in matching* a set of HL7 attributes beyond what is required by standard PIX. See Table 3.30.4.3-1 for a description of these additional requirements. For example, we would expect that two patients with all furnished data elements identical except the First Name (e.g., “Maria” vs. “Marina”), and consecutive Birth Order values would not be automatically linked or merged by the Patient Identifier Cross-Reference Manager.</p>
+    <h4 class="list-paragraph" id="3.30.4.4">3.30.4.4 Acknowledgement Support</h4>
+    <p>An actor that claims support for the Acknowledgement Support Option shall be capable of using the enhanced acknowledgement mode as defined in the HL7 v2.x standard. See HL7 Volume 2C, Section C.2.3 for further details.</p>
+    <h4 class="list-paragraph" id="3.30.4.5">3.30.4.5 Ambulatory Patient Data</h4>
+    <p>If the Patient Demographics Supplier supports the Ambulatory Patient Data Option, it SHALL supply the patient address in field PID-11 for ambulatory patients whenever this address is known.</p>
+    <h3 id="3.30.5">3.30.5 Common HL7 Message Segments</h3>
+    <p>This section describes the common HL7 message segments used in transaction [ITI-30].</p>
+    <p>Each table represents a segment. Fields for which a precise usage description is needed, particularly those having usage C (conditional), are commented on below the table. The optional fields are usually not commented on.</p>
+    <h4 id="3.30.5.1">3.30.5.1 MSH - Message Header Segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 2 (Section 2.15, “Message control”)</p>
+    <p>This segment defines the intent, supplier, destination, and some specifics of the syntax of the message. It also uniquely identifies the message itself and dates its production.</p>
+    <p>Table 3.30‑1: MSH - Message Header</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>1</td>
+          <td>ST</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00001</td>
+          <td>Field Separator</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>4</td>
+          <td>ST</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00002</td>
+          <td>Encoding Characters</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>227</td>
+          <td>HD</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00003</td>
+          <td>Sending Application</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>227</td>
+          <td>HD</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00004</td>
+          <td>Sending Facility</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>227</td>
+          <td>HD</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00005</td>
+          <td>Receiving Application</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>227</td>
+          <td>HD</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00006</td>
+          <td>Receiving Facility</td>
+        </tr>
+        <tr class="even">
+          <td>7</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00007</td>
+          <td>Date/Time of Message</td>
+        </tr>
+        <tr class="odd">
+          <td>8</td>
+          <td>40</td>
+          <td>ST</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00008</td>
+          <td>Security</td>
+        </tr>
+        <tr class="even">
+          <td>9</td>
+          <td>15</td>
+          <td>MSG</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00009</td>
+          <td>Message Type</td>
+        </tr>
+        <tr class="odd">
+          <td>10</td>
+          <td>20</td>
+          <td>ST</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00010</td>
+          <td>Message Control Id</td>
+        </tr>
+        <tr class="even">
+          <td>11</td>
+          <td>3</td>
+          <td>PT</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00011</td>
+          <td>Processing Id</td>
+        </tr>
+        <tr class="odd">
+          <td>12</td>
+          <td>60</td>
+          <td>VID</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00012</td>
+          <td>Version ID</td>
+        </tr>
+        <tr class="even">
+          <td>13</td>
+          <td>15</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00013</td>
+          <td>Sequence Number</td>
+        </tr>
+        <tr class="odd">
+          <td>14</td>
+          <td>180</td>
+          <td>ST</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00014</td>
+          <td>Continuation Pointer</td>
+        </tr>
+        <tr class="even">
+          <td>15</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0155</td>
+          <td>00015</td>
+          <td>Accept Acknowledgement Type</td>
+        </tr>
+        <tr class="odd">
+          <td>16</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0155</td>
+          <td>00016</td>
+          <td>Application Acknowledgement Type</td>
+        </tr>
+        <tr class="even">
+          <td>17</td>
+          <td>3</td>
+          <td>ID</td>
+          <td>RE</td>
+          <td>[1..1]</td>
+          <td>0399</td>
+          <td>00017</td>
+          <td>Country Code</td>
+        </tr>
+        <tr class="odd">
+          <td>18</td>
+          <td>16</td>
+          <td>ID</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>0211</td>
+          <td>00692</td>
+          <td>Character Set</td>
+        </tr>
+        <tr class="even">
+          <td>19</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>RE</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00693</td>
+          <td>Principal Language of Message</td>
+        </tr>
+        <tr class="odd">
+          <td>20</td>
+          <td>20</td>
+          <td>ID</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>0356</td>
+          <td>01317</td>
+          <td>Alternate Character Set Handling Scheme</td>
+        </tr>
+        <tr class="even">
+          <td>21</td>
+          <td>427</td>
+          <td>EI</td>
+          <td>RE</td>
+          <td>[0..*]</td>
+          <td />
+          <td>01598</td>
+          <td>Message Profile Identifier</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>MSH-1 Field Separator, required: This Technical Framework requires that applications support as the recommended value specified in the HL7 standard, which is | (ASCII 124). See <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a>.</p>
+    <p>MSH-2 Encoding Characters, required: This field contains the four characters in the following order: the component separator, repetition separator, escape character, and subcomponent separator. This Technical Framework requires that applications support the recommended values for encoding characters as specified in the HL7 standard. The values are ^~\&amp; (ASCII 94, 126, 92, and 38, respectively). See <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a>.</p>
+    <p>MSH-3 Sending Application (HD) and MSH-5 Receiving Application (HD), required. See the constrainable profile definition of data type HD.</p>
+    <p>MSH-4 Sending Facility (HD) and MSH-6 Receiving Facility (HD), required. See the constrainable profile definition of data type HD.</p>
+    <p>MSH-9 Message Type (MSG), required:</p>
+    <p>Components: &lt;Message Code (ID)&gt; ^ &lt;Trigger Event (ID)&gt; ^ &lt;Message Structure (ID)&gt;</p>
+    <p>Definition: This field contains the message type, trigger event, and the message structure ID for the message. All three components are required.</p>
+    <p>MSH-10 Message Control Id (ST), required:</p>
+    <p>Definition: This field contains a number or other identifier that uniquely identifies the message in the context of exchange between trading partners. Each message should be given a unique identifier by the sending system. The receiving system will echo this ID back to the sending system in the Message Acknowledgment segment (MSA). The combination of this identifier and the name of the sending application (MSH-3) should be unique across the healthcare enterprise.</p>
+    <p>MSH-12 Version ID (VID), required:</p>
+    <p>Components: &lt;Version ID (ID)&gt; ^ &lt;Internationalization Code (CE)&gt; ^ &lt;International Version ID (CE)&gt;</p>
+    <p>Definition: This field is matched by the receiving system to its own version to be sure the message will be interpreted correctly.</p>
+    <p>The first component SHALL be populated with the value "2.5" representing HL7 Version 2.5.</p>
+    <p>MSH-15 Accept Acknowledgment Type (ID), optional.</p>
+    <p>As a minimal requirement for all actors, the Original Acknowledgement Mode shall be supported, in which case this field of the message will remain empty.</p>
+    <p>If an actor declares the “Acknowledgement Support” Option, it shall be able to use Enhanced Acknowledgement Mode.</p>
+    <p>MSH-16 Application Acknowledgment Type (ID), optional.</p>
+    <p>As a minimal requirement for all actors, the Original Acknowledgement Mode shall be supported, in which case this field of the message will remain empty.</p>
+    <p>If an actor declares the “Acknowledgement Support” Option, it shall be able to use Enhanced Acknowledgement Mode.</p>
+    <p>MSH-17 Country Code (ID), required if available.</p>
+    <p>
+      Definition: This field contains the country of origin for the message. The values to be used are those of ISO 3166, using the 3-character alphabetic form. Refer to
+      <em>HL7 Table 0399 - Country code</em>
+      .
+    </p>
+    <p>Examples of valid values:</p>
+    <p>JPN = Japan, USA = United States, GBR = United Kingdom, ITA = Italy, FRA = France, NLD = Netherlands.</p>
+    <p>MSH-18 Character Set (ID), conditional.</p>
+    <p>
+      Definition: This field contains the character set for the entire message. Refer to
+      <em>HL7 Table 0211 - Alternate character sets</em>
+      for valid values.
+    </p>
+    <p>Examples of valid values:</p>
+    <p>ASCII: The printable 7-bit ASCII character set.</p>
+    <p>8859/1: The printable characters from the ISO 8859/1 Character set used by Western Europe. This character set can still be used, but 8859/15 should be used by preference. This character set is the forward-compatible version of 8859/1 and includes new characters such as the Euro currency symbol.</p>
+    <p>ISO IR87: Code for the Japanese Graphic Character set for information interchange (JIS X 0208-1990).</p>
+    <p>UNICODE UTF-8: UCS Transformation Format, 8-bit form.</p>
+    <p>Condition predicate: This field shall only be valued if the message uses a character set other than the 7-bit ASCII character set. Though the field is repeatable in HL7, IHE authorizes only one occurrence (i.e., one character set). The character set specified in this field is used for the encoding of all of the characters within the message.</p>
+    <p>MSH-19 Principal Language of Message (CE), required if available. Coded from ISO 639.</p>
+    <p>Examples: DE = German, EN = English, ES=Spanish, JA = Japanese, FR = French, NL = Dutch, IT = Italian</p>
+    <p>MSH-20 Alternate Character Set Handling Scheme (ID), not supported: Character set switching is not allowed here.</p>
+    <p>MSH-21 Message Profile Identifier (EI), required if available.</p>
+    <p>This field shall be valued in the messages for which a Message Profile has been officially registered with HL7, and is recommended to be valued for all messages in accordance with IHE Technical Framework transactions. See <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a>.</p>
+    <h4 id="3.30.5.2">3.30.5.2 EVN – Event Type Segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 3, Section 3.4.1</p>
+    <p>This segment is used to provide generic properties of the trigger event.</p>
+    <p>Table 3.30‑2: EVN – Event Type segment</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>3</td>
+          <td>ID</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>0003</td>
+          <td>00099</td>
+          <td>Event Type Code</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00100</td>
+          <td>Recorded Date Time</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00101</td>
+          <td>Date/Time Planned Event</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>3</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0062</td>
+          <td>00102</td>
+          <td>Event Reason Code</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0188</td>
+          <td>00103</td>
+          <td>Operator ID</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01278</td>
+          <td>Event Occurred</td>
+        </tr>
+        <tr class="even">
+          <td>7</td>
+          <td>241</td>
+          <td>HD</td>
+          <td>RE</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01534</td>
+          <td>Event Facility</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>EVN-1 Event Type Code (ID), Not supported (deprecated in HL7 2.5). The Event Type Code is given in MSH-9 of segment MSH.</p>
+    <p>EVN-2 Recorded Date Time (TS), Required. Date/time when the event was recorded.</p>
+    <p>EVN-3 Date/Time Planned Event (TS), Conditional. Date/time when the event was planned.</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field shall be populated in events “Pending Transfer” (A15) and “Cancel Pending Transfer” (A26), which are supported by transaction [ITI-31].</p>
+      </li>
+      <li>
+        <p>The update of a pending transfer uses message A08 and leaves this field empty. The update of the planned date/time of the transfer is only possible through the ZBE segment in message Z99, when using the option “Historic Movement Management” of transaction [ITI-31].</p>
+      </li>
+      <li>
+        <p>Other planned events of transaction [ITI-31], such as “Pending Admit”, “Pending Discharge” and the cancels thereof, use a specific field of segment PV2 to give the date/time of the planned event. For consistency of use, IHE recommends that the content of the specific field of PV2 be also copied to EVN-3.</p>
+      </li>
+    </ul>
+    <p>National extensions of this transaction may extend the condition above.</p>
+    <p>EVN-6 Event Occurred (TS): Conditional. This field contains the date/time that the event really occurred.</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field shall not be populated in messages communicating pending events and their cancellations.</p>
+      </li>
+      <li>
+        <p>In messages communicating effective events (inserts and updates), this field shall be populated with the real date/time of the notified event.</p>
+      </li>
+      <li>
+        <p>In messages communicating cancellations, this field shall be populated with the date/time that was sent in the message that originally communicated the event being cancelled.</p>
+      </li>
+    </ul>
+    <p>EVN-7 Event Facility (HD): Required if known to the sender. This field identifies the actual facility where the event occurred as distinct from the sending facility (MSH-4).</p>
+    <h4 id="3.30.5.3">3.30.5.3 PID - Patient Identification segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 3 (Section 3.4.2)</p>
+    <p>The PID segment is used by all applications as the primary means of communicating patient identification information. This segment contains permanent patient identifying and demographic information that, for the most part, is not likely to change frequently.</p>
+    <p>Table 3.30‑3: PID - Patient Identification segment</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>4</td>
+          <td>SI</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00104</td>
+          <td>Set ID - PID</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>20</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00105</td>
+          <td>Patient ID</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td />
+          <td>00106</td>
+          <td>Patient Identifier List</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>20</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00107</td>
+          <td>Alternate Patient ID - PID</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>250</td>
+          <td>XPN</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td />
+          <td>00108</td>
+          <td>Patient Name</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>250</td>
+          <td>XPN</td>
+          <td>
+            <p>O</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td />
+          <td>00109</td>
+          <td>Mother’s Maiden Name</td>
+        </tr>
+        <tr class="even">
+          <td>7</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>
+            <p>CE</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td />
+          <td>00110</td>
+          <td>Date/Time of Birth</td>
+        </tr>
+        <tr class="odd">
+          <td>8</td>
+          <td>1</td>
+          <td>IS</td>
+          <td>
+            <p>CE</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[1..1]</td>
+          <td>0001</td>
+          <td>00111</td>
+          <td>Administrative Sex</td>
+        </tr>
+        <tr class="even">
+          <td>9</td>
+          <td>250</td>
+          <td>XPN</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00112</td>
+          <td>Patient Alias</td>
+        </tr>
+        <tr class="odd">
+          <td>10</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0005</td>
+          <td>00113</td>
+          <td>Race</td>
+        </tr>
+        <tr class="even">
+          <td>11</td>
+          <td>250</td>
+          <td>XAD</td>
+          <td>
+            <p>CE</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..*]</td>
+          <td />
+          <td>00114</td>
+          <td>Patient Address</td>
+        </tr>
+        <tr class="odd">
+          <td>12</td>
+          <td>4</td>
+          <td>IS</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>0289</td>
+          <td>00115</td>
+          <td>County Code</td>
+        </tr>
+        <tr class="even">
+          <td>13</td>
+          <td>250</td>
+          <td>XTN</td>
+          <td>
+            <p>O</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..*]</td>
+          <td />
+          <td>00116</td>
+          <td>Phone Number - Home</td>
+        </tr>
+        <tr class="odd">
+          <td>14</td>
+          <td>250</td>
+          <td>XTN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00117</td>
+          <td>Phone Number - Business</td>
+        </tr>
+        <tr class="even">
+          <td>15</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0296</td>
+          <td>00118</td>
+          <td>Primary Language</td>
+        </tr>
+        <tr class="odd">
+          <td>16</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0002</td>
+          <td>00119</td>
+          <td>Marital Status</td>
+        </tr>
+        <tr class="even">
+          <td>17</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0006</td>
+          <td>00120</td>
+          <td>Religion</td>
+        </tr>
+        <tr class="odd">
+          <td>18</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00121</td>
+          <td>Patient Account Number</td>
+        </tr>
+        <tr class="even">
+          <td>19</td>
+          <td>16</td>
+          <td>ST</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00122</td>
+          <td>SSN Number - Patient</td>
+        </tr>
+        <tr class="odd">
+          <td>20</td>
+          <td>25</td>
+          <td>DLN</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00123</td>
+          <td>Driver's License Number - Patient</td>
+        </tr>
+        <tr class="even">
+          <td>21</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00124</td>
+          <td>Mother's Identifier</td>
+        </tr>
+        <tr class="odd">
+          <td>22</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0189</td>
+          <td>00125</td>
+          <td>Ethnic Group</td>
+        </tr>
+        <tr class="even">
+          <td>23</td>
+          <td>250</td>
+          <td>ST</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00126</td>
+          <td>Birth Place</td>
+        </tr>
+        <tr class="odd">
+          <td>24</td>
+          <td>1</td>
+          <td>ID</td>
+          <td>
+            <p>O</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td>0136</td>
+          <td>00127</td>
+          <td>Multiple Birth Indicator</td>
+        </tr>
+        <tr class="even">
+          <td>25</td>
+          <td>2</td>
+          <td>NM</td>
+          <td>
+            <p>O</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td />
+          <td>00128</td>
+          <td>Birth Order</td>
+        </tr>
+        <tr class="odd">
+          <td>26</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0171</td>
+          <td>00129</td>
+          <td>Citizenship</td>
+        </tr>
+        <tr class="even">
+          <td>27</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0172</td>
+          <td>00130</td>
+          <td>Veterans Military Status</td>
+        </tr>
+        <tr class="odd">
+          <td>28</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>0212</td>
+          <td>00739</td>
+          <td>Nationality</td>
+        </tr>
+        <tr class="even">
+          <td>29</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>CE</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00740</td>
+          <td>Patient Death Date and Time</td>
+        </tr>
+        <tr class="odd">
+          <td>30</td>
+          <td>1</td>
+          <td>ID</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>0136</td>
+          <td>00741</td>
+          <td>Patient Death Indicator</td>
+        </tr>
+        <tr class="even">
+          <td>31</td>
+          <td>1</td>
+          <td>ID</td>
+          <td>CE</td>
+          <td>[0..1]</td>
+          <td>0136</td>
+          <td>01535</td>
+          <td>Identity Unknown Indicator</td>
+        </tr>
+        <tr class="odd">
+          <td>32</td>
+          <td>20</td>
+          <td>IS</td>
+          <td>CE</td>
+          <td>[0..*]</td>
+          <td>0445</td>
+          <td>01536</td>
+          <td>Identity Reliability Code</td>
+        </tr>
+        <tr class="even">
+          <td>33</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>
+            <p>CE</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td />
+          <td>01537</td>
+          <td>Last Update Date/Time</td>
+        </tr>
+        <tr class="odd">
+          <td>34</td>
+          <td>241</td>
+          <td>HD</td>
+          <td>
+            <p>O</p>
+            <p>(Note 1)</p>
+          </td>
+          <td>[0..1]</td>
+          <td />
+          <td>01538</td>
+          <td>Last Update Facility</td>
+        </tr>
+        <tr class="even">
+          <td>35</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>CE</td>
+          <td>[0..1]</td>
+          <td>
+            <a href="#HL70446">0446</a>
+          </td>
+          <td>01539</td>
+          <td>Species Code</td>
+        </tr>
+        <tr class="odd">
+          <td>36</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>
+            <a href="#HL70447">0447</a>
+          </td>
+          <td>01540</td>
+          <td>Breed Code</td>
+        </tr>
+        <tr class="even">
+          <td>37</td>
+          <td>80</td>
+          <td>ST</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01541</td>
+          <td>Strain</td>
+        </tr>
+        <tr class="odd">
+          <td>38</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..2]</td>
+          <td />
+          <td>01542</td>
+          <td>Production Class Code</td>
+        </tr>
+        <tr class="even">
+          <td>39</td>
+          <td>250</td>
+          <td>CWE</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>01840</td>
+          <td>Tribal Citizenship</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Note 1: If the Pediatric Demographics Option is supported, this element in the table above shall be R2 for the Patient Identifier Cross-Reference Manager.</p>
+    <p>In accord with the HL7 Version 2.5 usage of this segment, fields PID-2 (Patient ID), PID-4 (Alternate Patient ID), PID-19 (SSN patient number) and PID-20 (Driver’s license number) are superseded by field PID-3, as shown below; field PID-28 (Nationality) is superseded by field PID-26 (Citizenship).</p>
+    <p>PID-3 – Patient Identifier List (CX), required. This field contains a list of identifiers (one or more) used by the healthcare facility to uniquely identify a patient.</p>
+    <p>As shown in the constrained profile definition of data type CX in <a href="../Volume2x/ch-14.html#Appendix N.1">ITI TF-2x: Appendix N.1</a>, subfields CX-1 “ID number”, CX-4 “Assigning authority” are required, and CX-5 “Identifier Type Code” is required if known for each identifier.</p>
+    <p>This field may be populated with various identifiers assigned to the patient by various assigning authorities.</p>
+    <p>The authorized values for subfield CX-5 “Identifier Type Code” are given in HL7 Table 0203 (HL7 Version 2.5, Chapter 2A, Section 2A.17.5).</p>
+    <p>Values commonly used for Identifier Type Code in the context of PID-3 are as follows:</p>
+    <blockquote>
+      <p>BC Bank card number. Assigning authority is the bank.</p>
+      <p>BR Birth Certificate number. Assigning authority is the birth state or national government that issues the Birth Certificate.</p>
+      <p>DL Driver’s license number. Assigning authority is the state</p>
+      <p>NH National Health Plan Identifier. Assigning authority at the national level.</p>
+      <p>PE Living Subject Enterprise Number. Assigning authority is the enterprise.</p>
+      <p>PI Patient Internal Identifier assigned by the healthcare organization.</p>
+      <p>PPN Passport number.</p>
+      <p>PRC Permanent Resident Card Number</p>
+      <p>SS Social Security Number.</p>
+    </blockquote>
+    <p>PID-5 – Patient Name (XPN), required. This field contains one or more names for the patient. At least one name must be provided, with at least the first subfield “Family Name” valued. See the constrained profile definition of data type XPN.</p>
+    <p>PID-6 – Mother’s Maiden Name (XPN), conditional:</p>
+    <p>Condition predicate:</p>
+    <p>This field is required if known for the Pediatrics Demographic Option. It serves to help link records when other demographic data and search criteria are not exactly the same.</p>
+    <p>PID-7 – Date/Time of Birth (TS), conditional.</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available (i.e., known to the sender) in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]), update patient demographics in the context of an encounter (A08 in [ITI-31]).</p>
+      </li>
+      <li>
+        <p>In all other messages, it is optional.</p>
+      </li>
+      <li>
+        <p>If the exact date of birth is not known, it can be truncated to the year of birth (e.g., 1954) or to the year and month of birth (e.g., 195411).</p>
+      </li>
+    </ul>
+    <p>PID-8 – Administrative Sex (IS), conditional.</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]).</p>
+      </li>
+      <li>
+        <p>In all other messages, it is optional.</p>
+      </li>
+    </ul>
+    <p>The authorized values are these, taken from HL7 User-defined Table 0001:</p>
+    <p>User-defined Table 0001: Administrative Sex</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value</th>
+          <th>Description</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>F</td>
+          <td>Female</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>M</td>
+          <td>Male</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>O</td>
+          <td>Other</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>U</td>
+          <td>Unknown</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>A</td>
+          <td>Ambiguous</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>N</td>
+          <td>Not applicable</td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>PID-10 – Race (CE), optional: The patient race is information of critical medical importance in practices such as imaging. Therefore, this information shall be present if known, except where prohibited. For example, France prohibits inclusion of Patient Race.</p>
+    <p>PID-11 – Patient Address (XAD), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available (if known to the sender) in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]).</p>
+      </li>
+      <li>
+        <p>In all other messages, it is optional.</p>
+      </li>
+    </ul>
+    <p>PID-13 – Home Phone Number (XTN), conditional.</p>
+    <p>Condition predicate:</p>
+    <p>This field is required if known for the Pediatrics Demographic Option. It serves to help locate records when other demographic data and search criteria are not exactly the same.</p>
+    <p>PID-18 – Patient Account Number (CX), Conditional.</p>
+    <p>HL7 Definition: This field contains the patient account number assigned by accounting to which all charges, payments, etc., are recorded. It is used to identify the patient’s account.</p>
+    <p>Relationship to encounter: A patient account can span more than one enterprise encounter.</p>
+    <p>Condition predicate: At least one of the fields PID-18 “Patient Account Number” or PV1-19 “Visit Number” shall be valued in the messages of transaction [ITI-31] that use the PV1 segment. Additional requirements for the presence of value in these fields may be documented in national extensions of this transaction.</p>
+    <p>PID-24 – Multiple Birth Indicator (ID), conditional.</p>
+    <p>Condition predicate:</p>
+    <p>This field is required if known for the Pediatrics Demographic Option. It serves to help avoid linking records for twins, which are often nearly identical.</p>
+    <p>PID-25 – Birth Order (NM), conditional.</p>
+    <p>Condition predicate:</p>
+    <p>This field is required if known for the Pediatrics Demographic Option. It serves to help avoid linking records for twins, which are often nearly identical.</p>
+    <p>PID-29 – Patient Death Date and Time (TS), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required in the Patient Discharge message of transaction [ITI-31] if the encounter is terminated by the patient’s death and the death date is known. It provides the date/time of the patient’s death.</p>
+      </li>
+      <li>
+        <p>In all other Patient Discharge messages, it shall not be populated.</p>
+      </li>
+    </ul>
+    <p>PID-30 – Patient Death Indicator (ID), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required to be populated with value “Y” in the Patient Discharge message of transaction [ITI-31] when the encounter is terminated by the patient’s death.</p>
+      </li>
+      <li>
+        <p>Otherwise it is optional.</p>
+      </li>
+    </ul>
+    <p>PID-31 – Identity Unknown Indicator (ID), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available (i.e., known to the sender) in the following messages: Creation of a new patient (A28 in [ITI-30)], inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]), update patient demographics in the context of an encounter (A08 in [ITI-31]).</p>
+      </li>
+      <li>
+        <p>In all other messages, it is optional.</p>
+      </li>
+    </ul>
+    <p>The possible values are “Y”, and “N” which is the default.</p>
+    <p>The value “Y” means that the patient identity is unknown. In this case the field PID-3 shall contain one single patient identifier, which is a temporary identifier, and the field PID-32 will contain the value “AL” indicating that the patient name is an alias.</p>
+    <p>PID-32 – Identity Reliability Code (IS), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available (i.e., known to the sender) in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]) , update patient demographics in the context of an encounter (A08 in [ITI-31]).</p>
+      </li>
+      <li>
+        <p>In all other messages, it is optional.</p>
+      </li>
+    </ul>
+    <p>The field is repeatable. The possible values are taken from HL7 user-defined Table 0445:</p>
+    <p>User-defined Table 0445: Identity Reliability Code</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value</th>
+          <th>Description</th>
+          <th>Comment (added by IHE for this profile)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>AL</td>
+          <td>Patient/Person Name is an Alias</td>
+          <td>Used in case of an unidentified patient (e.g., trauma case)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>PID-33 – Last Update Date/Time (TS), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required if available (i.e., known to the sender) in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]), update patient demographics in the context of an encounter (A08 in [ITI-31]).</p>
+      </li>
+      <li>
+        <p>In the cases of messages A08 and A31, the content of this field is equal to the value in EVN-6-event occurred.</p>
+      </li>
+    </ul>
+    <p>Note: This field is required if known for the Pediatrics Demographic Option. The condition predicate above satisfies this requirement. It serves to help avoid linking records for twins, which are often nearly identical. It is used in conjunction with PID-34.</p>
+    <p>PID-34 – Last Update Facility (HD), conditional.</p>
+    <p>Condition predicate:</p>
+    <p>This field is required if known for the Pediatrics Demographic Option. It serves to help avoid linking records for twins, whose records are often nearly identical, when used in conjunction with PID-33.</p>
+    <p>PID-35 – Species Code (CE) and PID-36 – Breed Code (CE), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>Required if known to the sender, when the patient is a non-human living subject, in the following messages: Creation of a new patient (A28 in [ITI-30]), inpatient admitted (A01 in [ITI-31]), registration of an outpatient (A04 in [ITI-31]), update patient demographics (A31 in [ITI-30]), update patient demographics in the context of an encounter (A08 in [ITI-31]).</p>
+      </li>
+    </ul>
+    <h4 id="3.30.5.4">3.30.5.4 PV1 - Patient Visit segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 3 (Section 3.4.3)</p>
+    <p>The PV1 segment is used by Registration/Patient Administration applications to communicate information on an account or visit-specific basis.</p>
+    <p>Table 3.30‑4: PV1 - Patient Visit segment</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>SEQ</th>
+          <th>LEN</th>
+          <th>DT</th>
+          <th>Usage</th>
+          <th>Card.</th>
+          <th>TBL#</th>
+          <th>ITEM#</th>
+          <th>ELEMENT NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>1</td>
+          <td>4</td>
+          <td>SI</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00131</td>
+          <td>Set ID - PV1</td>
+        </tr>
+        <tr class="even">
+          <td>2</td>
+          <td>1</td>
+          <td>IS</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>0004</td>
+          <td>00132</td>
+          <td>Patient Class</td>
+        </tr>
+        <tr class="odd">
+          <td>3</td>
+          <td>80</td>
+          <td>PL</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00133</td>
+          <td>Assigned Patient Location</td>
+        </tr>
+        <tr class="even">
+          <td>4</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0007</td>
+          <td>00134</td>
+          <td>Admission Type</td>
+        </tr>
+        <tr class="odd">
+          <td>5</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00135</td>
+          <td>Preadmit Number</td>
+        </tr>
+        <tr class="even">
+          <td>6</td>
+          <td>80</td>
+          <td>PL</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00136</td>
+          <td>Prior Patient Location</td>
+        </tr>
+        <tr class="odd">
+          <td>7</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0010</td>
+          <td>00137</td>
+          <td>Attending Doctor</td>
+        </tr>
+        <tr class="even">
+          <td>8</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0010</td>
+          <td>00138</td>
+          <td>Referring Doctor</td>
+        </tr>
+        <tr class="odd">
+          <td>9</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>0010</td>
+          <td>00139</td>
+          <td>Consulting Doctor</td>
+        </tr>
+        <tr class="even">
+          <td>10</td>
+          <td>3</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0069</td>
+          <td>00140</td>
+          <td>Hospital Service</td>
+        </tr>
+        <tr class="odd">
+          <td>11</td>
+          <td>80</td>
+          <td>PL</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00141</td>
+          <td>Temporary Location</td>
+        </tr>
+        <tr class="even">
+          <td>12</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0087</td>
+          <td>00142</td>
+          <td>Preadmit Test Indicator</td>
+        </tr>
+        <tr class="odd">
+          <td>13</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0092</td>
+          <td>00143</td>
+          <td>Re-admission Indicator</td>
+        </tr>
+        <tr class="even">
+          <td>14</td>
+          <td>6</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0023</td>
+          <td>00144</td>
+          <td>Admit Supplier</td>
+        </tr>
+        <tr class="odd">
+          <td>15</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0009</td>
+          <td>00145</td>
+          <td>Ambulatory Status</td>
+        </tr>
+        <tr class="even">
+          <td>16</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0099</td>
+          <td>00146</td>
+          <td>VIP Indicator</td>
+        </tr>
+        <tr class="odd">
+          <td>17</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0010</td>
+          <td>00147</td>
+          <td>Admitting Doctor</td>
+        </tr>
+        <tr class="even">
+          <td>18</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0018</td>
+          <td>00148</td>
+          <td>Patient Type</td>
+        </tr>
+        <tr class="odd">
+          <td>19</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00149</td>
+          <td>Visit Number</td>
+        </tr>
+        <tr class="even">
+          <td>20</td>
+          <td>50</td>
+          <td>FC</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0064</td>
+          <td>00150</td>
+          <td>Financial Class</td>
+        </tr>
+        <tr class="odd">
+          <td>21</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0032</td>
+          <td>00151</td>
+          <td>Charge Price Indicator</td>
+        </tr>
+        <tr class="even">
+          <td>22</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0045</td>
+          <td>00152</td>
+          <td>Courtesy Code</td>
+        </tr>
+        <tr class="odd">
+          <td>23</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0046</td>
+          <td>00153</td>
+          <td>Credit Rating</td>
+        </tr>
+        <tr class="even">
+          <td>24</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>0044</td>
+          <td>00154</td>
+          <td>Contract Code</td>
+        </tr>
+        <tr class="odd">
+          <td>25</td>
+          <td>8</td>
+          <td>DT</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00155</td>
+          <td>Contract Effective Date</td>
+        </tr>
+        <tr class="even">
+          <td>26</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00156</td>
+          <td>Contract Amount</td>
+        </tr>
+        <tr class="odd">
+          <td>27</td>
+          <td>3</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00157</td>
+          <td>Contract Period</td>
+        </tr>
+        <tr class="even">
+          <td>28</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0073</td>
+          <td>00158</td>
+          <td>Interest Code</td>
+        </tr>
+        <tr class="odd">
+          <td>29</td>
+          <td>4</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0110</td>
+          <td>00159</td>
+          <td>Transfer to Bad Debt Code</td>
+        </tr>
+        <tr class="even">
+          <td>30</td>
+          <td>8</td>
+          <td>DT</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00160</td>
+          <td>Transfer to Bad Debt Date</td>
+        </tr>
+        <tr class="odd">
+          <td>31</td>
+          <td>10</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0021</td>
+          <td>00161</td>
+          <td>Bad Debt Agency Code</td>
+        </tr>
+        <tr class="even">
+          <td>32</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00162</td>
+          <td>Bad Debt Transfer Amount</td>
+        </tr>
+        <tr class="odd">
+          <td>33</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00163</td>
+          <td>Bad Debt Recovery Amount</td>
+        </tr>
+        <tr class="even">
+          <td>34</td>
+          <td>1</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0111</td>
+          <td>00164</td>
+          <td>Delete Account Indicator</td>
+        </tr>
+        <tr class="odd">
+          <td>35</td>
+          <td>8</td>
+          <td>DT</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00165</td>
+          <td>Delete Account Date</td>
+        </tr>
+        <tr class="even">
+          <td>36</td>
+          <td>3</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0112</td>
+          <td>00166</td>
+          <td>Discharge Disposition</td>
+        </tr>
+        <tr class="odd">
+          <td>37</td>
+          <td>47</td>
+          <td>DLD</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0113</td>
+          <td>00167</td>
+          <td>Discharged to Location</td>
+        </tr>
+        <tr class="even">
+          <td>38</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0114</td>
+          <td>00168</td>
+          <td>Diet Type</td>
+        </tr>
+        <tr class="odd">
+          <td>39</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0115</td>
+          <td>00169</td>
+          <td>Servicing Facility</td>
+        </tr>
+        <tr class="even">
+          <td>40</td>
+          <td>1</td>
+          <td>IS</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>0116</td>
+          <td>00170</td>
+          <td>Bed Status</td>
+        </tr>
+        <tr class="odd">
+          <td>41</td>
+          <td>2</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0117</td>
+          <td>00171</td>
+          <td>Account Status</td>
+        </tr>
+        <tr class="even">
+          <td>42</td>
+          <td>80</td>
+          <td>PL</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00172</td>
+          <td>Pending Location</td>
+        </tr>
+        <tr class="odd">
+          <td>43</td>
+          <td>80</td>
+          <td>PL</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00173</td>
+          <td>Prior Temporary Location</td>
+        </tr>
+        <tr class="even">
+          <td>44</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>RE</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00174</td>
+          <td>Admit Date/Time</td>
+        </tr>
+        <tr class="odd">
+          <td>45</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>RE</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00175</td>
+          <td>Discharge Date/Time</td>
+        </tr>
+        <tr class="even">
+          <td>46</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00176</td>
+          <td>Current Patient Balance</td>
+        </tr>
+        <tr class="odd">
+          <td>47</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00177</td>
+          <td>Total Charges</td>
+        </tr>
+        <tr class="even">
+          <td>48</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00178</td>
+          <td>Total Adjustments</td>
+        </tr>
+        <tr class="odd">
+          <td>49</td>
+          <td>12</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00179</td>
+          <td>Total Payments</td>
+        </tr>
+        <tr class="even">
+          <td>50</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0203</td>
+          <td>00180</td>
+          <td>Alternate Visit ID</td>
+        </tr>
+        <tr class="odd">
+          <td>51</td>
+          <td>1</td>
+          <td>IS</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>0326</td>
+          <td>01226</td>
+          <td>Visit Indicator</td>
+        </tr>
+        <tr class="even">
+          <td>52</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>X</td>
+          <td>[0..*]</td>
+          <td>0010</td>
+          <td>01274</td>
+          <td>Other Healthcare Provider</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>General conditions of use:</p>
+    <ul>
+      <li>
+        <p>All messages of transaction [ITI-30] that use this segment, actually use a pseudo-PV1, which is empty. The only field populated is PV1-2 “Patient Class” values “N” (Not Applicable).</p>
+      </li>
+      <li>
+        <p>The condition predicates described below only apply to the use of this segment in the context of transaction [ITI-31].</p>
+      </li>
+    </ul>
+    <p>PV1-2 – Patient Class (IS), required:</p>
+    <p>
+      Definition: This field is used by systems to categorize patients by site. It does not have a consistent industry-wide definition. It is subject to site-specific variations. Refer to
+      <em>User-defined Table 0004 - Patient Class</em>
+      for suggested values.
+    </p>
+    <p>User-defined Table 0004: Patient Class</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value</th>
+          <th>Description</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>E</td>
+          <td>Emergency</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>I</td>
+          <td>Inpatient</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>O</td>
+          <td>Outpatient</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>P</td>
+          <td>Preadmit</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>R</td>
+          <td>Recurring patient</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>B</td>
+          <td>Obstetrics</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>C</td>
+          <td>Commercial Account</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>N</td>
+          <td>Not Applicable</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>U</td>
+          <td>Unknown</td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>National extensions of the PAM Profile may add further values to this table.</p>
+    <p>Messages of transaction [ITI-31] may use any of the above values. The four first values (“E” Emergency, “I” Inpatient, “O” Outpatient, “P” Preadmit) are in common use in most countries.</p>
+    <p>Conditions of use:</p>
+    <ul>
+      <li>
+        <p>Transaction [ITI-30] uses only the value “N” (Not Applicable) in all messages that contain the PV1 segment.</p>
+      </li>
+      <li>
+        <p>In transaction [ITI-31]:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Change to inpatient (A06) uses value I or another value representing an inpatient.</p>
+      </li>
+      <li>
+        <p>Change to outpatient (A07) uses value O or another value representing an outpatient (i.e., not assigned to an inpatient bed).</p>
+      </li>
+    </ul>
+    <p>PV1-3 – Assigned Patient Location (PL), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required in the Transfer (A02) and Cancel Transfer (A12) messages.</p>
+      </li>
+      <li>
+        <p>In all other messages of transaction [ITI-31], it is required if known to the sender.</p>
+      </li>
+    </ul>
+    <p>PV1-6 – Prior Patient Location (PL), conditional:</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required in the Transfer (A02)</p>
+      </li>
+      <li>
+        <p>In all other messages of transaction [ITI-31], it is optional.</p>
+      </li>
+    </ul>
+    <p>PV1-7 – Attending Doctor (XCN), optional. It is recommended that when this field is populated, the segment PV1/PV2 be followed by a ROL segment containing the details on the role assumed by the attending doctor.</p>
+    <p>PV1-8 – Referring Doctor (XCN), optional. It is recommended that when this field is populated, the segment PV1/PV2 be followed by a ROL segment containing the details on the role assumed by the referring doctor.</p>
+    <p>PV1-9 – Consulting Doctor (XCN), not supported (deprecated by HL7). The consulting doctor(s) are entirely described in the appropriate ROL segments following the PV1/PV2.</p>
+    <p>PV1-11 – Temporary Location (PL), conditional:</p>
+    <p>Condition predicate: This field is used by the option “Temporary Patient Transfers Tracking” of transaction [ITI-31] (messages A09, A10, A32, A33).</p>
+    <p>PV1-19 – Visit Number (CX), Conditional. This fields contains the unique identifier assigned to the encounter.</p>
+    <p>Condition predicate: At least one of the fields PID-18 “Patient Account Number” or PV1-19 “Visit Number” shall be valued in the messages of transaction [ITI-31] that use the PV1 segment. Additional requirements for the presence of values in these fields may be documented in national extensions of this transaction.</p>
+    <p>PV1-42 – Pending Location (PL), conditional.</p>
+    <p>Condition predicate:</p>
+    <ul>
+      <li>
+        <p>This field is required in the Pending Transfer (A15) and Cancel Pending Transfer (A26) messages.</p>
+      </li>
+      <li>
+        <p>In all other messages of transaction [ITI-31], it is optional.</p>
+      </li>
+    </ul>
+    <p>PV1-44 – Admit Date / Time (TS), required if available. This field contains the date/time of the beginning of the encounter.</p>
+    <p>PV1-45 – Discharge Date / Time (TS), required if available. This field contains the date/time of the discharge (end of the encounter).</p>
+    <p>PV1-51 – Visit Indicator (IS), Conditional.</p>
+    <p>This field specifies the level on which data are being sent. It is the indicator used to send data at two levels, visit and account. HL7 recommends sending an ‘A’ or no value when the data in the message are at the account level, or ‘V’ to indicate that the data sent in the message are at the visit level.</p>
+    <p>Condition predicate: This field SHALL be valued with value “V” if the field PV1-19 “Visit Number” is present. The field MAY be omitted otherwise.</p>
+    <h4 id="3.30.5.5">3.30.5.5 MRG – Merge segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 3 (Section 3.4.9)</p>
+    <p>This segment contains the supplier patient identifiers list to be merged.</p>
+    <p>Table 3.30-5: MRG - Merge segment</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td />
+          <td>00211</td>
+          <td>Prior Patient Identifier List</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00212</td>
+          <td>Prior Alternate Patient ID</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00213</td>
+          <td>Prior Patient Account Number</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00214</td>
+          <td>Prior Patient ID</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>01279</td>
+          <td>Prior Visit Number</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>01280</td>
+          <td>Prior Alternate Visit ID</td>
+        </tr>
+        <tr class="even">
+          <td>7</td>
+          <td>250</td>
+          <td>XPN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>01281</td>
+          <td>Prior Patient Name</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Each of the patient identifiers appearing in the MRG-1 is to be merged with a target patient identifier of the same type in the PID-3.</p>
+    <p>The type of identifier is a code given by the 5th component of the CX data type. See the commonly used identifier types in the description of the PID segment above. See also the definition of data type CX in the “Common Data Types” section.</p>
+    <h4 id="3.30.5.6">3.30.5.6 ROL – Role segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 15 (Section 15.4.7)</p>
+    <p>The ROL segment communicates information on persons related to the patient.</p>
+    <p>Table 3.30-6: ROL Segment</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>SEQ</th>
+          <th>LEN</th>
+          <th>DT</th>
+          <th>Usage</th>
+          <th>Card.</th>
+          <th>TBL#</th>
+          <th>ITEM #</th>
+          <th>ELEMENT NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>1</td>
+          <td>60</td>
+          <td>EI</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01206</td>
+          <td>Role Instance ID</td>
+        </tr>
+        <tr class="even">
+          <td>2</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>0287</td>
+          <td>00816</td>
+          <td>Action Code</td>
+        </tr>
+        <tr class="odd">
+          <td>3</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>0443</td>
+          <td>01197</td>
+          <td>Role-ROL</td>
+        </tr>
+        <tr class="even">
+          <td>4</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td />
+          <td>01198</td>
+          <td>Role Person</td>
+        </tr>
+        <tr class="odd">
+          <td>5</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01199</td>
+          <td>Role Begin Date/Time</td>
+        </tr>
+        <tr class="even">
+          <td>6</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01200</td>
+          <td>Role End Date/Time</td>
+        </tr>
+        <tr class="odd">
+          <td>7</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01201</td>
+          <td>Role Duration</td>
+        </tr>
+        <tr class="even">
+          <td>8</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01205</td>
+          <td>Role Action Reason</td>
+        </tr>
+        <tr class="odd">
+          <td>9</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>01510</td>
+          <td>Provider Type</td>
+        </tr>
+        <tr class="even">
+          <td>10</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0406</td>
+          <td>01461</td>
+          <td>Organization Unit Type</td>
+        </tr>
+        <tr class="odd">
+          <td>11</td>
+          <td>250</td>
+          <td>XAD</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00679</td>
+          <td>Office/Home Address/Birthplace</td>
+        </tr>
+        <tr class="even">
+          <td>12</td>
+          <td>250</td>
+          <td>XTN</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00678</td>
+          <td>Phone</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>ROL-1 – Role Instance ID (EI), optional. This field is in fact optional in the context of ADT messages.</p>
+    <p>ROL-2 – Action Code (ID), required</p>
+    <p>
+      ROL-3 – Role-ROL (CE), required. This field defines the functional involvement of the person. Values are given in
+      <em>User-defined Table 0443</em>
+      :
+    </p>
+    <p>User-defined Table 0443: Provider role</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value</th>
+          <th>Description</th>
+          <th>Used with</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>AD</td>
+          <td>Admitting</td>
+          <td>PV1-17 Admitting doctor</td>
+        </tr>
+        <tr class="even">
+          <td>AT</td>
+          <td>Attending</td>
+          <td>PV1-7 Attending doctor</td>
+        </tr>
+        <tr class="odd">
+          <td>CP</td>
+          <td>Consulting Provider</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>FHCP</td>
+          <td>Family Health Care Professional</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PP</td>
+          <td>Primary Care Provider</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>RP</td>
+          <td>Referring Provider</td>
+          <td>PV1-8 Referring doctor</td>
+        </tr>
+        <tr class="odd">
+          <td>RT</td>
+          <td>Referred to Provider</td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>ROL-4 – Role Person (XCN), required. Identification of the person playing the role.</p>
+    <h4 id="3.30.5.7">3.30.5.7 OBX – Observation/Result segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 7 (Section 7.4.2)</p>
+    <p>In transactions [ITI-30] and [ITI-31], the OBX segment is primarily used to convey patient height and patient weight. For this reason, this segment is described in this section, although it always appears as optional in transactions [ITI-30] and [ITI-31].</p>
+    <p>Table 3.30-7: OBX Segment</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>4</td>
+          <td>SI</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00569</td>
+          <td>Set ID – OBX</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>C</td>
+          <td>[1..1]</td>
+          <td>0125</td>
+          <td>00570</td>
+          <td>Value Type</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00571</td>
+          <td>Observation Identifier</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>20</td>
+          <td>ST</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00572</td>
+          <td>Observation Sub-ID</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>99999</td>
+          <td>Varies</td>
+          <td>C</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00573</td>
+          <td>Observation Value</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00574</td>
+          <td>Units</td>
+        </tr>
+        <tr class="even">
+          <td>7</td>
+          <td>60</td>
+          <td>ST</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00575</td>
+          <td>References Range</td>
+        </tr>
+        <tr class="odd">
+          <td>8</td>
+          <td>5</td>
+          <td>IS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0078</td>
+          <td>00576</td>
+          <td>Abnormal Flags</td>
+        </tr>
+        <tr class="even">
+          <td>9</td>
+          <td>5</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00577</td>
+          <td>Probability</td>
+        </tr>
+        <tr class="odd">
+          <td>10</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0080</td>
+          <td>00578</td>
+          <td>Nature of Abnormal Test</td>
+        </tr>
+        <tr class="even">
+          <td>11</td>
+          <td>1</td>
+          <td>ID</td>
+          <td>R</td>
+          <td>[0..1]</td>
+          <td>0085</td>
+          <td>00579</td>
+          <td>Observation Result Status</td>
+        </tr>
+        <tr class="odd">
+          <td>12</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00580</td>
+          <td>Effective Date of Reference Range</td>
+        </tr>
+        <tr class="even">
+          <td>13</td>
+          <td>20</td>
+          <td>ST</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00581</td>
+          <td>User Defined Access Checks</td>
+        </tr>
+        <tr class="odd">
+          <td>14</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00582</td>
+          <td>Date/Time of the Observation</td>
+        </tr>
+        <tr class="even">
+          <td>15</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00583</td>
+          <td>Producer's ID</td>
+        </tr>
+        <tr class="odd">
+          <td>16</td>
+          <td>250</td>
+          <td>XCN</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00584</td>
+          <td>Responsible Observer</td>
+        </tr>
+        <tr class="even">
+          <td>17</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00936</td>
+          <td>Observation Method</td>
+        </tr>
+        <tr class="odd">
+          <td>18</td>
+          <td>22</td>
+          <td>EI</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01479</td>
+          <td>Equipment Instance Identifier</td>
+        </tr>
+        <tr class="even">
+          <td>19</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>01480</td>
+          <td>Date/Time of the Analysis</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>OBX-2 Value Type (ID), conditional.</p>
+    <p>This field contains the type of observation.</p>
+    <p>Example: “NM” for a numeric observation such as patient weight or patient height.</p>
+    <p>Condition predicate: This field SHALL be valued if OBX-5 “Observation Value” is present. It MAY be valued otherwise.</p>
+    <p>OBX-3 Observation Identifier (CE), required</p>
+    <p>
+      The usage of LOINC vocabulary is strongly recommended. Details of this free vocabulary can be found at
+      <a href="http://www.loinc.org">http://www.loinc.org</a>
+      . The first and third sub-fields, “Identifier” and “Name of Coding System” are required in all transactions. The value of the “Name of Coding System” in the case of LOINC is “LN”. Example of the code used with the patient weight:
+    </p>
+    <p>3142-7^BODY WEIGHT (STATED)^LN</p>
+    <p>OBX-4 Observation Sub-ID (CE), conditional</p>
+    <p>This field is used to distinguish between multiple OBX segments with the same observation ID.</p>
+    <p>Condition predicate: When field OBX-3 “Observation Identifier” has an identical value in two or more OBX segments of the message, field OBX-4 “Observation Sub-ID” SHALL be populated with a distinct value in each of these OBX segments.</p>
+    <p>OBX-5 Observation Value (Varies), conditional.</p>
+    <p>This field contains the value of the observation itself.</p>
+    <p>Condition predicate: This field SHALL be valued if OBX-11 “Observation Result Status” has another value than “X”, “D”, “N” or “I” and if OBX-8 “Abnormal Flags” is empty. In all other cases this field MAY be valued.</p>
+    <p>OBX-11 Observation Result Status (ID), required.</p>
+    <p>This field contains the status of the results. In messages of transactions [ITI-30] and [ITI-31], this status is most commonly “F” (Final).</p>
+    <p>Example of use of the OBX segment to carry the patient weight and height:</p>
+    <blockquote>
+      <p>OBX|1|NM|3142-7^BODY WEIGHT (STATED)^LN||62|kg|||||F</p>
+      <p>OBX|2|NM|8303-0^BODY HEIGHT^LN||1.70|m|||||F</p>
+    </blockquote>
+    <h4 id="3.30.5.8">3.30.5.8 AL1 – Patient Allergy Information segment</h4>
+    <p>Standard Reference: HL7 Version 2.5, Chapter 3, Section 3.4.6</p>
+    <p>In transactions [ITI-30] and [ITI-31], the AL1 segment is used to inform the receiver of patient allergies. For this reason, this segment is described in this section, although it always appears as optional in transactions [ITI-30] and [ITI-31].</p>
+    <p>Table 3.30-8: AL1 Segment</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>SEQ</td>
+          <td>LEN</td>
+          <td>DT</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>TBL#</td>
+          <td>ITEM#</td>
+          <td>Element name</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>4</td>
+          <td>SI</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00203</td>
+          <td>Set ID – AL1</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0127</td>
+          <td>00204</td>
+          <td>Allergen Type Code</td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00205</td>
+          <td>Allergen Code/Mnemonic/Description</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>0128</td>
+          <td>00206</td>
+          <td>Allergen Severity Code</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>15</td>
+          <td>ST</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+          <td>00207</td>
+          <td>Allergen Reaction Code</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>8</td>
+          <td>DT</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00208</td>
+          <td>Identification Date</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>One or more AL1 segments may appear in the messages of transactions [ITI-30] and [ITI-31] if any allergies have been identified for the patient at time of registration.</p>
+    <h3 id="3.30.6">3.30.6 Interactions</h3>
+    <p>All messages of this transaction shall be acknowledged by the ACK message as stated in <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a>. For better readability, the acknowledgement messages are not shown on the interaction diagrams of this transaction.</p>
+    <h4 id="3.30.6.1">3.30.6.1 Messages</h4>
+    <p>Figure 3.30-1: Interactions of Transaction [ITI-30]</p>
+    <h4 id="3.30.6.2">3.30.6.2 Create New Patient - ADT^A28^ADT_A05</h4>
+    <h5 id="3.30.6.2.1">3.30.6.2.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Demographics Supplier to a Patient Demographics Consumer to communicate the demographics of a new patient, as well as related information.</p>
+    <p>MSH-9 is valued ADT^A28^ADT_A05.</p>
+    <h5 id="3.30.6.2.2">3.30.6.2.2 Message Static Definition</h5>
+    <p>Table 3.30-9: Static definition of ADT^A28^ADT_A05</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.2.3">3.30.6.2.3 Comments on segment usage</h5>
+    <p>The ROL segment following the PID/PD1 segments is used to communicate “person level” providers having an ongoing relationship with the patient, such as “family health care provider” and “primary care provider”.</p>
+    <p>The PV1 segment in this message is required in the HL7 message structure, but it is a pseudo PV1 carrying the only required field PV1-2 “Patient Class” with the value “N” meaning “Not applicable”. This message does not convey any visit information.</p>
+    <p>The PV2 segment is not supported here, for the same reason.</p>
+    <p>The ROL segment following the PV1/PV2 segments is not supported here, for the same reason.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>The ROL segment following the IN1/IN2/IN3 segments serves to communicate providers related to a specific insurance carrier.</p>
+    <h5 id="3.30.6.2.4">3.30.6.2.4 Expected actions</h5>
+    <p>The receiver shall add this new patient to its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <h4 id="3.30.6.3">3.30.6.3 Update patient information - ADT^A31^ADT_A05</h4>
+    <h5 id="3.30.6.3.1">3.30.6.3.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Demographics Supplier to a Patient Demographics Consumer to update the demographics of an existing patient.</p>
+    <p>MSH-9 is valued ADT^A31^ADT_A05.</p>
+    <h5 id="3.30.6.3.2">3.30.6.3.2 Message Static Definition</h5>
+    <p>Table 3.30-10: Static definition of ADT^A31^ADT_A05</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.3.3">3.30.6.3.3 Comments on segment usage</h5>
+    <p>To accommodate the situation in which the receiver does not know the patient, this message is populated with complete up-to-date demographics for the patient.</p>
+    <p>The ROL segment following the PID/PD1 segments is used to communicate “person level” providers having an ongoing relationship with the patient, such as “family health care provider” and “primary care provider”.</p>
+    <p>The PV1 segment in this message is required in the HL7 message structure, but it is a pseudo PV1 carrying the only required field PV1-2 “Patient Class” with the value “N” meaning “Not applicable”. This message does not convey any visit information.</p>
+    <p>The PV2 segment is not supported here, for the same reason.</p>
+    <p>The ROL segment following the PV1/PV2 segments is not supported here, for the same reason.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>The ROL segment following the IN1/IN2/IN3 segments serves to communicate providers related to a specific insurance carrier.</p>
+    <h5 id="3.30.6.3.4">3.30.6.3.4 Expected actions</h5>
+    <p>The receiver shall update the patient record in its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender. If the receiver did not previously have a record for this patient, it shall insert this patient into its database.</p>
+    <h4 id="3.30.6.4">3.30.6.4 Merge two patients - ADT^A40^ADT_A39</h4>
+    <p>This message is to be supported with the “Merge” Option of transaction [ITI-30].</p>
+    <h5 id="3.30.6.4.1">3.30.6.4.1 Trigger Event</h5>
+    <p>The Patient Demographics Supplier notifies to a Patient Demographics Consumer, the merge of records for a patient that was incorrectly filed under two different identifiers. This message is only used to merge two patient identifiers of the same type, or two lists of patient identifiers. It is not used to update other patient demographics information. The A31 trigger event should be used for this purpose.</p>
+    <p>MSH-9 is valued ADT^A40^ADT_A39.</p>
+    <h5 id="3.30.6.4.2">3.30.6.4.2 Message Static Definition</h5>
+    <p>Table 3.30-11: Static definition of ADT^A40^ADT_A39</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PATIENT begin</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.4.3">3.30.6.4.3 Comments on segment usage</h5>
+    <p>This transaction makes unrepeatable the PATIENT segment group: The message can communicate only one merge operation for one patient.</p>
+    <p>
+      The “incorrect supplier identifier” identified in the MRG segment (
+      <em>MRG-1 - Prior Patient Identifier List</em>
+      ) is to be merged with the required “correct target identifier” of the same “identifier type code” component identified in the PID segment (
+      <em>PID-3 - Patient Identifier List</em>
+      ). The “incorrect supplier identifier” would then logically never be referenced in future transactions.
+    </p>
+    <p>The PV1 segment is not supported by IHE in this message.</p>
+    <h5 id="3.30.6.4.4">3.30.6.4.4 Expected actions</h5>
+    <p>The receiver shall merge the two patients in its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>If the receiver does not recognize the target patient identifiers, it shall perform a Change Patient Identifier List instead of a Merge. This situation is not an error.</p>
+    <p>If the receiver does not recognize the supplier patient identifiers to be merged, it shall take no action. This situation is not an error.</p>
+    <p>If the receiver does not support the Merge Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.30.6.5">3.30.6.5 Change Patient Identifier List - ADT^A47^ADT_A30</h4>
+    <h5 id="3.30.6.5.1">3.30.6.5.1 Trigger Event</h5>
+    <p>
+      The Patient Demographics Supplier notifies the change of a patient identifier list for a patient. That is, a single
+      <em>PID-3-patient identifier list value</em>
+      has been found to be incorrect and has been changed.
+    </p>
+    <p>This message is not used to update other patient demographics information. The A31 trigger event should be used for this purpose.</p>
+    <p>MSH-9 is valued ADT^A47^ADT_A30.</p>
+    <h5 id="3.30.6.5.2">3.30.6.5.2 Message Static Definition</h5>
+    <p>Table 3.30-12: Static definition of ADT^A47^ADT_A30</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PATIENT begin</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.5.3">3.30.6.5.3 Comments on segment usage</h5>
+    <p>
+      The “incorrect supplier identifier” value is stored in the MRG segment (
+      <em>MRG-1-Prior Patient Identifier List</em>
+      ) and is to be changed to the “correct target patient ID” value stored in the PID segment (
+      <em>PID-3–Patient Identifier List</em>
+      ).
+    </p>
+    <h5 id="3.30.6.5.4">3.30.6.5.4 Expected actions</h5>
+    <p>The receiver shall correct the identifier in its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>If the receiver already associates the target patient identifiers with another patient in its database, this is an error condition: A merge (A40) should have been sent instead of a change.</p>
+    <p>If the receiver does not recognize the supplier patient identifiers to be merged, no further action is required and no error condition exists.</p>
+    <h4 id="3.30.6.6">3.30.6.6 Link Patient Information List - ADT^A24^ADT_A24</h4>
+    <p>This message is to be supported with the “Link/Unlink” Option of transaction [ITI-30].</p>
+    <h5 id="3.30.6.6.1">3.30.6.6.1 Trigger Event</h5>
+    <p>The Patient Demographics Supplier notifies the link of one patient identifier list (the first PID segment) to another one (the second PID segment). Linking two or more patients does not require the actual merging of patient information; following a link event, the affected patient data records should remain distinct.</p>
+    <p>This message is not used to update other patient demographics information. The A31 trigger event should be used for that purpose.</p>
+    <p>MSH-9 is valued to ADT^A24^ADT_A24.</p>
+    <h5 id="3.30.6.6.2">3.30.6.6.2 Message Static Definition</h5>
+    <p>Table 3.30-13: Static definition of ADT^A24^ADT_A24</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.6.3">3.30.6.6.3 Comments on segment usage</h5>
+    <p>
+      The patient identifier list stored in the first PID segment (
+      <em>PID-3–Patient Identifier List</em>
+      ) is to be linked with the patient identifier list stored in the second PID segment (
+      <em>PID-3–Patient Identifier List</em>
+      ).
+    </p>
+    <p>Transaction [ITI-30] restricts the use of this message to only the purpose of linking two patient identifier lists. This is why segments PD1, PV1 and DB1 are not supported in this message.</p>
+    <h5 id="3.30.6.6.4">3.30.6.6.4 Expected actions</h5>
+    <p>The receiver links the identifier lists in its database, and reports the result of this operation (success / error) in an acknowledgment message returned to the sender. In case of success, each patient record persists with all its associated information (encounter, clinical, care, insurance, next of kin, etc.).</p>
+    <p>In case the receiver did not recognize one or both of the patient identifier lists, the linking is still performed (the receiver will record the link without creating any missing patient record) and no error condition exists.</p>
+    <p>If the receiver does not support the Link/Unlink Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.30.6.7">3.30.6.7 Unlink Patient Information List - ADT^A37^ADT_A37</h4>
+    <h5 id="3.30.6.7.1">3.30.6.7.1 Trigger Event</h5>
+    <p>The Patient Demographics Supplier notifies the receiving system of the unlinking of one patient identifier list (the first PID segment) from another one (the second PID segment).</p>
+    <p>MSH-9 is valued ADT^A37^ADT_A37.</p>
+    <h5 id="3.30.6.7.2">3.30.6.7.2 Message Static Definition</h5>
+    <p>Table 3.30-14: Static definition of ADT^A37^ADT_A37</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>X</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.30.6.7.3">3.30.6.7.3 Comments on segment usage</h5>
+    <p>
+      The patient identifier lists stored in the two PID segments (
+      <em>PID-3–Patient Identifier List</em>
+      ) are to be unlinked.
+    </p>
+    <p>Transaction [ITI-30] restricts the use of this message to only the purpose of unlinking two patient identifier lists. This is why segments PD1, PV1 and DB1 are not supported in this message.</p>
+    <h5 id="3.30.6.7.4">3.30.6.7.4 Expected actions</h5>
+    <p>The receiver unlinks the identifier lists in its database, and reports the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case of success the two patient records are unlinked, each of them keeping its own related information (encounter, clinical, next of kin, insurance…).</p>
+    <p>In case the receiver did not recognize the link between these two patient identifier lists, no action is performed and no error condition exists.</p>
+    <p>If the receiver does not support the Link/Unlink Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+  </body>
+</html>

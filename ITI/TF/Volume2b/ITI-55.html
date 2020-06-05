@@ -1,0 +1,2473 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.55">3.55 Cross Gateway Patient Discovery [ITI-55]</h2>
+    <p>This section corresponds to transaction [ITI-55] of the IHE ITI Technical Framework. Transaction [ITI-55] is used by the Initiating Gateway and Responding Gateway Actors.</p>
+    <h3 class="list-paragraph" id="3.55.1">3.55.1 Scope</h3>
+    <p>The Cross Gateway Patient Discovery transaction supports the ability for Initiating Gateways and Responding Gateways to discover mutually known patients. This transaction assumes an environment where patient data is well described and high quality demographic data is available.</p>
+    <p>Because the transaction supports the mutual discovery of patients it can be seen as having dual purposes.</p>
+    <ul>
+      <li>
+        <p>To support a query by the Initiating Gateway requesting a demographically matching patient from within the Responding Gateway’s community.</p>
+      </li>
+      <li>
+        <p>To support a feed to Responding Gateway announcing that the patient is known by the Initiating Gateway’s community.</p>
+      </li>
+    </ul>
+    <p>This dual nature of the transaction is chosen for scalability purposes, as demographic matching algorithms are expensive on a large scale and once a match is identified it is important that both the initiating and responding sides of the transaction can use the results of that successful match.</p>
+    <p>The Cross Gateway Patient Discovery transaction has several modes, useful in different environments:</p>
+    <ul>
+      <li>
+        <p>Demographic Query only mode – in this mode only the demographics of the patient are included in the request. The initiating community does not have, or does not choose to specify, a patient identifier for use by the Responding Gateway.</p>
+      </li>
+      <li>
+        <p>Demographic Query and Feed – in this mode both the demographic and initiating community identifier are included in the request.</p>
+      </li>
+      <li>
+        <p>Shared/national Patient Identifier Query and Feed – in this mode only a shared/national identifier is specified. Demographics are not necessary because matching can be done on the identifier alone.</p>
+      </li>
+    </ul>
+    <p>This transaction can be used synchronously and asynchronously.</p>
+    <p>
+      The Cross Gateway Patient Discovery request asks for information about patients whose demographic data match data provided in the query message. The request is received by the Responding Gateway Actor. The Responding Gateway indicates in its response whether the community has knowledge of a patient matching the set of demographic data and, if a match is found, returns the demographics known by the responding community. If more than one match is found the Responding Gateway has the option of providing a list
+      <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref">
+        <sup>3</sup>
+      </a>
+      of matching patients or returning nothing. When nothing is returned the Responding Gateway may include in the response a set of additional demographic attributes which, if supplied, would aid in disambiguating the multiple matches.
+    </p>
+    <p>In the case of a match, the Responding Gateway may further update its own cache to indicate that the initiating community knows this patient and should be queried if data for this patient is desired.</p>
+    <p>The criteria used for demographic matching is defined by policy and not specified here, but fully enabled by the transaction.</p>
+    <h3 class="list-paragraph" id="3.55.2">3.55.2 Use Case Roles</h3>
+    <p>Actor: Initiating Gateway</p>
+    <p>Role: Requests the Responding Gateway to indicate whether the community has knowledge of a patient matching a set of demographic criteria.</p>
+    <p>Corresponding HL7 v3 Application Roles:</p>
+    <p>Person Registry Query Placer (PRPA_AR201303UV02)</p>
+    <p>Actor: Responding Gateway</p>
+    <p>Role: If a demographics match is found, returns demographics known by the responding community. If more than one match is found the Responding Gateway has the option of providing a small list of matching patients or returning no match. In the case of no match, the Responding Gateway may provide a list of additional demographic attributes needed to disambiguate multiple matches.</p>
+    <p>Corresponding HL7 v3 Application Roles:</p>
+    <p>Person Registry Query Fulfiller (PRPA_AR201304UV02)</p>
+    <h3 class="list-paragraph" id="3.55.3">3.55.3 Referenced Standard</h3>
+    <p>
+      HL7 Version 3 Edition 2008, Patient Administration DSTU, Patient Topic (found at
+      <a href="http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008">http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008</a>
+      )
+    </p>
+    <p>Implementers of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a> Web Services for IHE Transactions</p>
+    <h3 class="list-paragraph" id="3.55.4">3.55.4 Messages</h3>
+    <p>Figure 3.55.4-1: Interaction Diagram</p>
+    <h4 class="list-paragraph" id="3.55.4.1">3.55.4.1 Cross Gateway Patient Discovery Request</h4>
+    <p>The Cross Gateway Patient Discovery Request is implemented using the HL7 Patient Registry Query by Demographics (PRPA_MT201306UV02) message.</p>
+    <h5 class="list-paragraph" id="3.55.4.1.1">3.55.4.1.1 Trigger Events</h5>
+    <p>The initiating community needs to determine whether a patient is known by another community. Specific possible trigger events include, but are not limited to:</p>
+    <ul>
+      <li>
+        <p>The initiating community registers a new patient who has permitted sharing of healthcare data with external communities.</p>
+      </li>
+      <li>
+        <p>A healthcare provider within the community requests that records regarding a particular patient be accessed from a particular external community or all external communities known.</p>
+      </li>
+    </ul>
+    <h5 class="list-paragraph" id="3.55.4.1.2">3.55.4.1.2 Message Semantics</h5>
+    <p>The components of the Patient Registry Query by Demographics message with cardinality greater than 0 (as shown below) are required, and the detailed description of the message is provided in Sections 3.55.4.1.2.1 to 3.55.4.1.2.3.</p>
+    <p>For each element which is required, the element shall be specified by the Initiating Gateway in the request and shall be used by the Responding Gateway as part of its demographic matching algorithm.</p>
+    <p>For each element which is optional the element does not need to be specified by the Initiating Gateway in the request but, if specified, shall be used by the Responding Gateway as part of its demographic matching algorithm.</p>
+    <p>The Responding Gateway shall support Asynchronous Web Services Exchange as described in ITI TF-2x: V.5, Synchronous and Asynchronous Web Services Exchange. If the Initiating Gateway declares the Asynchronous Web Services Exchange Option it shall also support Asynchronous Web Services Exchange as described in ITI TF-2x: V.5. Use of Asynchronous Web Services Exchange is necessary when transactions scale to large numbers of communities because it allows for more efficient handling of latency and scale.</p>
+    <p>The Initiating Gateway may specify a duration value in the SOAP Header element of the request. This value suggests to the Responding Gateway a length of time that the Initiating Gateway recommends caching any correlation resulting from the interaction. The duration value is specified in the SOAP Header using the CorrelationTimeToLive element and contains a value conformant with the xs:duration type defined in http://www.w3.org/TR/xmlschema-2/#duration. If no CorrelationTimeToLive element is specified in the SOAP Header the Responding Gateway shall interpret this as a recommendation against caching, unless a mutually agreed policy states otherwise.</p>
+    <p>An example of specifying the CorrelationTimeToLive element follows, which recommends caching of 7 days.</p>
+    <p>&lt;xcpd:CorrelationTimeToLive&gt;P0Y0M7D&lt;/xcpd:CorrelationTimeToLive&gt;</p>
+    <h6 class="list-paragraph" id="3.55.4.1.2.1">3.55.4.1.2.1 Major Components of the Patient Registry Query by Demographics</h6>
+    <p>LivingSubjectName Parameter</p>
+    <p>This required parameter specifies the name of the person whose information is being queried. If multiple instances of LivingSubjectName are provided, the receiver shall consider them as possible alternatives, logically connected with an "or". Within each LivingSubjectName element, a single person name (PN) data item shall be specified in the LivingSubjectName.value attribute. An Initiating Gateway may specify all, or only a subset of the name parts within the PN data type (e.g., family name). The use attribute of the value element shall not be set to "SRCH".</p>
+    <p>LivingSubjectAdministrativeGender Parameter</p>
+    <p>This optional parameter specifies the administrative gender of the person whose information is being queried. For this parameter item, a single administrative gender code shall be specified in the LivingSubjectAdministrativeGender.value attribute.</p>
+    <p>LivingSubjectBirthTime Parameter</p>
+    <p>This required parameter specifies the birth data and time of the person whose information is being queried. This parameter can convey an exact moment (e.g., January 1, 1960 @ 03:00:00 EST), an approximate date (e.g., January 1960), or even a range of dates (e.g., December 1, 1959 through March 31, 1960).</p>
+    <p>PatientAddress Parameter</p>
+    <p>This optional parameter specifies one or more addresses associated with the person whose information is being queried.</p>
+    <p>LivingSubjectId Parameter</p>
+    <p>This optional repeating parameter specifies an identifier associated with the patient whose information is being queried (e.g., a local identifier, or an account identifier). If this parameter is specified, LivingSubjectName and LivingSubjectBirthTime are optional. This feature allows this query to be used when a national/shared patient identifier is known. The identifier specified in the LivingSubjectId.value attribute is expressed using the II data type. Please see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a> for the use of the II data type for patient identifiers.</p>
+    <p>The Initiating Gateway has the option of designating one of the identifiers in LivingSubjectId as the patient identifier that the Responding Gateway may use in an XCA Cross Gateway Query to the community represented by the Initiating Gateway (see Section 3.55.4.1.2.4) .</p>
+    <p>LivingSubjectBirthPlaceAddress Parameter</p>
+    <p>This optional parameter specifies the birth address of the patient.</p>
+    <p>LivingSubjectBirthPlaceName Parameter</p>
+    <p>This optional parameter specifies the name of the entity (like hospital name) where the patient was born.</p>
+    <p>MothersMaidenName Parameter</p>
+    <p>This optional parameter specifies the maiden name of the mother of the person whose information is being queried. For this parameter item, a single person name (PN) data item shall be specified in the Person.value attribute. Within the PN data type, the given name and family name may be specified. The use attribute of the value element shall not be set to "SRCH"</p>
+    <p>PatientTelecom</p>
+    <p>This optional parameter specifies a telecommunication address or addresses for communication with the patient.</p>
+    <p>PrincipalCareProviderId</p>
+    <p>This optional parameter specifies the care provider identifier of a person who has been assigned as the principal care provider of this patient. The requestor may specify multiple PrincipalCareProviderId elements which the responder shall consider as possible alternatives, logically connected with an "or". Within each PrincipalCareProviderId element, a single identifier shall be specified in the PrincipalCareProviderId.value attribute.</p>
+    <h6 class="list-paragraph" id="3.55.4.1.2.2">3.55.4.1.2.2 Message Information Model of the Patient Registry Query by Demographics Message</h6>
+    <p>
+      Below is the Message Information Model for the Query by Demographics message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict subset of the
+      <em>Patient Registry Query by Demographics (PRPA_RM201306UV02) RMIM</em>
+      .
+    </p>
+    <p>The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201306UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>The optional attributes ParameterList.id, MatchCriterionList.id, QueryByParameter responseElementGroupId, QueryByParameter.modifyCode, and QueryByParameter.executionAndDeliveryTime were omitted from the model.</p>
+      </li>
+      <li>
+        <p>QueryByParameter.responsePriorityCode is required and is either I (Immediate) or D (Deferred). See Section 3.55.6.2 for use of Deferred.</p>
+      </li>
+      <li>
+        <p>QueryByParameter.responseModalityCode is required and is fixed to R (Real Time).</p>
+      </li>
+      <li>
+        <p>QueryByParameter.statusCode is defaulted to "new".</p>
+      </li>
+      <li>
+        <p>The data type of MatchAlgorithm.value is constrained to ST.</p>
+      </li>
+      <li>
+        <p>The data type of MinimumDegreeMatch.value is constrained to INT between 0 and 100.</p>
+      </li>
+      <li>
+        <p>The data type of LivingSubjectName.value is constrained to PN.</p>
+      </li>
+      <li>
+        <p>The optional SortControl was omitted from the model.</p>
+      </li>
+      <li>
+        <p>The optional MatchWeight was omitted from the model.</p>
+      </li>
+      <li>
+        <p>The following optional parameters were omitted from the model:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>PatientStatusCode</p>
+      </li>
+      <li>
+        <p>LivingSubjectDeceaseTime</p>
+      </li>
+      <li>
+        <p>OtherIDsScopingOrganization</p>
+      </li>
+      <li>
+        <p>initialQuantity</p>
+      </li>
+      <li>
+        <p>initialQuantityCode</p>
+      </li>
+    </ul>
+    <p>The attributes of this model are described in the following table:</p>
+    <p>
+      <img src=".//media/image60.png" style="width:6.33056in;height:4.2in" alt="PatientRegistryQueryByDemographicsMessage" />
+    </p>
+    <p>Figure 3.55.4.1.2.2-1: Patient Registry Query by Demographics Message</p>
+    <p>Table 3.55.4.1.2.2-1: Model Attributes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            PRPA_HD201306IHE
+            <br />
+            Patient Registry Query by Demographics
+          </th>
+          <th>
+            <p>This HMD extract defines the message used to query a community for patients matching a set of demographics information.</p>
+            <p>Derived from Figure 3.55.4.1.2.2-1 (PRPA_RM201306IHEXCPD)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>QueryByParameter</td>
+          <td>The entry point for the domain content in this query</td>
+        </tr>
+        <tr class="even">
+          <td>
+            queryId [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">II</a>
+            )
+          </td>
+          <td>Unique identifier for the query</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            statusCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryStatusCode.htm#QueryStatusCode">QueryStatusCode</a>
+            , fixed value="new"}
+          </td>
+          <td>The status of the query, shall be "new"</td>
+        </tr>
+        <tr class="even">
+          <td>
+            responseModalityCode [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ResponseModality.htm#ResponseModality">ResponseModality</a>
+            , fixed value="R"}
+          </td>
+          <td>The mode of the response – always real-time.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            responsePriorityCode [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryPriority.htm#QueryPriority">QueryPriority</a>
+            }
+          </td>
+          <td>Either “I” or “D” shall be specified. “I” (Immediate) indicates that the Responding Gateway is required to send an immediate response. “D” (Deferred) indicates the Responding Gateway is required to send a deferred response, see Section 3.55.6.2.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            initialQuantity [0..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-INT">INT</a>
+            )
+          </td>
+          <td>Not supported, any value will be ignored by responder.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            initialQuantityCode [0..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CE">CE</a>
+            ) {CWE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryRequestLimit.htm#QueryRequestLimit">QueryRequestLimit</a>
+            , default="RD"}
+          </td>
+          <td>Not supported, any value will be ignored by responder.</td>
+        </tr>
+        <tr class="even">
+          <td>MatchAlgorithm</td>
+          <td>This parameter conveys instructions to the Responding Gateway specifying the preferred matching algorithm to use and may be ignored</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (ST)
+          </td>
+          <td>The name of the algorithm</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "MatchAlgorithm"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>MinimumDegreeMatch</td>
+          <td>This parameter conveys instructions to the Responding Gateway specifying minimum degree of match to use in filtering results and may be ignored</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (INT)
+          </td>
+          <td>The numeric value of the degree of match. Shall be value between 0 and 100 .</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "MinimumDegreeMatch"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectAdministrativeGender</td>
+          <td>This query parameter is a code representing the administrative gender of a person in a patient registry.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CE">CE</a>
+            ) {CWE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/AdministrativeGender.htm#AdministrativeGender">AdministrativeGender</a>
+            }
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.administrativeGender"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectBirthTime</td>
+          <td>This query parameter is the birth date of a living subject.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-IVL">IVL</a>
+            &lt;
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-TS">TS</a>
+            &gt;)
+          </td>
+          <td>A date or date range. This parameter can convey an exact moment (e.g., January 1, 1960 @ 03:00:00 EST), an approximate date (e.g., January 1960), or even a range of dates (e.g., December 1, 1959 through March 31, 1960).</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.birthTime"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectId</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..*] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">II</a>
+            )
+          </td>
+          <td>A patient identifier, used to assist in finding a match for the query and, when so designated by the Initiating Gateway, used by the Responding Gateway in a XCA Cross Gateway Query directed to the Community designated by the homeCommunityId value specified in the Control Act Wrapper – see Section 3.55.4.1.2.4.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.id"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectName</td>
+          <td>This query parameter is the name of a person. If multiple instances of LivingSubjectName are provided, the receiver must consider them as possible alternatives, logically connected with an "or".</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (PN)
+          </td>
+          <td>Only one instance of the value element is allowed. Only some of the name parts may be populated. If, for example, only the family and given name parts of a person's name are sent, then the query would match all persons with that family name and given name regardless of their initials. The use attribute of the value element shall not be set to "SRCH".</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.name"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PatientAddress</td>
+          <td>This query parameter is a postal address for corresponding with a patient. There shall be only a single PatientAddress element.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..*]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">AD</a>
+            )
+          </td>
+          <td>Multiple instances of the value element within a Patient Address may be specified and are combined with OR logic.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "Patient.addr"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectBirthPlaceAddress</td>
+          <td>This query parameter is a patient's birthplace represented as an address</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..*]
+            <br />
+            ParameterItem (SET&lt;AD&gt;)
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            ParameterItem (ST){default= "LivingSubject.BirthPlace.Addr"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectBirthPlaceName</td>
+          <td>This query parameter is a patient's birthplace represented as a place name</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..*]
+            <br />
+            ParameterItem (SET&lt;EN&gt;)
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            ParameterItem (ST){default= "LivingSubject.BirthPlace.Place.Name"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PrincipalCareProviderId</td>
+          <td>This query parameter is the care provider identifier of a person who has been assigned as the principal care provider of this patient. The requestor may specify multiple PrincipalCareProviderId elements which responder shall consider as possible alternatives, logically connected with an "or".</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            ParameterItem (II)
+          </td>
+          <td>There shall have only one id in the “value” attribute.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            ParameterItem (ST){default= "AssignedProvider.id"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>MothersMaidenName</td>
+          <td>This query parameter is the maiden name of a focal person's mother. It is included as a parameter because it is a common attribute for confirming the identity of persons in some registries. This parameter does not map to a single RIM attribute, instead, in RIM terms Mother's maiden name is the person name part of "family" with an EntityNamePartQualifier of "birth" for the person who is the player in a PersonalRelationship of type of "mother" to the focal person.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/datatypes/datatypes.htm#dt-PN">PN</a>
+            )
+          </td>
+          <td>A person name. In this case it may consist of only the given name part, the family name part, or both.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "Person.MothersMaidenName"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PatientTelecom</td>
+          <td>This query parameter is a telecommunications address for communicating with a living subject in the context of the target patient registry. It could be a telephone number, fax number or even an email address. There shall be only a single PatientTelecom element.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..*]
+            <br />
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/datatypes/datatypes.htm#dt-TEL">TEL</a>
+            )
+          </td>
+          <td>A telecommunications address. The scheme attribute specifies whether this is a telephone number, fax number, email address, etc. Multiple instances of the value element within a PatientTelecom may be specified and are combined with OR logic.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://www.hl7.org/v3ballot/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "Patient.telecom"}
+          </td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.55.4.1.2.3">3.55.4.1.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.55.4.1.2.3-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.55.4.1.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000100UV01 - Send Message Payload</td>
+          <td>QUQI_MT021001UV01 - Query Control Act Request : Query By Parameter</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId shall be set to PRPA_IN201305UV02</p>
+            <p>The value of processingModeCode shall be set to T</p>
+            <p>The acceptAckCode shall be set to AL</p>
+            <p>There shall be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The value of ControlActProcess.moodCode shall be set to EVN</p>
+            <p>The trigger event code in ControlActProcess.code shall be set to PRPA_TE201305UV02</p>
+            <p>If an authorOrPerformer participation is present, the value of authorOrPerformer.typeCode SHALL be set to AUT</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The schemas from the HL7 V3 2008 Normative Edition can be found at:</p>
+    <p>Edition2008/processable/multicacheschemas/PRPA_IN201305UV02.xsd)</p>
+    <h6 class="list-paragraph" id="3.55.4.1.2.4">3.55.4.1.2.4 Values used by Responding Gateway for a reverse Cross Gateway Query</h6>
+    <p>The Initiating Gateway shall specify two values in the request which allow the responding community to generate a reverse Cross Gateway Query in search of data about the patient identified in the Cross Gateway Patient Discovery request. The two values are homeCommunityId and community patient id assigning authority.</p>
+    <p>homeCommunityId – this value is a globally unique identifier for a community – further defined in Section 3.38.4.1.2.1. The Initiating Gateway shall specify this value in the Cross Gateway Patient Discovery request unless the Initiating Gateway is not grouped with a Responding Gateway.</p>
+    <p>The Responding Gateway uses the homeCommunityId to obtain the Web Services endpoint of services that provide access to data in the Initiating Gateway’s community.</p>
+    <p>The homeCommunityId is specified as the id element within the Organization associated with the device of the sender. The id element designating the homeCommunityId shall have only the root element the contents of which is the homeCommunityId.</p>
+    <p>
+      <img src=".//media/image61.png" style="width:6.40764in;height:3.90764in" alt="MCCI_RM000100UV" />
+    </p>
+    <p>Figure 3.55.4.1.2.4-1: Send Message Payload</p>
+    <p>An example of specifying the homeCommunityId element follows, where homeCommunityId=1.2.3.</p>
+    <p>&lt;sender typeCode="SND"&gt;</p>
+    <p>&lt;device classCode="DEV" determinerCode="INSTANCE"&gt;</p>
+    <p>&lt;id root="1.2.840.114350.1.13.999.567"/&gt;</p>
+    <p>&lt;asAgent classCode="AGNT"&gt;</p>
+    <p>&lt;representedOrganization classCode="ORG" determinerCode="INSTANCE"&gt;</p>
+    <p>&lt;!-- homeCommunityId=urn:oid:1.2.3 --&gt;</p>
+    <p>&lt;id root="1.2.3"/&gt;</p>
+    <p>&lt;/representedOrganization&gt;</p>
+    <p>&lt;/asAgent&gt;</p>
+    <p>&lt;/device&gt;</p>
+    <p>&lt;/sender&gt;</p>
+    <p>Community patient id assigning authority – this value designates the assigning authority for the patient identifier to be used within a reverse Cross Gateway Query. This value is not the assigning authority for all patient identifiers used by that community, but only the patient identifier used for the patient identified in the query. The Initiating Gateway shall be capable of specifying this value in the Cross Gateway Patient Discovery request.</p>
+    <p>The Responding Gateway may use the specified assigning authority to identify which of the LivingSubjectID values to use in a reverse Cross Gateway Query.</p>
+    <p>The community patient id assigning authority is specified as the id element within the assignedDevice associated with the authorOrPerformer element. The id element designating the community patient id assigning authority shall have only the root element, the contents of which designate the assigning authority of the LivingSubjectId to be used in the reverse Cross Gateway Query.</p>
+    <p>An example of specifying the community patient id assigning authority element follows, where the assigning authority specified is 1.2.840.114350.1.13.99997.2.3412 (see highlighted text) which identifies the first LivingSubjectID (root="1.2.840.114350.1.13.99997.2.3412" extension="1234") as the patient identifier to be used in a reverse Cross Gateway Query. In essence, the highlighted text must match to designate the patient identifier.</p>
+    <p>&lt;controlActProcess classCode="CACT" moodCode="EVN"&gt;</p>
+    <p>&lt;code code="PRPA_TE201305UV02" codeSystem="2.16.840.1.113883.1.6"/&gt;</p>
+    <p>&lt;!-- Identifies the first LivingSubjectID in the parameterList as the patient</p>
+    <p>Identifier to be used by responder in a reverse Cross Gateway Query --&gt;</p>
+    <p>&lt;authorOrPerformer typeCode="AUT"&gt;</p>
+    <p>&lt;assignedDevice&gt;</p>
+    <p>&lt;id root="1.2.840.114350.1.13.99997.2.3412"/&gt;</p>
+    <p>&lt;/assignedDevice&gt;</p>
+    <p>&lt;/authorOrPerformer&gt;</p>
+    <p>&lt;queryByParameter&gt;</p>
+    <p>&lt;queryId root="1.2.840.114350.1.13.28.1.18.5.999" extension="18204"/&gt;</p>
+    <p>&lt;statusCode code="new"/&gt;</p>
+    <p>&lt;parameterList&gt;</p>
+    <p>&lt;livingSubjectBirthTime&gt;</p>
+    <p>&lt;value value="19630804"/&gt;</p>
+    <p>&lt;semanticsText&gt;LivingSubject..birthTime&lt;/semanticsText&gt;</p>
+    <p>&lt;/livingSubjectBirthTime&gt;</p>
+    <p>&lt;livingSubjectName&gt;</p>
+    <p>&lt;value&gt;</p>
+    <p>&lt;given&gt;Jimmy&lt;/given&gt;</p>
+    <p>&lt;family&gt;Jones&lt;/family&gt;</p>
+    <p>&lt;/value&gt;</p>
+    <p>&lt;semanticsText&gt;LivingSubject.name&lt;/semanticsText&gt;</p>
+    <p>&lt;/livingSubjectName&gt;</p>
+    <p>&lt;LivingSubjectId&gt;</p>
+    <p>&lt;value root="1.2.840.114350.1.13.99997.2.3412" extension="1234"/&gt;</p>
+    <p>&lt;semanticsText&gt;LivingSubject.id&lt;/semanticsText&gt;</p>
+    <p>&lt;/LivingSubjectId&gt;</p>
+    <p>&lt;LivingSubjectId&gt;</p>
+    <p>&lt;value root="2.16.840.1.113883.4.1" extension="58910"/&gt;</p>
+    <p>&lt;semanticsText&gt;LivingSubject.id&lt;/semanticsText&gt;</p>
+    <p>&lt;/LivingSubjectId&gt;</p>
+    <p>&lt;/parameterList&gt;</p>
+    <p>&lt;/queryByParameter&gt;</p>
+    <p>&lt;/controlActProcess&gt;</p>
+    <p>Comparison of homeCommunityId and assigning authority</p>
+    <p>The value of homeCommunityId is an OID which may, or may not, also be an assigning authority. An assigning authority is designated by an OID and issues identifiers, in this case patient identifiers. A community’s patient identifier assigning authority issues patient identifiers for patients managed by the community. It is possible for there to be more than one patient identifier assigning authority in a community. The Initiating Gateway must specify the right patient identifier assigning authority for the patient being described. There is only one homeCommunityId per community. This OID may also be used by the community as the patient identifier assigning authority, but this is not required and should not be expected. While both values are OIDs, they have no necessary relationship. In general it is expected that the homeCommunityId will be assigned by an organization which governs the interaction among communities. In many countries this will be facilitated by the government who will manage the community level agreements necessary for sharing and also assign homeCommunityIds. An assigning authority has no expected level of management, and there may be multiple patient identifier assigning authorities within a community.</p>
+    <h5 class="list-paragraph" id="3.55.4.1.3">3.55.4.1.3 Expected Actions</h5>
+    <p>If responsePriorityCode is “I” the Responding Gateway shall return a Find Candidates Response message as specified in Section 3.55.4.2. The response message uses the Application Acknowledgement transmission wrapper, as specified in ITI TF-2x: O.1.3, and no other acknowledgments are part of this the transaction.</p>
+    <p>If responsePriorityCode is “D” and the Responding Gateway does not support the Deferred Response Option, it shall return an application error in the HL7 V3 Accept Acknowledgement with acknowledgeDetail to indicate Unsupported Processing Mode.</p>
+    <p>&lt;MCCI_IN000002UV01 …</p>
+    <p>( . . . )</p>
+    <p>&lt;acknowledgement&gt;</p>
+    <p>&lt;typeCode code="AE"/&gt;</p>
+    <p>&lt;targetMessage&gt;</p>
+    <p>&lt;id root="22a0f9e0-4454-11dc-a6be-3603d6866807"/&gt;</p>
+    <p>&lt;/targetMessage&gt;</p>
+    <p>&lt;acknowledgementDetail typeCode="E"&gt;</p>
+    <p>&lt;code code="NS250" displayName="Unsupported processing mode"/&gt;</p>
+    <p>&lt;text&gt;Deferred Response not supported.&lt;/text&gt;</p>
+    <p>&lt;/acknowledgementDetail&gt;</p>
+    <p>&lt;/acknowledgement&gt;</p>
+    <p>&lt;/MCCI_IN000002UV01&gt;</p>
+    <p>If the Responding Gateway supports the Deferred Response Option, it shall respond as described in Section 3.55.6.2.</p>
+    <p>If the Responding Gateway is unable to process the request due to an internal error, such as the local Master Patient Index system is offline, the Responding Gateway shall return an application error as described in Section 3.55.4.2.3 Case 5.</p>
+    <p>The community associated with the Responding Gateway may make use of the homeCommunityId and community patient identifier assigning authority by initiating a Cross Gateway Query. See Section 3.55.4.1.2.4 for more information. This provisioning of the Responding Gateway community may be cached indefinitely, but efforts are needed to ensure that changes are properly reflected. For more detail about this issue refer to Section 3.55.4.2.3.1.</p>
+    <h6 class="list-paragraph" id="3.55.4.1.3.1">3.55.4.1.3.1 Query Parameter Processing</h6>
+    <p>The Responding Gateway shall be capable of accepting, searching on, and responding with attributes in the Query Person by Demographics message.</p>
+    <p>Handling of phonetic issues, alternate spellings, upper and lower case, accented characters, etc., if deemed appropriate, is to be supported by the Responding Gateway rather than by the Initiating Gateway. The Responding Gateway shall return any matches to the query parameters that reflect a high degree of match, after consideration of all policy constraints; IHE does not further specify matching requirements, except as already discussed in the LivingSubjectName parameter description.</p>
+    <h4 class="list-paragraph" id="3.55.4.2">3.55.4.2 Cross Gateway Patient Discovery Response</h4>
+    <p>The Cross Gateway Patient Discovery Response is implemented using the HL7 Patient Registry Find Candidates Response message (PRPA_MT201310UV02).</p>
+    <h5 class="list-paragraph" id="3.55.4.2.1">3.55.4.2.1 Trigger Events</h5>
+    <p>The Patient Registry Find Candidates Response message (PRPA_MT201310UV02) is sent by the Responding Gateway in response to the query (PRPA_MT201306UV02) message previously received.</p>
+    <h5 class="list-paragraph" id="3.55.4.2.2">3.55.4.2.2 Message Semantics</h5>
+    <p>The components of the message with cardinality greater than 0 (as shown below) are required, and the detailed description of the message is provided in Sections 3.55.4.2.2.1 to 3.55.4.2.2.7. All other attributes of the message are optional.</p>
+    <p>For each element that is required this means that it shall be provided by Responding Gateway, unless not available, and shall be accepted by requestor but requestor is not required to process the value in any way, only accept it without any error.</p>
+    <p>The Responding Gateway shall support Asynchronous Web Services Exchange as described in ITI TF-2x: V.5, Synchronous and Asynchronous Web Services Exchange. If the Initiating Gateway declares the Asynchronous Web Services Exchange Option it shall also support Asynchronous Web Services Exchange as described in ITI TF-2x: V.5. Use of Asynchronous Web Services Exchange is necessary when transactions scale to large numbers of communities because it allows for more efficient handling of latency and scale.</p>
+    <p>The Responding Gateway may specify a duration value in the SOAP Header element of the response. This value suggests to the Initiating Gateway a length of time that the Responding Gateway recommends caching any correlation resulting from the interaction. The duration value is specified in the SOAP Header using the CorrelationTimeToLive element and contains a value conformant with the xs:duration type defined in http://www.w3.org/TR/xmlschema-2/#duration. If no CorrelationTimeToLive element is specified in the SOAP Header the Initiating Gateway shall interpret this as a recommendation against caching, unless a mutually agreed policy states otherwise.</p>
+    <p>An example of specifying the CorrelationTimeToLive element follows, which recommends caching of 7 days.</p>
+    <p>&lt;xcpd:CorrelationTimeToLive&gt;P0Y0M7D&lt;/xcpd:CorrelationTimeToLive&gt;</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.1">3.55.4.2.2.1 Major Components of the Patient Registry Find Candidates Response Message</h6>
+    <p>This message shares all the major components of the Patient Activate/Revise messages, as described in Section 3.44.4.1.2.1. The only additional component is the QueryMatchObservation class.</p>
+    <p>Query Match Observation</p>
+    <p>The QueryMatchObservation class is used to convey information about the quality of the match for each record returned by the query response.</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.2">3.55.4.2.2.2 Message Information Model of the Patient Registry Find Candidates Response Message</h6>
+    <p>Below is the Message Information Model for the Patient Registry Find Candidates Response message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict common subset of the Patient Registry Find Candidates Response (PRPA_RM201310UV02) RMIM.</p>
+    <p>The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201310UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>The focal entity choice is restricted to be only a person</p>
+      </li>
+      <li>
+        <p>The relationship holder of the personal relationship is restricted to be a person (using CMET COCT_MT030207UV)</p>
+      </li>
+      <li>
+        <p>The following roles are omitted:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>asPatientOfOtherProvider</p>
+      </li>
+      <li>
+        <p>guarantor</p>
+      </li>
+      <li>
+        <p>guardian</p>
+      </li>
+      <li>
+        <p>contactParty</p>
+      </li>
+      <li>
+        <p>asMember</p>
+      </li>
+      <li>
+        <p>careGiver</p>
+      </li>
+      <li>
+        <p>asStudent</p>
+      </li>
+    </ul>
+    <p>The following participations are omitted:</p>
+    <ul>
+      <li>
+        <p>subjectOf2 (administrativeObservation)</p>
+      </li>
+      <li>
+        <p>coveredPartyOf (coverage)</p>
+      </li>
+    </ul>
+    <p>
+      <img src=".//media/image62.jpeg" style="width:6.44583in;height:2.99236in" alt="PRPA_RM201310UV-IHE-XCPI" />
+    </p>
+    <p>Figure 3.55.4.2.2.2-1: Patient Registry Find Candidates Response Message</p>
+    <p>The attributes of this model are described in the following table. Note that CMETs are not discussed, as the HL7 definitions for them are being used.</p>
+    <p>Table 3.55.4.2.2.2-1: Attributes</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            PRPA_HD201310IHE
+            <br />
+            Patient Registry Find Candidates Response
+          </td>
+          <td>
+            <p>This HMD extract defines the message used to return records from a patient registry in response to a Find Candidates Query.</p>
+            <p>Derived from Figure 3.55.4.2.2.2-1 (PRPA_RM201310IHE)</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>Patient</td>
+          <td>The primary record for the focal person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Patient (CS) {CNE:PAT}</p>
+          </td>
+          <td>Structural attribute; this is a "patient" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [1..1] (M)</p>
+            <p>
+              Patient (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>The Patient Identifier to be used in subsequent XCA Cross Gateway Query transactions related to this patient when sent to the Responding Gateway sending the response. All other patient identifiers shall be specified in the OtherIDs.id attribute.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>statusCode [1..1]</p>
+            <p>Patient (CS) {CNE:active, fixed value= "active"}</p>
+          </td>
+          <td>A value specifying the state of this record in a patient registry (based on the RIM role class state-machine). This record is active.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>confidentialityCode [0..*]</p>
+            <p>Patient (SET&lt;CE&gt;) {CWE:Confidentiality}</p>
+          </td>
+          <td>Value(s) that control the disclosure of information about this living subject as a patient</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>veryImportantPersonCode [0..1]</p>
+            <p>Patient (CE) {CWE:PatientImportance}</p>
+          </td>
+          <td>A code specifying the patient's special status granted by the scoper organization, often resulting in preferred treatment and special considerations. Examples include board member, diplomat.</td>
+        </tr>
+        <tr class="even">
+          <td>Person</td>
+          <td>
+            <p>A subtype of LivingSubject representing a human being</p>
+            <p>Either Person.name or Patient.id must be non-null</p>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:PSN, fixed value= "PSN"}</p>
+          </td>
+          <td>Structural attribute; this is a "person" entity</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>name [1..*]</p>
+            <p>Person (BAG&lt;PN&gt;)</p>
+          </td>
+          <td>Name(s) for this person. May be null i.e., &lt;name nullFlavor=”NA”/&gt; only if the request contained only a patient identifier and no demographic data.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>telecom [0..*]</p>
+            <p>Person (BAG&lt;TEL&gt;)</p>
+          </td>
+          <td>Telecommunication address(es) for communicating with this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>administrativeGenderCode [0..1]</p>
+            <p>Person (CE) {CWE:AdministrativeGender}</p>
+          </td>
+          <td>A value representing the gender (sex) of this person. Note: this attribute does not include terms related to clinical gender which is a complex physiological, genetic and sociological concept that requires multiple observations in order to be comprehensively described.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>birthTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person was born</td>
+        </tr>
+        <tr class="odd">
+          <td>birthPlace</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>
+            <p>deceasedInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person is dead</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>deceasedTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person died</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>multipleBirthInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person was part of a multiple birth</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>multipleBirthOrderNumber [0..1]</p>
+            <p>Person (INT)</p>
+          </td>
+          <td>The order in which this person was born if part of a multiple birth</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>addr [0..*]</p>
+            <p>Person (BAG&lt;AD&gt;)</p>
+          </td>
+          <td>Address(es) for corresponding with this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>maritalStatusCode [0..1]</p>
+            <p>Person (CE) {CWE:MaritalStatus}</p>
+          </td>
+          <td>A value representing the domestic partnership status of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>religiousAffiliationCode [0..1]</p>
+            <p>Person (CE) {CWE:ReligiousAffiliation}</p>
+          </td>
+          <td>A value representing the primary religious preference of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>raceCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Race}</p>
+          </td>
+          <td>A set of values representing the races of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>ethnicGroupCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Ethnicity}</p>
+          </td>
+          <td>A set of values representing the ethnic groups of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>OtherIDs</td>
+          <td>Used to capture additional identifiers for the person such as a Drivers’ license or Social Security Number.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:ROL}</p>
+          </td>
+          <td>Structural attribute. This can be any specialization of "role" except for Citizen, or Employee.,</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>One or more identifiers issued to the focal person by the associated scopingOrganization (e.g., identifiers from a different Patient Identity Domain).</td>
+        </tr>
+        <tr class="even">
+          <td>PersonalRelationship</td>
+          <td>A personal relationship between the focal living subject and another living subject</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:PRS, fixed value= "PRS"}</p>
+          </td>
+          <td>Structural attribute; this is a "personal relationship" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\rim\rim.htm#Role-cls">Role</a>
+               (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Identifier(s) for this personal relationship</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Role (CE) {CWE:PersonalRelationshipRoleType}</p>
+          </td>
+          <td>A required value specifying the type of personal relationship between the relationshipHolder and the scoping living subject drawn from the PersonalRelationshipRoleType domain, for example, spouse, parent, unrelated friend</td>
+        </tr>
+        <tr class="even">
+          <td>Citizen</td>
+          <td>Used to capture person information relating to citizenship.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:CIT, fixed value= "CIT"}</p>
+          </td>
+          <td>Structural attribute; this is a "citizen" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>Identifier(s) for the focal person as a citizen of a nation</td>
+        </tr>
+        <tr class="odd">
+          <td>Nation</td>
+          <td>A politically organized body of people bonded by territory and known as a nation.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:NAT, fixed value= "NAT"}</p>
+          </td>
+          <td>Structural attribute; this is a 'nation' type of entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific entity</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Organization (CD) {CWE:NationEntityType}</p>
+          </td>
+          <td>A value that identifies a nation state</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>name [0..1]</p>
+            <p>Organization (ON)</p>
+          </td>
+          <td>A non-unique textual identifier or moniker for this nation</td>
+        </tr>
+        <tr class="even">
+          <td>Employee</td>
+          <td>A relationship of the focal person with an organization to receive wages or salary. The purpose of this class is to identify the type of relationship the employee has to the employer rather than the nature of the work actually performed. For example, it can be used to capture whether the person is a Military Veteran or not..</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Employee (CS) {CNE:EMP}</p>
+          </td>
+          <td>Structural attribute; this is an "employee" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [0..1]</p>
+            <p>Employee (CS) {CNE:RoleStatus}</p>
+          </td>
+          <td>A value specifying the state of this employment relationship (based on the RIM Role class state-machine), for example, active, suspended, terminated.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>occupationCode [0..1]</p>
+            <p>Employee (CE) {CWE:EmployeeOccupationCode}</p>
+          </td>
+          <td>A code qualifying the classification of kind-of-work based upon a recognized industry or jurisdictional standard. OccupationCode is used to convey the person's occupation as opposed to jobClassCode (not used in this transaction) which characterizes this particular job. For example, it can be used to capture whether the person is a Military Veteran or not.</td>
+        </tr>
+        <tr class="even">
+          <td>LanguageCommunication</td>
+          <td>A language communication capability of the focal person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>languageCode [1..1] (M)</p>
+            <p>LanguageCommunication (CE) {CWE:HumanLanguage}</p>
+          </td>
+          <td>A value representing a language for which the focal person has some level of proficiency for written or spoken communication. Examples: Spanish, Italian, German, English, American Sign</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>preferenceInd [0..1]</p>
+            <p>LanguageCommunication (BL)</p>
+          </td>
+          <td>An indicator specifying whether or not this language is preferred by the focal person for the associated mode</td>
+        </tr>
+        <tr class="odd">
+          <td>QueryMatchObservation</td>
+          <td>Used to convey information about the quality of the match for each record.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            classCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ActClass.htm - ActClass, default= "OBS"}
+          </td>
+          <td>Structural attribute – this is an observation</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            moodCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ActMood.htm - ActMood, default= "EVN"}
+          </td>
+          <td>Structural attribute – this is an event</td>
+        </tr>
+        <tr class="even">
+          <td>
+            code [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CD">CD</a>
+            ) {CWE:QueryMatchObservationType}
+          </td>
+          <td>A code, identifying this observation as a query match observation.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1] (M)
+            <br />
+            QueryMatch
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (INT)
+          </td>
+          <td>A numeric value indicating the quality of match for this record. It shall correspond to the MinimumDegreeMatch.value attribute of the original query, and it shall have the same meaning (e.g., percentage, indicating confidence in the match).</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.55.4.2.2.3">3.55.4.2.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see ITI TF-2X: Appendix O for details on the IHE guidelines for implementing the wrappers. Table 3.55.4.2.2.3-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.55.4.2.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000300UV01 – Send Application Acknowledgement</td>
+          <td>MFMI_MT700711UV01 – Master File/Registry Query Response Control Act (Role Subject)</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId shall be set to PRPA_IN201306UV02</p>
+            <p>The value of processingModeCode shall be set to T</p>
+            <p>The acceptAckCode shall be set to NE</p>
+            <p>There shall be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The value of ControlActProcess.moodCode shall be set to EVN</p>
+            <p>The trigger event code in ControlActProcess.code shall be set to PRPA_TE201306UV02</p>
+            <p>There shall be zero or more RegistrationEvents present in this message.</p>
+            <p>For each matching record returned, there shall be exactly one RegistrationEvent present in this message.</p>
+            <p>If a RegistrationEvent is part of the message, there shall be exactly one Patient role present in the payload.</p>
+            <p>There shall be no replacementOf act-relationship present in this message</p>
+            <p>The QueryAck.resultTotalQuantity, QueryAck.resultCurrentQuantity, and QueryAck.resultRemainingQuantity attributes shall not be populated.</p>
+            <p>There shall be a QueryByParameter copy of the original query which shall be in the control act wrapper following the queryAck element.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see Appendix W. The schemas from the HL7 V3 2008 Normative Edition can be found at:</p>
+    <p>Edition2008/processable/multicacheschemas/PRPA_IN201306UV02.xsd.</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.4">3.55.4.2.2.4 Specifying homeCommunityId in Response</h6>
+    <p>The homeCommunityId is a globally unique identifier for a community – further defined in Section 3.38.4.1.2.1. The Responding Gateway shall specify this value within every RegistrationEvent element in the Cross Gateway Patient Discovery response.</p>
+    <p>The Responding Gateway may specify the same homeCommunityId in every RegistrationEvent, or may specify different homeCommunityId’s. The Initiating Gateway shall interpret multiple RegistrationEvents as follows:</p>
+    <ul>
+      <li>
+        <p>Multiple RegistrationEvents with the same homeCommunityId represent multiple matches within the homeCommunityId identified community. The Initiating Gateway may choose one of the matches to use for subsequent processing.</p>
+      </li>
+      <li>
+        <p>Each set of RegistrationEvents with the same homeComunityId represents a different possible source for documents, so in order to get the complete list of relevant documents for the patient, the Initiating Gateway shall select at least one RegistrationEvent from each set with the same homeCommunityId and use the resulting collection of patient identifiers for subsequent processing. See <a href="../Volume1/ch-27.html#27.3.2.2">ITI TF-1: 27.3.2.2</a> for an introduction to this environment.</p>
+      </li>
+    </ul>
+    <p>The homeCommunityId is specified as the id element within the assignedEntity of the custodian of the RegistrationEvent. The id element designating the homeCommunityId shall have only the root element, the contents of which is the homeCommunityId.</p>
+    <p>The following example shows part of a response specifying a homeCommunityId value of urn:oid:1.2.840.114350.1.13.99998.8734.</p>
+    <p>&lt;subject typeCode="SUBJ"&gt;</p>
+    <p>&lt;registrationEvent classCode="REG" moodCode="EVN"&gt;</p>
+    <p>&lt;id nullFlavor="NA"/&gt;</p>
+    <p>&lt;statusCode code="active"/&gt;</p>
+    <p>&lt;subject1 typeCode="SBJ"&gt;</p>
+    <p>… (details of the matching patient)</p>
+    <p>&lt;/subject1&gt;</p>
+    <p>&lt;custodian typeCode="CST"&gt;</p>
+    <p>&lt;assignedEntity classCode="ASSIGNED"&gt;</p>
+    <p>&lt;id root="1.2.840.114350.1.13.99998.8734"/&gt;</p>
+    <p>&lt;code code="SupportsHealthDataLocator"</p>
+    <p>codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/&gt;</p>
+    <p>&lt;/assignedEntity&gt;</p>
+    <p>&lt;/custodian&gt;</p>
+    <p>&lt;/registrationEvent&gt;</p>
+    <p>&lt;/subject&gt;</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.5">3.55.4.2.2.5 Specifying support as a Health Data Locator</h6>
+    <p>The Responding Gateway shall specify its support for this patient as a Health Data Locator. This specification is a coded value within the assignedEntity of the custodian of the RegistrationEvent. The valid codes for this designation are described in Table 3.55.4.2.2.5-1. The codeSystem for these code elements is 1.3.6.1.4.1.19376.1.2.27.2.</p>
+    <p>Table 3.55.4.2.2.5-1: Coded values for codeSystem=1.3.6.1.4.1.19376.1.2.27.2</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value for code</th>
+          <th>Meaning of code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>NotHealthDataLocator</td>
+          <td>This community does not maintain externally available location information about this patient and will respond with no data to a Patient Location Query transaction related to this patient.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The following example shows part of a response specifying no support for Health Data Locator:</p>
+    <p>&lt;subject typeCode="SUBJ"&gt;</p>
+    <p>&lt;registrationEvent classCode="REG" moodCode="EVN"&gt;</p>
+    <p>&lt;id nullFlavor="NA"/&gt;</p>
+    <p>&lt;statusCode code="active"/&gt;</p>
+    <p>&lt;subject1 typeCode="SBJ"&gt;</p>
+    <p>… (details of the matching patient)</p>
+    <p>&lt;/subject1&gt;</p>
+    <p>&lt;custodian typeCode="CST"&gt;</p>
+    <p>&lt;assignedEntity classCode="ASSIGNED"&gt;</p>
+    <p>&lt;id root="1.2.840.114350.1.13.99998.8734"/&gt;</p>
+    <p>&lt;code code="NotHealthDataLocator"</p>
+    <p>codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/&gt;</p>
+    <p>&lt;/assignedEntity&gt;</p>
+    <p>&lt;/custodian&gt;</p>
+    <p>&lt;/registrationEvent&gt;</p>
+    <p>&lt;/subject&gt;</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.6">3.55.4.2.2.6 Special handling for more attributes requested</h6>
+    <p>The Responding Gateway has the option of informing the Initiating Gateway when additional demographic attributes may result in a match. This would most often be used in cases where the security and privacy policies do not allow release of patient data unless and until there is a level of assurance that the same patient is referenced. In this case the Responding Gateway cannot return a matching patient or patients because the level of assurance is not great enough. If the Initiating Gateway were able to specify further demographic attributes the Responding Gateway might have greater assurance of the match and thus be able to return the match information.</p>
+    <p>To indicate this situation in its response, the Responding Gateway codes a DetectedIssueEvent within the controlActProcess element, where the code in the actOrderRequired element references one of the coded elements described in Table 3.55.4.2.2.6-1. There may be as many triggerFor elements, each of them containing an ActOrderRequired element, as needed to code the attributes which would increase the assurance of the match. The codeSystem for these code elements is 1.3.6.1.4.1.19376.1.2.27.1.</p>
+    <p>Figure 3.55.4.2.2.6-1: RMIM for DetectedIssueEvent</p>
+    <p>Table 3.55.4.2.2.6-1: Coded values for codeSystem=1.3.6.1.4.1.19376.1.2.27.1</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value for code</th>
+          <th>Meaning of code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>LivingSubjectAdministrativeGenderRequested</td>
+          <td>Requests the LivingSubjectAdministrativeGender attribute be specified</td>
+        </tr>
+        <tr class="even">
+          <td>PatientAddressRequested</td>
+          <td>Requests the PatientAddress attribute be specified</td>
+        </tr>
+        <tr class="odd">
+          <td>PatientTelecomRequested</td>
+          <td>Requests the PatientTelecom attribute be specified</td>
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectBirthPlaceNameRequested</td>
+          <td>Requests the LivingSubjectBirthPlaceName attribute be specified</td>
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectBirthPlaceAddressRequested</td>
+          <td>Requests the LivingSubjectBirthPlaceAddress attribute be specified</td>
+        </tr>
+        <tr class="even">
+          <td>MothersMaidenNameRequested</td>
+          <td>Requests the MothersMaidenName attribute be specified</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The following example shows part of a response requesting the PatientAddress and PatientTelecom attributes.</p>
+    <p>&lt;detectedIssueEvent classCode="ALRT" moodCode="EVN"&gt;</p>
+    <p>&lt;code code="ActAdministrativeDetectedIssueCode" codeSystem="2.16.840.1.113883.5.4"/&gt;</p>
+    <p>&lt;triggerFor typeCode="TRIG"&gt;</p>
+    <p>&lt;actOrderRequired classCode="ACT" moodCode="RQO"&gt;</p>
+    <p>&lt;code code="PatientAddressRequested” codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/&gt;</p>
+    <p>&lt;/actOrderRequired&gt;</p>
+    <p>&lt;/triggerFor&gt;</p>
+    <p>&lt;triggerFor typeCode="TRIG"&gt;</p>
+    <p>&lt;actOrderRequired classCode="ACT" moodCode="RQO"&gt;</p>
+    <p>&lt;code code="PatientTelecomRequested” codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/&gt;</p>
+    <p>&lt;/actOrderRequired&gt;</p>
+    <p>&lt;/triggerFor&gt;</p>
+    <p>&lt;/detectedIssueEvent&gt;</p>
+    <h6 class="list-paragraph" id="3.55.4.2.2.7">3.55.4.2.2.7 Specify details about problems handling request</h6>
+    <p>The Responding Gateway has the option of informing the Initiating Gateway with some detail regarding a problem handling the request.</p>
+    <p>The Responding Gateway may code a DetectedIssueEvent within the controlActProcess element, where the code in the detectedIssueManagement element references one of the coded elements described in Table 3.55.4.2.2.7-1. The codeSystem for these code elements is 1.3.6.1.4.1.19376.1.2.27.3.</p>
+    <p>Table 3.55.4.2.2.7-1: Coded values for codeSystem=1.3.6.1.4.1.19376.1.2.27.3</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Value for code</th>
+          <th>Meaning of code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>ResponderBusy</td>
+          <td>The responder was not able to process the request because it is currently overloaded.</td>
+        </tr>
+        <tr class="even">
+          <td>AnswerNotAvailable</td>
+          <td>The answer is not available. Human intervention may be needed.</td>
+        </tr>
+        <tr class="odd">
+          <td>InternalError</td>
+          <td>The responder was not able to respond due to an internal error or inconsistency.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The following example shows part of a response specifying that the responder is busy.</p>
+    <p>&lt;detectedIssueEvent classCode="ALRT" moodCode="EVN"&gt;</p>
+    <p>&lt;code code="ActAdministrativeDetectedIssueCode" codeSystem="2.16.840.1.113883.5.4"/&gt;</p>
+    <p>&lt;mitigatedBy typeCode="MITGT"&gt;</p>
+    <p>&lt;detectedIssueManagement classCode="ACT" moodCode="EVN"&gt;</p>
+    <p>&lt;code code="ResponderBusy” codeSystem="1.3.6.1.4.1.19376.1.2.27.3"/&gt;</p>
+    <p>&lt;/detectedIssueManagement&gt;</p>
+    <p>&lt;/mitigatedBy&gt;</p>
+    <p>&lt;/detectedIssueEvent&gt;</p>
+    <h5 class="list-paragraph" id="3.55.4.2.3">3.55.4.2.3 Expected Actions</h5>
+    <p>The Initiating Gateway shall accept a SOAP fault representing a transmission error. An internal error in the Responding Gateway is covered under Case 5. The Initiating Gateway shall act on a valid query response as described by the following 5 cases:</p>
+    <p>Case 1: The Responding Gateway finds exactly one patient record matching the criteria sent in the query parameters.</p>
+    <p>AA (application accept) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>OK (data found, no errors) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>One RegistrationEvent (and the associated Patient role, subject of that event) is returned from the patient information source for the patient record found. The community associated with the Initiating Gateway may use the patient demographics and identifiers to run an independent matching algorithm to ensure the quality of the match. If the Initiating Gateway is grouped with an XCA Initiating Gateway, it may use the designated patient identifier in a Cross Gateway Query to get information about records related to the patient. This grouped Initiating Gateway shall be able to handle situations where the homeCommunityId in the response is different than the original homeCommunityId used to identify the XCPD Responding Gateway. In particular, the Initiating Gateway should use the new homeCommunityId to look up a potentially different endpoint. The Initiating Gateway may also choose to cache the correlation for future use (see Section 3.55.4.2.3.1 for more information about caching).</p>
+    <p>Case 2: The Responding Gateway finds more than one patient close to matching the criteria sent in the query parameters and the policy allows returning multiple.</p>
+    <p>AA (application accept) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>OK (data found, no errors) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>One RegistrationEvent (and the associated Patient role, subject of that event) is returned for each patient record found. The community associated with the Initiating Gateway may run its own matching algorithm to select from the list of returned patients. If a correlation is found, the Responding Gateway may continue as if only one entry had been returned, see Case 1. If a correlation is still not clear it is expected that human intervention is required, depending on the policies of the Initiating Gateway’s community.</p>
+    <p>Case 3: The Responding Gateway finds more than one patient close to matching the criteria sent in the query parameters but no matches close enough for the necessary assurance level and more attributes might allow the Responding Gateway to return a match.</p>
+    <p>AA (application accept) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>OK (data found, no errors) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>No RegistrationEvent is returned in the response, but the Responding Gateway provides a suggestion in terms of demographics that may help identify a match. The mechanism for specifying the suggestion is detailed in Section 3.55.4.2.2.6 for description of coding of the response. The Initiating Gateway may use this feedback to initiate a new Cross Gateway Patient Discovery request including the requested additional attributes.</p>
+    <p>Case 4: The Responding Gateway finds no patients anywhere close to matching the criteria sent in the query parameters.</p>
+    <p>AA (application accept) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>NF (data found, no errors) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>There is no RegistrationEvent returned in the response. The Initiating Gateway can assume this patient has no healthcare information held by the community represented by the Responding Gateway. This lack of correlation may be cached, see Section 3.55.4.2.3.1 for more information about caching.</p>
+    <p>Case 5: The Responding Gateway is unable to satisfy the request. This may be because the request came synchronously and an asynchronous request may be feasible, or because the Responding Gateway is overloaded with other requests and does not expect to answer for a significant period of time. It may also be that the Responding Gateway may need some manual configuration update to authorize responder or another error occurred while the Responding Gateway was processing the message payload.</p>
+    <p>AE (application error) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>AE (application error) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>There is no RegistrationEvent returned in the response. See Section 3.55.4.2.2.7 for more information about coding errors for this case.</p>
+    <h6 class="list-paragraph" id="3.55.4.2.3.1">3.55.4.2.3.1 Caching (Informative)</h6>
+    <p>This section presents some considerations regarding caching of information learned through the Cross Gateway Patient Discovery transaction. There are no requirements regarding caching of the information, as this is a complex issue and must be addressed as part of deployment. The caching resulting from receiving and responding to the query is not updating any local information but only saving a record in a cache if so desired.</p>
+    <p>Both the requesting and responding side of the Cross Gateway Patient Discovery transaction gain knowledge through this transaction. That knowledge may be used immediately, by sending a Cross Gateway Query transaction, or may be cached for use at some other time (or both). This section addresses caching considerations when the Cross Gateway Patient Discovery transaction is used in the Demographic Query and Feed mode. Other modes are a simplification of this mode with corresponding simplifications of the considerations presented.</p>
+    <p>The knowledge gained on both sides can be represented as a tuple:</p>
+    <ul>
+      <li>
+        <blockquote>
+          <p>LocalPid – Local patient identifier and demographics associated with that identifier</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>ExternalCommunityId – The homeCommunityId of another community.</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>ExternalPid – The patient identifier for the same patient as LocalPid within the community identified by ExternalCommunityId. This identifier also has associated demographics</p>
+        </blockquote>
+      </li>
+    </ul>
+    <p>For the Initiating Gateway the ExternalPid may be null indicating that the community represented by ExternalCommunityId has no correlating patient identifier available.</p>
+    <p>The tuple represents a correlation, or lack thereof, of patients in a pair of communities. The validity of this correlation may degrade over time, as changes in demographics, merge/link events and new patient registrations affect the correlation.</p>
+    <p>Local changes in demographics, merge/link</p>
+    <p>When a local change in demographics or a merge/link event affects the LocalPid, the community may initiate a Cross Gateway Patient Discovery request to validate the correlation.</p>
+    <p>External changes in demographics, merge/link</p>
+    <p>
+      When an external change in demographics or merge/link event occurs, the external community may initiate a Cross Gateway Patient Discovery request which, when received, can be used to re-assess the correlation and adjust accordingly. Mutually agreed policies for use of the
+      <em>CorrelationTimeToLive SOAP header may enable greater assurance that changes are reflected when needed.</em>
+    </p>
+    <p>New patient registrations</p>
+    <p>When the Initiating Gateway’s community discovers the lack of correlation to its local patient (ExternalPid null) it may monitor incoming Cross Gateway Patient Discovery transactions in order to discover later if that patient has arrived in the Responding Gateway’s community.</p>
+    <h3 class="list-paragraph" id="3.55.5">3.55.5 Security Considerations</h3>
+    <p>No transaction specific security considerations.</p>
+    <h4 class="list-paragraph" id="3.55.5.1">3.55.5.1 Security Audit Considerations</h4>
+    <p>The Cross Gateway Patient Discovery transaction is a Query Information event as defined in <a href="../Volume2a/ITI-20.html#3.20.4.1.1.1">ITI TF-2a: 3.20.4.1.1.1</a>-1.</p>
+    <p>The actors involved shall record audit events according to the following:</p>
+    <h5 class="list-paragraph" id="3.55.5.1.1">3.55.5.1.1 Initiating Gateway audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-55”, “IHE Transactions”, “Cross Gateway Patient Discovery”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Initiating Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Responding Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Initiating Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0) No patient identifiers are included in this audit message.</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </th>
+          <th>UserID</th>
+          <th>M</th>
+          <th>Identity of the human that initiated the transaction.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>“false”</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-55, “IHE Transactions”, “Cross Gateway Patient Discovery”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the QueryByParameter segment of the query, base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>M</td>
+          <td>The value of “ihe:homeCommunityID” as the value of the attribute type and the value of the homeCommunityID as the value of the attribute value.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.55.5.1.2">3.55.5.1.2 Responding Gateway audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-55”, “IHE Transactions”, “Cross Gateway Patient Discovery”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Initiating Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Responding Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Responding Gateway) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (0..n) one for each patient whose demographic information was returned in the response.</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>“false”</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-55”, “IHE Transactions”, “Cross Gateway Patient Discovery”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the QueryByParameter segment of the query, base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The value of “ihe:homeCommunityID” as the value of the attribute type and the value of the homeCommunityID as the value of the attribute value.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="list-paragraph" id="3.55.6">3.55.6 Protocol Requirements</h3>
+    <p>The Cross Gateway Patient Discovery request and response will be transmitted using Synchronous or Asynchronous Web Services Exchange, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>. If the Deferred Response Option is being used the request and response will be transmitted as described in Section 3.55.6.2.</p>
+    <p>The following WSDL naming conventions shall apply:</p>
+    <p>query message -&gt; "PRPA_IN201305UV02_Message"</p>
+    <p>The following WSDL snippet describes the type for this message:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201305UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201305UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The message is described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="PRPA_IN201305UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201305UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <h4 class="list-paragraph" id="3.55.6.1">3.55.6.1 Web Services Port Type and Binding Definitions</h4>
+    <p>Responding Gateway:</p>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “RespondingGateway”.</p>
+    <p>The following WSDL naming conventions shall apply:</p>
+    <p>wsdl:definitions/@name="RespondingGateway":</p>
+    <p>ITI-55 query -&gt; "PRPA_IN201305UV02_Message"</p>
+    <p>ITI-55 response -&gt; "PRPA_IN201306UV02_Message"</p>
+    <p>accept acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "RespondingGateway_PortType"</p>
+    <p>ITI-55 operation -&gt; "RespondingGateway_PRPA_IN201305UV02"</p>
+    <p>ITI-55 Deferred Response operation -&gt;</p>
+    <blockquote>
+      <p>“RespondingGateway_Deferred_PRPA_IN201305UV02”</p>
+    </blockquote>
+    <p>SOAP 1.2 binding -&gt; "RespondingGateway_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "RespondingGateway_Port_Soap12"</p>
+    <p>Initiating Gateway:</p>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “InitiatingGateway”.</p>
+    <p>The following WSDL naming conventions shall apply:</p>
+    <p>wsdl:definitions/@name="InitiatingGateway":</p>
+    <p>ITI-55 response -&gt; "PRPA_IN201306UV02_Message"</p>
+    <p>accept acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "InitiatingGateway_PortType"</p>
+    <blockquote>
+      <p>ITI-55 Deferred Response operation -&gt;</p>
+      <p>“InitiatingGateway_Deferred_PRPA_IN201306UV02”</p>
+    </blockquote>
+    <p>SOAP 1.2 binding -&gt; "InitiatingGateway_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "InitiatingGateway_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Cross Gateway Patient Discovery Query Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <h5 class="list-paragraph" id="3.55.6.1.1">3.55.6.1.1 Port Type</h5>
+    <p>Responding Gateway:</p>
+    <p>&lt;portType name="RespondingGateway_PortType"&gt;</p>
+    <p>&lt;operation name="RespondingGateway_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201305UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201305UV02:CrossGatewayPatientDiscovery"/&gt;</p>
+    <p>&lt;output message="tns:PRPA_IN201306UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201306UV02:CrossGatewayPatientDiscovery"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RespondingGateway_Deferred_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201305UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201305UV02:Deferred:CrossGatewayPatientDiscovery"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p>Initiating Gateway:</p>
+    <p>&lt;portType name="InitiatingGatewayDeferredResponse_PortType"&gt;</p>
+    <p>&lt;operation name="InitiatingGateway_Deferred_PRPA_IN201306UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201306UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201306UV02:Deferred:CrossGatewayPatientDiscovery"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <h5 class="list-paragraph" id="3.55.6.1.2">3.55.6.1.2 Bindings</h5>
+    <p>SOAP 1.2 binding:</p>
+    <p>Responding Gateway:</p>
+    <p>…</p>
+    <p>&lt;binding name="RespondingGateway_Binding_Soap12" type="RespondingGateway_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="RespondingGateway_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RespondingGateway_Deferred_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>Initiating Gateway:</p>
+    <p>…</p>
+    <p>&lt;binding name="InitiatingGatewayDeferredResponse_Binding" type="tns:InitiatingGatewayDeferredResponse_PortType"&gt;</p>
+    <p>&lt;soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="InitiatingGateway_Deferred_PRPA_IN201306UV02"&gt;</p>
+    <p>&lt;soap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;soap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;soap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>Informative WSDL for the Responding Gateway is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h4 class="list-paragraph" id="3.55.6.2">3.55.6.2 Deferred Response Option</h4>
+    <p>The Deferred Response Message pattern is a message exchange pattern where the request/response web service message exchange has been converted into two request/response message exchange patterns, where the original request and response messages are used as the request portion of each message and an application acknowledgement is the response. Figure 3.55.6.2-1 illustrates this pattern as it is used for the Cross Gateway Patient Discovery [ITI-55] transaction.</p>
+    <p>
+      <img src=".//media/image64.emf" style="width:5.39236in;height:3.41528in" />
+    </p>
+    <p>Figure 3.55.6.2-1: Deferred Response Message Pattern</p>
+    <p>Cross Gateway Patient Discovery Request Message</p>
+    <p>The Initiating Gateway that supports the Deferred Response Option may request the use of Deferred Response message exchange by specifying the following in the Cross Gateway Patient Discovery Request Message:</p>
+    <ul>
+      <li>
+        <p>The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201305UV02:Deferred: CrossGatewayPatientDiscovery</p>
+      </li>
+      <li>
+        <p>The responsePriorityCode element shall be set to a value of ‘D’ to represent the deferred processing mode.</p>
+      </li>
+      <li>
+        <p>The respondTo element of the transmission wrapper, see the figure in Section 3.55.4.1.2.4, shall contain a telecom element with the Web Services Endpoint where the response shall be sent.</p>
+      </li>
+    </ul>
+    <p>Example of specifying the respondTo element:</p>
+    <p>&lt;respondTo typeCode="RSP"&gt;</p>
+    <p>&lt;telecom value="service entry point url"</p>
+    <p>&lt;entityRsp classCode="ENT" determinerCode="INSTANCE" xsi:nil="true"/&gt;</p>
+    <p>&lt;/respondTo&gt;</p>
+    <p>Cross Gateway Patient Discovery Request Application Acknowledgement Message</p>
+    <p>If the Responding Gateway supports the Deferred Response Option it shall respond with an HL7 V3 Accept Acknowledgement message (MCCI_IN000002UV01). The WS-Addressing Action value shall be urn:hl7-org:v3:MCCI_IN000002UV01.</p>
+    <p>Cross Gateway Patient Discovery Response Message</p>
+    <p>The Responding Gateway will process the Cross Gateway Patient Discovery Request Message and generate a Cross Gateway Patient Discovery Response Message following all the applicable requirements for the transaction. If the Responding Gateway supports the Deferred Response Option, the Cross Gateway Patient Discovery Response Message will be sent as a new request as follows:</p>
+    <ul>
+      <li>
+        <p>The Responding Gateway shall direct the response message to the address specified in the respondTo element in the transmission wrapper.</p>
+      </li>
+      <li>
+        <p>The WS-Addressing RelatesTo element of the response message shall be populated with the message identifier from the WS-Addressing MessageID element of the request message</p>
+      </li>
+      <li>
+        <p>The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201306UV02:Deferred:CrossGatewayPatientDiscovery</p>
+      </li>
+      <li>
+        <p>Correlation with the request message is also supplied through the queryID element from the request message which shall be the same as the queryID element of the Response message.</p>
+      </li>
+    </ul>
+    <p>Cross Gateway Patient Discovery Response Application Acknowledgement Message</p>
+    <p>The Initiating Gateway that supports the Deferred Response Option shall respond with an HL7 V3 application acknowledgement message (MCCI_IN000002UV01). The WS-Addressing Action value shall be urn:hl7-org:v3:MCCI_IN000002UV01.</p>
+  </body>
+</html>

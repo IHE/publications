@@ -1,0 +1,1560 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2a_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2a</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.9">3.9 PIX Query [ITI-9]</h2>
+    <p>This section corresponds to transaction [ITI-9] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-9] is used by the Patient Identifier Cross-reference Consumer and Patient Identifier Cross-reference Manager Actors.</p>
+    <h3 id="3.9.1">3.9.1 Scope</h3>
+    <p>This transaction involves a request by the Patient Identifier Cross-reference Consumer for a list of patient identifiers that correspond to a patient identifier known by the consumer. The request is received by the Patient Identifier Cross-reference Manager. The Patient Identifier Cross-reference Manager immediately processes the request and returns a response in the form of a list of corresponding patient identifiers, if any.</p>
+    <h3 id="3.9.2">3.9.2 Use Case Roles</h3>
+    <p>Actor: Patient Identifier Cross-reference Consumer</p>
+    <p>Role: Queries the Patient Identifier Cross-reference Manager for a list of corresponding patient identifiers, if any</p>
+    <p>Actor: Patient Identifier Cross-reference Manager</p>
+    <p>Role: Manages the cross-referencing of patient identifiers across Patient Identification Domains. Upon request it returns a list of corresponding patient identifiers, if any.</p>
+    <h3 id="3.9.3">3.9.3 Referenced Standard</h3>
+    <p>HL7 2.5, Chapter 2 – Control, Chapter 3 – Patient Administration, Chapter 5 – Query</p>
+    <p>Note: HL7 version 2.5 was selected for this transaction because it was considered the most stable version that contained the functionality required by transactions [ITI-9] and [ITI-10].</p>
+    <h3 id="3.9.4">3.9.4 Messages</h3>
+    <p>Figure 3.9-1: Get Corresponding Identifiers Sequence</p>
+    <h4 id="3.9.4.1">3.9.4.1 Get Corresponding Identifiers</h4>
+    <h5 id="3.9.4.1.1">3.9.4.1.1 Trigger Events</h5>
+    <p>A Patient Identifier Cross-reference Consumer’s need to get the patient identifier associated with a domain for which it needs patient related information will trigger the request for corresponding patient identifiers message based on the following HL7 trigger event:</p>
+    <ul>
+      <li>
+        <p>Q23 – Get Corresponding Identifiers</p>
+      </li>
+    </ul>
+    <h5 id="3.9.4.1.2">3.9.4.1.2 Message Semantics</h5>
+    <p>The Request for Corresponding Patient Identifiers transaction is conducted by the HL7 QBP^Q23 message. The Patient Identifier Cross-reference Consumer shall generate the query message whenever it needs to obtain a corresponding patient identifier(s) from other Patient Identification Domain(s). The segments of the message listed below are required, and their detailed descriptions are provided in the following subsections.</p>
+    <p>Note: Conventions used in this section as well as additional qualifications to the level of specification and HL7 profiling are stated in <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a> and C.1.</p>
+    <p>Table 3.9-1: QBP Query By Parameter</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>QBP</th>
+          <th>Query By Parameter</th>
+          <th>Chapter in HL7 2.5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>QPD</td>
+          <td>Query Parameter Definition</td>
+          <td>5</td>
+        </tr>
+        <tr class="odd">
+          <td>RCP</td>
+          <td>Response Control Parameter</td>
+          <td>5</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The receiver shall respond to the query by sending the RSP^K23 response message. This satisfies the requirements of original mode acknowledgment; no intermediate ACK message is to be sent.</p>
+    <h6 id="3.9.4.1.2.1">3.9.4.1.2.1 MSH Segment</h6>
+    <p>The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2 “Message Control”.</p>
+    <p>
+      Field
+      <em>MSH-9 Message Type</em>
+      shall have all three components populated with a value. The first component shall have a value of QBP; the second component shall have the value of Q23. The third component shall have a value of QBP_Q21.
+    </p>
+    <h6 id="3.9.4.1.2.2">3.9.4.1.2.2 QPD Segment</h6>
+    <p>The Patient Identifier Cross-reference Consumer is required to send attributes within the QPD segment as described in Table 3.9-2.</p>
+    <p>Table 3.9-2: IHE Profile - QPD segment</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>SEQ</th>
+          <th>LEN</th>
+          <th>DT</th>
+          <th>OPT</th>
+          <th>TBL#</th>
+          <th>ITEM#</th>
+          <th>ELEMENT NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>1</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>R</td>
+          <td>0471</td>
+          <td>01375</td>
+          <td>Message Query Name</td>
+        </tr>
+        <tr class="even">
+          <td>2</td>
+          <td>32</td>
+          <td>ST</td>
+          <td>R+</td>
+          <td />
+          <td>00696</td>
+          <td>Query Tag</td>
+        </tr>
+        <tr class="odd">
+          <td>3</td>
+          <td>
+            250
+            <sup>**</sup>
+          </td>
+          <td>CX</td>
+          <td>R</td>
+          <td />
+          <td />
+          <td>Person Identifier</td>
+        </tr>
+        <tr class="even">
+          <td>4</td>
+          <td>250</td>
+          <td>CX</td>
+          <td>O</td>
+          <td />
+          <td />
+          <td>What Domains Returned</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <em>Adapted from the HL7 Standard, version 2.5</em>
+    </p>
+    <p>** Note: This value assumes completion of an HL7 erratum to correct an error identified in the standard.</p>
+    <p>
+      This message shall use the field QPD-3
+      <em>Person Identifier</em>
+      to convey a single Patient ID uniquely identifying the patient within a given Patient Identification Domain.
+    </p>
+    <p>The Patient Identifier Cross-reference Consumer shall provide the patient identifier in the ID component (first component) of the QPD-3 field (QPD-3.1).</p>
+    <p>The Patient Identifier Cross-reference Consumer shall provide component QPD-3.4, Assigning Authority, by including either the first subcomponent (namespace ID) or the second and third subcomponents (universal ID and universal ID type) If all three subcomponents are populated, the first subcomponent shall reference the same entity as is referenced by the second and third components.</p>
+    <p>
+      If the requesting system wishes to select the domains from which they wish to receive Patient IDs, it does so by populating
+      <em>QPD-4-What Domains Returned</em>
+      with as many repetitions as domains for which it wants to receive Patient IDs. Each repetition of QPD-4 shall contain an instance of data type CX in which only the fourth component (Assigning Authority) is populated; the remaining components shall be empty. The responding system shall return the Patient ID value for each requested domain if a value is known.
+    </p>
+    <p>If QPD-4 is empty, the Patient Identifier Cross-reference Manager shall return Patient IDs for all domains for which it possesses a corresponding Patient ID (subject to local publication restrictions).</p>
+    <p>The Consumer shall specify “IHE PIX Query” for QPD-1 Message Query Name.</p>
+    <h6 id="3.9.4.1.2.3">3.9.4.1.2.3 RCP Segment</h6>
+    <p>Although HL7 requires that the RCP Segment be sent in all QBP messages, IHE does not require that the Patient Identifier Cross-reference Consumer send any attributes within the RCP segment, as is specified in the HL7 standard.</p>
+    <p class="heading" id="populating-rcp-1-query-priority">Populating RCP-1-Query Priority</p>
+    <p>
+      Field
+      <em>RCP-1-Query Priority</em>
+      shall always contain I, signifying that the response to the query is to be returned in Immediate mode.
+    </p>
+    <h5 id="3.9.4.1.3">3.9.4.1.3 Expected Actions</h5>
+    <p>The Patient Identifier Cross-reference Manager shall be capable of accepting attributes in the QPD segment as specified in Table 3.9-2.</p>
+    <p>The Patient Identifier Cross-reference Manager must be capable of receiving all valid combinations of subcomponents that make up the Assigning Authority component (i.e., all valid combinations of QPD-3.4).</p>
+    <p>The Patient Identifier Cross-reference Manager shall be capable of accepting multiple concurrent PIX Query requests (Get Corresponding Identifiers messages) and responding correctly using the Return Corresponding Identifiers message.</p>
+    <h4 id="3.9.4.2">3.9.4.2 Return Corresponding Identifiers</h4>
+    <h5 id="3.9.4.2.1">3.9.4.2.1 Trigger Events</h5>
+    <p>The Patient Identifier Cross-reference Manager’s response to the Get Patient Identifiers message will trigger the following message:</p>
+    <ul>
+      <li>
+        <p>K23 – Corresponding patient identifiers</p>
+      </li>
+    </ul>
+    <h5 id="3.9.4.2.2">3.9.4.2.2 Message Semantics</h5>
+    <p>The Return Corresponding Identifiers transaction is conducted by the HL7 RSP^K23 message. The Patient Identifier Cross-reference Manager shall generate this message in direct response to the QBP^Q23 query message previously received. This message satisfies the Application Level, Original Mode Acknowledgement for the HL7 QBP^Q23 message. The segments of the message listed without enclosing square brackets in the table below are required. Detailed descriptions of all segments listed in the table below are provided in the following subsections. Other segments of the message are optional.</p>
+    <p>Note: Conventions used in this section as well as additional qualifications to the level of specification and HL7 profiling are stated in <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a> and C.1.</p>
+    <p>Table 3.9-3: RSP Segment Pattern Response</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>RSP</th>
+          <th>Segment Pattern Response</th>
+          <th>Chapter in HL7 2.5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>MSA</td>
+          <td>Message Acknowledgement</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>[ERR]</td>
+          <td>Error segment</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>QAK</td>
+          <td>Query Acknowledgement</td>
+          <td>5</td>
+        </tr>
+        <tr class="odd">
+          <td>QPD</td>
+          <td>Query Parameter Definition</td>
+          <td>5</td>
+        </tr>
+        <tr class="even">
+          <td>[PID]</td>
+          <td>Patient Identification</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 id="3.9.4.2.2.1">3.9.4.2.2.1 MSH Segment</h6>
+    <p>The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2, “Message Control”.</p>
+    <p>
+      Field
+      <em>MSH-9-Message Type</em>
+      shall have all three components populated with a value. The first component shall have a value of RSP; the second component shall have the value of K23. The third component shall have a value of RSP_K23.
+    </p>
+    <h6 id="3.9.4.2.2.2">3.9.4.2.2.2 MSA Segment</h6>
+    <p>The Patient Identifier Cross-reference Manager is not required to send any attributes within the MSA segment beyond what is specified in the HL7 standard. See ITI TF-2x: C.2.3 for the list of all required and optional fields within the MSA segment.</p>
+    <h6 id="3.9.4.2.2.3">3.9.4.2.2.3 QAK Segment</h6>
+    <p>The Patient Identifier Cross-reference Manager shall send attributes within the QAK segment as defined in Table 3.9-4. For the details on filling in QAK-2 (Query Response Status) refer to Section 3.9.4.2.2.6.</p>
+    <p>Table 3.9-4: IHE Profile - QAK segment</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>SEQ</th>
+          <th>LEN</th>
+          <th>DT</th>
+          <th>OPT</th>
+          <th>TBL#</th>
+          <th>ITEM#</th>
+          <th>ELEMENT NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>1</td>
+          <td>32</td>
+          <td>ST</td>
+          <td>R</td>
+          <td />
+          <td>00696</td>
+          <td>Query Tag</td>
+        </tr>
+        <tr class="even">
+          <td>2</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>R+</td>
+          <td>0208</td>
+          <td>00708</td>
+          <td>Query Response Status</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <em>Adapted from the HL7 standard, version 2.5</em>
+    </p>
+    <h6 id="3.9.4.2.2.4">3.9.4.2.2.4 QPD Segment</h6>
+    <p>The Patient Identifier Cross-reference Manager shall echo the QPD Segment value that was sent in the QBP^Q23 message.</p>
+    <h6 id="3.9.4.2.2.5">3.9.4.2.2.5 PID Segment</h6>
+    <p>
+      The Patient Identifier Cross-reference Manager shall return only those attributes within the PID segment that are required by the HL7 standard:
+      <em>PID-3-Patient IdentifierList</em>
+      and
+      <em>PID-5-Patient Name</em>
+      .
+    </p>
+    <p>The PID segment is returned only when the Patient Identifier Cross-reference Manager recognizes the specified Patient Identification Domain and Patient ID and an identifier exists for the specified patient in at least one other domain. See Section 3.9.4.2.2.6, “Patient Identifier Cross-reference Manager Query Response Behavior,” for a detailed description of how the Patient Identifier Cross-reference Manager responds to the query request under various circumstances.</p>
+    <p>
+      <em>The Patient Identifier Cross-reference Manager</em>
+      shall use the field PID-3 Patient Identifier List to convey the Patient ID uniquely identifying the patient within each Patient Identification Domain for which a Patient ID exists for the specified patient. Each resulting ID returned in PID-3 shall include a fully qualified Assigning Authority component. In other words, the Assigning Authority component returned shall include ALL subcomponents (namespace ID, Universal ID, and Universal ID type).
+    </p>
+    <p>
+      To eliminate the issue of conflicting name values between Patient Identifier Domains, the Patient Identifier Cross-reference Manager shall return in an empty (not present) value in the first repetition of field PID-5-Patient Name, and shall return a second repetition of field
+      <em>PID-5-Patient Name</em>
+      in which the only populated component is Component 7 (Name Type Code). Component 7 of repetition 2 shall contain a value of S (Coded Pseudo-name to assure anonymity). All other components of repetition 2 shall be empty (not present).
+    </p>
+    <h6 id="3.9.4.2.2.6">3.9.4.2.2.6 Patient Identifier Cross-reference Manager Actor Query Response Behavior</h6>
+    <p>It is wholly the responsibility of the Patient Identifier Cross-reference Manager to perform the matching of patient identifiers based on the patient traits it receives. The information provided by the Patient Identifier Cross-reference Manager to Patient Identifier Cross-reference Consumer Actors is a list of cross-referenced identifiers in two or more of the domains managed by the cross-referencing Actor. The list of cross-references is not made available until the set of policies and processes for managing the cross-reference function have been completed. The policies of administering identities adopted by the cooperating domains are completely internal to the Patient Identifier Cross-reference Manager and are outside of the scope of this framework. Possible matches should not be communicated until the healthcare institution policies and processes embodied in the Patient Identifier Cross-reference Manager reach a positive matching decision.</p>
+    <p>The Patient Identifier Cross-reference Manager shall respond to the query request as described by the following 6 cases:</p>
+    <p>Case 1: The Patient Identifier Cross-reference Manager recognizes the specified Patient Identification Domain and Patient ID sent by the Patient Identifier Cross-reference Consumer in QPD-3, and corresponding identifiers exist for the specified patient in at least one of the domains requested in QPD-4 (one identifier per domain). (See Case 6 below for the required behavior if there are multiple identifiers recognized within a given Identifier Domain by the Patient Identifier Cross-reference Manager Actor.)</p>
+    <p>AA (application accept) is returned in MSA-1.</p>
+    <p>OK (data found, no errors) is returned in QAK-2.</p>
+    <p>
+      A single PID segment is returned in which one repetition of
+      <em>PID-3 Patient Identifier List</em>
+      is populated for each of the domains, if any, that the Patient Identifier Cross-reference Manager did recognize in which a single identifier exists for the requested patient, not including the queried-for patient identifier that is returned in QPD-3.
+    </p>
+    <p>Case 2: The Patient Identifier Cross-reference Manager recognizes the Patient Identification Domain and Patient ID sent in QPD-3, but no identifier exists for that patient in any of the domains sent in QPD-4.</p>
+    <p>AA (application accept) is returned in MSA-1.</p>
+    <p>NF (no data found, no errors) is returned in QAK-2.</p>
+    <p>No PID segment is returned.</p>
+    <p>Case 3: The Patient Identifier Cross-reference Manager recognizes the specified Patient Identification Domain sent in the fourth component of QPD-3, but does not recognize the Patient ID sent in the first component of QPD-3.</p>
+    <p>AE (application error) is returned in MSA-1 and in QAK-2.</p>
+    <p>
+      An ERR segment is returned in which the components of
+      <em>ERR-2-Error Location</em>
+      are valued as follows.
+    </p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>COMP #</td>
+          <td>COMPONENT NAME</td>
+          <td>VALUE</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>Segment ID</td>
+          <td>QPD</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>Sequence</td>
+          <td>
+            <em>1</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>Field Position</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>Field Repetition</td>
+          <td>1</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>Component Number</td>
+          <td>1</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>Sub-Component Number</td>
+          <td>
+            <em>(empty)</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      As specified by HL7,
+      <em>ERR-2.6-Sub-Component Number</em>
+      is not valued because we are referring to the entire fourth component of field QPD-3.
+    </p>
+    <p>
+      <em>ERR-3-HL7 Error Code</em>
+      is populated with the error condition code 204 (unknown key identifier). Together with the values in ERR-2, this signifies that the Patient Identifier Cross-reference Manager did not recognize the value in the first component of QPD-3.
+    </p>
+    <p>Case 4: The Patient Identifier Cross-reference Manager does not recognize the Patient Identification Domain of the identifier sent in QPD-3.</p>
+    <p>AE (application error) is returned in MSA-1 and in QAK-2.</p>
+    <p>
+      An ERR segment is returned in which the components of
+      <em>ERR-2-Error Location</em>
+      are valued as follows.
+    </p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>COMP #</td>
+          <td>COMPONENT NAME</td>
+          <td>VALUE</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>Segment ID</td>
+          <td>QPD</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>Sequence</td>
+          <td>
+            <em>1</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>Field Position</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>Field Repetition</td>
+          <td>1</td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>Component Number</td>
+          <td>4</td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>Sub-Component Number</td>
+          <td>
+            <em>(empty)</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      As specified by HL7,
+      <em>ERR-2.6-Sub-Component Number</em>
+      is not valued because we are referring to the entire fourth component of field QPD-3.
+    </p>
+    <p>
+      <em>ERR-3-HL7 Error Code</em>
+      is populated with the error condition code 204 (unknown key identifier). Together with the values in ERR-2, this signifies that the Patient Identifier Cross-reference Manager did not recognize the value in the fourth component of QPD-3.
+    </p>
+    <p>Case 5: The Patient Identifier Cross-reference Manager does not recognize one or more of the Patient Identification Domains for which an identifier has been requested.</p>
+    <p>AE (application error) is returned in MSA-1 and in QAK-2.</p>
+    <p>
+      For one domain that was not recognized, an ERR segment is returned in which the components of
+      <em>ERR-2-Error Location</em>
+      are valued as indicated below.
+    </p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>COMP #</td>
+          <td>COMPONENT NAME</td>
+          <td>VALUE</td>
+        </tr>
+        <tr class="even">
+          <td>1</td>
+          <td>Segment ID</td>
+          <td>QPD</td>
+        </tr>
+        <tr class="odd">
+          <td>2</td>
+          <td>Sequence</td>
+          <td>
+            <em>1</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>3</td>
+          <td>Field Position</td>
+          <td>4</td>
+        </tr>
+        <tr class="odd">
+          <td>4</td>
+          <td>Field Repetition</td>
+          <td>
+            <em>(see below)</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>5</td>
+          <td>Component Number</td>
+          <td>
+            <em>(empty)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>6</td>
+          <td>Sub-Component Number</td>
+          <td>
+            <em>(empty)</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      As specified by HL7,
+      <em>ERR-2.5-Component Number</em>
+      and
+      <em>ERR-2.6-Sub-Component Number</em>
+      are not valued because we are referring to the entire field QPD-4.
+    </p>
+    <p>
+      <em>ERR-3-HL7 Error Code</em>
+      is populated with the error condition code 204 (unknown key identifier). Together with the values in ERR-2, this signifies that the Patient Identifier Cross-reference Manager did not recognize the domain for the occurrence of
+      <em>QPD-4-What Domains Returned</em>
+      whose ordinal number is returned as an integer in
+      <em>ERR-2.4</em>
+      .
+    </p>
+    <p>Case 6: The Patient Identifier Cross-reference Manager recognizes the specified Patient Identification Domain and Patient ID sent by the Patient Identifier Cross-reference Consumer in QPD-3, and corresponding identifiers exist for the specified patient in at least one of the domains requested in QPD-4, and there are multiple identifiers within at least one of the requested domains.</p>
+    <p>AA (application accept) is returned in MSA-1.</p>
+    <p>OK (data found, no errors) is returned in QAK-2.</p>
+    <p>
+      A single PID segment is returned in which one repetition of
+      <em>PID-3-Patient Identifier List</em>
+      is populated for each of the identifiers, not including the queried-for patient identifier that is returned in QPD-3. If the Patient Identifier Cross-reference Manager chooses to return multiple identifiers associated with the same domain, it shall return these identifiers grouped in successive repetitions within the
+      <em>PID-3-Patient Identifier List</em>
+      .
+    </p>
+    <h5 id="3.9.4.2.3">3.9.4.2.3 Expected Actions</h5>
+    <p>The Patient Identifier Cross-reference Consumer will use the list of patient identifier aliases provided by the Patient Identifier Cross-reference Manager to perform the functions for which it requested the list.</p>
+    <p>In the case where the returned list of identifiers contains multiple identifiers for a single domain, the Patient Identifier Cross-reference Consumer shall either use ALL of the multiple identifiers from the given domain or it shall ignore ALL of the multiple identifiers from the given domain.</p>
+    <p>This allows Patient Identifier Cross-reference Consumers capable of handling multiple identities for a single patient within a single domain (i.e., those that can correctly aggregate the information associated with the different identifiers) to do so. For those Patient Identifier Cross-reference Consumers not capable of handling this situation, ignoring the entire list of different identifiers prevents the Consumer from presenting incomplete data.</p>
+    <h3 id="3.9.5">3.9.5 Security Considerations</h3>
+    <h4 id="3.9.5.1">3.9.5.1 Audit Record Considerations</h4>
+    <p>The PIX Query Transaction is a Query Information event as defined in Table 3.20.4.1.1.1-1 with the following exceptions:</p>
+    <h5 id="3.9.5.1.1">3.9.5.1.1 Patient Identifier Cross-reference Consumer audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-9”, “IHE Transactions”, “PIX Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Identifier Cross-reference Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Patient Identifier Cross-reference Manager) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Patient Identity Cross-reference Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>The identity of the Patient Identifier Cross-reference Consumer Actor facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>The identity of the Patient Identifier Cross-reference Manager facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-9”, “IHE Transactions”, “PIX Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>The complete query message (including MSH and QPD segments), base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>M</td>
+          <td>Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.9.5.1.2">3.9.5.1.2 Patient Identifier Cross-reference Manager audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-9”, “IHE Transactions”, “PIX Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Identifier Cross-reference Manager) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Patient Identifier Cross-reference Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Patient Identifier Cross-reference Manager) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>The identity of the Patient Identifier Cross-reference Consumer Actor facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>The identity of the Patient Identifier Cross-reference Manager facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-9”, “IHE Transactions”, “PIX Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The complete query message (including MSH and QPD segments), base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>M</td>
+          <td>Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

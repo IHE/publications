@@ -1,0 +1,1655 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.51">3.51 Multi-Patient Stored Query [ITI-51]</h2>
+    <p>This section corresponds to transaction [ITI-51] of the IHE Technical Framework. Transaction [ITI-51] is used by the Document Consumer and Document Registry Actors.</p>
+    <h3 class="list-paragraph" id="3.51.1">3.51.1 Scope</h3>
+    <p>
+      <em>The Multi-Patient Stored Query supports a variety of queries for multiple patients. It is based on the Registry Stored Query [ITI-18] transaction. The main difference is the set of queries, which is specified in this transaction.</em>
+    </p>
+    <h3 class="list-paragraph" id="3.51.2">3.51.2 Use Case Roles</h3>
+    <p>Actor: Document Consumer</p>
+    <p>Role: Issues a Multi-Patient Stored Query to retrieve metadata or object references associated with multiple patients based on query parameters</p>
+    <p>Actor: Document Registry</p>
+    <p>Role: Responds to a Multi-Patient Stored Query by providing the metadata or object references of registry objects which satisfy the query parameters</p>
+    <h3 class="list-paragraph" id="3.51.3">3.51.3 Referenced Standard</h3>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>ebRIM</th>
+          <th>
+            <p>OASIS/ebXML Registry Information Model v3.0</p>
+            <p>This model defines the types of metadata and content that can be stored in an ebXML Registry, a basis for and subset of Document Sharing metadata.</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>ebRS</td>
+          <td>
+            <p>OASIS/ebXML Registry Services Specifications v3.0</p>
+            <p>This defines the services and protocols for an ebXML Registry, used as the basis for the XDS Document Registry</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>See <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a> for other referenced standards for SOAP encoding.</p>
+            <p>See <a href="../Volume2a/ITI-18.html#3.18">ITI TF-2a: 3.18</a> for the Registry Stored Query [ITI-18] transaction.</p>
+            <p>See <a href="../Volume3/ch-1.2.html#4.2">ITI TF-3: 4.2</a> for other referenced standards for metadata element encoding.</p>
+          </td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="list-paragraph" id="3.51.4">3.51.4 Messages</h3>
+    <p>Figure 3.51.4-1: Interaction Diagram</p>
+    <h4 class="list-paragraph" id="3.51.4.1">3.51.4.1 Multi-Patient Stored Query Request</h4>
+    <p>
+      <em>This is a query request from the Document Consumer to the Document Registry. The query request contains:</em>
+    </p>
+    <ul>
+      <li>
+        <p>A reference to a pre-defined query stored on the Document Registry Actor</p>
+      </li>
+      <li>
+        <p>Parameters to the query</p>
+      </li>
+    </ul>
+    <h5 class="list-paragraph" id="3.51.4.1.1">3.51.4.1.1 Trigger Events</h5>
+    <p>
+      <em>The message is initiated when a Document Consumer wants to query for metadata based on criteria spanning multiple patients (multiple Patient IDs).</em>
+    </p>
+    <h5 class="list-paragraph" id="3.51.4.1.2">3.51.4.1.2 Message Semantics</h5>
+    <p>
+      <em>The message semantics are identical to those documented for the Registry Stored Query [ITI-18] transaction except where noted below. The following sections document the differences.</em>
+    </p>
+    <p>Document Consumer and Document Registry Actors that support the Asynchronous Web Services Exchange Option shall support WS-Addressing based Asynchronous Web Services requirements as defined in ITI TF-2x: V.3.</p>
+    <h6 class="list-paragraph" id="3.51.4.1.2.1">3.51.4.1.2.1 Query Definitions</h6>
+    <p>
+      <em>This transaction defines the following Stored Queries that may query for multiple Patient Ids.</em>
+    </p>
+    <p class="heading list-paragraph" id="3.51.4.1.2.1.1">3.51.4.1.2.1.1 FindDocumentsForMultiplePatients</p>
+    <p>
+      <em>This Multi-</em>
+      Patient Query is semantically identical to the FindDocuments Stored Query (see <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.7.1">ITI TF-2a: 3.18.4.1.2.3.7.1</a>) except:
+    </p>
+    <ul>
+      <li>
+        <p>$XDSDocumentEntryPatientId is optional (may have zero values).</p>
+      </li>
+      <li>
+        <p>$XDSDocumentEntryPatientId may contain multiple values.</p>
+      </li>
+      <li>
+        <p>At least one of $XDSDocumentEntryPatientId, $XDSDocumentEntryClassCode, $XDSDocumentEntryEventCodeList, or $XDSDocumentEntryHealthcareFacilityTypeCode shall be specified in the provided set of parameters.</p>
+      </li>
+    </ul>
+    <p>Returns: XDSDocumentEntry or ObjectRef objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryPatientId
+            <sup>2</sup>
+          </td>
+          <td>XDSDocumentEntry.patientId</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryClassCode
+            <sup>1 2</sup>
+          </td>
+          <td>XDSDocumentEntry.classCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryTypeCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.typeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryPracticeSettingCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.practiceSettingCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryCreationTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryCreationTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStartTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStartTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStopTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStopTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryHealthcareFacilityTypeCode
+            <sup>1 2</sup>
+          </td>
+          <td>XDSDocumentEntry.healthcareFacilityTypeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryEventCodeList
+            <sup>1 2</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.eventCodeList
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>1</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryAuthorPerson
+            <sup>4</sup>
+          </td>
+          <td>XDSDocumentEntry.author</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryStatus</td>
+          <td>XDSDocumentEntry.status</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryType
+            <sup>5</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Shall be coded according to specification in <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.4">ITI TF-2a: 3.18.4.1.2.3.4</a> Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>2</sup>
+      At least one of $XDSDocumentEntryPatientId, $XDSDocumentEntryClassCode, $XDSDocumentEntryEventCodeList, or $XDSDocumentEntryHealthcareFacilityTypeCode shall be specified.
+    </p>
+    <p>
+      <sup>3</sup>
+      Supports AND/OR semantics as specified in <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.5">ITI TF-2a: 3.18.4.1.2.3.5</a>.
+    </p>
+    <p>
+      <sup>4</sup>
+      The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character. The match shall be applied to the text contained in the Value elements of the authorPerson Slot on the author Classification (value strings of the authorPerson sub-attribute)
+    </p>
+    <p>
+      <sup>5</sup>
+      See <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.6.2">ITI TF-2a: 3.18.4.1.2.3.6.2</a>
+    </p>
+    <p class="heading list-paragraph" id="3.51.4.1.2.1.2">3.51.4.1.2.1.2 FindFoldersForMultiplePatients</p>
+    <p>This Multi-Patient Query is semantically identical to the FindFolders Stored Query (see <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.7.3">ITI TF-2a: 3.18.4.1.2.3.7.3</a>) except:</p>
+    <ol type="1">
+      <li>
+        <p>$XDSFolderPatientId is optional (may have zero values).</p>
+      </li>
+      <li>
+        <p>$XDSFolderPatientId may contain multiple values.</p>
+      </li>
+      <li>
+        <p>At least one of $XDSFolderPatientId or $XDSFolderCodeList shall be specified in the provided set of parameters.</p>
+      </li>
+    </ol>
+    <p>Returns: XDSFolder or ObjectRef objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSFolderPatientId
+            <sup>2</sup>
+          </td>
+          <td>XDSFolder.patientId</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSFolderLastUpdateTimeFrom</td>
+          <td>XDSFolder.lastUpdateTime lower value</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSFolderLastUpdateTimeTo</td>
+          <td>XDSFolder.lastUpdateTime upper bound</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSFolderCodeList
+            <sup>1,2,3</sup>
+          </td>
+          <td>XDSFolder.codeList</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSFolderStatus</td>
+          <td>XDSFolder.status</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Shall be coded according to specification in <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.4">ITI TF-2a: 3.18.4.1.2.3.4</a> Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>2</sup>
+      At least one of $XDSFolderPatientId or $XDSFolderCodeList shall be specified.
+    </p>
+    <p>
+      <sup>3</sup>
+      Supports AND/OR semantics as specified in <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.5">ITI TF-2a: 3.18.4.1.2.3.5</a>.
+    </p>
+    <h6 class="list-paragraph" id="3.51.4.1.2.2">3.51.4.1.2.2 Multi-Patient Stored Query IDs</h6>
+    <p>The following Query Ids shall be used to represent these queries.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Query Name</td>
+          <td>Query ID</td>
+        </tr>
+        <tr class="even">
+          <td>FindDocumentsForMultiplePatients</td>
+          <td>urn:uuid:3d1bdb10-39a2-11de-89c2-2f44d94eaa9f</td>
+        </tr>
+        <tr class="odd">
+          <td>FindFoldersForMultiplePatients</td>
+          <td>urn:uuid:50d3f5ac-39a2-11de-a1ca-b366239e58df</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.51.4.1.2.3">3.51.4.1.2.3 Web Services Transport</h6>
+    <p>The requirements for Web Services transport for Synchronous and WS-Addressing based Asynchronous are described in this section.</p>
+    <p>For the support of both Synchronous and WS-Addressing based Asynchronous web service exchange cases the requirements are the following.</p>
+    <p>The query request and response shall be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V.3">ITI TF-2x: Appendix V.3</a>. The specific values for the WSDL describing the Multi-Patient Stored Query Service are described in this section.</p>
+    <p>The Document Registry shall accept a Multi-Patient Stored Query Request formatted as a SIMPLE SOAP message and respond with a Multi-Patient Stored Query Response formatted as a SIMPLE SOAP message. The Document Consumer shall generate the Multi-Patient Stored Query Request formatted as a SIMPLE SOAP message and accept a Multi-Patient Stored Query Response formatted as a SIMPLE SOAP message.</p>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name shall be “DocumentRegistry”.</p>
+    <p>The following WSDL naming conventions shall apply:</p>
+    <p>wsdl:definitions/@name="DocumentRegistry":</p>
+    <blockquote>
+      <p>query message -&gt; "MultiPatientStoredQuery_Message"</p>
+    </blockquote>
+    <p>query response -&gt; "MultiPatientStoredQueryResponse_Message"</p>
+    <p>portType -&gt; "DocumentRegistry_PortType"</p>
+    <p>operation -&gt; "DocumentRegistry_MultiPatientStoredQuery"</p>
+    <p>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "DocumentRegistry_Port_Soap12"</p>
+    <p>IHE-WSP202) The targetNamespace of the WSDL shall be “urn:ihe:iti:xds-b:2007”</p>
+    <p>These are the requirements for the Multi-Patient Stored Query transaction presented in the order in which they would appear in the WSDL definition:</p>
+    <ol type="1">
+      <li>
+        <p>The following types shall be imported (xsd:import) in the /definitions/types section:</p>
+      </li>
+    </ol>
+    <ul>
+      <li>
+        <p>namespace=" urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", schemaLocation="query.xsd"</p>
+      </li>
+    </ul>
+    <ol start="2" type="1">
+      <li>
+        <p>The /definitions/message/part/@element attribute of the Multi-Patient Stored Query Request message shall be defined as “query:AdhocQueryRequest”</p>
+      </li>
+      <li>
+        <p>The /definitions/message/part/@element attribute of the Multi-Patient Stored Query Response message shall be defined as “query:AdhocQueryResponse”</p>
+      </li>
+      <li>
+        <p>The /definitions/portType/operation/input/@wsaw:Action attribute for the Multi-Patient Stored Query Request message shall be defined as “urn:ihe:iti:2009:MultiPatientStoredQuery”</p>
+      </li>
+      <li>
+        <p>The /definitions/portType/operation/output/@wsaw:Action attribute for the Multi-Patient Stored Query Response message shall be defined as “urn:ihe:iti:2009:MultiPatientStoredQueryResponse”</p>
+      </li>
+      <li>
+        <p>The /definitions/binding/operation/soap12:operation/@soapActionRequired attribute shall be defined as “false”</p>
+      </li>
+    </ol>
+    <p>The following WSDL fragment shows an example of Multi-Patient Stored Query transaction definition:</p>
+    <p>&lt;?xml version="1.0" encoding="utf-8"?&gt;</p>
+    <p>&lt;definitions ...&gt;</p>
+    <p>...</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:ihe:iti:xds-b:2007"&gt;</p>
+    <p>&lt;xsd:import</p>
+    <p>namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>schemaLocation="schema\query.xsd"/&gt;</p>
+    <p>...</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>&lt;message name="RegistryStoredQuery_Message"&gt;</p>
+    <p>&lt;documentation&gt;Multi-Patient Stored Query&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="query:AdhocQueryRequest"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RegistryStoredQueryResponse_Message"&gt;</p>
+    <p>&lt;documentation&gt;Multi-Patient Stored Query Response&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="query:AdhocQueryResponse"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>...</p>
+    <p>&lt;portType name="MPQRegistry_PortType"&gt;</p>
+    <p>&lt;operation name="MultiPatientStoredQuery"&gt;</p>
+    <p>&lt;input message="ihe:RegistryStoredQuery_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2009:MultiPatientStoredQuery"/&gt;</p>
+    <p>&lt;output message="ihe:RegistryStoredQueryResponse_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2009:MultiPatientStoredQueryResponse"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>...</p>
+    <p>&lt;/portType&gt;</p>
+    <p>...</p>
+    <p>&lt;/definitions&gt;</p>
+    <p>A full WSDL for the Document Consumer and Document Registry Actors is found in <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.51.4.1.2.4">3.51.4.1.2.4 Sample SOAP Messages</h6>
+    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;a:Action/&gt;, &lt;a:MessageID/&gt;, &lt;a:ReplyTo/&gt;…; these WS-Addressing headers are populated according to <a href="../Volume2x/ch-22.html#Appendix V.3">ITI TF-2x: Appendix V.3</a>. The body of the SOAP message is omitted for brevity; in a real scenario the empty element will be populated with the appropriate metadata.</p>
+    <p>Samples presented in this section are also available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <p class="heading list-paragraph" id="3.51.4.1.2.4.1">3.51.4.1.2.4.1 Sample Multi-Patient Stored Query SOAP Request (WS-Addressing based)</p>
+    <p>
+      &lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+      <br />
+      &lt;s:Header&gt;
+      <br />
+      &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2009:MultiPatientStoredQuery&lt;/a:Action&gt;
+      <br />
+      &lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;
+      <br />
+      &lt;a:ReplyTo s:mustUnderstand="1"&gt;&gt;
+      <br />
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+      <br />
+      &lt;/a:ReplyTo&gt;
+      <br />
+      &lt;a:To&gt;http://localhost/service/IHEMPQRegistry.svc&lt;/a:To&gt;
+      <br />
+      &lt;/s:Header&gt;
+      <br />
+      &lt;s:Body&gt;
+      <br />
+      &lt;query:AdhocQueryRequest
+      <br />
+      xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"
+      <br />
+      xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"
+      <br />
+      xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;
+      <br />
+      &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;
+      <br />
+      <br />
+      &lt;!-- FindDocumentsForMultiplePatients --&gt;
+      <br />
+      &lt;rim:AdhocQuery id="urn:uuid:3d1bdb10-39a2-11de-89c2-2f44d94eaa9f"&gt;
+      <br />
+      &lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;
+      <br />
+      &lt;rim:ValueList&gt;
+      <br />
+      &lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;
+      <br />
+      &lt;/rim:ValueList&gt;
+      <br />
+      &lt;/rim:Slot&gt;
+      <br />
+      <br />
+      <br />
+      <br />
+      &lt;!-- Note the lack of a specification of the $XDSDocumentEntryPatientId parameter --&gt;
+      <br />
+      <br />
+      <br />
+      <br />
+      &lt;/rim:AdhocQuery&gt;
+      <br />
+      &lt;/query:AdhocQueryRequest&gt;
+      <br />
+      &lt;/s:Body&gt;
+      <br />
+      &lt;/s:Envelope&gt;
+    </p>
+    <p class="heading list-paragraph" id="3.51.4.1.2.4.2">3.51.4.1.2.4.2 Sample Multi-Patient Stored Query SOAP Response (WS-Addressing based)</p>
+    <p>
+      &lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+      <br />
+      &lt;s:Header&gt;
+      <br />
+      &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2009:MultiPatientStoredQueryResponse&lt;/a:Action&gt;
+      <br />
+      &lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;
+      <br />
+      &lt;/s:Header&gt;
+      <br />
+      &lt;s:Body&gt;
+      <br />
+      &lt;query:AdhocQueryResponse
+      <br />
+      xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"
+      <br />
+      status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"&gt;
+      <br />
+      &lt;rim:RegistryObjectList xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"&gt;
+    </p>
+    <p>&lt;!-- Internal details of ExtrinsicObjects are not shown --&gt;</p>
+    <p>
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;rim:ExtrinsicObject/&gt;
+      <br />
+      &lt;/rim:RegistryObjectList&gt;
+      <br />
+      &lt;/query:AdhocQueryResponse&gt;
+      <br />
+      &lt;/s:Body&gt;
+      <br />
+      &lt;/s:Envelope&gt;
+    </p>
+    <h5 class="list-paragraph" id="3.51.4.1.3">3.51.4.1.3 Expected Actions</h5>
+    <p>A Document Registry that supports the PatientId Only Option shall be able to process messages that include one or more $XDSDocumentEntryPatientId values and do not include $XDSDocumentEntryClassCode, $XDSDocumentEntryEventCodeList, or $XDSDocumentEntryHealthcareFacilityTypeCode values (for the FindDocumentsForMultiplePatients query) or $XDSFolderCodeList values (for the FindFoldersForMultiplePatients query).</p>
+    <p>A Document Registry that does NOT support the PatientId Only Option may return an XDSStoredQueryParamNumber error in this case.</p>
+    <p>See Registry Stored Query [ITI-18] for additional Expected Actions – <a href="../Volume2a/ITI-18.html#3.18.4.1.3">ITI TF-2a: 3.18.4.1.3</a>.</p>
+    <h3 class="list-paragraph" id="3.51.5">3.51.5 Security Considerations</h3>
+    <p>All of the Security Considerations found in [ITI-18] apply with the following further profiling.</p>
+    <p>It is expected that the ATNA authentication would be used to restrict access to the Multi-Patient Query [ITI-51] transaction. It is expected that few systems would be allowed to request the LeafClass return result.</p>
+    <h4 class="list-paragraph" id="3.51.5.1">3.51.5.1 Security Audit Considerations</h4>
+    <p>The actors involved shall record one audit event for each patient identity that has been included in the query according to the following. It is important for security auditing that the audit message contain only one patient identity to better handle these messages in the Audit Record Repository. If the query includes no patient identities, both Actors shall record a single audit event with no Patient participant.</p>
+    <h5 id="3.51.5.1.1">3.51.5.1.1 Document Consumer audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>
+            <em>EV(“ITI-51”,“IHE Transactions”,“Multi-Patient Stored Query”)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </th>
+          <th>UserID</th>
+          <th>C</th>
+          <th>If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>M</td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>M</td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </th>
+          <th>UserID</th>
+          <th>M</th>
+          <th>Identity of the human that initiated the transaction.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>RoleIDCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </th>
+          <th>
+            <em>AuditSourceID</em>
+          </th>
+          <th>
+            <em>U</em>
+          </th>
+          <th>
+            <em>not specialized</em>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient (if known)</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-51”, “IHE Transactions”, “Multi-Patient Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>Stored Query ID (UUID)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the AdhocQueryRequest, base64 encoded.3</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <p>
+              <em>The ParticipantObjectDetail element shall occur at least once.</em>
+            </p>
+            <p>
+              <em>The first element shall contain:</em>
+            </p>
+            <blockquote>
+              <p>
+                <em>Type: “QueryEncoding” (literal string)</em>
+              </p>
+              <p>
+                <em>Value: the character encoding, such as “UTF-8”, used to encode the ParticipantObjectQuery before base64 encoding</em>
+              </p>
+            </blockquote>
+            <p>
+              <em>If the homeCommunityId is known, the second element shall contain:</em>
+            </p>
+            <blockquote>
+              <p>
+                <em>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</em>
+              </p>
+              <p>
+                <em>Value: value of the homeCommunityId</em>
+              </p>
+            </blockquote>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.51.5.1.2">3.51.5.1.2 Document Registry audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-51”, “IHE Transactions”, “Multi-Patient Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </th>
+          <th>UserID</th>
+          <th>C</th>
+          <th>If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>M</td>
+          <td>
+            <em>The process ID as used within the local operating system in the local system logs.</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>M</td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>M</td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </th>
+          <th>UserID</th>
+          <th>M</th>
+          <th>SOAP endpoint URI.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>M</td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>M</td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </th>
+          <th>
+            <em>AuditSourceID</em>
+          </th>
+          <th>
+            <em>U</em>
+          </th>
+          <th>
+            <em>not specialized</em>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            P
+            <em>articipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>U</td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-51”, “IHE Transactions”, “Multi-Patient Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>
+            <em>Stored Query ID (UUID)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the AdhocQueryRequest, base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <p>
+              <em>The ParticipantObjectDetail element shall occur at least once.</em>
+            </p>
+            <p>
+              <em>The first element shall contain:</em>
+            </p>
+            <blockquote>
+              <p>
+                <em>Type: “QueryEncoding” (literal string)</em>
+              </p>
+              <p>
+                <em>Value: the character encoding, such as “UTF-8”, used to encode the ParticipantObjectQuery before base64 encoding</em>
+              </p>
+            </blockquote>
+            <p>
+              <em>If the homeCommunityId is known, the second element shall contain:</em>
+            </p>
+            <blockquote>
+              <p>
+                <em>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</em>
+              </p>
+              <p>
+                <em>Value: value of the homeCommunityId</em>
+              </p>
+            </blockquote>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

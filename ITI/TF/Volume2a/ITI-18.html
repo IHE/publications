@@ -1,0 +1,3449 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2a_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2a</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.18">3.18 Registry Stored Query [ITI-18]</h2>
+    <p>This section corresponds to transaction [ITI-18] of the IHE Technical Framework. Transaction [ITI-18] is used by the Document Registry and Document Consumer Actors.</p>
+    <h3 class="list-paragraph" id="3.18.1">3.18.1 Scope</h3>
+    <p>
+      <em>The Registry Stored Query transaction supports a variety of pre-defined queries. Examples include the following:</em>
+    </p>
+    <ul>
+      <li>
+        <p>Query for DocumentEntry objects by patient (Id) for a time interval on creation time and/or service time, by document type(s), by practice setting(s), by author person</p>
+      </li>
+      <li>
+        <p>Query for SubmissionSets by Document Source</p>
+      </li>
+      <li>
+        <p>Query for Folders updated during a time interval</p>
+      </li>
+      <li>
+        <p>Query for all contents in a Folder or SubmissionSet</p>
+      </li>
+      <li>
+        <p>Query for SubmissionSets by time of submission</p>
+      </li>
+    </ul>
+    <p>
+      <em>Depending on the value of the returnType parameter, all queries return:</em>
+    </p>
+    <ul>
+      <li>
+        <p>Metadata for one or more types of registry object (see <a href="../Volume3/ch-1.1.html#4.1.3">ITI TF-3: 4.1.3</a>), or</p>
+      </li>
+      <li>
+        <p>Object references for one or more types of registry object</p>
+      </li>
+    </ul>
+    <h3 class="list-paragraph" id="3.18.2">3.18.2 Use Case Roles</h3>
+    <p>Actor: Document Consumer</p>
+    <p>Role: Requests a query by identifier (UUID), and passes parameters to the query. A parameter controlling the format of the returned data is passed; it selects either object references or full objects.</p>
+    <p>Actor: Document Registry</p>
+    <p>Role: Services the query using its stored definitions of the queries defined for XDS.</p>
+    <p>Actor: Initiating Gateway</p>
+    <p>Role: Services the stored query by initiating transactions with a selected set of Responding Gateways, Document Registries or other appropriate systems.</p>
+    <h3 class="list-paragraph" id="3.18.3">3.18.3 Referenced Standards</h3>
+    <p><a href="../Volume3/ch-1.html#4">ITI TF-3:4</a> Metadata used in Document Sharing Profiles.</p>
+    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>: Web Services for IHE transactions.</p>
+    <p>ebRIM OASIS/ebXML Registry Information Model v3.0</p>
+    <p>ebRS OASIS/ebXML Registry Services Specifications v3.0</p>
+    <h3 class="list-paragraph" id="3.18.4">3.18.4 Messages</h3>
+    <p>Figure 3.18.4-1: Interaction Diagram</p>
+    <h4 class="list-paragraph" id="3.18.4.1">3.18.4.1 Registry Stored Query</h4>
+    <p>This is a query request to the Document Registry from a Document Consumer. The query request contains:</p>
+    <ul>
+      <li>
+        <p>A reference to a pre-defined query stored on the Document Registry Actor.</p>
+      </li>
+      <li>
+        <p>Parameters to the query.</p>
+      </li>
+    </ul>
+    <h5 class="list-paragraph" id="3.18.4.1.1">3.18.4.1.1 Trigger Events</h5>
+    <p>This message is initiated when the Document Consumer wants to query/retrieve document metadata.</p>
+    <h5 class="list-paragraph" id="3.18.4.1.2">3.18.4.1.2 Message Semantics</h5>
+    <p>
+      The semantics of Stored Query are defined in Section 6.3.
+      <em>Stored Query Support</em>
+      of ebRS version 3.0. This transaction corresponds to Section 6.3.2
+      <em>Invoking a Stored Query</em>
+      and 6.3.3
+      <em>Response to a Stored Query Invocation.</em>
+      This profile does not specify how the queries come to be stored in the Registry nor how they are to be translated for other database architectures.
+    </p>
+    <h6 class="list-paragraph" id="3.18.4.1.2.1">3.18.4.1.2.1 Version 3.0 ebXML Registry Standard</h6>
+    <p>This transaction uses ebXML Registry version 3.0.</p>
+    <h6 class="list-paragraph" id="3.18.4.1.2.2">3.18.4.1.2.2 Sample Query Request</h6>
+    <p>The sample query is included under Section 3.18.4.1.3 Expected Actions.</p>
+    <h6 class="list-paragraph" id="3.18.4.1.2.3">3.18.4.1.2.3 Query Request Parameters – Coding Style</h6>
+    <p>
+      <em>Registry Stored Query supports the following parameters:</em>
+    </p>
+    <ul>
+      <li>
+        <p>returnType – ‘LeafClass’ or ‘ObjectRef’</p>
+      </li>
+      <li>
+        <p>Query ID – a UUID from Section 3.18.4.1.2.4</p>
+      </li>
+      <li>
+        <p>Query Parameters – as defined in the subsections under Section 3.18.4.1.2.3.7, that correspond to the Query ID</p>
+      </li>
+    </ul>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.1">3.18.4.1.2.3.1 Parameter returnType</p>
+    <p>Registry Stored Query supports the following values for the parameter returnType:</p>
+    <ul>
+      <li>
+        <p>ObjectRef – a list of object UUIDs (references)</p>
+      </li>
+      <li>
+        <p>LeafClass – list of XML elements representing the leaf class of the object returned</p>
+      </li>
+    </ul>
+    <p>The ‘LeafClass’ returnType is meant for returning a small amount of fully specified ebXML objects (such as a list of ExtrinsicObject (XDSDocumentEntry) elements with full contents: slots, external identifiers, classifications etc.). This type of query result is self-contained, everything known about the object(s) is returned. The specific query documented in this section describes which object types will be included. ObjectRef elements are also returned. These represent objects not included in the returned object list that are referenced by objects in the returned object list. These ObjectRefs are optional by the registry standard version 3.0.</p>
+    <p>The 'ObjectRef' returnType returns references to the registry objects that match the query. This type query is recommended when the returned object list could be large. An initial query returning ObjectRefs for all objects of interest followed by secondary queries requesting full metadata (query type LeafClass) is an efficient way to query for large bodies of metadata. This strategy is particularly easy to use when querying for a single object type (XDSDocumentEntry or XDSSubmissionSet are examples) since only a single object type is involved.</p>
+    <p>An ObjectRef looks like:</p>
+    <p>&lt;ObjectRef id=”urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427”/&gt;</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.2">3.18.4.1.2.3.2 Parameter Query ID</p>
+    <p>This parameter holds the UUID assigned to the query to be invoked. UUIDs are assigned by this profile (see Section 3.18.4.1.2.4) to each of the queries defined in Section 3.18.4.1.2.3.7.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.3">3.18.4.1.2.3.3 Date/Time Coding</p>
+    <p>All Date/time values are to be inclusive, interpreted as:</p>
+    <blockquote>
+      <p>$XDSDocumentEntryCreationTimeFrom &lt;= XDSDocumentEntry.creationTime &lt; $XDSDocumentEntryCreationTimeTo</p>
+    </blockquote>
+    <p>for example.</p>
+    <p>The ‘From’ time or the ‘To’ time may be omitted.</p>
+    <p class="heading" id="comparing-servicestarttime-and-servicestoptime">3.18.4.1.2.3.3.1 Comparing serviceStartTime and serviceStopTime</p>
+    <p>Special consideration is needed when processing the query parameters related to serviceStartTime and serviceStopTime since these DocumentEntry metadata attributes may not be present:</p>
+    <p>If the DocumentEntry.serviceStartTime attribute of a DocumentEntry contains no value and if the query includes a value for $XDSDocumentEntryServiceStartTimeFrom or $XDSDocumentEntryServiceStartTimeTo, those query parameters shall not be used for deciding whether this DocumentEntry matches the query.</p>
+    <p>If the DocumentEntry.serviceStopTime attribute of a DocumentEntry contains no value and if the query includes a value for $XDSDocumentEntryServiceStopTimeFrom or $XDSDocumentEntryServiceStopTimeTo, those query parameters shall not be used for deciding whether this DocumentEntry matches the query.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.4">3.18.4.1.2.3.4 Coding of Code/Code-Scheme</p>
+    <p>When specifying a coded value parameter, an abbreviated form of the HL7 V2.5 CE format shall be used. Only the first (identifier) and third (coding scheme) elements shall be specified. Both are required. The second element shall be empty. The HL7 V2.5 length limits shall not apply. The ebRIM limit on Slot Value size does apply. An example of this format is:</p>
+    <p>code^^coding-scheme</p>
+    <p>This style parameter always accepts multiple values so example codings in context look like:</p>
+    <p>&lt;Value&gt;('code1^^coding-scheme1')&lt;/Value&gt;</p>
+    <p>or</p>
+    <p>&lt;Value&gt;('code1^^coding-scheme1','code2^^coding-scheme2')&lt;/Value&gt;</p>
+    <p>within the parameter Slot.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.5">3.18.4.1.2.3.5 Coding of Single/Multiple Values</p>
+    <p>Single values are coded as</p>
+    <ul>
+      <li>
+        <p>123 - without quotes for numbers</p>
+      </li>
+      <li>
+        <p>'urn:oasis:names:tc:ebxml-regrep:StatusType:Approved' - in single quotes for strings.</p>
+      </li>
+      <li>
+        <p>'Children''s Hospital' – a single quote is inserted in a string by specifying two single quotes</p>
+      </li>
+    </ul>
+    <p>For parameters defined to be compatible with the SQL 'LIKE' keyword: Underscore ('_') matches an arbitrary character</p>
+    <ul>
+      <li>
+        <p>Percent ('%') matches an arbitrary string (0 or more characters)</p>
+      </li>
+    </ul>
+    <p>Format for multiple values is</p>
+    <ul>
+      <li>
+        <p>(value,value,value,…)</p>
+      </li>
+    </ul>
+    <p>OR</p>
+    <ul>
+      <li>
+        <p>(value) if only one value is to be specified.</p>
+      </li>
+    </ul>
+    <p>where each value is coded as described above for single values.</p>
+    <p>When coding multiple values there is a potential conflict between needing to code a long list of values and the length restriction imposed by Schema on the size of the value of the &lt;Value/&gt; element. Slot values shall never exceed the Schema-enforced limit. Therefore, the use of multiple Value elements within the Slot shall be acceptable. Splits may occur only between values, where each Value element is surrounded by parentheses. The following example shows multiple values, split across multiple Value elements:</p>
+    <p>&lt;Slot name="$uuid"&gt;</p>
+    <p>&lt;ValueList&gt;</p>
+    <p>&lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66')&lt;/Value&gt;</p>
+    <p>&lt;Value&gt;('urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;</p>
+    <p>&lt;/ValueList&gt;</p>
+    <p>&lt;/Slot&gt;</p>
+    <p>This example shall be treated as equivalent to:</p>
+    <p>&lt;Slot name="$uuid"&gt;</p>
+    <p>&lt;ValueList&gt;</p>
+    <p>&lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66','urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;</p>
+    <p>&lt;/ValueList&gt;</p>
+    <p>&lt;/Slot&gt;</p>
+    <p>Character comparisons shall be performed in accordance with the rules in <a href="../Volume2x/ch-6.html#Appendix F">ITI TF-2x: Appendix F</a> Character String Comparisons.</p>
+    <p>And/or semantics for the coding of parameters shall be available only on parameters for multi-valued metadata elements (such as $XDSDocumentEntryEventCodeList). Multi-valued parameters shall be coded in two ways with different interpretations.</p>
+    <p>A parameter specified as a Slot with multiple values shall be interpreted as disjunction (OR semantics). For example:</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>    &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;</p>
+    <p>&lt;rim:Value&gt;('b')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing either 'a' or 'b'. The following coding of the parameter shall yield the same results:</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>    &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>A parameter specified as multiple Slots shall be interpreted as conjunction (AND semantics). For example:</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;('a')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>    &lt;rim:Value&gt;('b')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing both 'a' and 'b'.</p>
+    <p>Furthermore, the following specification of the $XDSDocumentEntryEventCodeList parameter:</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>    &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</p>
+    <p>  &lt;rim:ValueList&gt;</p>
+    <p>    &lt;rim:Value&gt;('c')&lt;/rim:Value&gt;</p>
+    <p>  &lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>shall be interpreted as matching a document having eventCode (a OR b) AND c.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.6">3.18.4.1.2.3.6 Valid Document Status Values</p>
+    <p>The Registry Object status values, in ebRIM v 3.0 format, used by XDS are:</p>
+    <p>urn:oasis:names:tc:ebxml-regrep:StatusType:Approved</p>
+    <p>urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated</p>
+    <p>If the Document Registry receives in a Registry Stored Query transaction a value for the $XDSDocumentEntryStatus parameter that it does not understand then the Document Registry shall ignore the value and process the Registry Stored Query transaction as if the not understood value were not specified. This means that if the only value present is one that is not understood an error will be generated because the $XDSDocumentEntryStatus parameter is required.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.6.1">3.18.4.1.2.3.6.1 Valid AdhocQueryResponse Status Values</p>
+    <p>The status attribute of AdhocQueryResponse shall contain one of the following values:</p>
+    <p>urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success</p>
+    <p>urn:ihe:iti:2007:ResponseStatusType:PartialSuccess</p>
+    <p>urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure</p>
+    <p>See <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a> Error Reporting for the interpretation of these values.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.6.2">3.18.4.1.2.3.6.2 Valid DocumentEntryType Parameter Values</p>
+    <p>The objectType attribute on an ExtrinsicObject (DocumentEntry) is used to distinguish Stable DocumentEntries from On-Demand DocumentEntries.</p>
+    <p>The following objectType values are used:</p>
+    <p>urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1 – Stable</p>
+    <p>urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248 – On-Demand</p>
+    <p>The valid DocumentEntryType parameter values used in the Registry Stored Query are:</p>
+    <p>urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1 – requests Stable Document Entries be included in the response. This is the default value.</p>
+    <p>urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248 – requests On-Demand Document Entries be included in the response. Used only by Document Consumers which support the On-Demand Documents Option.</p>
+    <p>If no value is specified for DocumentEntryType, the value requesting only Stable Document Entries shall be assumed. To get all Document Entry types, the query shall contain both of the valid values in the request.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7">3.18.4.1.2.3.7 Parameters for Required Queries</p>
+    <p>The sections below document the queries defined in the Registry Stored Query [ITI-18] transaction. These sections document a collection of Stored Queries. Document Registry Actors implementing this transaction shall support all queries in this collection and all parameters defined for each query. Document Consumer Actors implementing this transaction shall implement one or more of these queries as needed to support the use cases it implements.</p>
+    <p>Note that dollar sign ($) prefix on query parameters is required by ebRS 3.0.</p>
+    <p>In the query parameter tables below, each row represents a query parameter. Optional parameters which are not included in the query invocation have no effect on the query. Queries return registry objects that match all the supplied parameters. See Section 3.18.4.1.2.3.5 for information on specifying multiple values for a parameter.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.1">3.18.4.1.2.3.7.1 FindDocuments</p>
+    <p>Find documents (XDSDocumentEntry objects) in the registry for a given patientID with a matching availabilityStatus attribute. The other parameters can be used to restrict the set of XDSDocumentEntry objects returned.</p>
+    <p>Returns: XDSDocumentEntry objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryPatientId</td>
+          <td>XDSDocumentEntry.patientId</td>
+          <td>R</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryClassCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.classCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryTypeCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.typeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryPracticeSettingCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.practiceSettingCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryCreationTimeFrom
+            <sup>6</sup>
+          </td>
+          <td>Lower value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryCreationTimeTo
+            <sup>6</sup>
+          </td>
+          <td>Upper value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStartTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStartTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStopTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStopTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryHealthcareFacilityTypeCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.healthcareFacilityTypeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryEventCodeList
+            <sup>1</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.eventCodeList
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>1</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryAuthorPerson
+            <sup>4</sup>
+          </td>
+          <td>XDSDocumentEntry.author</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryStatus</td>
+          <td>XDSDocumentEntry.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryType
+            <sup>5</sup>
+          </td>
+          <td>XDSDocumentEntryobjectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>3</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p>
+      <sup>4</sup>
+      The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character. The match shall be applied to the text contained in the Value elements of the authorPerson Slot on the author Classification (value strings of the authorPerson sub-attribute)
+    </p>
+    <p>
+      <sup>5</sup>
+      See Section 3.18.4.1.2.3.6.2
+    </p>
+    <p>
+      <sup>6</sup>
+      CreationTimeFrom and CreationTimeTo are ignored when evaluating an On-Demand Document Entry’s selection for inclusion in the query response.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.2">3.18.4.1.2.3.7.2 FindSubmissionSets</p>
+    <p>Find submission sets (XDSSubmissionSet objects) in the registry for a given patientID with matching ‘status’ attribute. The other parameters can be used to restrict the collection of XDSSubmissionSet objects returned.</p>
+    <p>Returns: XDSSubmissionSet objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSSubmissionSetPatientId</td>
+          <td>XDSSubmissionSet.patientId</td>
+          <td>R</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSSubmissionSetSourceId</td>
+          <td>XDSSubmissionSet.sourceId</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSSubmissionSetSubmissionTimeFrom</td>
+          <td>XDSSubmissionSet.submissionTime Lower value</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSSubmissionSetSubmissionTimeTo</td>
+          <td>XDSSubmissionSet.submissionTime Upper value</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSSubmissionSetAuthorPerson
+            <sup>1</sup>
+          </td>
+          <td>XDSSubmissionSet.authorPerson</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSSubmissionSetContentType
+            <sup>2</sup>
+          </td>
+          <td>XDSSubmissionSet.contentTypeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSSubmissionSetStatus</td>
+          <td>XDSSubmissionSet.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character. The match shall be applied to the text contained in the Value elements of the authorPerson Slot on the author Classification (value strings of the authorPerson sub-attribute).
+    </p>
+    <p>
+      <sup>2</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.3">3.18.4.1.2.3.7.3 FindFolders</p>
+    <p>Find folders (XDSFolder objects) in the registry for a given patientID with matching ‘status’ attribute. The other parameters can be used to restrict the collection of XDSFolder objects returned.</p>
+    <p>Returns: XDSFolder objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSFolderPatientId</td>
+          <td>XDSFolder.patientId</td>
+          <td>R</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSFolderLastUpdateTimeFrom</td>
+          <td>XDSFolder.lastUpdateTime lower value</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSFolderLastUpdateTimeTo</td>
+          <td>XDSFolder.lastUpdateTime upper bound</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSFolderCodeList
+            <sup>1,2</sup>
+          </td>
+          <td>XDSFolder.codeList</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSFolderStatus</td>
+          <td>XDSFolder.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>2</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.4">3.18.4.1.2.3.7.4 GetAll</p>
+    <p>Get all registry content for a patient given the indicated status, format codes, and confidentiality codes.</p>
+    <p>Returns:</p>
+    <ul>
+      <li>
+        <p>XDSSubmissionSet, XDSDocumentEntry, and XDSFolder objects with patientId attribute matching $patientId parameter</p>
+      </li>
+      <li>
+        <p>Association objects with sourceObject or targetObject attribute matching one of the above objects</p>
+      </li>
+    </ul>
+    <blockquote>
+      <p>Note: Associations may be returned that reference objects not in the return set. For example, this could occur when:</p>
+    </blockquote>
+    <ul>
+      <li>
+        <blockquote>
+          <p>the $XDSDocumentEntryStatus parameter is Approved and a submitted DocumentEntry has been replaced and is, therefore, Deprecated, or</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>a SubmissionSet is linked to a DocumentEntry with a different Patient ID, i.e., for a mother and child.</p>
+        </blockquote>
+      </li>
+    </ul>
+    <blockquote>
+      <p>Document Consumers should be prepared to handle these situations.</p>
+    </blockquote>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$patientId</td>
+          <td>XDSFolder.patientId, XDSSubmissionSet.patientId, XDSDocumentEntry.patientId</td>
+          <td>R</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryStatus</td>
+          <td>XDSDocumentEntry.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSSubmissionSetStatus</td>
+          <td>XDSSubmissionSet.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSFolderStatus</td>
+          <td>XDSFolder.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>2</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>1, 2</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>1</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryType
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p>
+      <sup>2</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme
+    </p>
+    <p>
+      <sup>3</sup>
+      See Section 3.18.4.1.2.3.6.2
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.5">3.18.4.1.2.3.7.5 GetDocuments</p>
+    <p>Retrieve a collection of XDSDocumentEntry objects. XDSDocumentEntry objects are selected either by their entryUUID or uniqueId attribute.</p>
+    <p>Returns: XDSDocumentEntry objects requested</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryEntryUUID
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryUniqueId
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>2</sup>
+          </td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSDocumentEntryEntryUUID or $XDSDocumentEntryUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>Note: A query for a single XDSDocumentEntry.uniqueId can return multiple results. See <a href="../Volume3/ch-1.1.html#4.1.4">ITI TF-3: 4.1.4</a> under the topic of Document metadata duplication for explanation.</p>
+    <p>
+      <sup>3</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested DocumentEntry objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.6">3.18.4.1.2.3.7.6 GetFolders</p>
+    <p>Retrieve a collection of XDSFolder objects. XDSFolder objects are selected either by their entryUUID or uniqueId attribute.</p>
+    <p>Returns: XDSFolder objects requested.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSFolderEntryUUID
+            <sup>3</sup>
+          </td>
+          <td>XDSFolder.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSFolderUniqueId
+            <sup>3</sup>
+          </td>
+          <td>XDSFolder.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>2</sup>
+          </td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSFolderEntryUUID or $XDSFolderUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>3</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested Folder objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.7">3.18.4.1.2.3.7.7 GetAssociations</p>
+    <p>Retrieve Association objects whose sourceObject or targetObject attribute match $uuid.</p>
+    <p>Returns: Association objects</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$uuid</td>
+          <td>None</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.8">3.18.4.1.2.3.7.8 GetDocumentsAndAssociations</p>
+    <p>Retrieve a collection of XDSDocumentEntry objects and the Association objects surrounding them. XDSDocumentEntry objects are selected either by their entryUUID or uniqueId attribute. This is the GetDocuments query and GetAssociations query combined into a single query.</p>
+    <p>Returns:</p>
+    <ul>
+      <li>
+        <p>XDSDocumentEntry objects</p>
+      </li>
+      <li>
+        <p>Association objects whose sourceObject or targetObject attribute matches one of the above objects</p>
+      </li>
+    </ul>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryEntryUUID
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryUniqueId
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>2</sup>
+          </td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSDocumentEntryEntryUUID or $XDSDocumentEntryUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>3</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested DocumentEntry objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.9">3.18.4.1.2.3.7.9 GetSubmissionSets</p>
+    <p>Retrieve the XDSSubmissionSet objects used to submit a collection of XDSDocumentEntry and XDSFolder objects. The XDSDocumentEntry and XDSFolder objects of interest are identified by their UUIDs in the $uuid parameter.</p>
+    <p>Selection: XDSSubmissionSet objects are selected because Association objects exist that have:</p>
+    <ul>
+      <li>
+        <p>Type HasMember</p>
+      </li>
+      <li>
+        <p>targetObject attribute containing one of the UUIDs provided in the $uuid parameter</p>
+      </li>
+      <li>
+        <p>sourceObject attribute referencing an XDSSubmissionSet object</p>
+      </li>
+    </ul>
+    <p>Returns:</p>
+    <ul>
+      <li>
+        <p>XDSSubmissionSet objects described above</p>
+      </li>
+      <li>
+        <p>Association objects described in the Selection section above</p>
+      </li>
+    </ul>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $uuid
+            <sup>2</sup>
+          </td>
+          <td>
+            <p>XDSDocumentEntry.entryUUID and</p>
+            <p>XDSFolder.entryUUID</p>
+          </td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>2</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested Submission Set objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.10">3.18.4.1.2.3.7.10 GetSubmissionSetAndContents</p>
+    <p>Retrieve a SubmissionSet and its contents. SubmissionSet objects is selected either by its entryUUID or uniqueId attribute. The DocumentEntry objects returned may be constrained by their formatCode and confidentialityCode attributes. More specifically, the DocumentEntries returned shall be limited by the following rules:</p>
+    <ul>
+      <li>
+        <p>If the $XDSDocumentEntryConfidentialityCode parameter is present in the query, then DocumentEntries shall be returned only if they match this parameter.</p>
+      </li>
+      <li>
+        <p>If the $XDSDocumentEntryFormatCode parameter is present in the query, then DocumentEntries shall be returned only if they match this parameter</p>
+      </li>
+    </ul>
+    <p>Returns:</p>
+    <ul>
+      <li>
+        <p>SubmissionSet identified</p>
+      </li>
+      <li>
+        <p>DocumentEntries linked to the SubmissionSet by HasMember Associations (DocumentEntries shall pass the above rules)</p>
+      </li>
+      <li>
+        <p>The HasMember Associations identified in the previous rule</p>
+      </li>
+      <li>
+        <p>Folders linked to the SubmissionSet by HasMember Associations</p>
+      </li>
+      <li>
+        <p>The HasMember Associations identified in the previous rule</p>
+      </li>
+      <li>
+        <p>Associations linked to the SubmissionSet by HasMember Associations where the Associations link two objects already in the return set</p>
+      </li>
+      <li>
+        <p>The HasMember Associations identified in the previous rule</p>
+      </li>
+    </ul>
+    <p>In the above rules, Associations are only returned if both of the objects they connect are part of the return set.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSSubmissionSetEntryUUID
+            <sup>5</sup>
+          </td>
+          <td>XDSSubmissionSet.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSSubmissionSetUniqueId
+            <sup>5</sup>
+          </td>
+          <td>XDSSubmissionSet.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>4</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>4</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>2</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>3</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryType
+            <sup>6</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSSubmissionSetEntryUUID or $XDSSubmissionSetUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p>
+      <sup>3</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>4</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>5</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested Submission Set, Folder, and DocumentEntry objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p>
+      <sup>6</sup>
+      See Section 3.18.4.1.2.3.6.2
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.11">3.18.4.1.2.3.7.11 GetFolderAndContents</p>
+    <p>Retrieve a Folder and its contents. The Folder object is selected either by its entryUUID or uniqueId attribute. The DocumentEntry objects returned may be constrained by their formatCode and confidentialityCode attributes. More specifically, the DocumentEntries shall be limited by the following rules:</p>
+    <ul>
+      <li>
+        <p>If the $XDSDocumentEntryConfidentialityCode parameter is present in the query, then DocumentEntries shall be returned only if they match this parameter.</p>
+      </li>
+      <li>
+        <p>If the $XDSDocumentEntryFormatCode parameter is present in the query, then DocumentEntries shall be returned only if they match this parameter</p>
+      </li>
+    </ul>
+    <p>Returns:</p>
+    <ul>
+      <li>
+        <p>Folder identified</p>
+      </li>
+      <li>
+        <p>DocumentEntries linked to the Folder by HasMember Associations (DocumentEntries shall pass the above rules)</p>
+      </li>
+      <li>
+        <p>The HasMember Associations identified in the previous rule</p>
+      </li>
+    </ul>
+    <p>In the above rules, Associations are only returned if both of the objects they connect are part of the return set.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSFolderEntryUUID
+            <sup>5</sup>
+          </td>
+          <td>XDSFolder.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSFolderUniqueId
+            <sup>5</sup>
+          </td>
+          <td>XDSFolder.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>4</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>4</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>2</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>3</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryType
+            <sup>6</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSFolderEntryUUID or $XDSFolderUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p>
+      <sup>3</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>4</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>5</sup>
+      If the Stored Query specifies a returnType of LeafClass then the Document Registry shall verify that all requested Folder, and DocumentEntry objects to be returned will contain the same Patient ID. If this validation fails an XDSResultNotSinglePatient error shall be returned and no metadata shall be returned.
+    </p>
+    <p>
+      <sup>6</sup>
+      See Section 3.18.4.1.2.3.6.2
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.12">3.18.4.1.2.3.7.12 GetFoldersForDocument</p>
+    <p>Retrieve XDSFolder objects that contain the XDSDocumentEntry object provided with the query. XDSDocumentEntry objects are selected either by their entryUUID or uniqueId attribute.</p>
+    <p>Returns: XDSFolder objects that contain specified XDSDocumentEntry object. More specifically, for each Association object of type HasMember that has a targetObject attribute referencing the target XDSDocumentEntry object, return the object referenced by its sourceObject if it is of type XDSFolder.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryEntryUUID</td>
+          <td>XDSDocumentEntry.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryUniqueId</td>
+          <td>XDSDocumentEntry.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>2</sup>
+          </td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSDocumentEntryEntryUUID or $XDSDocumentEntryUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>Note: A query for a single XDSDocumentEntry.uniqueId can return multiple results. See <a href="../Volume3/ch-1.1.html#4.1.4">ITI TF-3: 4.1.4</a> under the topic of Document Metadata Duplication for explanation.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.13">3.18.4.1.2.3.7.13 GetRelatedDocuments</p>
+    <p>Retrieve XDSDocumentEntry objects that are related to the specified document via Association objects. Also return the Association objects. The specified document is designated by UUID or uniqueId. The query shall return</p>
+    <ul>
+      <li>
+        <p>Association objects where:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>The sourceObject attribute OR the targetObject attribute references the specified document AND</p>
+      </li>
+      <li>
+        <p>Both sourceObject attribute and targetObject attribute reference documents AND</p>
+      </li>
+      <li>
+        <p>The associationType attribute matches a value included in the $AssociationTypes parameter</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>XDSDocumentEntry objects referenced by the targetObject attribute OR the sourceObject attribute of an Association object matched above.</p>
+      </li>
+    </ul>
+    <p>Note: A side effect of the query is that the specified document is returned in the results if at least one Association is returned.</p>
+    <p>Note: A side effect of this query is that if the document specified by the $XDSDocumentEntryUUID or $XDSDocumentEntryUniqueId parameters has no associations linking it to other documents, then no documents and no associations are returned.</p>
+    <p>See ITI TF-3: 4.1.6 Document Relationships and Associations for background.</p>
+    <p>Returns: Association objects and related XDSDocumentEntry objects</p>
+    <p>Given: An XDSDocumentEntry object and a collection of association types.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryEntryUUID</td>
+          <td>XDSDocumentEntry.entryUUID</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryUniqueId</td>
+          <td>XDSDocumentEntry.uniqueId</td>
+          <td>
+            O
+            <sup>1</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$AssociationTypes</td>
+          <td>Not a named attribute</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$homeCommunityId</td>
+          <td>None</td>
+          <td>
+            O
+            <sup>2</sup>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryType
+            <sup>3</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Either $XDSDocumentEntryEntryUUID or $XDSDocumentEntryUniqueId shall be specified. This transaction shall return an XDSStoredQueryParamNumber error if both parameters are specified.
+    </p>
+    <p>
+      <sup>2</sup>
+      The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.
+    </p>
+    <p>
+      <sup>3</sup>
+      See Section 3.18.4.1.2.3.6.2
+    </p>
+    <p>Note: A query for a single XDSDocumentEntry.uniqueId can return multiple results. See <a href="../Volume3/ch-1.1.html#4.1.4">ITI TF-3: 4.1.4</a> under the topic of Document Metadata Duplication for explanation.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.7.14">3.18.4.1.2.3.7.14 FindDocumentsByReferenceId</p>
+    <p>This query shall be supported by Registries claiming the “Reference ID” Option. Find documents (XDSDocumentEntry objects) in the registry for a given patientID with a matching ‘status’ attribute. The other parameters can be used to restrict the set of XDSDocumentEntry objects returned.</p>
+    <p>This query is semantically identical to the FindDocuments Stored Query (see Section 3.18.4.1.2.3.7.1) except:</p>
+    <ul>
+      <li>
+        <p>$XDSDocumentEntryReferenceIdList contains one or more values to match against the referenceIdList document entry. Since referencedIdList is a rim:Slot, entries in the referencedIdList are matched as exact matches against the query parameter values.</p>
+      </li>
+    </ul>
+    <p>Returns: XDSDocumentEntry objects matching the query parameters</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter Name</td>
+          <td>Attribute</td>
+          <td>Opt</td>
+          <td>Mult</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryPatientId</td>
+          <td>XDSDocumentEntry.patientId</td>
+          <td>R</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryReferenceIdList
+            <sup>5</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.referenceIdList
+            <sup>3</sup>
+          </td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryClassCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.classCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryTypeCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.typeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryPracticeSettingCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.practiceSettingCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryCreationTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryCreationTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.creationTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStartTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStartTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStartTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>$XDSDocumentEntryServiceStopTimeFrom</td>
+          <td>Lower value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryServiceStopTimeTo</td>
+          <td>Upper value of XDSDocumentEntry.serviceStopTime</td>
+          <td>O</td>
+          <td>--</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryHealthcareFacilityTypeCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.healthcareFacilityTypeCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryEventCodeList
+            <sup>1</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.eventCodeList
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryConfidentialityCode
+            <sup>1</sup>
+          </td>
+          <td>
+            XDSDocumentEntry.confidentialityCode
+            <sup>3</sup>
+          </td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>
+            $XDSDocumentEntryAuthorPerson
+            <sup>4</sup>
+          </td>
+          <td>XDSDocumentEntry.author</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryFormatCode
+            <sup>1</sup>
+          </td>
+          <td>XDSDocumentEntry.formatCode</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+        <tr class="even">
+          <td>$XDSDocumentEntryStatus</td>
+          <td>XDSDocumentEntry.availabilityStatus</td>
+          <td>R</td>
+          <td>M</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            $XDSDocumentEntryType
+            <sup>6</sup>
+          </td>
+          <td>XDSDocumentEntry.objectType</td>
+          <td>O</td>
+          <td>M</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <sup>1</sup>
+      Shall be coded according to specification in Section 3.18.4.1.2.3.4 Coding of Code/Code-Scheme.
+    </p>
+    <p>
+      <sup>3</sup>
+      Supports AND/OR semantics as specified in Section 3.18.4.1.2.3.5.
+    </p>
+    <p>
+      <sup>4</sup>
+      The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character. The match shall be applied to the text contained in the Value elements of the authorPerson Slot on the author Classification (value strings of the authorPerson sub-attribute)
+    </p>
+    <p>
+      <sup>5</sup>
+      The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character.
+    </p>
+    <p>
+      <sup>6</sup>
+      See Section 3.18.4.1.2.3.6.2.
+    </p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.8">3.18.4.1.2.3.8 Use of homeCommunityId</p>
+    <p>The Registry Stored Query makes use of the homeCommunityId which is a globally unique identifier for a community and is used to obtain the Web Services endpoint of services that provide access to data in that community. The homeCommunityId is structured as an OID limited to 64 characters and is specified in URI syntax; for example, the homeCommunityId of 1.2.3 would be formatted as urn:oid:1.2.3.</p>
+    <p>Its use is as follows:</p>
+    <ul>
+      <li>
+        <p>It is returned within the response to Registry Stored Query and Cross Gateway Query transactions to indicate the association of a response element with a community. It is specified as the ebRIM 'home' attribute within the ExtrinsicObject, RegistryPackage and ObjectRef elements. Document Consumers process the value as an opaque unique identifier.</p>
+      </li>
+      <li>
+        <p>It is an optional parameter to Registry Stored Query requests, not requiring a patient id parameter, and Retrieve Document Set requests to indicate which community to direct the request.</p>
+      </li>
+    </ul>
+    <p>For stored queries which do not require the patient id as a parameter, meaning query by EntryUUID or UniqueID:</p>
+    <ul>
+      <li>
+        <p>If the Registry Stored Query is being addressed to an Initiating Gateway then the Document Consumer may have previously sent a Registry Stored Query to the Initiating Gateway which included a patient id and saved the homeCommunityId which was returned on the element containing the EntryUUID or uniqueID. If this is not the case the Document Consumer shall have access to the correct homeCommunityId through some other means.</p>
+      </li>
+      <li>
+        <p>If the Document Consumer received the EntryUUID or uniqueID in a previous Registry Stored Query response which contained a homeCommunityId, then the Document Consumer shall specify the homeCommunityId parameter.</p>
+      </li>
+      <li>
+        <p>
+          The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in:
+          <br />
+          &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;
+        </p>
+      </li>
+      <li>
+        <p>Each query request can have at most one homeCommunityId value. If the Document Consumer specifies multiple entryUUID or uniqueID values they must all be associated with the same homeCommunityId value. Multiple individual query requests can be used to retrieve data associated with different homeCommunityIds.</p>
+      </li>
+    </ul>
+    <p class="heading list-paragraph" id="3.18.4.1.2.3.9">3.18.4.1.2.3.9 Merge Patient ID</p>
+    <p>Patient identifiers can be merged via messages received through the Patient Identity Feed [ITI-8] or the Patient Identity Feed v3 [ITI-44] transaction. See Section 3.8.4.2 and <a href="../Volume2b/ITI-44.html#3.44.4.2.4">ITI TF-2b: 3.44.4.2.4</a> for details.</p>
+    <p>This section defines the effects that merged patient identifiers have on the Registry Stored Query transaction. The process of merging patient identifiers involves two patient identifiers: the subsumed patient identifier and the surviving patient identifier. The subsumed patient identifier stops being used and all patient records that were associated with that identifier are now associated with the surviving patient identifier. See Section 3.8.4.2.4 for how these identifiers map into the Merge Patient Identifier message.</p>
+    <p>Several transactions handle processing of merged patient identifiers, e.g.:</p>
+    <ul>
+      <li>
+        <p>Patient Identity Feed [ITI-8] and Patient Identity Feed v3 [ITI-44] – accept the merge request</p>
+      </li>
+      <li>
+        <p>Register Document Set-b [ITI-42] – accepts metadata containing patient identifiers</p>
+      </li>
+      <li>
+        <p>Registry Stored Query [ITI-18] – retrieves metadata containing patient identifiers.</p>
+      </li>
+    </ul>
+    <p>The above transactions and the profiles that use them do not specify how patient identifier merging is to be implemented. They do specify the results of the merge in terms of possible rejection of Register Document Set-b transactions and results returned in Registry Stored Query transactions.</p>
+    <p>The following two sections document the responsibilities of the Document Registry and the Document Consumer in processing Registry Stored Query transactions that reference patient identifiers that are involved in merges.</p>
+    <p class="heading" id="responsibilities-of-the-document-registry-actor">3.18.4.1.2.3.9.1 Responsibilities of the Document Registry Actor</p>
+    <p>The rules governing the handling of patient identity merges depend on the following factors:</p>
+    <ul>
+      <li>
+        <p>Does the stored query contain patient identifier parameters?</p>
+      </li>
+      <li>
+        <p>Has the registry received a patient identity merge message which references the patient identity parameter as either the subsumed patient identifier or the surviving patient identifier?</p>
+      </li>
+      <li>
+        <p>The content of any previously received merge message can contribute to the result of a stored query.</p>
+      </li>
+      <li>
+        <p>More than one merge message may contribute to the results of a stored query (e.g., Patient ID A merged into Patient ID B merged into Patient ID C etc.)</p>
+      </li>
+    </ul>
+    <p>The following assertions shall be met by a Document Registry when returning metadata in a Registry Stored Query transaction. The terms 'subsumed patient identifier' and 'surviving patient identifier' refer to the contents of any previously received merge message.</p>
+    <ul>
+      <li>
+        <p>If the query includes a patient identifier parameter and that patient identity matches the subsumed patient identifier of a merge message then the query shall return no results. This is not an error condition and the Registry Stored Query transaction shall not return an error status.</p>
+      </li>
+      <li>
+        <p>If the query includes a patient identifier and that patient identifier matches the surviving patient identifier of a previous merge message then the query shall return the composite of:</p>
+      </li>
+      <li>
+        <p>Metadata registered against the surviving patient identifier</p>
+      </li>
+      <li>
+        <p>Metadata registered against the subsumed patient identifier</p>
+      </li>
+      <li>
+        <p>Metadata returned shall show the surviving patient identifier in these metadata attributes:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>XDSSubmissionSet.patientId</p>
+      </li>
+      <li>
+        <p>XDSDocumentEntry.patientId</p>
+      </li>
+      <li>
+        <p>XDSFolder.patientId</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>Patient identifiers may be affected by multiple patient identity merges.</p>
+      </li>
+      <li>
+        <p>The subsumed patient identifier may have been referenced in a prior A40 Merge message as the surviving patient identifier.</p>
+      </li>
+      <li>
+        <p>The surviving patient identifier may have been referenced in a prior A40 Merge message as the surviving patient identifier.</p>
+      </li>
+      <li>
+        <p>Patient demographics in XDSDocumentEntry.sourcePatientInfo shall not be altered as a result of an A40 Merge.</p>
+      </li>
+    </ul>
+    <p class="heading" id="responsibilities-of-the-document-consumer-actor">3.18.4.1.2.3.9.2 Responsibilities of the Document Consumer Actor</p>
+    <p>The following assertions affect the Document Consumer:</p>
+    <ul>
+      <li>
+        <p>The Document Consumer shall depend on the patient identity in the following metadata attributes after a patient identifier is merged:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>XDSSubmissionSet.patientId</p>
+      </li>
+      <li>
+        <p>XDSDocumentEntry.patientId</p>
+      </li>
+      <li>
+        <p>XDSFolder.patientId</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>The Document Registry is required to return the surviving patient identifier of a merge in place of the original subsumed patient identifier.</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>The Document Consumer shall not depend on the patient demographics found in XDSDocumentEntry.sourcePatientInfo after a patient identifier is merged. Patient demographics should be accessed through PIX/PDQ services or their equivalent.</p>
+      </li>
+    </ul>
+    <h6 class="list-paragraph" id="3.18.4.1.2.4">3.18.4.1.2.4 Stored Query IDs</h6>
+    <p>The standard XDS queries are assigned the following Query IDs. These IDs are used in the AdhocQueryRequest to reference queries stored on the Document Registry Actor. Query IDs are in UUID format (RFC4122). An error shall be returned when an unsupported stored query ID is received.</p>
+    <p>Note: This query mechanism can be extended by adding a query by allocating a Query ID, defining query parameters, and implementing the query in the Document Registry.</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Query Name</td>
+          <td>Query ID</td>
+        </tr>
+        <tr class="even">
+          <td>FindDocuments</td>
+          <td>urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d</td>
+        </tr>
+        <tr class="odd">
+          <td>FindSubmissionSets</td>
+          <td>urn:uuid:f26abbcb-ac74-4422-8a30-edb644bbc1a9</td>
+        </tr>
+        <tr class="even">
+          <td>FindFolders</td>
+          <td>urn:uuid:958f3006-baad-4929-a4de-ff1114824431</td>
+        </tr>
+        <tr class="odd">
+          <td>GetAll</td>
+          <td>urn:uuid:10b545ea-725c-446d-9b95-8aeb444eddf3</td>
+        </tr>
+        <tr class="even">
+          <td>GetDocuments</td>
+          <td>urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4</td>
+        </tr>
+        <tr class="odd">
+          <td>GetFolders</td>
+          <td>urn:uuid:5737b14c-8a1a-4539-b659-e03a34a5e1e4</td>
+        </tr>
+        <tr class="even">
+          <td>GetAssociations</td>
+          <td>urn:uuid:a7ae438b-4bc2-4642-93e9-be891f7bb155</td>
+        </tr>
+        <tr class="odd">
+          <td>GetDocumentsAndAssociations</td>
+          <td>urn:uuid:bab9529a-4a10-40b3-a01f-f68a615d247a</td>
+        </tr>
+        <tr class="even">
+          <td>GetSubmissionSets</td>
+          <td>urn:uuid:51224314-5390-4169-9b91-b1980040715a</td>
+        </tr>
+        <tr class="odd">
+          <td>GetSubmissionSetAndContents</td>
+          <td>urn:uuid:e8e3cb2c-e39c-46b9-99e4-c12f57260b83</td>
+        </tr>
+        <tr class="even">
+          <td>GetFolderAndContents</td>
+          <td>urn:uuid:b909a503-523d-4517-8acf-8e5834dfc4c7</td>
+        </tr>
+        <tr class="odd">
+          <td>GetFoldersForDocument</td>
+          <td>urn:uuid:10cae35a-c7f9-4cf5-b61e-fc3278ffb578</td>
+        </tr>
+        <tr class="even">
+          <td>GetRelatedDocuments</td>
+          <td>urn:uuid:d90e5407-b356-4d91-a89f-873917b4b0e6</td>
+        </tr>
+        <tr class="odd">
+          <td>FindDocumentsByReferenceId</td>
+          <td>urn:uuid:12941a89-e02e-4be5-967c-ce4bfc8fe492</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.18.4.1.2.5">3.18.4.1.2.5 Compatibility of Options</h6>
+    <p>The presence or absence of the optional $XDSDocumentEntryType parameter triggers different behaviors on the Document Registry. If this parameter is specified, and the Document Registry does not support it, the Document Registry shall ignore. If it is specified, and the Document Registry does support it, the proper information is returned.</p>
+    <ul>
+      <li>
+        <p>If the Document Consumer does not support the On-Demand Documents Option, it will send a Registry Stored Query request which does not contain the $XDSDocumentEntryType parameter. The Document Registry will therefore not supply any On-Demand Document Entries in the query response.</p>
+      </li>
+      <li>
+        <p>
+          If the Document Consumer
+          <em>does</em>
+          support the On-Demand Documents Option, then it will be able to specify the $XDSDocumentEntryType parameter containing the uuid for On-Demand Document Entries in a Registry Stored Query. A Document Registry with the On-Demand Documents Option will recognize the $XDSDocumentEntryType parameter and process accordingly. A Document Registry which does not support the On-Demand Documents Option will ignore the $XDSDocumentEntryType parameter. Since there cannot be any On-Demand Document Entries held by a Document Registry which does not support On-Demand Documents, this is a consistent response to the request.
+        </p>
+      </li>
+    </ul>
+    <h6 class="list-paragraph" id="3.18.4.1.2.6">3.18.4.1.2.6 Managing Large Query Responses</h6>
+    <p>ebXML version 3.0 supports query results pagination (ebRS version 3.0 chapter 6.2). The interactions between the stored query capability and the query results pagination capability within the standard have never been reconciled and are not recommended for use together. It is recommended instead that query pagination be implemented within the Document Consumer Actor.</p>
+    <p>This can be accomplished by specifying returnType=”ObjectRef” on all large queries. This returns a list of references (UUIDs) instead of full objects (large XML structures). This is practical for queries returning thousands of objects. To construct a page for display, a small number of objects can be retrieved through a second query. This is repeated for each page. As an example, the following sequence of queries could be used to list a large number of documents:</p>
+    <ul>
+      <li>
+        <p>FindDocuments query with returnType=”ObjectRef” which returns a large collections of ObjectRefs (UUIDs)</p>
+      </li>
+      <li>
+        <p>GetDocuments query with returnType=”LeafClass” issued with a subset of the above returned UUIDs which returns the details to construct one page of listing</p>
+      </li>
+    </ul>
+    <p>OR</p>
+    <ul>
+      <li>
+        <blockquote>
+          <p>GetDocumentsAndAssocations query with returnType=”LeafClass” issued with a subset of the above returned UUIDs which returns the details to construct one page of listing. By retrieving the Association objects, the existence of document replacement, transformation, and amendment can be included into the display.</p>
+        </blockquote>
+      </li>
+    </ul>
+    <h6 class="list-paragraph" id="3.18.4.1.2.7">3.18.4.1.2.7 Web Services Transport</h6>
+    <p>The query request and response will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>. The specific values for the WSDL describing the Stored Query Service are described in this section.</p>
+    <p>The Document Registry shall accept a Registry Stored Query Request formatted as a SIMPLE SOAP message and respond with a Registry Stored Query Response formatted as a SIMPLE SOAP message. The Document Consumer shall generate the Registry Stored Query Request formatted as a SIMPLE SOAP message and accept a Registry Stored Query Response formatted as a SIMPLE SOAP message.</p>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name shall be “DocumentRegistry”.</p>
+    <p>The following WSDL naming conventions shall apply:</p>
+    <p>wsdl:definitions/@name="DocumentRegistry":</p>
+    <p>query message -&gt; "RegistryStoredQuery_Message"</p>
+    <p>query response -&gt; "RegistryStoredQuery_Response_Message"</p>
+    <p>portType -&gt; "DocumentRegistry_PortType"</p>
+    <p>operation -&gt; "RegistryStoredQuery"</p>
+    <p>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "DocumentRegistry_Port_Soap12"</p>
+    <p>IHE-WSP202) The targetNamespace of the WSDL shall be “urn:ihe:iti:xds-b:2007”</p>
+    <p>Document Registry: These are the requirements for the Registry Stored Query transaction presented in the order in which they would appear in the Document Registry WSDL definition:</p>
+    <ul>
+      <li>
+        <p>The following types shall be imported (xsd:import) in the /definitions/types section:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>namespace=" urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", schemaLocation="query.xsd"</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>The /definitions/message/part/@element attribute of the Registry Stored Query Request message shall be defined as “query:AdhocQueryRequest”</p>
+      </li>
+      <li>
+        <p>The /definitions/message/part/@element attribute of the Registry Stored Query Response message shall be defined as “query:AdhocQueryResponse”</p>
+      </li>
+      <li>
+        <p>Refer to Table 3.18.4.1.2.7-1 below for additional attribute requirements</p>
+      </li>
+      <li>
+        <p>To support the Asynchronous Web Services Exchange Option on the Document Consumer, the Document Registry shall support the use of a non-anonymous response EPR in the WS-Addressing replyTo header.</p>
+      </li>
+    </ul>
+    <p>Table 3.18.4.1.2.7-1: Additional Attribute Requirements</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Attribute</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>/definitions/portType/operation@name</td>
+          <td>DocumentRegistry_RegistryStoredQuery</td>
+        </tr>
+        <tr class="even">
+          <td>/definitions/portType/operation/input/@wsaw:Action</td>
+          <td>urn:ihe:iti:2007:RegistryStoredQuery</td>
+        </tr>
+        <tr class="odd">
+          <td>/definitions/portType/operation/output/@wsaw:Action</td>
+          <td>urn:ihe:iti:2007:RegistryStoredQuery Response</td>
+        </tr>
+        <tr class="even">
+          <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
+          <td>false</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The following WSDL fragment shows an example of Registry Stored Query transaction definition:</p>
+    <p>&lt;?xml version="1.0" encoding="utf-8"?&gt;</p>
+    <p>&lt;definitions ...&gt;</p>
+    <p>...</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:ihe:iti:xds-b:2007"&gt;</p>
+    <p>&lt;xsd:import</p>
+    <p>namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>schemaLocation="schema\query.xsd"/&gt;</p>
+    <p>...</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>&lt;message name="RegistryStoredQuery_Message"&gt;</p>
+    <p>&lt;documentation&gt;Registry Stored Query&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="query:AdhocQueryRequest"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RegistryStoredQueryResponse_Message"&gt;</p>
+    <p>&lt;documentation&gt;Registry Stored Query Response&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="query:AdhocQueryResponse"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>...</p>
+    <p>&lt;portType name="DocumentRegistry_PortType"&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_RegistryStoredQuery"&gt;</p>
+    <p>&lt;input message="ihe:RegistryStoredQuery_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:RegistryStoredQuery"/&gt;</p>
+    <p>&lt;output message="ihe:RegistryStoredQueryResponse_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:RegistryStoredQueryResponse"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>...</p>
+    <p>&lt;/portType&gt;</p>
+    <p>...</p>
+    <p>&lt;/definitions&gt;</p>
+    <p>A full WSDL for the Document Repository and Document Registry Actors is found in <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1">3.18.4.1.2.7.1 Sample SOAP Messages</p>
+    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;a:Action/&gt;, &lt;a:MessageID/&gt;, &lt;a:ReplyTo/&gt;…; these WS-Addressing headers are populated according to <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>: Web Services for IHE transactions. The body of the SOAP message is omitted for brevity; in a real scenario the empty element will be populated with the appropriate metadata.</p>
+    <p>Samples presented in this section are also available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.1">3.18.4.1.2.7.1.1 Sample Registry Stored Query SOAP Request</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.1.1">3.18.4.1.2.7.1.1.1 Synchronous Web Services Exchange</p>
+    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
+    <p>&lt;s:Header&gt;</p>
+    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;</p>
+    <p>&lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;</p>
+    <p>&lt;a:ReplyTo s:mustUnderstand="1"&gt;&gt;</p>
+    <p>&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;</p>
+    <p>&lt;/a:ReplyTo&gt;</p>
+    <p>&lt;a:To&gt;http://localhost/service/IHEXDSRegistry.svc&lt;/a:To&gt;</p>
+    <p>&lt;/s:Header&gt;</p>
+    <p>&lt;s:Body&gt;</p>
+    <p>&lt;query:AdhocQueryRequest</p>
+    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</p>
+    <p>&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</p>
+    <p>&lt;rim:AdhocQuery id=" urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d "&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;’st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO’&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;('35971002^^2.16.840.1.113883.6.96')&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;/rim:AdhocQuery&gt;</p>
+    <p>&lt;/query:AdhocQueryRequest&gt;</p>
+    <p>&lt;/s:Body&gt;</p>
+    <p>&lt;/s:Envelope&gt;</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.1.2">3.18.4.1.2.7.1.1.2 Asynchronous Web Services Exchange</p>
+    <p>&lt;s:Envelope</p>
+    <p>xmlns:s="http://www.w3.org/2003/05/soap-envelope"</p>
+    <p>xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
+    <p>&lt;s:Header&gt;</p>
+    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;</p>
+    <p>&lt;a:MessageID&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:MessageID&gt;</p>
+    <p>&lt;a:ReplyTo&gt;</p>
+    <p>&lt;a:Address&gt; http://192.168.2.4:9080/XDS/DocumentConsumerReceiver.svc &lt;/a:Address&gt;</p>
+    <p>&lt;/a:ReplyTo&gt;</p>
+    <p>&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentRegistryReceiver.svc&lt;/a:To&gt;</p>
+    <p>&lt;/s:Header&gt;</p>
+    <p>&lt;s:Body&gt;</p>
+    <p>&lt;query:AdhocQueryRequest</p>
+    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</p>
+    <p>&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</p>
+    <p>&lt;rim:AdhocQuery id=" urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d "&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;(‘Emergency Department’)&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;/rim:AdhocQuery&gt;</p>
+    <p>&lt;/query:AdhocQueryRequest&gt;</p>
+    <p>&lt;/s:Body&gt;</p>
+    <p>&lt;/s:Envelope&gt;</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.2">3.18.4.1.2.7.1.2 Sample Registry Stored Query SOAP Response</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.2.1">3.18.4.1.2.7.1.2.1 Synchronous Web Services Exchange</p>
+    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
+    <p>&lt;s:Header&gt;</p>
+    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;</p>
+    <p>&lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;</p>
+    <p>&lt;/s:Header&gt;</p>
+    <p>&lt;s:Body&gt;</p>
+    <p>&lt;query:AdhocQueryResponse xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</p>
+    <p>&lt;/s:Body&gt;</p>
+    <p>&lt;/s:Envelope&gt;</p>
+    <p class="heading list-paragraph" id="3.18.4.1.2.7.1.2.2">3.18.4.1.2.7.1.2.2 Asynchronous Web Services Exchange</p>
+    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"</p>
+    <p>xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
+    <p>&lt;s:Header&gt;</p>
+    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;</p>
+    <p>&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/a:MessageID&gt;</p>
+    <p>&lt;a:RelatesTo&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:RelatesTo&gt;</p>
+    <p>&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentConsumerReceiver.svc&lt;/a:To&gt;</p>
+    <p>&lt;/s:Header&gt;</p>
+    <p>&lt;s:Body&gt;</p>
+    <p>&lt;query:AdhocQueryResponse status="Success"</p>
+    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"&gt;</p>
+    <p>&lt;!—Rest of AdhocQueryResponse message goes here --&gt;</p>
+    <p>&lt;/query:AdhocQueryResponse&gt;</p>
+    <p>&lt;/s:Body&gt;</p>
+    <p>&lt;/s:Envelope&gt;</p>
+    <h5 class="list-paragraph" id="3.18.4.1.3">3.18.4.1.3 Expected Actions</h5>
+    <p>The Document Registry shall:</p>
+    <ol type="1">
+      <li>
+        <p>Accept a parameterized query in an AdhocQueryRequest message</p>
+      </li>
+      <li>
+        <p>Verify the required parameters are included in the request. Additionally, special rules documented in the above section ‘Parameters for Required Queries’ shall be verified.</p>
+      </li>
+      <li>
+        <p>Errors shall be returned for the following conditions:</p>
+      </li>
+    </ol>
+    <ul>
+      <li>
+        <p>Unknown query ID (error code XDSUnknownStoredQuery)</p>
+      </li>
+      <li>
+        <p>Required parameter missing (error code XDSStoredQueryParamNumber)</p>
+      </li>
+    </ul>
+    <blockquote>
+      <p>See <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a> Error Reporting for additional error codes and general information on formatting error responses.</p>
+    </blockquote>
+    <ol start="4" type="1">
+      <li>
+        <p>Process the query as appropriate:</p>
+      </li>
+    </ol>
+    <ul>
+      <li>
+        <p>For Document Registry Actors: Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in Section 3.18.4.1.2.3.7 Parameters for Required Queries and execute the query. The Document Registry shall accept the homeCommunityId value if it is specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry it shall return a successful response with no elements.</p>
+      </li>
+      <li>
+        <p>For Initiating Gateway Actors:</p>
+      </li>
+      <li>
+        <blockquote>
+          <p>Initiating Gateway receives a Registry Stored Query by patient id: It shall determine a) which Responding Gateways this request should be sent to and b) what patient id to use in the Cross Gateway Query. Detailed specification of these steps is not in the intended scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ), future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.7 XCA and Patient Identification Management for possible use of existing profiles PIX and PDQ. For each Responding Gateway identified, the Initiating Gateway shall update the query with the correct patient identifier corresponding to the Responding Gateway’s community and initiates a Cross Gateway Query transaction to the Responding Gateway. If the Initiating Gateway is grouped with a Document Consumer it will also initiate a Registry Stored Query to the local Document Registry.</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>Initiating Gateway receives a Registry Stored Query by entryUUID or uniqueID: Verify homeCommunityId has been specified. If missing return Failure status with XDSMissingHomeCommunityId error code. If homeCommunityId not recognized return a Failure or PartialSuccess status with XDSUnknownCommunity error code. Determine which Responding Gateway to contact by using the homeCommunityId to obtain the Web Services endpoint of the Responding Gateway. The process of obtaining the Web Services endpoint is not further specified in this profile. If the homeCommunityId represents the local community the Initiating Gateway shall initiate a Registry Stored Query to the local Document Registry. The Initiating Gateway shall specify the homeCommunityId in the Cross Gateway Query by entryUUID or uniqueID which identifies the community associated with the Responding Gateway. For details regarding the homeCommunityId see Section 3.18.4.1.2.3.8 and <a href="../Volume2b/ITI-38.html#3.38.4.1.2.1">ITI TF-2b: 3.38.4.1.2.1</a>.</p>
+        </blockquote>
+      </li>
+    </ul>
+    <ol start="5" type="1">
+      <li>
+        <p>Return XML formatted metadata in an AdhocQueryResponse message.</p>
+      </li>
+    </ol>
+    <ul>
+      <li>
+        <p>The Document Registry may specify the homeCommunityID attribute on any appropriate elements</p>
+      </li>
+      <li>
+        <p>The Initiating Gateway shall specify the homeCommunityID attribute on all appropriate elements. If the Initiating Gateway contacted a Document Registry, the Document Registry response might not contain the homeCommunityId. In this case the Initiating Gateway shall add the homeCommunityId of its local community to the Document Registry response prior to including it in the consolidated response to the Document Consumer. The homeCommunityId attribute corresponds to the ‘home’ attribute specified in the ebRIM standard. For more information on homeCommunityId see Section 3.18.4.1.2.3.8 and <a href="../Volume2b/ITI-38.html#3.38.4.1.2.1">ITI TF-2b: 3.38.4.1.2.1</a>. The elements that shall include the home attribute are:</p>
+      </li>
+      <li>
+        <p>If returntype=”LeafClass” the ExtrinsicObject and RegistryPackage elements shall contain the home attribute.</p>
+      </li>
+      <li>
+        <p>If returnType=”ObjectRef” the ObjectRef element shall contain the home attribute</p>
+      </li>
+      <li>
+        <p>If the Initiating Gateway is unable to get an appropriate response from a selected Responding Gateway it shall include in its response to the Document Consumer an XDSUnavailableCommunity error code where the context identifies the unavailable Responding Gateway. In this case, and any other error from a Responding Gateway, the Initiating Gateway shall return to the Document Consumer either a Failure status (if no part was successful) or a PartialSuccess status.</p>
+      </li>
+    </ul>
+    <ol start="6" type="1">
+      <li>
+        <p>When the Document Consumer receives the query response from the Initiating Gateway it must account for two aspects of the response; namely that a) the homeCommunityId attribute will be specified b) the Document Consumer may not be able to map the repository id value directly to the Document Repository. XCA assumes a common coding/vocabulary scheme is used across all communities. For example, all communities shall have common privacy consent vocabularies. The Document Consumer shall retain the values of the homeCommunityId attribute for future interaction with the Initiating Gateway.</p>
+      </li>
+    </ol>
+    <p>This transaction may return both errors and results in an AdhocQueryResponse message. To do this, the returned AdhocQueryResponse message would contain both a RegistryObjectList element and a RegistryErrorList element. See <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a> Error Reporting for additional details on formatting of error responses.</p>
+    <p>If the Document Consumer supports the Delayed Document Assembly Option it shall accept the following values of hash and size to indicate that the assembly of the document content has been delayed until the document is retrieved.</p>
+    <p>size = 0 (zero)</p>
+    <p>hash = da39a3ee5e6b4b0d3255bfef95601890afd80709 (SHA1 hash of a zero length file)</p>
+    <h6 class="list-paragraph" id="3.18.4.1.3.1">3.18.4.1.3.1 Sample Query Request</h6>
+    <p>This example query specifies:</p>
+    <ul>
+      <li>
+        <p>The FindDocuments query (id attribute of AdhocQuery element)</p>
+      </li>
+      <li>
+        <p>patientID st3498702^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO</p>
+      </li>
+      <li>
+        <p>Return Approved documents only</p>
+      </li>
+      <li>
+        <p>Time range (creation time) 200412252300 to 200501010800</p>
+      </li>
+      <li>
+        <p>Healthcare Facility Type Code of Emergency Department</p>
+      </li>
+    </ul>
+    <p>Note that ebRS 3.0 specifies the use of Slot to specify name/value(s) pairs as parameters to a Stored Query.</p>
+    <p>&lt;query:AdhocQueryRequest</p>
+    <p>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</p>
+    <p>&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</p>
+    <p>&lt;rim:AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d"&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;’st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO’&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;(‘Emergency Department’)&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;/rim:AdhocQuery&gt;</p>
+    <p>&lt;/query:AdhocQueryRequest&gt;</p>
+    <p>The following example shows a get documents query for XDSDocumentEntry objects for a specified list of entryUUIDs (urn:uuid:aff99222-18e3-4812-bc71-c410b2860e18, urn:uuid:aff99222-18e3-4812-bc71-c410b2860e19, urn:uuid:aff99222-18e3-4812-bc71-c410b2860e20) and corresponding homeCommunityId value (urn:oid:1.2.3):</p>
+    <p>&lt;query:AdhocQueryRequest … &gt;</p>
+    <p>&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</p>
+    <p>&lt;rim:AdhocQuery id="urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4" home=”urn:oid:1.2.3”&gt;</p>
+    <p>&lt;rim:Slot name="$XDSDocumentEntryEntryUUID"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;</p>
+    <p>(“urn:uuid:aff99222-18e3-4812-bc71-c410b2860e18”,</p>
+    <p>“urn:uuid:aff99222-18e3-4812-bc71-c410b2860e19”,</p>
+    <p>“urn:uuid:aff99222-18e3-4812-bc71-c410b2860e20”)</p>
+    <p>&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;/rim:AdhocQuery&gt;</p>
+    <p>&lt;/query:AdhocQueryRequest&gt;</p>
+    <h6 class="list-paragraph" id="3.18.4.1.3.2">3.18.4.1.3.2 Intentionally Left Blank</h6>
+    <h6 class="list-paragraph" id="3.18.4.1.3.3">3.18.4.1.3.3 Sample Query Response</h6>
+    <p>
+      This sample query response corresponds to the above query. Note that the query response message is coded in version 3.0 ebRIM and ebRS. This sample response and the ebXML Registry version 3.0 schema files are available online. The Implementation Guide found at
+      <a href="http://wiki.ihe.net/index.php?title=ITI_Implementation_Guide">http://wiki.ihe.net/index.php?title=ITI_Implementation_Guide</a>
+      contains such supplemental material.
+    </p>
+    <p>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</p>
+    <p>&lt;AdhocQueryResponse</p>
+    <p>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p>xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0</p>
+    <p>file:/Users/bill/RegSchema/V3.0/query.xsd"</p>
+    <p>xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"&gt;</p>
+    <p>&lt;rim:RegistryObjectList&gt;</p>
+    <p>&lt;rim:ExtrinsicObject</p>
+    <p>xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>isOpaque="false"</p>
+    <p>mimeType="text/xml"</p>
+    <p>objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"</p>
+    <p>status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved"&gt;</p>
+    <p>&lt;rim:Slot name="URI"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;http://localhost:8080/XDS/Repository/08a15a6f-5b4a-42de-8f95-89474f83abdf.xml&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="authorInstitution"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Some Hospital^^^^^^^^^1.2.3.4.5.6.7.8.9.1789.45&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="creationTime"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412261119&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="hash"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;4cf4f82d78b5e2aac35c31bca8cb79fe6bd6a41e&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="languageCode"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;en-us&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="serviceStartTime"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412230800&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="serviceStopTime"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;200412230801&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="size"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;54449&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="sourcePatientId"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;jd12323^^^wsh&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Slot name="sourcePatientInfo"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;PID-3|pid1^^^domain&lt;/rim:Value&gt;</p>
+    <p>&lt;rim:Value&gt;PID-5|Doe^John^^^&lt;/rim:Value&gt;</p>
+    <p>&lt;rim:Value&gt;PID-7|19560527&lt;/rim:Value&gt;</p>
+    <p>&lt;rim:Value&gt;PID-8|M&lt;/rim:Value&gt;</p>
+    <p>&lt;rim:Value&gt;PID-11|100 Main St^^Metropolis^Il^44130^USA&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="Sample document 1" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:ac872fc0-1c6e-439f-84d1-f76770a0ccdf"</p>
+    <p>nodeRepresentation="Education"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Connect-a-thon classCodes&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="Education" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:f1a8c8e4-3593-4777-b7e0-8b0773378705"</p>
+    <p>nodeRepresentation="C"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Connect-a-thon confidentialityCodes&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="Celebrity" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:b6e49c73-96c8-4058-8c95-914d83bd262a"</p>
+    <p>nodeRepresentation="CDAR2/IHE 1.0"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Connect-a-thon formatCodes&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="CDAR2/IHE 1.0" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:61e2b376-d74a-4984-ac21-dcd0b8890f9d"</p>
+    <p>nodeRepresentation="Emergency Department"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Connect-a-thon healthcareFacilityTypeCodes&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="Assisted Living" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:fb7677c5-c42f-485d-9010-dce0f3cd4ad5"</p>
+    <p>nodeRepresentation="Cardiology"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;Connect-a-thon practiceSettingCodes&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="Cardiology" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:Classification</p>
+    <p>classificationScheme="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"</p>
+    <p>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>id="urn:uuid:0a8a8ed9-8be5-4a63-9b68-a511adee8ed5"</p>
+    <p>nodeRepresentation="34098-4"</p>
+    <p>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</p>
+    <p>&lt;rim:Slot name="codingScheme"&gt;</p>
+    <p>&lt;rim:ValueList&gt;</p>
+    <p>&lt;rim:Value&gt;LOINC&lt;/rim:Value&gt;</p>
+    <p>&lt;/rim:ValueList&gt;</p>
+    <p>&lt;/rim:Slot&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString</p>
+    <p>charset="UTF-8"</p>
+    <p>value="Conference Evaluation Note" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:Classification&gt;</p>
+    <p>&lt;rim:ExternalIdentifier</p>
+    <p>id="urn:uuid:db9f4438-ffff-435f-9d34-d76190728637"</p>
+    <p>registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"</p>
+    <p>objectType="ExternalIdentifier"</p>
+    <p>value="st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO"&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString</p>
+    <p>charset="UTF-8"</p>
+    <p>value="XDSDocumentEntry.patientId"</p>
+    <p>xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:ExternalIdentifier&gt;</p>
+    <p>&lt;rim:ExternalIdentifier</p>
+    <p>id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5"</p>
+    <p>registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</p>
+    <p>identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"</p>
+    <p>objectType="ExternalIdentifier"</p>
+    <p>value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString</p>
+    <p>charset="UTF-8"</p>
+    <p>value="XDSDocumentEntry.uniqueId"</p>
+    <p>xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:ExternalIdentifier&gt;</p>
+    <p>&lt;/rim:ExtrinsicObject&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"/&gt;</p>
+    <p>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"/&gt;</p>
+    <p>&lt;/rim:RegistryObjectList&gt;</p>
+    <p>&lt;/AdhocQueryResponse&gt;</p>
+    <p>The following query response is the same as above (repeated sections replaced with …) with the homeCommunityId attribute specified. Subsequent requests specifying entryUUID of urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf or uniqueID of 1.3.6.1.4.1.21367.2005.3.99.1.1010 shall include the homeCommunityId value of urn:oid:1.2.3 in the query.</p>
+    <p>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</p>
+    <p>&lt;AdhocQueryResponse ... status="Success"&gt;</p>
+    <p>&lt;rim:RegistryObjectList&gt;</p>
+    <p>&lt;rim:ExtrinsicObject … id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" isOpaque="false" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" home=”urn:oid:1.2.3”&gt;</p>
+    <p>…</p>
+    <p>&lt;rim:ExternalIdentifier id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5" registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" objectType="ExternalIdentifier" value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;</p>
+    <p>&lt;rim:Name&gt;</p>
+    <p>&lt;rim:LocalizedString charset="UTF-8" value="XDSDocumentEntry.uniqueId" xml:lang="en-us"/&gt;</p>
+    <p>&lt;/rim:Name&gt;</p>
+    <p>&lt;rim:Description/&gt;</p>
+    <p>&lt;/rim:ExternalIdentifier&gt;</p>
+    <p>&lt;/rim:ExtrinsicObject&gt;</p>
+    <p>&lt;/rim:RegistryObjectList&gt;</p>
+    <p>&lt;/AdhocQueryResponse&gt;</p>
+    <h6 class="list-paragraph" id="3.18.4.1.3.4">3.18.4.1.3.4 Intentionally Left Blank</h6>
+    <h6 class="list-paragraph" id="3.18.4.1.3.5">3.18.4.1.3.5 Basic Patient Privacy Enforcement Option</h6>
+    <p>If the Basic Patient Privacy Enforcement Option is implemented:</p>
+    <ol type="1">
+      <li>
+        <p>All Document Consumer Actors may provide a list of confidentialityCode in XDS Registry Stored Query Transaction and the XDS Registry will return only document that have at least one matching confidentialityCode. In this way documents without at least one of the requested codes will not be returned.</p>
+      </li>
+      <li>
+        <p>The Document Consumer shall be able to be configured with the Patient Privacy Policies, Patient Privacy Policy Identifiers (OIDs) and associated information necessary to understand and enforce the XDS Affinity Domain Policy. The details of this are product specific and not specified by IHE.</p>
+      </li>
+      <li>
+        <p>The Document Consumer shall not allow access to documents for which the Document Consumer does not understand at least one of the confidentialityCode returned. This assures that a Document Consumer will not improperly handle documents with confidentialityCode that may be more restrictive than the Document Consumer is configured to support.</p>
+      </li>
+      <li>
+        <p>The Document Consumer shall abide by the XDS Affinity Domain Policies represented by the confidentialityCode in the metadata associated with the document. The Document Consumer likely will have user access controls or business rule capabilities to determine the details of how confidentiality codes apply to query results. The details of this are product specific and not specified by IHE. These rules shall reduce the query results to only those that are appropriate to the current situation for that actor and user.</p>
+      </li>
+      <li>
+        <p>Note: The Registry is already required to return only documents that match the requested confidentialityCode (filter) indicated in the Registry Stored Query.</p>
+      </li>
+      <li>
+        <p>Note: Products implementing the Document Registry may be able to further filter Registry Stored Query results through looking at all the Patient Privacy Acknowledgement Documents registered for the patient that have the availabilityStatus of Approved and for which have not expired.</p>
+      </li>
+    </ol>
+    <h6 class="list-paragraph" id="3.18.4.1.3.6">3.18.4.1.3.6 Basic Patient Privacy Proof Option</h6>
+    <p>If the Basic Patient Privacy Consents Proof Option is implemented:</p>
+    <ul>
+      <li>
+        <p>The Document Consumer shall be capable of querying for ‘Approved’ Patient Privacy Acknowledgement Documents in the XDS Affinity Domain. This query should be done by document class so as to catch both formats of document (Consent). The Document Consumer shall be capable of recognizing the eventCodeList from the resulting XDS Metadata. There is no required handling of Patient Privacy Consent Acknowledgement Document XDS Metadata. There is no requirement for the Document Consumer to retrieve the Patient Privacy Acknowledgement Document content.</p>
+      </li>
+    </ul>
+    <h3 class="list-paragraph" id="3.18.5">3.18.5 Security Considerations</h3>
+    <p>Relevant XDS Affinity Domain Security background is discussed in the XDS Security Considerations Section (see <a href="../Volume1/ch-10.html#10.7">ITI TF-1: 10.7</a>).</p>
+    <h4 class="list-paragraph" id="3.18.5.1">3.18.5.1 Audit Record Considerations</h4>
+    <p>The Registry Stored Query [ITI-18] transaction is a Query Information event as defined in Table 3.20.4.1.1.1-1. If a status of PartialSuccess is returned, the Actors involved shall record both a success and a failure audit event. The Actors involved shall record audit events according to the following:</p>
+    <h5 class="list-paragraph" id="3.18.5.1.1">3.18.5.1.1 Document Consumer audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-18”, “IHE Transactions”, “Registry Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0..1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-18”, “IHE Transactions”, “Registry Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>Stored Query ID (UUID)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the AdhocQueryRequest, base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>C</td>
+          <td>
+            <p>The ParticipantObjectDetail element may occur more than once.</p>
+            <p>
+              <em>In one element, set “QueryEncoding”as the value of the attribute type, Set the attribute value to the character encoding, such as “UTF-8”, used to encode the ParticipantObjectQuery before base64 encoding.</em>
+            </p>
+            <p>In another element, set “urn:ihe:iti:xca:2010:homeCommunityId” as the value of the attribute type and the value of the homeCommunityID as the value of the attribute value, if known.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.18.5.1.2">3.18.5.1.2 Document Registry audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-18”, “IHE Transactions”, “Registry Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (0..1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>M</td>
+          <td>The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-18”, “IHE Transactions”, “Registry Stored Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>Stored Query ID (UUID)</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the AdhocQueryRequest, base64 encoded.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>C</td>
+          <td>
+            <p>The ParticipantObjectDetail element may occur more than once.</p>
+            <p>
+              <em>In one element, set “QueryEncoding”as the value of the attribute type, Set the attribute value to the character encoding, such as “UTF-8”, used to encode the ParticipantObjectQuery before base64 encoding.</em>
+            </p>
+            <p>In another element, set “urn:ihe:iti:xca:2010:homeCommunityId” as the value of the attribute type and the value of the homeCommunityID as the value of the attribute value, if known.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

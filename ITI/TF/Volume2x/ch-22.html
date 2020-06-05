@@ -1,0 +1,843 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2x_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2x</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="Appendix V">Appendix V: Web Services for IHE Transactions</h1>
+    <h2 id="Appendix V.1">V.1 Introduction</h2>
+    <p>“Web Services” has become a catch-all phrase describing a wide range of HTTP transactions over a TCP/IP network. A more precise definition of Web Services implies richer infrastructure capabilities with all transactions built using SOAP messages. This appendix provides the guidelines for specifying the use of SOAP-based Web Services as the messaging infrastructure and transport mechanism for IHE transactions.</p>
+    <h2 id="Appendix V.2">V.2 Relevant Standards</h2>
+    <p>Virtually all web services specifications are developed under the auspices of the World Wide Web Consortium (W3C) or the Organization for the Advancement of Structured Information Standards (OASIS). The Web Services-Interoperability organization (WS-I) publishes profiles, which incorporate several existing standards, and constrain them for interoperability. For each profile, WS-I also publishes a test assertion document and corresponding interoperability testing tools for Java and C#.</p>
+    <h3 id="Appendix V.2.1">V.2.1 WS-I Profiles</h3>
+    <p>The Web Services for IHE transactions will be based on SOAP 1.2, and as such they take advantage of the guidelines expressed in the WS-I Basic Profile 2.0 (BP 2.0). Some IHE transactions may also take advantage of the WS-I Basic Security Profile 1.1 (BSP 1.1) and WS-I Reliable Secure Profile 1.0 (RSP 1.0) where applicable.</p>
+    <h3 id="Appendix V.2.2">V.2.2 WS-* Specifications</h3>
+    <p>Based on the requirements of the current WS-I profiles, the Web Services for IHE transactions support the following Web Services standards:</p>
+    <ul>
+      <li>
+        <p>WS-Addressing</p>
+      </li>
+      <li>
+        <p>MTOM</p>
+      </li>
+      <li>
+        <p>XOP</p>
+      </li>
+      <li>
+        <p>WS-Security</p>
+      </li>
+    </ul>
+    <p>The WS-I Reliable Secure Profile combines several of the above WS-* standards, as well as including:</p>
+    <ul>
+      <li>
+        <p>WS-SecureConversation</p>
+      </li>
+      <li>
+        <p>WS-Trust</p>
+      </li>
+      <li>
+        <p>WS-Policy</p>
+      </li>
+      <li>
+        <p>WS-ReliableMessaging</p>
+      </li>
+    </ul>
+    <p>In the future, the Web Services for IHE transactions will consider support for this new WS-I profile, or particular WS-* standards as needed by specific use cases.</p>
+    <h3 id="Appendix V.2.3">V.2.3 HL7 Web Services Profile</h3>
+    <p>The HL7 Web Services Profile provides a framework for using Web Services as the transport mechanism for HL7 V3 messages. The framework provides a layered approach to specifying Web Services requirements. IHE will use the same approach as a guideline when specifying Web Services transport for IHE transactions and will do its best to maintain this consistency over time.</p>
+    <h3 id="Appendix V.2.4">V.2.4 XML Namespaces</h3>
+    <p>Table V.2.4-1 lists XML namespaces that are used in this appendix. The choice of any namespace prefix is arbitrary and not semantically significant.</p>
+    <p>Table V.2.4-1: XML Namespaces and Prefixes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Prefix</th>
+          <th>Namespace</th>
+          <th>Specification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>wsdl (or default)</td>
+          <td>http://schemas.xmlsoap.org/wsdl/</td>
+          <td>
+            <a href="http://www.w3.org/Submission/wsdl11soap12/">WSDL 1.1 binding for SOAP 1.2</a>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>wsoap12 or wsoap</td>
+          <td>http://schemas.xmlsoap.org/wsdl/soap12/</td>
+          <td>
+            <a href="http://www.w3.org/Submission/wsdl11soap12/">WSDL 1.1 binding for SOAP 1.2</a>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>wsaw</td>
+          <td>http://www.w3.org/2006/05/addressing/wsdl</td>
+          <td>
+            <a href="http://www.w3.org/TR/2006/CR-ws-addr-wsdl-20060529/">WSA 1.0 - WSDL Binding</a>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>wsa</td>
+          <td>http://www.w3.org/2005/08/addressing</td>
+          <td>
+            <a href="http://www.w3.org/TR/ws-addr-core/">WSA 1.0 - Core</a>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>wsam</td>
+          <td>http://www.w3.org/2007/05/addressing/metadata</td>
+          <td>
+            <a href="http://www.w3.org/TR/2007/WD-ws-addr-metadata-20070627/">WSA 1.0 - Metadata</a>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>soap12</td>
+          <td>http://www.w3.org/2003/05/soap-envelope</td>
+          <td>
+            <a href="http://www.w3.org/TR/soap12-part1/">SOAP 1.2</a>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>soap</td>
+          <td>Either soap11 or soap12 depending on context</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Hl7</td>
+          <td>urn:hl7-org:v3</td>
+          <td>HL7 V3 XML ITS</td>
+        </tr>
+        <tr class="odd">
+          <td>xsd</td>
+          <td>http://www.w3.org/2001/XMLSchema</td>
+          <td>
+            <a href="http://www.w3.org/TR/xmlschema-1/">XML Schema</a>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>xsi</td>
+          <td>http://www.w3.org/2001/XMLSchema-instance</td>
+          <td>
+            <a href="http://www.w3.org/TR/xmlschema-1/">XML Schema</a>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>lcm</td>
+          <td>urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>rim</td>
+          <td>urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>rs</td>
+          <td>urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>query</td>
+          <td>urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>xds</td>
+          <td>urn:ihe:iti:xds-b:2007</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>xop</td>
+          <td>http://www.w3.org/2004/08/xop/include</td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p />
+    <h2 id="Appendix V.3">V.3 Web Services Requirements</h2>
+    <p>The requirements in this section represent guidance for IHE Technical Framework authors who need to use web services in specific transactions. These requirements fall into two categories:</p>
+    <ol type="1">
+      <li>
+        <p>Providing consistency and clarity in the IHE specifications.</p>
+      </li>
+      <li>
+        <p>Affecting the wire format of the transactions.</p>
+      </li>
+    </ol>
+    <p>When the requirements for particular text are specified, the following notation is used:</p>
+    <ul>
+      <li>
+        <p>curly braces (i.e., {}) are used to denote a part of a string which shall always be replaced with a string corresponding to the specific transaction, actor, or profile;</p>
+      </li>
+      <li>
+        <p>square brackets (i.e., []) are used to denote a part of a string which shall be either replaced with a string corresponding to the specific transaction, or shall be completely omitted.</p>
+      </li>
+    </ul>
+    <h3 id="Appendix V.3.1">V.3.1 Requirements for Transactions using HL7 V3 Messages</h3>
+    <p>When IHE transactions use HL7 V3 Messages, the Web Services protocol will conform to the HL7 Web Services Basic, Addressing, Security, and Reliable Messaging Profiles, with additional constraints as specified in the following sub-sections.</p>
+    <h4 id="Appendix V.3.1.1">V.3.1.1 HL7 WS Basic Profile Constraints</h4>
+    <p>The Sender and Receiver shall conform to the HL7 WS Basic Profile with five modifications. The first modification is the requirement of supporting SOAP 1.2, while the HL7 WS Basic Profile provides the choice of supporting either SOAP 1.1 or SOAP 1.2, or both.</p>
+    <p>The second modification is to HL7-WSP200, which recommends that a WSDL document describes a specific HL7 application role. For consistency with non-HL7 V3 transactions, IHE specifications shall provide an example WSDL document for all transactions of an actor per profile (see IHE-WSP200).</p>
+    <p>The third modification is to HL7-WSP201, which recommends that the HL7 Application Role ID is to be used as the name of the WSDL definition. For consistency with non-HL7 V3 transactions the name of the example WSDL definition provided in the IHE specification shall be the actor name of the transaction's receiver (see the IHE-WSP201).</p>
+    <p>The fourth modification is to HL7-WSP202, which specifies the use of the HL7 namespace as the target namespace of the WSDL document. This would prevent creating a single WSDL for actors which use both HL7 V3 and non-HL7 V3 IHE transactions (e.g., an XDS registry implementing the XDS.b Profile with the Patient Identity Feed HL7 V3 transaction). For consistency among all IHE transactions, when creating an IHE transaction specification, the WSDL target namespace shall be specified as “urn:ihe:&lt;committee name&gt;:&lt;profile&gt;:&lt;year&gt; (see IHE-WSP202).</p>
+    <p>The fifth modification is to HL7-WSP208, which specifies that “WSDL messages for Interactions SHOULD use wsdl:operation/wsdl:input/@wsa:Action = "urn:hl7-org:v3:{Interaction_Artifact_Id}”. IHE extends the “should” to support situations where one HL7 message is being used within two transactions for significantly different purposes. For this case the second use of the message shall extend the HL7 specified Action string with “:[transaction-name]” where [transaction-name] is the name of the second transaction.</p>
+    <h4 id="Appendix V.3.1.2">V.3.1.2 HL7 WS Addressing Profile Constraints</h4>
+    <p>The Sender and Receiver should conform to the HL7 WS Addressing Profile. No additional constraints are made in this sub-section.</p>
+    <h4 id="Appendix V.3.1.3">V.3.1.3 HL7 WS Security Profile Constraints</h4>
+    <p>IHE does not specify whether the Sender and Receiver should implement the HL7 WS Security Profile. The decision to implement the HL7 WS Security Profile is left to implementers. Each IHE transaction specifies its ATNA requirements for security and authentication. Security profiles such as Cross-Enterprise User Assertion (XUA) contain further security requirements. With the publication of WS-Security 1.1 and when the WS-I Basic Security Profile 1.1 is released, it is expected that ATNA (or a different profile) may incorporate additional options for Web Services, and the HL7 WS Security Profile will be incorporated in this appendix.</p>
+    <h4 id="Appendix V.3.1.4">V.3.1.4 HL7 WS Reliable Messaging Profile Constraints</h4>
+    <p>IHE does not specify whether the Sender and Receiver should implement the HL7 WS Reliable Messaging Profile. The decision to implement the HL7 WS Reliable Messaging Profile is left to implementers. When the WS-I Reliable Secure Profile Working Group releases a profile it is expected that additional options for Web Services may be added, and the HL7 WS Reliable Messaging Profile will be incorporated in this appendix.</p>
+    <h3 id="Appendix V.3.2">V.3.2 Requirements for Transactions which don’t use HL7 V3 Messages</h3>
+    <p>The following IHE web services requirements are derived from the HL7 Web Services Profile. This provides consistency among the IHE transactions, compatibility to existing Web Services implementations through the WS-I profiles, and a well-defined mechanism for adding additional layers of web services in the future. The HL7 Web Services Profile also provides detailed background regarding the requirements presented here.</p>
+    <p>The numbering scheme for the individual requirements uses the following convention:</p>
+    <ul>
+      <li>
+        <p>IHE-WS[P|A|S|RM]nnn[.e]) text</p>
+      </li>
+    </ul>
+    <p>P, A, S, and RM represent the Basic, Addressing, Security, and Reliable Messaging requirements sections in this specification, nnn represents a unique number for this specification, and text is the text of the requirement. This directly corresponds to the convention used in the HL7 Web Services Profile, and for easier navigation, the same numbers correspond to the equivalent requirements in both specifications. Note that not all implementation decisions from the HL7 Web Services Profile are relevant for non-HL7 web services transactions. If there are cases where an IHE Web Services requirement exists that does not correspond to an implementation decision from the HL7 Web Services Profile, the optional extension to the number (shown as .e above) can be used to eliminate the possibility of confusion.</p>
+    <p>Table V.3.2-1: Web Services Requirements for Non-HL7 Transactions</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Requirement Identifier</th>
+          <th>Requirement text</th>
+          <th>SOAP message format affected?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>IHE-WSP200</td>
+          <td>Example WSDL documents shall implement a specific IHE actor within a specific IHE Integration Profile.</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>IHE-WSP201</td>
+          <td>The attribute /wsdl:definitions/@name in the example WSDL document provided with an IHE specification shall be the name of the IHE actor providing the service.</td>
+          <td>No</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE-WSP202</td>
+          <td>The targetNamespace of the example WSDL shall be urn:ihe:{committee}:{profile}:{year}</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>IHE-WSP203</td>
+          <td>The example WSDL shall include XML Schema Definition references for the transactions payloads.</td>
+          <td>No</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE-WSP205</td>
+          <td>Two WSDL messages shall be defined for a request-response transaction.</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>IHE-WSP206</td>
+          <td>In the example WSDL provided by an IHE specification a single WSDL part named Body shall be defined for each WSDL message and the part type shall refer to an element defined in the Schema Definition required in IHE-WSP203.</td>
+          <td>Determines the format of the SOAP Body</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE_WSP207</td>
+          <td>For each input and output message defined in the WSDL portType operation an attribute wsaw:Action SHALL be included.</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>IHE_WSP208</td>
+          <td>
+            WSDL operations SHALL use
+            <em>wsdl:operation/wsdl:input/@wsaw:Action = "urn:ihe:{committee}:{Year}:{Transaction name}[Operation]" and wsdl:operation/wsdl:output/@wsaw:Action = "urn:ihe:{committee}:{Year}:{Transaction name}[Operation]Response"</em>
+          </td>
+          <td>Determines the SOAP header content for wsa:Action</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE_WSP211</td>
+          <td>
+            <p>Operations defined in the WSDL portType may or may not have a wsoap12:operation/@soapAction attribute provided. If wsoap12:operation/@soapAction is not provided, wsoap12:operation/@soapActionRequired shall be false.</p>
+            <p>SOAP message consumers shall ignore any soapAction value found in a SOAP message.</p>
+          </td>
+          <td>Determines the value of soapAction</td>
+        </tr>
+        <tr class="even">
+          <td>IHE_WSP212</td>
+          <td>
+            The example WSDL provided with an IHE specification shall use the SOAP Binding described in
+            <a href="http://www.w3.org/TR/wsdl.html#_soap-b">WSDL 1.1 Chapter 3</a>
+            and the
+            <a href="http://www.w3.org/Submission/wsdl11soap12/">binding extension for SOAP 1.2</a>
+            .
+          </td>
+          <td>No</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE_WSP215</td>
+          <td>IHE transactions referencing the standards specified by Appendix V shall support SOAP 1.2, unless otherwise noted in the transaction. The example WSDL document provided with an IHE specification shall contain a SOAP 1.2 binding unless the transaction specifically notes that SOAP 1.2 is not supported.</td>
+          <td>Determines the namespace of the SOAP message</td>
+        </tr>
+        <tr class="even">
+          <td>IHE_WSA100</td>
+          <td>The example WSDL provided with IHE transactions shall use the WS-Addressing framework when specifying the Web Services protocol.</td>
+          <td>Determines the WSA content for the SOAP header</td>
+        </tr>
+        <tr class="odd">
+          <td>IHE_WSA101</td>
+          <td>All &lt;wsa:Action&gt; elements shall have the mustUnderstand attribute set (mustUnderstand=”1” or “true”)</td>
+          <td>Ensures that web services frameworks are configured to properly generate and process WS-Addressing headers</td>
+        </tr>
+        <tr class="even">
+          <td>IHE_WSA102</td>
+          <td>The &lt;wsa:ReplyTo&gt; element of the initiating message shall be present. (See Note 1.)</td>
+          <td>Ensures that responses are routed to the appropriate web services end point, or as an immediate response</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Note 1: There may be web services toolkits which implement the WS-Addressing features improperly and may have problems processing a wsa:ReplyTo header with a mustUnderstand attribute set to true. Implementers of SOAP clients are advised to plan for mitigating the impact of toolkits with deficient implementation of WS-Addressing by putting the mustUnderstand attribute only on other header(s).</p>
+    <h4 id="Appendix V.3.2.1">V.3.2.1 Basic Requirements</h4>
+    <h4 id="Appendix V.3.2.1.1">V.3.2.1.1 Naming conventions and namespaces</h4>
+    <p>IHE-WSP200) Example WSDL documents shall implement a specific IHE actor within a specific IHE Integration Profile.</p>
+    <p>This editorial requirement means that if several IHE actors within a profile are combined, then separate WSDL documents for each actor need to be provided. This only applies to actors, which provide a particular service, i.e., the receivers in an IHE transaction.</p>
+    <p>IHE-WSP201) IHE requires the profile writers and recommends the implementers to use the following naming convention for WSDL artifacts.</p>
+    <ul>
+      <li>
+        <p>NAME – represents the formal IHE actor name of the actor providing the service with spaces omitted from the name (e.g., DocumentRegistry is the NAME value for the XDS.b Document Registry Actor). Specifically, NAME is the value of the /wsdl:definitions/@name attribute which will be specified for each transaction.</p>
+      </li>
+      <li>
+        <p>Transaction Name – represents the formal IHE Transaction Name for this particular web-service exchange with spaces omitted from the name (e.g., RegistryStoredQuery is the TRANSACTION_for the XDS.b Registry Stored Query Transaction)</p>
+      </li>
+    </ul>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>WSDL Artifact</td>
+          <td>Proposed Naming</td>
+        </tr>
+        <tr class="even">
+          <td>message request</td>
+          <td>{Transaction Name}_Message</td>
+        </tr>
+        <tr class="odd">
+          <td>message response</td>
+          <td>{Transaction Name}Response_Message</td>
+        </tr>
+        <tr class="even">
+          <td>portType</td>
+          <td>{NAME}_PortType</td>
+        </tr>
+        <tr class="odd">
+          <td>Operation</td>
+          <td>{NAME}_{Transaction Name}[_OperationID]</td>
+        </tr>
+        <tr class="even">
+          <td>SOAP 1.2 binding</td>
+          <td>{NAME}_Binding_Soap12</td>
+        </tr>
+        <tr class="odd">
+          <td>SOAP 1.2 port</td>
+          <td>{NAME}_Port_Soap12</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Here is an example of how the nomenclature is applied:</p>
+    <p>For wsdl:definitions/@name="DocumentRegistry":</p>
+    <p>message request -&gt; "RegistryStoredQuery_Message"</p>
+    <p>message response -&gt; RegistryStoredQueryResponse_Message</p>
+    <p>portType -&gt; "DocumentRegistry_PortType"</p>
+    <p>operation -&gt; "DocumentRegistry_RegistryStoredQuery_Request"</p>
+    <p>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "DocumentRegistry_Port_Soap12"</p>
+    <p>IHE-WSP202)</p>
+    <p>IHE requires the use of the following naming convention for targetNamespace of example WSDL.</p>
+    <ul>
+      <li>
+        <p>DOMAIN – represents the acronym of the IHE domain who authored this web-service transaction (e.g., iti)</p>
+      </li>
+      <li>
+        <p>PROFILE – represents the acronym of the IHE profile which references this web-service transaction (e.g., xds-b)</p>
+      </li>
+      <li>
+        <p>YEAR – represents the four-digit year that this transaction was first published within a Trial Implementation profile</p>
+      </li>
+      <li>
+        <p>TYPE – optional extension of which other IHE specifications already using XML namespaces may make use</p>
+      </li>
+    </ul>
+    <p>The targetNamespace of the example WSDL shall be</p>
+    <blockquote>
+      <p>urn:ihe:{DOMAIN}:{PROFILE}:{YEAR} and may be extended to</p>
+      <p>urn:ihe:{DOMAIN}:{PROFILE}:{YEAR}:{TYPE}</p>
+    </blockquote>
+    <p>As an example the namespace for the 2008 XDS.b Integration Profile is urn:ihe:iti:xds-b:2007.</p>
+    <p>IHE-WSP203) The example WSDL shall include XML Schema Definition references for the transactions payloads.</p>
+    <p>The purpose of this requirement is to specify how authors of IHE profiles specify the transactions which use web services. This requires both the existence of an XML schema definition for the transaction payloads, and the manner in which it is specified in the WSDL file – by reference.</p>
+    <h4 id="Appendix V.3.2.1.2">V.3.2.1.2 Message and portType Definitions</h4>
+    <p>IHE-WSP205) Two WSDL messages shall be defined for a request-response transaction.</p>
+    <p>IHE-WSP206) In the example WSDL provided by an IHE specification a single WSDL part named Body shall be defined for each WSDL message and the part type shall refer to an element defined in the Schema Definition required in IHE-WSP203.</p>
+    <p>IHE-WSP207) For each input and output message defined in the WSDL portType operation an attribute wsaw:Action SHALL be included.</p>
+    <p>For compatibility with the Addressing requirements and consistency with naming across IHE Web Services implementations, the wsaw:Action attribute for each WSDL input and output message must be defined.</p>
+    <p>The wsaw:Action attribute shall be ignored by Web Services implementations that do not support WS-Addressing. It is very important to have the attribute in mixed cases where just one of the endpoints might support the WS-Addressing specification to avoid communication or routing errors.</p>
+    <p>
+      IHE-WSP208) WSDL operations SHALL use
+      <em>wsdl:operation/wsdl:input/@wsaw:Action = "urn:ihe:{Domain}:{Year}:{Transaction name}" and wsdl:operation/wsdl:output/@wsaw:Action = "urn:ihe:{Domain}:{Year}:{Transaction name}Response"</em>
+    </p>
+    <p>
+      For example, the wsaw:Action value for the Registry Stored Query [ITI-18] transaction is specified as
+      <em>“</em>
+      urn:ihe:iti:2007:RegistryStoredQuery” and “urn:ihe:iti:2007:RegistryStoredQueryResponse”
+      <em>.</em>
+    </p>
+    <h4 id="Appendix V.3.2.1.3">V.3.2.1.3 Binding</h4>
+    <p>Multiple WSDL bindings can be defined in order to support different protocols and transports. The naming is consistent with the naming rules specified in the previous section.</p>
+    <p>IHE-WSP211) Operations defined in the WSDL portType may or may not have a wsoap12:operation/@soapAction attribute provided. If wsoap12:operation/@soapAction is not provided, wsoap12:operation/@soapActionRequired shall be false.</p>
+    <p>SOAP message consumers shall ignore any soapAction value found in a SOAP message.</p>
+    <p>
+      IHE-WSP212) The example WSDL provided with an IHE specification shall use the SOAP Binding described in
+      <a href="http://www.w3.org/TR/wsdl.html#_soap-b">WSDL 1.1 Chapter 3</a>
+      and the
+      <a href="http://www.w3.org/Submission/wsdl11soap12/">binding extension for SOAP 1.2</a>
+      .
+    </p>
+    <p>IHE-WSP215) IHE transactions referencing the standards specified by Appendix V shall support SOAP 1.2, unless otherwise noted in the transaction. The example WSDL document provided with an IHE specification shall contain a SOAP 1.2 binding unless the transaction specifically notes that SOAP 1.2 is not supported.</p>
+    <p>SOAP 1.2 is the base standard for several WS specification, and has many available and easily accessible implementations.</p>
+    <p>Example 1: Example WSDL File with a Non-HL7 Transaction</p>
+    <p>&lt;definitions xmlns:wsoap11="http://schemas.xmlsoap.org/wsdl/soap/"</p>
+    <p>xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"</p>
+    <p>xmlns:ihe="urn:ihe:iti:xds-b:2007" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</p>
+    <p>targetNamespace="urn:ihe:iti:xds-b:2007" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"</p>
+    <p>xmlns:wsaw="http://www.w3.org/2007/05/addressing/wsdl" name="XDSRepository"&gt;</p>
+    <p>&lt;documentation&gt;IHE XDS Document Repository&lt;/documentation&gt;</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified"&gt;</p>
+    <p>&lt;xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</p>
+    <p>schemaLocation="../schema/ebXML_RS/rs.xsd"/&gt;</p>
+    <p>&lt;xsd:import namespace="urn:ihe:iti:xds-b:2007" schemaLocation="../schema/IHE/IHEXDS.xsd"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>&lt;message name="RetrieveDocumentSet_Message"&gt;</p>
+    <p>&lt;documentation&gt;Retrieve Document Set&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="ihe:RetrieveDocumentSetRequest"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveDocumentSetResponse_Message"&gt;</p>
+    <p>&lt;documentation&gt;Retrieve Document Set Response&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="ihe:RetrieveDocumentSetResponse"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="ProvideAndRegisterDocumentSet_Message"&gt;</p>
+    <p>&lt;documentation&gt;Provide and Register Document Set&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="ihe:ProvideAndRegisterDocumentSetRequest"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="ProvideAndRegisterDocumentSetResponse_Message"&gt;</p>
+    <p>&lt;documentation&gt;Provide And Register Document Set Response&lt;/documentation&gt;</p>
+    <p>&lt;part name="body" element="rs:RegistryResponse"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;portType name="XDSDocumentRepository_PortType"&gt;</p>
+    <p>&lt;operation name="ProvideAndRegisterDocumentSet"&gt;</p>
+    <p>&lt;input message="ihe:ProvideAndRegisterDocumentSet_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"/&gt;</p>
+    <p>&lt;output message="ihe:ProvideAndRegisterDocumentSetResponse_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-bResponse"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocumentSet"&gt;</p>
+    <p>&lt;input message="ihe:RetrieveDocumentSet_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:RetrieveDocumentSet"/&gt;</p>
+    <p>&lt;output message="ihe:RetrieveDocumentSetResponse_Message"</p>
+    <p>wsaw:Action="urn:ihe:iti:2007:RetrieveDocumentSetResponse"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p>&lt;binding name="XDSDocumentRepository_Binding_Soap11" type="ihe:XDSDocumentRepository_PortType"&gt;</p>
+    <p>&lt;wsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="ProvideAndRegisterDocumentSet"&gt;</p>
+    <p>&lt;wsoap11:operation soapAction="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap11:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap11:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocumentSet"&gt;</p>
+    <p>&lt;wsoap11:operation soapAction="urn:ihe:iti:2007:RetrieveDocumentSet"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap11:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap11:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>&lt;binding name="XDSDocumentRepository_Binding_Soap12" type="ihe:XDSDocumentRepository_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="ProvideAndRegisterDocumentSet"&gt;</p>
+    <p>&lt;wsoap12:operation soapAction="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocumentSet"&gt;</p>
+    <p>&lt;wsoap12:operation soapAction="urn:ihe:iti:2007:RetrieveDocumentSet"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>&lt;service name="XDSDocumentRepository_Service"&gt;</p>
+    <p>&lt;port name="XDSDocumentRepository_Port_Soap11" binding="ihe:XDSDocumentRepository_Binding_Soap11"&gt;</p>
+    <p>&lt;wsoap11:address location="http://servicelocation/XDSDocumentRepository_Service"/&gt;</p>
+    <p>&lt;/port&gt;</p>
+    <p>&lt;port name="XDSDocumentRepository_Port_Soap12"</p>
+    <p>binding="ihe:XDSDocumentRepository_Binding_Soap12"&gt;</p>
+    <p>&lt;wsoap12:address location="http://servicelocation/XDSDocumentRepository_Service"/&gt;</p>
+    <p>&lt;/port&gt;</p>
+    <p>&lt;/service&gt;</p>
+    <p>&lt;/definitions&gt;</p>
+    <h4 id="Appendix V.3.2.2">V.3.2.2 Addressing Requirements</h4>
+    <p>The Web Services Addressing specification (WS-Addressing) defines a framework for a transport-neutral SOAP messaging. Although understanding the concepts outlined in WS-Addressing is important, most of the underlying details will be shielded by the abstraction layers provided to developers. This specification assumes an abstract separation between the application layer, the Web services messaging infrastructure layer, and the message transport layer.</p>
+    <p>The IHE transaction is built at the application layer, it is passed to the Web services messaging infrastructure layer where the SOAP message is constructed according to the rules set in the WSDL. The action value specified in the WSDL is used to construct the &lt;wsa:Action&gt; SOAP header. The endpoint address specified in the WSDL (or the supplied end point reference) is used to construct the &lt;wsa:To&gt;. Depending on the message exchange pattern (e.g., one-way, request-response), other WS-Addressing headers may be added at this point (e.g., &lt;wsa:From&gt;, &lt;wsa:ReplyTo&gt;, etc.).</p>
+    <p>IHE-WSA100) The example WSDL provided with IHE transactions shall use the WS-Addressing framework when specifying the Web Services protocol.</p>
+    <p>IHE-WSA101) All &lt;wsa:Action&gt; elements shall have the mustUnderstand attribute set (mustUnderstand=”1” or “true”)</p>
+    <p>IHE-WSA102) The &lt;wsa:ReplyTo&gt; element of the initiating message shall be present.</p>
+    <p>Note: There may be web services toolkits which implement the WS-Addressing features improperly and may have problems processing a wsa:ReplyTo header with a mustUnderstand attribute set to true. Implementers of SOAP clients are advised to plan for mitigating the impact of toolkits with deficient implementation of WS-Addressing by putting the mustUnderstand attribute only on other header(s).</p>
+    <p>See Section V.9.2 for sample headers for Synchronous and Asynchronous messages.</p>
+    <h4 id="Appendix V.3.2.3">V.3.2.3 Security Requirements</h4>
+    <p>The IHE ATNA Profile contains requirements which address certain aspects of security and authentication, including HTTPS transport requirements. Individual transactions which use Web Services will incorporate these requirements depending on their needs. Security profiles such as Cross-Enterprise User Assertion (XUA) Profile contain further security requirements. With the publication of the WS-I Basic Security Profile it is expected that ATNA will incorporate additional options for Web Services, and this appendix will reflect any requirements specific for Web Services for IHE transactions.</p>
+    <h2 id="Appendix V.4">V.4 Web Services for specific IHE Transactions</h2>
+    <p>The Web Services specification is provided in three parts. The first part will be in Volumes 2a, 2b and 2c, where a separate subsection shall be added for each affected IHE transaction at the end of the “Message Semantics” section. This subsection shall detail the types and message parts of the WSDL. The actor-specific constraints against the IHE Web Services Requirements specified above shall be added at the end of each “Expected Actions” section.</p>
+    <p>The second, informative part of the specification shall be on the IHE ftp site (see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>), which shall contain a complete WSDL (Web Services Description Language) description of the web service, which aggregates the snippets from Volumes 2a, 2b and 2c described above. There will be one WSDL contract per actor per profile. Each transaction is represented by a port type, where the operations names and message names follow the requirements specified in Section V.3.2.1.1. The complete WSDL is for reference purposes for implementers.</p>
+    <h2 id="Appendix V.5">V.5 Synchronous and Asynchronous Web Services Exchange</h2>
+    <h3 id="Appendix V.5.1">V.5.1 Overview</h3>
+    <p>When two actors, later referred to as Requestor and Provider, need to exchange web services messages using a request-response message exchange pattern, they can do so synchronously or asynchronously.</p>
+    <p>With synchronous message exchange, the Requestor sends a request and blocks waiting for a response from the Provider. The Requestor receives the response on the same connection that the Requestor initially established to send the request. Synchronous exchange is usually easier to implement and requires that the Provider be available when the Requestor needs to send a request.</p>
+    <p>With asynchronous message exchange, the Requestor is only concerned with sending the request, knowing that it will ‘eventually’ receive a response. The Provider may not be available at the time the request is sent. When the Provider receives and processes the message it sends a response back to the Requestor over a new connection. Asynchronous Web Services Exchange enables support for network infrastructures where:</p>
+    <ul>
+      <li>
+        <p>Transports are unreliable</p>
+      </li>
+      <li>
+        <p>Systems are not always available</p>
+      </li>
+      <li>
+        <p>Variable or high communication latency is present</p>
+      </li>
+    </ul>
+    <p>Asynchronous Web Services Exchange opens the option for using intermediaries for store and forward or offline communication modes, and leveraging reliable messaging mechanisms to address the reliability and availability challenges that these types of network infrastructures present. Asynchronous Web Services Exchange enables support for clinical use cases that can benefit from asynchronous infrastructure capabilities such as offline mode.</p>
+    <h3 id="Appendix V.5.2">V.5.2 Considerations for using Asynchronous Web Services Exchange</h3>
+    <p>Asynchronous Web Services Exchange opens the option for using intermediaries for store and forward or offline communication modes, and leveraging reliable messaging mechanisms to address the reliability and availability challenges that these types of network infrastructures present. Asynchronous Web Services Exchange enables support for clinical use cases that can benefit from asynchronous infrastructure capabilities such as offline mode.</p>
+    <p>Adding support for asynchronous exchange should take into consideration the fact that:</p>
+    <ul>
+      <li>
+        <p>The request and response messages are decoupled and transmitted on separate connections as shown in Figure V.5.2-1 below.</p>
+      </li>
+      <li>
+        <p>The Requestor will ‘unblock’ before it receives the response. The response will be received asynchronously at a later time. Having decoupled request/response exchange should draw attention to the following:</p>
+      </li>
+      <li>
+        <blockquote>
+          <p>The Requestor should have response timeout capability to handle the case when a response has not been received within expected time interval</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>The Requestor should be able to match request/response pairs</p>
+        </blockquote>
+      </li>
+    </ul>
+    <p>
+      <img src=".//media/image16.emf" style="width:4.62778in;height:2.62778in" />
+    </p>
+    <p>Figure V.5.2-1: Request and Response Messages</p>
+    <h3 id="Appendix V.5.3">V.5.3 Specification of the use of Asynchronous Web Services Exchange</h3>
+    <p>Volume 2a, 2b and 2c transaction specifications will identify whether asynchronous support is required or optional on the transaction level. If nothing is specified in Volume 2a/2b/2c, only synchronous exchange is expected. When optional asynchronous support is applicable to a transaction, the profile specification in ITI TF-1 will identify that support as required for actors in that profile or as a named option.</p>
+    <h2 id="Appendix V.6">V.6 Web Services Standards Evolution</h2>
+    <p>As the industry acceptance of newer standards/newer versions of existing standards progresses, new options will be added to existing transactions. One such expected change is the support for WS-Security and WS-Reliable Messaging as new options to web services transactions.</p>
+    <h2 id="Appendix V.7">V.7 Web Services References</h2>
+    <p>
+      WS-I:
+      <a href="http://ws-i.org/">http://ws-i.org/</a>
+    </p>
+    <p>
+      WS-I Basic Profile 1.2:
+      <a href="http://ws-i.org/Profiles/BasicProfile-1.2-2010-11-09.html">http://ws-i.org/Profiles/BasicProfile-1.2-2010-11-09.html</a>
+    </p>
+    <p>
+      WS-I Basic Profile 2.0:
+      <a href="http://ws-i.org/Profiles/BasicProfile-2.0-2010-11-09.html">http://ws-i.org/Profiles/BasicProfile-2.0-2010-11-09.html</a>
+    </p>
+    <p>
+      SOAP 1.2:
+      <a href="http://www.w3.org/TR/soap12-part0/">http://www.w3.org/TR/soap12-part0/</a>
+    </p>
+    <p>
+      WSDL 1.1 SOAP 1.2 binding:
+      <a href="http://www.w3.org/Submission/wsdl11soap12/">http://www.w3.org/Submission/wsdl11soap12/</a>
+    </p>
+    <p>
+      HL7 V3 Web Services Profile:
+      <a href="http://www.hl7.org/v3ballot/html/infrastructure/transport/transport-wsprofiles.htm">http://www.hl7.org/v3ballot/html/infrastructure/transport/transport-wsprofiles.htm</a>
+    </p>
+    <p>
+      WS-Addressing:
+      <a href="http://www.w3.org/TR/ws-addr-core">http://www.w3.org/TR/ws-addr-core</a>
+    </p>
+    <p>
+      WS-I Basic Security Profile 1.1:
+      <a href="http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html">http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html</a>
+    </p>
+    <p>
+      WS-I Reliable Secure Profile:
+      <a href="http://www.ws-i.org/Profiles/ReliableSecureProfile-1.0-2010-11-09.html">http://www.ws-i.org/Profiles/ReliableSecureProfile-1.0-2010-11-09.html</a>
+    </p>
+    <p>
+      MTOM:
+      <a href="http://www.w3.org/TR/soap12-mtom/">http://www.w3.org/TR/soap12-mtom/</a>
+    </p>
+    <p>
+      XOP:
+      <a href="http://www.w3.org/TR/xop10/">http://www.w3.org/TR/xop10/</a>
+    </p>
+    <p>WS-Security 1.0: http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wss#technical</p>
+    <p>
+      WS-Security 1.1:
+      <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wss#technical">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wss#technical</a>
+    </p>
+    <p>
+      WS-Secure Conversation:
+      <a href="http://docs.oasis-open.org/ws-sx/ws-secureconversation/v1.4/ws-secureconversation.html">http://docs.oasis-open.org/ws-sx/ws-secureconversation/v1.4/ws-secureconversation.html</a>
+    </p>
+    <p>
+      WS-Trust:
+      <a href="http://docs.oasis-open.org/ws-sx/ws-trust/v1.4/errata01/os/ws-trust-1.4-errata01-os-complete.html">http://docs.oasis-open.org/ws-sx/ws-trust/v1.4/errata01/os/ws-trust-1.4-errata01-os-complete.html</a>
+    </p>
+    <p>
+      WS-Policy:
+      <a href="http://www.w3.org/TR/ws-policy/">http://www.w3.org/TR/ws-policy/</a>
+    </p>
+    <p>
+      WS-Reliable Messaging:
+      <a href="http://docs.oasis-open.org/ws-rx/wsrm/200702">http://docs.oasis-open.org/ws-rx/wsrm/200702</a>
+    </p>
+    <h2 id="Appendix V.8">V.8 Usage of MTOM/XOP</h2>
+    <p>See Section V.9 for sample messages.</p>
+    <h3 id="Appendix V.8.1">V.8.1 Simple SOAP vs MTOM</h3>
+    <p>A simple SOAP message contains the SOAP xml as the message body. An MTOM-encoded message contains a MIME Multipart message with the SOAP xml as the body of one of the parts.</p>
+    <p>Unless a transaction specifies otherwise, Simple SOAP shall be used. Both the request and the response messages shall use the same encoding.</p>
+    <h3 id="Appendix V.8.2">V.8.2 Use of MTOM encoding</h3>
+    <p>Transactions making use of MTOM shall conform to http://www.w3.org/TR/soap12-mtom and http://www.w3.org/TR/xop10/.</p>
+    <p>Actors that create messages with xsi:base64Binary content may use XOP Optimization to reduce the size of the message. If there are multiple xsi:base64Binary content elements, the actor may optimize none, any or all of them at its discretion. Typically, small content will be left in the XML Infoset while larger content will be "optimized".</p>
+    <p>Actors that receive MTOM messages shall be capable of accepting any content of type xsi:base64Binary whether it is contained in the XML Infoset or serialized as Optimized Content.</p>
+    <p>See the following sections of the XOP specification for more information:</p>
+    <ul>
+      <li>
+        <p>https://www.w3.org/TR/2005/REC-xop10-20050125/#introduction (Introduction)</p>
+      </li>
+      <li>
+        <p>https://www.w3.org/TR/2005/REC-xop10-20050125/#terminology (Terminology)</p>
+      </li>
+      <li>
+        <p>https://www.w3.org/TR/2005/REC-xop10-20050125/#creating_xop_packages (Creating XOP Packages).</p>
+      </li>
+      <li>
+        <p>https://www.w3.org/TR/2005/REC-xop10-20050125/#interpreting_xop_packages (Interpreting XOP Packages).</p>
+      </li>
+    </ul>
+    <h3 id="Appendix V.8.3">V.8.3 Use of XOP Optimization (Informative)</h3>
+    <p>In order to optimize a specific piece of binary data:</p>
+    <ul>
+      <li>
+        <p>Create an additional MIME part in the enclosing MTOM message.</p>
+      </li>
+      <li>
+        <p>Assign the new MIME part a Content-ID header containing a unique identifier surrounded by &lt;&gt; angle brackets.</p>
+      </li>
+      <li>
+        <p>Place the Optimized Content in the body of the new MIME part.</p>
+      </li>
+      <li>
+        <p>Replace the Optimized Content with an &lt;xop:Include&gt; element. The @href attribute of the element is the string “cid:” followed by the Content-ID header of the corresponding MIME part (without the &lt;&gt; brackets)</p>
+      </li>
+    </ul>
+    <p>Note that reconstruction of XOP-encoded messages must render them identical to the original in terms of the XML Infoset, in order to be able to calculate matching digital signatures (see http://www.w3.org/TR/xop10/#xop_processing_model). As such, only canonical data may be XOP-optimized and XOP-optimized items should be reconstructed to canonical xsi:base64Binary form (see http://www.w3.org/TR/xmlschema-2/#base64Binary for a description of the canonical form).</p>
+    <h2 id="Appendix V.9">V.9 Sample SOAP Messages</h2>
+    <p>Because there are so many different ways to construct SOAP messages, the samples in this section show the building blocks typically used for SOAP requests and their relative SOAP responses. A sample combining many of the building blocks is included in Section V.9.4.</p>
+    <p>Namespace declarations (see Table V.2.4-1) are omitted for brevity.</p>
+    <h3 id="Appendix V.9.1">V.9.1 Simple SOAP</h3>
+    <p>&lt;?xml version='1.0' encoding='UTF-8'?&gt;</p>
+    <p>&lt;soap12:Envelope&gt;</p>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;!-- SOAP Headers go here --&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <p>&lt;soap12:Body&gt;</p>
+    <p>&lt;!-- SOAP Body goes here --&gt;</p>
+    <p>&lt;/soap12:Body&gt;</p>
+    <p>&lt;/soap12:Envelope&gt;</p>
+    <h3 id="Appendix V.9.2">V.9.2 SOAP Headers</h3>
+    <p>The sample headers show the WS-Addressing headers &lt;wsa:Action/&gt;, &lt;wsa:MessageID/&gt;, &lt;wsa:ReplyTo/&gt;, etc. These WS-Addressing headers are populated according to Appendix V: Web Services for IHE Transactions and according to the specific ITI transaction.</p>
+    <h4 id="Appendix V.9.2.1">V.9.2.1 Headers for Synchronous Request</h4>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;wsa:To&gt;http://localhost:4040/axis2/services/test11966a&lt;/wsa:To&gt;</p>
+    <p>&lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</p>
+    <p>&lt;wsa:Action soap12:mustUnderstand="1"&gt;</p>
+    <p>urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</p>
+    <p>&lt;/wsa:Action&gt;</p>
+    <p>&lt;wsa:ReplyTo&gt;</p>
+    <p>&lt;wsa:Address&gt;</p>
+    <p>http://www.w3.org/2005/08/addressing/anonymous</p>
+    <p>&lt;/wsa:Address&gt;</p>
+    <p>&lt;/wsa:ReplyTo&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <h4 id="Appendix V.9.2.2">V.9.2.2 Headers for Synchronous Response</h4>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;wsa:Action soap12:mustUnderstand="1"&gt;</p>
+    <p>urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-bResponse</p>
+    <p>&lt;/wsa:Action&gt;</p>
+    <p>&lt;wsa:RelatesTo&gt;urn:uuid:6d296e90-e5dc-43d0-b455-7c1f3eb35d83&lt;/wsa:RelatesTo&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <h4 id="Appendix V.9.2.3">V.9.2.3 Headers for Asynchronous Request</h4>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;wsa:Action soap12:mustUnderstand="1"&gt;</p>
+    <p>urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</p>
+    <p>&lt;/wsa:Action&gt;</p>
+    <p>&lt;wsa:MessageID&gt;urn:uuid:6d296e90-e5dc-43d0-b455-7c1f3eb35d83&lt;/wsa:MessageID&gt;</p>
+    <p>&lt;wsa:ReplyTo soap12:mustUnderstand="1"&gt;</p>
+    <p>&lt;wsa:Address&gt;</p>
+    <p>http://192.168.2.4:9080/XdsService/DocumentSourceReceiver.svc</p>
+    <p>&lt;/wsa:Address&gt;</p>
+    <p>&lt;/wsa:ReplyTo&gt;</p>
+    <p>&lt;wsa:To soap12:mustUnderstand="1"&gt;</p>
+    <p>http://localhost:2647/XdsService/DocumentRepositoryReceiver.svc</p>
+    <p>&lt;/wsa:To&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <h4 id="Appendix V.9.2.4">V.9.2.4 Headers for Asynchronous Response</h4>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;wsa:Action soap12:mustUnderstand="1"&gt;</p>
+    <p>urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-bResponse</p>
+    <p>&lt;/wsa:Action&gt;</p>
+    <p>&lt;wsa:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/wsa:MessageID&gt;</p>
+    <p>&lt;wsa:RelatesTo&gt;urn:uuid:6d296e90-e5dc-43d0-b455-7c1f3eb35d83&lt;/wsa:RelatesTo&gt;</p>
+    <p>&lt;wsa:To soap12:mustUnderstand="1"&gt;</p>
+    <p>http://localhost:2647/XdsService/DocumentSourceReceiver.svc</p>
+    <p>&lt;/wsa:To&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <h3 id="Appendix V.9.3">V.9.3 MTOM/XOP</h3>
+    <p>HTTP headers are included in this sample to reflect the HTTP Binding included in the MTOM specification.</p>
+    <h4 id="Appendix V.9.3.1">V.9.3.1 No XOP Optimized Content</h4>
+    <p>POST /axis2/services/repository HTTP/1.1</p>
+    <p>Content-Type: multipart/related; boundary=MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180;</p>
+    <p>type="application/xop+xml"; start="&lt;0.urn:uuid76A2C3D9BCD3AECFF31217932910181@apache.org&gt;";</p>
+    <p>start-info="application/soap+xml"; action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"</p>
+    <p>User-Agent: Axis2</p>
+    <p>Host: localhost:4040</p>
+    <p>Content-Length: 4567</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <p>Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"</p>
+    <p>Content-Transfer-Encoding: binary</p>
+    <p>Content-ID: &lt;0.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org&gt;</p>
+    <p>&lt;!-- The soap12:Envelope has the same content as Simple SOAP --&gt;</p>
+    <p>&lt;?xml version='1.0' encoding='UTF-8'?&gt;</p>
+    <p>&lt;soap12:Envelope&gt;</p>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;!-- SOAP Headers go here --&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <p>&lt;soap12:Body&gt;</p>
+    <p>&lt;!-- Other parts of SOAP body omitted --&gt;</p>
+    <p>&lt;xds:Document id="id1"&gt;</p>
+    <p>&lt;!-- Example of un-optimized content. NOTE: The content is shown indented for</p>
+    <p>readability. For XOP optimized content to be allowed, however, no whitespace</p>
+    <p>is permitted before, inline or after the content. --&gt;</p>
+    <p>SGVyZSBpcyB0aGUgZG9jdW1lbnQgY29udGVudA==</p>
+    <p>&lt;/xds:Document&gt;</p>
+    <p>&lt;/soap12:Body&gt;</p>
+    <p>&lt;/soap12:Envelope&gt;</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <h4 id="Appendix V.9.3.2">V.9.3.2 XOP Optimized Content</h4>
+    <p>POST /axis2/services/repository HTTP/1.1</p>
+    <p>Content-Type: multipart/related; boundary=MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180;</p>
+    <p>type="application/xop+xml"; start="&lt;0.urn:uuid76A2C3D9BCD3AECFF31217932910181@apache.org&gt;";</p>
+    <p>start-info="application/soap+xml"; action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"</p>
+    <p>User-Agent: Axis2</p>
+    <p>Host: localhost:4040</p>
+    <p>Content-Length: 4567</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <p>Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"</p>
+    <p>Content-Transfer-Encoding: binary</p>
+    <p>Content-ID: &lt;0.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org&gt;</p>
+    <p>&lt;!-- The soap12:Envelope has the same content as Simple SOAP, except for the optimized</p>
+    <p>content --&gt;</p>
+    <p>&lt;?xml version='1.0' encoding='UTF-8'?&gt;</p>
+    <p>&lt;soap12:Envelope&gt;</p>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;!-- SOAP Headers go here --&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <p>&lt;soap12:Body&gt;</p>
+    <p>&lt;!-- Other parts of SOAP body omitted --&gt;</p>
+    <p>&lt;xds:Document id="id1"&gt;</p>
+    <p>&lt;!-- Example of XOP optimized content. NOTE: xop:Include is shown indented for</p>
+    <p>readability. In practice, no whitespace is allowed before or</p>
+    <p>after the element. --&gt;</p>
+    <p>&lt;xop:Include href="cid:1.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org"&gt;</p>
+    <p>&lt;/xds:Document&gt;</p>
+    <p>&lt;/soap12:Body&gt;</p>
+    <p>&lt;/soap12:Envelope&gt;</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <p>Content-Type: text/plain; charset=UTF-8"</p>
+    <p>Content-Transfer-Encoding: binary</p>
+    <p>Content-ID: &lt;1.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org&gt;</p>
+    <p>Here is the document content</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180--</p>
+    <p />
+    <h3 id="Appendix V.9.4">V.9.4 Full Sample</h3>
+    <p>This sample combines several of the building blocks from the previous sections to show a Synchronous Request that uses MTOM/XOP with optimized content.</p>
+    <p>POST /axis2/services/repository HTTP/1.1</p>
+    <p>Content-Type: multipart/related; boundary=MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180;</p>
+    <p>type="application/xop+xml"; start="&lt;0.urn:uuid76A2C3D9BCD3AECFF31217932910181@apache.org&gt;";</p>
+    <p>start-info="application/soap+xml"; action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"</p>
+    <p>User-Agent: Axis2</p>
+    <p>Host: localhost:4040</p>
+    <p>Content-Length: 4567</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <p>Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"</p>
+    <p>Content-Transfer-Encoding: binary</p>
+    <p>Content-ID: &lt;0.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org&gt;</p>
+    <p>&lt;?xml version='1.0' encoding='UTF-8'?&gt;</p>
+    <p>&lt;soap12:Envelope&gt;</p>
+    <p>&lt;soap12:Header&gt;</p>
+    <p>&lt;wsa:To&gt;http://localhost:4040/axis2/services/test11966a&lt;/wsa:To&gt;</p>
+    <p>&lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</p>
+    <p>&lt;wsa:Action soap12:mustUnderstand="1"&gt;</p>
+    <p>urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</p>
+    <p>&lt;/wsa:Action&gt;</p>
+    <p>&lt;wsa:ReplyTo&gt;</p>
+    <p>&lt;wsa:Address&gt;</p>
+    <p>http://www.w3.org/2005/08/addressing/anonymous</p>
+    <p>&lt;/wsa:Address&gt;</p>
+    <p>&lt;/wsa:ReplyTo&gt;</p>
+    <p>&lt;/soap12:Header&gt;</p>
+    <p>&lt;soap12:Body&gt;</p>
+    <p>&lt;!-- Other parts of SOAP body omitted --&gt;</p>
+    <p>&lt;xds:Document id="id1"&gt;</p>
+    <p>&lt;xop:Include href="cid:1.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org"&gt;</p>
+    <p>&lt;/xds:Document&gt;</p>
+    <p>&lt;/soap12:Body&gt;</p>
+    <p>&lt;/soap12:Envelope&gt;</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180</p>
+    <p>Content-Type: text/plain; charset=UTF-8"</p>
+    <p>Content-Transfer-Encoding: binary</p>
+    <p>Content-ID: &lt;1.urn:uuid:76A2C3D9BCD3AECFF31217932910181@apache.org&gt;</p>
+    <p>Here is the document content</p>
+    <p>--MIMEBoundaryurn_uuid_76A2C3D9BCD3AECFF31217932910180--</p>
+  </body>
+</html>

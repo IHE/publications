@@ -1,0 +1,191 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2a_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2a</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.6">3.6 Change Context [ITI-6]</h2>
+    <p>This section corresponds to transaction [ITI-6] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-6] is used by the Context Participant and Context Manager Actors.</p>
+    <h3 id="3.6.1">3.6.1 Scope</h3>
+    <p>This transaction allows for an application supporting the Context Participant to change the values for one or more context subjects, forcing other Context Participant Actors to synchronize based on the new context values.</p>
+    <p>
+      The Change Context Transaction is composed of multiple methods as defined by the
+      <em>HL7 Context Management “CCOW” Standard</em>
+      . There are two key characteristics to this transaction. The first is that the transaction has multiple phases consisting of instigating the change, surveying the other participants, and finally publishing the decision as to whether the context changed or not. The second characteristic is that the context change involves a specific subject. For the Patient Context Participant the subject being changed is the patient subject. For the Client Authentication Agent the subject being changed is the user subject. Applications that implement only the Patient Context Participant shall not expect the user subject to be set in context.
+    </p>
+    <p>
+      The semantics of the methods used are defined in the documents
+      <em>HL7 Context Management “CCOW” Standard: Component Technology Mapping: ActiveX</em>
+      or
+      <em>HL7 Context Management “CCOW” Standard: Component Technology Mapping: Web</em>
+      , in conjunction with the
+      <em>HL7 Context Management “CCOW” Standard: Subject Data Definitions</em>
+      document. The Context Participant can choose the technology implementation it wishes to implement. The Context Manager must support both technology implementations in order to accommodate whichever implementation a participant ends up choosing.
+    </p>
+    <p>In the case where Patient Context Participant Actors use identifiers from different patient identifier domains the Context Manager shall be grouped with the Patient Identifier Cross-reference Consumer and the corresponding PIX Query transaction as defined in Section 3.9 to retrieve all identifiers the patient is known by. The IHE Context Manager encompasses more than a CCOW context manager function. See <a href="../Volume2x/ch-4.html#Appendix D">ITI TF-2x: Appendix D</a> for a complete discussion of the grouping of these two actors.</p>
+    <p>
+      The CCOW architecture is defined as a set of components that implement defined interfaces and their detailed methods as specified in the
+      <em>HL7 Context Management “CCOW” Standard: Technology Independent Architecture</em>
+      document. This structure is different than the traditional IHE network transaction. As is depicted in the interaction diagram in Section 3.6.4, the IHE Change Context Transaction is composed of multiple CCOW-defined methods.
+    </p>
+    <h3 id="3.6.2">3.6.2 Use Case Roles</h3>
+    <p>Actor: Client Authentication Agent</p>
+    <p>Role: Initiates context change for user subject by supplying new context values.</p>
+    <p>Actor: Patient Context Participant</p>
+    <p>Role: Initiates context change for patient subject by supplying new context values. After receiving the context survey results it finalizes context change decision. Applications containing this actor without a patient lookup function would not use this transaction.</p>
+    <p>Actor: Context Manager</p>
+    <p>Role: Manages Change Context Transaction lifecycle.</p>
+    <h3 id="3.6.3">3.6.3 Referenced Standard</h3>
+    <p>HL7 Context Management “CCOW” Standard, Version 1.4:</p>
+    <p>Technology and Subject Independent Architecture</p>
+    <p>Component Technology Mapping: ActiveX</p>
+    <p>Component Technology Mapping: Web</p>
+    <p>Subject Data Definitions</p>
+    <h3 id="3.6.4">3.6.4 Messages</h3>
+    <p>Figure 3.6-1: Change Context sequence</p>
+    <h4 id="3.6.4.1">3.6.4.1 Context Change – StartContextChanges Method</h4>
+    <h5 id="3.6.4.1.1">3.6.4.1.1 Trigger Events</h5>
+    <p>This method is triggered by a specific user gesture. The user gesture that triggers this transaction in for the Patient Context Participant is one of selecting a patient. The user gesture that triggers this transaction for the Client Authentication Agent is authentication of a user.</p>
+    <h5 id="3.6.4.1.2">3.6.4.1.2 Message Semantics</h5>
+    <p>
+      The Patient Context Participant and/or the Client Authentication Agent will issue a StartContextChanges method of the ContextManager interface. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.5, for a more detailed description of the parameters associated with this method. IHE specifies no restrictions or extensions to the CCOW definition of the StartContextChanges method.
+    </p>
+    <h5 id="3.6.4.1.3">3.6.4.1.3 Expected Actions</h5>
+    <p>
+      The Context Manager returns the pending context coupon. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.5, for a more detailed description of the response issued by the Context Manager. IHE specifies no restrictions or extensions to the CCOW definition of the StartContextChanges method.
+    </p>
+    <h4 id="3.6.4.2">3.6.4.2 Change Context – SetItemValues Method</h4>
+    <h5 id="3.6.4.2.1">3.6.4.2.1 Trigger Events</h5>
+    <p>The SetItemValues method is triggered by the return of a context coupon in response to the StartContextChanges method.</p>
+    <h5 id="3.6.4.2.2">3.6.4.2.2 Message Semantics</h5>
+    <h6 id="3.6.4.2.2.1">3.6.4.2.2.1 Patient Context Participant Actor support for CCOW Patient Subject</h6>
+    <p>
+      The Patient Context Participant issues an invocation of the SetItemValues method of the ContextData interface to the Context Manager Actor. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.4.4, for a more detailed description of the parameters associated with this method, to be issued by the Patient Context Participant Actor. The Patient Context Participant supports synchronization around the CCOW patient subject. A Patient Context Participant performing a Change Context Transaction shall set the Patient.Id.IdList.1 patient identifier item. All other patient identifier items as defined by the CCOW standard and shown in Table 3.6.4.2-1 Patient Subject Identifier Items, are subject to deprecation in future releases of the standard.
+    </p>
+    <p>Table 3.6.4.2-1: Patient Subject Identifier Items</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Patient Subject Identifier Item Name</th>
+          <th>HL7 Meaning</th>
+          <th>HL7 Data Type</th>
+          <th>HL7 Semantic Constraints on Values</th>
+          <th>Case Sensitive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>
+            Patient.Id.MRN.
+            <em>Suffix</em>
+          </td>
+          <td>Patient’s medical record number, per PID-2</td>
+          <td>ST</td>
+          <td>HL7 Table 0203Identifier Type = MR</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>Patient.Id.MPI</td>
+          <td>Patient’s identifier in the “Master Patient Index”, per PID-2</td>
+          <td>ST</td>
+          <td>HL7 Table 0203Identifier Type = PT or PI (as agreed upon by context sharing systems) and Assigning Authority represents the MPI system</td>
+          <td>No</td>
+        </tr>
+        <tr class="odd">
+          <td>Patient.Id.NationalIdNumber</td>
+          <td>Patient’s national identifier number, per PID-2</td>
+          <td>ST</td>
+          <td>HL7 Table 0203Identifier Type = PT and Assigning Authority represents agreed-upon National Authority</td>
+          <td>No</td>
+        </tr>
+        <tr class="even">
+          <td>Patient.Id.IdList</td>
+          <td>A list of patient identifiers for a patient, per PID-3</td>
+          <td>CX</td>
+          <td>May be a repeating set of CX item values each of which contains an identifier that denotes the same patient</td>
+          <td>No</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <em>Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</em>
+    </p>
+    <p>The Patient.Id.IdList.1 item shall populate component 1, (the patient identifier), and either sub-component 1, (namespace ID), of component 4, (the assigning authority), of the CX data item. This is to be consistent with the requirements for the patient identifier as defined in the PIX Query transaction documented in Section 3.9.4.1.2.2.</p>
+    <p>
+      The Patient Context Participant should use the SetItemValues associated with the ContextData interface, as defined in Sections 17.3.4.4 and 17.3.4.5 respectively of the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document.
+    </p>
+    <h6 id="3.6.4.2.2.2">3.6.4.2.2.2 Client Authentication Agent Actor support for CCOW User Subject</h6>
+    <p>
+      The Client Authentication Agent supports synchronization around the CCOW user subject. A Client Authentication Agent performing a Change Context Transaction shall set the User.Id.Logon.
+      <em>Suffix</em>
+      identifier item, where the
+      <em>Suffix</em>
+      is assigned as Kerberos. This would make the item name to be used by the Client Authentication Agent User.Id.Logon.Kerberos. The value of User.Id.Kerberos shall be the username@realm.
+    </p>
+    <p>
+      The Client Authentication Agent shall use the SetItemValues associated with SecureContextData interface as defined in Section 17.3.13.3 of the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document.
+    </p>
+    <h5 id="3.6.4.2.3">3.6.4.2.3 Expected Actions</h5>
+    <p>
+      The Context Manager returns an acknowledgement of the changed data. IHE specifies no restrictions or extensions to the CCOW definition of the SetItemValues method. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.4.4, for a more detailed description of the response issued by the Context Manager to the Patient Context Participant Actor. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.13.3, for a more detailed description of the response issued by the Context Manager to the Client Authentication Agent Actor.
+    </p>
+    <h4 id="3.6.4.3">3.6.4.3 Context Change – EndContextChanges</h4>
+    <h5 id="3.6.4.3.1">3.6.4.3.1 Trigger Events</h5>
+    <p>The EndContextChanges method is triggered by the completion of the SetItemValues method.</p>
+    <h5 id="3.6.4.3.2">3.6.4.3.2 Message Semantics</h5>
+    <p>
+      The Patient Context Participant and Client Authentication Agent Actors issue an EndContextChanges method of the ContextManager interface to the Context Manager Actor. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.6, for a description of the parameters associated with this method. IHE specifies no restrictions or extensions to the CCOW definition of the EndContextChanges method.
+    </p>
+    <h5 id="3.6.4.3.3">3.6.4.3.3 Expected Actions</h5>
+    <p>The EndContextChanges method triggers the ContextChangesPending method as defined in Section 3.13.4.1. The Context Manager returns the results of the context survey to the instigating Patient Context Participant or Client Authentication Agent Actor.</p>
+    <p>If the instigating Patient Context Participant or Client Authentication Agent receives a unanimous acceptance in the survey results, then it triggers an accept in the PublishChangesDecision method.</p>
+    <p>If the instigating Patient Context Participant or Client Authentication Agent receives one or more Conditional Accept responses in the survey results, then the application containing the actor must ask the user to continue, suspend context participation, or cancel the pending context change transaction. The user’s decision to continue will result in the context change being accepted. The user’s decision to suspend context participation will cancel the change transaction and allow the user to temporarily use the application without affecting the current context session. The user’s decision to cancel will cancel the pending context change transaction. At this point the Patient Context Participant or Client Authentication Agent triggers the PublishChangesDecision with the user’s response.</p>
+    <p>In the event a participant application does not respond to the survey, after a configurable period of time the Context Manager will deem the application as “busy”. If the instigating participant application receives one or more busy responses, it shall only present the suspend or cancel choices. This prevents an application from inadvertently becoming out of synch with the context, unbeknownst to the user.</p>
+    <p>
+      Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.6, for a more detailed description of the response issued by the Context Manager and actions required by the Patient Context Participant and or Client Authentication Agent Actors. IHE specifies no restrictions or extensions to the CCOW definition of the EndContextChanges method.
+    </p>
+    <h4 id="3.6.4.4">3.6.4.4 Context Change – PublishChangesDecision</h4>
+    <h5 id="3.6.4.4.1">3.6.4.4.1 Trigger Events</h5>
+    <p>The PublishChangesDecision method is triggered by the return of EndContextChanges method.</p>
+    <h5 id="3.6.4.4.2">3.6.4.4.2 Message Semantics</h5>
+    <p>
+      The Patient Context Participant and Client Authentication Agent Actors shall issue either an accept or cancel via the PublishChangesDecision method of the ContextManager interface to the Context Manager Actor. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.8, for a more detailed description of the parameters associated with this method. IHE specifies no restrictions or extensions to the CCOW definition of the PublishChangesDecision method.
+    </p>
+    <h5 id="3.6.4.4.3">3.6.4.4.3 Expected Actions</h5>
+    <p>
+      When the PublishChangesDecision method is received by the Context Manager it triggers the ContextChangesAccepted or ContextChangesCancelled method as defined in Section 3.13.4.2 or Section 3.13.4.3 respectively. IHE specifies no restrictions or extensions to the CCOW definition of the PublishChangesDecision method. Refer to the
+      <em>HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</em>
+      document, Section 17.3.6.8, for a description of the response issued by the Context Manager Actor.
+    </p>
+  </body>
+</html>

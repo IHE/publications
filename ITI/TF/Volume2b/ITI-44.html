@@ -1,0 +1,1954 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.44">3.44 Patient Identity Feed HL7 V3 [ITI-44]</h2>
+    <p>This section corresponds to transaction [ITI-44] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-44] is used by the Patient Identity Source, Patient Identifier Cross-reference Manager and Document Registry Actors.</p>
+    <h3 class="list-paragraph" id="3.44.1">3.44.1 Scope</h3>
+    <p>The scope is identical to <a href="../Volume2a/ITI-8.html#3.8.1">ITI TF-2a: 3.8.1</a>.</p>
+    <h3 class="list-paragraph" id="3.44.2">3.44.2 Use Case Roles</h3>
+    <p>Actor: Patient Identity Source</p>
+    <p>Role: Provides notification to the Patient Identifier Cross-reference Manager and Document Registry for any patient identification related events including: creation, updates, merges, etc.</p>
+    <blockquote>
+      <p>Corresponding HL7 v3 Application Roles:</p>
+      <p>Patient Registry Informer (PRPA_AR201301UV02)</p>
+    </blockquote>
+    <p>Actor: Patient Identifier Cross-reference Manager</p>
+    <p>Role: Serves a well-defined set of Patient Identification Domains. Based on information provided in each Patient Identification Domain by a Patient Identification Source Actor, it manages the cross-referencing of patient identifiers across Patient Identification Domains.</p>
+    <blockquote>
+      <p>Corresponding HL7 v3 Application Roles:</p>
+      <p>Patient Registry Tracker (PRPA_AR201302UV02)</p>
+    </blockquote>
+    <p>Actor: Document Registry</p>
+    <p>Role: Uses patient identifiers provided by Patient Identity Source to ensure that XDS Documents metadata registered is associated with a known patient and updates patient identity in document metadata by tracking identity change operations (e.g., merge).</p>
+    <blockquote>
+      <p>Corresponding HL7 v3 Application Roles:</p>
+      <p>Patient Registry Tracker (PRPA_AR201302UV02)</p>
+    </blockquote>
+    <h3 class="list-paragraph" id="3.44.3">3.44.3 Referenced Standards</h3>
+    <p>
+      HL7 Version 3 Edition 2008 Patient Administration DSTU, Patient Topic (found at
+      <a href="http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008">http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008</a>
+      ).
+    </p>
+    <h3 class="list-paragraph" id="3.44.4">3.44.4 Messages</h3>
+    <p>Figure 3.44.4-1: Patient Identity Sequence</p>
+    <h4 class="list-paragraph" id="3.44.4.1">3.44.4.1 Patient Identity Management – Add or Revise Patient Record</h4>
+    <h5 class="list-paragraph" id="3.44.4.1.1">3.44.4.1.1 Trigger Events</h5>
+    <p>The following events from a Patient Identity Source will trigger one of the Add or Revise Patient Record messages:</p>
+    <p>Patient Registry Record Added (PRPA_TE201301UV02)</p>
+    <p>This trigger event signals that a new patient was added to a Patient Identity Source.</p>
+    <p>Changes to patient demographics (e.g., change in patient name, patient address, etc.) shall trigger the following Patient Registry Record Revised message:</p>
+    <p>Patient Registry Record Revised (PRPA_TE201302UV02)</p>
+    <p>This trigger event signals that patient information was revised in a Patient Identity Source.</p>
+    <p>The Patient Identifier Cross-reference Manager shall only perform cross-referencing logic on messages received from Patient Identity Source Actors. For a given Patient Identifier Domain there shall be one and only one Patient Identity Source Actor, but a given Patient Identity Source may serve more than one Patient Identifier Domain.</p>
+    <h5 class="list-paragraph" id="3.44.4.1.2">3.44.4.1.2 Message Semantics</h5>
+    <p>The Patient Identity Feed transaction is carried out by the HL7 v3 Patient Activate (PRPA_MT201301UV02) and Patient Revise (PRPA_MT201302UV02) messages, as defined in the subsequent sections. The Patient Identity Source shall generate the message whenever a patient is registered or when some piece of patient demographic data changes. The components of the message listed below are required, and their detailed descriptions are provided in the following subsections.</p>
+    <p>Each message shall be acknowledged by the HL7 v3 Accept Acknowledgement (MCCI_MT000200UV01), which is described in <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a>.</p>
+    <p>The message information model in Section 3.44.4.1.2.2 describes the relevant data elements for this transaction. Specific requirements for the particular actors are found in Section 3.44.4.1.3 Expected Actions.</p>
+    <h6 class="list-paragraph" id="3.44.4.1.2.1">3.44.4.1.2.1 Major Components of the Patient Registry Record Added/Revised Messages</h6>
+    <p>Patient</p>
+    <p>
+      The
+      <em>Patient</em>
+      class is the entry point to the R-MIMs for the
+      <em>Patient Activate (PRPA_RM201301UV02)</em>
+      and
+      <em>Patient Revise (PRPA_RM201302UV02)</em>
+      models. The patient identifiers are captured using an Instance Identifier (II) data type. Please see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a> for a detailed description about the use of the HL7 V3 II data type for patient identifiers.
+    </p>
+    <p>Provider Organization</p>
+    <p>The Patient class is scoped by the provider organization where this person is a patient. The HL7 definition of the CMET requires that the provider organization needs to be identified by an id attribute, and at least one of address, telecommunications address, or contact person to be present. The id attribute SHALL have only a root, expressed as an ISO OID.</p>
+    <p>Person</p>
+    <p>
+      The
+      <em>Person</em>
+      class contains identifying and demographic data elements for the focal person similar to those in the HL7 v2.x PID segment such as name, gender, date of birth, marital status and deceased indicator and time.
+    </p>
+    <p>Language Communication</p>
+    <p>
+      Information about what language(s) should be used to communicate with the focal person can be sent in the
+      <em>LanguageCommunication</em>
+      class.
+    </p>
+    <p>PersonalRelationship</p>
+    <p>This is used for sending information pertaining to the mother’s maiden name.</p>
+    <p>Citizen</p>
+    <p>
+      Citizenship information for a person, including citizen identifier and effective time can be sent in the
+      <em>Citizen</em>
+      class. The nation that scopes the
+      <em>Citizen</em>
+      role, as identified by
+      <em>Nation.code</em>
+      , is mandatory.
+    </p>
+    <p>Other Identifiers</p>
+    <p>
+      The
+      <em>OtherIDs</em>
+      class is used to capture other identifiers associated with the person, such as a driver’s license number or a social security number. In this transaction, the IDs assigned by the scoping provider organization are represented in the id attribute of the Patient class. All other IDs are represented in the OtherIDs class. For the purposes of interoperability, where both HL7 V3 and HL7 v2.x-based transactions are used, the following requirement is imposed on the OtherIDs.id attribute and on the scopingOrganization.id attribute:
+    </p>
+    <ul>
+      <li>
+        <p>OtherIDs.id.root SHALL be identical to scopingOrganization.id.root</p>
+      </li>
+      <li>
+        <p>scopingOrganization.id.extension SHALL NOT have any value</p>
+      </li>
+    </ul>
+    <p>Please see ITI TF-2x: E.2 for details on the use of the II data type for patient identifiers.</p>
+    <h6 class="list-paragraph" id="3.44.4.1.2.2">3.44.4.1.2.2 Message Information Model of the Patient Registry Record Added/Revised Messages</h6>
+    <p>
+      Below is the Message Information Model for both the Patient Activate and Patient Revise messages, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict common subset of the
+      <em>Patient Activate (PRPA_RM201301UV02)</em>
+      and
+      <em>Patient Revise (PRPA_RM201302UV02)</em>
+      RMIMs. While HL7 defines two models for the two messages, a single common subset is sufficient for the purposes of this IHE transaction.
+    </p>
+    <p>The base RMIMs can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201301UV.htm and Edition2008/domains/uvpa/editable/PRPA_RM201302UV.htm. The following restrictions are made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>The focal entity choice is restricted to be only a person</p>
+      </li>
+    </ul>
+    <p>The relationship holder of the personal relationship is restricted to be a person (using CMET COCT_MT030207UV)</p>
+    <p>The provider organization which is scoping the patient role is required in both the Add and Revise messages (it is optional in the original Revise message definition).</p>
+    <p>The following roles are omitted:</p>
+    <ul>
+      <li>
+        <p>asPatientOfOtherProvider</p>
+      </li>
+      <li>
+        <p>guarantor</p>
+      </li>
+      <li>
+        <p>guardian</p>
+      </li>
+      <li>
+        <p>contactParty</p>
+      </li>
+      <li>
+        <p>asMember</p>
+      </li>
+      <li>
+        <p>careGiver</p>
+      </li>
+      <li>
+        <p>asStudent</p>
+      </li>
+    </ul>
+    <p>The following participations are omitted:</p>
+    <ul>
+      <li>
+        <p>subjectOf (administrativeObservation)</p>
+      </li>
+      <li>
+        <p>coveredPartyOf (coverage)</p>
+      </li>
+    </ul>
+    <p>
+      <img src=".//media/image38.jpeg" style="width:6.39236in;height:5.06944in" alt="PRPA_RM201301IHE" />
+    </p>
+    <p>Figure 3.44.4.1.2.2-1: RMIM Diagram</p>
+    <p>The attributes of this model are described in the following table. Note that CMETs are not discussed, as the HL7 definitions for them are being used.</p>
+    <p>Table 3.44.4.1.2.2-1: Model Attributes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            PRPA_HD201301IHE
+            <br />
+            Patient Activate/Revise
+          </th>
+          <th>
+            <p>This HMD extract defines the message used to report that a new patient record was added, or a patient record was updated.</p>
+            <p>Derived from Figure 3.44.4.1.2.2-1 (PRPA_RM201301IHE)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Patient</td>
+          <td>The primary record for the focal person in a Patient Identity Source</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Patient (CS) {CNE:PAT}</p>
+          </td>
+          <td>Structural attribute; this is a "patient" role</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>
+              Patient (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Identifiers designated by this patient identity source for the focal person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [1..1]</p>
+            <p>Patient (CS) {CNE:active, fixed value= "active"}</p>
+          </td>
+          <td>A value specifying the state of this record in a patient registry (based on the RIM role class state-machine). This record is active.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>confidentialityCode [0..*]</p>
+            <p>Patient (SET&lt;CE&gt;) {CWE:Confidentiality}</p>
+          </td>
+          <td>Value(s) that control the disclosure of information about this living subject as a patient</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>veryImportantPersonCode [0..1]</p>
+            <p>Patient (CE) {CWE:PatientImportance}</p>
+          </td>
+          <td>A code specifying the patient's special status granted by the scoper organization, often resulting in preferred treatment and special considerations. Examples include board member, diplomat.</td>
+        </tr>
+        <tr class="odd">
+          <td>Person</td>
+          <td>
+            <p>A subtype of LivingSubject representing a human being</p>
+            <p>Either Person.name or Patient.id must be non-null</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:PSN, fixed value= "PSN"}</p>
+          </td>
+          <td>Structural attribute; this is a "person" entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>name [1..*]</p>
+            <p>Person (BAG&lt;PN&gt;)</p>
+          </td>
+          <td>Name(s) for this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>telecom [0..*]</p>
+            <p>Person (BAG&lt;TEL&gt;)</p>
+          </td>
+          <td>Telecommunication address(es) for communicating with this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>administrativeGenderCode [0..1]</p>
+            <p>Person (CE) {CWE:AdministrativeGender}</p>
+          </td>
+          <td>A value representing the gender (sex) of this person. Note: this attribute does not include terms related to clinical gender which is a complex physiological, genetic and sociological concept that requires multiple observations in order to be comprehensively described.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>birthTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person was born</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>deceasedInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person is dead</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>deceasedTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person died</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>multipleBirthInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person was part of a multiple birth</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>multipleBirthOrderNumber [0..1]</p>
+            <p>Person (INT)</p>
+          </td>
+          <td>The order in which this person was born if part of a multiple birth</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>addr [0..*]</p>
+            <p>Person (BAG&lt;AD&gt;)</p>
+          </td>
+          <td>Address(es) for corresponding with this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>maritalStatusCode [0..1]</p>
+            <p>Person (CE) {CWE:MaritalStatus}</p>
+          </td>
+          <td>A value representing the domestic partnership status of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>religiousAffiliationCode [0..1]</p>
+            <p>Person (CE) {CWE:ReligiousAffiliation}</p>
+          </td>
+          <td>A value representing the primary religious preference of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>raceCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Race}</p>
+          </td>
+          <td>A set of values representing the races of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>ethnicGroupCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Ethnicity}</p>
+          </td>
+          <td>A set of values representing the ethnic groups of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>OtherIDs</td>
+          <td>Used to capture additional identifiers for the person such as a Drivers’ license or Social Security Number. Please see notes above in the Major Components section on the use of OtherIDs.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:ROL}</p>
+          </td>
+          <td>Structural attribute. This can be any specialization of "role" except for Citizen, or Employee.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>One or more identifiers issued to the focal person by the associated scopingOrganization (e.g., a Driver’s License number issued by a DMV)</td>
+        </tr>
+        <tr class="even">
+          <td>PersonalRelationship</td>
+          <td>A personal relationship between the focal living subject and another living subject</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:PRS, fixed value= "PRS"}</p>
+          </td>
+          <td>Structural attribute; this is a "personal relationship" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\rim\rim.htm#Role-cls">Role</a>
+               (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Identifier(s) for this personal relationship</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Role (CE) {CWE:PersonalRelationshipRoleType}</p>
+          </td>
+          <td>A required value specifying the type of personal relationship between the relationshipHolder and the scoping living subject drawn from the PersonalRelationshipRoleType domain, for example, spouse, parent, unrelated friend</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [0..1]</p>
+            <p>Role (CE)</p>
+            <p>{CWE:RoleStatus}</p>
+          </td>
+          <td>A value specifying the state of this personal relationship (based on the RIM Role class state-machine), for example, following divorce a spouse relationship would be "terminated".</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>effectiveTime [0..1]</p>
+            <p>Role (IVL&lt;TS&gt;)</p>
+          </td>
+          <td>An interval of time specifying the period during which this personal relationship is in effect, if such time is applicable and known.</td>
+        </tr>
+        <tr class="even">
+          <td>Citizen</td>
+          <td>Used to capture person information relating to citizenship.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:CIT, fixed value= "CIT"}</p>
+          </td>
+          <td>Structural attribute; this is a "citizen" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>Identifier(s) for the focal person as a citizen of a nation</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>effectiveTime [0..1]</p>
+            <p>Employee (IVL&lt;TS&gt;)</p>
+          </td>
+          <td>An interval of time specifying the period during which this employment relationship is in effect, if such time limit is applicable and known.</td>
+        </tr>
+        <tr class="even">
+          <td>Nation</td>
+          <td>A politically organized body of people bonded by territory and known as a nation.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:NAT, fixed value= "NAT"}</p>
+          </td>
+          <td>Structural attribute; this is a 'nation' type of entity</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Organization (CD) {CWE:NationEntityType}</p>
+          </td>
+          <td>A value that identifies a nation state</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>name [0..1]</p>
+            <p>Organization (ON)</p>
+          </td>
+          <td>A non-unique textual identifier or moniker for this nation</td>
+        </tr>
+        <tr class="odd">
+          <td>Employee</td>
+          <td>A relationship of the focal person with an organization to receive wages or salary. The purpose of this class is to identify the type of relationship the employee has to the employer rather than the nature of the work actually performed. For example, it can be used to capture whether the person is a Military Veteran or not..</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Employee (CS) {CNE:EMP}</p>
+          </td>
+          <td>Structural attribute; this is an "employee" role</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>statusCode [0..1]</p>
+            <p>Employee (CS) {CNE:RoleStatus}</p>
+          </td>
+          <td>A value specifying the state of this employment relationship (based on the RIM Role class state-machine), for example, active, suspended, terminated.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [0..1]</p>
+            <p>Employee (CS) {CNE:RoleStatus}</p>
+          </td>
+          <td>A value specifying the state of this employment relationship (based on the RIM Role class state-machine), for example, active, suspended, terminated.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>effectiveTime [0..1]</p>
+            <p>Employee (IVL&lt;TS&gt;)</p>
+          </td>
+          <td>An interval of time specifying the period during which this employment relationship is in effect, if such time limit is applicable and known.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>occupationCode [0..1]</p>
+            <p>Employee (CE) {CWE:EmployeeOccupationCode}</p>
+          </td>
+          <td>A code qualifying the classification of kind-of-work based upon a recognized industry or jurisdictional standard. OccupationCode is used to convey the person's occupation as opposed to jobClassCode (not used in this transaction) which characterizes this particular job. For example, it can be used to capture whether the person is a Military Veteran or not.</td>
+        </tr>
+        <tr class="odd">
+          <td>BirthPlace</td>
+          <td>The birthplace of the focal living subject.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Birthplace (CS) {CNE:BIRTHPL}</p>
+          </td>
+          <td>Structural attribute; this is a "birthplace" role.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [0..*]</p>
+            <p>
+              Birthplace (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>A living subject's birth place represented by a unique identifier.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>addr [0..*]</p>
+            <p>Patient (BAG&lt;AD&gt;)</p>
+          </td>
+          <td>A living subject's birth place represented as an address. Note: Either BirthPlace.addr or an associated Place.name must be valued.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Birthplace (CS) {CNE:BIRTHPL}</p>
+          </td>
+          <td>Structural attribute; this is a "birthplace" role.</td>
+        </tr>
+        <tr class="even">
+          <td>LanguageCommunication</td>
+          <td>A language communication capability of the focal person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>languageCode [1..1] (M)</p>
+            <p>LanguageCommunication (CE) {CWE:HumanLanguage}</p>
+          </td>
+          <td>A value representing a language for which the focal person has some level of proficiency for written or spoken communication. Examples: Spanish, Italian, German, English, American Sign</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>preferenceInd [0..1]</p>
+            <p>LanguageCommunication (BL)</p>
+          </td>
+          <td>An indicator specifying whether or not this language is preferred by the focal person for the associated mode</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.44.4.1.2.3">3.44.4.1.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.44.4.1.2.3-1 contains the Transmission and Control Act wrappers used for the two interactions, and the associated constraints.</p>
+    <p>Table 3.44.4.1.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000100UV01 – Send Message Payload</td>
+          <td>MFMI_MT700701UV01 – Master File / Registry Notification Control Act, Role Subject</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId SHALL be set to PRPA_IN201301UV02 or PRPA_IN201302UV02</p>
+            <p>The value of processingModeCode SHALL be set to T</p>
+            <p>The acceptAckCode SHALL be set to AL</p>
+            <p>There SHALL be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The trigger event code in ControlActProcess.code SHALL be set to PRPA_TE201301UV02 or PRPA_TE201302UV02 respectively</p>
+            <p>RegistrationEvent.statusCode SHALL be set to “active”</p>
+            <p>There SHALL be no InReplacementOf act relationship for these interactions.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The composite message schemas which describe the full payload of these interactions, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The HL7 V3 2008 Normative Edition schemas are at
+      <br />
+      Edition2008/processable/multicacheschemas/PRPA_IN201301UV02.xsd and Edition2008/processable/multicacheschemas/PRPA_IN201302UV02.xsd).
+    </p>
+    <h6 class="list-paragraph" id="3.44.4.1.2.4">3.44.4.1.2.4 Web Services Types and Messages</h6>
+    <p>The Patient Registry Record Added/Revised messages will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>“add” message -&gt; "PRPA_IN201301UV02_Message"</p>
+    <p>“revise” message -&gt; "PRPA_IN201302UV02_Message"</p>
+    <p>acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>The following WSDL snippet describes the types for these messages:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201301UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201301UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201302UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201302UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/MCCI_IN000002UV01.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The messages are described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="PRPA_IN201301UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201301UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="PRPA_IN201302UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201302UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="MCCI_IN000002UV01_Message"&gt;</p>
+    <p>&lt;part element="hl7:MCCI_IN000002UV01" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <p>The port types for the WSDL describing the Patient Identity Feed Service are described together with the expected actions of the actors which receive these messages in Sections 3.44.4.1.3 and 3.44.4.1.4.</p>
+    <h5 class="list-paragraph" id="3.44.4.1.3">3.44.4.1.3 Expected Actions – PIX Manager</h5>
+    <p>The Patient Identifier Cross-reference Manager shall be capable of accepting attributes specified in Table 3.44.4.1.2.2-1 above. This is to ensure that the Patient Identifier Cross-reference Manager can handle a sufficient set of corroborating information in order to perform its cross-referencing function.</p>
+    <p>The Patient Identifier Cross-reference Manager shall only recognize a single Patient Identity Source per domain.</p>
+    <p>The cross-referencing process (algorithm, human decisions, etc.) is performed within the Patient Identifier Cross-reference Manager, but its specification is beyond the scope of IHE.</p>
+    <p>Once the Patient Identifier Cross-reference Manager has completed its cross-referencing function, it shall make the newly cross-referenced identifiers available to PIX queries and send out notification to any Patient Identifier Cross-reference Consumers that have been configured as being interested in receiving such notifications using the PIX Update Notification HL7 V3 transaction (see Section 3.46 for the details of that transaction).</p>
+    <h6 class="list-paragraph" id="3.44.4.1.3.1">3.44.4.1.3.1 Web Services Port Type and Binding Definitions</h6>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “PIXManager”.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>wsdl:definitions/@name="PIXManager":</p>
+    <p>“add” message -&gt; "PRPA_IN201301UV02_Message"</p>
+    <p>“revise” message -&gt; "PRPA_IN201302UV02_Message"</p>
+    <p>acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "PIXManager_PortType"</p>
+    <p>add operation -&gt; "PIXManager_PRPA_IN201301UV02"</p>
+    <p>revise operation -&gt; "PIXManager_PRPA_IN201302UV02"</p>
+    <p>SOAP 1.2 binding -&gt; "PIXManager_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "PIXManager_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Patient Identity Feed Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p class="heading list-paragraph" id="3.44.4.1.3.1.1">3.44.4.1.3.1.1 Port Type</p>
+    <p>&lt;portType name="PIXManager_PortType"&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201301UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201301UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201301UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201302UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201302UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201302UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p class="heading list-paragraph" id="3.44.4.1.3.1.2">3.44.4.1.3.1.2 Bindings</p>
+    <p>SOAP 1.2 binding:</p>
+    <p>…</p>
+    <p>&lt;binding name="PIXManager_Binding_Soap12" type="PIXManager_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201301UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201302UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>An informative WSDL for the PIX Manager implementing the PIXV3 Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.44.4.1.3.2">3.44.4.1.3.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h5 class="list-paragraph" id="3.44.4.1.4">3.44.4.1.4 Expected Actions – Document Registry</h5>
+    <p>The Document Registry shall be capable of accepting attributes in the Patient Registry Record Added or Patient Registry Record Revised messages as specified in Table 3.44.4.1.2.2-1. The Patient Identity Feed transaction contains more than what the XDS Document Registry needs for its operation.</p>
+    <p>The Document Registry shall store only the patient identifiers of the patient identification domain designated by the Affinity Domain for document sharing in the registry. Patient identifiers of other patient identification domains, if present in a received message, shall be ignored.</p>
+    <h6 class="list-paragraph" id="3.44.4.1.4.1">3.44.4.1.4.1 Web Services Port Type and Binding Definitions</h6>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “DocumentRegistry”.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>wsdl:definitions/@name="DocumentRegistry":</p>
+    <p>"add" message -&gt; "PRPA_IN201301UV02_Message"</p>
+    <p>"revise" message -&gt; "PRPA_IN201302UV02_Message"</p>
+    <p>acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "DocumentRegistry_PortType"</p>
+    <p>add operation -&gt; "DocumentRegistry_PRPA_IN201301UV02"</p>
+    <p>revise operation -&gt; "DocumentRegistry_PRPA_IN201302UV02"</p>
+    <p>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "DocumentRegistry_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Patient Identity Feed Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p class="heading list-paragraph" id="3.44.4.1.4.1.1">3.44.4.1.4.1.1 Port Type</p>
+    <p>&lt;portType name="DocumentRegistry_PortType"&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201301UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201301UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201301UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201302UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201302UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201302UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p class="heading list-paragraph" id="3.44.4.1.4.1.2">3.44.4.1.4.1.2 Bindings</p>
+    <p>SOAP 1.2 binding:</p>
+    <p>…</p>
+    <p>&lt;binding name="DocumentRegistry_Binding_Soap12" type="DocumentRegistry_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201301UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201302UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>An informative WSDL for the Document Registry implementing the XDS.b Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.44.4.1.4.2">3.44.4.1.4.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h4 class="list-paragraph" id="3.44.4.2">3.44.4.2 Patient Identity Management – Patient Identity Merge</h4>
+    <h5 class="list-paragraph" id="3.44.4.2.1">3.44.4.2.1 Trigger Events</h5>
+    <p>When two patients’ records are found to identify the same patient by a Patient Identity Source in a Patient Identifier Domain, the Patient Identity Source shall indicate this information using the following trigger:</p>
+    <p>Patient Registry Duplicates Resolved (PRPA_TE201304UV02)</p>
+    <p>This trigger event signals that duplicate records were resolved in a patient registry.</p>
+    <p>A Patient Registry Duplicates Resolved message indicates that the Patient Identity Source has done a merge within a specific Patient Identification Domain. That is, the surviving identifier (patient ID) has subsumed a duplicate patient identifier.</p>
+    <h5 class="list-paragraph" id="3.44.4.2.2">3.44.4.2.2 Message Semantics</h5>
+    <p>The Patient Registry Duplicates Resolved interaction is carried out by the HL7 v3 Patient Demographics message (PRPA_MT201303UV02). The message shall be generated by the system (Patient Identity Source) that performs the update whenever two patient records are found to reference the same person.</p>
+    <p>The components of the HL7 Merge Patient message listed below are required, and the detailed description of the message is provided in Sections 3.44.4.2.2.1 to 3.44.4.2.2.4.</p>
+    <p>Each message shall be acknowledged by the HL7 v3 Accept Acknowledgement (MCCI_MT000200UV01), which is described in <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a>.</p>
+    <p>
+      When two Patient identifiers are to be merged, the subsumed identifier is referenced in the Registry Trigger Event Control Act Wrapper and the payload is sent for the surviving identifier. For example, if Patients A, B, and C are all to be merged into Patient B, then two messages are sent. In the first message Patient A’s identifier is referenced in the Registry Trigger Event Control Act Wrapper via the
+      <em>replacementOf</em>
+      act relationship and Patients B’s identifier is referenced in the
+      <em>Patient</em>
+      class of the payload. In the second message Patient C’s identifier is referenced in the wrapper, and Patient B’s identifier is, again, in the payload.
+    </p>
+    <p>The message information model in Section 3.44.4.2.2.2 describes the relevant data elements for this transaction. Specific requirements for the particular actors are found in Section 3.44.4.2.3 Expected Actions.</p>
+    <h6 class="list-paragraph" id="3.44.4.2.2.1">3.44.4.2.2.1 Major Components of the Patient Registry Duplicates Resolved</h6>
+    <p>Patient</p>
+    <p>
+      The
+      <em>Patient</em>
+      class is the entry point to the R-MIM for the
+      <em>Patient Demographics (PRPA_RM201303UV02)</em>
+      in the Patient Identity Source. The patient identifier is represented using an Instance Identifier (II) data type. Please see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a> for a detailed description about the use of the HL7 V3 II data type for patient identifiers.
+    </p>
+    <p>Provider Organization</p>
+    <p>The Patient class is scoped by the provider organization which is the assigning authority for the patient’s identifier. For this message the provider organization class is optional. The HL7 definition of the CMET requires that the provider organization needs to be identified by an id attribute, and at least one of address, telecommunications address, or contact person to be present. The id attribute SHALL have only a root expressed as an ISO OID, and it shall match the root of the Patient.id attribute</p>
+    <p>Person</p>
+    <p>
+      The
+      <em>Person</em>
+      class contains the name for the focal person (similarly to the requirement for the HL7 v2.x PID segment).
+    </p>
+    <h6 class="list-paragraph" id="3.44.4.2.2.2">3.44.4.2.2.2 Message Information Model of the Patient Registry Duplicates Resolved Message</h6>
+    <p>
+      Below is the Message Information Model for the Duplicates Resolved message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict subset of the
+      <em>Patient Demographics (PRPA_RM201303UV02)</em>
+      RMIM.
+    </p>
+    <p>The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201303UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>The focal entity choice is restricted to be only a person</p>
+      </li>
+      <li>
+        <p>All optional classes are removed</p>
+      </li>
+      <li>
+        <p>All optional attributes in the Patient and Person class are removed</p>
+      </li>
+    </ul>
+    <p>This restricted model makes clear the purpose of this message – it is to inform about the merge of identities in the Patient Identity Source. If there are any updates to the demographics of the patient in question, this information shall be relayed via a Patient Registry Record Revised message. This follows the semantics of the Patient Identity Feed transaction as defined in <a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>, and is a restriction on the semantics of this message as defined by HL7 (where any demographics information can be updated with the Duplicates Resolved message).</p>
+    <p>The provider organization is also optionally available.</p>
+    <p>
+      <img src=".//media/image39.png" style="width:3.91528in;height:3.59236in" alt="PRPA_RM201303IHE" />
+    </p>
+    <p>Figure 3.44.4.2.2.2-1: Message Information Model for Duplicates Resolved Message</p>
+    <p>The attributes of this model are described in the following table.</p>
+    <p>Table 3.44.4.2.2.2-1: Model Attributes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            PRPA_HD201303IHE
+            <br />
+            Duplicates Resolved
+          </th>
+          <th>
+            <p>This HMD extract defines the message used to report that two patient identifiers were merged (i.e., a duplicate was resolved).</p>
+            <p>Derived from Figure 3.44.4.2.2.2-1 (PRPA_RM201303IHE)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Patient</td>
+          <td>The primary record for the focal person in a Patient Identity Source</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Patient (CS) {CNE:PAT}</p>
+          </td>
+          <td>Structural attribute; this is a "patient" role</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>
+              Patient (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Identifiers designated by various patient identity sources for the focal person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [1..1]</p>
+            <p>Patient (CS) {CNE:active, fixed value= "active"}</p>
+          </td>
+          <td>A value specifying the state of this record in a patient registry (based on the RIM role class state-machine). This record is active.</td>
+        </tr>
+        <tr class="odd">
+          <td>Person</td>
+          <td>
+            <p>A subtype of LivingSubject representing a human being</p>
+            <p>Both Person.name and Patient.id must be non-null</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:PSN, fixed value= "PSN"}</p>
+          </td>
+          <td>Structural attribute; this is a "person" entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>name [1..*]</p>
+            <p>Person (BAG&lt;PN&gt;)</p>
+          </td>
+          <td>Name(s) for this person</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.44.4.2.2.3">3.44.4.2.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.44.4.2.2.2-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.44.4.2.2.2-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000100UV01 – Send Message Payload</td>
+          <td>MFMI_MT700701UV01 – Master File / Registry Notification Control Act, Role Subject</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId SHALL be set to PRPA_IN201304UV02</p>
+            <p>The value of processingModeCode SHALL be set to T</p>
+            <p>The acceptAckCode SHALL be set to AL</p>
+            <p>There SHALL be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The trigger event code in ControlActProcess.code SHALL be set to PRPA_TE201304UV02</p>
+            <p>RegistrationEvent.statusCode SHALL be set to “active”</p>
+            <p>There SHALL be an InReplacementOf act relationship</p>
+            <p>The value of PriorRegistration.statusCode SHALL be “obsolete”</p>
+            <p>There SHALL be a PriorRegisteredRole role</p>
+            <p>There SHALL be a single PriorRegisteredRole.id attribute, representing the subsumed patient identifier.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The schemas from the HL7 V3 2008 Normative Edition can be found at Edition2008/processable/multicacheschemas/PRPA_IN201304UV02.xsd).</p>
+    <h6 class="list-paragraph" id="3.44.4.2.2.4">3.44.4.2.2.4 Web Services Types and Messages</h6>
+    <p>The Patient Registry Duplicates Resolved message will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>"resolve duplicates" message -&gt; "PRPA_IN201304UV02_Message"</p>
+    <p>Acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>The following WSDL snippet describes the types for these messages:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201304UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201304UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/MCCI_IN000002UV01.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The messages are described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="PRPA_IN201304UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201304UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="MCCI_IN000002UV01_Message"&gt;</p>
+    <p>&lt;part element="hl7:MCCI_IN000002UV01" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <p>The port types for the WSDL describing the Duplicates Resolved Service are described together with the expected actions of the actors which receive these messages in Section 3.44.4.2.3 and 3.44.4.2.4.</p>
+    <h5 class="list-paragraph" id="3.44.4.2.3">3.44.4.2.3 Expected Actions – PIX Manager</h5>
+    <p>The Patient Identifier Cross-reference Manager shall be capable of accepting attributes in the Duplicates Resolved message as specified in Table 3.44.4.2.2.2-1.</p>
+    <p>The Patient Identifier Cross-reference Manager shall perform the Expected Actions similar to the ones specified in <a href="../Volume2a/ITI-8.html#3.8.4.2.3">ITI TF-2a: 3.8.4.2.3</a>. The particular behavior is described below.</p>
+    <p>When the Patient Identifier Cross-reference Manager receives the Duplicates Resolved message type of the Patient Identity Feed transaction, it shall cross-reference the patient identifiers provided in the wrapper and the payload of the message by replacing any references it is maintaining internally to the patient ID provided in the wrapper by the patient ID included in the payload. After the identifier references are replaced, the Patient Identifier Cross-reference Manager shall reapply its internal cross-referencing logic/ policies before providing the updated information via either the PIX V3 Query [ITI-45] or PIX V3 Update Notification [ITI-46] transactions.</p>
+    <h6 class="list-paragraph" id="3.44.4.2.3.1">3.44.4.2.3.1 Web Services Port Type and Binding Definitions</h6>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “PIXManager”.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>wsdl:definitions/@name="PIXManager":</p>
+    <p>“merge” message -&gt; "PRPA_IN201304UV02_Message"</p>
+    <p>acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "PIXManager_PortType"</p>
+    <p>merge operation -&gt; "PIXManager_PRPA_IN201304UV02"</p>
+    <p>SOAP 1.2 binding -&gt; "PIXManager_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "PIXManager_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Patient Identity Feed Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p class="heading list-paragraph" id="3.44.4.2.3.1.1">3.44.4.2.3.1.1 Port Type</p>
+    <p>&lt;portType name="PIXManager_PortType"&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201304UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201304UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201304UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p class="heading list-paragraph" id="3.44.4.2.3.1.2">3.44.4.2.3.1.2 Bindings</p>
+    <p>SOAP 1.2 binding:</p>
+    <p>…</p>
+    <p>&lt;binding name="PIXManager_Binding_Soap12" type="PIXManager_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="PIXManager_PRPA_IN201304UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>An informative WSDL for the PIX Manager implementing the PIXV3 Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.44.4.2.3.2">3.44.4.2.3.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h5 class="list-paragraph" id="3.44.4.2.4">3.44.4.2.4 Expected Actions – Document Registry</h5>
+    <p>The Document Registry shall be capable of accepting attributes in the Duplicates Resolved message as specified in Table 3.44.4.2.2.2-1. Other attributes may exist, but the Document Registry shall ignore them.</p>
+    <p>The Document Registry shall perform the Expected Actions similar to the ones specified in <a href="../Volume2a/ITI-8.html#3.8.4.2.4">ITI TF-2a: 3.8.4.2.4</a>. The particular behavior is described below.</p>
+    <p>When the Document Registry receives the Duplicates Resolved message of the Patient Identity Feed transaction, it shall merge the patient identity specified in the priorRegisteredRole.id attribute of the Control-Act wrapper (subsumed patient identifier) into the patient identity specified in Patient.id attribute of the message payload (surviving patient identifier) in its registry. After the merge, all Document Submission Sets (including all Documents and Folders beneath them) under the secondary patient identity before the merge shall point to the primary patient identity. The secondary patient identity shall no longer be referenced in the future services provided by the Document Registry.</p>
+    <p>Changes resulting from a Duplicates Resolved message are not reversible. No un-resolve message is supported by this transaction.</p>
+    <p>A Duplicates Resolved message contains two attributes of interest:</p>
+    <ul>
+      <li>
+        <p>priorRegisteredRole.id – subsumed patient identifier: the patient identifier which is to become obsolete</p>
+      </li>
+      <li>
+        <p>Patient.id – surviving patient identifier: the patient identifier which is to remain active.</p>
+      </li>
+    </ul>
+    <p>After a duplicate resolution, the Patient.id attribute represents all records formerly represented by either the Patient.id attribute or the priorRegisteredRole.id attribute. All other attributes may be ignored.</p>
+    <p>The following conditions shall be detected by the Document Registry. Messages containing these conditions shall not update the state of the Document Registry.</p>
+    <ul>
+      <li>
+        <p>The subsumed patient identifier is not issued by the correct Assigning Authority according to the Affinity Domain configuration.</p>
+      </li>
+      <li>
+        <p>The surviving patient identifier is not issued by the correct Assigning Authority according to the Affinity Domain configuration.</p>
+      </li>
+      <li>
+        <p>The subsumed and surviving patient identifiers are the same.</p>
+      </li>
+      <li>
+        <p>The subsumed patient identifier has already been subsumed by an earlier message.</p>
+      </li>
+      <li>
+        <p>The surviving patient identifier has already been subsumed by and earlier message.</p>
+      </li>
+      <li>
+        <p>The subsumed patient identifier does not convey a currently active patient identifier known to the Document Registry.</p>
+      </li>
+    </ul>
+    <p>If none of the above conditions occur then the Document Registry shall perform the following duties:</p>
+    <ol type="1">
+      <li>
+        <p>Records the merge. Only the subsumed and surviving patient identifiers need be remembered. A patient identifier merge affects the processing of future Registry Stored Query [ITI-18] and Register Document Set-b [ITI-42] transactions. See <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.9">ITI TF-2a: 3.18.4.1.2.3.9</a> for details of how this message type affects results of a query transaction and Section 3.42.4.1.3.3.2 to see how it affects the Register Document Set-b [ITI-42] transaction.</p>
+      </li>
+      <li>
+        <p>Multiple merge transactions can form a recorded merge chain, where the Subsumed identifier of the current merge is the Surviving identifier of a previous merge.</p>
+      </li>
+      <li>
+        <p>Register Document Set-b transactions referencing a subsumed identifier are rejected with an XDSUnknownPatientId error.</p>
+      </li>
+      <li>
+        <p>Registry Stored Query transactions referencing a subsumed identifier return no content.</p>
+      </li>
+      <li>
+        <p>Registry Stored Query transactions referencing a surviving identifier successfully match the entire recorded merge chain and return appropriate metadata.</p>
+      </li>
+      <li>
+        <p>No change in the Registry StoredQuery transaction.</p>
+      </li>
+    </ol>
+    <p>Note: This transaction does not specify how the merge is to be implemented. It may or may not change the stored form of the metadata. It only specifies the observable results from the perspective of the Registry Stored Query [ITI-18] transaction and the Register Document Set-b [ITI-42].transaction.</p>
+    <h6 class="list-paragraph" id="3.44.4.2.4.1">3.44.4.2.4.1 Web Services Port Type and Binding Definitions</h6>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “DocumentRegistry”.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>wsdl:definitions/@name="DocumentRegistry":</p>
+    <p>"resolve duplicates" message -&gt; "PRPA_IN201304UV02_Message"</p>
+    <p>acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "DocumentRegistry_PortType"</p>
+    <p>resolve duplicates operation -&gt; "DocumentRegistry_PRPA_IN201304UV02"</p>
+    <p>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "DocumentRegistry_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Patient Identity Feed Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p class="heading list-paragraph" id="3.44.4.2.4.1.1">3.44.4.2.4.1.1 Port Type</p>
+    <p>&lt;portType name="DocumentRegistry_PortType"&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201304UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201304UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201304UV02"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p class="heading list-paragraph" id="3.44.4.2.4.1.2">3.44.4.2.4.1.2 Bindings</p>
+    <p>SOAP 1.2 binding:</p>
+    <p>…</p>
+    <p>&lt;binding name="DocumentRegistry_Binding_Soap12" type="DocumentRegistry_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="DocumentRegistry_PRPA_IN201304UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>An informative WSDL for the Document Registry implementing the XDS.b Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.44.4.2.4.2">3.44.4.2.4.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h3 class="list-paragraph" id="3.44.5">3.44.5 Security Requirements</h3>
+    <p>This transaction is generally used in profiles that require actors to be grouped with a Secure Node as defined in the Audit Trail and Node Authentication (ATNA) Profile. This use of the ATNA Profile in an XDS Affinity Domain does not require a centralized XDS Affinity Domain Audit Record Repository.</p>
+    <p>The use of ATNA along with XDS does require that each member of the XDS Affinity Domain have audit and security mechanisms in place. See <a href="../Volume1/ch-44.html#Appendix G">ITI TF-1: Appendix G</a> and <a href="../Volume2x/ch-11.html#Appendix K">ITI TF-2x: Appendix K</a>.</p>
+    <p>The individual actors involved are often members of different secure domains. The data transfers between different secure domains need different protection than transfers within a secure domain and shall be encrypted with TLS authentication of both hosts.</p>
+    <p>Transfers within a single secure domain may choose to omit encryption if it is unnecessary, so it is recommended that the online transfer security mechanisms be configurable. Certificate management and exchange is defined as part of the XDS Affinity Domain business relationships and no IHE Integration Profile is specified at this time, see <a href="../Volume1/ch-49.html#Appendix L">ITI TF-1: Appendix L</a>.</p>
+    <p>Each transaction will result in audit records describing the transaction. Each secure domain has its own audit server to capture the records for the actors that are within that domain. Access to audit records by other enterprises within the XDS Affinity Domain is managed and controlled by the business relationship terms of the XDS Affinity Domain. There is no automatic IHE transaction for such access.</p>
+    <h4 class="list-paragraph" id="3.44.5.1">3.44.5.1 Security Audit Record</h4>
+    <p>When grouped with ATNA Secure Node or Secure Application Actors, this transaction is to be audited as “Patient Record” event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The following tables show items that are required to be part of the audit record for this transaction.</p>
+    <p>Logically, a merge operation consists of a delete on one patient record, and an update of another patient record. Separate audit records shall be written for the delete operation and the update operation.</p>
+    <h5 class="list-paragraph" id="3.44.5.1.1">3.44.5.1.1 Patient Identity Source audit message</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110110, DCM, “Patient Record”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“C” (create) , “U” (update), or “D” (delete) as appropriate</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-44”, “IHE Transactions”, “Patient Identity Feed”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Identity Source Actor) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Patient Identifier Cross-reference Manager or Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Patient Identity Source Actor) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>the patient ID in HL7 CX format (see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a>)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>M</td>
+          <td>Type=II (the literal string), Value=the value of message.id</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.44.5.1.2">3.44.5.1.2 Patient Identifier Cross-reference Manager audit message</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110110, DCM, “Patient Record”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“C” (create) , “U” (update), or “D” (delete) as appropriate</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-44”, “IHE Transactions”, “Patient Identity Feed”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Identity Source Actor) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Patient Identifier Cross-reference Manager or Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Patient Identifier Cross-reference Manager or Document Registry) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>AuditMessage/ActiveParticipant</p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>“false”</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>the patient ID in HL7 CX format (see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a>).</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>M</td>
+          <td>Type=II (the literal string), Value=the value of message.id</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.44.5.1.3">3.44.5.1.3 Document Registry audit message</h5>
+    <p>Document Registry audit message are the same as Patient Identifier Cross-reference Manager audit message as presented in Section 3.44.5.1.2.</p>
+  </body>
+</html>

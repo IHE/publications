@@ -1,0 +1,1134 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.54">3.54 Document Metadata Publish [ITI-54]</h2>
+    <p>This section corresponds to transaction [ITI-54] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-54] is used by the Document Metadata Notification Broker and Document Metadata Publisher Actors.</p>
+    <h3 class="list-paragraph" id="3.54.1">3.54.1 Scope</h3>
+    <p>This transaction delivers information from the Document Metadata Publisher to the Document Metadata Notification Broker about an event which may have a subscription. The WS Brokered Notification Publisher Registration requirements are out of scope for this transaction.</p>
+    <h3 class="list-paragraph" id="3.54.2">3.54.2 Use Case Roles</h3>
+    <p>
+      <img src=".//media/image56.png" style="width:4.58472in;height:2.07708in" alt="dsub_ucr3" />
+    </p>
+    <p>Actor: Document Metadata Notification Broker</p>
+    <p>Role: Receives and processes information about events for which there may be a subscription.</p>
+    <p>Actor: Document Metadata Publisher</p>
+    <p>Role: Publishes information to the Document Metadata Notification Broker when applicable events occur for which a subscription may exist.</p>
+    <h3 class="list-paragraph" id="3.54.3">3.54.3 Referenced Standards</h3>
+    <ul>
+      <li>
+        <p>
+          <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsn">OASIS Web Services Notification Family of Standards</a>
+        </p>
+      </li>
+      <li>
+        <p>
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.pdf">WS-BaseNotification 1.3 OASIS Standard</a>
+        </p>
+      </li>
+      <li>
+        <p>
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_brokered_notification-1.3-spec-os.pdf">WS-BrokeredNotification 1.3 OASIS Standard</a>
+        </p>
+      </li>
+      <li>
+        <p>
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_topics-1.3-spec-os.pdf">WS-Topics 1.3 OASIS Standard</a>
+        </p>
+      </li>
+      <li>
+        <p><a href="../Volume2b/ITI-43.html#3.43.4.2.2">ITI TF-2b: 3.43.4.2.2</a></p>
+      </li>
+      <li>
+        <p><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></p>
+      </li>
+    </ul>
+    <h3 class="list-paragraph" id="3.54.4">3.54.4 Messages</h3>
+    <p>
+      <img src=".//media/image57.png" style="width:3.92292in;height:2.62292in" alt="DPublish_ID" />
+    </p>
+    <p>Figure 3.54.4-1: Document Metadata Publish Sequence</p>
+    <h4 class="list-paragraph" id="3.54.4.1">3.54.4.1 Notify Message</h4>
+    <h5 class="list-paragraph" id="3.54.4.1.1">3.54.4.1.1 Trigger</h5>
+    <p>When an event occurs for which a subscription may exist, the Document Metadata Publisher will trigger a Notification message to the Document Metadata Notification Broker. Events that could trigger a notification are publication of or update to a DocumentEntry or SubmissionSet.</p>
+    <h5 class="list-paragraph" id="3.54.4.1.2">3.54.4.1.2 Message Semantics</h5>
+    <p>The Document Metadata Publisher shall use a Notify message to communicate published objects to the Document Metadata Notification Broker Actor.</p>
+    <p>
+      This message shall have one
+      <em>&lt;NotificationMessage&gt;</em>
+      element.
+    </p>
+    <p>This element SHALL have two child elements:</p>
+    <ul>
+      <li>
+        <p>
+          <em>&lt;ProducerReference&gt;</em>
+          that identifies the source of the data published. This element conveys the value of the SubmissionSet.sourceId attribute. This attribute shall contain a URI, for example “urn:oid:1.2.3.4.5”.
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>&lt;Message&gt;</em>
+          that identifies published objects. This element shall have a single child element
+          <em>&lt;lcm:SubmitObjectsRequest&gt;</em>
+          that has only one child element
+          <em>&lt;rim:RegistryObjectList&gt;.</em>
+          This element conveys a list of SubmissionSet, Folder, and DocumentEntry objects.
+        </p>
+      </li>
+    </ul>
+    <p>
+      Note: SubmissionSet objects are constructed from
+      <em>&lt;rim:RegistryObject&gt;</em>
+      elements and must include the
+      <em>&lt;rim:Classification&gt;</em>
+      .
+    </p>
+    <p>Note that there is no subscription information in the Notify message in the Publish transaction.</p>
+    <h5 class="list-paragraph" id="3.54.4.1.3">3.54.4.1.3 Expected Actions</h5>
+    <p>The Notify message shall comply with the requirements in the WS-BaseNotification standard.</p>
+    <p>The Document Metadata Notification Broker shall evaluate the Publish transaction, and if there are matching subscriptions, it shall send the corresponding Notification transaction to the appropriate Document Metadata Notification Recipients.</p>
+    <h5 class="list-paragraph" id="3.54.4.1.4">3.54.4.1.4 Example</h5>
+    <p>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</p>
+    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"</p>
+    <p>xmlns:a="http://www.w3.org/2005/08/addressing"</p>
+    <p>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p>xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"</p>
+    <p>xmlns:ihe="urn:ihe:iti:pub-sub:2008"</p>
+    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
+    <p>xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2005/08/addressing http://www.w3.org/2005/08/addressing/ws-addr.xsd http://docs.oasis-open.org/wsn/b-2 http://docs.oasis-open.org/wsn/b-2.xsd urn:ihe:iti:pub-sub:2008 ../schema/IHE/XDS.b_PublishSubscribe.xsd urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ../schema/ebRS/rim.xsd"&gt;</p>
+    <p>&lt;s:Header&gt;</p>
+    <p>&lt;a:Action&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationConsumer/Notify&lt;/a:Action&gt;</p>
+    <p>&lt;a:MessageID&gt;382dcdca-8e87-9fdf-8446-48fd83bca93b&lt;/a:MessageID&gt;</p>
+    <p>&lt;a:To&gt;https://NotificationBroker/xdsBpublish&lt;/a:To&gt;</p>
+    <p>&lt;/s:Header&gt;</p>
+    <p>&lt;s:Body&gt;</p>
+    <p>&lt;wsnt:Notify&gt;</p>
+    <p>&lt;wsnt:NotificationMessage&gt;</p>
+    <p>&lt;wsnt:ProducerReference&gt;</p>
+    <p>&lt;a:Address&gt;urn:oid:1.2.3.4.5&lt;/a:Address&gt;</p>
+    <p>&lt;/wsnt:ProducerReference&gt;</p>
+    <p>&lt;wsnt:Message&gt;</p>
+    <p>&lt;lcm:SubmitObjectsRequest&gt;</p>
+    <p>&lt;rim:RegistryObjectList&gt;</p>
+    <p>&lt;!-- The list of extrinsic objects --&gt;</p>
+    <p>&lt;rim:ExtrinsicObject id="Document01" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"&gt;</p>
+    <p>…</p>
+    <p>&lt;/rim:ExtrinsicObject&gt;</p>
+    <p>
+      &lt;!-- The list of RegistryPackage objects --&gt;
+      <br />
+      &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Submission01"&gt;
+      <br />
+      &lt;rim:Classification classificationNode="urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd" classifiedObject="Submission01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification01"/&gt;
+      <br />
+      &lt;/rim:RegistryPackage&gt;
+      <br />
+      &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Folder01"&gt;
+      <br />
+      &lt;rim:Classification classificationNode="urn:uuid:d9d542f3-6cc4-48b6-8870-ea235fbc94c2" classifiedObject="Folder01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification02"/&gt;
+      <br />
+      &lt;/rim:RegistryPackage&gt;
+    </p>
+    <p>&lt;/rim:RegistryObjectList&gt;</p>
+    <p>&lt;/lcm:SubmitObjectsRequest&gt;</p>
+    <p>&lt;/wsnt:Message&gt;</p>
+    <p>&lt;/wsnt:NotificationMessage&gt;</p>
+    <p>&lt;/wsnt:Notify&gt;</p>
+    <p>&lt;/s:Body&gt;</p>
+    <p>&lt;/s:Envelope&gt;</p>
+    <h3 class="list-paragraph" id="3.54.5">3.54.5 Security Considerations</h3>
+    <p>
+      The risk assessment for the Document Metadata Publish transaction is described in the risk assessment spreadsheet for the Document Metadata Subscription Profile, which is available from IHE at
+      <a href="http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls">http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls</a>
+      . The derived mitigations are as follows:
+    </p>
+    <ul>
+      <li>
+        <p>The Document Metadata Publisher and the Document Metadata Notification Broker shall be grouped with a Secure Node or Secure Application in the Audit Trail and Node Authentication (ATNA) Profile.</p>
+      </li>
+      <li>
+        <p>The use of encrypted TLS is recommended when the transmission is not otherwise secured (e.g., transmission over a secure network)</p>
+      </li>
+    </ul>
+    <h4 class="list-paragraph" id="3.54.5.1">3.54.5.1 Audit Record Considerations</h4>
+    <p>The Document Metadata Publish Transaction is an Export event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The actors involved in the transaction shall create audit data in conformance with DICOM Part 15 “Data Export”/”Data Import”, with the following exceptions.</p>
+    <h5 class="list-paragraph" id="3.54.5.1.1">3.54.5.1.1 Document Metadata Publisher Audit Message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110106, DCM, “Export”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“R” (Read)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Metadata Publisher) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Document Metadata Notification Broker) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Document Metadata Publisher) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0..1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>DocumentEntry/SubmissionSet (1..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>(if-known)</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>M</td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>DocumentEntry</p>
+            <p>SubmissionSet</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (System)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“3” (report)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>
+            <p>The Document Metadata Publisher shall include one of the following values, depending on the specific object in the message:</p>
+            <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
+            <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
+            <p>
+              <em>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</em>
+            </p>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The value of the object's EntryUUID attribute.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>C</td>
+          <td>
+            <p>This element is required, if known:</p>
+            <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
+            <p>Value: value of the homeCommunityId</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.54.5.1.2">3.54.5.1.2 Document Metadata Notification Broker audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110107, DCM, “Import”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“C” (Create)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Document Metadata Publisher) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Document Metadata Notification Broker) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Document Metadata Notification Broker) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>DocumentEntry/SubmissionSet (1..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>NetworkAccessPointTypeCode</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>NetworkAccessPointID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>The machine name or IP address</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>DocumentEntry</p>
+            <p>SubmissionSet</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (System)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“3” (report)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>
+            <p>The Document Metadata Notification Broker shall include one of the following values, depending on the specific object in the message:</p>
+            <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
+            <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
+            <p>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</p>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>M</td>
+          <td>The value of the object's EntryUUID attribute.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>ParticipantObjectDetail</td>
+          <td>C</td>
+          <td>
+            <p>This element is required, if known:</p>
+            <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
+            <p>Value: value of the homeCommunityId</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

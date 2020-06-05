@@ -1,0 +1,2505 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.47">3.47 Patient Demographics Query HL7 V3 [ITI-47]</h2>
+    <p>This section corresponds to transaction [ITI-47] of the IHE Technical Framework. Transaction [ITI-47] is used by the Patient Demographics Consumer and Patient Demographics Supplier Actors. Additional components to be included if the Pediatric Demographics Option is supported are also indicated in Sections 3.47.4.1.2.1 to 3.47.4.1.2.4.</p>
+    <h3 class="list-paragraph" id="3.47.1">3.47.1 Scope</h3>
+    <p>The scope is identical to <a href="../Volume2a/ITI-21.html#3.21.1">ITI TF-2a: 3.21.1</a>.</p>
+    <h3 class="list-paragraph" id="3.47.2">3.47.2 Use Case Roles</h3>
+    <p>Actor: Patient Demographics Consumer</p>
+    <p>
+      Role: Requests a list of patients matching a minimal set of demographic criteria (
+      <em>e.g.</em>
+      , ID or partial name) from the Patient Demographics Supplier. Populates its attributes with demographic information received from the Patient Demographics Supplier.
+    </p>
+    <blockquote>
+      <p>Corresponding HL7 v3 Application Roles:</p>
+      <p>Person Registry Query Placer (PRPA_AR201303UV02)</p>
+    </blockquote>
+    <p>Actor: Patient Demographics Supplier</p>
+    <p>Role: Returns demographic information for all patients matching the demographic criteria provided by the Patient Demographics Consumer.</p>
+    <blockquote>
+      <p>Corresponding HL7 v3 Application Roles:</p>
+      <p>Person Registry Query Fulfiller (PRPA_AR201304UV02)</p>
+    </blockquote>
+    <h3 class="list-paragraph" id="3.47.3">3.47.3 Referenced Standards</h3>
+    <p>
+      HL7 Version 3 Edition 2008, Patient Administration DSTU, Patient Topic (found at
+      <a href="http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008">http://www.hl7.org/memonly/downloads/v3edition.cfm#V32008</a>
+      )
+    </p>
+    <p>Implementers of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a> Web Services for IHE Transactions.</p>
+    <h3 class="list-paragraph" id="3.47.4">3.47.4 Messages</h3>
+    <p>Figure 3.47.4-1: Find Candidates Query</p>
+    <h4 class="list-paragraph" id="3.47.4.1">3.47.4.1 Patient Demographics Query</h4>
+    <h5 class="list-paragraph" id="3.47.4.1.1">3.47.4.1.1 Trigger Events</h5>
+    <p>A Patient Demographics Consumer’s need to select a patient based on demographic information about patients whose information matches a set of known data will trigger the Patient Demographics Query based on the following HL7 trigger event:</p>
+    <p>Find Candidates Query (PRPA_TE201305UV02)</p>
+    <p>
+      An application, in the role of Query Placer, sends a query-by-parameter message to request that the application return
+      <em>all</em>
+      person records that match the demographic information sent in the query parameters.
+    </p>
+    <h5 class="list-paragraph" id="3.47.4.1.2">3.47.4.1.2 Message Semantics</h5>
+    <p>The Find Candidates Query is supported by the Patient Registry Query by Demographics (PRPA_MT201306UV02) message. The Patient Demographics Consumer shall generate the query message whenever it needs to select from a list of patients whose information matches a set of demographic data.</p>
+    <p>The components of the Patient Registry Query by Demographics message with cardinality greater than 0 (as shown below) are required, and the detailed description of the message is provided in Sections 3.47.4.1.2.1 to 3.47.4.1.2.4. Additional components to be included if the Pediatric Demographics Option is supported are also indicated in Section 3.47.4.1.2.1 to 3.47.4.1.2.4.</p>
+    <p>The receiver shall respond to the query by sending the Patient Registry Find Candidates Response message (PRPA_MT201310UV02), which uses the Application Level Acknowledgement transmission wrapper. This satisfies the requirements of original mode acknowledgment; no intermediate Accept Acknowledgement is to be sent. The response message shall contain demographic records that reflect the best fit to all of the search criteria received in the Patient Registry Query by Demographics message.</p>
+    <h6 class="list-paragraph" id="3.47.4.1.2.1">3.47.4.1.2.1 Major Components of the Patient Registry Query by Demographics</h6>
+    <p>LivingSubjectName Parameter</p>
+    <p>
+      This optional parameter specifies the name of the person whose information is being queried. For this parameter item, a single person name (PN) data item shall be specified in the LivingSubjectName.value attribute. Only certain name parts within the PN data type (e.g., family name) may be specified. If the sender needs to indicate that the name parts specified are not limited to an exact match, then the
+      <em>use</em>
+      attribute of the
+      <em>value</em>
+      element shall be set to "SRCH". Handling of phonetic issues, alternate spellings, upper and lower case, partial matching, accented characters, etc. if deemed appropriate, is to be supported by the Patient Demographics Supplier rather than by the Patient Demographics Consumer. The Supplier shall return at least all exact matches to the query parameters sent by the Consumer. IHE does not further specify matching requirements, however, the MatchAlgorithm parameter may be used to indicate more specific requirements for the Supplier, based on an existing agreement on allowable values for MatchAlgorithm.value.
+    </p>
+    <p>LivingSubjectAdministrativeGender Parameter</p>
+    <p>This optional parameter specifies the administrative gender of the person whose information is being queried. For this parameter item, a single administrative gender code shall be specified in the LivingSubjectAdministrativeGender.value attribute.</p>
+    <p>LivingSubjectBirthTime Parameter</p>
+    <p>This optional parameter specifies the birth data and time of the person whose information is being queried. This parameter can convey an exact moment (e.g., January 1, 1960 @ 03:00:00 EST), an approximate date (e.g., January 1960), or even a range of dates (e.g., December 1, 1959 through March 31, 1960).</p>
+    <p>PatientAddress Parameter</p>
+    <p>This optional parameter specifies one or more addresses associated with the person whose information is being queried.</p>
+    <p>LivingSubjectId Parameter</p>
+    <p>This optional repeating parameter specifies an identifier associated with the patient whose information is being queried (e.g., a local identifier, or an account identifier). If multiple instances of this parameter are provided in the query, all of the associated identifiers must match. The identifier specified in the LivingSubjectId.value attribute is expressed using the II data type. Please see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a> for the use of the II data type for patient identifiers.</p>
+    <p>OtherIDsScopingOrganization Parameter</p>
+    <p>
+      This optional repeating parameter specifies the assigning authority/authorities of the Patient Identity Domain(s) for which identifiers are to be returned. The identifier specified in the OtherIDsScopingOrganization.value attribute shall be expressed using the II data type, where the
+      <em>root</em>
+      element contains a valid ISO OID, and there is no
+      <em>extension</em>
+      element. If no such parameter is supplied, the patient demographics supplier is required to return the identifiers from all Patient Identity Domains known to it. Any parameter value which is not recognized by the target patient information source shall cause an error condition.
+    </p>
+    <p>Additional components to be included if the Pediatric Demographics Option is supported are also indicated below:</p>
+    <p>MothersMaidenName Parameter</p>
+    <p>This optional parameter specifies the maiden name of the mother of the person whose information is being queried. For this parameter item, a single person name (PN) data item shall be specified in the Person.value attribute. Within the PN data type, the given name and family name may be specified. If the sender needs to indicate that the name parts specified are not limited to an exact match, then the use attribute of the value element shall be set to "SRCH".</p>
+    <p>PatientTelecom Parameter</p>
+    <p>This optional parameter specifies the primary telephone number or email address of the person whose information is being queried.</p>
+    <p>Additional components to be included if the Pediatric Demographics Option is supported are also indicated below:</p>
+    <p>MothersMaidenName Parameter</p>
+    <p>
+      This optional parameter specifies the maiden name of the mother of the person whose information is being queried. For this parameter item, a single person name (PN) data item shall be specified in the Person.value attribute. Within the PN data type, the given name and family name may be specified. If the sender needs to indicate that the name parts specified are not limited to an exact match, then the
+      <em>use</em>
+      attribute of the
+      <em>value</em>
+      element shall be set to "SRCH".
+    </p>
+    <p>PatientTelecom Parameter</p>
+    <p>This optional parameter specifies the primary telephone number or email address of the person whose information is being queried.</p>
+    <h6 class="list-paragraph" id="3.47.4.1.2.2">3.47.4.1.2.2 Message Information Model of the Patient Registry Query by Demographics Message</h6>
+    <p>
+      Below is the Message Information Model for the Query by Demographics message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict subset of the
+      <em>Patient Registry Query by Demographics (PRPA_RM201306UV02) RMIM.</em>
+      If the Pediatric Demographics Option is supported, there are somewhat fewer constraints on the RMIM; these are also indicated.
+    </p>
+    <p>The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201306UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>Exactly one value attribute shall be present in each parameter</p>
+      </li>
+      <li>
+        <p>Only the LivingSubjectId, OtherIDsScopingOrganization, and LivingSubjectName parameters can have more than one instance</p>
+      </li>
+      <li>
+        <p>The optional attributes ParameterList.id, MatchCriterionList.id, QueryByParameter responseElementGroupId, QueryByParameter.modifyCode, and QueryByParameter.executionAndDeliveryTime were omitted from the model</p>
+      </li>
+      <li>
+        <p>QueryByParameter.responsePriorityCode is required and is fixed to I (Immediate)</p>
+      </li>
+      <li>
+        <p>QueryByParameter.responseModalityCode is required and is fixed to R (Real Time)</p>
+      </li>
+      <li>
+        <p>QueryByParameter.statusCode is defaulted to "new".</p>
+      </li>
+      <li>
+        <p>The data type of MatchAlgorithm.value is constrained to ST</p>
+      </li>
+      <li>
+        <p>The data type of MinimumDegreeMatch.value is constrained to INT</p>
+      </li>
+      <li>
+        <p>The data type of LivingSubjectName.value is constrained to PN</p>
+      </li>
+      <li>
+        <p>The optional SortControl was omitted from the model</p>
+      </li>
+      <li>
+        <p>The optional MatchWeight was omitted from the model</p>
+      </li>
+      <li>
+        <p>The following optional parameters were omitted from the model:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>PatientTelecom (not omitted if Pediatric Demographics Option is supported)</p>
+      </li>
+      <li>
+        <p>PrincipalCareProviderId</p>
+      </li>
+      <li>
+        <p>PrinicpalCareProvisionId</p>
+      </li>
+      <li>
+        <p>MothersMaidenName (not omitted if Pediatric Demographics Option is supported)</p>
+      </li>
+      <li>
+        <p>LivingSubjectDeceasedTime</p>
+      </li>
+      <li>
+        <p>PatientStatusCode</p>
+      </li>
+      <li>
+        <p>LivingSubjectBirthPlaceName</p>
+      </li>
+      <li>
+        <p>LivingSubjectBirthPlaceAddress</p>
+      </li>
+    </ul>
+    <p>
+      <img src=".//media/image46.png" style="width:6.02292in;height:3.39236in" alt="PDQ V3" />
+    </p>
+    <p>Figure 3.47.4.1.2.2-1: Message Information Model for the Query by Demographics Message</p>
+    <p>The attributes of this model are described in the following table:</p>
+    <p>Table 3.47.4.1.2.2-1: Model Attributes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            PRPA_HD201306IHE
+            <br />
+            Patient Registry Query by Demographics
+          </th>
+          <th>
+            <p>This HMD extract defines the message used to query a patient registry for records matching a set of demographics information.</p>
+            <p>Derived from Figure 3.47.4.1.2.2-1 (PRPA_RM201306IHE)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>QueryByParameter</td>
+          <td>The entry point for the domain content in this query</td>
+        </tr>
+        <tr class="even">
+          <td>
+            queryId [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">II</a>
+            )
+          </td>
+          <td>Unique identifier for the query</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            statusCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryStatusCode.htm#QueryStatusCode">QueryStatusCode</a>
+            , default="new"}
+          </td>
+          <td>The status of the query, default is "new"</td>
+        </tr>
+        <tr class="even">
+          <td>
+            responseModalityCode [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ResponseModality.htm#ResponseModality">ResponseModality</a>
+            , fixed value="R"}
+          </td>
+          <td>The mode of the response – always real-time.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            responsePriorityCode [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryPriority.htm#QueryPriority">QueryPriority</a>
+            , fixed value="I"}
+          </td>
+          <td>The Patient Demographics Supplier is required to send an immediate response.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            initialQuantity [0..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-INT">INT</a>
+            )
+          </td>
+          <td>Defines the maximum size of the response that can be accepted by the requesting application</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            initialQuantityCode [0..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#QueryByParameter-cls">QueryByParameter</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CE">CE</a>
+            ) {CWE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/QueryRequestLimit.htm#QueryRequestLimit">QueryRequestLimit</a>
+            , default="RD"}
+          </td>
+          <td>Defines the units associated with the initialQuantity; default is "records".</td>
+        </tr>
+        <tr class="even">
+          <td>MatchAlgorithm</td>
+          <td>This parameter conveys instructions to the patient demographics supplier specifying the preferred matching algorithm to use</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (ST)
+          </td>
+          <td>The name of the algorithm</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "MatchAlgorithm"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>MinimumDegreeMatch</td>
+          <td>This parameter conveys instructions to the patient demographics supplier specifying minimum degree of match to use in filtering results</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (INT)
+          </td>
+          <td>The numeric value of the degree of match</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "MatchAlgorithm"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectAdministrativeGender</td>
+          <td>This query parameter is a code representing the administrative gender of a person in a patient registry.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CE">CE</a>
+            ) {CWE:
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/AdministrativeGender.htm#AdministrativeGender">AdministrativeGender</a>
+            }
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.administrativeGender"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectBirthTime</td>
+          <td>This query parameter is the birth date of a living subject.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-IVL">IVL</a>
+            &lt;
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-TS">TS</a>
+            &gt;)
+          </td>
+          <td>A date or date range. This parameter can convey an exact moment (e.g., January 1, 1960 @ 03:00:00 EST), an approximate date (e.g., January 1960), or even a range of dates (e.g., December 1, 1959 through March 31, 1960).</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.birthTime"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>LivingSubjectId</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">II</a>
+            )
+          </td>
+          <td>A patient identifier, used to assist in finding a match for the query.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.id"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>LivingSubjectName</td>
+          <td>This query parameter is the name of a person. If multiple instances of LivingSubjectName are provided, the receiver must consider them as possible alternatives, logically connected with an "or".</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (PN)
+          </td>
+          <td>The name "use" attribute can convey that a name is to be matched using "fuzzy" matching, and does not require exact match. Only some of the name parts may be populated. If, for example, only a family name part of a person's name is sent, then the query would match all persons with that family name regardless of their given names or initials.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "LivingSubject.name"}
+          </td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PatientAddress</td>
+          <td>This query parameter is a postal address for corresponding with a patient. There shall be only a single PatientAddress element</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..*]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">AD</a>
+            )
+          </td>
+          <td>Multiple instances of the value element within a Patient Address may be specified and are combined with OR logic.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "Patient.addr"}
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>OtherIDsScopingOrganization</td>
+          <td>Optional parameter specifying the assigning authority of a Patient Identity Domain</td>
+        </tr>
+        <tr class="even">
+          <td>
+            value [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-II">II</a>
+            )
+          </td>
+          <td>
+            The identifier for a Patient Identity Domain's assigning authority. IHE restriction:
+            <br />
+            The value.root attribute SHALL be a valid ISO OID
+            <br />
+            The value.extension attribute SHALL NOT be present
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>
+            semanticsText [1..1]
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#ParameterItem-cls">ParameterItem</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-ST">ST</a>
+            ){default= "OtherIDs.scopingOrganization.id"}
+          </td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>When the Pediatric Demographics Option is supported, the following sections may be included.</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>MothersMaidenName</th>
+          <th>Design Comments: This query parameter is the maiden name of a focal person's mother. It is included as a parameter because it is a common attribute for confirming the identity of persons in some registries. This parameter does not map to a single RIM attribute, instead, in RIM terms Mother's maiden name is the person name part of "family" with an EntityNamePartQualifier of "birth" for the person who is the player in a PersonalRelationship of type of "mother" to the focal person.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>value [1..1]</p>
+            <p>ParameterItem (PN)</p>
+          </td>
+          <td>Design Comments: A person name. In this case it may consist of only the given name part, the family name part, or both.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>semanticsText [1..1]</p>
+            <p>ParameterItem (ST){default= "Person.MothersMaidenName"}</p>
+          </td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PatientTelecom</td>
+          <td>Design Comments: This query parameter is a telecommunications address for communicating with a living subject in the context of the target patient registry. It could be a telephone number, fax number or even an email address. There shall be only a single PatientTelecom element.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>value [1..*]</p>
+            <p>ParameterItem (TEL)</p>
+          </td>
+          <td>Design Comments: A telecommunications address. The scheme attribute specifies whether this is a telephone number, fax number, email address, etc. Multiple instances of the value element within a PatientTelecom may be specified and are combined with OR logic.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.47.4.1.2.3">3.47.4.1.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.47.4.1.2.3-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.47.4.1.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000100UV01 – Send Message Payload</td>
+          <td>QUQI_MT021001UV01 – Query Control Act Request: Query By Parameter</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId SHALL be set to PRPA_IN201305UV02</p>
+            <p>The value of processingModeCode SHALL be set to T</p>
+            <p>The acceptAckCode SHALL be set to AL</p>
+            <p>There SHALL be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The value of ControlActProcess.moodCode SHALL be set to EVN</p>
+            <p>The trigger event code in ControlActProcess.code SHALL be set to PRPA_TE201305UV02</p>
+            <p>If an authorOrPerformer participation is present, the value of authorOrPerformer.typeCode SHALL be set to AUT</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The schemas from the HL7 V3 2008 Normative Edition can be found at
+      <br />
+      Edition2008/processable/multicacheschemas/PRPA_IN201305UV02.xsd)
+    </p>
+    <h6 class="list-paragraph" id="3.47.4.1.2.4">3.47.4.1.2.4 Web Services Types and Messages</h6>
+    <p>The Patient Registry Query by Demographics message will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>query message -&gt; "PRPA_IN201305UV02_Message"</p>
+    <p>The following WSDL snippet describes the type for this message:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201305UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201305UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The message is described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="PRPA_IN201305UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201305UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <p>The port types for the WSDL describing the Patient Demographics Service are described together with the expected actions of the actors which receive these messages in Section 3.47.4.2.3.</p>
+    <h5 id="3.47.4.1.3">3.47.4.1.3 Expected Actions</h5>
+    <h6 class="list-paragraph" id="3.47.4.1.3.1">3.47.4.1.3.1 Immediate Response</h6>
+    <p>The Patient Demographics Supplier shall immediately return a Find Candidates Response message as specified below in Section 3.47.4.2. The response message uses the Application Acknowledgement transmission wrapper, as specified in <a href="../Volume2x/ch-15.html#Appendix O.1.3">ITI TF-2x: Appendix O.1.3</a>, and no other acknowledgments are part of this transaction.</p>
+    <h6 id="3.47.4.1.3.2">3.47.4.1.3.2 Query Parameter Processing</h6>
+    <p>The Patient Demographics Supplier shall be capable of accepting, searching on, and responding with attributes in the Query Person by Demographics message.</p>
+    <p>Handling of phonetic issues, alternate spellings, upper and lower case, partial matching, accented characters, etc., if deemed appropriate, is to be supported by the Patient Demographics Supplier rather than by the Patient Demographics Consumer. The Supplier shall return at least all exact matches to the query parameters sent by the Consumer; IHE does not further specify matching requirements, except as already discussed in the LivingSubjectName parameter description.</p>
+    <h6 class="list-paragraph" id="3.47.4.1.3.3">3.47.4.1.3.3 Incremental Response Processing</h6>
+    <p>
+      The Patient Demographics Supplier, which supports the Continuation Option, shall be capable of accepting and processing the
+      <em>QueryByParameter.responsePriorityCode</em>
+      attribute. In particular, the Patient Demographics Supplier shall respond in immediate mode.
+    </p>
+    <p>
+      Also, the Patient Demographics Supplier shall be able to interpret
+      <em>QueryByParameter.initialQuantity</em>
+      to return successive responses of partial lists of records. When processing incremental responses, the Patient Demographics Consumer shall request additional responses using the Query Control Act Request Continue/Cancel message (QUQI_MT000001UV01), as described in Section 3.47.4.3.
+    </p>
+    <h6 class="list-paragraph" id="3.47.4.1.3.4">3.47.4.1.3.4 Web Services Port Type and Binding Definitions</h6>
+    <p>These definitions are part of the query response message. Please see Section 3.47.4.2.3 for more information.</p>
+    <h6 class="list-paragraph" id="3.47.4.1.3.5">3.47.4.1.3.5 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h4 class="list-paragraph" id="3.47.4.2">3.47.4.2 Patient Demographics Query Response</h4>
+    <h5 class="list-paragraph" id="3.47.4.2.1">3.47.4.2.1 Trigger Events</h5>
+    <p>The Patient Demographics Supplier’s response to the Find Candidates Query message is triggered by the following trigger:</p>
+    <p>Find Candidates Response (PRPA_TE201306UV02)</p>
+    <p>
+      An application returns a Patient Registry Find Candidates Response message populated with information it holds for
+      <em>each</em>
+      person whose record matches the demographic information sent as parameters in a query-by-parameter message.
+    </p>
+    <h5 class="list-paragraph" id="3.47.4.2.2">3.47.4.2.2 Message Semantics</h5>
+    <p>The Patient Registry Find Candidates Response message (PRPA_MT201310UV02) is sent by the Patient Demographics Supplier in direct response to the query (PRPA_MT201306UV02) or, if the Continuation Option is supported, the query continuation (QUQI_MT000001UV01) message previously received. The components of the message with cardinality greater than 0 (as shown below) are required, and the detailed description of the message is provided in Sections 3.47.4.2.2.1 to 3.47.4.2.2.4. All other attributes of the message are optional.</p>
+    <h6 class="list-paragraph" id="3.47.4.2.2.1">3.47.4.2.2.1 Major Components of the Patient Registry Find Candidates Response Message</h6>
+    <p>This message shares all the major components of the Patient Activate/Revise messages, as described in Section 3.44.4.1.2.1. The only additional component is the QueryMatchObservation class.</p>
+    <p>Query Match Observation</p>
+    <p>
+      The
+      <em>QueryMatchObservation</em>
+      class is used to convey information about the quality of the match for each record returned by the query response.
+    </p>
+    <h6 class="list-paragraph" id="3.47.4.2.2.2">3.47.4.2.2.2 Message Information Model of the Patient Registry Find Candidates Response Message</h6>
+    <p>
+      Below is the Message Information Model for the Patient Registry Find Candidates Response message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict common subset of the
+      <em>Patient Registry Find Candidates Response (PRPA_RM201310UV02)</em>
+      RMIM.
+    </p>
+    <p>The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201310UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
+    <ul>
+      <li>
+        <p>The focal entity choice is restricted to be only a person</p>
+      </li>
+      <li>
+        <p>The relationship holder of the personal relationship is restricted to be a person (using CMET COCT_MT030207UV)</p>
+      </li>
+      <li>
+        <p>The following roles are omitted:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>asPatientOfOtherProvider</p>
+      </li>
+      <li>
+        <p>birthPlace</p>
+      </li>
+      <li>
+        <p>guarantor</p>
+      </li>
+      <li>
+        <p>guardian</p>
+      </li>
+      <li>
+        <p>contactParty</p>
+      </li>
+      <li>
+        <p>asMember</p>
+      </li>
+      <li>
+        <p>careGiver</p>
+      </li>
+      <li>
+        <p>asStudent</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>The following participations are omitted:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>subjectOf (administrativeObservation)</p>
+      </li>
+      <li>
+        <p>coveredPartyOf (coverage)</p>
+      </li>
+    </ul>
+    <p>
+      <img src=".//media/image47.png" style="width:6.41528in;height:5.11528in" alt="PRPA_RM201310IHE" />
+    </p>
+    <p>Figure 3.47.4.2.2.2-1: Message Information Model for the Patient Registry Find Candidates Response Message</p>
+    <p>The attributes of this model are described in the following table. Note that CMETs are not discussed, as the HL7 definitions for them are being used.</p>
+    <p>Table 3.47.4.2.2.2-1: Model Attributes</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>
+            PRPA_HD201310IHE
+            <br />
+            Patient Registry Find Candidates Response
+          </th>
+          <th>
+            <p>This HMD extract defines the message used to return records from a patient registry in response to a Find Candidates Query.</p>
+            <p>Derived from Figure 3.47.4.2.2.2-1 (PRPA_RM201310IHE)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Patient</td>
+          <td>The primary record for the focal person in a Patient Demographics Supplier</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Patient (CS) {CNE:PAT}</p>
+          </td>
+          <td>Structural attribute; this is a "patient" role</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>
+              Patient (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Patient identifiers. Patient Identifiers from different Identity Domains may be contained either here, or in the OtherIDs.id attributes, but not in both places. At least one Patient Identifier shall be present in this attribute</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [1..1]</p>
+            <p>Patient (CS) {CNE:active, fixed value= "active"}</p>
+          </td>
+          <td>A value specifying the state of this record in a patient registry (based on the RIM role class state-machine). This record is active.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>confidentialityCode [0..*]</p>
+            <p>Patient (SET&lt;CE&gt;) {CWE:Confidentiality}</p>
+          </td>
+          <td>Value(s) that control the disclosure of information about this living subject as a patient</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>veryImportantPersonCode [0..1]</p>
+            <p>Patient (CE) {CWE:PatientImportance}</p>
+          </td>
+          <td>A code specifying the patient's special status granted by the scoper organization, often resulting in preferred treatment and special considerations. Examples include board member, diplomat.</td>
+        </tr>
+        <tr class="odd">
+          <td>Person</td>
+          <td>
+            <p>A subtype of LivingSubject representing a human being</p>
+            <p>Either Person.name or Patient.id must be non-null</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:PSN, fixed value= "PSN"}</p>
+          </td>
+          <td>Structural attribute; this is a "person" entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Person (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>name [1..*]</p>
+            <p>Person (BAG&lt;PN&gt;)</p>
+          </td>
+          <td>Name(s) for this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>telecom [0..*]</p>
+            <p>Person (BAG&lt;TEL&gt;)</p>
+          </td>
+          <td>Telecommunication address(es) for communicating with this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>administrativeGenderCode [0..1]</p>
+            <p>Person (CE) {CWE:AdministrativeGender}</p>
+          </td>
+          <td>A value representing the gender (sex) of this person. Note: this attribute does not include terms related to clinical gender which is a complex physiological, genetic and sociological concept that requires multiple observations in order to be comprehensively described.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>birthTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person was born</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>deceasedInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person is dead</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>deceasedTime [0..1]</p>
+            <p>Person (TS)</p>
+          </td>
+          <td>The date and time this person died</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>multipleBirthInd [0..1]</p>
+            <p>Person (BL)</p>
+          </td>
+          <td>An indication that this person was part of a multiple birth</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>multipleBirthOrderNumber [0..1]</p>
+            <p>Person (INT)</p>
+          </td>
+          <td>The order in which this person was born if part of a multiple birth</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>addr [0..*]</p>
+            <p>Person (BAG&lt;AD&gt;)</p>
+          </td>
+          <td>Address(es) for corresponding with this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>maritalStatusCode [0..1]</p>
+            <p>Person (CE) {CWE:MaritalStatus}</p>
+          </td>
+          <td>A value representing the domestic partnership status of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>religiousAffiliationCode [0..1]</p>
+            <p>Person (CE) {CWE:ReligiousAffiliation}</p>
+          </td>
+          <td>A value representing the primary religious preference of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>raceCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Race}</p>
+          </td>
+          <td>A set of values representing the races of this person</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>ethnicGroupCode [0..*]</p>
+            <p>Person (SET&lt;CE&gt;) {CWE:Ethnicity}</p>
+          </td>
+          <td>A set of values representing the ethnic groups of this person</td>
+        </tr>
+        <tr class="odd">
+          <td>OtherIDs</td>
+          <td>Used to capture additional identifiers for the person such as a Drivers’ license or Social Security Number.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:ROL}</p>
+          </td>
+          <td>Structural attribute. This can be any specialization of "role" except for Citizen, or Employee.,</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>id [1..*] (M)</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>One or more identifiers issued to the focal person by the associated scopingOrganization (e.g., identifiers from a different Patient Identity Domain).</td>
+        </tr>
+        <tr class="even">
+          <td>PersonalRelationship</td>
+          <td>A personal relationship between the focal living subject and another living subject</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:PRS, fixed value= "PRS"}</p>
+          </td>
+          <td>Structural attribute; this is a "personal relationship" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\rim\rim.htm#Role-cls">Role</a>
+               (
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-SET">SET</a>
+              &lt;
+              <a href="file:///C:\v3ballot_2006jan\html\infrastructure\datatypes\datatypes.htm#dt-II">II</a>
+              &gt;)
+            </p>
+          </td>
+          <td>Identifier(s) for this personal relationship</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Role (CE) {CWE:PersonalRelationshipRoleType}</p>
+          </td>
+          <td>A required value specifying the type of personal relationship between the relationshipHolder and the scoping living subject drawn from the PersonalRelationshipRoleType domain, for example, spouse, parent, unrelated friend</td>
+        </tr>
+        <tr class="even">
+          <td>Citizen</td>
+          <td>Used to capture person information relating to citizenship.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Role (CS) {CNE:CIT, fixed value= "CIT"}</p>
+          </td>
+          <td>Structural attribute; this is a "citizen" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>id [0..*]</p>
+            <p>Role (SET&lt;II&gt;)</p>
+          </td>
+          <td>Identifier(s) for the focal person as a citizen of a nation</td>
+        </tr>
+        <tr class="odd">
+          <td>Nation</td>
+          <td>A politically organized body of people bonded by territory and known as a nation.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:NAT, fixed value= "NAT"}</p>
+          </td>
+          <td>Structural attribute; this is a 'nation' type of entity</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>determinerCode [1..1] (M)</p>
+            <p>Organization (CS) {CNE:INSTANCE, fixed value= "INSTANCE"}</p>
+          </td>
+          <td>Structural attribute; this is a specific entity</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>code [1..1] (M)</p>
+            <p>Organization (CD) {CWE:NationEntityType}</p>
+          </td>
+          <td>A value that identifies a nation state</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>name [0..1]</p>
+            <p>Organization (ON)</p>
+          </td>
+          <td>A non-unique textual identifier or moniker for this nation</td>
+        </tr>
+        <tr class="even">
+          <td>Employee</td>
+          <td>A relationship of the focal person with an organization to receive wages or salary. The purpose of this class is to identify the type of relationship the employee has to the employer rather than the nature of the work actually performed. For example, it can be used to capture whether the person is a Military Veteran or not..</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>classCode [1..1] (M)</p>
+            <p>Employee (CS) {CNE:EMP}</p>
+          </td>
+          <td>Structural attribute; this is an "employee" role</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>statusCode [0..1]</p>
+            <p>Employee (CS) {CNE:RoleStatus}</p>
+          </td>
+          <td>A value specifying the state of this employment relationship (based on the RIM Role class state-machine), for example, active, suspended, terminated.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>occupationCode [0..1]</p>
+            <p>Employee (CE) {CWE:EmployeeOccupationCode}</p>
+          </td>
+          <td>A code qualifying the classification of kind-of-work based upon a recognized industry or jurisdictional standard. OccupationCode is used to convey the person's occupation as opposed to jobClassCode (not used in this transaction) which characterizes this particular job. For example, it can be used to capture whether the person is a Military Veteran or not.</td>
+        </tr>
+        <tr class="even">
+          <td>LanguageCommunication</td>
+          <td>A language communication capability of the focal person</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <p>languageCode [1..1] (M)</p>
+            <p>LanguageCommunication (CE) {CWE:HumanLanguage}</p>
+          </td>
+          <td>A value representing a language for which the focal person has some level of proficiency for written or spoken communication. Examples: Spanish, Italian, German, English, American Sign</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>preferenceInd [0..1]</p>
+            <p>LanguageCommunication (BL)</p>
+          </td>
+          <td>An indicator specifying whether or not this language is preferred by the focal person for the associated mode</td>
+        </tr>
+        <tr class="odd">
+          <td>QueryMatchObservation</td>
+          <td>Used to convey information about the quality of the match for each record.</td>
+        </tr>
+        <tr class="even">
+          <td>
+            classCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ActClass.htm - ActClass, default= "OBS"}
+          </td>
+          <td>Structural attribute – this is an observation</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            moodCode [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CS">CS</a>
+            ) {CNE:http://hl7.org/v3ballot2007may/html/infrastructure/vocabulary/ActMood.htm - ActMood, default= "EVN"}
+          </td>
+          <td>Structural attribute – this is an event</td>
+        </tr>
+        <tr class="even">
+          <td>
+            code [1..1] (M)
+            <br />
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/datatypes/datatypes.htm#dt-CD">CD</a>
+            ) {CWE:QueryMatchObservationType}
+          </td>
+          <td>A code, identifying this observation as a query match observation.</td>
+        </tr>
+        <tr class="odd">
+          <td>
+            value [1..1] (M)
+            <br />
+            QueryMatch
+            <a href="http://hl7.org/v3ballot2007may/html/infrastructure/rim/rim.htm#Observation-cls">Observation</a>
+             (INT)
+          </td>
+          <td>A numeric value indicating the quality of match for this record. It shall correspond to the MinimumDegreeMatch.value attribute of the original query, and it shall have the same meaning (e.g., percentage, indicating confidence in the match).</td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.47.4.2.2.3">3.47.4.2.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.47.4.2.2.3-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.47.4.4.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000300UV01 – Send Application Acknowledgement</td>
+          <td>MFMI_MT700711UV01 – Master File/Registry Query Response Control Act (Role Subject)</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId SHALL be set to PRPA_IN201306UV02</p>
+            <p>The value of processingModeCode SHALL be set to T</p>
+            <p>The acceptAckCode SHALL be set to NE</p>
+            <p>There SHALL be only one receiver Device</p>
+          </td>
+          <td>
+            <p>The value of ControlActProcess.moodCode SHALL be set to EVN</p>
+            <p>The trigger event code in ControlActProcess.code SHALL be set to PRPA_TE201306UV02</p>
+            <p>There SHALL be zero or more RegistrationEvents present in this message.</p>
+            <p>For each matching record returned, there SHALL be exactly one RegistrationEvent present in this message.</p>
+            <p>If a RegistrationEvent is part of the message, there SHALL be exactly one Patient role present in the payload.</p>
+            <p>There SHALL be no replacementOf act-relationship present in this message</p>
+            <p>There SHALL be a QueryByParameter copy of the original query.</p>
+            <p>The QueryAck.resultTotalQuantity, QueryAck.resultCurrentQuantity, and QueryAck.resultRemainingQuantity attributes SHALL have the appropriate values populated.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The schemas from the HL7 V3 2008 Normative Edition can be found at
+      <br />
+      Edition2008/processable/multicacheschemas/PRPA_IN201306UV02.xsd).
+    </p>
+    <h6 class="list-paragraph" id="3.47.4.2.2.4">3.47.4.2.2.4 Web Services Types and Messages</h6>
+    <p>The Patient Registry Query by Demographics message will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>response message -&gt; "PRPA_IN201306UV02_Message"</p>
+    <p>The following WSDL snippet describes the type for these message:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/PRPA_IN201306UV02.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="PRPA_IN201306UV02"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The message is described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="PRPA_IN201306UV02_Message"&gt;</p>
+    <p>&lt;part element="hl7:PRPA_IN201306UV02" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <h5 class="list-paragraph" id="3.47.4.2.3">3.47.4.2.3 Expected Actions</h5>
+    <p>
+      The Patient Demographics Supplier shall perform the matching of patient data based on the query parameter values it receives. The information provided by the Patient Demographics Supplier to Patient Demographics Consumers is a list of possible matching patients from the patient information source associated with the value that the Consumer sent in the
+      <em>Device</em>
+      class of the transmission wrapper of the query message.
+    </p>
+    <p>
+      If
+      <em>OtherIDsScopingOrganization</em>
+      parameters were part of the query, and they were recognized by the Patient Demographics Supplier as identifying known Patient Identity Domains, the response will also, for each patient, contain any Patient ID values found in the specified domains.
+    </p>
+    <p>The mechanics of the matching algorithms used are internal to the Patient Demographics Supplier and are outside of the scope of this framework.</p>
+    <p>The Patient Demographics Supplier shall respond to the query request as described by the following 3 cases:</p>
+    <p>
+      Case 1 The Patient Demographics Supplier finds (in the patient information source associated with
+      <em>Receiver.Device in the query transmission wrapper</em>
+      ) at least one patient record matching the criteria sent in the query parameters. There were no
+      <em>OtherIDsScopingOrganization</em>
+      parameters in the query.
+    </p>
+    <p>AA (application accept) is returned in Acknowledgement.typeCode (transmission wrapper).</p>
+    <p>OK (data found, no errors) is returned in QueryAck.queryResponseCode (control act wrapper)</p>
+    <p>One RegistrationEvent (and the associated Patient role, subject of that event) is returned from the patient information source for each patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the RegistrationEvent class within the transmission wrapper.</p>
+    <p>
+      For each patient, one or more identifiers from the Patient ID Domain associated with the target patient information source identified by
+      <em>Receiver.Device</em>
+      are represented as Patient.id attributes.
+    </p>
+    <p>
+      If an incremental number of records are specified in
+      <em>QueryByParamter.initialQuantity (i.e., the Consumer supports the Continuation Option)</em>
+      , and the number of records to be sent exceeds that incremental number, the Supplier shall return only up to the incremental number of records. If the Supplier supports the Continuation Option, it shall correctly populate the
+      <em>resultTotalQuantity</em>
+      ,
+      <em>resultCurrentQuantity</em>
+      , and
+      <em>resultRemainingQuantity</em>
+      attributes of the
+      <em>QueryAck</em>
+      class in the control act wrapper. If the Supplier does not support the Continuation Option, in addition to returning only up to the incremental number of records requested, it shall return AE (application error in the Acknowledgement.typeCode (transmission wrapper) and AE (application error) is returned in QueryAck.queryResponseCode (control act wrapper).
+    </p>
+    <p>The Consumer may then send a query continuation message as a subsequent query request for the next increment of responses.</p>
+    <p>
+      Case 2: The Patient Demographics Supplier finds (in the patient information source associated with
+      <em>Receiver.Device in the query transmission wrapper</em>
+      ) at least one patient record matching the criteria sent in the query parameters. One or more
+      <em>OtherIDsScopingOrganization</em>
+      parameters are present in the query; the Supplier recognizes all the requested domains.
+    </p>
+    <p>
+      AA (application accept) is returned in
+      <em>Acknowledgement.typeCode</em>
+      (transmission wrapper).
+    </p>
+    <p>
+      OK (data found, no errors) is returned in
+      <em>QueryAck.queryResponseCode</em>
+      (control act wrapper)
+    </p>
+    <p>
+      One
+      <em>RegistrationEvent</em>
+      (and the associated
+      <em>Patient</em>
+      role, subject of that event) is returned from the patient information source for each patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the
+      <em>RegistrationEvent</em>
+      class within the transmission wrapper.
+    </p>
+    <p>
+      For each patient, the identifiers from all the Patient ID Domains requested via the
+      <em>OtherIDsScopingOrganization</em>
+      parameter are returned either as values of the
+      <em>Patient.id</em>
+      attribute, or as values of the
+      <em>OtherIDs.id</em>
+      attribute. The same patient identifier value shall not appear in both the Patient.id and OtherIDs.id attributes. The Patient Demographics consumer shall consider the identifiers from both places as equivalently valid. If the Patient Demographics supplier cannot provide a patient ID for some of the requested Patient ID Domains, then an
+      <em>OtherIDs.id</em>
+      attribute shall have an appropriate null value, and the
+      <em>ScopingOrganization</em>
+      class shall identify the corresponding domain.
+    </p>
+    <p>
+      If an incremental number of records are specified in
+      <em>QueryByParamter.initialQuantity</em>
+      , and the number of records to be sent exceeds that incremental number, and the Patient Demographics Supplier supports the Continuation Option, the Supplier returns only the incremental number of records, correctly populating the
+      <em>resultTotalQuantity</em>
+      ,
+      <em>resultCurrentQuantity</em>
+      , and
+      <em>resultRemainingQuantity</em>
+      attributes of the
+      <em>QueryAck</em>
+      class in the control act wrapper. The consumer will send a query continuation message as a subsequent query request for the next increment of responses. If the Supplier does not support the Continuation Option, then AE (application error) is returned in the Acknowledgement.typeCode (transmission wrapper) and AE (application error) is returned in QueryAck.queryResponseCode (control act wrapper).
+    </p>
+    <p>
+      Case 3: The Patient Demographics Supplier does not recognize one or more
+      <em>OtherIDsScopingOrganization</em>
+      parameters as representing valid Patient Identity Domains.
+    </p>
+    <p>
+      AE (application error) is returned in
+      <em>Acknowledgement.typeCode</em>
+      (transmission wrapper) and in
+      <em>QueryAck.queryResponseCode</em>
+      (control act wrapper).
+    </p>
+    <p>
+      No
+      <em>RegistrationEvent</em>
+      is returned.
+    </p>
+    <p>
+      The queried-for patient identification domains are returned in the
+      <em>QueryByParameter</em>
+      parameter list (control act wrapper).
+    </p>
+    <p>For each domain that was not recognized, an AcknowledgmentDetail class is returned in which the attributes typeCode, code, and location are valued as follows:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Attribute</td>
+          <td>VALUE</td>
+        </tr>
+        <tr class="even">
+          <td>typeCode</td>
+          <td>E</td>
+        </tr>
+        <tr class="odd">
+          <td>code</td>
+          <td>204 (Unknown Key Identifier)</td>
+        </tr>
+        <tr class="even">
+          <td>location</td>
+          <td>
+            XPath expression for the value element of the OtherIDsScopingOrganization parameter
+            <br />
+            (which includes the repetition number of the parameter)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 class="list-paragraph" id="3.47.4.2.3.1">3.47.4.2.3.1 Web Services Port Type and Binding Definitions</h6>
+    <p>IHE-WSP201) The attribute /wsdl:definitions/@name SHALL be “PDSupplier”.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>wsdl:definitions/@name="PDSupplier":</p>
+    <p>patient demographics query -&gt; "PRPA_IN201305UV02_Message"</p>
+    <p>patient demographics response -&gt; "PRPA_IN201306UV02_Message"</p>
+    <p>continuation query -&gt; "QUQI_IN000003UV01_Message"</p>
+    <p>accept acknowledgement -&gt; "MCCI_IN000002UV01_Message"</p>
+    <p>portType -&gt; "PDSupplier_PortType"</p>
+    <p>get candidates operation -&gt; "PDSupplier_PRPA_IN201305UV02"</p>
+    <p>continuation operation -&gt; "PDSupplier_PRPA_IN201305UV02_Continue"</p>
+    <p>cancel operation -&gt; "PDSupplier_PRPA_IN201305UV02_Cancel"</p>
+    <p>SOAP 1.2 binding -&gt; "PDSupplier_Binding_Soap12"</p>
+    <p>SOAP 1.2 port -&gt; "PDSupplier_Port_Soap12"</p>
+    <p>The following WSDL snippets specify the Patient Demographics Query Port Type and Binding definitions, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p class="heading list-paragraph" id="3.47.4.2.3.1.1">3.47.4.2.3.1.1 Port Type</p>
+    <p>&lt;portType name="PDSupplier_PortType"&gt;</p>
+    <p>&lt;operation name="PDSupplier_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;input message="tns:PRPA_IN201305UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201305UV02"/&gt;</p>
+    <p>&lt;output message="tns:PRPA_IN201306UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201306UV02"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PDSupplier_QUQI_IN000003UV01_Continue"&gt;</p>
+    <p>&lt;input message="tns:QUQI_IN000003UV01_Message" wsaw:Action="urn:hl7-org:v3:QUQI_IN000003UV01_Continue"/&gt;</p>
+    <p>&lt;output message="tns:PRPA_IN201306UV02_Message" wsaw:Action="urn:hl7-org:v3:PRPA_IN201306UV02"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PIXManager_QUQI_IN000003UV01_Cancel"&gt;</p>
+    <p>&lt;input message="tns:QUQI_IN000003UV01_Message" wsaw:Action="urn:hl7-org:v3: QUQI_IN000003UV01_Cancel"/&gt;</p>
+    <p>&lt;output message="tns:MCCI_IN000002UV01_Message" wsaw:Action="urn:hl7-org:v3:MCCI_IN000002UV01"/&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p class="heading list-paragraph" id="3.47.4.2.3.1.2">3.47.4.2.3.1.2 Bindings</p>
+    <p>SOAP 1.2 binding:</p>
+    <p>…</p>
+    <p>&lt;binding name="PDSupplier_Binding_Soap12" type="PDSupplier_PortType"&gt;</p>
+    <p>&lt;wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;</p>
+    <p>&lt;operation name="PDSupplier_PRPA_IN201305UV02"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PDSupplier_QUQI_IN000003UV01_Continue"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="PDSupplier_QUQI_IN000003UV01_Cancel"&gt;</p>
+    <p>&lt;wsoap12:operation soapActionRequired="false"/&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;wsoap12:body use="literal"/&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>…</p>
+    <p>An informative WSDL for the Patient Demographics Supplier implementing the PDQV3 Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.47.4.2.3.2">3.47.4.2.3.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h4 class="list-paragraph" id="3.47.4.3">3.47.4.3 Patient Demographics Query HL7V3 Continuation</h4>
+    <h5 class="list-paragraph" id="3.47.4.3.1">3.47.4.3.1 Trigger Events</h5>
+    <p>A Patient Demographics Consumer’s need to get another set of matching records to a previously sent Patient Demographics query will trigger the Patient Demographics Query Continuation based on the following HL7 trigger event:</p>
+    <p>Query General Activate Query Continuation (QUQI_TE000003UV01)</p>
+    <p>An application, in the role of Query Placer, sends a query continuation message to request that the application return up to a specified number of matching records based on a previous demographics query.</p>
+    <h5 class="list-paragraph" id="3.47.4.3.2">3.47.4.3.2 Message Semantics</h5>
+    <p>The Query continuation is supported by the Query Control Act Request Continue / Cancel (QUQI_MT000001UV01) message. The Patient Demographics Consumer shall generate the continuation message whenever it needs to receive another set of matching records based on the results of a previously sent query.</p>
+    <p>If the Supplier supports the Continuation Option, it shall respond to the continuation request by sending the Patient Registry Find Candidates Response message (PRPA_MT201310), which uses the Application Level Acknowledgement transmission wrapper. This satisfies the requirements of original mode acknowledgment; no intermediate Accept Acknowledgement is to be sent.</p>
+    <p>If a cancellation request is sent by the Patient Demographics Consumer, then the receiver shall respond by sending an Accept Acknowledgement (see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for the descriptions of the Accept Acknowledgement transmission wrapper).</p>
+    <h6 class="list-paragraph" id="3.47.4.3.2.1">3.47.4.3.2.1 Major Components of the Query Continuation Message</h6>
+    <p>This message contains no domain payload, it is built from a transmission and control act wrappers.</p>
+    <h6 class="list-paragraph" id="3.47.4.3.2.2">3.47.4.3.2.2 Message Information Model of the Query Continuation Message</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for the description of the transmission and control act wrappers used by this message. The next section discusses the wrappers, and the specific constraints relevant to this transaction.</p>
+    <h6 class="list-paragraph" id="3.47.4.3.2.3">3.47.4.3.2.3 Control Act and Transmission Wrappers</h6>
+    <p>Please see <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a> for details on the IHE guidelines for implementing the wrappers. Table 3.47.4.3.2.3-1 contains the Transmission and Control Act wrappers used for this interaction, and the associated constraints.</p>
+    <p>Table 3.47.4.3.2.3-1: Wrappers and Constraints</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Transmission Wrapper</th>
+          <th>Trigger Event Control Act Wrapper</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>MCCI_MT000300UV01 – Send Application Acknowledgement</td>
+          <td>QUQI_MT000001UV01 – Query Control Act Request Continue / Cancel</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>The value of interactionId SHALL be set to QUQI_IN000003UV01</p>
+            <p>The value of processingModeCode SHALL be set to T</p>
+            <p>The acceptAckCode SHALL be set to AL</p>
+            <p>There SHALL be only one receiver Device</p>
+            <p>The Acknowledgement.typeCode SHALL be set to AA</p>
+            <p>The TargetMessage.id SHALL be the message ID of the immediately preceding Query response message</p>
+          </td>
+          <td>
+            <p>The trigger event code in ControlActProcess.code SHALL be set to PRPA_TE000003UV01</p>
+            <p>QueryContinuation.queryId SHALL be set to the original query identifier</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The composite message schemas which describe the full payload of this interaction, including the wrappers, can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The schemas from the HL7 V3 2008 Normative Edition can be found at
+      <br />
+      Edition2008/processable/multicacheschemas/QUQI_IN000003UV01.xsd)
+    </p>
+    <h6 class="list-paragraph" id="3.47.4.3.2.4">3.47.4.3.2.4 Web Services Types and Messages</h6>
+    <p>The Query Continuation message will be transmitted using Web Services, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>.</p>
+    <p>The following WSDL naming conventions SHALL apply:</p>
+    <p>query continuation -&gt; "QUQI_IN000003UV01_Message"</p>
+    <p>The following WSDL snippet describes the type for this message:</p>
+    <p>…</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:hl7-org:v3"</p>
+    <p>xmlns:hl7="urn:hl7-org:v3"&gt;</p>
+    <p>&lt;!-- Include the message schema --&gt;</p>
+    <p>&lt;xsd:import namespace="urn:hl7-org:v3" schemaLocation="../schema/HL7V3/NE2008/multicacheschemas/QUQI_IN000003UV01.xsd"/&gt;</p>
+    <p>&lt;xsd:element name="QUQI_IN000003UV01"/&gt;</p>
+    <p>&lt;/xsd:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>…</p>
+    <p>The message is described by the following snippet:</p>
+    <p>…</p>
+    <p>&lt;message name="QUQI_IN000003UV01_Message"&gt;</p>
+    <p>&lt;part element="hl7:QUQI_IN000003UV01" name="Body"/&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>…</p>
+    <p>The port types for the WSDL describing the Patient Demographics Service are described together with the expected actions of the actors which receive these messages in Section 3.47.4.2.3.</p>
+    <h5 id="3.47.4.3.3">3.47.4.3.3 Expected Actions</h5>
+    <p>
+      If a number of records is specified in the
+      <em>initialQuantity</em>
+      of the original quantity, and the Patient Demographics Supplier supports the Continuation Option, the Patient Demographics Supplier shall return an incremental response of that number of records when the number of matching records it finds exceeds the number of records specified. In subsequent query continuation messages, the Patient Demographics Consumer may specify a different number of records to be returned from now on for this query session by populating the
+      <em>continuationQuantity</em>
+      attribute. In addition, the consumer may specify from which record the next set of matches should start by populating the
+      <em>startResultNumber</em>
+      attribute. If the Patient Demographics Supplier does not support the Continuation Option and the number of matching records to the original query exceeds the number specified, then, in addition to returning up to that number of records, the Supplier shall return AE (application error) in the Acknowledgement.typeCode (transmission wrapper) and AE (application error) in QueryAck.queryResponseCode (control act wrapper).
+    </p>
+    <p>
+      The Patient Demographics Supplier shall always populate the
+      <em>resultTotalQuantity</em>
+      ,
+      <em>resultCurrentQuantity</em>
+      , and
+      <em>resultRemainingQuantity</em>
+      in the
+      <em>QueryAck</em>
+      class. This information will indicate to the Patient Demographics Consumer whether there are any remaining records to be returned in subsequent continuations.
+    </p>
+    <p>The Patient Demographics Consumer shall indicate a query session cancellation by sending a continuation message, and setting the continuationQuantity attribute to 0, and setting the statusCode to "aborted". In such case, the Patient Demographics Supplier shall respond with an Accept Acknowledgement (as described in <a href="../Volume2x/ch-15.html#Appendix O">ITI TF-2x: Appendix O</a>).</p>
+    <p>Sending a query cancellation message is optional. The Patient Demographics Supplier may simply not send any continuation messages once a record has been selected. How long the Patient Demographic Supplier retains query results (for incremental response) is an implementation decision and therefore beyond the scope of IHE.</p>
+    <h6 class="list-paragraph" id="3.47.4.3.3.1">3.47.4.3.3.1 Web Services Port Type and Binding Definitions</h6>
+    <p>This information is part of the specification of the Patient Demographics Query response in Section 3.47.4.2.3.1.</p>
+    <p>An informative WSDL for the Patient Demographics Supplier implementing the PDQV3 Profile is available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h6 class="list-paragraph" id="3.47.4.3.3.2">3.47.4.2.3.2 Message Examples</h6>
+    <p>Message examples can be found online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
+    <h3 class="list-paragraph" id="3.47.5">3.47.5 Security Requirements</h3>
+    <p>No transaction specific security considerations.</p>
+    <h4 id="3.47.5.1">3.47.5.1 Audit Record Considerations</h4>
+    <p>When grouped with ATNA Secure Node or Secure Application Actors, this transaction is to be audited as “Query Information” event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The following tables show items that are required to be part of the audit record for this transaction.</p>
+    <h5 id="3.47.5.1.1">3.47.5.1.1 Patient Demographics Consumer audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-47”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Demographics Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Human Requestor (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Destination (Patient Demographics Supplier) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Audit Source (Patient Demographics Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>AlternativeUserID</td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Human Requestor (if known)</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>U</td>
+          <td>Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>“false”</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format</em>
+            (see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a>)
+            <em>.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-47”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the QueryByParameter segment of the query, base64 encoded</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.47.5.1.2">3.47.5.1.2 Patient Demographics Source audit message:</h5>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>Field Name</td>
+          <td>Opt</td>
+          <td>Value Constraints</td>
+        </tr>
+        <tr class="even">
+          <td>
+            <p>Event</p>
+            <p>
+              AuditMessage/
+              <br />
+              EventIdentification
+            </p>
+          </td>
+          <td>EventID</td>
+          <td>M</td>
+          <td>EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>EventActionCode</td>
+          <td>M</td>
+          <td>“E” (Execute)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>EventDateTime</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>EventOutcomeIndicator</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>EventTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-47”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td>Source (Patient Demographics Consumer) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Destination (Patient Demographics Supplier) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Audit Source (Patient Demographics Supplier) (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Patient (0..n)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Query Parameters (1)</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>Where:</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>
+            <em>UserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Destination</p>
+            <p>
+              AuditMessage/
+              <br />
+              ActiveParticipant
+            </p>
+          </td>
+          <td>UserID</td>
+          <td>M</td>
+          <td>SOAP endpoint URI</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AlternativeUserID</em>
+          </td>
+          <td>M</td>
+          <td>the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>UserName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>UserIsRequestor</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>“false”</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>RoleIDCode</td>
+          <td>M</td>
+          <td>EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>NetworkAccessPointTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>NetworkAccessPointID</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>the machine name or IP address.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Audit Source</p>
+            <p>
+              AuditMessage/
+              <br />
+              AuditSourceIdentification
+            </p>
+          </td>
+          <td>
+            <em>AuditSourceID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>AuditEnterpriseSiteID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>AuditSourceTypeCode</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Patient</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“1” (Person)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“1” (Patient)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectIDTypeCode</em>
+          </td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectID</td>
+          <td>
+            <em>M</em>
+          </td>
+          <td>
+            <em>The patient ID in HL7 CX format</em>
+            (see <a href="../Volume2x/ch-5.html#Appendix E">ITI TF-2x: Appendix E</a>)
+            <em>.</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectQuery</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <p>Query Parameters</p>
+            <p>
+              (AuditMessage/
+              <br />
+              ParticipantObjectIdentification)
+            </p>
+          </td>
+          <td>ParticipantObjectTypeCode</td>
+          <td>M</td>
+          <td>“2” (system object)</td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectTypeCodeRole</td>
+          <td>M</td>
+          <td>“24” (query)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDataLifeCycle</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectIDTypeCode</td>
+          <td>M</td>
+          <td>EV(“ITI-47”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectSensitivity</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>
+            <em>ParticipantObjectID</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectName</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+        <tr class="even">
+          <td />
+          <td>ParticipantObjectQuery</td>
+          <td>M</td>
+          <td>the QueryByParameter segment of the query, base64 encoded</td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>
+            <em>ParticipantObjectDetail</em>
+          </td>
+          <td>
+            <em>U</em>
+          </td>
+          <td>
+            <em>not specialized</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

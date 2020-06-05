@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol1_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume1</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="24">24 Patient Demographics Query HL7 V3 (PDQV3)</h1>
+    <p>
+      The
+      <em>Patient Demographics Query HL7 V3 Integration Profile (PDQV3)</em>
+      provides ways for multiple distributed applications to query a patient information server for a list of patients, based on user-defined search criteria, and retrieve a patient’s demographic information directly into the application. The discussion and use cases in Section 8 fully apply here, with the obvious adjustments to the referenced transactions.
+    </p>
+    <h2 class="list-paragraph" id="24.1">24.1 PDQV3 Actors/Transactions</h2>
+    <p>The actors in this profile are the same as the actors defined in the PDQ Profile (Section 8.1).</p>
+    <p>Table 24.1-1: Patient Demographics Query HL7 V3 Integration Profile - Actors and Transactions</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actors</td>
+          <td>Transactions</td>
+          <td>Optionality</td>
+          <td>Section</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Consumer</td>
+          <td>Patient Demographics Query HL7 V3 [ITI-47]</td>
+          <td>R</td>
+          <td><a href="../Volume2b/ITI-47.html#3.47">ITI TF-2b: 3.47</a></td>
+        </tr>
+        <tr class="odd">
+          <td>Patient Demographics Supplier</td>
+          <td>Patient Demographics Query HL7 V3 [ITI-47]</td>
+          <td>R</td>
+          <td><a href="../Volume2b/ITI-47.html#3.47">ITI TF-2b: 3.47</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The transaction in this profile directly corresponds to one of the transactions used in the PDQ Profile (Section 8) and provides the identical functionality. Table 24.1-2 describes this correspondence. Note that there is no transaction in PDQV3 that corresponds to the Patient Demographics and Visit Query [ITI-22] in the PDQ Profile.</p>
+    <p>Table 24.1-2: Transactions Correspondence between the PDQ and PDQV3 Profiles</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Transactions in PDQ</td>
+          <td>Section in Volume</td>
+          <td>Transactions in PDQV3</td>
+          <td>Section in Volume</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Query [ITI-21]</td>
+          <td>ITI TF-2: 3.21</td>
+          <td>Patient Demographics Query HL7 V3 [ITI-47]</td>
+          <td><a href="../Volume2b/ITI-47.html#3.47">ITI TF-2b: 3.47</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class="list-paragraph" id="24.2">24.2 PDQV3 Actor Options</h2>
+    <p>Options that may be selected for this Integration Profile are listed in the Table 24.2-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
+    <p>Table 24.2-1: Patient Demographics Query HL7 V3 - Actors and Options</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Actor</td>
+          <td>Options</td>
+          <td>Vol. &amp; Section</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Consumer</td>
+          <td>Continuation</td>
+          <td><a href="../Volume1/ch-24.html#24.2.1">ITI TF-1: 24.2.1</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Pediatric Demographics</td>
+          <td><a href="../Volume1/ch-24.html#24.2.2">ITI TF-1: 24.2.2</a></td>
+        </tr>
+        <tr class="even">
+          <td>Patient Demographics Supplier</td>
+          <td>Continuation</td>
+          <td><a href="../Volume1/ch-24.html#24.2.1">ITI TF-1: 24.2.1</a></td>
+        </tr>
+        <tr class="odd">
+          <td />
+          <td>Pediatric Demographics</td>
+          <td><a href="../Volume1/ch-24.html#24.2.2">ITI TF-1: 24.2.2</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Support of continuations is described in transaction [ITI-47]. This option allows the Patient Demographics Consumer to get the full set of responses in several increments, as opposed to in one single response.</p>
+    <h3 class="list-paragraph" id="24.2.1">24.2.1 Continuation Option</h3>
+    <p>Support of continuations is described in transaction [ITI-47]. This option allows the Patient Demographics Consumer to get the full set of responses in several increments, as opposed to in one single response.</p>
+    <h3 class="list-paragraph" id="24.2.2">24.2.2 Pediatric Demographics Option</h3>
+    <p>The experience of immunization registries and other public health population databases has shown that matching and linking patient records from different sources for the same individual person in environments with large proportions of pediatric records requires additional demographic data.</p>
+    <p>In particular, distinguishing records for children who are twins, triplets, etc. – that is, avoiding false positive matches - may be difficult because much of the demographic data for the two individuals matches. For instance, twin children may have identical last names, parents, addresses, and dates of birth; their first names may be very similar, possibly differing by only one letter. It can be very difficult for a computer or even a human being to determine in this situation whether the slight first name difference points to two distinct individuals or just a typographical error in one of the records. Additional information is extremely helpful in making this determination.</p>
+    <p>Pediatric Demographics makes use of the following six additional demographic fields to aid record matching in databases with many pediatric records.</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Field</th>
+          <th>Reason for inclusion</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>Mother’s Maiden Name</td>
+          <td>Any information about the mother is helpful in making a match</td>
+          <td>Helps create true positive matches</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Home Telephone</td>
+          <td>A telecom helps match into the right household</td>
+          <td>Helps create true positive matches</td>
+        </tr>
+        <tr class="odd">
+          <td>Patient Multiple Birth Indicator</td>
+          <td>Indicates this person is a multiple – twin, triplet, etc.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+        <tr class="even">
+          <td>Patient Birth Order</td>
+          <td>Distinguishes among those multiples.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+        <tr class="odd">
+          <td>Last Update Date/Time, Last Update Facility</td>
+          <td>These fields, although not strictly demographic, can effectively substitute when multiple birth indicator and birth order are not collected. They indirectly provide visit information. Provider visits on the same day may likely indicate two children brought to a doctor together.</td>
+          <td>Helps avoid false positive matches of multiples</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Patient Identity Source Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction and shall provide values, when available, for the fields identified as Pediatric Demographics fields.</p>
+    <p>Patient Identifier Cross-reference Manager Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction, and if values for one or more of the Pediatric Demographics fields are specified in the Patient Identity Management [ITI-30], they shall be considered as part of the matching algorithm of the PIX Manager.</p>
+    <p>Pediatric Demographics are defined as all of the following:</p>
+    <ul>
+      <li>
+        <p>Mother’s Maiden Name</p>
+      </li>
+      <li>
+        <p>Patient Home Telephone</p>
+      </li>
+      <li>
+        <p>Patient Multiple Birth Indicator</p>
+      </li>
+      <li>
+        <p>Patient Birth Order</p>
+      </li>
+      <li>
+        <p>Last Update Date/Time</p>
+      </li>
+      <li>
+        <p>Last Update Facility</p>
+      </li>
+    </ul>
+    <h2 class="list-paragraph" id="24.3">24.3 Patient Demographics Query HL7 V3 Process Flow</h2>
+    <p>Section 8.3 describes use cases that this profile addresses. Figure 8.3-1 also applies to this profile with the changes to the corresponding PDQV3 transactions as specified in Table 24.1-2, and omitting transaction [ITI-22], which has no correspondence in this profile.</p>
+    <h3 class="list-paragraph" id="24.3.1">24.3.1 Combined Use of PDQV3 with other IHE Workflow Profiles</h3>
+    <p>In addition to the discussion in Section 8.3.1, the use of web services as the transport in the transactions in this profile makes it well suited in cases where other web services-based profiles are used, like XDS.b and PIXV3.</p>
+    <h3 class="list-paragraph" id="24.3.2">24.3.2 Supplier Data Configuration</h3>
+    <p>The Patient Demographics Supplier provides demographics information about possible matches to the parameters of the query. As described in <a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a>, while it is possible for the supplier to have demographics information from multiple domains, only a single set of demographics shall be returned by the supplier.</p>
+    <p>If the supplier holds information for a single Patient ID domain, it shall provide the demographics information from that domain. In the case where the supplier holds demographics information from multiple Patient ID domains, the determination of which set of information to return must be based on the ID values for the Receiver’s Device and Organization classes of the query transmission wrapper (the equivalent of MSH-5 and MSH-6 in the HL7 Version 2.5 corresponding message).</p>
+    <h2 class="list-paragraph" id="24.4">24.4 Intentionally Left Blank</h2>
+    <h2 class="list-paragraph" id="24.5">24.5 Security Considerations</h2>
+    <p>
+      <em>The implementer of this profile is advised that many risks cannot be mitigated by the IHE profile and instead the responsibility for mitigation is transferred to the vendor, and occasionally to the operational environment.</em>
+    </p>
+    <p>
+      <em>In order to address identified security risks:</em>
+    </p>
+    <ul>
+      <li>
+        <p>All actors in PDQV3 should be grouped with a Consistent Time (CT) Profile - Time Client Actor. This grouping will assure that all systems have a consistent time clock to assure a consistent timestamp for audit logging.</p>
+      </li>
+      <li>
+        <p>All actors in PDQV3 should be grouped with an Audit Trail and Node Authentication (ATNA) Profile - Secure Node or ATNA Secure Application Actor. This grouping will assure that only highly trusted systems can communicate and that all changes are recorded in the audit log.</p>
+      </li>
+      <li>
+        <p>All actors in PDQV3 should be grouped with a Cross-Enterprise User Assertion (XUA) X-Service User or X-Service Provider as appropriate. This grouping will enable service side access control and more detailed audit logging.</p>
+      </li>
+      <li>
+        <p>All actors in PDQV3 should be grouped with the appropriate actor from the Enterprise User Authentication (EUA) Profile to enable single sign-on inside an enterprise by facilitating one name per user for participating devices and software.</p>
+      </li>
+    </ul>
+  </body>
+</html>

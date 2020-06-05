@@ -1,0 +1,582 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 class="list-paragraph" id="3.60">3.60 Retrieve Multiple Value Sets [ITI-60]</h2>
+    <p>This section corresponds to transaction [ITI-60] of the IHE IT Infrastructure Technical Framework. The Value Set Consumer and Value Set Repository Actors use transaction [ITI-60].</p>
+    <h3 class="list-paragraph" id="3.60.1">3.60.1 Scope</h3>
+    <p>This transaction is used by the Value Set Consumer to retrieve Value Sets from the Value Set Repository.</p>
+    <h3 class="list-paragraph" id="3.60.2">3.60.2 Use case roles</h3>
+    <p>Figure 3.60.2-1: Use Case Roles</p>
+    <p>Actors:</p>
+    <blockquote>
+      <p>Actor: Value Set Consumer</p>
+      <p>Role: Requests all Value Sets that match request parameters</p>
+      <p>Actor: Value Set Repository</p>
+      <p>Role: Provides matching Value Sets and associated metadata</p>
+    </blockquote>
+    <h3 class="list-paragraph" id="3.60.3">3.60.3 Referenced Standards</h3>
+    <p>The referenced standards are:</p>
+    <p>Table 3.60.3-1: Referenced Standards</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Appendix V</td>
+          <td>
+            <p><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a> Web Services for IHE Transactions</p>
+            <p>Contains references to all Web Services standards and requirements of use</p>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>HL7 v3 Data Type XML ITS</td>
+          <td>HL7 Version 3 Standard: XML Implementation Technology Specifications – Data Types, R1</td>
+        </tr>
+        <tr class="odd">
+          <td>HTTP 1.1</td>
+          <td>IETF RFC2616: Hypertext Transfer Protocol – HTTP 1.1</td>
+        </tr>
+        <tr class="even">
+          <td>POSIX 1003.2</td>
+          <td>IEEE Std 1003.2 IEEE Standard for Information Technology — Portable Operating System Interface (POSIX®) — Part 2: Shell and Utilities — Amendment 1: Batch Environment -Description</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="list-paragraph" id="3.60.4">3.60.4 Messages</h3>
+    <p>Figure 3.60.4-1: Interaction Diagram</p>
+    <h4 class="list-paragraph" id="3.60.4.1">3.60.4.1 Retrieve Multiple Value Sets Request</h4>
+    <h5 class="list-paragraph" id="3.60.4.1.1">3.60.4.1.1 Trigger Events</h5>
+    <p>The Value Set Consumer wants to retrieve value sets and has one or more element values to be matched in the metadata that describes value sets. This could be from pre-configuration or user input. The value sets that match these element values are needed for processing by the Value Set Consumer. The Value Set Consumer sends a Retrieve Multiple Value Sets Request to the Value Set Repository. Table 3.60.4.1.1-1 summarizes the metadata elements. See the schema for precise encoding details.</p>
+    <p>Table 3.60.4.1.1-1: Metadata Summary</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Metadata Element</td>
+          <td>Description</td>
+          <td>Mandatory within Metadata returned</td>
+          <td>Usable as Selection Criterion</td>
+        </tr>
+        <tr class="even">
+          <td>id</td>
+          <td>This is the unique identifier of the value set</td>
+          <td>Mandatory</td>
+          <td>Y</td>
+        </tr>
+        <tr class="odd">
+          <td>displayName</td>
+          <td>This is the name of the value set</td>
+          <td>Mandatory</td>
+          <td>Y</td>
+        </tr>
+        <tr class="even">
+          <td>Source</td>
+          <td>This is the source of the value set, identifying the originator or publisher of the information</td>
+          <td>Mandatory</td>
+          <td>Y</td>
+        </tr>
+        <tr class="odd">
+          <td>Purpose</td>
+          <td>Brief description about the general purpose of the value set</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="even">
+          <td>Definition</td>
+          <td>A text definition describing how concepts in the value set were selected</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="odd">
+          <td>Source URI</td>
+          <td>Most sources also have a URL or document URI that provides further details regarding the value set.</td>
+          <td>Optional</td>
+          <td>N</td>
+        </tr>
+        <tr class="even">
+          <td>Version</td>
+          <td>A string identifying the specific version of the value set.</td>
+          <td>Mandatory</td>
+          <td>N</td>
+        </tr>
+        <tr class="odd">
+          <td>Status</td>
+          <td>Active, Inactive, local extensions</td>
+          <td>Mandatory</td>
+          <td>N</td>
+        </tr>
+        <tr class="even">
+          <td>Type</td>
+          <td>
+            <p>This describes the type of the value set. It shall be:</p>
+            <ul>
+              <li>
+                <p>Intensional,</p>
+              </li>
+              <li>
+                <p>Extensional, or</p>
+              </li>
+              <li>
+                <p>Expanded</p>
+              </li>
+            </ul>
+            <p>Note: This is the type of the value set in the repository. The ConceptList that will also be returned is the current expansion of the value set.</p>
+          </td>
+          <td>Mandatory</td>
+          <td>N</td>
+        </tr>
+        <tr class="odd">
+          <td>Binding</td>
+          <td>Shall be “Static” or “Dynamic”</td>
+          <td>Optional</td>
+          <td>N</td>
+        </tr>
+        <tr class="even">
+          <td>Effective Date</td>
+          <td>The date when the value set is expected to be effective</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="odd">
+          <td>Expiration Date</td>
+          <td>The date when the value set is no longer expected to be used</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="even">
+          <td>Creation Date</td>
+          <td>The date of creation of the value set</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="odd">
+          <td>Revision Date</td>
+          <td>The date of revision of the value set</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+        <tr class="even">
+          <td>Group</td>
+          <td>The identifiers and keywords of the groups that include this value set. A group may also have an OID assigned.</td>
+          <td>Optional</td>
+          <td>Y</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.60.4.1.2">3.60.4.1.2 Message Semantics</h5>
+    <p>The Retrieve Multiple Value Sets Request shall specify retrieval selection parameters as shown in the Table 3.60.4.1.2-1. It requests retrieval of all concept lists that have metadata matching the parameters used. At least one request parameter shall be provided.</p>
+    <p>Table 3.60.4.1.2-1: The Request Parameters in the RetrieveMultipleValueSets Request</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Parameter</td>
+          <td>Parameter Format</td>
+          <td>Metadata Element</td>
+          <td>Match Type</td>
+          <td>Match Rules</td>
+          <td>Note</td>
+        </tr>
+        <tr class="even">
+          <td>id</td>
+          <td>OID</td>
+          <td>id</td>
+          <td>OID</td>
+          <td>equals</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>DisplayNameContains</td>
+          <td>string</td>
+          <td>Name</td>
+          <td>Regex</td>
+          <td>regex</td>
+          <td>POSIX rules</td>
+        </tr>
+        <tr class="even">
+          <td>SourceContains</td>
+          <td>string</td>
+          <td>Source</td>
+          <td>Regex</td>
+          <td>regex</td>
+          <td>POSIX rules</td>
+        </tr>
+        <tr class="odd">
+          <td>PurposeContains</td>
+          <td>string</td>
+          <td>Purpose</td>
+          <td>Regex</td>
+          <td>regex</td>
+          <td>POSIX rules</td>
+        </tr>
+        <tr class="even">
+          <td>DefinitionContains</td>
+          <td>string</td>
+          <td>Definition</td>
+          <td>Regex</td>
+          <td>regex</td>
+          <td>POSIX rules</td>
+        </tr>
+        <tr class="odd">
+          <td>GroupContains</td>
+          <td>string</td>
+          <td>Group</td>
+          <td>Regex</td>
+          <td>regex</td>
+          <td>POSIX rules</td>
+        </tr>
+        <tr class="even">
+          <td>GroupOID</td>
+          <td>OID</td>
+          <td>Group</td>
+          <td>OID</td>
+          <td>equals</td>
+          <td>Equality match for OID attribute of a Group element</td>
+        </tr>
+        <tr class="odd">
+          <td>EffectiveDateBefore</td>
+          <td>http-date</td>
+          <td>EffectiveDate</td>
+          <td>date</td>
+          <td>Before or equal</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="even">
+          <td>EffectiveDateAfter</td>
+          <td>http-date</td>
+          <td>EffectiveDate</td>
+          <td>date</td>
+          <td>Equal or after</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="odd">
+          <td>ExpirationDateBefore</td>
+          <td>http-date</td>
+          <td>ExpirationDate</td>
+          <td>date</td>
+          <td>Before or equal</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="even">
+          <td>ExpirationDateAfter</td>
+          <td>http-date</td>
+          <td>ExpirationDate</td>
+          <td>date</td>
+          <td>Equal or after</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="odd">
+          <td>CreationDateBefore</td>
+          <td>http-date</td>
+          <td>CreationDate</td>
+          <td>date</td>
+          <td>Before or equal</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="even">
+          <td>CreationDateAfter</td>
+          <td>http-date</td>
+          <td>CreationDate</td>
+          <td>date</td>
+          <td>Equal or after</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="odd">
+          <td>RevisionDateBefore</td>
+          <td>http-date</td>
+          <td>RevisionDate</td>
+          <td>date</td>
+          <td>Before or equal</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="even">
+          <td>RevisionDateAfter</td>
+          <td>http-date</td>
+          <td>RevisionDate</td>
+          <td>date</td>
+          <td>Equal or after</td>
+          <td>Date comparison to the day</td>
+        </tr>
+        <tr class="odd">
+          <td>Format</td>
+          <td>String</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>This specifies the format for the returned information. Shall be “CE-List” if present.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="list-paragraph" id="3.60.4.1.3">3.60.4.1.3 Expected Actions</h5>
+    <p>The Value Set Repository shall perform matching in accordance with the rules in Table 3.60.4.1.2-1.</p>
+    <ul>
+      <li>
+        <blockquote>
+          <p>Regex matches shall compare the contents of the referenced metadata field with the regex using the POSIX matching rules. If the regex matches the field, the value set matches.</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>OID matching compares only for equal OIDs, ignoring leading zeroes.</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>Date comparisons convert the argument into a date, and compare it with the dates in the metadata using a date comparison. Equality means the same day.</p>
+        </blockquote>
+      </li>
+    </ul>
+    <p>Any value set that matches all of the request parameters shall be included in the response.</p>
+    <p>Note: Multiple queries will sometimes be needed. Rather than specify a complex query mechanism, the Retrieve Multiple Value Sets request expects the client or user to locally eliminate any extra value sets and make additional queries. Value sets are relatively small and compress very well, so these extras are not a significant communications burden. Performing the final steps of selecting the value sets based on having the full metadata present locally allows a much richer and potentially interactive selection process. It also allows a simpler and more robust server.</p>
+    <h4 class="list-paragraph" id="3.60.4.2">3.60.4.2 Retrieve Multiple Value Sets Response</h4>
+    <h5 class="list-paragraph" id="3.60.4.2.1">3.60.4.2.1 Trigger Events</h5>
+    <p>This message will be triggered by completion of matching for a Retrieve Multiple Value Sets Request Message.</p>
+    <h5 class="list-paragraph" id="3.60.4.2.2">3.60.4.2.2 Message Semantics</h5>
+    <p>The response shall be a Retrieve Multiple Value Sets Response as specified in the XML schema defining RetrieveMultipleValueSetsResponse which can be accessed on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>. The RetrieveMultipleValueSetsResponse element shall have one DescribedValueSet element for each matching value set found. If no matching elements are found, it shall be empty.</p>
+    <p>Each DescribedValueSet element contains:</p>
+    <ul>
+      <li>
+        <p>An id attribute, a mandatory OID, the OID for this value set</p>
+      </li>
+      <li>
+        <p>A displayName attribute, a mandatory string, the name of this value set</p>
+      </li>
+      <li>
+        <p>Source, an optional string, the source organization for this value set</p>
+      </li>
+      <li>
+        <p>SourceURI, an optional URI, a URI providing more description of this value set,</p>
+      </li>
+      <li>
+        <p>Purpose, an optional string, a description of the intended use of this value set</p>
+      </li>
+      <li>
+        <p>Definition, an optional string, a definition of the value set provided by the source</p>
+      </li>
+      <li>
+        <p>A version attribute, a mandatory string, a version in the format used by the source,</p>
+      </li>
+      <li>
+        <p>Status, an optional string, the status at time of retrieval (e.g., Active or Inactive)</p>
+      </li>
+      <li>
+        <p>Type, a mandatory string that indicates whether this is an intensional, extensional, or expanded value set.</p>
+      </li>
+      <li>
+        <p>Binding, an optional string, either static or dynamic.</p>
+      </li>
+      <li>
+        <p>EffectiveDate, an optional XML-date, the initial effective date for this value set</p>
+      </li>
+      <li>
+        <p>ExpirationDate, an optional XML-date, the intended expiration date for this value set</p>
+      </li>
+      <li>
+        <p>CreationDate, an optional XML-date, the creation date of this value set,</p>
+      </li>
+      <li>
+        <p>RevisionDate, an optional XML-date, the revision date of this value set,</p>
+      </li>
+      <li>
+        <p>Zero or more Group elements, where each Group element has</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>an optional id attribute containing the OID for the group.</p>
+      </li>
+      <li>
+        <p>An optional displayName attribute, containing the name for the group,</p>
+      </li>
+      <li>
+        <p>An optional sourceOrganization attribute, containing the name of the organization that defined the group.</p>
+      </li>
+      <li>
+        <p>Zero or more Keyword elements that contain keywords associated with the group.</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>One ConceptList, that contains</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>One or more Concept, encoded using the HL7 CE datatype. These are the codes that are members of the expanded form of the value set.</p>
+      </li>
+      <li>
+        <p>With an optional attribute xml:lang to indicate the language for the displayname for these concepts.</p>
+      </li>
+    </ul>
+    <p>The ConceptList element and structure is the same in both the [ITI-48] and [ITI-60] transactions. The Identifier OID in the [ITI-60] response is the OID used in the [ITI-48] transaction when the value set is an expanded value set. It will not match in other cases.</p>
+    <p>A sample RetrieveMultipleValueSetsResponse is shown below:</p>
+    <p>
+      &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+      <br />
+      &lt;RetrieveMultipleValueSetsResponse xmlns="urn:ihe:iti:svs:2008" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ihe:iti:svs:2008:SVS.xsd"&gt;
+      <br />
+      &lt;DescribedValueSet id="1.2.3" displayName="placeholder" version="version1"&gt;
+      <br />
+      &lt;ConceptList xml:lang="en-US"&gt;
+      <br />
+      &lt;Concept code="code1" codeSystem="2.3.4" codeSystemName="codeSystemName1" codeSystemVersion="codeSystemVersion1" displayName="displayName1"&gt;
+      <br />
+      &lt;/Concept&gt;
+      <br />
+      &lt;Concept code="code7" codeSystem="2.3.4" codeSystemName="codeSystemName1" codeSystemVersion="codeSystemVersion1" displayName="displayName7"&gt;
+      <br />
+      &lt;/Concept&gt;
+      <br />
+      &lt;/ConceptList&gt;
+      <br />
+      &lt;Source&gt;Codingsource&lt;/Source&gt;
+    </p>
+    <p>
+      &lt;SourceURI&gt;http://www.codingsource.com/placeholder&lt;/SourceURI&gt;
+      <br />
+      &lt;Purpose&gt;Purpose0&lt;/Purpose&gt;
+      <br />
+      &lt;Definition&gt;Definition0&lt;/Definition&gt;
+      <br />
+      &lt;Type&gt;Expanded&lt;/Type&gt;
+      <br />
+      &lt;Binding&gt;Static&lt;/Binding&gt;
+      <br />
+      &lt;Status&gt;Status0&lt;/Status&gt;
+      <br />
+      &lt;EffectiveDate&gt;2006-05-04&lt;/EffectiveDate&gt;
+      <br />
+      &lt;ExpirationDate&gt;2011-09-04&lt;/ExpirationDate&gt;
+      <br />
+      &lt;CreationDate&gt;2006-05-04&lt;/CreationDate&gt;
+      <br />
+      &lt;RevisionDate&gt;2006-05-04&lt;/RevisionDate&gt;
+      <br />
+      &lt;Group id="2.4.5" sourceOrganization="sourceOrganization1" displayName="displayName15"&gt;
+      <br />
+      &lt;Keyword&gt;Keyword0&lt;/Keyword&gt;
+      <br />
+      &lt;Keyword&gt;Keyword1&lt;/Keyword&gt;
+      <br />
+      &lt;/Group&gt;
+      <br />
+      &lt;Group id="2.4.54" sourceOrganization="sourceOrganization3" displayName="displayName17"&gt;
+      <br />
+      &lt;Keyword&gt;Keyword2&lt;/Keyword&gt;
+      <br />
+      &lt;Keyword&gt;Keyword3&lt;/Keyword&gt;
+      <br />
+      &lt;/Group&gt;
+      <br />
+      &lt;/DescribedValueSet&gt;
+      <br />
+      &lt;/RetrieveMultipleValueSetsResponse&gt;
+    </p>
+    <h3 class="list-paragraph" id="3.60.5">3.60.5 Protocol Requirements</h3>
+    <p>The protocol for the Retrieve Value Set transaction describes two bindings. The first is based on SOAP 1.2, and the second is an HTTP binding. The relevant XML namespace definitions can be seen in Table 3.48.5-1 WSDL Namespace Definitions.</p>
+    <p>Table 3.60.5-1: WSDL Namespace Definitions</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>soap12</td>
+          <td>http://schemas.xmlsoap.org/wsdl/soap12/</td>
+        </tr>
+        <tr class="even">
+          <td>wsaw</td>
+          <td>http://www.w3.org/2006/05/addressing/wsdl/</td>
+        </tr>
+        <tr class="odd">
+          <td>xsd</td>
+          <td>
+            <a href="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</a>
+          </td>
+        </tr>
+        <tr class="even">
+          <td>ihe</td>
+          <td>urn:ihe:iti:svs:2008</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4 class="list-paragraph" id="3.60.5.1">3.60.5.1 SOAP Binding</h4>
+    <p>Value Set Consumers which support the SOAP Binding Option shall follow the rules for Web Services transactions outlined in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>. These are the requirements for the RetrieveMultipleValueSets transaction presented in the order in which they would appear in the WSDL definition:</p>
+    <p>The following types shall be imported (xsd:import) in the /definitions/types section:</p>
+    <p>namespace="urn:ihe:iti:svs:2008", schema="SVS.xsd"</p>
+    <p>The /definitions/message/part/@element attribute of the Retrieve Value Set Request message shall be defined as “ihe:RetrieveMultipleValueSetsRequest”</p>
+    <p>The /definitions/message/part/@element attribute of the Retrieve Value Set Response message shall be defined as “ihe:RetrieveMultipleValueSetsResponse”</p>
+    <p>The /definitions/portType/operation/input/@wsaw:Action attribute for the Retrieve Multiple Value Sets Request message shall be defined as “urn:ihe:iti:2010:RetrieveMultipleValueSets”</p>
+    <p>The /definitions/portType/operation/output/@wsaw:Action attribute for the Retrieve Value Set Response message shall be defined as “urn:ihe:iti:2010:RetrieveMultipleValueSetsResponse”</p>
+    <p>The /definitions/binding/operation/soap12:operation/@soapActionRequired attribute shall be defined as “false”</p>
+    <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability.</p>
+    <p>Within the request message payload the &lt;ihe:RetrieveMultipleValueSetsRequest/&gt; element is defined as:</p>
+    <ul>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@id element that contains the ID of the requested Value Set within the Value Set Repository. The Value Set ID shall be formatted as an ISO OID.</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@DisplayNameContains element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@SourceContains element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@PurposeContains element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@DefinitionContains element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@GroupContains element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@GroupOID element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@EffectiveDateBefore element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@EffectiveDateAfter element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@ExpirationDateBefore element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@ExpirationDateAfter element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@CreationDateBefore element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@CreationDateAfter element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@RevisionDateBefore element</p>
+      </li>
+      <li>
+        <p>An optional /ihe:RetrieveMultipleValueSetsRequest@RevisionDateAfter element</p>
+      </li>
+    </ul>
+    <p>Value Set Repositories shall include within the response message payload for the SOAP Binding Option the &lt;ihe:RetrieveMultipleValueSetsResponse/&gt; element which is described above in Section 3.60.4.2.2.</p>
+    <h4 class="list-paragraph" id="3.60.5.2">3.60.5.2 HTTP Binding</h4>
+    <p>Value Set Consumers which support the HTTP Binding Option shall use the GET method as defined in IETF RFC2616 for the Retrieve Value Set Request. Each parameter to be used for selection shall be encoded as an HTTP Get parameter.</p>
+    <p>A sample URL for the HTTP binding for a query to retrieve all value sets for a reporting purpose, with either “stroke” or “JCAHO” in the value set name looks as follows:</p>
+    <p>https://example.com/RetrieveMultipleValueSets?DisplayNameContains=”stroke|JCAHO”&amp;PurposeContains=”report”</p>
+    <p>Value Set Repositories shall format the response to the HTTP GET operation as an HTTP response message as defined in RFC2616.</p>
+    <p>The Content-Type field of the HTTP header shall be “text/xml” (see Section 14.4 of IETF RFC2616).</p>
+    <p>The content of the HTTP response message shall be an XML encoded RetrieveMultipleValueSetsResponse, as described in Section 3.60.4.2.2.</p>
+    <p>The Value Set Repository shall return an error code in case there are invalid request parameters. It shall return an HTTP status code of 404, with an HTTP Warning header containing warn-code of 111, and warn-text of “INV: Invalid search parameters”. See Sections 10.4.5 and 14.46 of IETF RFC2616 for more information. A search with valid request parameters that finds no matching value sets is not an error. It will return an empty QueryRetrievedValueSets</p>
+    <h3 class="list-paragraph" id="3.60.6">3.60.6 Security Requirements</h3>
+    <p>The value sets do not contain personal information. In some cases, the value sets are created by standards organizations with the intention that they be or publicly shared. In other cases, there may be licensing or other proprietary restrictions on their disclosure. These licenses or restrictions are at the organizational level, not at the level of individual users. This greatly reduces the security needs and eliminates privacy concerns.</p>
+    <p>For further security considerations please consult <a href="../Volume1/ch-44.html#Appendix G">ITI TF-1: Appendix G</a>.</p>
+    <p>Audit trails shall be configurable to record access to a selected list of Value Sets. In most cases, there is no need to audit the value set request activity, but there may be some exceptional cases where auditing will be needed. See Section 3.48.6.1 for audit record recommendations in those cases.</p>
+    <p>This profile does not attempt to establish rules for managing security on proprietary value sets with licensing or access restrictions.</p>
+  </body>
+</html>

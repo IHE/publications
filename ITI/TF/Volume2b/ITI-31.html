@@ -1,0 +1,5245 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2b</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h2 id="3.31">3.31 Patient Encounter Management [ITI-31]</h2>
+    <p>This section corresponds to transaction “Patient Encounter Management” [ITI-31] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-31] is used by the actors Patient Encounter Supplier and Patient Encounter Consumer.</p>
+    <h3 id="3.31.1">3.31.1 Scope</h3>
+    <p>This transaction enables systems to share encounter information within acute care settings for both inpatients (i.e., those who are assigned an inpatient bed at the facility) and outpatients (i.e., those who are not assigned an inpatient bed at the facility).</p>
+    <p>The transaction carries events for creating, updating, and canceling patient encounters as well as the movements that take place within these encounters.</p>
+    <p>The capabilities of this transaction are organized into several optional subsets to address a wide range of needs from the simplest one that only shares the basic encounter information to the most sophisticated one that tracks all patient temporary moves in the healthcare facility.</p>
+    <h3 id="3.31.2">3.31.2 Use Case Roles</h3>
+    <p>Actor: Patient Encounter Supplier</p>
+    <p>Role: Sends inserts, cancels and updates of patient encounters and movements.</p>
+    <p>Actor: Patient Encounter Consumer</p>
+    <p>Role: Receives patient encounters and movement messages, and takes the appropriate actions.</p>
+    <h3 id="3.31.3">3.31.3 Referenced Standards</h3>
+    <p>HL7 2.5 Chapters 2, 3, 6, 15</p>
+    <h3 id="3.31.4">3.31.4 Definition of the concept “Movement”</h3>
+    <p>As stated in Volume 1, a “Movement” is any change of the situation of the patient (location, patient class, attending doctor, etc.) in the context of the encounter.</p>
+    <p>The concept of “Movement” is a superset of the concept of “Transfer”. Like a transfer, a movement is an event that can be planned (pending) and executed (effective). Errors detected in the recording of these pending and effective events can later be corrected through cancellations or updates, which are distinct events. Three actions are associated with Movements:</p>
+    <ul>
+      <li>
+        <p>Insert: This action is the first recording of the Movement.</p>
+      </li>
+      <li>
+        <p>Update: This action corrects some attributes of a Movement formerly inserted. This action is possible only with the option “Historic Movement Management” of transaction [ITI-30].</p>
+      </li>
+      <li>
+        <p>Cancel: This action cancels a Movement that was erroneously recorded, and requests the receiver to delete this Movement from its database. Only the current Movement can be cancelled.</p>
+      </li>
+    </ul>
+    <p>In some acute care settings, both the billing process and care provision process require precise knowledge of the movements of the inpatient during his or her stay in the hospital. Applications acting as Patient Encounter Supplier or Patient Encounter Consumer, divide the period of the encounter into “sub-encounters” delimited by the Movements. Each of these “sub-encounters” provides a specific context to record and invoice the acts produced within this period. However, if applications on both ends manage sub-encounters, which are periods of time, the messages of transaction [ITI-31] communicate Movements as events. Hence, applications manage periods of time, but the messages carry the discrete events that delimit these periods of time.</p>
+    <p>Illustration:</p>
+    <ol type="1">
+      <li>
+        <p>Patient received at Emergency room by attending doctor U. (A04 / patient class E).</p>
+      </li>
+      <li>
+        <p>Doctor U admits the patient (A06 / patient class = I), into location BB, referring him to attending Doctor X.</p>
+      </li>
+      <li>
+        <p>The patient is moved to location GG (A02Transfer), keeping X for attending doctor.</p>
+      </li>
+      <li>
+        <p>The patient is healed and leaves the hospital (A03: Discharge).</p>
+      </li>
+    </ol>
+    <p>These 4 real world events are expressed with 5 trigger events / messages, two of which occur at the same time (step 2). Here the encounter will be divided into 3 sub-encounters:</p>
+    <p>
+      <img src=".//media/image7.wmf" style="width:5.20764in;height:1.46181in" />
+    </p>
+    <h3 id="3.31.5">3.31.5 Message sets and options</h3>
+    <p>All messages of this transaction shall be acknowledged by the ACK message as described in <a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a>. For better readability, the acknowledgement messages are not shown on the interaction diagrams of this transaction.</p>
+    <h4 id="3.31.5.1">3.31.5.1 Basic Subset</h4>
+    <p>Table 3.31-1: Message Basic Subset for Transaction [ITI-31]</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The Basic Subset of transaction [ITI-31] is composed of the above events and related messages. A system implementing either Patient Encounter Supplier or Patient Encounter Consumer, shall support these 5 trigger events and messages.</p>
+    <p>Figure 3.31-1: Interaction Diagram for the Basic Subset</p>
+    <h4 id="3.31.5.2">3.31.5.2 Inpatient/Outpatient Encounter Management Option</h4>
+    <p>This option adds support for management of patient class (Outpatient, Emergency, Inpatient, Pre-admitted, etc.) and of patient location (point of care, room, bed, etc.).</p>
+    <p>The following is the required message set to support the “Inpatient/Outpatient Encounter Management” Option:</p>
+    <p>Table 3.31-2: Message Subset for Inpatient/outpatient Encounter Management Option</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+        <tr class="odd">
+          <td>Pre-admit patient</td>
+          <td>A05</td>
+          <td>ADT^A05^ADT_A05</td>
+          <td>A38</td>
+          <td>ADT^A38^ADT_A38</td>
+        </tr>
+        <tr class="even">
+          <td>Change patient class to inpatient</td>
+          <td>A06</td>
+          <td>ADT^A06^ADT_A06</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Change patient class to outpatient</td>
+          <td>A07</td>
+          <td>ADT^A07^ADT_A06</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Transfer patient</td>
+          <td>A02</td>
+          <td>ADT^A02^ADT_A02</td>
+          <td>A12</td>
+          <td>ADT^A12^ADT_A12</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>A system implementing this option shall support these 11 trigger events and messages.</p>
+    <p>Figure 3.31-2 depicts the messages added by this option to the basic subset.</p>
+    <p>Figure 3.31-2: Additional Interactions for “Inpatient/Outpatient Encounter Management” Option</p>
+    <h4 id="3.31.5.3">3.31.5.3 Pending Event Management Option</h4>
+    <p>This option adds support for management of pending events. This option also requires the “Inpatient/Outpatient Encounter Management” Option.</p>
+    <p>The following is the required message set to support the “Pending Event Management” Option:</p>
+    <p>Table 3.31-3: Message Subset for Pending Event Management Option</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+        <tr class="odd">
+          <td>Pre-admit patient</td>
+          <td>A05</td>
+          <td>ADT^A05^ADT_A05</td>
+          <td>A38</td>
+          <td>ADT^A38^ADT_A38</td>
+        </tr>
+        <tr class="even">
+          <td>Change patient class to inpatient</td>
+          <td>A06</td>
+          <td>ADT^A06^ADT_A06</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>Change patient class to outpatient</td>
+          <td>A07</td>
+          <td>ADT^A07^ADT_A06</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Transfer patient</td>
+          <td>A02</td>
+          <td>ADT^A02^ADT_A02</td>
+          <td>A12</td>
+          <td>ADT^A12^ADT_A12</td>
+        </tr>
+        <tr class="odd">
+          <td>Pending admit</td>
+          <td>A14</td>
+          <td>ADT^A14^ADT_A05</td>
+          <td>A27</td>
+          <td>ADT^A27^ADT_A21</td>
+        </tr>
+        <tr class="even">
+          <td>Pending transfer</td>
+          <td>A15</td>
+          <td>ADT^A15^ADT_A15</td>
+          <td>A26</td>
+          <td>ADT^A26^ADT_A21</td>
+        </tr>
+        <tr class="odd">
+          <td>Pending discharge</td>
+          <td>A16</td>
+          <td>ADT^A16^ADT_A16</td>
+          <td>A25</td>
+          <td>ADT^A25^ADT_A21</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>A system implementing this option shall support these 17 trigger events and messages.</p>
+    <p>Figure 3.31-3 below depicts the messages added by this option to the basic subset and the Inpatient/Outpatient Encounter Management Option.</p>
+    <p>Figure 3.31-3: Additional Interactions for “Pending Event Management” Option</p>
+    <h4 id="3.31.5.4">3.31.5.4 Advanced Encounter Management Option</h4>
+    <p>This option provides support to manage changes of attending doctor, leaves of absence, and accounts.</p>
+    <p>The following is the required message set to support the “Advanced Encounter Management” Option:</p>
+    <p>Table 3.31-4: Message Subset for Advanced Encounter Management Option</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+        <tr class="odd">
+          <td>Change attending doctor</td>
+          <td>A54</td>
+          <td>ADT^A54^ADT_A54</td>
+          <td>A55</td>
+          <td>ADT^A55^ADT_A52</td>
+        </tr>
+        <tr class="even">
+          <td>Leave of absence</td>
+          <td>A21</td>
+          <td>ADT^A21^ADT_A21</td>
+          <td>A52</td>
+          <td>ADT^A52^ADT_A52</td>
+        </tr>
+        <tr class="odd">
+          <td>Return from leave of absence</td>
+          <td>A22</td>
+          <td>ADT^A22^ADT_A21</td>
+          <td>A53</td>
+          <td>ADT^A53^ADT_A52</td>
+        </tr>
+        <tr class="even">
+          <td>Move account information</td>
+          <td>A44</td>
+          <td>ADT^A44^ADT_A43</td>
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>A system implementing this option shall support these 12 trigger events and messages.</p>
+    <p>Figure 3.31-4 below depicts the messages added by this option to the basic subset.</p>
+    <p>Figure 3.31-4: Additional Interactions for “Advanced Encounter Management” Option</p>
+    <h4 id="3.31.5.5">3.31.5.5 Temporary Patient Transfers Tracking Option</h4>
+    <p>This option tracks patient moves to and from temporary locations such as radiotherapy, scanner, EKG, and dialysis.</p>
+    <p>The following is the required message set to support the “Temporary Patient Transfers Tracking” Option:</p>
+    <p>Table 3.31-5: Message Subset for Temporary Patient Transfers Tracking Option</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+        <tr class="odd">
+          <td>Patient departing - Tracking</td>
+          <td>A09</td>
+          <td>ADT^A09^ADT_A09</td>
+          <td>A33</td>
+          <td>ADT^A33^ADT_A21</td>
+        </tr>
+        <tr class="even">
+          <td>Patient arriving - Tracking</td>
+          <td>A10</td>
+          <td>ADT^A10^ADT_A09</td>
+          <td>A32</td>
+          <td>ADT^A32^ADT_A21</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>A system implementing this option shall support these 9 trigger events and messages.</p>
+    <p>Figure 3.31-5 below depicts the messages added by this option to the basic subset.</p>
+    <p>Figure 3.31-5: Additional Interactions for “Temporary Patient Transfers Tracking” Option</p>
+    <h4 id="3.31.5.6">3.31.5.6 Historic Movement Management</h4>
+    <p>This option adds the capability to cancel or update safely any Movement.</p>
+    <p>The Movement updated can be the current Movement (currently active or pending) or a Movement in the past (i.e., historic Movement).</p>
+    <p>The Movement canceled can only be the current Movement (currently active or pending).</p>
+    <p>This capability is supported by the addition of segment ZBE below PV1/PV2. With this option, this ZBE segment is required at this position in the messages associated with the following trigger events: A01, A02, A03, A04, A05, A06, A07, A11, A12, A13, A14, A15, A16, A21, A22, A25, A26, A27, A38, A52, A53, A54, A55, Z99. In the following sections the ZBE segment is only shown in the message associated with trigger Z99 which is dedicated to the Historic Movement Management Option. In the other messages, this segment will appear whenever this option is active.</p>
+    <p>This segment ZBE brings the following features:</p>
+    <ul>
+      <li>
+        <p>It enables unique identification of the Movement (including admission and discharge).</p>
+      </li>
+      <li>
+        <p>It carries an action code that describes the action to be performed on this Movement: The three possible actions are:</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>INSERT: The receiver must interpret the content of this message as a new Movement.</p>
+      </li>
+      <li>
+        <p>CANCEL: This action code is always associated with a “cancel” trigger event. The receiver shall delete the corresponding Movement (matched with its unique identifier). Only the current Movement can be cancelled.</p>
+      </li>
+      <li>
+        <p>UPDATE: This action code is associated with the dedicated trigger event Z99 described in Section 3.31.7.30. The receiver shall update the corresponding Movement (matched with its unique identifier), which can be the current Movement or a historic Movement.</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <p>In the case of UPDATE or CANCEL, the ZBE segment carries the code of the original trigger event that was associated with the action INSERT of the related Movement.</p>
+      </li>
+      <li>
+        <p>It carries an indicator “Historic Movement” informing whether the action to perform is about the current Movement or a Historic one.</p>
+      </li>
+      <li>
+        <p>It provides the starting date/time of the “sub-encounter” that this Movement initiates.</p>
+      </li>
+      <li>
+        <p>It carries the ward to which this patient is assigned during this sub-encounter.</p>
+      </li>
+    </ul>
+    <p>This option may apply to any combination of the previous subsets, except Temporary Patient Transfers Tracking (Temporary Patient Transfers do not need to be uniquely identified).</p>
+    <p>
+      <span class="underline">Implementation note:</span>
+      The Patient Encounter Consumer must support transaction log update to maintain integrity of the Movement records.
+    </p>
+    <h4 id="3.31.5.7">3.31.5.7 Acknowledgement Support</h4>
+    <p>An actor that claims support for the Acknowledgement Support Option shall be capable of using the enhanced acknowledgement mode as defined in the HL7 v2.x standard. See HL7 Volume 2C, Section C.2.3 for further details.</p>
+    <h4 id="3.31.5.8">3.31.5.8 Ambulatory Patient Data</h4>
+    <p>If the Patient Encounter Supplier supports the Ambulatory Patient Data Option, it SHALL supply:</p>
+    <p>the patient address in field PID-11 for ambulatory patients whenever this address is known</p>
+    <p>the referring doctor in field PV1-8, if known, when registering an outpatient (MSH-9 Message Type is ADT^A04) or when pre-registering a patient (MSH-9 Message Type is ADT^A05)</p>
+    <p>the ambulatory status of the patient into field PV1-15 if this information is known.</p>
+    <h4 class="list-paragraph" id="3.31.5.9">3.31.5.9 Maintain Demographics Option</h4>
+    <p>This option adds support to manage “Update patient information” and “Merge patient identifier list” in the context of an encounter.</p>
+    <p>The following is the required message set to support the “Maintain Demographics Option”:</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>Category of event</th>
+          <th>Trigger / Action</th>
+          <th />
+          <th />
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td />
+          <td>insert</td>
+          <td>Cancel</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Admit inpatient</td>
+          <td>A01</td>
+          <td>ADT^A01^ADT_A01</td>
+          <td>A11</td>
+          <td>ADT^A11^ADT_A09</td>
+        </tr>
+        <tr class="odd">
+          <td>Register outpatient</td>
+          <td>A04</td>
+          <td>ADT^A04^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Discharge patient</td>
+          <td>A03</td>
+          <td>ADT^A03^ADT_A03</td>
+          <td>A13</td>
+          <td>ADT^A13^ADT_A01</td>
+        </tr>
+        <tr class="odd">
+          <td>Update patient information</td>
+          <td>A08</td>
+          <td>ADT^A08^ADT_A01</td>
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>Merge patient identifier list</td>
+          <td>A40</td>
+          <td>ADT^A40^ADT_A39</td>
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <p>A Patient Encounter Supplier or Patient Encounter Consumer supporting the Maintain Demographics Option shall support these 7 trigger events and messages.</p>
+    <p>Figure 3.31-6 depicts the messages added by this option to the basic subset.</p>
+    <p>
+      <img src=".//media/image13.png" style="width:5.26944in;height:1.75417in" />
+    </p>
+    <p>Figure 3.31-6: Additional Interactions for “Maintain Demographics” Option</p>
+    <h3 id="3.31.6">3.31.6 Common HL7 Message Segments</h3>
+    <p>Messages in transaction [ITI-31] use the same common HL7 message segments as those in transaction [ITI-30]; refer to Section 3.30.5. In addition, messages in transaction [ITI-31] use the ZBE segment, described below.</p>
+    <h4 id="3.31.6.1">3.31.6.1 ZBE – Movement Action segment</h4>
+    <p>The ZBE segment was first introduced in the German extension of the IHE Radiology Technical Framework. It is extended here with additional fields: ZBE-5, ZBE-6, ZBE-7, ZBE-8, and ZBE-9. This ZBE segment is required with the “Historic Movement” Option of transaction [ITI-31].</p>
+    <p>The purpose of this segment is to uniquely identify any movement at creation time (action INSERT), so that any further correction brought to this movement (action UPDATE) or cancellation of it (action CANCEL) can be achieved safely and consistently between the two actors Patient Encounter Supplier and Patient Encounter Consumer.</p>
+    <p>Another security feature offered by this segment is to clearly distinguish current events from events that address a historic (past) movement to avoid any misinterpretation on the part of the receiving application.</p>
+    <p>Table 3.31-6: ZBE segment description</p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>SEQ</th>
+          <th>LEN</th>
+          <th>DT</th>
+          <th>Usage</th>
+          <th>Card.</th>
+          <th>ELEMENT NAME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>1</td>
+          <td>427</td>
+          <td>EI</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td>Movement ID</td>
+        </tr>
+        <tr class="even">
+          <td>2</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>Start Movement Date/Time</td>
+        </tr>
+        <tr class="odd">
+          <td>3</td>
+          <td>26</td>
+          <td>TS</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>End Movement Date/Time</td>
+        </tr>
+        <tr class="even">
+          <td>4</td>
+          <td>6</td>
+          <td>ID</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>Movement Action (INSERT / UPDATE / CANCEL)</td>
+        </tr>
+        <tr class="odd">
+          <td>5</td>
+          <td>1</td>
+          <td>ID</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>Historical Movement Indicator (values: Y / N)</td>
+        </tr>
+        <tr class="even">
+          <td>6</td>
+          <td>3</td>
+          <td>ID</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>Original trigger event code [in the case of an UPDATE of the movement (trigger A08), this field conveys the original trigger event that was sent with the INSERT]</td>
+        </tr>
+        <tr class="odd">
+          <td>7</td>
+          <td>567</td>
+          <td>XON</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>Responsible Ward (Medical or Nursing Ward, depending of the trigger event of the message). See Note 1.</td>
+        </tr>
+        <tr class="even">
+          <td>8</td>
+          <td>567</td>
+          <td>XON</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>Responsible Nursing Ward</td>
+        </tr>
+        <tr class="odd">
+          <td>9</td>
+          <td>3</td>
+          <td>CWE</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>Movement Scope</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Note 1: If ZBE-8 exists, then ZBE-7 shall be interpreted as the Responsible Medical Ward.</p>
+    <p>ZBE-1 – Movement ID (EI): required and repeatable to support cooperative Movement Management. The Movement Identifier list is created with the action INSERT, and then recalled with further actions such as UPDATE or CANCEL.</p>
+    <p>ZBE-2 – Start Movement Date/Time (TS): Required. It is the date/time of the creation of the Movement, i.e., the effective date time of the event that used action INSERT with this Movement.</p>
+    <p>ZBE-3 – End Movement Date/Time (TS): Optional.</p>
+    <p>ZBE-4 – Movement Action (ID): Required. Three possible values:</p>
+    <ul>
+      <li>
+        <p>INSERT: With any trigger event that inserts a movement.</p>
+      </li>
+      <li>
+        <p>UPDATE: With trigger event Z99</p>
+      </li>
+      <li>
+        <p>CANCEL: With any “cancel” trigger event.</p>
+      </li>
+    </ul>
+    <p>ZBE-5 –Historical Movement Indicator (ID): Required. Values:</p>
+    <ul>
+      <li>
+        <p>‘Y’ when the message is related to a Historic Movement.</p>
+      </li>
+      <li>
+        <p>‘N’ when the message is related to the current (last or next) movement.</p>
+      </li>
+    </ul>
+    <p>ZBE-6 – Original trigger event code (ID): Conditional.</p>
+    <p>Condition predicate: This field shall be populated when ZBE-4 contains action UPDATE or CANCEL. In this case, this field is populated with the trigger event that inserted (action INSERT) the movement being currently updated or canceled.</p>
+    <p>ZBE-7 – Responsible Ward (XON): Optional. This Field provides the code of the ward that is responsible for the patient. This field may be further constrained in national extensions of this transaction. For example, the French National Extension constrains ZBE-7 to be the Responsible Medical Ward and adds related specifications for ZBE-8 and ZBE-9. See ITI TF-4: 4.1.2.7.</p>
+    <p>ZBE-8 – Responsible Nursing Ward (XON): Optional. This field may be further constrained in national extensions of this transaction.</p>
+    <p>ZBE-9 – Movement scope (CWE): Optional. This field provides the scope of the movement, e.g., change of housing, change of medical ward, change of nursing ward. See French National Extension in ITI TF-4: Table 4.1.2.7-1 for a more detailed example.</p>
+    <h3 id="3.31.7">3.31.7 Interactions</h3>
+    <p>The following sections contain the static definitions of the messages belonging to the various optional sets described above.</p>
+    <p>The Historic Movement Management Option is not shown in these message tables. The reader is reminded that this option adds the ZBE segment below PV1/PV2.</p>
+    <h4 id="3.31.7.1">3.31.7.1 Admit/Visit Notification (ADT^A01^ADT_A01)</h4>
+    <h5 id="3.31.7.1.1">3.31.7.1.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient has arrived at a healthcare facility for an episode of care in which the patient is assigned to an inpatient bed. Such an episode is commonly referred to as “inpatient” care.</p>
+    <p>MSH-9 is valued ADT^A01^ADT_A01.</p>
+    <h5 id="3.31.7.1.2">3.31.7.1.2 Message Static Definition</h5>
+    <p>Table 3.31-7: Static definition of message ADT^A01^ADT_A01</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.1.3">3.31.7.1.3 Comments on segment usage</h5>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.1.4">3.31.7.1.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to indicate that the patient has been admitted.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement (new admission) conflicts with an existing current movement for the patient (an admission is already opened for this patient) the message is discarded and an error condition is raised.</p>
+    <h4 id="3.31.7.2">3.31.7.2 Cancel Admit/Visit Notification – ADT^A11^ADT_A09</h4>
+    <h5 id="3.31.7.2.1">3.31.7.2.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to cancel a previous notification to a Patient Encounter Consumer as a notification that a patient has been admitted for an inpatient stay (via trigger event A01) or registered for an outpatient visit (via trigger event A04). See Section 3.31.5.8 for the message to be used to cancel a pre-admit notification, and Section 3.31.5.14 for the message to be used to cancel a pending admit notification.</p>
+    <p>MSH-9 is valued ADT^A11^ADT_A09.</p>
+    <h5 id="3.31.7.2.2">3.31.7.2.2 Message Static Definition</h5>
+    <p>Table 3.31-8: Static definition of message ADT^A11^ADT_A09</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.2.3">3.31.7.2.3 Comments on segment usage</h5>
+    <p>None.</p>
+    <h5 id="3.31.7.2.4">3.31.7.2.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status in its system to the value existing immediately before the admit or visit notification was received.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (i.e., no inpatient nor outpatient visit has been opened for this patient) the message is discarded but no error condition is raised.</p>
+    <h4 id="3.31.7.3">3.31.7.3 Register a Patient (ADT^A04^ADT_A01)</h4>
+    <h5 id="3.31.7.3.1">3.31.7.3.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient has arrived at a healthcare facility for an episode of care in which the patient is not assigned to a bed. Examples of such episodes include outpatient visits, ambulatory care encounters, and emergency room visits.</p>
+    <p>MSH-9 is valued ADT^A04^ADT_A01.</p>
+    <h5 id="3.31.7.3.2">3.31.7.3.2 Message Static Definition</h5>
+    <p>Table 3.31-9: Static definition of message ADT^A04^ADT_A01</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.3.3">3.31.7.3.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-44-admit date/time</em>
+      is used to carry the date and time that the encounter started.
+    </p>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.3.4">3.31.7.3.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to indicate that the visit has started.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case an inpatient encounter is already opened, the outpatient encounter is still recorded by the receiver. This is not a situation of conflict and no error condition is raised.</p>
+    <h4 id="3.31.7.4">3.31.7.4 Discharge/End Visit (ADT^A03^ADT_A03)</h4>
+    <h5 id="3.31.7.4.1">3.31.7.4.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient’s stay at a healthcare facility has ended. Inpatient encounters are generally closed by an A03. Outpatient encounters may or may not be closed by an A03, depending on the healthcare organization policies.</p>
+    <p>MSH-9 is valued ADT^A03^ADT_A03.</p>
+    <h5 id="3.31.7.4.2">3.31.7.4.2 Message Static Definition</h5>
+    <p>Table 3.31-10: Static definition of message ADT^A03^ADT_A03</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.4.3">3.31.7.4.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-3-assigned patient location</em>
+      is used to indicate the patient’s last location prior to discharge (or end of visit).
+    </p>
+    <p>
+      Field
+      <em>PV1-45-discharge date/time</em>
+      is used to carry either the date and time of discharge (for an inpatient) or the date and time that the visit ended (for an outpatient).
+    </p>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>Within a Patient Discharge message, if the encounter has been terminated by the patient's death, then the field PID-30 Patient Death Indicator shall be populated. In this case PID-29 Patient Death Date and Time shall be populated as well, provided that the value is known.</p>
+    <h5 id="3.31.7.4.4">3.31.7.4.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to “discharged” (or “visit ended”).</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no inpatient nor outpatient visit opened for this patient) the message is discarded but no error condition is raised.</p>
+    <h4 id="3.31.7.5">3.31.7.5 Cancel Discharge/End Visit – ADT^A13^ADT_A01</h4>
+    <h5 id="3.31.7.5.1">3.31.7.5.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A03) that a patient’s stay at a healthcare facility had ended.</p>
+    <p>MSH-9 is valued ADT^A13^ADT_A01.</p>
+    <h5 id="3.31.7.5.2">3.31.7.5.2 Message Static Definition</h5>
+    <p>Table 3.31-11: Static definition of message ADT^A13^ADT_A01</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.5.3">3.31.7.5.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-3-patient location</em>
+      shall contain the patient’s location after the cancellation has been processed. This may be different from the patient’s location prior to the discharge/end visit notification.
+    </p>
+    <h5 id="3.31.7.5.4">3.31.7.5.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status to its value prior to the receipt of the discharge/end visit message, and shall update the patient’s location to the value in field PV1-3-patient location.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no prior discharge received) the message is discarded but no error condition is raised.</p>
+    <h4 id="3.31.7.6">3.31.7.6 Update Patient Information (ADT^A08^ADT_A01)</h4>
+    <h5 id="3.31.7.6.1">3.31.7.6.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that some non-movement-related information (such as address, date of birth, etc.) has changed for a patient. It is used when information about the patient has changed not related to any other trigger event.</p>
+    <p>MSH-9 is valued ADT^A08^ADT_A01.</p>
+    <h5 id="3.31.7.6.2">3.31.7.6.2 Message Static Definition</h5>
+    <p>Table 3.31-12: Static definition of message ADT^A08^ADT_A01</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.6.3">3.31.7.6.3 Comments on segment usage</h5>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.6.4">3.31.7.6.4 Expected actions</h5>
+    <p>The receiver shall update the patient record in its database to contain the information in the message.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active encounter for this patient, or the patient is unknown) the message is discarded but no error condition is raised.</p>
+    <h4 id="3.31.7.7">3.31.7.7 Pre-Admit (ADT^A05^ADT_A05)</h4>
+    <h5 id="3.31.7.7.1">3.31.7.7.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to communicate information that has been collected about a patient to be admitted as an inpatient (or to be registered as an outpatient).</p>
+    <p>MSH-9 is valued ADT^A05^ADT_A05.</p>
+    <h5 id="3.31.7.7.2">3.31.7.7.2 Message Static Definition</h5>
+    <p>Table 3.31-13: Static definition of message ADT^A05^ADT_A05</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.7.3">3.31.7.7.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV2-8-expected admit date/time</em>
+      is used to carry the expected date and time when the patient is to be admitted (or registered).
+    </p>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.7.4">3.31.7.7.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to pre-admitted.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>There is no particular potential conflict between this Movement and any previously received message related to the same patient.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.8">3.31.7.8 Cancel Pre-Admit – ADT^A38^ADT_A38</h4>
+    <h5 id="3.31.7.8.1">3.31.7.8.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A08) that a patient was to be updated to pre-admitted (or pre-registered) status.</p>
+    <p>MSH-9 is valued ADT^A38^ADT_A38.</p>
+    <h5 id="3.31.7.8.2">3.31.7.8.2 Message Static Definition</h5>
+    <p>Table 3.31-14: Static definition of message ADT^A38^ADT_A38</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.8.3">3.31.7.8.3 Comments on segment usage</h5>
+    <p>None.</p>
+    <h5 id="3.31.7.8.4">3.31.7.8.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status to its value prior to the receipt of the pre-admit message.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no pre-admit registered for this patient, or the patient is unknown) the message is discarded but no error condition is raised.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.9">3.31.7.9 Change Outpatient to Inpatient (ADT^A06^ADT_A06)</h4>
+    <h5 id="3.31.7.9.1">3.31.7.9.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that it has been decided to admit a patient that was formerly in a non-admitted status, such as Emergency.</p>
+    <p>MSH-9 is valued ADT^A06^ADT_A06.</p>
+    <h5 id="3.31.7.9.2">3.31.7.9.2 Message Static Definition</h5>
+    <p>Table 3.31-15: Static definition of message ADT^A06^ADT_A06</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.9.3">3.31.7.9.3 Comments on segment usage</h5>
+    <p>
+      The new patient location should appear in
+      <em>PV1-3 - Assigned Patient Location</em>
+      while the old patient location (if different) should appear in
+      <em>PV1-6 - Prior Patient Location</em>
+      .
+    </p>
+    <p>Condition predicate on use of the segment MRG:</p>
+    <blockquote>
+      <p>
+        A change from outpatient to inpatient status may be accompanied by the closing of the outpatient account and the opening of an inpatient account. This may be expressed by populating the outpatient account number into
+        <em>MRG-3-prior account number</em>
+        and the inpatient account number into
+        <em>PID-18-patient account number</em>
+        . The use of the MRG segment in this case is strictly conventional and is not intended to communicate an actual merge.
+      </p>
+    </blockquote>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.9.4">3.31.7.9.4 Expected actions</h5>
+    <p>
+      The receiver shall update the patient’s class to “inpatient” and, if necessary, shall update the patient’s location to the value in field
+      <em>PV1-3-patient location</em>
+      .
+    </p>
+    <p>
+      If the MRG segment is included, the receiver shall update the patient’s account number from the value in
+      <em>MRG-3-prior account number</em>
+      to the value in
+      <em>PID-18-patient account number</em>
+      .
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active outpatient encounter is known for this patient, or the patient is unknown) the message is still processed and initiates a new inpatient encounter for a possibly new patient, and no error condition is raised.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.10">3.31.7.10 Change Inpatient to Outpatient (ADT^A07^ADT_A06)</h4>
+    <h5 id="3.31.7.10.1">3.31.7.10.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient is no longer in an “admitted” status, but is still being seen for an episode of care.</p>
+    <p>MSH-9 is valued ADT^A07^ADT_A06.</p>
+    <h5 id="3.31.7.10.2">3.31.7.10.2 Message Static Definition</h5>
+    <p>Table 3.31-16: Static definition of message ADT^A07^ADT_A06</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>C</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN3</td>
+          <td>Insurance Additional Info - Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.10.3">3.31.7.10.3 Comments on segment usage</h5>
+    <p>
+      The new patient location should appear in
+      <em>PV1-3 - Assigned Patient Location</em>
+      while the old patient location (if different) should appear in
+      <em>PV1-6 - Prior Patient Location</em>
+      .
+    </p>
+    <p>Condition predicate on use of the segment MRG:</p>
+    <blockquote>
+      <p>
+        A change from inpatient to outpatient status may be accompanied by the closing of the inpatient account and the opening of an outpatient account. This may be expressed by populating the inpatient account number into
+        <em>MRG-3-prior account number</em>
+        and the outpatient account number into
+        <em>PID-18-patient account number</em>
+        . The use of the MRG segment in this case is strictly conventional and is not intended to communicate an actual merge.
+      </p>
+    </blockquote>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments. Providers specific to a particular insurance carrier may be communicated in ROL segments immediately following the IN1/IN2/IN3 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.10.4">3.31.7.10.4 Expected actions</h5>
+    <p>
+      The receiver shall update the patient’s class to “outpatient,” and, if necessary, shall update the patient’s location to the value in field
+      <em>PV1-3-patient location</em>
+      .
+    </p>
+    <p>
+      If the MRG segment is included, the receiver shall update the patient’s account number from the value in
+      <em>MRG-3-prior account number</em>
+      to the value in
+      <em>PID-18-patient account number</em>
+      .
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient encounter is known for this patient, or the patient is unknown) the message is still processed and initiates a new outpatient encounter for a possibly new patient, and no error condition is raised.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.11">3.31.7.11 Transfer a Patient (ADT^A02^ADT_A02)</h4>
+    <h5 id="3.31.7.11.1">3.31.7.11.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient is being transferred from one location to another. The new location will be reflected in the institution’s bed census.</p>
+    <p>MSH-9 is valued ADT^A02^ADT_A02.</p>
+    <h5 id="3.31.7.11.2">3.31.7.11.2 Message Static Definition</h5>
+    <p>Table 3.31-17: Static definition of message ADT^A02^ADT_A02</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.11.3">3.31.7.11.3 Comments on segment usage</h5>
+    <p>
+      The new patient location should appear in
+      <em>PV1-3 – Assigned Patient Location</em>
+      while the old patient location should appear in
+      <em>PV1-6 – Prior Patient Location</em>
+      .
+    </p>
+    <p>Providers with an ongoing relationship with the patient may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>Segment DG1 should be used to communicate diagnosis information only if it is necessary to communicate with a receiver that is using a version of HL7 prior to V2.5.</p>
+    <h5 id="3.31.7.11.4">3.31.7.11.4 Expected actions</h5>
+    <p>
+      The receiver shall update the patient’s location to the value in field
+      <em>PV1-3-patient location</em>
+      .
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient encounter is known for this patient, or the patient is unknown or the known patient location was not the one declared in PV1-6) the message is still processed, the new situation is registered (the encounter and the patient are created if needed) and no error condition is raised.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.12">3.31.7.12 Cancel Transfer – ADT^A12^ADT_A12</h4>
+    <h5 id="3.31.7.12.1">3.31.7.12.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A02) that a patient was being moved from one location to another.</p>
+    <p>MSH-9 is valued ADT^A12^ADT_A12.</p>
+    <h5 id="3.31.7.12.2">3.31.7.12.2 Message Static Definition</h5>
+    <p>Table 3.31-18: Static definition of message ADT^A12^ADT_A12</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.12.3">3.31.7.12.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-3-patient location</em>
+      shall contain the patient’s location prior to the transfer.
+    </p>
+    <h5 id="3.31.7.12.4">3.31.7.12.4 Expected actions</h5>
+    <p>
+      The receiver shall reset the patient’s location to the value in field
+      <em>PV1-11-temporary location</em>
+      or to the value in field
+      <em>PV1-3-patient location</em>
+      , as appropriate.
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no transfer previously notified, or encounter unknown, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Inpatient/Outpatient Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.13">3.31.7.13 Pending Admit (ADT^A14^ADT_A05)</h4>
+    <h5 id="3.31.7.13.1">3.31.7.13.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that it is planned to admit a patient.</p>
+    <p>MSH-9 is valued ADT^A14^ADT_A05.</p>
+    <h5 id="3.31.7.13.2">3.31.7.13.2 Message Static Definition</h5>
+    <p>Table 3.31-19: Static definition of message ADT^A14^ADT_A05</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info – Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.13.3">3.31.7.13.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV2-8-expected admit date/time</em>
+      is used to carry the expected date and time when the patient is to be admitted.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.13.4">3.31.7.13.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to “pending admit”.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>There is no particular potential conflict between this Movement and any previously received message related to the same patient.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.14">3.31.7.14 Cancel Pending Admit – ADT^A27^ADT_A21</h4>
+    <h5 id="3.31.7.14.1">3.31.7.14.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A14) that a patient was expected to be admitted.</p>
+    <p>MSH-9 is valued ADT^A27^ADT_A21.</p>
+    <h5 id="3.31.7.14.2">3.31.7.14.2 Message Static Definition</h5>
+    <p>Table 3.31-20: Static definition of message ADT^A27^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.14.3">3.31.7.14.3 Comments on segment usage</h5>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.14.4">3.31.7.14.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status to its value prior to the receipt of the “pending admit” message.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no pending admit previously notified, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.15">3.31.7.15 Pending Transfer (ADT^A15^ADT_A15)</h4>
+    <h5 id="3.31.7.15.1">3.31.7.15.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that it is planned to transfer a patient.</p>
+    <p>MSH-9 is valued ADT^A15^ADT_A15.</p>
+    <h5 id="3.31.7.15.2">3.31.7.15.2 Message Static Definition</h5>
+    <p>Table 3.31-21: Static definition of message ADT^A15^ADT_A15</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.15.3">3.31.7.15.3 Comments on segment usage</h5>
+    <p>Providers with an ongoing relationship may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments.</p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>Segment DG1 should be used to communicate diagnosis information only if it is necessary to communicate with a receiver that is using a version of HL7 prior to V2.5.</p>
+    <p>The planned date for this pending transfer is given in field EVN-3 of segment EVN. See Section 3.30.5.2.</p>
+    <h5 id="3.31.7.15.4">3.31.7.15.4 Expected actions</h5>
+    <p>The receiver shall record that a transfer is pending for this patient.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient encounter, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.16">3.31.7.16 Cancel Pending Transfer – ADT^A26^ADT_A21</h4>
+    <h5 id="3.31.7.16.1">3.31.7.16.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A25) that it was planned to transfer a patient.</p>
+    <p>MSH-9 is valued ADT^A26^ADT_A21.</p>
+    <h5 id="3.31.7.16.2">3.31.7.16.2 Message Static Definition</h5>
+    <p>Table 3.31-22: Static definition of message ADT^A26^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.16.3">3.31.7.16.3 Comments on segment usage</h5>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>The planned date for the pending transfer that is cancelled, is given in field EVN-3 of segment EVN. See Section 3.30.5.2.</p>
+    <h5 id="3.31.7.16.4">3.31.7.16.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status to the value immediately before the Pending Transfer message was received.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no pending transfer known, or no active inpatient encounter, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.17">3.31.7.17 Pending Discharge (ADT^A16^ADT_A16)</h4>
+    <h5 id="3.31.7.17.1">3.31.7.17.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that it is planned to discharge a patient.</p>
+    <p>MSH-9 is valued ADT^A16^ADT_A16.</p>
+    <h5 id="3.31.7.17.2">3.31.7.17.2 Message Static Definition</h5>
+    <p>Table 3.31-23: Static definition of message ADT^A16^ADT_A16</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>RE</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="even">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN3</td>
+          <td>Insurance Additional Info – Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.17.3">3.31.7.17.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV2-9-expected discharge date/time</em>
+      is used to carry the expected date and time when the patient is to be discharged.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.17.4">3.31.7.17.4 Expected actions</h5>
+    <p>The receiver shall update the patient’s status to “pending discharge”.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient encounter, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.18">3.31.7.18 Cancel Pending Discharge – ADT^A25^ADT_A21</h4>
+    <h5 id="3.31.7.18.1">3.31.7.18.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A16) that a patient was expected to be discharged.</p>
+    <p>MSH-9 is valued ADT^A25^ADT_A21.</p>
+    <h5 id="3.31.7.18.2">3.31.7.18.2 Message Static Definition</h5>
+    <p>Table 3.31-24: Static definition of message ADT^A25^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.18.3">3.31.7.18.3 Comments on segment usage</h5>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.18.4">3.31.7.18.4 Expected actions</h5>
+    <p>The receiver shall reset the patient’s status to its value prior to the receipt of the “pending discharge” message.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no pending discharge known, or no active inpatient encounter, or patient unknown) the message is discarded, and no error condition is raised.</p>
+    <p>If the receiver does not support the Pending Event Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.19">3.31.7.19 Change Attending Doctor – ADT^A54^ADT_A54</h4>
+    <h5 id="3.31.7.19.1">3.31.7.19.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that there has been a change in the doctor responsible for the patient’s treatment.</p>
+    <p>MSH-9 is valued ADT^A54^ADT_A54.</p>
+    <h5 id="3.31.7.19.2">3.31.7.19.2 Message Static Definition</h5>
+    <p>Table 3.31-25: Static definition of message ADT^A54^ADT_A54</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.19.3">3.31.7.19.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-7-attending doctor</em>
+      shall contain the new attending doctor.
+    </p>
+    <p>Providers with an ongoing relationship may be communicated in ROL segments immediately following the PID/PD1 segments. Providers specific to an episode of care may be communicated in ROL segments immediately following the PV1/PV2 segments.</p>
+    <p>
+      Field
+      <em>ROL-4-role begin date/time</em>
+      and
+      <em>ROL-5-role end date/time</em>
+      are used to communicate the begin and end date and time of the attending doctor (or of the admitting, consulting, and/or referring doctor, as appropriate and as designated in
+      <em>ROL-7-role code</em>
+      ). When segment ROL is used to communicate this information, field
+      <em>ROL-2-action code</em>
+      should be valued UP.
+    </p>
+    <h5 id="3.31.7.19.4">3.31.7.19.4 Expected actions</h5>
+    <p>The receiver shall record the patient’s new attending doctor.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient or outpatient encounter, or patient unknown) the message is discarded, but no error condition is raised. If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.20">3.31.7.20 Cancel Change Attending Doctor – ADT^A55^ADT_A52</h4>
+    <h5 id="3.31.7.20.1">3.31.7.20.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to cancel a previous notification to a Patient Encounter Consumer of a change to the patient’s attending doctor.</p>
+    <p>MSH-9 is valued ADT^A55^ADT_A52.</p>
+    <h5 id="3.31.7.20.2">3.31.7.20.2 Message Static Definition</h5>
+    <p>Table 3.31-26: Static definition of message ADT^A55^ADT_A52</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.20.3">3.31.7.20.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>PV1-7-attending doctor</em>
+      shall contain the patient’s attending doctor prior to the notification of change.
+    </p>
+    <h5 id="3.31.7.20.4">3.31.7.20.4 Expected actions</h5>
+    <p>
+      The receiver shall reset the patient’s attending doctor to the value in field
+      <em>PV1-7-attending doctor</em>
+      .
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active inpatient or outpatient encounter, or patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.21">3.31.7.21 Patient Goes on a Leave of Absence – ADT^A21^ADT_A21</h4>
+    <h5 id="3.31.7.21.1">3.31.7.21.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient has left the healthcare institution temporarily.</p>
+    <p>MSH-9 is valued ADT^A21^ADT_A21.</p>
+    <h5 id="3.31.7.21.2">3.31.7.21.2 Message Static Definition</h5>
+    <p>Table 3.31-27: Static definition of message ADT^A21^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.21.3">3.31.7.21.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>EVN-6-event occurred</em>
+      shall contain the date and time that the patient actually left the institution.
+      <em>PV2-47-expected LOA return</em>
+      shall contain the date and time that the patient is expected to return from the leave of absence.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.21.4">3.31.7.21.4 Expected actions</h5>
+    <p>The receiver shall record that the patient has left the institution on a leave of absence.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no active encounter, or patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.22">3.31.7.22 Cancel Leave of Absence for a Patient – ADT^A52^ADT_A52</h4>
+    <h5 id="3.31.7.22.1">3.31.7.22.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to cancel a previous notification to a Patient Encounter Consumer that a patient had left the healthcare institution temporarily.</p>
+    <p>MSH-9 is valued ADT^A52^ADT_A52.</p>
+    <h5 id="3.31.7.22.2">3.31.7.22.2 Message Static Definition</h5>
+    <p>Table 3.31-28: Static definition of message ADT^A52^ADT_A52</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.22.3">3.31.7.22.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>EVN-6-event occurred</em>
+      shall contain the date and time that the leave of absence was cancelled.
+    </p>
+    <h5 id="3.31.7.22.4">3.31.7.22.4 Expected actions</h5>
+    <p>The receiver shall cancel the patient’s leave of absence.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no leave of absence previously notified, or no active encounter, or patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.23">3.31.7.23 Patient Returns from a Leave of Absence – ADT^A22^ADT_A21</h4>
+    <h5 id="3.31.7.23.1">3.31.7.23.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient has returned from a leave of absence.</p>
+    <p>MSH-9 is valued ADT^A22^ADT_A21.</p>
+    <h5 id="3.31.7.23.2">3.31.7.23.2 Message Static Definition</h5>
+    <p>Table 3.31-29: Static definition of message ADT^A22^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.23.3">3.31.7.23.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>EVN-6-event occurred</em>
+      shall contain the date and time that the patient actually returned from the leave of absence.
+      <em>PV2-47-expected LOA return</em>
+      shall contain the date and time that the patient was expected to return from the leave of absence.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.23.4">3.31.7.23.4 Expected actions</h5>
+    <p>The receiver shall record that the patient has returned from the leave of absence.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no leave of absence previously notified, or no active encounter, or patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.24">3.31.7.24 Cancel Patient Return from a Leave of Absence – ADT^A53^ADT_A52</h4>
+    <h5 id="3.31.7.24.1">3.31.7.24.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to cancel a previous notification to a Patient Encounter Consumer that a patient had returned from a leave of absence.</p>
+    <p>MSH-9 is valued ADT^A53^ADT_A52.</p>
+    <h5 id="3.31.7.24.2">3.31.7.24.2 Message Static Definition</h5>
+    <p>Table 3.31-30: Static definition of message ADT^A53^ADT_A52</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.24.3">3.31.7.24.3 Comments on segment usage</h5>
+    <p>
+      Field
+      <em>EVN-6-event occurred</em>
+      shall contain the date and time that the return from leave of absence was cancelled.
+      <em>PV2-47-expected LOA return</em>
+      shall contain the date and time that the patient is expected to return from the leave of absence.
+    </p>
+    <h5 id="3.31.7.24.4">3.31.7.24.4 Expected actions</h5>
+    <p>The receiver shall cancel the patient’s return from leave of absence.</p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this Movement conflicts with the current situation of the patient (no return from leave of absence previously notified, or no active encounter, or patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.25">3.31.7.25 Move account information – ADT^A44^ADT_A43</h4>
+    <h5 id="3.31.7.25.1">3.31.7.25.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that an account previously associated with one patient is now associated with another patient.</p>
+    <p>MSH-9 is valued ADT^A44^ADT_A43.</p>
+    <h5 id="3.31.7.25.2">3.31.7.25.2 Message Static Definition</h5>
+    <p>Table 3.31-31: Static definition of message ADT^A44^ADT_A43</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PATIENT begin</td>
+          <td>R</td>
+          <td>[1..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PATIENT end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.25.3">3.31.7.25.3 Comments on segment usage</h5>
+    <p>None.</p>
+    <h5 id="3.31.7.25.4">3.31.7.25.4 Expected actions</h5>
+    <p>
+      The receiver shall associate the account in
+      <em>MRG-3-prior patient account number</em>
+      with the patient in
+      <em>PID-3-patient identifier list</em>
+      , and shall remove associations of that account with the patient in
+      <em>MRG-1-prior patient identifier list</em>
+      .
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this message conflicts with the current situation (account unknown or supplier patient unknown) the message is discarded, but no error condition is raised.</p>
+    <p>If the receiver does not support the Advanced Encounter Management Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.26">3.31.7.26 Patient Departing – Tracking (ADT^A09^ADT_A09)</h4>
+    <h5 id="3.31.7.26.1">3.31.7.26.1 Trigger Event</h5>
+    <p>This message is only used within the context of the “Temporary Patient Transfers Tracking” Option.</p>
+    <p>This message is sent by a Patient Encounter Supplier to notify a Patient Encounter Consumer that a patient has departed a location without the patient’s official bed census location having changed. The HL7 standard describes three situations that qualify as non-census location changes: (a) patient tracking (i.e., pre-notification before an official transfer), (b) the patient is in transit between locations for some time, (c) a notification of temporary location change. This IHE transaction only uses the latter: notification of temporary location change.</p>
+    <p>MSH-9 is valued ADT^A09^ADT_A09.</p>
+    <h5 id="3.31.7.26.2">3.31.7.26.2 Message Static Definition</h5>
+    <p>Table 3.31-32: Static definition of message ADT^A09^ADT_A09</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.26.3">3.31.7.26.3 Comments on segment usage</h5>
+    <p>
+      If the patient has left for a non-temporary location (tracking), then field
+      <em>PV1-3-patient location</em>
+      shall contain the patient’s new location and field
+      <em>PV1-6-prior patient location</em>
+      shall contain the patient’s old location.
+    </p>
+    <p>
+      If the patient will be in transit for some time, then field
+      <em>PV1-42-pending location</em>
+      shall contain the new location and field
+      <em>PV1-6-prior patient location</em>
+      shall contain the patient’s old location.
+    </p>
+    <p>
+      If the patient is moving to a temporary location, then field
+      <em>PV1-11-temporary location</em>
+      shall contain the new temporary location. If the patient is moving from a temporary location, then field
+      <em>PV1-43-prior temporary location</em>
+      shall contain the old temporary location. If the patient is moving from a permanent location, then field
+      <em>PV1-6-prior patient location</em>
+      shall contain the old permanent location.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <p>Segment DG1 should be used to communicate diagnosis information only if it is necessary to communicate with a receiver that is using a version of HL7 prior to V2.5.</p>
+    <h5 id="3.31.7.26.4">3.31.7.26.4 Expected actions</h5>
+    <p>
+      The receiver shall reset the patient’s location to the value in field
+      <em>PV1-11-temporary location</em>
+      , field
+      <em>PV1-42-pending location</em>
+      , or field
+      <em>PV1-3-patient location</em>
+      , as appropriate.
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this message conflicts with the current situation, the message is discarded but no error condition is raised.</p>
+    <p>If the receiver does not support the Temporary Patient Location Tracking Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.27">3.31.7.27 Cancel Patient Departing – Tracking – ADT^A33^ADT_A21</h4>
+    <h5 id="3.31.7.27.1">3.31.7.27.1 Trigger Event</h5>
+    <p>This message is only used within the context of the “Temporary Patient Transfers Tracking” Option. This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A09) that a patient has departed a location without the patient’s official bed census location having changed.</p>
+    <p>MSH-9 is valued ADT^A33^ADT_A21.</p>
+    <h5 id="3.31.7.27.2">3.31.7.27.2 Message Static Definition</h5>
+    <p>Table 3.31-33: Static definition of message ADT^A33^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.27.3">3.31.7.27.3 Comments on segment usage</h5>
+    <p>
+      If the patient was in a non-temporary location, then field
+      <em>PV1-3-patient location</em>
+      shall contain the patient’s location prior to the erroneous A09 event. If the patient was in a temporary location, then field
+      <em>PV1-11-temporary location</em>
+      shall contain the patient’s location prior to the erroneous A09 event.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.27.4">3.31.7.27.4 Expected actions</h5>
+    <p>
+      The receiver shall reset the patient’s location to the value in field
+      <em>PV1-11-temporary location</em>
+      or to the value in field
+      <em>PV1-3-patient location</em>
+      , as appropriate.
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this message conflicts with the current situation, the message is discarded but no error condition is raised.</p>
+    <p>If the receiver does not support the Temporary Patient Location Tracking Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.28">3.31.7.28 Patient Arriving – Tracking – ADT^A10^ADT_A09</h4>
+    <h5 id="3.31.7.28.1">3.31.7.28.1 Trigger Event</h5>
+    <p>This message is only used within the context of the “Temporary Patient Transfers Tracking” Option.</p>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer as a notification that a patient has arrived at a new location without the patient’s official bed census location having changed. The HL7 standard describes three varieties of these non-census location changes involving three different kinds of notification: (a) an unofficial notification of location change prior to the official notification of patient tracking, (b) the patient is in transit between locations for some time, (c) a notification of a temporary location change. This IHE transaction only uses the latter: notification of temporary location change.</p>
+    <p>MSH-9 is valued ADT^A10^ADT_A09.</p>
+    <h5 id="3.31.7.28.2">3.31.7.28.2 Message Static Definition</h5>
+    <p>Table 3.31-34: Static definition of message ADT^A10^ADT_A09</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.28.3">3.31.7.28.3 Comments on segment usage</h5>
+    <p>
+      If the patient is arriving at a temporary location, field
+      <em>PV1-11-temporary location</em>
+      shall indicate this temporary location. If the patient is moving from one temporary location to another, then field
+      <em>PV1-43-prior temporary location</em>
+      may also be used.
+    </p>
+    <p>
+      If the patient is arriving at a permanent location from a temporary location, field
+      <em>PV1-3-patient location</em>
+      shall be used for the new location and field
+      <em>PV1-43-prior temporary location</em>
+      shall be used for the old location.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.28.4">3.31.7.28.4 Expected actions</h5>
+    <p>
+      The receiver shall update the patient’s location to the value in field
+      <em>PV1-11-temporary location</em>
+      or to the value in field
+      <em>PV1-3-patient location</em>
+      , as appropriate.
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this message conflicts with the current situation, the message is discarded but no error condition is raised.</p>
+    <p>If the receiver does not support the Temporary Patient Location Tracking Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.29">3.31.7.29 Cancel Patient Arriving – Tracking – ADT^A32^ADT_A21</h4>
+    <h5 id="3.31.7.29.1">3.31.7.29.1 Trigger Event</h5>
+    <p>This message is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to cancel a previous notification (via trigger event A10) that a patient arrived at a location without the patient’s official bed census location having changed, as for example when the patient arrives at a diagnostic or treatment service.</p>
+    <p>MSH-9 is valued ADT^A32^ADT_A21.</p>
+    <h5 id="3.31.7.29.2">3.31.7.29.2 Message Static Definition</h5>
+    <p>Table 3.31-35: Static definition of message ADT^A32^ADT_A21</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.29.3">3.31.7.29.3 Comments on segment usage</h5>
+    <p>
+      If the patient was in a non-temporary location, then field
+      <em>PV1-3–- Assigned Patient Location</em>
+      may contain (if known) the original patient location prior to the erroneous A10 (patient arriving-tracking) event. If the patient was in a temporary location, then field
+      <em>PV1-11–- Temporary Location</em>
+      may contain (if known) the original patient location prior to the erroneous A10 (patient arriving-tracking) event.
+    </p>
+    <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
+    <h5 id="3.31.7.29.4">3.31.7.29.4 Expected actions</h5>
+    <p>
+      If field
+      <em>PV1-3–- Assigned Patient Location</em>
+      is populated, the receiver shall reset the patient’s permanent location to the value contained in that field. If field
+      <em>PV1-11–- Temporary Location</em>
+      is populated, the receiver shall reset the patient’s permanent location to the value contained in that field.
+    </p>
+    <p>The receiver shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>In case this message conflicts with the current situation, the message is discarded but no error condition is raised.</p>
+    <p>If the receiver does not support the Temporary Patient Location Tracking Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.30">3.31.7.30 Update Patient Movement Information – ADT^Z99^ADT_A01</h4>
+    <h5 id="3.31.7.30.1">3.31.7.30.1 Trigger Event</h5>
+    <p>This message is only used within the context of the “Historic Movement Management” Option.</p>
+    <p>It is sent by a Patient Encounter Supplier to a Patient Encounter Consumer to communicate an update of a Movement, which can be the current Movement or a historic one.</p>
+    <p>MSH-9 is valued ADT^Z99^ADT_A01.</p>
+    <h5 id="3.31.7.30.2">3.31.7.30.2 Message Static Definition</h5>
+    <p>Table 3.31-36: Static definition of message ADT^Z99^ADT_A01</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>NK1</td>
+          <td>Next of Kin / Associated Parties</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>PV2</td>
+          <td>Patient Visit – Additional Info</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>ZBE</td>
+          <td>Movement segment</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>DB1</td>
+          <td>Disability Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>OBX</td>
+          <td>Observation/Result</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>7</td>
+        </tr>
+        <tr class="odd">
+          <td>AL1</td>
+          <td>Allergy Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>DG1</td>
+          <td>Diagnosis Information</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>DRG</td>
+          <td>Diagnosis Related Group</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- PROCEDURE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>PR1</td>
+          <td>Procedures</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PROCEDURE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="even">
+          <td>GT1</td>
+          <td>Guarantor</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- INSURANCE begin</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>IN1</td>
+          <td>Insurance</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>IN2</td>
+          <td>Insurance Additional Info.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>IN3</td>
+          <td>Insurance Additional Info–- Cert.</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>ROL</td>
+          <td>Role</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>15</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td>--- INSURANCE end</td>
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr class="odd">
+          <td>ACC</td>
+          <td>Accident Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>UB1</td>
+          <td>Universal Bill Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="odd">
+          <td>UB2</td>
+          <td>Universal Bill 92 Information</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>6</td>
+        </tr>
+        <tr class="even">
+          <td>PDA</td>
+          <td>Patient Death and Autopsy</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.30.3">3.31.7.30.3 Comments on segment usage</h5>
+    <p>The ZBE segment is mandatory in this message. See the description of this segment in Section 3.31.6.1.</p>
+    <h5 id="3.31.7.30.4">3.31.7.30.4 Expected actions</h5>
+    <p>Otherwise, the receiver shall update the Movement in its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>If the receiver does not know the Movement to be updated (identified by ZBE-3 in the ZBE segment), it discards the message and raises an error condition.</p>
+    <p>A receiver not supporting the Historic Movement Management Option shall application-reject the message (see ITI TF-2x: C.2.3).</p>
+    <h4 id="3.31.7.31">3.31.7.31 Merge two patients–- ADT^A40^ADT_A39</h4>
+    <h5 id="3.31.7.31.1">3.31.7.31.1 Trigger Event</h5>
+    <p>The Patient Encounter Supplier notifies the merge of records for a patient that was incorrectly filed under two different identifiers. This message is only used to merge two patient identifiers of the same type, or two lists of patient identifiers, it is not supposed to update other patient demographics information. The A08 trigger event should be used for this purpose.</p>
+    <p>MSH-9 is valued ADT^A40^ADT_A39.</p>
+    <h5 id="3.31.7.31.2">3.31.7.31.2 Message Static Definition</h5>
+    <p>Table 3.31-37: Static definition of message ADT^Z40^ADT_A39</p>
+    <table>
+      <tbody>
+        <tr class="odd">
+          <td>Segment</td>
+          <td>Meaning</td>
+          <td>Usage</td>
+          <td>Card.</td>
+          <td>HL7 chapter</td>
+        </tr>
+        <tr class="even">
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>SFT</td>
+          <td>Software Segment</td>
+          <td>O</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+        <tr class="even">
+          <td>EVN</td>
+          <td>Event Type</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr class="odd">
+          <td>---</td>
+          <td>--- PATIENT begin</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+        </tr>
+        <tr class="even">
+          <td>PID</td>
+          <td>Patient Identification</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PD1</td>
+          <td>Additional Demographics</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>MRG</td>
+          <td>Merge Information</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>3</td>
+        </tr>
+        <tr class="odd">
+          <td>PV1</td>
+          <td>Patient Visit</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>3</td>
+        </tr>
+        <tr class="even">
+          <td>---</td>
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.31.7.31.3">3.31.7.31.3 Comments on segment usage</h5>
+    <p>This transaction makes unrepeatable the PATIENT segment group: The message can communicate only one merge operation for one patient.</p>
+    <p>
+      The “incorrect supplier identifier” identified in the MRG segment (
+      <em>MRG-1-Prior Patient Identifier List</em>
+      ) is to be merged with the required “correct target identifier” of the same “identifier type code” component identified in the PID segment (
+      <em>PID-3-Patient Identifier List</em>
+      ). The “incorrect supplier identifier” would then logically never be referenced in future transactions.
+    </p>
+    <p>The PV1 segment is not supported by IHE in this message.</p>
+    <h5 id="3.31.7.31.4">3.31.7.31.4 Expected actions</h5>
+    <p>The receiver shall merge the two patients in its data base, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
+    <p>If the receiver does not recognize the target patient identifiers, it shall perform a Change Patient Identifier List instead of a Merge.</p>
+    <p>If the receiver does not recognize the supplier patient identifiers to be merged, it shall take no action. This situation is not an error.</p>
+  </body>
+</html>

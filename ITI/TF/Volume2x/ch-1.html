@@ -1,0 +1,305 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta charset="utf-8" />
+    <title>IHE_ITI_TF_Rev16-0_Vol2x_FT</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <p>
+      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+    </p>
+    <p>IHE IT Infrastructure (ITI)</p>
+    <p>Technical Framework - Volume2x</p>
+    <p>Revision 16.0 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+    <h1 id="Appendix A">Appendix A: Web Service Definition for Retrieve Specific Information for Display and Retrieve Document for Display Transaction</h1>
+    <p>The following is an example WSDL definition of web services used in transactions [ITI-11] and [ITI-12]. This code is provided as an example and is not intended to replace the formal specification of transactions [ITI-11] and [ITI-12] in Volume 2a. Also, the definitions of summaryRequestType, listRequestType and contentType shall correspond to the capabilities of the Information Source.</p>
+    <p>&lt;?xml version="1.0" encoding="utf8"?&gt;</p>
+    <p>&lt;definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"</p>
+    <p>xmlns:s="http://www.w3.org/2001/XMLSchema"</p>
+    <p>xmlns:s0="http://rsna.org/ihe/IHERetrieveForDisplay"</p>
+    <p>xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"</p>
+    <p>xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"</p>
+    <p>targetNamespace="http://rsna.org/ihe/IHERetrieveForDisplay"</p>
+    <p>xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;</p>
+    <p>&lt;!-- Defines the types available for the parameters --&gt;</p>
+    <p>&lt;!-- May also include the return type definitions --&gt;</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;s:schema elementFormDefault="qualified" targetNamespace="http://rsna.org/ihe/IHERetrieveForDisplay"&gt;</p>
+    <p>&lt;!-- Add any items that control the returned values list or type here --&gt;</p>
+    <p>&lt;!-- Add or remove items in the actual supplied WSDL to show the available types. --&gt;</p>
+    <p>&lt;s:simpleType name="summaryRequestType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-RADIOLOGY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-CARDIOLOGY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-LABORATORY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-SURGERY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-EMERGENCY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-DISCHARGE" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-ICU" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;s:simpleType name="listRequestType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="LIST-ALLERGIES" /&gt;</p>
+    <p>&lt;s:enumeration value="LIST-MEDS" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;!-- Please list all content types available, and remove those not available. --&gt;</p>
+    <p>&lt;s:simpleType name="contentType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="text/html" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;!-- Indicates that this item is a returned rows restriction --&gt;</p>
+    <p>&lt;s:simpleType name="ReturnedResultCount" type="s:positiveInteger" /&gt;</p>
+    <p>&lt;!-- Please use the string "Search" as a prefix for all search criteria, and list below --&gt;</p>
+    <p>&lt;!-- Indicates that this item is a search string --&gt;</p>
+    <p>&lt;s:simpleType name="SearchString" type="s:string" /&gt;</p>
+    <p>&lt;/s:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>&lt;message name="RetrieveSummaryInfoHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;part name="requestType" type="summaryRequestType" /&gt;</p>
+    <p>&lt;part name="patientID" type="SearchString" /&gt;</p>
+    <p>&lt;part name="lowerDateTime" type="s:dateTime" /&gt;</p>
+    <p>&lt;part name="upperDateTime" type="s:dateTime" /&gt;</p>
+    <p>&lt;part name="mostRecentResults" type="ReturnedResultCount" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveSummaryInfoHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s0:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s0:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveListInfoHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;part name="requestType" type="listRequestType" /&gt;</p>
+    <p>&lt;part name="patientID" type="SearchString" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveListInfoHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s0:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s0:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveDocumentHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;!-- It is recommended that one of the sub-types of SearchUID is chosen here --&gt;</p>
+    <p>&lt;!-- Especially if SearchStudyUID is allowed, then the display client can know that --&gt;</p>
+    <p>&lt;!-- it is permissible to use a dicom uid here --&gt;</p>
+    <p>&lt;part name="documentUID" type="SearchString" /&gt;</p>
+    <p>&lt;part name="contentType" type="contentType" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveDocumentHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;portType name="IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;operation name="RetrieveSummaryInfo"&gt;</p>
+    <p>&lt;input message="s0:RetrieveSummaryInfoHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveSummaryInfoHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveListInfo"&gt;</p>
+    <p>&lt;input message="s0:RetrieveListInfoHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveListInfoHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocument"&gt;</p>
+    <p>&lt;input message="s0:RetrieveDocumentHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveDocumentHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p>&lt;binding name="IHERetrieveForDisplayHttpGet" type="s0:IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;http:binding verb="GET" /&gt;</p>
+    <p>&lt;operation name="RetrieveSummaryInfo"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveSummaryInfo" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveListInfo"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveListInfo" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocument"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveDocument" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;!-- The type of the output should be restricted on a per-server basis to the types --&gt;</p>
+    <p>&lt;!-- actually provided. --&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;mime:content type="application/x-hl7-cda-level-one+xml" /&gt;</p>
+    <p>&lt;mime:content type="application/pdf" /&gt;</p>
+    <p>&lt;mime:content type="image/jpeg" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>&lt;!-- Bind the actual service here --&gt;</p>
+    <p>&lt;service name="IHERetrieveForDisplay"&gt;</p>
+    <p>&lt;port name="IHERetrieveForDisplayHttpGet" binding="s0:IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;http:address location="http://localhost/" /&gt;</p>
+    <p>&lt;/port&gt;</p>
+    <p>&lt;/service&gt;</p>
+    <p>&lt;?xml version="1.0" encoding="utf8"?&gt;</p>
+    <p>&lt;definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"</p>
+    <p>xmlns:s="http://www.w3.org/2001/XMLSchema"</p>
+    <p>xmlns:s0="http://rsna.org/ihe/IHERetrieveForDisplay"</p>
+    <p>xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"</p>
+    <p>xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"</p>
+    <p>targetNamespace="http://rsna.org/ihe/IHERetrieveForDisplay"</p>
+    <p>xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;</p>
+    <p>&lt;!-- Defines the types available for the parameters --&gt;</p>
+    <p>&lt;!-- May also include the return type definitions --&gt;</p>
+    <p>&lt;types&gt;</p>
+    <p>&lt;s:schema elementFormDefault="qualified" targetNamespace="http://rsna.org/ihe/IHERetrieveForDisplay"&gt;</p>
+    <p>&lt;!-- Add any items that control the returned values list or type here --&gt;</p>
+    <p>&lt;!-- Add or remove items in the actual supplied WSDL to show the available types. --&gt;</p>
+    <p>&lt;s:simpleType name="summaryRequestType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-RADIOLOGY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-CARDIOLOGY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-LABORATORY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-SURGERY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-EMERGENCY" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-DISCHARGE" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-ICU" /&gt;</p>
+    <p>&lt;s:enumeration value="SUMMARY-RX" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;s:simpleType name="listRequestType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="LIST-ALLERGIES" /&gt;</p>
+    <p>&lt;s:enumeration value="LIST-MEDS" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;!-- Please list all content types available, and remove those not available. --&gt;</p>
+    <p>&lt;s:simpleType name="contentType"&gt;</p>
+    <p>&lt;s:restriction base="s:string"&gt;</p>
+    <p>&lt;s:enumeration value="text/html" /&gt;</p>
+    <p>&lt;/s:restriction&gt;</p>
+    <p>&lt;/s:simpleType&gt;</p>
+    <p>&lt;!-- Indicates that this item is a returned rows restriction --&gt;</p>
+    <p>&lt;s:simpleType name="ReturnedResultCount" type="s:positiveInteger" /&gt;</p>
+    <p>&lt;!-- Please use the string "Search" as a prefix for all search criteria, and list below --&gt;</p>
+    <p>&lt;!-- Indicates that this item is a search string --&gt;</p>
+    <p>&lt;s:simpleType name="SearchString" type="s:string" /&gt;</p>
+    <p>&lt;/s:schema&gt;</p>
+    <p>&lt;/types&gt;</p>
+    <p>&lt;message name="RetrieveSummaryInfoHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;part name="requestType" type="summaryRequestType" /&gt;</p>
+    <p>&lt;part name="patientID" type="SearchString" /&gt;</p>
+    <p>&lt;part name="lowerDateTime" type="s:dateTime" /&gt;</p>
+    <p>&lt;part name="upperDateTime" type="s:dateTime" /&gt;</p>
+    <p>&lt;part name="mostRecentResults" type="ReturnedResultCount" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveSummaryInfoHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s0:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s0:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveListInfoHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;part name="requestType" type="listRequestType" /&gt;</p>
+    <p>&lt;part name="patientID" type="SearchString" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveListInfoHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s0:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s0:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveDocumentHttpGetIn"&gt;</p>
+    <p>&lt;!-- Add other parameters here if they are available, using types defined above. --&gt;</p>
+    <p>&lt;!-- It is recommended that one of the sub-types of SearchUID is chosen here --&gt;</p>
+    <p>&lt;!-- Especially if SearchStudyUID is allowed, then the display client can know that --&gt;</p>
+    <p>&lt;!-- it is permissible to use a dicom uid here --&gt;</p>
+    <p>&lt;part name="documentUID" type="SearchString" /&gt;</p>
+    <p>&lt;part name="contentType" type="contentType" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;message name="RetrieveDocumentHttpGetOut"&gt;</p>
+    <p>&lt;!-- If a complex type is defined for the return value, then it is suggested that --&gt;</p>
+    <p>&lt;!-- it be used here instead of s:string. If a complex type is allowed as one --&gt;</p>
+    <p>&lt;!-- of the options, but an arbitrarily formatted string is also allowed, then create --&gt;</p>
+    <p>&lt;!-- a union type here that allows either option. --&gt;</p>
+    <p>&lt;part name="Body" element="s:string" /&gt;</p>
+    <p>&lt;/message&gt;</p>
+    <p>&lt;portType name="IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;operation name="RetrieveSummaryInfo"&gt;</p>
+    <p>&lt;input message="s0:RetrieveSummaryInfoHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveSummaryInfoHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveListInfo"&gt;</p>
+    <p>&lt;input message="s0:RetrieveListInfoHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveListInfoHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocument"&gt;</p>
+    <p>&lt;input message="s0:RetrieveDocumentHttpGetIn" /&gt;</p>
+    <p>&lt;output message="s0:RetrieveDocumentHttpGetOut" /&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/portType&gt;</p>
+    <p>&lt;binding name="IHERetrieveForDisplayHttpGet" type="s0:IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;http:binding verb="GET" /&gt;</p>
+    <p>&lt;operation name="RetrieveSummaryInfo"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveSummaryInfo" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveListInfo"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveListInfo" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;operation name="RetrieveDocument"&gt;</p>
+    <p>&lt;http:operation location="/IHERetrieveDocument" /&gt;</p>
+    <p>&lt;input&gt;</p>
+    <p>&lt;http:urlEncoded /&gt;</p>
+    <p>&lt;/input&gt;</p>
+    <p>&lt;!-- The type of the output should be restricted on a per-server basis to the types --&gt;</p>
+    <p>&lt;!-- actually provided. --&gt;</p>
+    <p>&lt;output&gt;</p>
+    <p>&lt;mime:content type="text/html" /&gt;</p>
+    <p>&lt;mime:content type="application/x-hl7-cda-level-one+xml" /&gt;</p>
+    <p>&lt;mime:content type="application/pdf" /&gt;</p>
+    <p>&lt;mime:content type="image/jpeg" /&gt;</p>
+    <p>&lt;/output&gt;</p>
+    <p>&lt;/operation&gt;</p>
+    <p>&lt;/binding&gt;</p>
+    <p>&lt;!-- Bind the actual service here --&gt;</p>
+    <p>&lt;service name="IHERetrieveForDisplay"&gt;</p>
+    <p>&lt;port name="IHERetrieveForDisplayHttpGet" binding="s0:IHERetrieveForDisplayHttpGet"&gt;</p>
+    <p>&lt;http:address location="http://localhost/" /&gt;</p>
+    <p>&lt;/port&gt;</p>
+    <p>&lt;/service&gt;</p>
+  </body>
+</html>
