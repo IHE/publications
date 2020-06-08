@@ -2,11 +2,12 @@
 
 # ITI
 * Final Text Technical Framework
-  * [ITI Volume 1](ITI/TF/Volume1/index.html)
-  * [ITI volume 2a](ITI/TF/Volume2a/index.html)
-  * [ITI volume 2b](ITI/TF/Volume2b/index.html)
-  * [ITI volume 2x](ITI/TF/Volume2x/index.html)
-  * [ITI volume 3](ITI/TF/Volume3/index.html)
+  * [ITI TF Index](ITI/TF/index.html)
+  * [ITI TF Volume 1](ITI/TF/Volume1/index.html)
+  * [ITI TF volume 2a](ITI/TF/Volume2a/index.html)
+  * [ITI TF volume 2b](ITI/TF/Volume2b/index.html)
+  * [ITI TF volume 2x](ITI/TF/Volume2x/index.html)
+  * [ITI TF volume 3](ITI/TF/Volume3/index.html)
   * etc...
 * Trial Implementation Supplements
   * [MHD](MHD/index.html)
