@@ -36,13 +36,12 @@ The conversion is a multi step process consosting of the following steps:
 * added HTML links to appendix sections
 * added HTML links to appendix subsections
 * added HTML links to level 7 and level 8 headers, which have no <hx/> tag (since this is not defined in HTML).
+* build Table and image TOC (meked missing image tags with \*\*)
 
 ## Open issues:
 
 ### Java processing code
-- volumes use inner volume reference with pattern "Section 3.52.5.1". Need to be converted to HTML links. See example in 3.53 Document Metadata Notify.
 - link footnotes in Volume 1 to the Volume 1 Glossary  
-- build Table and image TOC
 - Not all tables use \<thead/> or <th/> header elements like in v1_ch-1.html, for example the tables in v1_ch-2.html have no header line.
 - list numbering fails, if there a paragraph text in lists (see v1 ch 15, 15.3 XDR Process Flow for example)
 
