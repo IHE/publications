@@ -9,55 +9,160 @@
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework - Volume2a</p>
+    <p>Technical Framework</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h2 id="3.4">3.4 Kerberized Communication [ITI-4]</h2>
-    <p>This section corresponds to transaction [ITI-4] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-4] is used by the Client Authentication Agent and Kerberized Server Actors.</p>
-    <h3 id="3.4.1">3.4.1 Scope</h3>
-    <p>This section specifies the details of the association of a Kerberos user identity with a session for a session oriented protocol, or a transaction for a transaction oriented protocol.</p>
-    <h3 id="3.4.2">3.4.2 Use Case Roles</h3>
-    <p>Actor: Client Authentication Agent</p>
-    <p>Role: Provides appropriate ticket as part of the connection or session management for another protocol.</p>
-    <p>Actor: Kerberized Server</p>
-    <p>Role: Accepts and verifies the ticket to perform user-identity-related services as part of the connection or session management for another protocol.</p>
-    <h3 id="3.4.3">3.4.3 Referenced Standard</h3>
-    <p>RFC1510 The Kerberos Network Authentication Service (V5)</p>
-    <h3 id="3.4.4">3.4.4 Messages</h3>
-    <p id="Figure 3.4-1">Figure 3.4-1: Kerberized Communications</p>
-    <h4 id="3.4.4.1">3.4.4.1 Kerberized Communications</h4>
-    <p>The sequence diagram above describes information flow that can be encapsulated in a variety of different protocol startup sequences. The specific details for this encapsulation are defined as part of the definition of Kerberizing a specific kind of communication protocol.</p>
-    <h5 id="3.4.4.1.1">3.4.4.1.1 Trigger Events</h5>
-    <p>This occurs at the beginning of a session or as part of each session-less transaction.</p>
-    <h5 id="3.4.4.1.2">3.4.4.1.2 Message Semantics</h5>
-    <p>The Client Authentication Agent requests service from a Kerberized Server by sending the server a Kerberos Application Request (KRB_AP_REQ). This message contains an authenticator encrypted with the session key, the ticket obtained in the Get Service Ticket Transaction, and a flag indicating whether the client wants mutual authentication. (The setting of this flag is either specified by the rules of the Kerberized communications, or is an option of the specific Kerberized protocol.)</p>
-    <p>The Kerberized Server receives KRB_AP_REQ, decrypts the ticket, and extracts the authorization data and the session key. The server uses the session key to decrypt the authenticator and then evaluates the timestamp inside. If the authenticator passes the test, the server looks for a mutual authentication flag in the client’s request for protocols that support mutual authentication. If the flag is set, the server uses the session key to encrypt the time supplied by the Client Authentication and returns the result in a Kerberos Application Reply (KRB_AP_REP).</p>
-    <p>The actual encoding and exchange of the KRB_AP_REQ and KRB_AP_REP are defined as part of the definition of the specific Kerberized protocol.</p>
-    <h5 id="3.4.4.1.3">3.4.4.1.3 Expected Actions</h5>
-    <p>When the Client Authentication receives KRB_AP_REP, it decrypts the server’s authenticator with the session key it shares with the server and compares the time returned by the service with the time in the client’s original authenticator. If the times match, the client knows that the service is genuine, and the connection proceeds.</p>
-    <p>If no mutual authentication is requested, the other IHE actors proceed with their IHE transactions. These transactions are identified as being requested by the authenticated user. The other actors will utilize this information for other purposes, such as confirming user authorization or logging user actions into audit trails.</p>
-    <h4 id="3.4.4.2">3.4.4.2 Kerberized HTTP</h4>
-    <p>
-      Kerberized HTTP shall use SPNEGO-HTTP (see
-      <a href="http://www.ietf.org/internet-drafts/draft-brezak-spnego-http-04.txt">http://www.ietf.org/internet-drafts/draft-brezak-spnego-http-04.txt</a>
-      ).
+    <h2 xmlns="" id="3.4">3.4      Kerberized Communication [ITI-4]</h2>
+    <p xmlns="">
+      <span>This section corresponds to</span>
+      <span>t</span>
+      <span>ransaction</span>
+      <span>[</span>
+      <span>ITI-4</span>
+      <span>]</span>
+      <span>of the IHE IT Infrastructure Technical Framework. Transaction</span>
+      <span>[</span>
+      <span>ITI-4</span>
+      <span>]</span>
+      <span>is used by the Client Authentication Agent and Kerberized Server Actors.</span>
     </p>
-    <p>Note: At the time of publication there were no Kerberized HTTP normative standards. There are three relatively well-documented non-normative specifications. In addition, there are commercial and open source implementations of this specification for web and application servers. It was decided to use the Kerberized HTTP specification that is implemented by Microsoft Internet Explorer (MSIE) because many healthcare desktops use MSIE.</p>
-    <p>The following figure shows a typical message sequence for Kerberized HTTP.</p>
-    <p id="Figure 3.4-2">Figure 3.4-2: Kerberized HTTP</p>
-    <p>There is also documentation on the transactions, configuration, and troubleshooting these configurations. Rather than reproduce all of that material as part of this framework, readers are strongly encouraged to explore these references.</p>
-    <h5 id="3.4.4.2.1">3.4.4.2.1 Trigger Events</h5>
-    <p>This transaction occurs at the beginning of each HTTP transaction.</p>
-    <p>Note: When the workstation is properly configured utilizing Microsoft Internet Explorer these transactions are transparent. A prompt for username, password, and domain is an indication of an improperly configured component.</p>
-    <h5 id="3.4.4.2.2">3.4.4.2.2 Message Semantics</h5>
-    <p>This IHE profile recognizes that the SPNEGO-HTTP method allows the client side to return Kerberos credentials or NTLM credentials. This IHE profile thus restricts the transactions to the Kerberized credentials.</p>
-    <h4 id="3.4.4.3">3.4.4.3 Kerberized DICOM</h4>
-    <p>The Kerberization of DICOM has been proposed and is under development. There is not a finished standard at this time.</p>
-    <h4 id="3.4.4.4">3.4.4.4 Kerberized HL7</h4>
-    <p>The Kerberization of HL7 has been proposed and is under development. There is not a finished standard at this time.</p>
-    <h3 id="3.4.5">3.4.5 Security Considerations</h3>
-    <p>The Kerberized Communications [ITI-4] transaction is not required to log an ATNA UserAuthentication event in the case of successful communications. An ATNA UserAuthentication event shall be logged when the communications fails for the purpose of authentication failure.</p>
+    <h3 xmlns="" id="3.4.1">3.4.1 Scope</h3>
+    <p xmlns="">
+      <span>This section specifies the details of the association of a Kerberos user identity with a session for a session oriented protocol, or a transaction for a transaction oriented protocol.</span>
+    </p>
+    <h3 xmlns="" id="3.4.2">3.4.2 Use Case Roles</h3>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/alql6-rgeyz.010.png" width="365" height="123" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span>Client Authentication Agent</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span>Provides appropriate ticket as part of the connection or session management for another protocol.</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span>Kerberized Server</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span>Accepts and verifies the ticket to perform user-identity-related services as part of the connection or session management for another protocol.</span>
+    </p>
+    <h3 xmlns="" id="3.4.3">3.4.3 Referenced Standard</h3>
+    <p xmlns="">
+      <span>RFC</span>
+      <span>1510</span>
+      <span style="width:25.32pt; display:inline-block"> </span>
+      <span>The Kerberos Network Authentication Service (V5)</span>
+    </p>
+    <h3 xmlns="" id="3.4.4">3.4.4 Messages</h3>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/alql6-rgeyz.011.png" width="517" height="249" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 3.4-1: Kerberized Communications</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <h4 xmlns="" id="3.4.4.1">3.4.4.1    Kerberized Communications</h4>
+    <p xmlns="">
+      <span>The sequence diagram above describes information flow that can be encapsulated in a variety of different protocol startup sequences. The specific details for this encapsulation are defined as part of the definition of Kerberizing a specific kind of communication protocol.</span>
+    </p>
+    <h5 xmlns="" id="3.4.4.1.1">3.4.4.1.1   Trigger Events</h5>
+    <p xmlns="">
+      <span>This occurs at the beginning of a session or as part of each session-less transaction.</span>
+    </p>
+    <h5 xmlns="" id="3.4.4.1.2">3.4.4.1.2   Message Semantics</h5>
+    <p xmlns="">
+      <span>The Client Authentication Agent requests service from a Kerberized Server by sending the server a Kerberos Application Request (KRB_AP_REQ). This message contains an authenticator encrypted with the session key, the ticket obtained in the Get Service Ticket Transaction, and a flag indicating whether the client wants mutual authentication. (The setting of this flag is either specified by the rules of the Kerberized communications, or is an option of the specific Kerberized protocol.)</span>
+    </p>
+    <p xmlns="">
+      <span>The Kerberized Server receives KRB_AP_REQ, decrypts the ticket, and extracts the authorization data and the session key. The server uses the session key to decrypt the</span>
+      <span>authenticator and then evaluates the timestamp inside. If the authenticator passes the test, the server looks for a mutual authentication flag in the client’s request for protocols that support mutual authentication. If the flag is set, the server uses the session key to encrypt the time supplied by the Client Authentication and returns the result in a Kerberos Application Reply (KRB_AP_REP).</span>
+    </p>
+    <p xmlns="">
+      <span>The actual encoding and exchange of the KRB_AP_REQ and KRB_AP_REP are defined as part of the definition of the specific Kerberized protocol.</span>
+    </p>
+    <h5 xmlns="" id="3.4.4.1.3">3.4.4.1.3   Expected Actions</h5>
+    <p xmlns="">
+      <span>When the Client Authentication receives KRB_AP_REP, it decrypts the server’s authenticator with the session key it shares with the server and compares the time returned by the service with the time in the client’s original authenticator. If the times match, the client knows that the service is genuine, and the connection proceeds.</span>
+    </p>
+    <p xmlns="">
+      <span>If no mutual authentication is requested, the other IHE actors proceed with their IHE transactions. These transactions are identified as being requested by the authenticated user. The other actors will utilize this information for other purposes, such as confirming user authorization or logging user actions into audit trails.</span>
+    </p>
+    <h4 xmlns="" id="3.4.4.2">3.4.4.2    Kerberized HTTP</h4>
+    <p xmlns="">
+      <span>Kerberized HTTP shall use SPNEGO-HTTP</span>
+      <span />
+      <span>(see</span>
+      <a href="http://www.ietf.org/internet-drafts/draft-brezak-spnego-http-04.txt" style="text-decoration:none">
+        <span style="font-family:'Times New Roman'; text-decoration:underline; color:#0000ff">http://www.ietf.org/internet-drafts/draft-brezak-spnego-http-04.txt</span>
+      </a>
+      <span>)</span>
+      <span>.</span>
+    </p>
+    <p xmlns="" style="font-size:9pt">
+      <span>Note:</span>
+      <span style="width:13.75pt; text-indent:0pt; display:inline-block"> </span>
+      <span>At the time of publication there were no Kerberized HTTP normative standards. There are three relatively well-documented non-normative specifications. In addition, there are commercial and open source implementations of this specification for web and application servers. It was decided to use the Kerberized HTTP specification that is implemented by Microsoft Internet Explorer (MSIE) because many healthcare desktops use MSIE.</span>
+    </p>
+    <p xmlns="">
+      <span>The following figure shows a typical message sequence for Kerberized HTTP.</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/alql6-rgeyz.012.png" width="615" height="375" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 3.4-2: Kerberized HTTP</span>
+    </p>
+    <p xmlns="">
+      <span>There is also documentation on the transactions, configuration, and troubleshooting these configurations. Rather than reproduce all of that material as part of this</span>
+      <span>f</span>
+      <span>ramework, readers are strongly encouraged to explore these references.</span>
+    </p>
+    <h5 xmlns="" id="3.4.4.2.1">3.4.4.2.1   Trigger Events</h5>
+    <p xmlns="">
+      <span>This transaction occurs at the beginning of each HTTP transaction.</span>
+    </p>
+    <p xmlns="" style="font-size:9pt">
+      <span>Note:</span>
+      <span style="width:16pt; text-indent:0pt; display:inline-block"> </span>
+      <span>When the workstation is properly configured utilizing Microsoft Internet Explorer these transactions are transparent. A prompt for username, password, and domain is an indication of an improperly configured component.</span>
+    </p>
+    <h5 xmlns="" id="3.4.4.2.2">3.4.4.2.2   Message Semantics</h5>
+    <p xmlns="">
+      <span>This IHE profile recognizes that the SPNEGO-HTTP method allows the client side to return Kerberos credentials or NTLM credentials. This IHE profile thus restricts the transactions to the Kerberized credentials.</span>
+    </p>
+    <h4 xmlns="" id="3.4.4.3">3.4.4.3    Kerberized DICOM</h4>
+    <p xmlns="">
+      <span>The Kerberization of DICOM has been proposed and is under development. There is not a finished standard at this time.</span>
+    </p>
+    <h4 xmlns="" id="3.4.4.4">3.4.4.4    Kerberized HL7</h4>
+    <p xmlns="">
+      <span>The Kerberization of HL7 has been proposed and is under development. There is not a finished standard at this time.</span>
+    </p>
+    <h3 xmlns="" id="3.4.5">3.4.5 Security Considerations</h3>
+    <p xmlns="">
+      <span>The Kerberized Communications [ITI-4]</span>
+      <span>t</span>
+      <span>ransaction is not required to log an ATNA UserAuthentication event in the case of successful communications. An ATNA UserAuthentication event shall be logged when the communications fails for the purpose of authentication failure.</span>
+    </p>
   </body>
 </html>

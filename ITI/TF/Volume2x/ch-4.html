@@ -9,182 +9,524 @@
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework - Volume2x</p>
+    <p>Technical Framework</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h1 id="Appendix D">Appendix D: Cross-Profile Interactions of PIX and PSA</h1>
-    <p>When the Context Manager in a Patient Synchronized Application Integration Profile is grouped with a Patient Identifier Cross-reference Consumer in a Patient Identifier Cross-referencing Integration Profile, patient identifiers must be accessible to both actors in a consistent manner. This Appendix provides the necessary mapping rules.</p>
-    <p>The Patient Identifier Cross-Referencing (PIX) Integration Profile defines a general-purpose mapping of a Patient ID within a Patient Identification Domain to aliases in other Patient Identification Domains. This mapping is intended to be used across all IHE systems that require patient identification in transactions crossing Patient Identification Domains. The PIX Integration Profile relies on HL7 V2 transactions.</p>
-    <p>The Patient Synchronized Application Integration Profile relies on HL7 CCOW which, confronted with a similar need, has defined a Patient Mapping API within its architecture. The HTTP Technology mapping for the CCOW Patient Mapping Agent API supports its operation over a network interface, thus creating an alternative to HL7 V2 messages.</p>
-    <p>As IHE strives to avoid the inclusion in its integration profiles of incompatible but functionally equivalent variants, it has decided to use HL7 V2 ADT messages for the Patient Identifier Cross-referencing Integration Profiles. In consequence, the combined use of the Patient Synchronized (CCOW based) Integration Profile and of the Patient Identifier Cross-referencing Integration profiles requires that the IHE Context Manager use the services of the PIX Integration Profile. To do so, the Patient Identifier Cross-reference Consumer in communication with the Patient Identifier Cross-reference Manager operates as a substitute for the CCOW Patient Mapping Agent. This is shown in Figure D-1 below as a dashed oval surrounding the Patient Cross-reference Manager and the Patient Identifier Cross-reference Consumer Actors. As a result it is likely that a context management solution would bundle a PMA proxy application that would implement the PIX Query in support of the Patient Identifier Cross-reference Consumer.</p>
-    <p id="Figure D-1">Figure D-1: Actor Grouping Diagram</p>
-    <p>This Appendix provides the definition of the mapping of the CCOW Patient Mapping Agent API methods onto the PIX Query Transaction (HL7 V2 QBP^Q23/RSP^K23) as defined by the PIX Integration Profile.</p>
-    <p>Figure D-1 shows the definition of the Patient Mapping Methods parameters as implemented in Web technology. Most of these Arguments relate to the normal operations of the Patient Mapping Agent methods that pose no mapping challenge except for the ItemNames and ItemValues which pose some constraints. The first constraint comes from the translation of Patient Identity Domains for both query and response from and to a CCOW defined name / value pair. The second one comes from the fact that CCOW participant applications can set more than one identifier in context the ability to detect when these identifiers represent the identities of more than one patient. IHE has taken steps to mitigate these issues by further restricting how the IHE Context Participant implements the methods. Each of these constraints is addressed in sections below.</p>
-    <p id="Table D-1">Table D-1: ContextChangesPending</p>
-    <table>
-      <tbody>
-        <tr class="odd">
-          <td>HTTP Request Message</td>
-          <td />
-          <td />
-        </tr>
-        <tr class="even">
-          <td>Argument Name</td>
-          <td>Data Type</td>
-          <td>Comment</td>
-        </tr>
-        <tr class="odd">
-          <td>Interface</td>
-          <td>string</td>
-          <td>“ContextAgent”</td>
-        </tr>
-        <tr class="even">
-          <td>Method</td>
-          <td>string</td>
-          <td>“ContextChangesPending”</td>
-        </tr>
-        <tr class="odd">
-          <td>agentCoupon</td>
-          <td>long</td>
-          <td>“-1”</td>
-        </tr>
-        <tr class="even">
-          <td>contextManager</td>
-          <td>string</td>
-          <td>URL for the Context Manager that is requesting the patient id cross-reference</td>
-        </tr>
-        <tr class="odd">
-          <td>itemNames</td>
-          <td>string[]</td>
-          <td>One or more item names (e.g., Patient.Id.IdList)</td>
-        </tr>
-        <tr class="even">
-          <td>itemValues</td>
-          <td>string[]</td>
-          <td>The patient identifiers corresponding to the domains identified in item names</td>
-        </tr>
-        <tr class="odd">
-          <td>contextCoupon</td>
-          <td>long</td>
-          <td>Context Coupon value for pending context change transaction</td>
-        </tr>
-        <tr class="even">
-          <td>managerSignature</td>
-          <td>string</td>
-          <td>Not required</td>
-        </tr>
-        <tr class="odd">
-          <td>HTTP Reply Message</td>
-          <td />
-          <td />
-        </tr>
-        <tr class="even">
-          <td>agentCoupon</td>
-          <td>long</td>
-          <td>“-1”</td>
-        </tr>
-        <tr class="odd">
-          <td>itemNames</td>
-          <td>string[]</td>
-          <td>See below for valid item names for patient subject</td>
-        </tr>
-        <tr class="even">
-          <td>itemValues</td>
-          <td>string[]</td>
-          <td>See below for any constraints on item values</td>
-        </tr>
-        <tr class="odd">
-          <td>contextCoupon</td>
-          <td>long</td>
-          <td>Return the value provided in request</td>
-        </tr>
-        <tr class="even">
-          <td>agentSignature</td>
-          <td>string</td>
-          <td>Not required</td>
-        </tr>
-        <tr class="odd">
-          <td>Decision</td>
-          <td>string</td>
-          <td>“valid” or “invalid”</td>
-        </tr>
-        <tr class="even">
-          <td>Reason</td>
-          <td>string</td>
-          <td>Reason text if mapping is invalid</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <em>Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</em>
+    <h1 xmlns="" id="Appendix D">Appendix D: Cross-Profile Interactions of PIX and PSA</h1>
+    <p xmlns="">
+      <span>When the Context Manager in a Patient Synchronized Application Integration Profile is grouped with a Patient Identifier Cross-reference Consumer in a Patient Identifier Cross-referencing Integration Profile, patient identifiers must be accessible to both actors in a consistent manner. This Appendix provides the necessary mapping rules.</span>
     </p>
-    <h2 id="Appendix D.1">D.1 Namespace Translation from PIX Query to CCOW</h2>
-    <p>The CCOW standard defines multiple identifier items that may be set into the context by an instigating participant application. The current list of valid identifier names are listed in Table D-2.</p>
-    <p id="Table D-2">Table D-2: Patient Subject Identifiers</p>
-    <table>
-      <tbody>
-        <tr class="odd">
-          <td>Patient Subject Identifier Item Name</td>
-          <td>HL7 Meaning</td>
-          <td>HL7 Data Type</td>
-          <td>HL7 Semantic Constraints on Values</td>
-          <td>Case Sensitive</td>
-        </tr>
-        <tr class="even">
-          <td>
-            Patient.Id.MRN
-            <em>.Suffix</em>
-          </td>
-          <td>Patient medical record number, per PID-2</td>
-          <td>ST</td>
-          <td>
-            HL7 Table 0203
-            <br />
-            Identifier Type = MR
-          </td>
-          <td>No</td>
-        </tr>
-        <tr class="odd">
-          <td>Patient.Id.MPI</td>
-          <td>Patient identifier in the “Master Patient Index”, per PID-2</td>
-          <td>ST</td>
-          <td>
-            HL7 Table 0203
-            <br />
-            Identifier Type = PT or PI (as agreed upon by context sharing systems) and Assigning Authority represents the MPI system
-          </td>
-          <td>No</td>
-        </tr>
-        <tr class="even">
-          <td>Patient.Id.NationalIdNumber</td>
-          <td>Patient national identifier number, per PID-2</td>
-          <td>ST</td>
-          <td>
-            HL7 Table 0203
-            <br />
-            Identifier Type = PT and Assigning Authority represents agreed upon National Authority
-          </td>
-          <td>No</td>
-        </tr>
-        <tr class="odd">
-          <td>Patient.Id.IdList</td>
-          <td>A list of patient identifiers for a patient, per PID-3</td>
-          <td>CX</td>
-          <td>May be a repeating set of CX item values (per Section 1.7 of the HL7 Context Management “CCOW” Standard: Subject Data Definitions document), each of which contains an identifier that denotes the same patient</td>
-          <td>No</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <em>Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</em>
+    <p xmlns="">
+      <span>The Patient Identifier Cross-Referencing (PIX) Integration Profile defines a general-purpose mapping of a Patient ID within a Patient Identification Domain to aliases in other Patient Identification Domains. This mapping is intended to be used across all IHE systems that require patient identification in transactions crossing Patient Identification Domains. The PIX Integration Profile relies on HL7 V2</span>
+      <span>t</span>
+      <span>ransactions.</span>
     </p>
-    <p>IHE has specified in the Context Change Transaction as documented in ITI TF-2a that the Context Participant shall use the Patient.Id.IdList item. The intent is to eliminate translation as the Patient.Id.IdList value maps directly to PIX Query Transaction QPD-3.</p>
-    <p>Applications using in their identifier items Patient.Id.MRN.Suffix will need to migrate to the Patient.Id.IdList item as expected by the HL7 CCOW standard.</p>
-    <h2 id="Appendix D.2">D.2 Processing Multiple Identifiers</h2>
-    <p>CCOW participant applications are permitted to populate as many patient identifiers as they have available to them. This means that when a user selects a patient in one of these applications the context is populated with multiple identifiers for the selected patient. When the CCOW Patient Mapping Agent (PMA) accepts multiple patient identifiers as input, the PMA has the responsibility of invalidating patient mapping and causing the context change transaction to be cancelled if it determines that the multiple identifiers supplied as part of the transaction identify more than one patient.</p>
-    <p>The QPD segment as defined in the IHE PIX Query Transaction specifies a single identifier uniquely identifying one patient within a given Patient Identification Domain. In the case where multiple identifiers are populated, the context manager may have to process the response to the initial PIX Query Transaction to evaluate if the other identifiers in context are included. If so, no further processing is required. Otherwise, an additional PIX Query will need to be issued and the results processed. Should a non-null result be returned, indicating the identifier uniquely identifies a different patient for the given domain, the context manager shall assume “invalid” in the decision field and “multiple patients identified” in the reason field.</p>
-    <p>In order to mitigate this condition, IHE specifies that all context participants supporting the Patient Synchronized Applications Profile shall only set one identifier for the patient when a Patient Identifier Cross-referencing Profile is used by the context manager. This means that the context participant for those applications that manage multiple patient identifiers will need to be configurable as to which identifier item is passed in the Change Context Transaction.</p>
+    <p xmlns="">
+      <span>The Patient Synchronized Application Integration Profile relies on HL7 CCOW which, confronted with a similar need, has defined a Patient Mapping API within its architecture. The HTTP Technology mapping for the CCOW Patient Mapping Agent API supports its operation over a network interface, thus creating an alternative to HL7 V2 messages.</span>
+    </p>
+    <p xmlns="">
+      <span>As IHE strives to avoid the inclusion in its integration profiles of incompatible but functionally equivalent variants, it has decided to use HL7 V2 ADT messages for the Patient Identifier Cross-referencing Integration Profiles. In consequence, the combined use of the Patient Synchronized (CCOW based) Integration Profile and of the Patient Identifier Cross-referencing Integration profiles requires that the IHE Context Manager use the services of the PIX Integration Profile. To do so, the Patient Identifier Cross-reference Consumer in communication with the Patient Identifier Cross-reference Manager operates as a substitute for the CCOW Patient Mapping Agent. This is shown in Figure D-1 below as a dashed oval surrounding the Patient Cross-reference Manager and the Patient Identifier Cross-reference Consumer Actors. As a result it is likely that a context management solution would bundle a PMA proxy application that would implement the PIX Query in support of the Patient Identifier Cross-reference Consumer.</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/asf0a-gktbl.002.png" width="663" height="221" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure D-1: Actor Grouping Diagram</span>
+    </p>
+    <p xmlns="">
+      <span>This Appendix provides the definition of the mapping of the CCOW Patient Mapping Agent API methods onto the PIX Query Transaction (HL7 V2 QBP^Q23/RSP^K23) as defined by the PIX Integration Profile.</span>
+    </p>
+    <p xmlns="">
+      <span>Figure D-1 shows the definition of the Patient Mapping Methods parameters as implemented in Web technology. Most of these Arguments relate to the normal operations of the Patient Mapping Agent methods that pose no mapping challenge except for the ItemNames and ItemValues which pose some constraints. The first constraint comes from the translation of Patient Identity Domains for both query and response from and to a CCOW defined name / value pair. The second one comes from the fact that CCOW participant applications can set more than one identifier in context the ability to detect when these identifiers represent the identities of more than one patient. IHE has taken steps to mitigate these issues by further restricting how the IHE Context Participant implements the methods. Each of these constraints is addressed in sections below.</span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Table D-1: ContextChangesPending</span>
+    </p>
+    <div xmlns="" style="text-align:center">
+      <table cellspacing="0" cellpadding="0" style="margin-right:auto; margin-left:auto; border-collapse:collapse">
+        <thead>
+          <tr>
+            <td colspan="3" style="width:439.5pt; border-style:solid; border-width:1pt 1pt 0.75pt; padding-right:4.9pt; padding-left:4.9pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">HTTP Request Message</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">Argument Name</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">Data Type</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">Comment</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Interface</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>“ContextAgent”</span>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Method</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>“ContextChangesPending”</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>agentCoupon</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>long</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>“-1”</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>contextManager</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>URL for the Context Manager that is requesting the patient id cross-reference</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>itemNames</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string[]</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>One or more item names (e.g., Patient.Id.IdList)</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>itemValues</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string[]</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>The patient identifiers corresponding to the domains identified in item names</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>contextCoupon</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>long</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Context Coupon value for pending context change transaction</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>managerSignature</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Not required</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="width:439.5pt; border-style:solid; border-width:1pt 1pt 0.75pt; padding-right:4.9pt; padding-left:4.9pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">HTTP Reply Message</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>agentCoupon</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>long</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>“-1”</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>itemNames</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string[]</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>See below for valid item names for patient subject</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>itemValues</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string[]</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>See below for any constraints on item values</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>contextCoupon</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>long</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Return the value provided in request</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>agentSignature</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Not required</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Decision</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>“valid” or “invalid”</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:75.6pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Reason</span>
+              </p>
+            </td>
+            <td style="width:43.2pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>string</span>
+              </p>
+            </td>
+            <td style="width:299.1pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:1pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Reason text if mapping is invalid</span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <h2 xmlns="" id="D.1">D.1 Namespace Translation from PIX Query to CCOW</h2>
+    <p xmlns="">
+      <span>The CCOW standard defines multiple identifier items that may be set into the context by an instigating participant application. The current list of valid identifier names are listed in Table D-2.</span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Table D-2: Patient Subject Identifiers</span>
+    </p>
+    <div xmlns="" style="text-align:center">
+      <table cellspacing="0" cellpadding="0" style="margin-right:auto; margin-left:auto; border-collapse:collapse">
+        <thead>
+          <tr>
+            <td style="width:120.7pt; border-top-style:solid; border-top-width:1pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">Patient Subject Identifier Item Name</span>
+              </p>
+            </td>
+            <td style="width:66.35pt; border-top-style:solid; border-top-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">HL7 Meaning</span>
+              </p>
+            </td>
+            <td style="width:33.4pt; border-top-style:solid; border-top-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">HL7 Data Type</span>
+              </p>
+            </td>
+            <td style="width:152.9pt; border-top-style:solid; border-top-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">HL7 Semantic Constraints on Values</span>
+              </p>
+            </td>
+            <td style="width:58.95pt; border-style:solid; border-width:1pt 1pt 0.75pt 0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:9pt">
+                <span style="font-family:Arial; font-weight:bold">Case Sensitive</span>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:120.7pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient.Id.MRN</span>
+                <span style="font-family:'Times New Roman'; font-style:italic">.Suffix</span>
+              </p>
+            </td>
+            <td style="width:66.35pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient medical record number, per PID-2</span>
+              </p>
+            </td>
+            <td style="width:33.4pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ST</span>
+              </p>
+            </td>
+            <td style="width:152.9pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>HL7 Table 0203</span>
+                <br />
+                <span>Identifier Type = MR</span>
+              </p>
+            </td>
+            <td style="width:58.95pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>No</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:120.7pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient.Id.MPI</span>
+              </p>
+            </td>
+            <td style="width:66.35pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient identifier in the “Master Patient Index”, per PID-2</span>
+              </p>
+            </td>
+            <td style="width:33.4pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ST</span>
+              </p>
+            </td>
+            <td style="width:152.9pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>HL7 Table 0203</span>
+                <br />
+                <span>Identifier Type = PT or PI (as agreed upon by context sharing systems) and Assigning Authority represents the MPI system</span>
+              </p>
+            </td>
+            <td style="width:58.95pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>No</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:120.7pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient.Id.NationalIdNumber</span>
+              </p>
+            </td>
+            <td style="width:66.35pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient national identifier number, per PID-2</span>
+              </p>
+            </td>
+            <td style="width:33.4pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ST</span>
+              </p>
+            </td>
+            <td style="width:152.9pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>HL7 Table 0203</span>
+                <br />
+                <span>Identifier Type = PT and Assigning Authority represents agreed upon National Authority</span>
+              </p>
+            </td>
+            <td style="width:58.95pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>No</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:120.7pt; border-left-style:solid; border-left-width:1pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:4.9pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Patient.Id.IdList</span>
+              </p>
+            </td>
+            <td style="width:66.35pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>A list of patient identifiers for a patient, per PID-3</span>
+              </p>
+            </td>
+            <td style="width:33.4pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>CX</span>
+              </p>
+            </td>
+            <td style="width:152.9pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>May be a repeating set of CX item values (per Section 1.7 of the HL7 Context Management “CCOW” Standard: Subject Data Definitions document), each of which contains an identifier that denotes the same patient</span>
+              </p>
+            </td>
+            <td style="width:58.95pt; border-right-style:solid; border-right-width:1pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.9pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>No</span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span>IHE has specified in the Context Change Transaction as documented in ITI TF-2a that the Context Participant shall use the Patient.Id.IdList item. The intent is to eliminate translation as the Patient.Id.IdList value maps directly to PIX Query Transaction QPD-3.</span>
+    </p>
+    <p xmlns="">
+      <span>Applications using in their identifier items Patient.Id.MRN.Suffix will need to migrate to the Patient.Id.IdList item as expected by the HL7 CCOW standard.</span>
+    </p>
+    <h2 xmlns="" id="D.2">D.2 Processing Multiple Identifiers</h2>
+    <p xmlns="">
+      <span>CCOW participant applications are permitted to populate as many patient identifiers as they have available to them. This means that when a user selects a patient in one of these applications the context is populated with multiple identifiers for the selected patient. When the CCOW Patient Mapping Agent (PMA) accepts multiple patient identifiers as input, the PMA has the responsibility of invalidating patient mapping and causing the context change transaction to be cancelled if it determines that the multiple identifiers supplied as part of the transaction identify more than one patient.</span>
+    </p>
+    <p xmlns="">
+      <span>The QPD segment as defined in the IHE PIX Query Transaction specifies a single identifier uniquely identifying one patient within a given Patient Identification Domain. In the case where multiple identifiers are populated, the context manager may have to process the response to the initial PIX Query Transaction to evaluate if the other identifiers in context are included. If so, no further processing is required. Otherwise, an additional PIX Query will need to be issued and the results processed. Should a non-null result be returned, indicating the identifier uniquely identifies a different patient for the given domain, the context manager shall assume “invalid” in the decision field and “multiple patients identified” in the reason field.</span>
+    </p>
+    <p xmlns="">
+      <span>In order to mitigate this condition, IHE specifies that all context participants supporting the Patient Synchronized Applications Profile shall only set one identifier for the patient when a Patient Identifier Cross-referencing</span>
+      <span />
+      <span>Profile is used by the context manager. This means that the context participant for those applications that manage multiple patient identifiers will need to be configurable as to which identifier item is passed in the Change Context Transaction.</span>
+    </p>
   </body>
 </html>

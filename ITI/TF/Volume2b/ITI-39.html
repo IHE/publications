@@ -9,278 +9,1030 @@
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework - Volume2b</p>
+    <p>Technical Framework</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h2 class="list-paragraph" id="3.39">3.39 Cross Gateway Retrieve [ITI-39]</h2>
-    <p>This section corresponds to transaction [ITI-39] of the IHE Technical Framework. Transaction [ITI-39] is used by the Initiating Gateway and Responding Gateway Actors.</p>
-    <h3 class="list-paragraph" id="3.39.1">3.39.1 Scope</h3>
-    <p>
-      <em>The scope of the Cross Gateway Retrieve transaction is semantically the same as the Retrieve Document Set [ITI-43] transaction. Differences from the Retrieve Document Set transactions are:</em>
+    <h2 xmlns="" id="3.39">3.39 Cross Gateway Retrieve [ITI-39]</h2>
+    <p xmlns="">
+      <span>This section corresponds to</span>
+      <span>transaction</span>
+      <span />
+      <span>[</span>
+      <span>ITI-</span>
+      <span>39</span>
+      <span>]</span>
+      <span>of the IHE Technical Framework. Transaction</span>
+      <span>[</span>
+      <span>ITI-</span>
+      <span>39</span>
+      <span>]</span>
+      <span>is used by the Initiating Gateway and Responding Gateway</span>
+      <span>Actor</span>
+      <span>s.</span>
     </p>
-    <ul>
-      <li>
-        <p>The Cross Gateway Retrieve is between an Initiating Gateway and a Responding Gateway.</p>
-      </li>
-      <li>
-        <p>The ‘homeCommunityId’ parameter is required. This means that the homeCommunityId parameter which is optional on the Retrieve Document Set transaction is required by this transaction.</p>
-      </li>
-      <li>
-        <p>Responding Gateways shall support the Asynchronous Web Services Exchange Option on the Cross Gateway Retrieve. Support for this function is required in order to enable use of Asynchronous Web Services Exchange in any cross-community interaction. Without this support an Initiating Gateway would require unique configuration, per Responding Gateway, to know if Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services Exchange will be desired by the majority of communities.</p>
-      </li>
-      <li>
-        <p>Asynchronous Web Services Exchange is an option on the Initiating Gateway, see <a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a>.</p>
-      </li>
-    </ul>
-    <h3 class="list-paragraph" id="3.39.2">3.39.2 Use Case Roles</h3>
-    <p id="Figure 3.39.2-1">Figure 3.39.2-1: Use Case Roles</p>
-    <p>Actor: Initiating Gateway</p>
-    <p>Role: To formulate a Cross Gateway Retrieve in response to Retrieve Document Set transactions or other internal interaction.</p>
-    <p>Actor: Responding Gateway</p>
-    <p>Role: To return the documents requested.</p>
-    <h3 class="list-paragraph" id="3.39.3">3.39.3 Referenced Standard</h3>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a> Web Services for IHE Transactions.</p>
-    <p>ebRIM OASIS/ebXML Registry Information Model v3.0</p>
-    <p>ebRS OASIS/ebXML Registry Services Specifications v3.0</p>
-    <p><a href="../Volume3/ch-1.html#4">ITI TF-3:4</a> Metadata used in Document Sharing profiles</p>
-    <p>
-      MTOM SOAP Message Transmission Optimization Mechanism
-      <a href="http://www.w3.org/TR/soap12-mtom/">http://www.w3.org/TR/soap12-mtom/</a>
+    <h3 xmlns="" id="3.39.1">3.39.1 Scope</h3>
+    <p xmlns="">
+      <span>The scope of the Cross Gateway Retrieve transaction is semantically the same as the Retrieve Document Set</span>
+      <span>[ITI-43]</span>
+      <span>transaction. Differences from the Retrieve Document Set transactions are:</span>
     </p>
-    <h3 class="list-paragraph" id="3.39.4">3.39.4 Messages</h3>
-    <p id="Figure 3.39.4-1">Figure 3.39.4-1: Interaction Diagram</p>
-    <h4 id="3.39.4.1">3.39.4.1 Cross Gateway Retrieve Request</h4>
-    <p>The Cross Gateway Retrieve Request uses the same syntax and standards as the Retrieve Document Set Request. See Section <a href="../Volume2b/ITI-43.html#3.43.4.1">ITI TF-2b: 3.43.4.1</a>.</p>
-    <h5 class="list-paragraph" id="3.39.4.1.1">3.39.4.1.1 Trigger Events</h5>
-    <p>This message is initiated by the Initiating Gateway to retrieve a set of documents from another community represented by a Responding Gateway. The Initiating Gateway may be responding to a Retrieve Document Set transaction or may use a proprietary mechanism for triggering the Cross Gateway Retrieve.</p>
-    <h5 class="list-paragraph" id="3.39.4.1.2">3.39.4.1.2 Message Semantics</h5>
-    <p>The message semantics for Cross Gateway Retrieve are the same as Retrieve Document Set (s Section 3.43.4.1.2). The Initiating Gateway shall specify the homeCommunityId parameter within the Retrieve Document Set. The homeCommunityId shall contain the value that identifies the community associated with the Responding Gateway.</p>
-    <p>Initiating Gateways which support the On-Demand Documents Option shall be capable of retrieving an On-Demand Document Entry either through internal mechanisms or, when the XDS Affinity Domain Option is also declared, through interaction with an XDS Document Consumer which supports the On-Demand Documents Option.</p>
-    <p>Responding Gateways which support the On-Demand Documents Option shall be able to respond to retrieval of an On-Demand Document Entry either through internal mechanisms or, when grouped with a Document Consumer, through interaction with appropriate XDS Actors which support On-Demand Documents. Responding Gateways which support the Persistence of Retrieved Documents Option shall specify the NewRepositoryUniqueId element indicating the document is available for later retrieval and be able to return exactly the same document in all future retrieve requests for the document identified by NewDocumentUniqueId.</p>
-    <h5 class="list-paragraph" id="3.39.4.1.3">3.39.4.1.3 Expected Actions</h5>
-    <p>Actors supporting this transaction shall support the Expected Actions described in the Section 3.43.4.1.3.</p>
-    <p>The Responding Gateway shall determine the local system or systems which hold the documents requested and interact with those systems. The Responding Gateway may use a Retrieve Document Set transaction or other internally defined interaction, to retrieve the document or documents. If more than one system is contacted the Responding Gateway shall consolidate the results from the multiple systems into one response to the Initiating Gateway. If both successes and failures are received the Responding Gateway may choose to use PartialSuccess status to reflect both failure and success. The Responding Gateway may alternatively choose to suppress the failures and report only successes.</p>
-    <p>If the Responding Gateway returns any Registry Error elements, the Responding Gateway shall include in the location attribute all the requirements stated in Section 3.43 plus the homeCommunityId of the Responding Gateway.</p>
-    <p>If the XDS Affinity Domain Option is supported, the Initiating Gateway shall, if needed, consolidate results from multiple Responding Gateways. This includes reflecting in the consolidated results returned to the originating Retrieve Document Set [ITI-43] all successes and failures received from Responding Gateways. If both successes and failures are received from Responding Gateways, the Initiating Gateway shall return both DocumentResponse and RegistryErrorList elements in one response and specify PartialSuccess status.</p>
-    <h6 class="list-paragraph" id="3.39.4.1.3.1">3.39.4.1.3.1 Compatibility of Options</h6>
-    <p>If the Initiating Gateway does not support the On-Demand Document Option, it will never send a Cross Gateway Retrieve request for an On-Demand Document. In this case, none of the attributes specific to On-Demand Documents will be included in the response.</p>
-    <p>If the Initiating Gateway does support the On-Demand Document Option, it will only direct Cross Gateway Retrieve requests for On-Demand Documents to responders which have returned an On-Demand Document Entry in a Cross Gateway Query response. Thus there are no compatibility concerns with this transaction.</p>
-    <h4 id="3.39.4.2">3.39.4.2 Cross Gateway Retrieve Response</h4>
-    <h5 id="3.39.4.2.1">3.39.4.2.1 Trigger Events</h5>
-    <p>This message will be triggered by a Cross Gateway Retrieve Message.</p>
-    <h5 id="3.39.4.2.2">3.39.4.2.2 Message Semantics</h5>
-    <p>The message semantics for Cross Gateway Retrieve are the same as Retrieve Document Set. See Section 3.43.4.2.2.</p>
-    <h5 id="3.39.4.2.3">3.39.4.2.3 Expected Actions</h5>
-    <p>Actors supporting this transaction shall support the Expected Actions described in Section 3.43.4.2.3.</p>
-    <h3 class="list-paragraph" id="3.39.5">3.39.5 Protocol Requirements</h3>
-    <p>The Cross Gateway Retrieve request and response will be transmitted using Synchronous or WS-Addressing based Asynchronous Web Services Exchange, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V.3">ITI TF-2x: Appendix V.3</a>. The protocol requirements are identical to the Retrieve Document Set except as noted below.</p>
-    <p>XML namespace prefixes are for informational purposes only and are documented in <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>, Table V.2.4-1.</p>
-    <p>Responding Gateway: These are the requirements for the Cross Gateway Retrieve transaction presented in the order in which they would appear in the Responding Gateway WSDL definition:</p>
-    <ul>
+    <ul xmlns="" type="disc">
       <li>
-        <p>The following types shall be imported (xsd:import) in the /definitions/types section:</p>
+        <span>The Cross Gateway Retrieve is between an Initiating Gateway and a Responding Gateway.</span>
+      </li>
+      <li>
+        <span>The ‘homeCommunityId’ parameter is required. This means that the homeCommunityId parameter which is optional on the Retrieve Document Set transaction is required by this transaction.</span>
+      </li>
+      <li>
+        <span>Responding Gateways shall support the Asynchronous Web Services Exchange Option on the Cross Gateway Retrieve. Support for this function is required in order to enable use of Asynchronous Web Services Exchange in any cross-community interaction. Without this support an Initiating Gateway would require unique configuration, per Responding Gateway, to know if Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services Exchange will be desired by the majority of communities.</span>
+      </li>
+      <li>
+        <span>Asynchronous Web Services Exchange is an option on the Initiating Gateway, see <a href="../Volume1/ch-18.html#18.2.2"><a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a></a>.</span>
       </li>
     </ul>
-    <ul>
+    <h3 xmlns="" id="3.39.2">3.39.2 Use Case Roles</h3>
+    <p xmlns="">
+      <img src="media/ak3aq-ow60c.029.png" width="373" height="129" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <a name="_Toc168463565">
+        <span style="font-family:Arial; font-weight:bold">Figure 3.39.2-1: Use Case Roles</span>
+      </a>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span>Initiating Gateway</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span>To formulate a Cross Gateway Retrieve in response to Retrieve Document Set transactions or other internal interaction.</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span>Responding Gateway</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span>To return the documents requested.</span>
+    </p>
+    <h3 xmlns="" id="3.39.3">3.39.3 Referenced Standard</h3>
+    <p xmlns="">
+      <span>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a> Web Services for IHE Transactions.</span>
+    </p>
+    <p xmlns="">
+      <span>ebRIM</span>
+      <span style="width:2pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span>OASIS/ebXML Registry Information Model v3.0</span>
+    </p>
+    <p xmlns="">
+      <span>ebRS</span>
+      <span style="width:10pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span>OASIS/ebXML Registry Services Specifications v3.0</span>
+    </p>
+    <p xmlns="">
+      <span>ITI TF-3:4</span>
+      <span style="width:20.34pt; display:inline-block"> </span>
+      <span>Metadata used in Document Sharing profiles</span>
+    </p>
+    <p xmlns="">
+      <span>MTOM</span>
+      <span style="width:34.66pt; display:inline-block"> </span>
+      <span>SOAP Message Transmission Optimization Mechanism</span>
+      <a href="http://www.w3.org/TR/soap12-mtom/" style="text-decoration:none">
+        <span style="font-family:'Times New Roman'; text-decoration:underline; color:#0000ff">http://www.w3.org/TR/soap12-mtom/</span>
+      </a>
+    </p>
+    <h3 xmlns="" id="3.39.4">3.39.4 Messages</h3>
+    <p xmlns="" style="font-size:10pt">
+      <img src="media/ak3aq-ow60c.030.png" width="428" height="241" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 3.39.4-1: Interaction Diagram</span>
+    </p>
+    <h4 xmlns="" id="3.39.4.1">3.39.4.1 Cross Gateway Retrieve Request</h4>
+    <p xmlns="">
+      <span>The Cross Gateway Retrieve</span>
+      <span>Request</span>
+      <span>uses the same syntax and standards as the Retrieve Document Set</span>
+      <span>Request. S</span>
+      <span>ee</span>
+      <span>Section</span>
+      <span />
+      <span>ITI TF-2b:</span>
+      <span>3.43</span>
+      <span>.4.1</span>
+      <span>.</span>
+    </p>
+    <h5 xmlns="" id="3.39.4.1.1">3.39.4.1.1 Trigger Events</h5>
+    <p xmlns="">
+      <span>This message is initiated by the Initiating Gateway to retrieve a set of documents from another community represented by a Responding Gateway. The Initiating Gateway may be responding to a Retrieve Document Set transaction or may use a proprietary mechanism for triggering the Cross Gateway Retrieve.</span>
+    </p>
+    <h5 xmlns="" id="3.39.4.1.2">3.39.4.1.2 Message Semantics</h5>
+    <p xmlns="">
+      <span>The message semantics for Cross Gateway Retrieve are the same as Retrieve Document Set</span>
+      <span>(s Section</span>
+      <span>3.43.4.1.2</span>
+      <span>)</span>
+      <span>. The Initiating Gateway shall specify the homeCommunityId parameter within the Retrieve Document Set. The homeCommunityId shall contain the value that identifies the community associated with the Responding Gateway.</span>
+    </p>
+    <p xmlns="">
+      <span>Initiating Gateways which support the On-Demand Documents Option shall be capable of retrieving an On-Demand Document Entry either through internal mechanisms or, when the XDS Affinity Domain Option is also declared, through interaction with an XDS Document Consumer which supports the On-Demand Documents Option.</span>
+    </p>
+    <p xmlns="">
+      <span>Responding Gateways which support the On-Demand Documents Option shall be able to respond to retrieval of an On-Demand Document Entry either through internal mechanisms or, when grouped with a Document Consumer, through interaction with appropriate XDS Actors which support On-Demand Documents. Responding Gateways which support the Persistence of Retrieved Documents Option shall specify the NewRepositoryUniqueId element indicating the document is available for later retrieval and be able to return exactly the same document in all future retrieve requests for the document identified by NewDocumentUniqueId.</span>
+    </p>
+    <h5 xmlns="" id="3.39.4.1.3">3.39.4.1.3 Expected Actions</h5>
+    <p xmlns="">
+      <span>Actors supporting this transaction shall support the Expected Actions described in the</span>
+      <span>Section</span>
+      <span>3.43.4.1.3.</span>
+    </p>
+    <p xmlns="">
+      <span>The Responding Gateway shall determine the local system or systems which hold the documents requested and interact with those systems. The Responding Gateway may use a Retrieve Document Set transaction or other internally defined interaction, to retrieve the document or documents. If more than one system is contacted the Responding Gateway shall consolidate the results from the multiple systems into one response to the Initiating Gateway. If both successes and failures are received the Responding Gateway may choose to use PartialSuccess status to reflect both failure and success. The Responding Gateway may alternatively choose to suppress the failures and report only successes.</span>
+    </p>
+    <p xmlns="">
+      <span>If the Responding Gateway returns any</span>
+      <span>Registry</span>
+      <span>Error elements, the Responding Gateway shall include in the location attribute all the requirements stated in Section 3.43 plus</span>
+      <span>the homeCommunityId of the Responding Gateway.</span>
+    </p>
+    <p xmlns="">
+      <span>If the XDS Affinity Domain Option is supported, the Initiating Gateway shall, if needed, consolidate results from multiple Responding Gateways. This includes reflecting in the consolidated results returned to the originating Retrieve Document Set [ITI-43] all successes and failures received from Responding Gateways. If both successes and failures are received from Responding Gateways, the Initiating Gateway shall return both DocumentResponse and RegistryErrorList elements in one response and specify PartialSuccess status.</span>
+    </p>
+    <h6 xmlns="" id="3.39.4.1.3.1">3.39.4.1.3.1 Compatibility of Options</h6>
+    <p xmlns="">
+      <span>If the Initiating Gateway does not support the On-Demand Document Option, it will never send a Cross Gateway Retrieve request for an On-Demand Document. In this case, none of the attributes specific to On-Demand Documents will be included in the response.</span>
+    </p>
+    <p xmlns="">
+      <span>If the Initiating Gateway does support the On-Demand Document Option, it will only direct Cross Gateway Retrieve requests for On-Demand Documents to responders which have returned an On-Demand Document Entry in a Cross Gateway Query response. Thus there are no compatibility concerns with this transaction.</span>
+    </p>
+    <h4 xmlns="" id="3.39.4.2">3.39.4.2 Cross Gateway Retrieve Response</h4>
+    <h5 xmlns="" id="3.39.4.2.1">3.39.4.2.1 Trigger Events</h5>
+    <p xmlns="">
+      <span>This message will be triggered by a Cross Gateway Retrieve Message.</span>
+    </p>
+    <h5 xmlns="" id="3.39.4.2.2">3.39.4.2.2 Message Semantics</h5>
+    <p xmlns="">
+      <span>The message semantics for Cross Gateway Retrieve are the same as Retrieve Document Set. See</span>
+      <span />
+      <span>Section 3.43.4.2.2.</span>
+    </p>
+    <h5 xmlns="" id="3.39.4.2.3">3.39.4.2.3 Expected Actions</h5>
+    <p xmlns="">
+      <span>Actors supporting this transaction shall support the Expected Actions described in Section 3.43.4.2.3.</span>
+    </p>
+    <h3 xmlns="" id="3.39.5">3.39.5 Protocol Requirements</h3>
+    <p xmlns="">
+      <span>The Cross Gateway Retrieve request and response will be transmitted using Synchronous or</span>
+      <span>WS-Addressing based</span>
+      <span>Asynchronous Web Services Exchange, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a></span>
+      <span>.3</span>
+      <span>. The protocol requirements are identical to the Retrieve Document Set except as noted below.</span>
+    </p>
+    <p xmlns="">
+      <span>XML namespace prefixes are for informational purposes only and are documented in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>, Table V.2.4-1.</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Responding Gateway:</span>
+      <span>These are the requirements for the Cross Gateway Retrieve transaction presented in the order in which they would appear in the Responding Gateway WSDL definition:</span>
+    </p>
+    <ul xmlns="" type="disc">
       <li>
-        <p>namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</p>
+        <span>The following types shall be imported (xsd:import) in the /definitions/types section:</span>
       </li>
     </ul>
-    <ul>
+    <ul xmlns="" type="disc">
       <li>
-        <p>The /definitions/message/part/@element attribute of the Cross Gateway Retrieve Request message shall be defined as “ihe:RetrieveDocumentSetRequest”</p>
-      </li>
-      <li>
-        <p>The /definitions/message/part/@element attribute of the Cross Gateway Retrieve Response message shall be defined as “ihe:RetrieveDocumentSetResponse”</p>
+        <span>namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</span>
       </li>
     </ul>
-    <ul>
+    <ul xmlns="" type="disc">
       <li>
-        <p>Refer to Table 3.39.5-2 below for additional attribute requirements</p>
+        <span>The /definitions/message/part/@element attribute of the Cross Gateway Retrieve Request message shall be defined as “</span>
+        <span style="font-family:'Times New Roman'; background-color:#ffffff">ihe:RetrieveDocumentSetRequest</span>
+        <span>”</span>
+      </li>
+      <li>
+        <span>The /definitions/message/part/@element attribute of the</span>
+        <span style="font-family:'Times New Roman'; background-color:#ffffff">Cross Gateway</span>
+        <span>Retrieve Response message shall be defined as “</span>
+        <span style="font-family:'Times New Roman'; background-color:#ffffff">ihe:RetrieveDocumentSet</span>
+        <span>Response”</span>
       </li>
     </ul>
-    <p id="Table 3.39.5-2">Table 3.39.5-2: Requirements for portType and Binding attributes</p>
-    <table>
-      <thead>
-        <tr class="header">
-          <th>Attribute</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="odd">
-          <td>/definitions/portType/operation@name</td>
-          <td>RespondingGateway_CrossGatewayRetrieve</td>
-        </tr>
-        <tr class="even">
-          <td>/definitions/portType/operation/input/@wsaw:Action</td>
-          <td>urn:ihe:iti:2007:CrossGatewayRetrieve</td>
-        </tr>
-        <tr class="odd">
-          <td>/definitions/portType/operation/output/@wsaw:Action</td>
-          <td>urn:ihe:iti:2007:CrossGatewayRetrieveResponse</td>
-        </tr>
-        <tr class="even">
-          <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
-          <td>false</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.43.5.1 Sample SOAP Messages.</p>
-    <p>For informative WSDL for the Responding Gateway see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
-    <p>The &lt;ihe:RetrieveDocumentSetRequest/&gt; element is defined in Section 3.43.5. When used within the Cross Gateway Retrieve the &lt;ihe:HomeCommunityId/&gt; element is required.</p>
-    <p>The &lt;ihe:RetrieveDocumentSetResponse/&gt; element is defined in Section 3.43.5.</p>
-    <h4 class="list-paragraph" id="3.39.5.1">3.39.5.1 Sample SOAP Messages</h4>
-    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;, &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to the W3C WS-Addressing standard. The body of the SOAP message is omitted for brevity; in a real scenario the empty element will be populated with the appropriate metadata.</p>
-    <p>Samples presented in this section are also available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>.</p>
-    <h5 class="list-paragraph" id="3.39.5.1.1">3.39.5.1.1 Sample Cross Gateway Retrieve SOAP Request</h5>
-    <h6 class="list-paragraph" id="3.39.5.1.1.1">3.39.5.1.1.1 Synchronous Web Services Exchange</h6>
-    <p>&lt;s:Envelope</p>
-    <p>xmlns:s="http://www.w3.org/2003/05/soap-envelope"</p>
-    <p>xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
-    <p>&lt;s:Header&gt;</p>
-    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayRetrieve&lt;/a:Action&gt;</p>
-    <p>&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</p>
-    <p>&lt;a:ReplyTo&gt;</p>
-    <p>&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;</p>
-    <p>&lt;/a:ReplyTo&gt;</p>
-    <p>&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/IHEXCAGateway.svc&lt;/a:To&gt;</p>
-    <p>&lt;/s:Header&gt;</p>
-    <p>&lt;s:Body&gt;</p>
-    <p>&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</p>
-    <p>&lt;DocumentRequest&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;/DocumentRequest&gt;</p>
-    <p>&lt;DocumentRequest&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;/DocumentRequest&gt;</p>
-    <p>&lt;/RetrieveDocumentSetRequest&gt;</p>
-    <p>&lt;/s:Body&gt;</p>
-    <p>&lt;/s:Envelope&gt;</p>
-    <h6 class="list-paragraph" id="3.39.5.1.1.2">3.39.5.1.1.2 Asynchronous Web Services Exchange</h6>
-    <p>&lt;s:Envelope</p>
-    <p>xmlns:s="http://www.w3.org/2003/05/soap-envelope"</p>
-    <p>xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
-    <p>&lt;s:Header&gt;</p>
-    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayRetrieve&lt;/a:Action&gt;</p>
-    <p>&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</p>
-    <p>&lt;a:ReplyTo&gt;</p>
-    <p>&lt;a:Address&gt;http://192.168.2.4:9080/XcaService/InitiatingGatewayReceiver.svc</p>
-    <blockquote>
-      <p>&lt;/a:Address&gt;</p>
-    </blockquote>
-    <p>&lt;/a:ReplyTo&gt;</p>
-    <p>&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/RespondingGatewayReceiver.svc&lt;/a:To&gt;</p>
-    <p>&lt;/s:Header&gt;</p>
-    <p>&lt;s:Body&gt;</p>
-    <p>&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</p>
-    <p>&lt;DocumentRequest&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;/DocumentRequest&gt;</p>
-    <p>&lt;DocumentRequest&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;/DocumentRequest&gt;</p>
-    <p>&lt;/RetrieveDocumentSetRequest&gt;</p>
-    <p>&lt;/s:Body&gt;</p>
-    <p>&lt;/s:Envelope&gt;</p>
-    <h5 class="list-paragraph" id="3.39.5.1.2">3.39.5.1.2 Sample Cross Gateway Retrieve SOAP Response</h5>
-    <h6 class="list-paragraph" id="3.39.5.1.2.1">3.39.5.1.2.1 Synchronous Web Services Exchange</h6>
-    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
-    <p>&lt;s:Header&gt;</p>
-    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayRetrieveResponse&lt;/a:Action&gt;</p>
-    <p>&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</p>
-    <p>&lt;/s:Header&gt;</p>
-    <p>&lt;s:Body&gt;</p>
-    <p>&lt;RetrieveDocumentSetResponse</p>
-    <p>xmlns="urn:ihe:iti:xds-b:2007"</p>
-    <p>xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</p>
-    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
-    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
-    <p>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</p>
-    <p>&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</p>
-    <p>&lt;DocumentResponse&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</p>
-    <p>&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</p>
-    <p>&lt;/DocumentResponse&gt;</p>
-    <p>&lt;DocumentResponse&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</p>
-    <p>&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</p>
-    <p>&lt;/DocumentResponse&gt;</p>
-    <p>&lt;/RetrieveDocumentSetResponse&gt;</p>
-    <p>&lt;/s:Body&gt;</p>
-    <p>&lt;/s:Envelope&gt;</p>
-    <h6 class="list-paragraph" id="3.39.5.1.2.2">3.39.5.1.2.2 Asynchronous Web Services Exchange</h6>
-    <p>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</p>
-    <p>&lt;s:Header&gt;</p>
-    <p>&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayRetrieveResponse&lt;/a:Action&gt;</p>
-    <blockquote>
-      <p>&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/a:MessageID&gt;</p>
-    </blockquote>
-    <p>&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</p>
-    <p>&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/InitiatingGatewayReceiver.svc&lt;/a:To&gt;</p>
-    <p>&lt;/s:Header&gt;</p>
-    <p>&lt;s:Body&gt;</p>
-    <p>&lt;RetrieveDocumentSetResponse</p>
-    <p>xmlns="urn:ihe:iti:xds-b:2007"</p>
-    <p>xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</p>
-    <p>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</p>
-    <p>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</p>
-    <p>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</p>
-    <p>&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</p>
-    <p>&lt;DocumentResponse&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</p>
-    <p>&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</p>
-    <p>&lt;/DocumentResponse&gt;</p>
-    <p>&lt;DocumentResponse&gt;</p>
-    <p>&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</p>
-    <p>&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</p>
-    <p>&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</p>
-    <p>&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</p>
-    <p>&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</p>
-    <p>&lt;/DocumentResponse&gt;</p>
-    <p>&lt;/RetrieveDocumentSetResponse&gt;</p>
-    <p>&lt;/s:Body&gt;</p>
-    <p>&lt;/s:Envelope&gt;</p>
-    <h3 id="3.39.6">3.39.6 Security Considerations</h3>
-    <p>Both the Initiating Gateway and Responding Gateway shall audit the Cross Gateway Retrieve. The audit entries shall be equivalent to the entries required for the Retrieve Document Set.</p>
-    <p>The Initiating Gateway:</p>
-    <ul>
+    <ul xmlns="" type="disc">
       <li>
-        <p>If receiving a Retrieve Document Set transaction from a Document Consumer, shall audit as if it were a Document Repository (see Section 3.43.6).</p>
-      </li>
-      <li>
-        <p>In addition, shall audit the Cross Gateway Retrieve as if it were a Document Consumer except that for EventTypeCode the Initiating Gateway shall specify EV(“ITI-39”, “IHE Transactions”, and “Cross Gateway Retrieve”) (see Section 3.43.6).</p>
-      </li>
-      <li>
-        <p>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</p>
+        <span>Refer to Table 3.39.5-2 below for additional attribute requirements</span>
       </li>
     </ul>
-    <p>The Responding Gateway:</p>
-    <ul>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Table</span>
+      <span style="font-family:Arial; font-weight:bold">3.39.5-2: Requirements for portType and Binding attributes</span>
+    </p>
+    <div xmlns="" style="text-align:center">
+      <table cellspacing="0" cellpadding="0" style="margin-right:auto; margin-left:auto; border-collapse:collapse">
+        <tr>
+          <td style="width:287.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:9pt">
+              <span style="font-family:Arial; font-weight:bold">Attribute</span>
+            </p>
+          </td>
+          <td style="width:119.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:9pt">
+              <span style="font-family:Arial; font-weight:bold">Value</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:287.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>/definitions/portType/operation@name</span>
+            </p>
+          </td>
+          <td style="width:119.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>RespondingGateway_CrossGatewayRetrieve</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:287.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>/definitions/portType/operation/input/@wsaw:Action</span>
+            </p>
+          </td>
+          <td style="width:119.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>urn:ihe:iti:2007:CrossGatewayRetrieve</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:287.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>/definitions/portType/operation/output/@wsaw:Action</span>
+            </p>
+          </td>
+          <td style="width:119.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>urn:ihe:iti:2007:CrossGatewayRetrieveResponse</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:287.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</span>
+            </p>
+          </td>
+          <td style="width:119.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>false</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in</span>
+      <span>Section</span>
+      <span />
+      <a href="#_Ref167821063" style="text-decoration:none; -aw-ignore:true">
+        <span style="font-family:'Times New Roman'; color:#000000">3.43.5.1 Sample SOAP Messages</span>
+      </a>
+      <span>.</span>
+    </p>
+    <p xmlns="">
+      <span>For informative WSDL for the Responding Gateway see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</span>
+    </p>
+    <p xmlns="">
+      <span>The &lt;ihe:RetrieveDocumentSetRequest/&gt; element is defined in</span>
+      <span>Section</span>
+      <span>3.43.5. When used within the Cross Gateway Retrieve the &lt;ihe:HomeCommunityId/&gt; element is required.</span>
+    </p>
+    <p xmlns="">
+      <span>The &lt;ihe:RetrieveDocumentSetResponse/&gt; element is defined in</span>
+      <span>Section</span>
+      <span>3.43.5.</span>
+    </p>
+    <h4 xmlns="" id="3.39.5.1">3.39.5.1 Sample SOAP Messages</h4>
+    <p xmlns="">
+      <span>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;, &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to the W3C WS-Addressing standard. The body of the SOAP message is omitted for brevity; in a real scenario the empty element will be populated with the appropriate metadata.</span>
+    </p>
+    <p xmlns="">
+      <span>Samples presented in this section are also available online on the IHE FTP site, see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</span>
+    </p>
+    <h5 xmlns="" id="3.39.5.1.1">3.39.5.1.1 Sample Cross Gateway Retrieve SOAP Request</h5>
+    <h6 xmlns="" id="3.39.5.1.1.1">3.39.5.1.1.1 Synchronous Web Services Exchange</h6>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'"> </span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Envelope</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:</span>
+      <span style="font-family:'Courier New'">CrossGatewayRetrieve</span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:Action&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/IHEXCAGateway.svc&lt;/a:To&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/RetrieveDocumentSetRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <h6 xmlns="" id="3.39.5.1.1.2">3.39.5.1.1.2 Asynchronous Web Services Exchange</h6>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Envelope</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:</span>
+      <span style="font-family:'Courier New'">CrossGatewayRetrieve</span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:Action&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Address&gt;</span>
+      <span style="font-family:'Courier New'">http</span>
+      <span style="font-family:'Courier New'">://192.168.2.4:9080/XcaService/</span>
+      <span style="font-family:'Courier New'">InitiatingGatewayReceiver.svc</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:Address&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/RespondingGatewayReceiver.svc&lt;/a:To&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/RetrieveDocumentSetRequest&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+    </p>
+    <h5 xmlns="" id="3.39.5.1.2">3.39.5.1.2 Sample Cross Gateway Retrieve SOAP Response</h5>
+    <h6 xmlns="" id="3.39.5.1.2.1">3.39.5.1.2.1 Synchronous Web Services Exchange</h6>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'"> </span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;</span>
+      <span style="font-family:'Courier New'">urn:ihe:iti:2007:CrossGatewayRetrieveResponse</span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:Action&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+    </p>
+    <h6 xmlns="" id="3.39.5.1.2.2">3.39.5.1.2.2 Asynchronous Web Services Exchange</h6>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;</span>
+      <span style="font-family:'Courier New'">urn:ihe:iti:2007:CrossGatewayRetrieveResponse</span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/a:Action&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/</span>
+      <span style="font-family:'Courier New'">a</span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">:MessageID&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/InitiatingGatewayReceiver.svc&lt;/a:To&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Header&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.4&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;HomeCommunityId&gt;urn:oid:1.2.3.5&lt;/HomeCommunityId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;RepositoryUniqueId&gt;1.3.6.1.4...2000&lt;/RepositoryUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="width:36pt; display:inline-block"> </span>
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Body&gt;</span>
+    </p>
+    <p xmlns="" style="font-size:8pt">
+      <span style="font-family:'Courier New'; background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <h3 xmlns="" id="3.39.6">3.39.6 Security Considerations</h3>
+    <p xmlns="">
+      <span>Both the Initiating Gateway and Responding Gateway shall audit the Cross Gateway Retrieve. The audit entries shall be equivalent to the entries required for the Retrieve Document Set.</span>
+    </p>
+    <p xmlns="">
+      <span>The Initiating Gateway:</span>
+    </p>
+    <ul xmlns="" type="disc">
       <li>
-        <p>Shall audit the Cross Gateway Retrieve as if it were a Document Repository except that for EventTypeCode the Responding Gateway shall specify EV(“ITI-39”, “IHE Transactions”, “Cross Gateway Retrieve”) (see Section 3.43.6).</p>
+        <span>If receiving a Retrieve Document Set transaction from a Document Consumer, shall audit as if it were a Document Repository (see Section 3.43.6).</span>
       </li>
       <li>
-        <p>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</p>
+        <span>In addition, shall audit the Cross Gateway Retrieve as if it were a Document Consumer except that for EventTypeCode the Initiating Gateway shall specify EV(“ITI-39”, “IHE Transactions”, and “Cross Gateway Retrieve”) (see Section 3.43.6).</span>
+      </li>
+      <li>
+        <span>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>The Responding Gateway:</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>Shall audit the Cross Gateway Retrieve as if it were a Document Repository except that for EventTypeCode the Responding Gateway shall specify EV(“ITI-39”, “IHE Transactions”, “Cross Gateway Retrieve”) (see Section 3.43.6).</span>
+      </li>
+      <li>
+        <span>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</span>
       </li>
     </ul>
   </body>

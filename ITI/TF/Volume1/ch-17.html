@@ -9,348 +9,882 @@
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework - Volume1</p>
+    <p>Technical Framework</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h1 id="17">17 Retrieve Form for Data Capture (RFD)</h1>
-    <p>The Retrieve Form for Data Capture (RFD) Profile provides a method for gathering data within a user’s current application to meet the requirements of an external system. RFD supports the retrieval of a form from a form source, the display and completion of the form, and the return of instance data from the display application to a receiving application. In addition, RFD provides a mechanism to amend data that was previously captured.</p>
-    <p>Consider the case where a healthcare provider site uses an Electronic Health Record (EHR) to document patient care. In this case, the EHR acts as the local home application for the provider’s personnel. Suppose an external agency, through some contractual arrangement, requires data from the provider, some of which reside in the EHR’s database, the rest requiring data entry by the EHR’s users. RFD enables the EHR user to retrieve a data capture form from the external agency, to fill out the form, and to return the data to the external agency without leaving the provider’s local home application, the EHR. The profile also permits the external agency to indicate that there is a need to clarify points about the data so captured and provides the mechanisms to allow the data to be modified.</p>
-    <p>Many potential uses of RFD want the form to dynamically pre-populate forms from the host application’s database, that is have the form delivered with host application database values filled in to appropriate fields of a form. RFD permits automatic form population and provides a generic mechanism by which this can be accomplished. However, the profile does not speak to the issue of content, remaining silent on normative vocabularies and other enablers of semantic interoperability. Specific domain groups – clinical trials, drug safety, bio-surveillance – will build on RFD by contributing content specifications or by evaluating and recommending existing content standards that will operate within RFD. When RFD, as an infrastructure profile, integrates with domain-specific content standards, a much greater level of interoperability will result.</p>
-    <p>The RFD Profile provides a generic polling mechanism to allow an external agency to indicate issues with data that have been captured and enable the healthcare provider to correct the data. The profile does not dictate the mechanism employed or content required to achieve such corrections.</p>
-    <p>In this profile, the external agency provides data capture forms in a schema appropriate to its domain. The profile intends to minimize the work that the displaying application should do, and to bring over fully functional forms that carry with them the instruction necessary to complete the form. RFD also supports archiving a copy of the completed form.</p>
-    <p>RFD offers the capability to leverage industry standards that address both the structure and content of forms used for data capture. HL7’s Individual Case Safety Record (ICSR) and CDISC’s Operational Data Model (ODM) provide examples.</p>
-    <p>The infrastructure provided by the RFD Profile can be utilized by many domain groups and the following domain-specific use cases illustrate the wide variety of uses to which RFD can be made.</p>
-    <h2 class="list-paragraph" id="17.1">17.1 Use Cases</h2>
-    <p>The following use cases indicate how this profile might be used by various disciplines. The RFD Profile enables all of these use cases. It does not implement any of them. Actual discipline specific profiles that specify both the use of RFD and the rules for data objects are expected in future domain-specific IHE profiles.</p>
-    <h3 class="list-paragraph" id="17.1.1">17.1.1 Investigational New Drug Clinical Trial Use Case</h3>
-    <p>The setting for the clinical trial use case is a physicians’ practice where patient care is delivered side-by-side with clinical research. The site, Holbin Medical Group, is a multi-site physician practice, employing over 100 physicians in a variety of specialties. Holbin’s CEO encourages the physicians to participate as site investigators for pharmaceutical-sponsored clinical trials; Holbin provides support for clinical research activities in the form of a Research Department of twelve dedicated study coordinators, mostly RNs, along with clerical and data-entry support personnel. Holbin Medical Group uses an Electronic Health Record (EHR) and a number of sponsor-provided Electronic Data Capture (EDC) systems for documenting clinical trial activities. (For our purposes, an EHR is any application which is the primary site for documenting patient care and retrieving patient care information. Thus we include in our span of interest many systems installed today that are not quite EHRs in the strictest sense, but which would still benefit from this approach.)</p>
-    <p>Holbin’s involvement in a clinical study begins when the Research Department receives a request for proposal from a study sponsor. A Study Coordinator, Patricia Zone, RN, evaluates the RFP for business viability and clinical appropriateness, and provides the requested documentation back to the sponsor. After being selected as a site for the trial, identified as #1234, and providing the required regulatory documentation to the sponsor, the physician identified as the Principal Investigator and other study personnel receive protocol-specific training from the sponsor. During the trial set-up period, Patricia ensures that the appropriate system security is in place for this protocol, recruits patients to participate as subjects according to inclusion and exclusion criteria described in the study protocol, schedules patient visits, manages data capture and data entry, and performs all the attendant financial tasks.</p>
-    <p>Patricia contacts Corey Jones, a patient at Holbin, about participating in the trial, and Corey agrees to participate as a subject. Patricia registers Corey in the EHR as a subject in trial #1234, using the EHR’s patient index. She schedules Corey’s study visits using the EHR scheduling module, and flags the visits as pertaining to the trial #1234. After the set-up stage, the site initiates clinical trial care and trial-specific documentation.</p>
-    <p>The use case continues with current state and desired state scenarios, which describe data capture utilizing EDC technology during a patient clinical trial visit before and after the RFD implementation.</p>
-    <h4 class="list-paragraph" id="17.1.1.1">17.1.1.1 Current State</h4>
-    <p>Corey Jones arrives at the clinic for a scheduled trial visit and meets with Patricia Zone for a face-to-face interview. Patricia logs into the EHR and documents the visit with a terse entry: ‘Mrs. Jones comes in for a clinical trial visit associated with study #1234.’ Patricia interviews Mrs. Jones, makes some observations, and records her observation on a source paper document. She looks up recent lab results in the EHR and records them in the Case Report Form (CRF). The EHR provides only a portion of the data required to complete the form, the rest comes from the interview and observations. (Estimates on the percentage of data required for a clinical trial that would be available in an EHR vary from 5% to 40%. Even in the best case, the EHR typically captures only a subset of the data required by a study protocol.)</p>
-    <p>
-      The completed source document is forwarded to Bob, the data entry person. Bob identifies the CRF as belonging to trial #1234, and selects the trial #1234 EDC system, which may be housed on a dedicated laptop provided by the sponsor or may be accessible via a browser session connected to the Sponsor’s EDC system via the Internet. He takes a three ring binder off the shelf and refers to his ‘crib sheet’ to get the instructions for how to use this particular system. He logs into the EDC application, using a user name and password unique to this system, and enters the data into the correct electronic case report form (eCRF) for that trial visit. Once the source document has been processed, Bob files it in a ‘banker’s box’
-      <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref">
-        <sup>6</sup>
-      </a>
-      as part of the permanent source record of the trial (in order to meet the requirements of the Federal Code of Regulations 21CFR 312:62).
+    <h1 xmlns="" id="17">17    Retrieve Form for Data Capture (RFD)</h1>
+    <p xmlns="">
+      <span>The Retrieve Form for Data Capture (RFD) Profile provides a method for gathering data within a user’s current application to meet the requirements of an external system. RFD supports the retrieval of a form from a form source, the display and completion of the form, and the return of instance data from the display application to a receiving application. In addition, RFD provides a mechanism to amend data that was previously captured.</span>
     </p>
-    <p>In addition to trial #1234, Bob performs data entry on eight additional EDC systems, five on dedicated laptops and three that are web-based. The web-based EDC systems save on table space, but still require entries in the three ring binders where Bob puts his ‘crib sheets’. It is a chore to make sure that data from a particular trial gets entered into the corresponding laptop with its unique login ritual and data capture form, so Bob experiences much frustration in dealing with this unwieldy set of systems. Bob is a conscientious employee, and stays current in his work. But in many other sites the data entry person holds the CRF for a period of time before entering the data, perhaps entering data twice a month, or entering the data the week before the monitor visit occurs.</p>
-    <h4 class="list-paragraph" id="17.1.1.2">17.1.1.2 Desired State</h4>
-    <p>Mrs. Jones arrives for a visit and Patricia logs into the EHR, pulls up Mrs. Jones’s record, and identifies the scheduled clinical trial visit. Because of the patient identification and scheduling steps that took place in the set-up stage, the EHR recognizes Mrs. Jones as a subject in Trial 1234, and requests an electronic case report form from trial #1234’s EDC system, using RFD. If the trial is sufficiently complex, the retrieved form may contain a list of relevant forms from the EDC system for Patricia to choose from. When the correct context is established between the EHR and the EDC, Patricia selects the clinical research tab within the EHR application to reveal the appropriate form. The EHR checks Patricia’s credentials, confirms that she is empowered to view the form, and displays the form. The data capture form is essentially the same form that the EDC system would offer for this visit, and its presentation may take on some of the look and feel of the EHR’s user interface. The use of a crib sheet may still be necessary, although sophisticated forms should carry with them information on how to fill out the form.</p>
-    <p>Patricia interviews Mrs. Jones and enters data into the clinical trial form. Data from the EHR database may be pre-populated into the proper data fields (which have built-in edit checks). Upon completing the form, Patricia hits the submit button, and the EHR returns the complete form to the EDC system, using RFD. A copy of the document is archived in the site clinical trial document vault as part of the permanent source record of the trial.</p>
-    <h3 class="list-paragraph" id="17.1.2">17.1.2 Public Health Reporting Use Cases</h3>
-    <h4 class="list-paragraph" id="17.1.2.1">17.1.2.1 Public Health Scenario 1</h4>
-    <h5 class="list-paragraph" id="17.1.2.1.1">17.1.2.1.1 Current State</h5>
-    <p>Mrs. Smith presents to the Emergency Department of the Community Hospital with digestive complaints. The health care provider sends samples to the lab. The laboratory identifies cryptosporidium. The laboratory personnel query the laboratory database for weekly required public health reporting. Cases are identified, and information from the laboratory information system is copied to the public health form, printed, and sent to the public health authority. The public health officials review the reports submitted from the health care providers in the jurisdiction and identify that multiple cases of cryptosporidium have been presenting to area hospitals. Notification of the event is communicated to health care providers in the area to notify them to watch for additional cases. Water supplies servicing the affected areas are tested and treated accordingly. However, with the delay in the detection process caused by the paper-based process, numerous additional cases of cryptosporidium infection present for care.</p>
-    <h5 class="list-paragraph" id="17.1.2.1.2">17.1.2.1.2 Desired State</h5>
-    <p>Mrs. Smith presents to the Emergency Department of the Community Hospital with digestive complaints. The health care provider sends samples to the lab. The laboratory identifies cryptosporidium. The laboratory system identifies this test result as a required public health report and sends it to the state DOH using PHIN standards as soon as the result is verified in the laboratory system. In addition or alternatively, a form is retrieved using the RFD Profile from the Biowatch public health system. The case reporting form is presented to the provider, pre-populated with EHR mapped data. The healthcare provider fills out the remaining supplemental information and submits this data electronically to the public health authority. The public health authority receives numerous electronic reports from laboratories and health care providers in the jurisdiction. Notification is sent to area health care providers and laboratories in the area to notify them to watch for additional cases. Water supplies servicing the area are tested and treated accordingly. With the early detection through process automation, further illness in the community is minimized.</p>
-    <h5 class="list-paragraph" id="17.1.2.1.3">17.1.2.1.3 Anthrax and Avian Influenza Scenarios: Disease Monitoring Based on Presumptive Diagnoses and/or Patient ‘Problems’</h5>
-    <p>Anthrax: Patient presents at ED with rapidly progressive respiratory symptoms. Gram stain of sputum reveals gram positive rods, chest X-ray reveals a widened mediastinum, and patient's condition rapidly deteriorates. Culture of sputum in laboratory is suspicious for Bacillus anthracis. State DOH contacted and specimens sent for confirmation. Once confirmed, the state DOH notifies appropriate local, regional, state, and federal officials (e.g., CDC, FBI, USAMRID), and notifies local hospitals, providers, and media. (This involves a bioterrorist scenario on the back end after ID confirmation – the influenza scenario below does not, but probably invokes the same pathways.)</p>
-    <p>Once notified of the potential for additional cases, the ED performs STAT Gram stains on sputa and PA/Lateral Chest X-rays for all patients presenting with rapidly progressive respiratory symptoms. Presence of Gram positive rods in sputum is entered directly into the lab system OR by designated ER staff into a specific ADT field on the patient ADT screen in the CIS for internal / external surveillance reporting. Rapid reading of Chest X-ray with mediastinal widening is entered in a specific ADT field by designated staff (e.g., Radiology technician) on behalf of physician. Entry of information in these fields creates a transaction of the information to the local public health department biosurveillance system (BIS) as presumptively diagnosed inhalational anthrax. The BIS aggregates information received from multiple sites to present the location, origin and extent of presumptive and defined case presentation.</p>
-    <p>Influenza: Physicians around hospital and hospital ED get rapidly increasing number of patients with respiratory symptoms suggestive of a viral infection, but no increased prevalence of similar symptoms in surrounding hospitals. Rapid test for influenza A/B is positive in many of the patients and epidemic influenza is circulating in the community. Respiratory culture is negative for bacterial pathogen at 24 hr., but viral culture is positive for influenza A. AH5N1 is suspected due to association of patients with each other and “dead chickens”. All specimens are sent to state DOH ASAP for ID. State lab identifies AH5N1. Follow-up similar to #1 above. The follow-up once notification is disseminated from health department(s) to local providers, is similar to the presumptive diagnosis information transmission to public health BIS. A more robust method for collection of presumptive diagnoses in either scenario (but not near-term) is to use standardized “problem” terms (using SNOMED) for selection of presumptive problems as part of routine operations of a CIS for physician order entry and for physician and nursing documentation.</p>
-    <p>The difference in these two scenarios is that the Anthrax case involves syndromic surveillance (severe respiratory symptoms and a widened mediastinum on X-ray: need radiology surveillance and cross-correlation to ED and Lab – much more complex.)</p>
-    <h3 class="list-paragraph" id="17.1.3">17.1.3 Pharmaco-vigilance Scenario</h3>
-    <p>A community-based physician, Dr. Cramp, sees a patient in an outpatient clinic and accesses the patient’s electronic health record which reveals that the patient is on one of the new statin drugs. The physical examination turns up muscle weakness in the patient’s calves, which the physician recognizes as a possible adverse reaction to the statin. He orders a total creatinine kinase lab test to help in diagnosing the problem.</p>
-    <h4 class="list-paragraph" id="17.1.3.1">17.1.3.1 Current State</h4>
-    <p>Dr. Cramp exits the EHR and, using a web browser, goes to http://www.fda.gov/medwatch/. He brings up form FDA 3500, for ‘voluntary reporting of adverse events noted spontaneously in the course of clinical care’. He navigates through several screens of routing and instructions to arrive at the first screen of the actual form, which requests patient identifier, age at time of event or date of birth, sex, and weight; the second screen requests seven entries: a classification of the event, classification of outcome, event date, report date, description, relevant tests (he notes that a test has been ordered), and other relevant history (the last three fields are text entry); the third and fourth screens ask for details about the product ; and so forth. In actuality, the current state is that this form is seldom completed.</p>
-    <h4 class="list-paragraph" id="17.1.3.2">17.1.3.2 Desired State</h4>
-    <p>Dr. Cramp sees the patient and accesses the EHR as above. Upon finding the potential problem, he clicks on an ‘Adverse Event Reporting’ button which brings up FDA form 3500, using the EHR user interface. The form is presented with the demographics already completed. The product name is part of the working context of the EHR session, and is automatically loaded into the appropriate field. Dr. Cramp completes the empty fields of the form and submits directly to the FDA Medwatch site.</p>
-    <p>RFD takes care of retrieving the form from MedWatch, displaying it, and returning the form to FDA. Note that the profile does not address whether or not the EHR stores a copy of the form or preloads it with EHR data. Simply using the EHR to display, complete, and submit the form is sufficient. The EHR and the site might decide to capture and store the form in the EHR database, which would be a permitted extension of the profile, but not necessary.</p>
-    <h3 class="list-paragraph" id="17.1.4">17.1.4 Cardiology Research Use Cases</h3>
-    <h4 class="list-paragraph" id="17.1.4.1">17.1.4.1 Cardiology Use Case 1 - Submission to National, State and Regional Data Registries</h4>
-    <p>Several jurisdictions have mandatory requirements for submission of data for particular cardiac procedures, (e.g., New York State for angioplasty and cardiac surgery, or the US for implantation of cardioverter defibrillators in Medicare patients). Additionally, many institutions participate in voluntary regional or national data registries, notably the NCDR™ National Cardiovascular Data Registry.</p>
-    <p>A single cardiac patient’s data may be submitted to multiple registries. It is therefore useful for data collections for multiple submissions to be done simultaneously, so that the nurse preparing the data can review the patient medical record once and extract relevant data to each of the submission forms. Additionally, the patient’s “medical record” is in fact spread across several electronic and paper-based systems, so that repeated access in the preparation of multiple submissions must be minimized.</p>
-    <p>Most of the cardiac registry submissions require data from several encounters. E.g., the NCDR gathers data on patients who undergo diagnostic cardiac catheterization followed by a percutaneous coronary intervention (PCI). If the patient had presented to the Emergency Department with an ST-elevation infarction, only a small portion of the NCDR-required data is gathered in association with the catheterization procedure. The following information is needed to complete the NCDR data set: Date of previous CABG, date of previous PCI, time of arrival in the ER, baseline laboratory data (BUN, creatinine), information from the patient’s history (family history of CAD, history of stroke, pulmonary and renal disease, etc.), measured cardiac ejection fraction prior to PCI, QCA findings, inventory of the devices used (including bar codes), and medications administered.</p>
-    <p>Thus, the preparation of the submission must be done incrementally at each encounter, and/or retrospectively at a time that all the information can be determined. Incremental preparation is problematic, since at the initial encounters it is not known what procedures the patient will undergo, and hence what registries’ data forms need to be filled in. Purely retrospective data collection is similarly problematic, as it is better to obtain the data when it is produced, rather than needing to search through the record for it.</p>
-    <p>Carl Cardiac, a patient, presents at the ED with chest pain, and based on ECG and history is whisked to the cath lab for a diagnostic and interventional procedure. During the PCI, while things are slow during the angioplasty balloon inflation, Ted Tech, the cath lab technologist, calls up the (empty) state and national angioplasty registry forms from the forms repository onto the cath lab logging system, and begins filling in relevant information from the case. During post-procedure clean-up, he completes as much information as he knows, and stores the partially filled-in forms back to the forms repository.</p>
-    <p>At the end of the month, Nancy Nurse is assigned the task of completing the registry data collection for that month’s cath patients. She retrieves a list of cath patients, and for each one pulls up partially completed forms. When she gets to Carl’s name, she pulls up the forms as partially completed by Ted, and accesses Carl’s lab results, cath procedure report, nursing notes from the CCU, and discharge summary report. She fills in the remainder of the registry forms, and stores the completed forms back to the repository.</p>
-    <p>At the end of the quarter, Adele Admin uses a specialized application to retrieve all the completed forms for the national registry for the quarter from the repository, and to prepare the submission. She does a similar task with an application that processes the state registry forms.</p>
-    <h4 class="list-paragraph" id="17.1.4.2">17.1.4.2 Cardiology Use Case 2 – Performance Measures</h4>
-    <p>A major issue in cardiology is improving the quality of care by monitoring select performance measures. There is a strong collaborative arrangement between the ACC, AHA, CMS, JCAHO, and AHRQ on the development and use of performance measures, such as the new ACC/AHA Clinical Performance Measures for Adults with ST-Elevation and Non–ST-Elevation Myocardial Infarction.</p>
-    <p>These performance measures require data collection, similar to the collection of data for submission to registries. However, after collection of data for a particular time period, further analysis on the total patient population must be applied to obtain an appropriate denominator for the reported measures (i.e., certain patients must be retrospectively excluded from the population data set).</p>
-    <h3 class="list-paragraph" id="17.1.5">17.1.5 Radiology Use Case – Clinical Impact Registry</h3>
-    <p>As part of the effort to assess the impact of PET imaging on cancer patient management, the Centers for Medicare and Medicaid Services have predicated reimbursement, for a number of otherwise non-reimbursed procedures, on the submission of study data to a National Oncologic PET Registry (NOPR) operated by the American College of Radiology at www.cancerpetregistry.org.</p>
-    <p>This use case involves a sequence of forms which must be submitted for a given patient study and includes overlaps with the billing process.</p>
-    <p>PET Facilities are required to register their site with NOPR. Because access to NOPR is limited to registered facilities and because the facility depends on complete submission to get the reimbursement, the PET Facility has the primary responsibility and direct access for submitting all data. The referring physician does not have access to NOPR.</p>
-    <p>Paul Positron, a patient, presents with indications of stomach cancer (or other indication covered only by participation in the NOPR). His physician, Dr. Jones, refers him to PET-Pros, a participating PET facility. PET-Pros obtains basic demographic information from Dr. Jones and submits this information to NOPR via a Web form, at which time a Registry case number is assigned by NOPR.</p>
-    <p>Once a Registry case number is created, NOPR emails Dr. Jones the Pre-PET Form that must be completed with case specific clinical details and forwarded to PET-Pros for entry into the NOPR database by midnight of the day of the PET scan.</p>
-    <p>At some time before the PET study, or when Paul arrives for the PET scan, PET-Pros provides Paul with the ACR IRB-approved standard NOPR Patient Information Sheet. Paul can contact the NOPR directly for more information, if necessary. Paul indicates his NOPR consent verbally to staff at the PET facility, either on the day of the PET study or within two working days after the PET study is completed. Written consent is not required. PET-Pros notes in the PET Report Form, if the patient gave or withheld consent for use of his data in future NOPR research.</p>
-    <p>Once the PET scan has been performed and reported, PET-Pros submits a study completion form and a report form (including the report provided to Dr. Jones) to NOPR.</p>
-    <p>NOPR emails Dr. Jones the Post-PET Form for completion. This form collects information relating to the impact of the scan. It also includes an ACR IRB-approved Referring Physician Information Sheet and indication whether physician consent for use of the response data in future NOPR research has been given or withheld. The Post-PET form must be completed, forwarded to PET-Pros and entered into the NOPR database within 30 days of the PET scan.</p>
-    <p>The NOPR database notifies PET-Pros when all case data have been entered so that the facility can bill CMS for the study. PET-Pros can check on the case status of their patients at any time using the PET Facility Reporting Tools available on the NOPR Web site.</p>
-    <h3 class="list-paragraph" id="17.1.6">17.1.6 Data Clarification</h3>
-    <p>There is a need for a clarification process that enables a sponsor organization to highlight data that needs to be examined and potentially corrected. These are detected by sponsor-initiated checks (edit checks) that result in sponsor data queries for clarification, correction, or verification relating to previously submitted data. These queries about previously submitted data are provided to the EHR system upon request. Note that there is no automated notification to the EHR that these queries for clarification / correction / verification exist. It is up to the EHR to periodically make requests when working with a sponsor that performs these edit checks. Performing these longitudinal edit checks on submitted data does not apply to all use cases.</p>
-    <h4 class="list-paragraph" id="17.1.6.1">17.1.6.1 Current State - query process</h4>
-    <p>Edit checks built in to eCRFs can facilitate accurate and complete data capture; however, it is probable that during the course of a trial, some data elements will need to be reviewed by the site for clarification, correction, or verification. As data managers review the data (through manual and/or system-supported validation processes), they identify missing, incomplete, or potentially discrepant data (e.g., a site reports a patient was prescribed penicillin for a headache). Data queries are generated through an EDC system and sent back to the site for clarification/ correction/ verification by the research coordinator. For each data query, the coordinator must reference the source record where the data element was originally documented and compare the queried data element to the source. On occasions, the site may need to contact the patient if the source is incomplete (e.g., a stop date on a medication). Clarifications to the data are documented by the coordinator in the source and if it is determined that the source record is in error, corrections are clearly documented in the source per GCP guidelines. The coordinator then responds to the query in the EDC system providing a reason for any updates to the original record which the system captures in the audit trail. The data manager can then review the updates and the response and close the query if no further information is required.</p>
-    <h4 class="list-paragraph" id="17.1.6.2">17.1.6.2 Future State - query process</h4>
-    <p>Edit checks built into trial-specific forms and eCRFs in the EHR system can facilitate accurate and complete data capture; however, it is probable that during the course of a trial, some data elements will need to be reviewed by the site for clarification, correction, or verification.</p>
-    <p>As data managers review the data (through manual and/or system-supported validation processes), they identify missing, incomplete, or potentially discrepant data (e.g., a site reports a patient was prescribed penicillin for a headache). Data queries are generated through the sponsor system and prepared to the site for clarification/ correction/ verification by the research coordinator. The EHR study coordinator accesses and reviews each data query through the EHR system referencing the EHR data in order to respond to the query. On occasions, the site may need to contact the patient if the EHR data is incomplete (e.g., a stop date on a medication). The coordinator documents clarifications to the data in the EHR system if needed and submits a query response as well as any data updates to the sponsor system and to the investigator site archive. The query response includes a reason for any changes made which is included as part of the audit trail in the EHR system, sponsor system, and the investigator’s site archive. The data manager of the sponsor can then review the response and the updates in the sponsor system and close the query if no further information is required.</p>
-    <h2 class="list-paragraph" id="17.2">17.2 RFD Actors/Transactions</h2>
-    <p>Figure 17.2-1 shows the actors directly involved in the Retrieve Form for Data Capture Integration Profile and the relevant transactions between them. Actors that may be indirectly involved due to their participation in other profiles are not shown.</p>
-    <p>Figure 17.2-1: Retrieve Form for Data Capture Actor Diagram</p>
-    <p>Table 17.2-1 lists the transactions for each actor directly involved in the Retrieve Form for Data Capture Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile that the implementations may choose to support is listed in Section 17.3.</p>
-    <p>Table 17.2-1: Retrieve Form for Data Capture Integration Profile - Actors and Transactions</p>
-    <table>
+    <p xmlns="">
+      <span>Consider the case where a healthcare provider site uses an Electronic Health Record (EHR) to document patient care. In this case, the EHR acts as the local home application for the provider’s personnel. Suppose an external agency, through some contractual arrangement, requires data from the provider, some of which reside in the EHR’s database, the rest requiring data entry by the EHR’s users. RFD enables the EHR user to retrieve a data capture form from the external agency, to fill out the form, and to return the data to the external agency without leaving the provider’s local home application, the EHR. The profile also permits the external agency to indicate that there is a need to clarify points about the data so captured and provides the mechanisms to allow the data to be modified.</span>
+    </p>
+    <p xmlns="">
+      <span>Many potential uses of RFD want the form to dynamically pre-populate forms from the host application’s database, that is have the form delivered with host application database values filled in to appropriate fields of a form. RFD permits automatic form population and provides a generic mechanism by which this can be accomplished. However, the profile does not speak to the issue of content, remaining silent on normative vocabularies and other enablers of semantic interoperability. Specific domain groups – clinical trials, drug safety, bio-surveillance – will build on RFD by contributing content specifications or by evaluating and recommending existing content standards that will operate within RFD. When RFD, as an infrastructure profile, integrates with domain-specific content standards, a much greater level of interoperability will result.</span>
+    </p>
+    <p xmlns="">
+      <span>The RFD Profile provides a generic polling mechanism to allow an external agency to indicate issues with data that have been captured and enable the healthcare provider to correct the data. The profile does not dictate the mechanism employed or content required to achieve such corrections.</span>
+    </p>
+    <p xmlns="">
+      <span>In this profile, the external agency provides data capture forms in a schema appropriate to its domain. The profile intends to minimize the work that the displaying application should do, and to bring over fully functional forms that carry with them the instruction necessary to complete the form. RFD also supports archiving a copy of the completed form.</span>
+    </p>
+    <p xmlns="">
+      <span>RFD offers the capability to leverage industry standards that address both the structure and content of forms used for data capture. HL7’s Individual Case Safety Record (ICSR) and CDISC’s Operational Data Model (ODM) provide examples.</span>
+    </p>
+    <p xmlns="">
+      <span>The infrastructure provided by the RFD Profile can be utilized by many domain groups and the following domain-specific use cases illustrate the wide variety of uses to which RFD can be made.</span>
+    </p>
+    <h2 xmlns="" id="17.1">17.1 Use Cases</h2>
+    <p xmlns="">
+      <span>The following use cases indicate how this profile might be used by various disciplines. The RFD Profile enables all of these use cases. It does not implement any of them. Actual discipline specific profiles that specify both the use of RFD and the rules for data objects are expected in future domain-specific IHE profiles.</span>
+    </p>
+    <h3 xmlns="" id="17.1.1">17.1.1 Investigational New Drug Clinical Trial Use Case</h3>
+    <p xmlns="">
+      <span>The setting for the clinical trial use case is a physicians’ practice where patient care is delivered side-by-side with clinical research. The site, Holbin Medical Group, is a multi-site physician practice, employing over 100 physicians in a variety of specialties. Holbin’s CEO encourages the physicians to participate as site investigators for pharmaceutical-sponsored clinical trials; Holbin provides support for clinical research activities in the form of a Research Department of twelve dedicated study coordinators, mostly RNs, along with clerical and data-entry support personnel. Holbin Medical Group uses an Electronic Health Record (EHR) and a number of sponsor-provided Electronic Data Capture (EDC) systems for documenting clinical trial activities. (For our purposes, an EHR is any application which is the primary site for documenting patient care and retrieving patient care information. Thus we include in our span of interest many systems installed today that are not quite EHRs in the strictest sense, but which would still benefit from this approach.)</span>
+    </p>
+    <p xmlns="">
+      <span>Holbin’s involvement in a clinical study begins when the Research Department receives a request for proposal from a study sponsor. A Study Coordinator, Patricia Zone, RN, evaluates the RFP for business viability and clinical appropriateness, and provides the requested documentation back to the sponsor. After being selected as a site for the trial, identified as #1234, and providing the required regulatory documentation to the sponsor, the physician identified as the Principal Investigator and other study personnel receive protocol-specific training from the sponsor. During the trial set-up period, Patricia ensures that the appropriate system security is in place for this protocol, recruits patients to participate as subjects according to inclusion and exclusion criteria described in the study protocol, schedules patient visits, manages data capture and data entry, and performs all the attendant financial tasks.</span>
+    </p>
+    <p xmlns="">
+      <span>Patricia contacts Corey Jones, a patient at Holbin, about participating in the trial, and Corey agrees to participate as a subject. Patricia registers Corey in the EHR as a subject in trial #1234, using the EHR’s patient index. She schedules Corey’s study visits using the EHR scheduling module, and flags the visits as pertaining to the trial #1234. After the set-up stage, the site initiates clinical trial care and trial-specific documentation.</span>
+    </p>
+    <p xmlns="">
+      <span>The use case continues with current state and desired state scenarios, which describe data capture utilizing EDC technology during a patient clinical trial visit before and after the RFD implementation.</span>
+    </p>
+    <h4 xmlns="" id="17.1.1.1">17.1.1.1 Current State</h4>
+    <p xmlns="">
+      <span>Corey Jones arrives at the clinic for a scheduled trial visit and meets with Patricia Zone for a face-to-face interview. Patricia logs into the EHR and documents the visit with a terse entry:</span>
+      <span>‘Mrs. Jones comes in for a clinical trial visit associated with study #1234.’ Patricia interviews Mrs. Jones, makes some observations, and records her observation on a source paper document. She looks up recent lab results in the EHR and records them in the Case Report Form (CRF). The EHR provides only a portion of the data required to complete the form, the rest comes from the interview and observations. (Estimates on the percentage of data required for a clinical trial that would be available in an EHR vary from 5% to 40%. Even in the best case, the EHR typically captures only a subset of the data required by a study protocol.)</span>
+    </p>
+    <p xmlns="">
+      <span>The completed source document is forwarded to Bob, the data entry person. Bob identifies the CRF as belonging to trial #1234, and selects the trial #1234 EDC system, which may be housed on a dedicated laptop provided by the sponsor or may be accessible via a browser session connected to the Sponsor’s EDC system via the Internet. He takes a three ring binder off the shelf and refers to his ‘crib sheet’ to get the instructions for how to use this particular system. He logs into the EDC application, using a user name and password unique to this system, and enters the data into the correct electronic case report form (eCRF) for that trial visit. Once the source document has been processed, Bob files it in a ‘banker’s box’</span>
+      <a href="#_ftn6" style="text-decoration:none">
+        <span style="font-family:'Times New Roman'; font-size:8pt; vertical-align:super; color:#000000">[6]</span>
+      </a>
+      <span>as part of the permanent source record of the trial (in order to meet the requirements of the Federal Code of Regulations 21CFR 312:62).</span>
+    </p>
+    <p xmlns="">
+      <span>In addition to trial #1234, Bob performs data entry on eight additional EDC systems, five on dedicated laptops and three that are web-based. The web-based EDC systems save on table space, but still require entries in the three ring binders where Bob puts his ‘crib sheets’. It is a chore to make sure that data from a particular trial gets entered into the corresponding laptop with its unique login ritual and data capture form, so Bob experiences much frustration in dealing with this unwieldy set of systems. Bob is a conscientious employee, and stays current in his work. But in many other sites the data entry person holds the CRF for a period of time before entering the data, perhaps entering data twice a month, or entering the data the week before the monitor visit occurs.</span>
+    </p>
+    <h4 xmlns="" id="17.1.1.2">17.1.1.2 Desired State</h4>
+    <p xmlns="">
+      <span>Mrs. Jones arrives for a visit and Patricia logs into the EHR, pulls up Mrs. Jones’s record, and identifies the scheduled clinical trial visit. Because of the patient identification and scheduling steps that took place in the set-up stage, the EHR recognizes Mrs. Jones as a subject in Trial 1234, and requests an electronic case report form from trial #1234’s EDC system, using RFD. If the trial is sufficiently complex, the retrieved form may contain a list of relevant forms from the EDC system for Patricia to choose from. When the correct context is established between the EHR and the EDC, Patricia selects the clinical research tab within the EHR application to reveal the appropriate form. The EHR checks Patricia’s credentials, confirms that she is empowered to view the form, and displays the form. The data capture form is essentially the same form that the EDC system would offer for this visit, and its presentation may take on some of the look and feel</span>
+      <span>of the EHR’s user interface. The use of a crib sheet may still be necessary, although sophisticated forms should carry with them information on how to fill out the form.</span>
+    </p>
+    <p xmlns="">
+      <span>Patricia interviews Mrs. Jones and enters data into the clinical trial form. Data from the EHR database may be pre-populated into the proper data fields (which have built-in edit checks). Upon completing the form, Patricia hits the submit button, and the EHR returns the complete form to the EDC system, using RFD. A copy of the document is archived in the site clinical trial document vault as part of the permanent source record of the trial.</span>
+    </p>
+    <h3 xmlns="" id="17.1.2">17.1.2 Public Health Reporting Use Cases</h3>
+    <h4 xmlns="" id="17.1.2.1">17.1.2.1 Public Health Scenario 1</h4>
+    <h5 xmlns="" id="17.1.2.1.1">17.1.2.1.1 Current State</h5>
+    <p xmlns="">
+      <span>Mrs. Smith presents to the Emergency Department of the Community Hospital with digestive complaints. The health care provider sends samples to the lab. The laboratory identifies cryptosporidium. The laboratory personnel query the laboratory database for weekly required public health reporting. Cases are identified, and information from the laboratory information system is copied to the public health form, printed, and sent to the public health authority. The public health officials review the reports submitted from the health care providers in the jurisdiction and identify that multiple cases of cryptosporidium have been presenting to area hospitals. Notification of the event is communicated to health care providers in the area to notify them to watch for additional cases. Water supplies servicing the affected areas are tested and treated accordingly. However, with the delay in the detection process caused by the paper-based process, numerous additional cases of cryptosporidium infection present for care.</span>
+    </p>
+    <h5 xmlns="" id="17.1.2.1.2">17.1.2.1.2 Desired State</h5>
+    <p xmlns="">
+      <span>Mrs. Smith presents to the Emergency Department of the Community Hospital with digestive complaints. The health care provider sends samples to the lab. The laboratory identifies cryptosporidium. The laboratory system identifies this test result as a required public health report and sends it to the state DOH using PHIN standards as soon as the result is verified in the laboratory system. In addition or alternatively, a form is retrieved using the RFD Profile from the Biowatch public health system. The case reporting form is presented to the provider, pre-populated with EHR mapped data. The healthcare provider fills out the remaining supplemental information and submits this data electronically to the public health authority. The public health authority receives numerous electronic reports from laboratories and health care providers in the jurisdiction. Notification is sent to area health care providers and laboratories in the area to notify them to watch for additional cases. Water supplies servicing the area are tested and treated accordingly. With the early detection through process automation, further illness in the community is minimized.</span>
+    </p>
+    <h5 xmlns="" id="17.1.2.1.3">17.1.2.1.3 Anthrax and Avian Influenza Scenarios: Disease Monitoring Based on Presumptive Diagnoses and/or Patient ‘Problems’</h5>
+    <p xmlns="">
+      <span>Anthrax: Patient presents at ED with rapidly progressive respiratory symptoms. Gram stain of sputum reveals gram positive rods, chest X-ray reveals a widened mediastinum, and patient's condition rapidly deteriorates. Culture of sputum in laboratory is suspicious for Bacillus anthracis. State DOH contacted and specimens sent for confirmation. Once confirmed, the state DOH notifies appropriate local, regional, state, and federal officials (e.g., CDC, FBI, USAMRID), and notifies local hospitals, providers, and media. (This involves a bioterrorist scenario on the back end after ID confirmation – the influenza scenario below does not, but probably invokes the same pathways.)</span>
+    </p>
+    <p xmlns="">
+      <span>Once notified of the potential for additional cases, the ED performs STAT Gram stains on sputa and PA/Lateral Chest X-rays for all patients presenting with rapidly progressive respiratory symptoms. Presence of Gram positive rods in sputum is entered directly into the lab system OR by designated ER staff into a specific ADT field on the patient ADT screen in the CIS for internal / external surveillance reporting. Rapid reading of Chest X-ray with mediastinal widening is entered in a specific ADT field by designated staff (e.g., Radiology technician) on behalf of physician. Entry of information in these fields creates a transaction of the information to the local public health department biosurveillance system (BIS) as presumptively diagnosed inhalational anthrax. The BIS aggregates information received from multiple sites to present the location, origin and extent of presumptive and defined case presentation.</span>
+    </p>
+    <p xmlns="">
+      <span>Influenza: Physicians around hospital and hospital ED get rapidly increasing number of patients with respiratory symptoms suggestive of a viral infection, but no increased prevalence of similar symptoms in surrounding hospitals. Rapid test for influenza A/B is positive in many of the patients and epidemic influenza is circulating in the community. Respiratory culture is negative for bacterial pathogen at 24 hr., but viral culture is positive for influenza A. AH5N1 is suspected due to association of patients with each other and “dead chickens”. All specimens are sent to state DOH ASAP for ID. State lab identifies AH5N1. Follow-up similar to #1 above. The follow-up once notification is disseminated from health department(s) to local providers, is similar to the presumptive diagnosis information transmission to public health BIS. A more robust method for collection of presumptive diagnoses in either scenario (but not near-term) is to use standardized “problem” terms (using SNOMED) for selection of presumptive problems as part of routine operations of a CIS for physician order entry and for physician and nursing documentation.</span>
+    </p>
+    <p xmlns="">
+      <span>The difference in these two scenarios is that the Anthrax case involves syndromic surveillance (severe respiratory symptoms and a widened mediastinum on X-ray: need radiology surveillance and cross-correlation to ED and Lab – much more complex.)</span>
+    </p>
+    <h3 xmlns="" id="17.1.3">17.1.3 Pharmaco-vigilance Scenario</h3>
+    <p xmlns="">
+      <span>A community-based physician, Dr. Cramp, sees a patient in an outpatient clinic and accesses the patient’s electronic health record which reveals that the patient is on one of the new statin drugs. The physical examination turns up muscle weakness in the patient’s calves, which the physician</span>
+      <span>recognizes as a possible adverse reaction to the statin. He orders a total creatinine kinase lab test to help in diagnosing the problem.</span>
+    </p>
+    <h4 xmlns="" id="17.1.3.1">17.1.3.1 Current State </h4>
+    <p xmlns="">
+      <span>Dr. Cramp exits the EHR and, using a web browser, goes to http://www.fda.gov/medwatch/. He brings up form FDA 3500, for ‘voluntary reporting of adverse events noted spontaneously in the course of clinical care’. He navigates through several screens of routing and instructions to arrive at the first screen of the actual form, which requests patient identifier, age at time of event or date of birth, sex, and weight; the second screen requests seven entries: a classification of the event, classification of outcome, event date, report date, description, relevant tests (he notes that a test has been ordered), and other relevant history (the last three fields are text entry); the third and fourth screens ask for details about the product ; and so forth. In actuality, the current state is that this form is seldom completed.</span>
+    </p>
+    <h4 xmlns="" id="17.1.3.2">17.1.3.2 Desired State</h4>
+    <p xmlns="">
+      <span>Dr. Cramp sees the patient and accesses the EHR as above. Upon finding the potential problem, he clicks on an ‘Adverse Event Reporting’ button which brings up FDA form 3500, using the EHR user interface. The form is presented with the demographics already completed. The product name is part of the working context of the EHR session, and is automatically loaded into the appropriate field. Dr. Cramp completes the empty fields of the form and submits directly to the FDA Medwatch site.</span>
+    </p>
+    <p xmlns="">
+      <span>RFD takes care of retrieving the form from MedWatch, displaying it, and returning the form to FDA. Note that the profile does not address whether or not the EHR stores a copy of the form or preloads it with EHR data. Simply using the EHR to display, complete, and submit the form is sufficient. The EHR and the site might decide to capture and store the form in the EHR database, which would be a permitted extension of the profile, but not necessary.</span>
+    </p>
+    <h3 xmlns="" id="17.1.4">17.1.4 Cardiology Research Use Cases</h3>
+    <h4 xmlns="" id="17.1.4.1">17.1.4.1 Cardiology Use Case 1 - Submission to National, State and Regional Data Registries</h4>
+    <p xmlns="">
+      <span>Several jurisdictions have mandatory requirements for submission of data for particular cardiac procedures, (e.g., New York State for angioplasty and cardiac surgery, or the US for implantation of cardioverter defibrillators in Medicare patients). Additionally, many institutions participate in voluntary regional or national data registries, notably the NCDR™ National Cardiovascular Data Registry.</span>
+    </p>
+    <p xmlns="">
+      <span>A single cardiac patient’s data may be submitted to multiple registries. It is therefore useful for data collections for multiple submissions to be done simultaneously, so that the nurse preparing the data can review the patient medical record once and extract relevant data to each of the submission forms. Additionally, the patient’s “medical record” is in fact spread across several electronic and paper-based systems, so that repeated access in the preparation of multiple submissions must be minimized.</span>
+    </p>
+    <p xmlns="">
+      <span>Most of the cardiac registry submissions require data from several encounters. E.g., the NCDR gathers data on patients who undergo diagnostic cardiac catheterization followed by a percutaneous coronary intervention (PCI). If the patient had presented to the Emergency Department with an ST-elevation infarction, only a small portion of the NCDR-required data is gathered in association with the catheterization procedure. The following information is needed to complete the NCDR data set: Date of previous CABG, date of previous PCI, time of arrival in the ER, baseline laboratory data (BUN, creatinine), information from the patient’s history (family history of CAD, history of stroke, pulmonary and renal disease, etc.), measured cardiac ejection fraction prior to PCI, QCA findings, inventory of the devices used (including bar codes), and medications administered.</span>
+    </p>
+    <p xmlns="">
+      <span>Thus, the preparation of the submission must be done incrementally at each encounter, and/or retrospectively at a time that all the information can be determined. Incremental preparation is problematic, since at the initial encounters it is not known what procedures the patient will undergo, and hence what registries’ data forms need to be filled in. Purely retrospective data collection is similarly problematic, as it is better to obtain the data when it is produced, rather than needing to search through the record for it.</span>
+    </p>
+    <p xmlns="">
+      <span>Carl Cardiac, a patient, presents at the ED with chest pain, and based on ECG and history is whisked to the cath lab for a diagnostic and interventional procedure. During the PCI, while things are slow during the angioplasty balloon inflation, Ted Tech, the cath lab technologist, calls up the (empty) state and national angioplasty registry forms from the forms repository onto the cath lab logging system, and begins filling in relevant information from the case. During post-procedure clean-up, he completes as much information as he knows, and stores the partially filled-in forms back to the forms repository.</span>
+    </p>
+    <p xmlns="">
+      <span>At the end of the month, Nancy Nurse is assigned the task of completing the registry data collection for that month’s cath patients. She retrieves a list of cath patients, and for each one pulls up partially completed forms. When she gets to Carl’s name, she pulls up the forms as partially completed by Ted, and accesses Carl’s lab results, cath procedure report, nursing notes from the CCU, and discharge summary report. She fills in the remainder of the registry forms, and stores the completed forms back to the repository.</span>
+    </p>
+    <p xmlns="">
+      <span>At the end of the quarter, Adele Admin uses a specialized application to retrieve all the completed forms for the national registry for the quarter from the repository, and to prepare the submission. She does a similar task with an application that processes the state registry forms.</span>
+    </p>
+    <h4 xmlns="" id="17.1.4.2">17.1.4.2 Cardiology Use Case 2 – Performance Measures</h4>
+    <p xmlns="">
+      <span>A major issue in cardiology is improving the quality of care by monitoring select performance measures. There is a strong collaborative arrangement between the ACC, AHA, CMS, JCAHO, and AHRQ on the development and use of performance measures, such as the new ACC/AHA Clinical Performance Measures for Adults with ST-Elevation and Non–ST-Elevation Myocardial Infarction.</span>
+    </p>
+    <p xmlns="">
+      <span>These performance measures require data collection, similar to the collection of data for submission to registries. However, after collection of data for a particular time period, further</span>
+      <span>analysis on the total patient population must be applied to obtain an appropriate denominator for the reported measures (i.e., certain patients must be retrospectively excluded from the population data set).</span>
+    </p>
+    <h3 xmlns="" id="17.1.5">17.1.5 Radiology Use Case – Clinical Impact Registry</h3>
+    <p xmlns="">
+      <span>As part of the effort to assess the impact of PET imaging on cancer patient management, the Centers for Medicare and Medicaid Services have predicated reimbursement, for a number of otherwise non-reimbursed procedures, on the submission of study data to a National Oncologic PET Registry (NOPR) operated by the American College of Radiology at www.cancerpetregistry.org.</span>
+    </p>
+    <p xmlns="">
+      <span>This use case involves a sequence of forms which must be submitted for a given patient study and includes overlaps with the billing process.</span>
+    </p>
+    <p xmlns="">
+      <span>PET Facilities are required to register their site with NOPR. Because access to NOPR is limited to registered facilities and because the facility depends on complete submission to get the reimbursement, the PET Facility has the primary responsibility and direct access for submitting all data. The referring physician does not have access to NOPR.</span>
+    </p>
+    <p xmlns="">
+      <span>Paul Positron, a patient, presents with indications of stomach cancer (or other indication covered only by participation in the NOPR). His physician, Dr. Jones, refers him to PET-Pros, a participating PET facility. PET-Pros obtains basic demographic information from Dr. Jones and submits this information to NOPR via a Web form, at which time a Registry case number is assigned by NOPR.</span>
+    </p>
+    <p xmlns="">
+      <span>Once a Registry case number is created, NOPR emails Dr. Jones the Pre-PET Form that must be completed with case specific clinical details and forwarded to PET-Pros for entry into the NOPR database by midnight of the day of the PET scan.</span>
+    </p>
+    <p xmlns="">
+      <span>At some time before the PET study, or when Paul arrives for the PET scan, PET-Pros provides Paul with the ACR IRB-approved standard NOPR Patient Information Sheet. Paul can contact the NOPR directly for more information, if necessary. Paul indicates his NOPR consent verbally to staff at the PET facility, either on the day of the PET study or within two working days after the PET study is completed. Written consent is not required. PET-Pros notes in the PET Report Form, if the patient gave or withheld consent for use of his data in future NOPR research.</span>
+    </p>
+    <p xmlns="">
+      <span>Once the PET scan has been performed and reported, PET-Pros submits a study completion form and a report form (including the report provided to Dr. Jones) to NOPR.</span>
+    </p>
+    <p xmlns="">
+      <span>NOPR emails Dr. Jones the Post-PET Form for completion. This form collects information relating to the impact of the scan. It also includes an ACR IRB-approved Referring Physician Information Sheet and indication whether physician consent for use of the response data in future NOPR research has been given or withheld. The Post-PET form must be completed, forwarded to PET-Pros and entered into the NOPR database within 30 days of the PET scan.</span>
+    </p>
+    <p xmlns="">
+      <span>The NOPR database notifies PET-Pros when all case data have been entered so that the facility can bill CMS for the study. PET-Pros can check on the case status of their patients at any time using the PET Facility Reporting Tools available on the NOPR Web site.</span>
+    </p>
+    <h3 xmlns="" id="17.1.6">17.1.6 Data Clarification</h3>
+    <p xmlns="">
+      <span>There is a need for a clarification process that enables a sponsor organization to highlight data that needs to be examined and potentially corrected. These are detected by sponsor-initiated checks (edit checks) that result in sponsor data queries for clarification, correction, or verification relating to previously submitted data. These queries about previously submitted data are provided to the EHR system upon request. Note that there is no automated notification to the EHR that these queries for clarification / correction / verification exist. It is up to the EHR to periodically make requests when working with a sponsor that performs these edit checks. Performing these longitudinal edit checks on submitted data does not apply to all use cases.</span>
+    </p>
+    <h4 xmlns="" id="17.1.6.1">17.1.6.1 Current State - query process</h4>
+    <p xmlns="">
+      <span>Edit checks built in to eCRFs can facilitate accurate and complete data capture; however, it is probable that during the course of a trial, some data elements will need to be reviewed by the site for clarification, correction, or verification. As data managers review the data (through manual and/or system-supported validation processes), they identify missing, incomplete, or potentially discrepant data (e.g., a site reports a patient was prescribed penicillin for a headache). Data queries are generated through an EDC system and sent back to the site for clarification/ correction/ verification by the research coordinator. For each data query, the coordinator must reference the source record where the data element was originally documented and compare the queried data element to the source. On occasions, the site may need to contact the patient if the source is incomplete (e.g., a stop date on a medication). Clarifications to the data are documented by the coordinator in the source and if it is determined that the source record is in error, corrections are clearly documented in the source per GCP guidelines. The coordinator then responds to the query in the EDC system providing a reason for any updates to the original record which the system captures in the audit trail. The data manager can then review the updates and the response and close the query if no further information is required.</span>
+    </p>
+    <h4 xmlns="" id="17.1.6.2">17.1.6.2 Future State - query process</h4>
+    <p xmlns="">
+      <span>Edit checks built into trial-specific forms and eCRFs in the EHR system can facilitate accurate and complete data capture; however, it is probable that during the course of a trial, some data elements will need to be reviewed by the site for clarification, correction, or verification.</span>
+    </p>
+    <p xmlns="">
+      <span>As data managers review the data (through manual and/or system-supported validation processes), they identify missing, incomplete, or potentially discrepant data (e.g., a site reports a patient was prescribed penicillin for a headache). Data queries are generated through the sponsor system and prepared to the site for clarification/ correction/ verification by the research coordinator. The EHR study coordinator accesses and reviews each data query through the EHR system referencing the EHR data in order to respond to the query. On occasions, the site may need to contact the patient if the EHR data is incomplete (e.g., a stop date on a medication). The coordinator documents clarifications to the data in the EHR system if needed and submits a query response as well as any data updates to the sponsor system and to the investigator site archive. The query response includes a reason for any changes made which is included as part of the audit trail in the EHR system, sponsor system, and the investigator’s site archive. The data</span>
+      <span>manager of the sponsor can then review the response and the updates in the sponsor system and close the query if no further information is required.</span>
+    </p>
+    <h2 xmlns="" id="17.2">17.2 RFD Actors/Transactions</h2>
+    <p xmlns="">
+      <span>Figure 17.2-1 shows the actors directly involved in the Retrieve Form for Data Capture Integration Profile and the relevant transactions between them. Actors that may be indirectly involved due to their participation in other profiles are not shown.</span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.060.png" width="558" height="299" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.2-1: Retrieve Form for Data Capture Actor Diagram</span>
+    </p>
+    <p xmlns="">
+      <span>Table 17.2-1 lists the transactions for each actor directly involved in the Retrieve Form for Data Capture Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile that the implementations may choose to support is listed in Section 17.3.</span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Table 17.2-1: Retrieve Form for Data Capture Integration Profile - Actors and Transactions</span>
+    </p>
+    <table xmlns="" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+      <thead>
+        <tr>
+          <td style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:10pt">
+              <span style="font-family:Arial; font-weight:bold">Actors</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:10pt">
+              <span style="font-family:Arial; font-weight:bold">Transactions</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:10pt">
+              <span style="font-family:Arial; font-weight:bold">Optionality</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#d9d9d9">
+            <p style="font-size:10pt">
+              <span style="font-family:Arial; font-weight:bold">Section in Vol. 2</span>
+            </p>
+          </td>
+        </tr>
+      </thead>
       <tbody>
-        <tr class="odd">
-          <td>Actors</td>
-          <td>Transactions</td>
-          <td>Optionality</td>
-          <td>Section in Vol. 2</td>
+        <tr>
+          <td rowspan="4" style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Form Filler</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Form [ITI-34]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-34.html#3.34"><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="even">
-          <td>Form Filler</td>
-          <td>Retrieve Form [ITI-34]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></td>
+        <tr>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Submit Form [ITI-35]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-35.html#3.35"><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="odd">
-          <td />
-          <td>Submit Form [ITI-35]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></td>
+        <tr>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Archive Form [ITI-36]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>O</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-36.html#3.36"><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="even">
-          <td />
-          <td>Archive Form [ITI-36]</td>
-          <td>O</td>
-          <td><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></td>
+        <tr style="height:15.25pt">
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Clarifications [ITI-37]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>O</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-37.html#3.37"><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="odd">
-          <td />
-          <td>Retrieve Clarifications [ITI-37]</td>
-          <td>O</td>
-          <td><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></td>
+        <tr style="height:17.5pt">
+          <td rowspan="2" style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Form Manager</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Form [ITI-34]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-34.html#3.34"><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="even">
-          <td>Form Manager</td>
-          <td>Retrieve Form [ITI-34]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></td>
+        <tr>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Clarifications [ITI-37]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-37.html#3.37"><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="odd">
-          <td />
-          <td>Retrieve Clarifications [ITI-37]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></td>
+        <tr>
+          <td style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Form Receiver</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Submit Form [ITI-35]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-35.html#3.35"><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="even">
-          <td>Form Receiver</td>
-          <td>Submit Form [ITI-35]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></td>
+        <tr>
+          <td style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Form Archiver</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Archive Form [ITI-36]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-36.html#3.36"><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="odd">
-          <td>Form Archiver</td>
-          <td>Archive Form [ITI-36]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></td>
+        <tr>
+          <td rowspan="3" style="width:125.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Form Processor</span>
+            </p>
+          </td>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Form [ITI-34]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-34.html#3.34"><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="even">
-          <td>Form Processor</td>
-          <td>Retrieve Form [ITI-34]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-34.html#3.34">ITI TF-2b: 3.34</a></td>
+        <tr>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Submit Form [ITI-35]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-35.html#3.35"><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></a></span>
+            </p>
+          </td>
         </tr>
-        <tr class="odd">
-          <td />
-          <td>Submit Form [ITI-35]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-35.html#3.35">ITI TF-2b: 3.35</a></td>
-        </tr>
-        <tr class="even">
-          <td />
-          <td>Retrieve Clarifications [ITI-37]</td>
-          <td>R</td>
-          <td><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></td>
+        <tr>
+          <td style="width:144.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>Retrieve Clarifications [ITI-37]</span>
+            </p>
+          </td>
+          <td style="width:67.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span>R</span>
+            </p>
+          </td>
+          <td style="width:65.7pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+            <p style="font-size:9pt">
+              <span><a href="../Volume2b/ITI-37.html#3.37"><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></a></span>
+            </p>
+          </td>
         </tr>
       </tbody>
     </table>
-    <h3 class="list-paragraph" id="17.2.1">17.2.1 Actors</h3>
-    <h4 class="list-paragraph" id="17.2.1.1">17.2.1.1 Form Manager</h4>
-    <p>The Form Manager supplies forms to Form Fillers based upon form retrieval requests. In some cases, the Form Manager may simply return a form from a store of forms, whereas in other cases the returned form may be selected or even constructed based upon context information supplied in the form retrieval request. Additionally, forms from a store may be modified based upon whether or not the Form Filler supplies additional information about a Form Archiver. A Form Manager may return a form instance id along with a form in response to a request to retrieve a form. The Form Manager constructs forms such that form data is submitted to a Form Receiver.</p>
-    <h4 class="list-paragraph" id="17.2.1.2">17.2.1.2 Form Filler</h4>
-    <p>The Form Filler retrieves forms from a Form Manager as and when required. When requesting a form, the Form Filler can optionally provide EHR context information by providing pre-population xml data in the request for use by the Form Manager, as well as workflow data that may be used to facilitate form selection. A form instance id may be provided to identify use of previously submitted data.</p>
-    <p>The Form Filler may also specify a Form Archiver Actor. The Form Archiver specified by the Form Filler is in addition to any Form Archiver Actors specified by the Form Manager.</p>
-    <h4 class="list-paragraph" id="17.2.1.3">17.2.1.3 Form Receiver</h4>
-    <p>The Form Receiver receives and processes completed or partially completed forms instance data from a Form Filler. Form Receiver processing is out of the scope of the profile.</p>
-    <h4 class="list-paragraph" id="17.2.1.4">17.2.1.4 Form Archiver</h4>
-    <p>The Form Archiver receives completed or partially completed forms instance data and stores these for archival purposes.</p>
-    <h4 class="list-paragraph" id="17.2.1.5">17.2.1.5 Form Processor</h4>
-    <p>The Form Processor is an integrated Form Manager and Form Receiver, supporting all of the transactions and options of those actors.</p>
-    <p>The Form Processor constructs forms such that form data is submitted back to itself.</p>
-    <h3 class="list-paragraph" id="17.2.2">17.2.2 Transactions</h3>
-    <h4 class="list-paragraph" id="17.2.2.1">17.2.2.1 Retrieve Form</h4>
-    <p>The Retrieve Form transaction carries the form identifier from a Form Filler to a Form Manager, or Form Processor. The transaction allows a Form Filler to optionally specify a Form Archiver Actor. Additional data containing context information as well as workflow information may be supplied with the request to facilitate the selection and pre-population of the requested form. The value of the assigned form identifier determines the format of the form. Assignment of form identifiers is not profiled and is assumed to take place as a part of the setup configuration process necessary between Form Fillers and Form Managers, or Form Processors.</p>
-    <h4 class="list-paragraph" id="17.2.2.2">17.2.2.2 Submit Form</h4>
-    <p>The Submit Form transaction allows a Form Filler to submit form instance data to a Form Receiver Actor, or Form Processor Actor. For instance, data submits to a Form Receiver when the form was retrieved from a Form Manager, or back to the Form Processor that created the form.</p>
-    <h4 class="list-paragraph" id="17.2.2.3">17.2.2.3 Archive Form</h4>
-    <p>The Archive Form transaction allows a Form Filler to submit form instance data to a Form Archiver Actor.</p>
-    <h4 class="list-paragraph" id="17.2.2.4">17.2.2.4 Retrieve Clarifications</h4>
-    <p>The Retrieve Clarifications transaction allows a Form Filler to request the set of clarifications for a given organization from a Form Manager, or Form Processor. The value of the assigned organization identifier determines the named option format of the clarifications form. Assignment of organization identifiers is not profiled and is assumed to take place as a part of the setup configuration process between Form Fillers and Form Managers.</p>
-    <h2 class="list-paragraph" id="17.3">17.3 RFD Options</h2>
-    <p>Options that may be selected for this Integration Profile are listed in Table 17.3-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
-    <p>Table 17.3-1: Actors and Options</p>
-    <table>
-      <tbody>
-        <tr class="odd">
-          <td>Actor</td>
-          <td>Options</td>
-          <td>Vol. &amp; Section</td>
-        </tr>
-        <tr class="even">
-          <td>Form Filler</td>
-          <td>Archive Form</td>
-          <td><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></td>
-        </tr>
-        <tr class="odd">
-          <td />
-          <td>Data Clarifications</td>
-          <td><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></td>
-        </tr>
-        <tr class="even">
-          <td />
-          <td>XForms</td>
-          <td><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></td>
-        </tr>
-        <tr class="odd">
-          <td>Form Manager</td>
-          <td>XForms</td>
-          <td><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></td>
-        </tr>
-        <tr class="even">
-          <td>Form Processor</td>
-          <td>XForms</td>
-          <td><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <h3 class="list-paragraph" id="17.3.1">17.3.1 Archive Form Option</h3>
-    <p>The Archive Form Option allows a Form Filler to submit, for archival purposes, the form instance data to a Form Archiver.</p>
-    <h3 class="list-paragraph" id="17.3.2">17.3.2 Data Clarifications Option</h3>
-    <p>The Data Clarifications Option allows a Form Filler to retrieve clarifications from a Form Manager, or Form Processor, and submit updates to a Form Receiver, or Form Processor, for data that have been previously submitted.</p>
-    <h3 class="list-paragraph" id="17.3.3">17.3.3 XForms Option</h3>
-    <p>The XForms Option allows Form Fillers, Form Managers, and Form Processors to exchange forms in XForms format. See <a href="../Volume2b/ITI-34.html#3.34.4.1">ITI TF-2b: 3.34.4.1</a> for constraints that apply to this option.</p>
-    <h2 class="list-paragraph" id="17.4">17.4 Retrieve Forms for Data Capture Process Flow</h2>
-    <p>This section describes the process and information flow when a form is retrieved for data capture and subsequently submitted upon partial or full completion. The criteria for determining whether or not the form is “complete” is outside the scope of this profile.</p>
-    <p>Five cases are distinguished.</p>
-    <p>Case 1: This case illustrates a simple, Retrieve Form using a known formID.</p>
-    <p>The identifier of a form, the formID, is known to the Form Filler, such as may happen during the registration process for participation in a Clinical Trial. formID values could also be communicated by publication of form directories or by personal communications. The method of acquisition of the formID is outside the scope of this profile and is a precondition for the Retrieve Form request.</p>
-    <p>Two actor configurations are possible:</p>
-    <ul>
-      <li>
-        <p>A Form Manager and Form Receiver are grouped and functioning as the form source. Figure 17.4-1</p>
-      </li>
-      <li>
-        <p>A Form Processor exists. Figure 17.4-1b</p>
-      </li>
-    </ul>
-    <p>The Form Filler makes a Retrieve Form request to a Form Manager or a Form Processor. The Form Manager or Form Processor either returns the requested form, or an error indicating no form is available. When a form is returned, the Form Filler will subsequently submit the form instance data to a Form Receiver or back to the Form Processor using the Submit Form transaction. When a Form Manager and Form Receiver are grouped, there may be communications between the Form Receiver and the Form Manager, as would be necessary to support partially completed forms, but these communications are internal and are not IHE transactions.</p>
-    <p>Figure 17.4-1: Case 1: Retrieve Form and Submit Form; Form Manager grouped with Form Receiver</p>
-    <p>Figure 17.4-1b: Case 1: Retrieve Form and Submit Form; Form Processor</p>
-    <p>Case 2: This case illustrates that a Form Receiver may be standalone (i.e., not grouped with a Form Manager).</p>
-    <p>In this illustration there are two Form Receivers: 1) the intermediate Form Receiver, is grouped with the Form Filler; 2) the final, ungrouped Form Receiver.</p>
-    <p>The identifier of a form, the formID, is known to the Form Filler; there is a grouped Form Manager and Form Receiver on one system supporting intermediate form storage, and a separate Form Receiver on a different system for final storage of form data.</p>
-    <p>The Form Filler makes a Retrieve Form request to a Form Manager. The Form Manager either returns the requested form or an error indicating no form is available. When a form is returned, the Form Filler submits partially complete forms to the intermediate Form Receiver. This partially completed form can be retrieved with another Retrieve Form request to the Form Manager, and final completed form data can be submitted to the final storage, standalone, Form Receiver, such as a national data registry. The action upon submit is controlled by the form, hence the Form Manager is responsible for defining the post-submit action by selection of, or generation of, the desired action during the Retrieve Form transaction processing.</p>
-    <p>Figure 17.4-2: Case 2: Retrieve Form, Submit Form; Form Manager separate from Form Receiver</p>
-    <p>Case 3: In this case the Form Filler uses the Archive Option.</p>
-    <p>The Form Filler makes a Retrieve Form request to a Form Manager, specifying that archival is necessary to a specific Form Archiver. The Form Manager either returns the requested form or an error indicating no form is available. The Form Manager constructs the form to perform an archive transaction to the Form Archiver specified in the Form Filler’s Retrieve Form request. When the form is returned and subsequently submitted, form instance data is submitted to the Form Receiver and also to the Form Archiver.</p>
-    <p>Figure 17.4-3: Case 3: Retrieve Form, Submit Form, Archive Form</p>
-    <p>Case 4: This case illustrates one way to use Form design to solve the issue where a formID is not known in advance. The identifier of a form, the formID, is not known to the Form Filler, but a set of context value (name, value) pairs is known. A context form where these values could be entered would have a formID. Information collected by the instance of a context form would be used by the Form Manager to determine the appropriate data capture form to return to the Form Filler.</p>
-    <p>The Form Filler has enough information to request a context form that collects information that can help the Form Manager determine the actual data capture form. The Form Filler completes the context form, submits this to the Form Receiver which returns either new instance data, or a new form.</p>
-    <p>Figure 17.4-4: Case 4: Retrieve Form; Submit Form</p>
-    <p>Case 5: In this case the Form Filler supports the Data Clarifications Option.</p>
-    <p>The Form Filler makes a Retrieve Clarifications request to a Form Manager. The interactions of Form Receiver and Form Manager are outside of the scope of this profile. An example of a solution for providing clarification information to a Form Manager is to group the Form Manager with the Form Receiver, as shown in Figures 17.4-5 and 17.4-6. The request made by the Form Filler contains an organization identifier allowing the Form Manager to return only the set of clarifications relevant to the organization making the request. The Form Manager returns a form containing the necessary information to allow the site or organization making the request to amend the data as required. These Retrieve Clarifications requests must be periodically executed by the Form Filler. The frequency of request is likely based upon some duration as defined or agreed upon by the Form Manager / Form Receiver.</p>
-    <p>The Form Manager can return either a form containing the data to be modified or a form containing a list of references to other forms. In the second case, the references are used to obtain the individual forms using the Retrieve Form transaction. In both cases the data are then modified and submitted to the Form Receiver using the Submit Form transaction. Submitted data may then be evaluated by the data manager of the sponsor for proper handling.</p>
-    <p>The profile does not distinguish between the two responses, the content returned within the form allows the user of the Form Filler to process the form returned in the appropriate manner.</p>
-    <p>Figure 17.4-5: Case 5: Form Filler supporting Data Clarifications Option</p>
-    <p>Figure 17.4-6: Case 5: Form Filler supporting Data Clarifications Option</p>
-    <h2 class="list-paragraph" id="17.5">17.5 Security Considerations</h2>
-    <h3 class="list-paragraph" id="17.5.1">17.5.1 RFD Risk Analysis Risk Assessment</h3>
-    <p>
-      The risk analysis for RFD enumerates assets, threats, and mitigations. The complete risk data is stored and available from IHE
-      <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref">
-        <sup>7</sup>
-      </a>
-      .
+    <p xmlns="">
+      <span> </span>
     </p>
-    <p>The purpose of this risk assessment is to notify vendors of some of the risks that they are advised to consider when implementing RFD actors. For general IHE risks and threats, please see <a href="../Volume1/ch-49.html#Appendix L">ITI TF-1: Appendix L</a>. The vendor is also advised that many risks cannot be mitigated by the IHE profile and instead responsibility for mitigation is transferred to the vendor, and occasionally to the affinity domains, individual enterprises and implementers. In these instances, IHE fulfills its responsibility to notify affected parties through the use of the following sections.</p>
-    <h3 class="list-paragraph" id="17.5.2">17.5.2 Recommendations</h3>
-    <p>The high impact risks include: accuracy errors, mismatch between data and schema, disclosure of trade secrets. This profile includes the mitigations:</p>
-    <ul>
+    <h3 xmlns="" id="17.2.1">17.2.1 Actors</h3>
+    <h4 xmlns="" id="17.2.1.1">17.2.1.1 Form Manager</h4>
+    <p xmlns="">
+      <span>The Form Manager supplies forms to Form Fillers based upon form retrieval requests. In some cases, the Form Manager may simply return a form from a store of forms, whereas in other cases the returned form may be selected or even constructed based upon context information supplied in the form retrieval request. Additionally, forms from a store may be modified based upon whether or not the Form Filler supplies additional information about a Form Archiver. A Form Manager may return a form instance id along with a form in response to a request to retrieve a form. The Form Manager constructs forms such that form data is submitted to a Form Receiver.</span>
+    </p>
+    <h4 xmlns="" id="17.2.1.2">17.2.1.2 Form Filler</h4>
+    <p xmlns="">
+      <span>The Form Filler retrieves forms from a Form Manager as and when required. When requesting a form, the Form Filler can optionally provide EHR context information by providing pre-population xml data in the request for use by the Form Manager, as well as workflow data that may be used to facilitate form selection. A form instance id may be provided to identify use of previously submitted data.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Filler may also specify a Form Archiver Actor. The Form Archiver specified by the Form Filler is in addition to any Form Archiver</span>
+      <span>Actor</span>
+      <span>s specified by the Form Manager.</span>
+    </p>
+    <h4 xmlns="" id="17.2.1.3">17.2.1.3 Form Receiver</h4>
+    <p xmlns="">
+      <span>The Form Receiver receives and processes completed or partially completed forms instance data from a Form Filler. Form Receiver processing is out of the scope of the profile.</span>
+    </p>
+    <h4 xmlns="" id="17.2.1.4">17.2.1.4 Form Archiver</h4>
+    <p xmlns="">
+      <span>The Form Archiver receives completed or partially completed forms instance data and stores these for archival purposes.</span>
+    </p>
+    <h4 xmlns="" id="17.2.1.5">17.2.1.5 Form Processor</h4>
+    <p xmlns="">
+      <span>The Form Processor is an integrated Form Manager and Form Receiver, supporting all of the transactions and options of those actors.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Processor constructs forms such that form data is submitted back to itself.</span>
+    </p>
+    <h3 xmlns="" id="17.2.2">17.2.2 Transactions</h3>
+    <h4 xmlns="" id="17.2.2.1">17.2.2.1 Retrieve Form</h4>
+    <p xmlns="">
+      <span>The Retrieve Form transaction carries the form identifier from a Form Filler to a Form Manager, or Form Processor. The transaction allows a Form Filler to optionally specify a Form Archiver Actor. Additional data containing context information as well as workflow information may be supplied with the request to facilitate the selection and pre-population of the requested form. The value of the assigned form identifier determines the format of the form. Assignment of form identifiers is not profiled and is assumed to take place as a part of the setup configuration process necessary between Form Fillers and Form Managers, or Form Processors.</span>
+    </p>
+    <h4 xmlns="" id="17.2.2.2">17.2.2.2 Submit Form</h4>
+    <p xmlns="">
+      <span>The Submit Form transaction allows a Form Filler to submit form instance data to a Form Receiver Actor, or Form Processor Actor. For instance</span>
+      <span>,</span>
+      <span>data submits to a Form Receiver when the form was retrieved from a Form Manager, or back to the Form Processor that created the form.</span>
+    </p>
+    <h4 xmlns="" id="17.2.2.3">17.2.2.3 Archive Form</h4>
+    <p xmlns="">
+      <span>The Archive Form transaction allows a Form Filler to submit form instance data to a Form Archiver Actor.</span>
+    </p>
+    <h4 xmlns="" id="17.2.2.4">17.2.2.4 Retrieve Clarifications</h4>
+    <p xmlns="">
+      <span>The Retrieve Clarifications transaction allows a Form Filler to request the set of clarifications for a given organization from a Form Manager, or Form Processor. The value of the assigned organization identifier determines the named option format of the clarifications form. Assignment of organization identifiers is not profiled and is assumed to take place as a part of the setup configuration process between Form Fillers and Form Managers.</span>
+    </p>
+    <h2 xmlns="" id="17.3">17.3 RFD Options</h2>
+    <p xmlns="">
+      <span>Options that may be selected for this Integration Profile are listed in Table 17.3-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Table 17.3-1: Actors and Options</span>
+    </p>
+    <div xmlns="" style="text-align:center">
+      <table cellspacing="0" cellpadding="0" style="margin-right:auto; margin-left:auto; border-collapse:collapse">
+        <thead>
+          <tr>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Actor</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Options</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; background-color:#e6e6e6">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Vol. &amp; Section</span>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:16.6pt">
+            <td rowspan="3" style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Form Filler</span>
+              </p>
+              <p style="font-size:9pt">
+                <span> </span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Archive Form</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span><a href="../Volume2b/ITI-36.html#3.36"><a href="../Volume2b/ITI-36.html#3.36">ITI TF-2b: 3.36</a></a></span>
+              </p>
+            </td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Data Clarifications</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span><a href="../Volume2b/ITI-37.html#3.37"><a href="../Volume2b/ITI-37.html#3.37">ITI TF-2b: 3.37</a></a></span>
+              </p>
+            </td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>XForms</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span><a href="../Volume1/ch-17.html#17.3.2"><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></a></span>
+              </p>
+            </td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Form Manager</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>XForms</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span><a href="../Volume1/ch-17.html#17.3.2"><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></a></span>
+              </p>
+            </td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Form Processor</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>XForms</span>
+              </p>
+            </td>
+            <td style="border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span><a href="../Volume1/ch-17.html#17.3.2"><a href="../Volume1/ch-17.html#17.3.2">ITI TF-1: 17.3.2</a></a></span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 xmlns="" id="17.3.1">17.3.1 Archive Form Option</h3>
+    <p xmlns="">
+      <span>The Archive Form Option allows a Form Filler to submit, for archival purposes, the form instance data to a Form Archiver.</span>
+    </p>
+    <h3 xmlns="" id="17.3.2">17.3.2 Data Clarifications Option</h3>
+    <p xmlns="">
+      <span>The Data Clarifications Option allows a Form Filler to retrieve clarifications from a Form Manager, or Form Processor, and submit updates to a Form Receiver, or Form Processor, for data that have been previously submitted.</span>
+    </p>
+    <h3 xmlns="" id="17.3.3">17.3.3 XForms Option</h3>
+    <p xmlns="">
+      <span>The XForms Option allows Form Fillers, Form Managers, and Form Processors to exchange forms in XForms format. See <a href="../Volume2b/ITI-34.html#3.34.4.1"><a href="../Volume2b/ITI-34.html#3.34.4.1">ITI TF-2b: 3.34.4.1</a></a> for constraints that apply to this option.</span>
+    </p>
+    <h2 xmlns="" id="17.4">17.4 Retrieve Forms for Data Capture Process Flow</h2>
+    <p xmlns="">
+      <span>This section describes the process and information flow when a form is retrieved for data capture and subsequently submitted upon partial or full completion. The criteria for determining whether or not the form is “complete” is outside the scope of this profile.</span>
+    </p>
+    <p xmlns="">
+      <span>Five cases are distinguished.</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Case 1</span>
+      <span>: This case illustrates a simple, Retrieve Form using a known formID.</span>
+    </p>
+    <p xmlns="">
+      <span>The identifier of a form, the formID, is known to the Form Filler, such as may happen during the registration process for participation in a Clinical Trial. formID values could also be communicated by publication of form directories or by personal communications. The method of acquisition of the formID is outside the scope of this profile and is a precondition for the Retrieve Form request.</span>
+    </p>
+    <p xmlns="">
+      <span>Two actor configurations are possible:</span>
+    </p>
+    <ul xmlns="" type="disc">
       <li>
-        <p>M1: If the user notices that the wrong form has been retrieved, they will discard the form. Since Form Retrieval is stateless, a discard of the form shall cause no problems.</p>
+        <span>A Form Manager and Form Receiver are grouped and functioning as the form source. Figure 17.4-1</span>
       </li>
       <li>
-        <p>M2: When using the XForm Option, the XForms model provides for schema validation of the data model. The XForms plugins responsible for processing and displaying XForms, which are outside of this profile, are required to validate forms.</p>
-      </li>
-      <li>
-        <p>M3: TLS may be implemented, so that those affinity domains and enterprises that need privacy protection and site authentication can use it. (Implementations must provide the TLS, but the decision to activate it is up to the affinity domain and enterprises.)</p>
-      </li>
-      <li>
-        <p>M4: Form validations will prevent submission of forms with missing data.</p>
-      </li>
-      <li>
-        <p>M5: The RFD Archive Form transaction for saving source data to a trusted third party is an option that it is available to enterprises.</p>
+        <span>A Form Processor exists. Figure 17.4-1b</span>
       </li>
     </ul>
-    <p>These mitigations are transferred to Vendors and Clients.</p>
-    <ul>
+    <p xmlns="">
+      <span>The Form Filler makes a Retrieve Form request to a Form Manager or a Form Processor. The Form Manager or Form Processor either returns the requested form, or an error indicating no form is available. When a form is returned, the Form Filler will subsequently submit the form instance data to a Form Receiver or back to the Form Processor using the Submit Form transaction. When a Form Manager and Form Receiver are grouped, there may be communications between the Form Receiver and the Form Manager, as would be necessary to support partially completed forms, but these communications are internal and are not IHE transactions.</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.061.png" width="441" height="317" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-1: Case 1: Retrieve Form and Submit Form; Form Manager grouped with Form Receiver</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <img src="media/a7222-00r44.062.png" width="469" height="337" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-1b: Case 1: Retrieve Form and Submit Form; Form Processor</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Case 2</span>
+      <span>: This case illustrates that a Form Receiver may be standalone (i.e., not grouped with a Form Manager).</span>
+    </p>
+    <p xmlns="">
+      <span>In this illustration there are two Form Receivers: 1) the intermediate Form Receiver, is grouped with the Form Filler; 2) the final, ungrouped Form Receiver.</span>
+    </p>
+    <p xmlns="">
+      <span>The identifier of a form, the formID, is known to the Form Filler; there is a grouped Form Manager and Form Receiver on one system supporting intermediate form storage, and a separate Form Receiver on a different system for final storage of form data.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Filler makes a Retrieve Form request to a Form Manager. The Form Manager either returns the requested form or an error indicating no form is available. When a form is returned, the Form Filler submits partially complete forms to the intermediate Form Receiver. This partially completed form can be retrieved with another Retrieve Form request to the Form Manager, and final completed form data can be submitted to the final storage, standalone, Form Receiver, such as a national data registry. The action upon submit is controlled by the form, hence the Form Manager is responsible for defining the post-submit action by selection of, or generation of, the desired action during the Retrieve Form transaction processing.</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-style:italic"> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.063.png" width="654" height="407" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-2: Case 2: Retrieve Form, Submit Form; Form Manager separate from Form Receiver</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Case 3</span>
+      <span>: In this case the Form Filler uses the Archive Option.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Filler makes a Retrieve Form request to a Form Manager, specifying that archival is necessary to a specific Form Archiver. The Form Manager either returns the requested form or an error indicating no form is available. The Form Manager constructs the form to perform an archive transaction to the Form Archiver specified in the Form Filler’s Retrieve Form request. When the form is returned and subsequently submitted, form instance data is submitted to the Form Receiver and also to the Form Archiver.</span>
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.064.png" width="644" height="317" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-3: Case 3: Retrieve Form, Submit Form, Archive Form</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Case 4</span>
+      <span>: This case illustrates one way to use Form design to solve the issue where a formID is not known in advance.</span>
+      <span />
+      <span>The identifier of a form, the formID, is not known to the Form Filler, but a set of context value (name, value) pairs is known. A context form where these values could be entered would have a formID. Information collected by the instance of a context form would be used by the Form Manager to determine the appropriate data capture form to return to the Form Filler.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Filler has enough information to request a context form that collects information that can help the Form Manager determine the actual data capture form. The Form Filler completes the context form, submits this to the Form Receiver which returns either new instance data, or a new form.</span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.065.png" width="644" height="278" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-4: Case 4: Retrieve Form; Submit Form</span>
+    </p>
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Case 5</span>
+      <span>: In this case the Form Filler supports the Data Clarifications Option.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Filler makes a Retrieve Clarifications request to a Form Manager. The interactions of Form Receiver and Form Manager are outside of the scope of this profile. An example of a solution for providing clarification information to a Form Manager is to group the Form Manager with the Form Receiver, as shown in Figures 17.4-5 and 17.4-6. The request made by the Form Filler contains an organization identifier allowing the Form Manager to return only the set of clarifications relevant to the organization making the request. The Form Manager returns a form containing the necessary information to allow the site or organization making the request to amend the data as required. These Retrieve Clarifications requests must be periodically executed by the Form Filler. The frequency of request is likely based upon some duration as defined or agreed upon by the Form Manager / Form Receiver.</span>
+    </p>
+    <p xmlns="">
+      <span>The Form Manager can return either a form containing the data to be modified or a form containing a list of references to other forms. In the second case, the references are used to obtain the individual forms using the Retrieve Form transaction. In both cases the data are then modified and submitted to the Form Receiver using the Submit Form transaction. Submitted data may then be evaluated by the data manager of the sponsor for proper handling.</span>
+    </p>
+    <p xmlns="">
+      <span>The profile does not distinguish between the two responses, the content returned within the form allows the user of the Form Filler to process the form returned in the appropriate manner.</span>
+    </p>
+    <p xmlns="">
+      <img src="media/a7222-00r44.066.png" width="616" height="348" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-5: Case 5: Form Filler supporting Data Clarifications Option</span>
+    </p>
+    <p xmlns="" style="font-size:11pt">
+      <img src="media/a7222-00r44.067.png" width="642" height="308" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+      <span style="font-family:Arial; font-weight:bold">Figure 17.4-6: Case 5: Form Filler supporting Data Clarifications Option</span>
+    </p>
+    <h2 xmlns="" id="17.5">17.5 Security Considerations</h2>
+    <h3 xmlns="" id="17.5.1">17.5.1 RFD Risk Analysis Risk Assessment</h3>
+    <p xmlns="">
+      <span>The risk analysis for RFD enumerates assets, threats, and mitigations. The complete risk data is stored and available from IHE</span>
+      <a href="#_ftn7" style="text-decoration:none">
+        <span style="font-family:'Times New Roman'; font-size:8pt; vertical-align:super; color:#000000">[7]</span>
+      </a>
+      <span>.</span>
+    </p>
+    <p xmlns="">
+      <span>The purpose of this risk assessment is to notify vendors of some of the risks that they are advised to consider when implementing RFD actors. For general IHE risks and threats, please see <a href="../Volume1/ch-49.html#Appendix L"><a href="../Volume1/ch-49.html#Appendix L">ITI TF-1: Appendix L</a></a>. The vendor is also advised that many risks cannot be mitigated by the IHE profile and instead responsibility for mitigation is transferred to the vendor, and occasionally to the affinity domains, individual enterprises and implementers. In these instances, IHE fulfills its responsibility to notify affected parties through the use of the following sections.</span>
+    </p>
+    <h3 xmlns="" id="17.5.2">17.5.2 Recommendations</h3>
+    <p xmlns="">
+      <span>The high impact risks include: accuracy errors, mismatch between data and schema, disclosure of trade secrets. This profile includes the mitigations:</span>
+    </p>
+    <ul xmlns="" type="disc">
       <li>
-        <p>T1: IHE recommends that providers evaluate and review forms as presented before entering data and submitting. Provider review is an essential part of the forms retrieval and submission process to ensure data is entered into the correct form and for the correct patient. Vendors are cautioned not to use RFD for unmediated treatment or diagnosis. A doctor must always intervene prior to treatment or diagnosis to ensure that errors that may occur in transit are checked by a human prior to engaging in any treatment or diagnosis of a patient.</p>
+        <span style="font-family:'Times New Roman'; font-weight:bold">M1</span>
+        <span>:</span>
+        <span>If the user notices that the wrong form has been retrieved</span>
+        <span>,</span>
+        <span>they will discard the form. Since Form Retrieval is stateless, a discard of the form shall cause no problems.</span>
       </li>
       <li>
-        <p>T2: The supported format options allow for basic data validity checks within the form. It is the responsibility of the forms designers/implementers to take advantage of this to protect against entry errors, etc.</p>
+        <span style="font-family:'Times New Roman'; font-weight:bold">M2</span>
+        <span>:</span>
+        <span>When using the XForm Option, the XForms model provides for schema validation of the data model. The XForms plugins responsible for processing and displaying XForms, which are outside of this profile, are required to validate forms.</span>
       </li>
       <li>
-        <p>T3: The need for partially filled forms identifies this as a workflow issue within the organization(s) supplying the data.</p>
+        <span style="font-family:'Times New Roman'; font-weight:bold">M3</span>
+        <span>:</span>
+        <span>TLS may be implemented, so that those affinity domains and enterprises that need privacy protection and site authentication can use it. (Implementations must provide the TLS, but the decision to activate it is up to the affinity domain and enterprises.)</span>
       </li>
       <li>
-        <p>T4: Forms and workflow designers should break forms into sequential step forms if possible.</p>
+        <span style="font-family:'Times New Roman'; font-weight:bold">M4</span>
+        <span>:</span>
+        <span>Form validations will prevent submission of forms with missing data.</span>
       </li>
       <li>
-        <p>T5: Forms Design should facilitate evaluation of workflow and gaps.</p>
-      </li>
-      <li>
-        <p>T6: Access control and security at the client site are important mitigating factors to potential disclosures.</p>
-      </li>
-      <li>
-        <p>T7: Policy controls are recommended to determine which systems may be used to perform the Form Filler Actor.</p>
-      </li>
-      <li>
-        <p>T8: Policy controls are recommended to determine which users may fill out forms.</p>
-      </li>
-      <li>
-        <p>T9: This profile does not require audit logging. An enterprise audit logging process is recommended to reduce errors and track malicious behavior.</p>
-      </li>
-      <li>
-        <p>T10: An application feature to support roll back of forms data may be needed.</p>
-      </li>
-      <li>
-        <p>T11: Notification of the need to clarify data.</p>
-      </li>
-      <li>
-        <p>T13: Form Managers, Receivers, Archivers must be on well protected systems.</p>
-      </li>
-      <li>
-        <p>T14: Network and Infrastructure and Systems robustness must be considered, especially for forms applications that are to be used during disasters, epidemics, and other situations where the local infrastructure may be significantly disrupted.</p>
-      </li>
-      <li>
-        <p>T15: Forms should be designed for high latency, low bandwidth links if they are for applications that are to be used during disasters, epidemics, and other situations where the local infrastructure may be significantly disrupted.</p>
-      </li>
-      <li>
-        <p>T16: Form Fillers should be robust in the face of user error, network failure, and underlying hardware failures.</p>
-      </li>
-      <li>
-        <p>T17: Workflow must be addressed in the requirements gathering phase. Vendors are advised to discuss investigator workflow with clients.</p>
-      </li>
-      <li>
-        <p>T18: Vendors are advised to consider the implications of their logging and audit repository implementation.</p>
+        <span style="font-family:'Times New Roman'; font-weight:bold">M5</span>
+        <span>:</span>
+        <span>The RFD Archive Form transaction for saving source data to a trusted third party is an option that it is available to enterprises.</span>
       </li>
     </ul>
+    <p xmlns="">
+      <span>These mitigations are transferred to Vendors and Clients.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T1</span>
+        <span>:</span>
+        <span>IHE recommends that providers evaluate and review forms as presented before entering data and submitting. Provider review is an essential part of the forms retrieval and submission process to ensure data is entered into the correct form and for the correct patient. Vendors are cautioned not to use RFD for unmediated treatment or diagnosis. A doctor must always intervene prior to treatment or diagnosis to ensure that errors that may occur in transit are checked by a human prior to engaging in any treatment or diagnosis of a patient.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T2</span>
+        <a name="OLE_LINK20">
+          <span>:</span>
+        </a>
+        <span />
+        <span>The supported format options allow for basic data validity checks within the form. It is the responsibility of the forms designers/implementers to take advantage of this to protect against entry errors, etc.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T3</span>
+        <span>:</span>
+        <span>The need for partially filled forms identifies this as a workflow issue within the organization(s) supplying the data.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T4</span>
+        <span>:</span>
+        <span>Forms and workflow designers should break forms into sequential step forms if possible.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T5</span>
+        <span>:</span>
+        <span>Forms Design should facilitate evaluation of workflow and gaps.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T6</span>
+        <span>:</span>
+        <span>Access control and security at the client site are important mitigating factors to potential disclosures.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T7</span>
+        <span>:</span>
+        <span>Policy controls are recommended to determine which systems may be used to perform the Form Filler Actor.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T8</span>
+        <span>:</span>
+        <span style="font-family:'Times New Roman'; font-weight:bold" />
+        <span>Policy controls are recommended to determine which users may fill out forms.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T9</span>
+        <span>:</span>
+        <span>This profile does not require audit logging. An enterprise audit logging process is recommended to reduce errors and track malicious behavior.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T10</span>
+        <span>:</span>
+        <span>An application feature to support roll back of forms data may be needed.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T11</span>
+        <span>:</span>
+        <span>Notification of the need to clarify data.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T13</span>
+        <span>:</span>
+        <span>Form Managers, Receivers, Archivers must be on well protected systems.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T14</span>
+        <span>:</span>
+        <span>Network and Infrastructure and Systems robustness must be considered, especially for forms applications that are to be used during disasters, epidemics, and other situations where the local infrastructure may be significantly disrupted.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T15</span>
+        <span>:</span>
+        <span>Forms should be designed for high latency, low bandwidth links if they are for applications that are to be used during disasters, epidemics, and other situations where the local infrastructure may be significantly disrupted.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T16</span>
+        <span>:</span>
+        <span>Form Fillers should be robust in the face of user error, network failure, and underlying hardware failures.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T17</span>
+        <span>:</span>
+        <span>Workflow must be addressed in the requirements gathering phase. Vendors are advised to discuss investigator workflow with clients.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-weight:bold">T18</span>
+        <span>:</span>
+        <span>Vendors are advised to consider the implications of their logging and audit repository implementation.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span> </span>
+    </p>
   </body>
 </html>

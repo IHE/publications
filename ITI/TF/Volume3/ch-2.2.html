@@ -9,532 +9,1897 @@
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework - Volume3</p>
+    <p>Technical Framework</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h2 id="5.2">5.2 Scanned Documents Content Module</h2>
-    <p>This section outlines the content of the HL7 CDA R2 constraints for the document. We note here that requirements specified below are to ensure the presence of a minimum amount of wrapper data in order to enhance description and facilitate sharing of the document. Implementers of this profile can and should make use of additional annotation within the CDA header to provide richer context. The examples in the following sections contain the minimal amount of wrapper data, as specified, and in many cases do make use of additional CDA header elements for enriched context.</p>
-    <p>Assumptions and Definitions: We assume that the scanning facility and equipment within it are assigned an OID and that the scanning facility assembles the wrapped scanned content. More information regarding the construction of OIDs can be found in <a href="../Volume2x/ch-2.html#Appendix B">ITI TF-2x: Appendix B</a>. We define the following nomenclature for entity roles concerned in forming the wrapper content.</p>
-    <ul>
-      <li>
-        <p>
-          <em>Original content</em>
-          – Legacy paper or electronic document intended for wrapping.
-        </p>
-      </li>
-      <li>
-        <p>
-          <em>Scanned content</em>
-          – Scanned or appropriately converted/encoded electronic version of the original content.
-        </p>
-      </li>
-      <li>
-        <p>
-          <em>Original author</em>
-          – Author of the original content.
-        </p>
-      </li>
-      <li>
-        <p>
-          <em>(Scanner) Operator</em>
-          – Person assembling the scanned content.
-        </p>
-      </li>
-    </ul>
-    <h3 class="list-paragraph" id="5.2.1">5.2.1 Referenced Standards</h3>
-    <ul>
-      <li>
-        <p>PDF RFC3778, The application/pdf Media Type (informative)</p>
-      </li>
-      <li>
-        <p>PDF/A ISO 19005-1b. Document management - Electronic document file format for long-term preservation - Part 1: Use of PDF (PDF/A)</p>
-      </li>
-      <li>
-        <p>HL7 CDA Release 2.0 (denoted HL7 CDA R2, or just CDA, in subsequent text)</p>
-      </li>
-      <li>
-        <p>
-          <a href="http://www.ietf.org/rfc/rfc5646.txt#_blank">RFC5646</a>
-          , Tags for the identification of languages
-        </p>
-      </li>
-    </ul>
-    <h4 class="list-paragraph" id="5.2.1.1">5.2.1.1 Discussion of Content Standards</h4>
-    <p>PDF and plaintext documents intended for wrapping can consist of multiple pages. Encoding of multiple page PDF documents are subject to the PDF/A standard. This ISO standard, PDF/A, is a subset of Adobe PDF version 1.4 intended to be suitable for long-term preservation of page-oriented documents. PDF/A attempts to maximize:</p>
-    <ul>
-      <li>
-        <p>Device independence</p>
-      </li>
-      <li>
-        <p>Self-containment</p>
-      </li>
-      <li>
-        <p>Self-documentation</p>
-      </li>
-    </ul>
-    <p>The constraints imposed by PDF/A include:</p>
-    <ul>
-      <li>
-        <p>Audio and video content are forbidden</p>
-      </li>
-      <li>
-        <p>JavaScript and executable file launches are prohibited</p>
-      </li>
-      <li>
-        <p>All fonts must be embedded and also must be legally embeddable for unlimited, universal rendering</p>
-      </li>
-      <li>
-        <p>Colorspaces specified in a device-independent manner</p>
-      </li>
-      <li>
-        <p>Encryption is disallowed (although the enclosing document and transport may provide encryption external to the PDF content)</p>
-      </li>
-      <li>
-        <p>Compression methods are restricted to a standard list</p>
-      </li>
-    </ul>
-    <p>The PDF/A approach has several advantages over TIFF or JPEG. First, there are more image compressions and format flexibility in PDF, so that the image files sizes can be kept smaller. There are many simple programs available for converting TIFF and JPEG into PDF with various other features for improving compression or adding other information. The PDF/A enables devices that produce vectorized output. Unlike TIFF, JPEG, or BMP, a PDF/A image has the ability to provide several "layers" of information. This allows the creation of PDF searchable images.</p>
-    <p>A PDF searchable image is a PDF document with an exact bitmapped replica of the scanned paper pages and with text information stored behind the bitmap image of the page. This approach retains the look of the original pages while enabling text searchability and computer analysis. This approach is especially suitable for documents that have to be searchable while retaining the original scan details. The text layer is created by an Optical Character Recognition (OCR) application that scans the text on each page. It then creates a PDF file with the recognized text stored in a layer beneath the image of the text. Unrecognized graphics areas and annotations are preserved with full fidelity in the image. The text form may be incomplete or the OCR confused by some words, but the original image is preserved and available.</p>
-    <p>Plaintext as well as PDF/A documents shall be base-64 encoded before wrapped in a HL7 CDA R2 header. The PDF/A documents shall conform to PDF/A-1b. Creators are encouraged to conform to PDF/A-1a to the maximum extent possible, but a simple document scanner may be unable to fully conform to PDF/A-1a. Other profiles may require PDF/A-1a conformance.</p>
-    <p>HL7 CDA R2 header schema is constrained so that pertinent metadata values and scanning facility, technology and operator information shall be present (see Section 5.2.3).</p>
-    <p>Medical imagery and photographs are outside the scope of this profile. Diagnostic or intervention medical imagery will be supported through DICOM (which includes the use of JPEG and MPEG). Additionally, audio and video recorded content is not covered by this profile.</p>
-    <h3 class="list-paragraph" id="5.2.2">5.2.2 XDS Metadata</h3>
-    <p>XDS-SD is a CDA R2 document and thus conforms to the XDS Metadata requirements in the PCC TF-2:4 unless otherwise specified below.</p>
-    <h4 class="list-paragraph" id="5.2.2.1">5.2.2.1 XDS DocumentEntry Metadata</h4>
-    <p>Content Creators shall populate DocumentEntry Metadata according to requirements in PCC TF-2: 4.1.1 (e.g., authorInstitution, authorPerson, authorRole, authorSpeciality, classCode, typeCode, confidentialityCode, creationTime, formatCode, healthcareFacilityTypeCode, languageCode, mimeType, practiceSettingCode, serviceStartTime, serviceStopTime, sourcePatientId, and sourcePatientInfo) unless otherwise specified below.</p>
-    <h5 class="list-paragraph" id="5.2.2.1.1">5.2.2.1.1 XDSDocumentEntry.formatCode</h5>
-    <p>The XDSDocumentEntry.formatCode shall be urn:ihe:iti:xds-sd:pdf:2008 when the document is scanned pdf and urn:ihe:iti:xds-sd:text:2008 when the document is scanned text. The formatCode codeSystem shall be 1.3.6.1.4.1.19376.1.2.3.</p>
-    <h5 class="list-paragraph" id="5.2.2.1.2">5.2.2.1.2 XDSDocumentEntry.uniqueId</h5>
-    <p>This value shall be the ClinicalDocument/id in the HL7 CDA R2 header. The root attribute is required, and the extension attribute is optional. In accordance with the XDS Profile, total length is limited to 256 characters. See PCC TF-2: 4.1.1, for further content specification.</p>
-    <h5 class="list-paragraph" id="5.2.2.1.3">5.2.2.1.3 Relating instances of XDS-SD documents</h5>
-    <p>In general, most instances of XDS-SD will not have parent documents. It is possible, however, in some specific use cases that instances of XDS-SD documents are related. For example, for a particular document it may be the case that both the PDF scanned content and somewhat equivalent plaintext need to be wrapped and submitted. Each document would correspond to separate XDSDocumentEntries linked via an XFRM Association that indicates one document is a transform of the other. These can be submitted in a single submission set, or in separate ones. Other specific examples may exist and this profile does not preclude the notion of a parent document for these cases.</p>
-    <h4 class="list-paragraph" id="5.2.2.2">5.2.2.2 XDS SubmissionSet Metadata</h4>
-    <p>No additional constraints. Particular to this profile, a legitimate use of submission sets would be to maintain a logical grouping of multiple XDS-SD documents. We encourage such usage. For more information, see PCC TF-2: 4.1.2.</p>
-    <h4 class="list-paragraph" id="5.2.2.3">5.2.2.3 XDS Folder Metadata</h4>
-    <p>No additional requirements. For more information, see PCC TF-2: 4.1.3.</p>
-    <h3 class="list-paragraph" id="5.2.3">5.2.3 Specification</h3>
-    <table>
-      <tbody>
-        <tr class="odd">
-          <td>HL7 CDA R2 header element</td>
-          <td>CDA as constrained by XDS-SD</td>
-          <td>Section Number of Extended Discussion</td>
-          <td>Source Type</td>
-          <td>Source / Value</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/typeId</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>FM</td>
-          <td>Fixed, per CDA R2 version in use.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/templateId</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>FM</td>
-          <td>Fixed, per this specification</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/id</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>DS</td>
-          <td>Computable.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/code</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>O / FM</td>
-          <td>Entered by operator or appropriately fixed for scanned content</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/title</td>
-          <td>R2</td>
-          <td>5.2.3.1</td>
-          <td>SA / O</td>
-          <td>Entered by operator, or possibly can be taken from the scanned content.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/confidentialityCode</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>O</td>
-          <td>Assigned by the operator</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/effectiveTime</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>DS</td>
-          <td>Computed. This is the scan time.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/languageCode</td>
-          <td>R</td>
-          <td>5.2.3.1</td>
-          <td>O</td>
-          <td>Entered by operator</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/recordTarget</td>
-          <td>R</td>
-          <td>5.2.3.2</td>
-          <td>SA / O</td>
-          <td>Taken from scanned content, supplemented by operator.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/author/assignedAuthor/assignedPerson</td>
-          <td>R2</td>
-          <td>5.2.3.3</td>
-          <td>SA / O</td>
-          <td>Taken from scanned content, supplemented by operator. This is the original author.</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/author/assignedAuthor/authoringDevice</td>
-          <td>R</td>
-          <td>5.2.3.4</td>
-          <td>DS / FM / O</td>
-          <td>Can be computed or fixed based on the scanning device and software. This is the information about the scanning device.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/dataEnterer</td>
-          <td>R</td>
-          <td>5.2.3.5</td>
-          <td>DS / O</td>
-          <td>Can be computed by the scanner or supplemented by operator. This is the information about the scanner operator.</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/custodian</td>
-          <td>R</td>
-          <td>5.2.3.6</td>
-          <td>DS / FM</td>
-          <td>Retains original HL7 CDA Context. To be computed or fixed appropriately to denote guardianship of the scanned and wrapped content.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/legalAuthenticator</td>
-          <td>O</td>
-          <td>5.2.3.7</td>
-          <td>O</td>
-          <td>Most likely supplemented by the operator, when applicable or mandated.</td>
-        </tr>
-        <tr class="even">
-          <td>ClinicalDocument/documentationOf/serviceEvent/effectiveTime</td>
-          <td>R</td>
-          <td>5.2.3.8</td>
-          <td>SA / O</td>
-          <td>Denotes the time/date range of the original content.</td>
-        </tr>
-        <tr class="odd">
-          <td>ClinicalDocument/component/nonXMLBody</td>
-          <td>R</td>
-          <td>5.2.3.9</td>
-          <td>SA</td>
-          <td>The scanned/encoded content.</td>
-        </tr>
-      </tbody>
-    </table>
-    <h4 class="list-paragraph" id="5.2.3.1">5.2.3.1 ClinicalDocument child-less elements</h4>
-    <p>In this section we further discuss id, code, effectiveTime, confidentialityCode and languageCode elements of the ClinicalDocument.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/templateId element shall be present. The root attribute shall contain the OID ‘1.3.6.1.4.1.19376.1.2.20’, to indicate this document is an XDS-SD document.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/id element shall be present. The root attribute shall contain the OID for the document, in which case the extension attribute shall be empty, or an OID that scopes the set of possible unique values for the extension attribute, in which case the extension shall be populated with a globally unique identifier within the scope of the root OID.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/code will in most cases be provided by the operator. Values for this code are dictated by the CDA R2 documentation, but are permissible to extend to fit the particular use case. Attributes code@code and code@codeSystem shall be present.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/title shall be present if known.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/effectiveTime shall denote the time at which the original content was scanned. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/confidentialityCode shall be assigned by the operator in accordance with the scanning facility policy. The notion or level of confidentiality in the header may not be the same as that in the Affinity Domain, but in certain cases could be used to derive a confidentiality value among those specified by the Affinity Domain. Attributes confidentialityCode@code and confidentialityCode@codeSystem shall be present.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/languageCode, in accordance with the HL7 CDA R2 documentation, shall denote the language used in the character data of the wrapper CDA header. If the scanned content, when rendered, is in a language different than that of the header, the language context of the CDA will be overwritten at the body level (see Section 5.2.3.9 ClinicalDocument/component/nonXMLBody for an example). Attribute code@code shall be present. Attribute code@codeSystem shall be IETF (Internet Engineering Task Force) RFC5646 in accordance with the HL7 CDA R2 documentation.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.2">5.2.3.2 ClinicalDocument/recordTarget</h4>
-    <p>The ClinicalDocument/recordTarget contains identifying information about the patient concerned in the original content. In many cases this will have to be supplied by the operator. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/recordTarget/patientRole/id element shall include both the root and the extension attributes. Refer to PCC TF-2: 4.1.1 for more details.</p>
-      </li>
-      <li>
-        <p>At least one ClinicalDocument/recordTarget/patientRole/addr element shall include at least the country subelement. The addr element has an unbounded upper limit on occurrences. It can, and should, be replicated to include additional addresses for a patient, each minimally specified by the country sub element.</p>
-      </li>
-      <li>
-        <p>At least one ClinicalDocument/recordTarget/patientRole/ patient/name element shall be at least one given subelement and one family subelement.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/recordTarget/patientRole/patient/ administrativeGenderCode element shall be present.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/recordTarget/patientRole/patient/ birthTime element shall be present with precision to the year.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.3">5.2.3.3 ClinicalDocument/author (original)</h4>
-    <p>This ClinicalDocument/author element represents the author of the original content. It additionally can encode the original author’s institution in the subelement representedOrganization. Information regarding the original author and his/her institution shall be included, if it is known. In many cases this will have to be supplied by the operator. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/author/templateId element shall be present. The root attribute shall contain the OID ‘1.3.6.1.4.1.19376.1.2.20.1’, to indicate this is the original author.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/time represents the day and time of the authoring of the original content. This value is not restricted beyond statements made in the HL7 CDA R2 documentation.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/id element if known shall include both the root and extension attributes. Refer to PCC TF-2: 4.1.1 for more details.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/representedOrganization/id element if known shall include both the root and the extension attribute. Refer to PCC TF-2: 4.1.1 for more details.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.4">5.2.3.4 ClinicalDocument/author (scanner)</h4>
-    <p>This ClinicalDocument/author element shall be present and represent the scanning device and software used to produce the scanned content. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/author/templateId element shall be present. The root attribute shall contain the OID ‘1.3.6.1.4.1.19376.1.2.20.2’, to indicate this author is the scanning device and software.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/time shall denote the time at which the original content was scanned. This value shall be equal to that of ClinicalDocument/effectiveTime. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/id element shall be at least the root OID of the scanning device.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/code element shall be present. The values set here are taken from appropriate DICOM vocabulary. The value of code@codeSystem shall be set to “1.2.840.10008.2.16.4”. The value of code@code shall be set to “CAPTURE” for PDF scanned content and “WSD” for plaintext. The value of code@displayName shall be set to “Image Capture” for PDF scanned content and “Workstation” for plaintext.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/manufacturerModelName element shall be present. The mixed content shall contain string information that specifies the scanner product name and model number. From this information, features like bit depth and resolution can be inferred. In the case of virtually scanned documents (for example, print to PDF), the manufactureModelName referenced here refers to the makers of the technology that was used to produce the embedded content.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/softwareName element shall be present. The mixed content shall contain string information that specifies the scanning software name and version. In the case of virtually scanned documents, the softwareName referenced here refers to the technology that was used to produce the embedded content.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/author/assignedAuthor/representedOrganization/id element shall be present. The root attribute shall be set to the OID of the scanning facility.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.5">5.2.3.5 ClinicalDocument/dataEnterer</h4>
-    <p>This ClinicalDocument/dataEnterer element shall represent the scanner operator who produced the scanned content. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/dataEnterer/templateId element shall be present. The root attribute shall contain the OID ‘1.3.6.1.4.1.19376.1.2.20.3’, to indicate this is the scanner operator.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/dataEnterer/time shall denote the time at which the original content was scanned. This value shall be equal to that of ClinicalDocument/effectiveTime. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/dataEnterer/assignedEntity/id element shall be both the root and the extension attributes; the root shall be the OID of the scanning facility and the extension shall be an appropriately assigned, facility unique id of the operator.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.6">5.2.3.6 ClinicalDocument/custodian</h4>
-    <p>The ClinicalDocument/custodian shall be present. Its context is left up to the scanning facility to refine in accordance with local policies and to reflect the entity responsible for the scanned content. In most cases this will be the scanning facility. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/assignedCustodian/representedOrganization/name shall be present.</p>
-      </li>
-      <li>
-        <p>At least one ClinicalDocument/assignedCustodian/representedOrganization/addr element shall include at least the country sub element.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.7">5.2.3.7 ClinicalDocument/legalAuthenticator</h4>
-    <p>The ClinicalDocument/legalAuthenticator may be present and its context is left up to the scanning facility to refine in accordance with local policies. All subelements retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>The ClinicalDocument/legalAuthenticator/assignedEntity/id element if known shall include both the root and the extension attribute. Refer back to PCC TF-2: 4.1.1 for more details.</p>
-      </li>
-    </ul>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.8">5.2.3.8 ClinicalDocument/documentationOf</h4>
-    <p>This ClinicalDocument/documentationOf element is used to encode the date/time range of the original content. If the original content is representative of a single point in time then the endpoints of the date/time range shall be the same. Information regarding this date/time range shall be included, if it is known. In many cases this will have to be supplied by the operator. This profile does not restrict the documentationOf element beyond statements made in the HL7 CDA R2 documentation.</p>
-    <p>Example:</p>
-    <h4 class="list-paragraph" id="5.2.3.9">5.2.3.9 ClinicalDocument/component/nonXMLBody</h4>
-    <p>This ClinicalDocument/component/nonXMLBody element shall be present and used to wrap the scanned content. The nonXMLBody element is guaranteed to be unique; thus, the x-path to recover the scanned content is essentially fixed. All subelements of the nonXMLBody retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</p>
-    <ul>
-      <li>
-        <p>If the human-readable language of the scanned content is different than that of the wrapper (specified in ClinicalDocument/languageCode), then ClinicalDocument/component/nonXMLBody/languageCode shall be present. Attribute code@code shall be present. Attribute code@codeSystem shall be IETF (Internet Engineering Task Force) RFC5646 in accordance with the HL7 CDA R2 documentation.</p>
-      </li>
-      <li>
-        <p>The ClinicalDocument/component/nonXMLBody/text element shall be present and encoded using xs:base64Binary encoding and shall contain the scanned content.</p>
-      </li>
-      <li>
-        <p>ClinicalDocument/component/nonXMLBody/text@mediaType shall be “application/pdf” for PDF, or “text/plain” for plaintext.</p>
-      </li>
-      <li>
-        <p>When the character encoding of text/plain content is other than UTF-8, the @mediaType shall be text/plain;charset=XXX, where XXX is the name of the encoding as specified by RFC2046.</p>
-      </li>
-      <li>
-        <p>ClinicalDocument/component/nonXMLBody/text@representation shall be present. The @representation for both PDF and plaintext scanned content will be “B64”, because this profile requires the base-64 encoding of both formats.</p>
-      </li>
-    </ul>
-    <p>
-      Example (PDF scanned content is in the
-      <em>same</em>
-      language as the wrapper):
+    <h2 xmlns="" id="5.2">5.2           Scanned Documents Content Module</h2>
+    <p xmlns="">
+      <span>This section outlines the content of the HL7 CDA R2 constraints for the document. We note here that requirements specified below are to ensure the presence of a minimum amount of wrapper data in order to enhance description and facilitate sharing of the document. Implementers of this profile can and should make use of additional annotation within the CDA header to provide richer context. The examples in the following sections contain the minimal amount of wrapper data, as specified, and in many cases do make use of additional CDA header elements for enriched context.</span>
     </p>
-    <p>
-      Example (PDF scanned content is in a
-      <em>different</em>
-      language than the wrapper):
+    <p xmlns="">
+      <span style="font-family:'Times New Roman'; font-weight:bold">Assumptions and Definitions</span>
+      <span>: We assume that the scanning facility and equipment within it are assigned an</span>
+      <span>OID</span>
+      <span>and that the scanning facility assembles the wrapped scanned content. More information regarding the construction of</span>
+      <span>OIDs</span>
+      <span>can be found in <a href="../Volume2x/ch-2.html#Appendix B"><a href="../Volume2x/ch-2.html#Appendix B">ITI TF-2x: Appendix B</a></a>. We define the following nomenclature for entity roles concerned in forming the wrapper content.</span>
     </p>
-    <h3 class="list-paragraph" id="5.2.4">5.2.4 Complete Example (Wrapped PDF)</h3>
-    <p>&lt;ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" classCode="DOCCLIN" moodCode="EVN" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd"&gt;</p>
-    <p>&lt;typeId extension="POCD_HD000040" root="2.16.840.1.113883.1.3"/&gt;</p>
-    <p>&lt;templateId root=”1.3.6.1.4.1.19376.1.2.20”/&gt;</p>
-    <p>&lt;id root=“1.3.6.4.1.4.1.2835.2.7777”/&gt;</p>
-    <p>&lt;code code=“34133-9” codeSystem=“2.16.840.1.113883.6.1”</p>
-    <p>codeSystemName=“LOINC” displayName=“SUMMARIZATION OF EPISODE NOTE”/&gt;</p>
-    <p>&lt;title&gt;Good Health Clinic Care Record Summary&lt;/title&gt;</p>
-    <p>&lt;effectiveTime value=“20050329224411+0500”/&gt;</p>
-    <p>&lt;confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/&gt;</p>
-    <p>&lt;languageCode code=“en-US”/&gt;</p>
-    <p>&lt;recordTarget&gt;</p>
-    <p>&lt;patientRole&gt;</p>
-    <p>&lt;id extension="12345" root="2.16.840.1.113883.3.933"/&gt;</p>
-    <p>&lt;addr&gt;</p>
-    <p>&lt;streetAddressLine&gt;17 Daws Rd.&lt;/streetAddressLine&gt;</p>
-    <p>&lt;city&gt;Blue Bell&lt;/city&gt;</p>
-    <p>&lt;state&gt;MA&lt;/state&gt;</p>
-    <p>&lt;postalCode&gt;02368&lt;/postalCode&gt;</p>
-    <p>&lt;country&gt;USA&lt;/country&gt;</p>
-    <p>&lt;/addr&gt;</p>
-    <p>&lt;patient&gt;</p>
-    <p>&lt;name&gt;</p>
-    <p>&lt;prefix&gt;Mrs.&lt;/prefix&gt;</p>
-    <p>&lt;given&gt;Ellen&lt;/given&gt;</p>
-    <p>&lt;family&gt;Ross&lt;/family&gt;</p>
-    <p>&lt;/name&gt;</p>
-    <p>&lt;administrativeGenderCode code="F"</p>
-    <p>codeSystem="2.16.840.1.113883.5.1"/&gt;</p>
-    <p>&lt;birthTime value="19600127"/&gt;</p>
-    <p>&lt;/patient&gt;</p>
-    <p>&lt;/patientRole&gt;</p>
-    <p>&lt;/recordTarget&gt;</p>
-    <p>&lt;author&gt;</p>
-    <p>&lt;templateId root=”1.3.6.1.4.1.19376.1.2.20.1”/&gt;</p>
-    <p>&lt;time value=“19990522”/&gt;</p>
-    <p>&lt;assignedAuthor&gt;</p>
-    <p>&lt;id extension=“11111111” root=“1.3.5.35.1.4436.7”/&gt;</p>
-    <p>&lt;assignedPerson&gt;</p>
-    <p>&lt;name&gt;</p>
-    <p>&lt;prefix&gt;Dr.&lt;/prefix&gt;</p>
-    <p>&lt;given&gt;Bernard&lt;/given&gt;</p>
-    <p>&lt;family&gt;Wiseman&lt;/family&gt;</p>
-    <p>&lt;suffix&gt;Sr.&lt;/suffix&gt;</p>
-    <p>&lt;/name&gt;</p>
-    <p>&lt;/assignedPerson&gt;</p>
-    <p>&lt;representedOrganization&gt;</p>
-    <p>&lt;id extension=“aaaaabbbbb” root=“1.3.5.35.1.4436.7”/&gt;</p>
-    <p>&lt;name&gt;Dr. Wiseman’s Clinic&lt;/name&gt;</p>
-    <p>&lt;/representedOrganization&gt;</p>
-    <p>&lt;/assignedAuthor&gt;</p>
-    <p>&lt;/author&gt;</p>
-    <p>&lt;author&gt;</p>
-    <p>&lt;templateId root=”1.3.6.1.4.1.19376.1.2.20.2”/&gt;</p>
-    <p>&lt;time value=“20050329224411+0500”/&gt;</p>
-    <p>&lt;assignedAuthor&gt;</p>
-    <p>&lt;id root=“1.3.6.4.1.4.1.2835.2.1234”/&gt;</p>
-    <p>&lt;assignedAuthoringDevice&gt;</p>
-    <p>&lt;code code=“CAPTURE” displayName=“Image Capture” codeSystem=“ 1.2.840.10008.2.16.4” /&gt;</p>
-    <p>&lt;manufacturerModelName&gt;SOME SCANNER NAME AND MODEL &lt;/manufacturerModelName&gt;</p>
-    <p>&lt;softwareName&gt;SCAN SOFTWARE NAME v0.0&lt;/softwareName&gt;</p>
-    <p>&lt;/assignedAuthoringDevice&gt;</p>
-    <p>&lt;representedOrganization&gt;</p>
-    <p>&lt;id root=“1.3.6.4.1.4.1.2835.2”/&gt;</p>
-    <p>&lt;name&gt;SOME Scanning Facility&lt;/name&gt;</p>
-    <p>&lt;addr&gt;</p>
-    <p>&lt;streetAddressLine&gt;21 North Ave&lt;/streetAddressLine&gt;</p>
-    <p>&lt;city&gt;Burlington&lt;/city&gt;</p>
-    <p>&lt;state&gt;MA&lt;/state&gt;</p>
-    <p>&lt;postalCode&gt;01803&lt;/postalCode&gt;</p>
-    <p>&lt;country&gt;USA&lt;/country&gt;</p>
-    <p>&lt;/addr&gt;</p>
-    <p>&lt;/representedOrganization&gt;</p>
-    <p>&lt;/assignedAuthor&gt;</p>
-    <p>&lt;/author&gt;</p>
-    <p>&lt;dataEnterer&gt;</p>
-    <p>&lt;templateId root=”1.3.6.1.4.1.19376.1.2.20.3”/&gt;</p>
-    <p>&lt;time value=“20050329224411+0500”/&gt;</p>
-    <p>&lt;assignedEntity&gt;</p>
-    <p>&lt;id extension=“22222222” root=“1.3.6.4.1.4.1.2835.2”/&gt;</p>
-    <p>&lt;assignedPerson&gt;</p>
-    <p>&lt;name&gt;</p>
-    <p>&lt;prefix&gt;Mrs.&lt;/prefix&gt;</p>
-    <p>&lt;given&gt;Bernice&lt;/given&gt;</p>
-    <p>&lt;family&gt;Smith&lt;/family&gt;</p>
-    <p>&lt;/name&gt;</p>
-    <p>&lt;/assignedPerson&gt;</p>
-    <p>&lt;/assignedEntity&gt;</p>
-    <p>&lt;/dataEnterer&gt;</p>
-    <p>&lt;custodian&gt;</p>
-    <p>&lt;assignedCustodian&gt;</p>
-    <p>&lt;representedCustodianOrganization&gt;</p>
-    <p>&lt;id root=“1.3.6.4.1.4.1.2835.2”/&gt;</p>
-    <p>&lt;name&gt;SOME Scanning Facility&lt;/name&gt;</p>
-    <p>&lt;addr&gt;</p>
-    <p>&lt;streetAddressLine&gt;21 North Ave&lt;/streetAddressLine&gt;</p>
-    <p>&lt;city&gt;Burlington&lt;/city&gt;</p>
-    <p>&lt;state&gt;MA&lt;/state&gt;</p>
-    <p>&lt;postalCode&gt;01803&lt;/postalCode&gt;</p>
-    <p>&lt;country&gt;USA&lt;/country&gt;</p>
-    <p>&lt;/addr&gt;</p>
-    <p>&lt;/representedCustodianOrganization&gt;</p>
-    <p>&lt;/assignedCustodian&gt;</p>
-    <p>&lt;/custodian&gt;</p>
-    <p>&lt;legalAuthenticator&gt;</p>
-    <p>&lt;time value=“19990522”/&gt;</p>
-    <p>&lt;signatureCode code=“S”/&gt;</p>
-    <p>&lt;assignedEntity&gt;</p>
-    <p>&lt;id extension=“11111111” root=“1.3.5.35.1.4436.7”/&gt;</p>
-    <p>&lt;assignedPerson&gt;</p>
-    <p>&lt;name&gt;</p>
-    <p>&lt;prefix&gt;Dr.&lt;/prefix&gt;</p>
-    <p>&lt;given&gt;Bernard&lt;/given&gt;</p>
-    <p>&lt;family&gt;Wiseman&lt;/family&gt;</p>
-    <p>&lt;suffix&gt;Sr.&lt;/suffix&gt;</p>
-    <p>&lt;/name&gt;</p>
-    <p>&lt;/assignedPerson&gt;</p>
-    <p>&lt;/assignedEntity&gt;</p>
-    <p>&lt;/legalAuthenticator&gt;</p>
-    <p>&lt;documentationOf&gt;</p>
-    <p>&lt;serviceEvent &gt;</p>
-    <p>&lt;effectiveTime&gt;</p>
-    <p>&lt;low value=“19800127”/&gt;</p>
-    <p>&lt;high value=“19990522”/&gt;</p>
-    <p>&lt;/effectiveTime&gt;</p>
-    <p>&lt;/serviceEvent&gt;</p>
-    <p>&lt;/documentationOf&gt;</p>
-    <p>&lt;component&gt;</p>
-    <p>&lt;nonXMLBody&gt;</p>
-    <p>&lt;text mediaType=“application/pdf” representation=“B64”&gt;</p>
-    <p>JVBERi0xLjMKJcfsj6IKNSAwIG9iago8PC9MZW5ndGggNiAwIFIvRmlsdGVyIC9GbGF0</p>
-    <p>ZURlY29kZT4+CnN0cmVhbQp4nGWPMWsDMQyFd/8KjfJwqmVbkr0GQqFbg7fQoSRNWuhB</p>
-    <p>Q/4/1L67TEEYme+9J1s3CMQQRm39NLuXg8H17gK89nN1N8eLAbZ2mmHXuql2QDVUhnZx</p>
-    <p>a5iBcyQtoMIUM7TZHbH5KZEVDgm//SSUswbFHx/JzBLeu5yYxOIzE8bPcRWqdaGDmcZO</p>
-    <p>BWc/9bfUNOPfOte44O9jxtcIKskqp0JZouJ5deYqeBn58ZmKtIU+2ptjqWQRJpGyrHDu</p>
-    <p>K7CXIe2be+/1DzXQP+RlbmRzdHJlYW0KZW5kb2JqCjYgMCBvYmoKMjAxCmVuZG9iago0</p>
-    <p>...</p>
-    <p>SW5mbyAyIDAgUgovSUQgWzxGNENDN0FFQjU0QjM2RkIyODNDNUMzMjQ3OUFEMjgzRj48</p>
-    <p>RjRDQzdBRUI1NEIzNkZCMjgzQzVDMzI0NzlBRDI4M0Y+XQo+PgpzdGFydHhyZWYKMzAx</p>
-    <p>MgolJUVPRgo=</p>
-    <p>&lt;/text&gt;</p>
-    <p>&lt;/nonXMLBody&gt;</p>
-    <p>&lt;/component&gt;</p>
-    <p>&lt;/ClinicalDocument&gt;</p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span style="font-family:'Times New Roman'; font-style:italic">Original content</span>
+        <span>– Legacy paper or electronic document intended for wrapping.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-style:italic">Scanned content</span>
+        <span>– Scanned or appropriately converted/encoded electronic version of the original content.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-style:italic">Original author</span>
+        <span>– Author of the original content.</span>
+      </li>
+      <li>
+        <span style="font-family:'Times New Roman'; font-style:italic">(Scanner) Operator</span>
+        <span>– Person assembling the scanned content.</span>
+      </li>
+    </ul>
+    <h3 xmlns="" id="5.2.1">5.2.1 Referenced Standards</h3>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>PDF RFC3778, The application/pdf Media Type (informative)</span>
+      </li>
+      <li>
+        <span>PDF/A ISO 19005-1b. Document management - Electronic document file format for long-term preservation - Part 1: Use of PDF (PDF/A)</span>
+      </li>
+      <li>
+        <span>HL7 CDA Release 2.0 (denoted HL7 CDA R2, or just CDA, in subsequent text)</span>
+      </li>
+      <li>
+        <a href="http://www.ietf.org/rfc/rfc5646.txt#_blank" style="text-decoration:none">
+          <span style="font-family:'Times New Roman'; text-decoration:underline; color:#0000ff">RFC</span>
+          <span style="font-family:'Times New Roman'; text-decoration:underline; color:#0000ff">5646</span>
+        </a>
+        <span>, Tags for the identification of languages</span>
+      </li>
+    </ul>
+    <h4 xmlns="" id="5.2.1.1">5.2.1.1 Discussion of Content Standards</h4>
+    <p xmlns="">
+      <span>PDF and plaintext documents intended for wrapping can consist of multiple pages. Encoding of multiple page PDF documents are subject to the PDF/A standard. This ISO standard,</span>
+      <span>PDF/A, is a subset of Adobe PDF version 1.4 intended to be suitable for long-term preservation of page-oriented documents. PDF/A attempts to maximize:</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>Device independence</span>
+      </li>
+      <li>
+        <span>Self-containment</span>
+      </li>
+      <li>
+        <span>Self-documentation</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>The constraints imposed by PDF/A include:</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>Audio and video content are forbidden</span>
+      </li>
+      <li>
+        <span>JavaScript and executable file launches are prohibited</span>
+      </li>
+      <li>
+        <span>All fonts must be embedded and also must be legally embeddable for unlimited, universal rendering</span>
+      </li>
+      <li>
+        <span>Colorspaces</span>
+        <span>specified in a device-independent manner</span>
+      </li>
+      <li>
+        <span>Encryption is disallowed (although the enclosing document and transport may provide encryption external to the PDF content)</span>
+      </li>
+      <li>
+        <span>Compression methods are restricted to a standard list</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>The PDF/A approach has several advantages over TIFF or JPEG. First, there are more image compressions and format flexibility in PDF, so that the image files sizes can be kept smaller. There are many simple programs available for converting TIFF and JPEG into PDF with various other features for improving compression or adding other information. The PDF/A enables devices that produce vectorized output. Unlike TIFF, JPEG, or BMP, a PDF/A image has the ability to provide several "layers" of information. This allows the creation of PDF searchable images.</span>
+    </p>
+    <p xmlns="">
+      <span>A PDF searchable image is a PDF document with an exact bitmapped replica of the scanned paper pages and with text information stored behind the bitmap image of the page. This approach retains the look of the original pages while enabling text searchability and computer analysis. This approach is especially suitable for documents that have to be searchable while retaining the original scan details. The text layer is created by an Optical Character Recognition (OCR) application that scans the text on each page. It then creates a PDF file with the recognized text stored in a layer beneath the image of the text. Unrecognized graphics areas and annotations are preserved with full fidelity in the image. The text form may be incomplete or the OCR confused by some words, but the original image is preserved and available.</span>
+    </p>
+    <p xmlns="">
+      <span>Plaintext as well as PDF/A documents shall be base-64 encoded before wrapped in a HL7 CDA R2 header. The PDF/A documents shall conform to PDF/A-1b</span>
+      <span>.</span>
+      <span>Creators are encouraged to conform to PDF/A-1a to the maximum extent possible, but a simple document scanner may be unable to fully conform to PDF/A-1a</span>
+      <span>.</span>
+      <span>Other profiles may require PDF/A-1a conformance.</span>
+    </p>
+    <p xmlns="">
+      <span>HL7 CDA R2 header schema is constrained so that pertinent metadata values and scanning facility, technology and operator information shall be present (</span>
+      <span>see</span>
+      <span>Section</span>
+      <span>5.2.3).</span>
+    </p>
+    <p xmlns="">
+      <span>Medical imagery and photographs are outside the scope of this profile</span>
+      <span>.</span>
+      <span>Diagnostic or intervention medical imagery will be supported through DICOM (which includes the use of JPEG and MPEG). Additionally</span>
+      <span>,</span>
+      <span>audio and video recorded content is not covered by this profile.</span>
+    </p>
+    <h3 xmlns="" id="5.2.2">5.2.2 XDS Metadata</h3>
+    <p xmlns="">
+      <span>XDS-SD is a CDA R2 document and thus conforms to the XDS Metadata requirements in the PCC TF-2:4 unless otherwise specified below.</span>
+    </p>
+    <h4 xmlns="" id="5.2.2.1">5.2.2.1 XDS DocumentEntry Metadata</h4>
+    <p xmlns="">
+      <span>Content Creators shall populate</span>
+      <span />
+      <span>DocumentEntry</span>
+      <span>Metadata</span>
+      <span>according to</span>
+      <span>requirements in PCC TF-2: 4.1.1</span>
+      <span>(</span>
+      <span>e.g.,</span>
+      <span>authorInstitution</span>
+      <span>,</span>
+      <span>authorPerson</span>
+      <span>,</span>
+      <span>authorRole</span>
+      <span>,</span>
+      <span>authorSpeciality</span>
+      <span>,</span>
+      <span>classCode</span>
+      <span>,</span>
+      <span>typeCode</span>
+      <span>,</span>
+      <span>confidentialityCode</span>
+      <span>,</span>
+      <span>creationTime</span>
+      <span>,</span>
+      <span>formatCode</span>
+      <span>,</span>
+      <span>healthcareFacilityTypeCode</span>
+      <span>,</span>
+      <span>languageCode</span>
+      <span>,</span>
+      <span>mimeType</span>
+      <span>,</span>
+      <span>practiceSettingCode</span>
+      <span>,</span>
+      <span>serviceStartTime</span>
+      <span>,</span>
+      <span>serviceStopTime</span>
+      <span>,</span>
+      <span>sourcePatientId</span>
+      <span>, and</span>
+      <span>sourcePatientInfo</span>
+      <span>)</span>
+      <span>unless otherwise specified below.</span>
+    </p>
+    <h5 xmlns="" id="5.2.2.1.1">5.2.2.1.1 XDSDocumentEntry.formatCode</h5>
+    <p xmlns="">
+      <span>The</span>
+      <span>XDSDocumentEntry.formatCode</span>
+      <span>shall be</span>
+      <span style="font-family:'Times New Roman'; font-weight:bold">urn:ihe:iti:xds-sd:pdf:2008</span>
+      <span>when the document is scanned pdf and</span>
+      <span style="font-family:'Times New Roman'; font-weight:bold">urn:ihe:iti:xds-sd:text:2008</span>
+      <span>when the document is scanned text. The</span>
+      <span>formatCode</span>
+      <span />
+      <span>codeSystem</span>
+      <span>shall be</span>
+      <span style="font-family:'Times New Roman'; font-weight:bold">1.3.6.1.4.1.19376.1.2.3</span>
+      <span>.</span>
+    </p>
+    <h5 xmlns="" id="5.2.2.1.2">5.2.2.1.2 XDSDocumentEntry.uniqueId</h5>
+    <p xmlns="">
+      <span>This value shall be the</span>
+      <span style="font-family:'Courier New'">ClinicalDocument</span>
+      <span style="font-family:'Courier New'">/id</span>
+      <span>in the HL7 CDA R2 header.</span>
+      <span>The root attribute is required, and the extension attribute is optional.</span>
+      <span>In accordance with the XDS</span>
+      <span>Profile</span>
+      <span>, total length is limited to 256 characters</span>
+      <span>.</span>
+      <span>S</span>
+      <span>ee PCC TF-2: 4.1.1, for further content specification.</span>
+    </p>
+    <h5 xmlns="" id="5.2.2.1.3">5.2.2.1.3 Relating instances of XDS-SD documents</h5>
+    <p xmlns="">
+      <span>In general, most instances of XDS-SD will not have parent documents. It is possible, however, in some specific use cases that instances of XDS-SD documents are related. For example, for a particular document it may be the case that both the PDF scanned content and somewhat equivalent plaintext need to be wrapped and submitted</span>
+      <span>.</span>
+      <span>Each document would correspond to separate</span>
+      <span>XDSDocumentEntries</span>
+      <span>linked via an</span>
+      <span>XFRM</span>
+      <span>Association that indicates one document is a transform of the other. These can be submitted in a single submission set, or in separate ones. Other specific examples may exist and this profile does not preclude the notion of a parent document for these cases.</span>
+    </p>
+    <h4 xmlns="" id="5.2.2.2">5.2.2.2 XDS SubmissionSet Metadata</h4>
+    <p xmlns="">
+      <span>No additional constraints. Particular to this profile, a legitimate use of submission sets would be to maintain a logical grouping of multiple XDS-SD documents. We encourage such usage. For more information, see PCC TF-2: 4.1.2</span>
+      <span>.</span>
+    </p>
+    <h4 xmlns="" id="5.2.2.3">5.2.2.3 XDS Folder Metadata</h4>
+    <p xmlns="">
+      <span>No additional requirements. For more information, see PCC TF-2: 4.1.3</span>
+      <span>.</span>
+    </p>
+    <h3 xmlns="" id="5.2.3">5.2.3 Specification</h3>
+    <div xmlns="" style="text-align:center">
+      <table cellspacing="0" cellpadding="0" style="margin-right:auto; margin-left:auto; border-collapse:collapse">
+        <thead>
+          <tr style="height:31.8pt">
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">HL7 CDA R2 header element</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">CDA as constrained by XDS-SD</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Section Number of Extended Discussion</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Source Type</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top; background-color:#d9d9d9">
+              <p style="font-size:10pt">
+                <span style="font-family:Arial; font-weight:bold">Source / Value</span>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>typeId</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>FM</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Fixed, per CDA R2 version in use.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>templateId</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>FM</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Fixed, per this specification</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/id</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>DS</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Computable.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/code</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>O / FM</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Entered by operator or appropriately fixed for scanned content</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/title</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R2</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>SA / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Entered by operator, or possibly can be taken from the scanned content.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>confidentialityCode</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Assigned by the operator</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>effectiveTime</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>DS</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Computed. This is the scan time.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>languageCode</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.1</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Entered by operator</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>recordTarget</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.2</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>SA / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Taken from scanned content, supplemented by operator.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/author/</span>
+                <span>assignedAuthor</span>
+                <span>/</span>
+                <span>assignedPerson</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R2</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.3</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>SA / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Taken from scanned content, supplemented by operator. This is the original author.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/author/</span>
+                <span>assignedAuthor</span>
+                <span>/</span>
+                <span>authoringDevice</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.4</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>DS / FM / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Can be computed or fixed based on the scanning device and software. This is the information about the scanning device.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>dataEnterer</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.5</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>DS / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Can be computed by the scanner or supplemented by operator. This is the information about the scanner operator.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/custodian</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.6</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>DS / FM</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Retains original HL7 CDA Context. To be computed or fixed appropriately to denote guardianship of the scanned and wrapped content.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>legalAuthenticator</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>O</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.7</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Most likely supplemented by the operator, when applicable or mandated.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/</span>
+                <span>documentationOf</span>
+                <span>/</span>
+                <span>serviceEvent</span>
+                <span>/</span>
+                <span>effectiveTime</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.8</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>SA / O</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>Denotes the time/date range of the original content.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:128.35pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>ClinicalDocument</span>
+                <span>/component/</span>
+                <span>nonXMLBody</span>
+              </p>
+            </td>
+            <td style="width:51.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>R</span>
+              </p>
+            </td>
+            <td style="width:65pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>5.2.3.9</span>
+              </p>
+            </td>
+            <td style="width:42.5pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.75pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>SA</span>
+              </p>
+            </td>
+            <td style="width:123.65pt; border-style:solid; border-width:0.75pt; padding-right:5.38pt; padding-left:5.38pt; vertical-align:top">
+              <p style="font-size:9pt">
+                <span>The scanned/encoded content.</span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h4 xmlns="" id="5.2.3.1">5.2.3.1 ClinicalDocument child-less elements</h4>
+    <p xmlns="">
+      <span>In this section we further discuss</span>
+      <span style="font-family:'Courier New'">id, code,</span>
+      <span style="font-family:'Courier New'">effectiveTime</span>
+      <span style="font-family:'Courier New'">,</span>
+      <span style="font-family:'Courier New'">confidentialityCode</span>
+      <span style="font-family:'Courier New'; font-size:10pt" />
+      <span>and</span>
+      <span style="font-family:'Courier New'">languageCode</span>
+      <span>elements of the</span>
+      <span style="font-family:'Courier New'">ClinicalDocument</span>
+      <span>.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>templateId</span>
+        <span>element shall be present. The root attribute shall contain the</span>
+        <span>OID</span>
+        <span>‘1.3.6.1.4.1.19376.1.2.20’, to indicate this document is an XDS-SD document.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/id element shall be present. The root attribute shall contain the</span>
+        <span>OID</span>
+        <span />
+        <span>for the document, in which case the extension attribute shall be empty, or an</span>
+        <span>OID</span>
+        <span />
+        <span>that scopes the set of possible unique values for the extension attribute, in which case the extension shall be populated with a globally unique identifier within the scope of the root</span>
+        <span>OID</span>
+        <span>.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/code will in most cases be provided by the operator. Values for this code are dictated by the CDA R2 documentation, but are permissible to extend to fit the particular use case. Attributes</span>
+        <span>code@code</span>
+        <span>and</span>
+        <span>code@codeSystem</span>
+        <span>shall be present.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/title shall be present if known.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>effectiveTime</span>
+        <span>shall denote the time at which the original content was scanned. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>confidentialityCode</span>
+        <span>shall be assigned by the operator in accordance with the scanning facility policy. The notion or level of confidentiality in the header may not be the same as that in the Affinity Domain, but in certain cases could be used to derive a confidentiality value among those specified by the Affinity Domain. Attributes</span>
+        <span>confidentialityCode@code</span>
+        <span>and</span>
+        <span>confidentialityCode@codeSystem</span>
+        <span>shall be present.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>languageCode</span>
+        <span>, in accordance with the HL7 CDA R2 documentation, shall denote the language used in the character data of the wrapper CDA header. If the scanned content, when rendered, is in a language different than that of the header, the language context of the CDA will be overwritten at the body level (</span>
+        <span>see</span>
+        <span>Section</span>
+        <span>5.2.3.9</span>
+        <span>ClinicalDocument</span>
+        <span>/component/</span>
+        <span>nonXMLBody</span>
+        <span>for an example). Attribute</span>
+        <span>code@code</span>
+        <span>shall be present. Attribute</span>
+        <span>code@codeSystem</span>
+        <span>shall be</span>
+        <span>IETF</span>
+        <span>(Internet Engineering Task Force) RFC</span>
+        <span>5646</span>
+        <span>in accordance with the HL7 CDA R2 documentation.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+      <img src="media/anavf-skue1.029.png" width="624" height="193" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <h4 xmlns="" id="5.2.3.2">5.2.3.2 ClinicalDocument/recordTarget</h4>
+    <p xmlns="">
+      <span>The</span>
+      <span style="font-family:'Courier New'">ClinicalDocument</span>
+      <span style="font-family:'Courier New'">/</span>
+      <span style="font-family:'Courier New'">recordTarget</span>
+      <span>contains identifying information about the patient concerned in the original content</span>
+      <span>.</span>
+      <span>In many cases this will have to be supplied by the operator. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>recordTarget</span>
+        <span>/patientRole/id element shall include both the root and the extension attributes. Refer to PCC TF-2: 4.1.1 for more details.</span>
+      </li>
+      <li>
+        <span>At least one</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>recordTarget</span>
+        <span>/patientRole/</span>
+        <span>addr</span>
+        <span>element shall include at least the country</span>
+        <span>subelement</span>
+        <span>. The</span>
+        <span>addr</span>
+        <span>element has an unbounded upper limit on occurrences. It can, and should, be replicated to include additional addresses for a patient, each minimally specified by the country sub element</span>
+        <span>.</span>
+      </li>
+      <li>
+        <span>At least one</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>recordTarget</span>
+        <span>/patientRole/ patient/name element shall be at least one given</span>
+        <span>subelement</span>
+        <span>and one family</span>
+        <span>subelement</span>
+        <span>.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>recordTarget</span>
+        <span>/patientRole/patient/</span>
+        <span>administrativeGenderCode</span>
+        <span>element shall be present.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>recordTarget</span>
+        <span>/patientRole/patient/</span>
+        <span>birthTime</span>
+        <span>element shall be present with precision to the year.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+      <img src="media/anavf-skue1.030.png" width="626" height="376" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <a name="_Toc367877085">
+        <span> </span>
+      </a>
+    </p>
+    <h4 xmlns="" id="5.2.3.3">5.2.3.3 ClinicalDocument/author (original)</h4>
+    <p xmlns="">
+      <span>This</span>
+      <span>ClinicalDocument</span>
+      <span>/author element represents the author of the original content. It additionally can encode the original author’s institution in the</span>
+      <span>subelement</span>
+      <span />
+      <span>representedOrganization</span>
+      <span>. Information regarding the original author and his/her institution shall be included, if it is known. In many cases this will have to be supplied by the operator. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/</span>
+        <span>templateId</span>
+        <span>element shall be present. The root attribute shall contain the</span>
+        <span>OID</span>
+        <span>‘1.3.6.1.4.1.19376.1.2.20.1’, to indicate this is the original author.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/time represents the day and time of the authoring of the original content. This value is not restricted beyond statements made in the HL7 CDA R2 documentation.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/</span>
+        <span>assignedAuthor</span>
+        <span>/id element if known shall include both the root and extension attributes. Refer to PCC TF-2: 4.1.1 for more details.</span>
+      </li>
+      <li>
+        <span>The ClinicalDocument/author/assignedAuthor/representedOrganization/id element if known shall include both the root and the extension attribute. Refer to PCC TF-2: 4.1.1</span>
+        <span />
+        <span>for more details.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.031.png" width="624" height="320" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <a name="_Toc367877086">
+        <span> </span>
+      </a>
+    </p>
+    <h4 xmlns="" id="5.2.3.4">5.2.3.4 ClinicalDocument/author (scanner)</h4>
+    <p xmlns="">
+      <span>This</span>
+      <span>ClinicalDocument</span>
+      <span>/author element shall be present and represent the scanning device and software used to produce the scanned content. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/</span>
+        <span>templateId</span>
+        <span>element shall be present. The root attribute shall contain the</span>
+        <span>OID</span>
+        <span>‘1.3.6.1.4.1.19376.1.2.20.2’, to indicate this author is the scanning device and software.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/time shall denote the time at which the original content was scanned. This value shall be equal to that of</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>effectiveTime</span>
+        <span>. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/author/</span>
+        <span>assignedAuthor</span>
+        <span>/id element shall be at least the root</span>
+        <span>OID</span>
+        <span />
+        <span>of the scanning device.</span>
+      </li>
+      <li>
+        <span>The ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/code element shall be present. The values set here are taken from appropriate DICOM vocabulary. The value of</span>
+        <span>code@codeSystem</span>
+        <span>shall be set to “1.2.840.10008.2.16.4”. The value of</span>
+        <span>code@code</span>
+        <span>shall be set to “CAPTURE” for PDF scanned content and “</span>
+        <span>WSD</span>
+        <span>” for plaintext. The value of</span>
+        <span>code@displayName</span>
+        <span>shall be set to “Image Capture” for PDF scanned content and “Workstation” for plaintext.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span />
+        <span>ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/manufacturerModelName element shall be present. The mixed content shall contain string information that specifies the scanner product name and model number. From this information, features like bit depth and resolution can be inferred. In the case of virtually scanned documents (for example, print to PDF), the</span>
+        <span>manufactureModelName</span>
+        <span>referenced here refers to the makers of the technology that was used to produce the embedded content.</span>
+      </li>
+      <li>
+        <span>The ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice/softwareName element shall be present. The mixed content shall contain string information that specifies the scanning software name and version. In the case of virtually scanned documents, the</span>
+        <span>softwareName</span>
+        <span>referenced here refers to the technology that was used to produce the embedded content.</span>
+      </li>
+      <li>
+        <span>The ClinicalDocument/author/assignedAuthor/representedOrganization/id element shall be present. The root attribute shall be set to the</span>
+        <span>OID</span>
+        <span />
+        <span>of the scanning facility.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.032.png" width="624" height="411" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <a name="_Toc367877087">
+        <span> </span>
+      </a>
+    </p>
+    <h4 xmlns="" id="5.2.3.5">5.2.3.5 ClinicalDocument/dataEnterer</h4>
+    <p xmlns="">
+      <span>This</span>
+      <span>ClinicalDocument</span>
+      <span>/</span>
+      <span>dataEnterer</span>
+      <span>element shall represent the scanner operator who produced the scanned content. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>dataEnterer</span>
+        <span>/</span>
+        <span>templateId</span>
+        <span>element shall be present. The root attribute shall contain the</span>
+        <span>OID</span>
+        <span>‘1.3.6.1.4.1.19376.1.2.20.3’, to indicate this is the scanner operator.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>dataEnterer</span>
+        <span>/time shall denote the time at which the original content was scanned. This value shall be equal to that of</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>effectiveTime</span>
+        <span>. At a minimum, the time shall be precise to the day and shall include the time zone offset from GMT.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>dataEnterer</span>
+        <span>/</span>
+        <span>assignedEntity</span>
+        <span>/id element shall be both the root and the extension attributes</span>
+        <span>;</span>
+        <span>the root shall be the</span>
+        <span>OID</span>
+        <span />
+        <span>of the scanning facility and the extension shall be an appropriately assigned, facility unique id of the operator.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.033.png" width="624" height="242" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <h4 xmlns="" id="5.2.3.6">5.2.3.6 ClinicalDocument/custodian</h4>
+    <p xmlns="">
+      <span>The</span>
+      <span>ClinicalDocument</span>
+      <span>/custodian shall be present. Its context is left up to the scanning facility to refine in accordance with local policies and to reflect the entity responsible for the scanned content. In most cases this will be the scanning facility. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>assignedCustodian</span>
+        <span>/</span>
+        <span>representedOrganization</span>
+        <span>/name shall be present.</span>
+      </li>
+      <li>
+        <span>At least one</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>assignedCustodian</span>
+        <span>/</span>
+        <span>representedOrganization</span>
+        <span>/</span>
+        <span>addr</span>
+        <span>element shall include at least the country sub element.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.034.png" width="621" height="276" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <a name="_Toc367877089">
+        <span> </span>
+      </a>
+    </p>
+    <h4 xmlns="" id="5.2.3.7">5.2.3.7 ClinicalDocument/legalAuthenticator</h4>
+    <p xmlns="">
+      <span>The</span>
+      <span style="font-family:'Courier New'; font-size:10pt">ClinicalDocument</span>
+      <span style="font-family:'Courier New'; font-size:10pt">/</span>
+      <span style="font-family:'Courier New'; font-size:10pt">legalAuthenticator</span>
+      <span style="font-family:'Courier New'; font-size:10pt" />
+      <span>may be present and its context is left up to the scanning facility to refine in accordance with local policies. All</span>
+      <span>subelements</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>legalAuthenticator</span>
+        <span>/</span>
+        <span>assignedEntity</span>
+        <span>/id element if known shall include both the root and the extension attribute. Refer back to PCC TF-2: 4.1.1 for more details.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example:</span>
+      <img src="media/anavf-skue1.035.png" width="624" height="277" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <h4 xmlns="" id="5.2.3.8">5.2.3.8 ClinicalDocument/documentationOf</h4>
+    <p xmlns="">
+      <span>This</span>
+      <span style="font-family:'Courier New'; font-size:10pt">ClinicalDocument</span>
+      <span style="font-family:'Courier New'; font-size:10pt">/</span>
+      <span style="font-family:'Courier New'; font-size:10pt">documentationOf</span>
+      <span style="font-family:'Courier New'; font-size:10pt" />
+      <span>element is used to encode the date/time range of the original content. If the original content is representative of a single point in time then the endpoints of the date/time range shall be the same. Information regarding this date/time range shall be included, if it is known. In many cases this will have to be supplied by the operator. This profile does not restrict the</span>
+      <span style="font-family:'Courier New'; font-size:10pt">documentationOf</span>
+      <span>element beyond statements made in the HL7 CDA R2 documentation.</span>
+    </p>
+    <p xmlns="">
+      <span>Example:</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.036.png" width="624" height="158" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <p xmlns="">
+      <a name="_Toc367877091">
+        <span> </span>
+      </a>
+    </p>
+    <h4 xmlns="" id="5.2.3.9">5.2.3.9 ClinicalDocument/component/nonXMLBody</h4>
+    <p xmlns="">
+      <span>This</span>
+      <span>ClinicalDocument</span>
+      <span>/component/</span>
+      <span>nonXMLBody</span>
+      <span>element shall be present and used to wrap the scanned content. The</span>
+      <span>nonXMLBody</span>
+      <span>element is guaranteed to be unique; thus</span>
+      <span>,</span>
+      <span>the x-path to recover the scanned content is essentially fixed. All</span>
+      <span>subelements</span>
+      <span>of the</span>
+      <span>nonXMLBody</span>
+      <span>retain their original definition as defined by the HL7 CDA R2 specification, unless noted below.</span>
+    </p>
+    <ul xmlns="" type="disc">
+      <li>
+        <span>If the human-readable language of the scanned content is different than that of the wrapper (specified in</span>
+        <span>ClinicalDocument</span>
+        <span>/</span>
+        <span>languageCode</span>
+        <span>), then</span>
+        <span>ClinicalDocument</span>
+        <span>/component/</span>
+        <span>nonXMLBody</span>
+        <span>/</span>
+        <span>languageCode</span>
+        <span>shall be present. Attribute</span>
+        <span>code@code</span>
+        <span>shall be present. Attribute</span>
+        <span>code@codeSystem</span>
+        <span>shall be</span>
+        <span>IETF</span>
+        <span>(Internet Engineering Task Force) RFC</span>
+        <span>5646</span>
+        <span>in accordance with the HL7 CDA R2 documentation.</span>
+      </li>
+      <li>
+        <span>The</span>
+        <span>ClinicalDocument</span>
+        <span>/component/</span>
+        <span>nonXMLBody</span>
+        <span>/text element shall be present and encoded using xs:base64Binary encoding and shall contain the scanned content.</span>
+      </li>
+      <li>
+        <span>ClinicalDocument</span>
+        <span>/component/</span>
+        <span>nonXMLBody</span>
+        <span>/</span>
+        <span>text@mediaType</span>
+        <span>shall be “application/pdf” for PDF, or “text/plain” for plaintext.</span>
+      </li>
+      <li>
+        <span>When the character encoding of text/plain content is other than UTF-8, the @</span>
+        <span>mediaType</span>
+        <span>shall be text/</span>
+        <span>plain;charset</span>
+        <span>=XXX, where XXX is the name of the encoding as specified by RFC2046.</span>
+      </li>
+      <li>
+        <span>ClinicalDocument</span>
+        <span>/component/</span>
+        <span>nonXMLBody</span>
+        <span>/</span>
+        <span>text@representation</span>
+        <span>shall be present. The @representation for both PDF and plaintext scanned content will be “B64”, because this profile requires the base-64 encoding of both formats.</span>
+      </li>
+    </ul>
+    <p xmlns="">
+      <span>Example (PDF scanned content is in the</span>
+      <span style="font-family:'Times New Roman'; font-style:italic">same</span>
+      <span>language as the wrapper):</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.037.png" width="624" height="313" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+      <span />
+    </p>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <span>Example (PDF scanned content is in a</span>
+      <span style="font-family:'Times New Roman'; font-style:italic">different</span>
+      <span>language than the wrapper):</span>
+    </p>
+    <p xmlns="">
+      <img src="media/anavf-skue1.038.png" width="624" height="319" alt="" style="-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" />
+    </p>
+    <h3 xmlns="" id="5.2.4">5.2.4 Complete Example (Wrapped PDF)</h3>
+    <div xmlns="" style="border:0.75pt solid #000000; clear:both">
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">ClinicalDocument</span>
+        <span style="font-family:'Courier New'" />
+        <span style="font-family:'Courier New'">xmlns</span>
+        <span style="font-family:'Courier New'">="urn:hl7-org:v3" </span>
+        <span style="font-family:'Courier New'">xmlns:xsi</span>
+        <span style="font-family:'Courier New'">="http://www.w3.org/2001/XMLSchema-instance"</span>
+        <span style="font-family:'Courier New'">classCode</span>
+        <span style="font-family:'Courier New'">="</span>
+        <span style="font-family:'Courier New'">DOCCLIN</span>
+        <span style="font-family:'Courier New'">"</span>
+        <span style="font-family:'Courier New'">moodCode</span>
+        <span style="font-family:'Courier New'">="</span>
+        <span style="font-family:'Courier New'">EVN</span>
+        <span style="font-family:'Courier New'">"</span>
+        <span style="font-family:'Courier New'">xsi:schemaLocation</span>
+        <span style="font-family:'Courier New'">="urn:hl7-org:v3 CDA.xsd"&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">typeId</span>
+        <span style="font-family:'Courier New'">extension="POCD_HD000040" root="2.16.840.1.113883.1.3"/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">templateId</span>
+        <span style="font-family:'Courier New'">root=”1.3.6.1.4.1.19376.1.2.20”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;id root=“1.3.6.4.1.4.1.2835.2.7777”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;code code=“34133-9” </span>
+        <span style="font-family:'Courier New'">codeSystem</span>
+        <span style="font-family:'Courier New'">=“2.16.840.1.113883.6.1”</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">codeSystemName</span>
+        <span style="font-family:'Courier New'">=“LOINC”</span>
+        <span style="font-family:'Courier New'">displayName</span>
+        <span style="font-family:'Courier New'">=“SUMMARIZATION OF EPISODE NOTE”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;title&gt;Good Health Clinic Care Record Summary&lt;/title&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">effectiveTime</span>
+        <span style="font-family:'Courier New'">value=“20050329224411+0500”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">confidentialityCode</span>
+        <span style="font-family:'Courier New'">code="N"</span>
+        <span style="font-family:'Courier New'">codeSystem</span>
+        <span style="font-family:'Courier New'">="2.16.840.1.113883.5.25"/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">languageCode</span>
+        <span style="font-family:'Courier New'">code=“</span>
+        <span style="font-family:'Courier New'">en</span>
+        <span style="font-family:'Courier New'">-US”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">recordTarget</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;patientRole&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;id extension="12345" root="2.16.840.1.113883.3.933"/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;17</span>
+        <span style="font-family:'Courier New'">Daws</span>
+        <span style="font-family:'Courier New'">Rd.&lt;/</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;city&gt;Blue Bell&lt;/city&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;state&gt;MA&lt;/state&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;02368&lt;/</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;country&gt;USA&lt;/country&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;patient&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;prefix&gt;Mrs.&lt;/prefix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;given&gt;Ellen&lt;/given&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;family&gt;Ross&lt;/family&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;</span>
+        <span style="font-family:'Courier New'">administrativeGenderCode</span>
+        <span style="font-family:'Courier New'">code="F"</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">codeSystem</span>
+        <span style="font-family:'Courier New'">="2.16.840.1.113883.5.1"/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;</span>
+        <span style="font-family:'Courier New'">birthTime</span>
+        <span style="font-family:'Courier New'">value="19600127"/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/patient&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">   &lt;/patientRole&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/</span>
+        <span style="font-family:'Courier New'">recordTarget</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;author&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">templateId</span>
+        <span style="font-family:'Courier New'">root=”1.3.6.1.4.1.19376.1.2.20.1”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;time value=“19990522”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">assignedAuthor</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;id extension=“11111111” root=“1.3.5.35.1.4436.7”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;prefix&gt;Dr.&lt;/prefix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;given&gt;Bernard&lt;/given&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;family&gt;Wiseman&lt;/family&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;suffix&gt;Sr.&lt;/suffix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">   </span>
+        <span style="width:12pt; display:inline-block"> </span>
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">representedOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;id extension=“</span>
+        <span style="font-family:'Courier New'">aaaaabbbbb</span>
+        <span style="font-family:'Courier New'">”</span>
+        <span style="width:32.62pt; display:inline-block"> </span>
+        <span style="font-family:'Courier New'">root=“1.3.5.35.1.4436.7”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;name&gt;Dr. Wiseman’s Clinic&lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">representedOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">assignedAuthor</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/author&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;author&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">templateId</span>
+        <span style="font-family:'Courier New'">root=”1.3.6.1.4.1.19376.1.2.20.2”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;time value=“20050329224411+0500”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">assignedAuthor</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;id root=“1.3.6.4.1.4.1.2835.2.1234”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">assignedAuthoringDevice</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;code code=“CAPTURE”</span>
+        <span style="font-family:'Courier New'">displayName</span>
+        <span style="font-family:'Courier New'">=“Image Capture”</span>
+        <span style="font-family:'Courier New'">codeSystem</span>
+        <span style="font-family:'Courier New'">=“  1.2.840.10008.2.16.4” /&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">manufacturerModelName</span>
+        <span style="font-family:'Courier New'">&gt;SOME SCANNER NAME AND MODEL  &lt;/</span>
+        <span style="font-family:'Courier New'">manufacturerModelName</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">         &lt;</span>
+        <span style="font-family:'Courier New'">softwareName</span>
+        <span style="font-family:'Courier New'">&gt;SCAN SOFTWARE NAME v0.0&lt;/</span>
+        <span style="font-family:'Courier New'">softwareName</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">   </span>
+        <span style="width:12pt; display:inline-block"> </span>
+        <span style="font-family:'Courier New'">&lt;/</span>
+        <span style="font-family:'Courier New'">assignedAuthoringDevice</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">   </span>
+        <span style="width:12pt; display:inline-block"> </span>
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">representedOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;id root=“1.3.6.4.1.4.1.2835.2”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;name&gt;SOME Scanning Facility&lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">         &lt;</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;21 North Ave&lt;/</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;city&gt;Burlington&lt;/city&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;state&gt;MA&lt;/state&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;01803&lt;/</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;country&gt;USA&lt;/country&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">         &lt;/</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">representedOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">   &lt;/</span>
+        <span style="font-family:'Courier New'">assignedAuthor</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;/author&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;</span>
+        <span style="font-family:'Courier New'">dataEnterer</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">templateId</span>
+        <span style="font-family:'Courier New'">root=”1.3.6.1.4.1.19376.1.2.20.3”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;time value=“20050329224411+0500”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">assignedEntity</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;id extension=“22222222” root=“1.3.6.4.1.4.1.2835.2”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;prefix&gt;Mrs.&lt;/prefix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;given&gt;Bernice&lt;/given&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;family&gt;Smith&lt;/family&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">assignedEntity</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/</span>
+        <span style="font-family:'Courier New'">dataEnterer</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;custodian&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">assignedCustodian</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">representedCustodianOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;id root=“1.3.6.4.1.4.1.2835.2”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="width:9.35pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:9.35pt"> </span>
+        <span style="font-family:'Courier New'">   &lt;name&gt;SOME Scanning Facility&lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">         &lt;</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;21 North Ave&lt;/</span>
+        <span style="font-family:'Courier New'">streetAddressLine</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;city&gt;Burlington&lt;/city&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;state&gt;MA&lt;/state&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;01803&lt;/</span>
+        <span style="font-family:'Courier New'">postalCode</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">           &lt;country&gt;USA&lt;/country&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">         &lt;/</span>
+        <span style="font-family:'Courier New'">addr</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">representedCustodianOrganization</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">assignedCustodian</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/custodian&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">legalAuthenticator</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;time value=“19990522”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">signatureCode</span>
+        <span style="font-family:'Courier New'">code=“S”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">assignedEntity</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;id extension=“11111111” root=“1.3.5.35.1.4436.7”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;prefix&gt;Dr.&lt;/prefix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;given&gt;Bernard&lt;/given&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;family&gt;Wiseman&lt;/family&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">          &lt;suffix&gt;Sr.&lt;/suffix&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;/name&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">assignedPerson</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">assignedEntity</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/</span>
+        <span style="font-family:'Courier New'">legalAuthenticator</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;</span>
+        <span style="font-family:'Courier New'">documentationOf</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">serviceEvent</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;</span>
+        <span style="font-family:'Courier New'">effectiveTime</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;low value=“19800127”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">        &lt;high value=“19990522”/&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/</span>
+        <span style="font-family:'Courier New'">effectiveTime</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">serviceEvent</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/</span>
+        <span style="font-family:'Courier New'">documentationOf</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;component&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;</span>
+        <span style="font-family:'Courier New'">nonXMLBody</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;text</span>
+        <span style="font-family:'Courier New'">mediaType</span>
+        <span style="font-family:'Courier New'">=“application/pdf” representation=“B64”&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">JVBERi0xLjMKJcfsj6IKNSAwIG9iago8PC9MZW5ndGggNiAwIFIvRmlsdGVyIC9GbGF0</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">ZURlY29kZT4+CnN0cmVhbQp4nGWPMWsDMQyFd/8KjfJwqmVbkr0GQqFbg7fQoSRNWuhB</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">Q/4/1L67TEEYme+9J1s3CMQQRm39NLuXg8H17gK89nN1N8eLAbZ2mmHXuql2QDVUhnZx</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">a5iBcyQtoMIUM7TZHbH5KZEVDgm//SSUswbFHx/JzBLeu5yYxOIzE8bPcRWqdaGDmcZO</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">BWc/9bfUNOPfOte44O9jxtcIKskqp0JZouJ5deYqeBn58ZmKtIU+2ptjqWQRJpGyrHDu</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">K7CXIe2be+/1DzXQP+RlbmRzdHJlYW0KZW5kb2JqCjYgMCBvYmoKMjAxCmVuZG9iago0</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">...</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">SW5mbyAyIDAgUgovSUQgWzxGNENDN0FFQjU0QjM2RkIyODNDNUMzMjQ3OUFEMjgzRj48</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">RjRDQzdBRUI1NEIzNkZCMjgzQzVDMzI0NzlBRDI4M0Y+XQo+PgpzdGFydHhyZWYKMzAx</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">MgolJUVPRgo</span>
+        <span style="font-family:'Courier New'">=</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">      &lt;/text&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">    &lt;/</span>
+        <span style="font-family:'Courier New'">nonXMLBody</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">  &lt;/component&gt;</span>
+      </p>
+      <p style="font-size:10pt">
+        <span style="font-family:'Courier New'">&lt;/</span>
+        <span style="font-family:'Courier New'">ClinicalDocument</span>
+        <span style="font-family:'Courier New'">&gt;</span>
+      </p>
+    </div>
+    <p xmlns="">
+      <span> </span>
+    </p>
+    <p xmlns="">
+      <a name="_Toc400706697">
+        <br style="page-break-before:always; clear:both" />
+      </a>
+    </p>
   </body>
 </html>
