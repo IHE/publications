@@ -31,30 +31,25 @@ The conversion is a multi step process consisting of the following steps:
 * the HTML converted from word has strange sequences of SPAN elements with equal styling.
 	Added processing code to merge these sequences to a single SPAN element.
 * cleared styling of table, TD and IMG elements
-* removed unnecessary DIV elements      
+* removed unnecessary DIV elements
+* replaced DIV with table content, if the DIV only contains the table
+* replaced P with image content, if the P only contains the IMG
+* removed all inline styling of images
+* simplified inline style of TD and TABLE elements       
 
 
 ## Open issues:
-* after merging SPAN: Simplify all P elements which have only 1 SPAN element without style setting.
+* rename TD to TH elements if their parent are THEAD to allow global styling
+* iterate all figure and table captions and add a class for them, to be styled in CSS file
+* Simplify all P elements which have only 1 SPAN element without style setting.
 * remove inline style of A HREF tags
-* remove style text-align:center from div, which contain a table. If it only contains the table, replace the DIV with the table   
+* some image captions are put in a P element with the image. Todo: insert the image before the P element.
 
+	<p xmlns="" style="font-size:11pt">
+      <img src="media/a7222-00r44.042.png" width="624" height="374" alt="">
+      <span style="font-weight:bold">Figure 10.7.1-1: Example Security Domain Relationships</span>
+    </p>    
 
-* correct the flow styling of the images. Some have flow left, some flow right and some do not have a flow setting at all.
-	TODO remove all styling of images.
-
-* the HTML converted from word uses inline styling extensively. These must be partly removed (Font Family, etc.) to be able
-	to style the HTML with a global CSS file. There are many unnecessary style settings like
-
-   \<span style="font-family:'Times New Roman'"\>
-   \<li style="margin-top:6pt; margin-left:32pt; padding-left:4pt; font-family:'Times New Roman'; font-size:12pt"\>
-   \<p style="margin-top:6pt; margin-bottom:0pt; font-size:12pt"\>
-
-   ** remove font-family:serif from style of LI elements
-   ** remove -aw-font-family:'Symbol' and -aw-font-weight:normal from LI elements
-   ** Replace with CLASS definitions ??  
-
-* some subsection in appendix are P elements and currently do not show up in the toc (see vol 1 appendix M):
 * level 7 and 8 subsections do not show up in the toc
 
 	\<p xmlns="" style="margin-top:12pt; margin-bottom:3pt; page-break-after:avoid; font-size:12pt"\>
@@ -62,7 +57,7 @@ The conversion is a multi step process consisting of the following steps:
       \<span style="font-family:Arial; font-weight:bold"\>Patient Identifier Attribute\</span\>
 	\</p\>
 
-	or in 2b ITI-40:
+(or in 2b ITI-40):
 
 	\<p xmlns=""\>
       \<span style="font-family:Arial; font-weight:bold"\>3.40.4.1.2.3.1 ATNA encoding of PurposeOfUse\</span\>
@@ -74,14 +69,14 @@ Initial conversion is done with online conversion tool:
 https://www.aconvert.com/document/pages-to-doc/
 
 The processing is done afterwards and contains of:
-* some cleanup to simplify the generated HTML
-* splitting
+* cleanup to simplify the generated HTML
+* splitting to sections
 * indexing to replace text references with HTML links
 
 ### Word issues:
-* Volume 2 b, ITI-40 has and bold/underline text. Is that intended?  
-* Volume 1, Section 4, EUA has bold/italic text. Is that intended?
-* the HTML converted from word contains all images but in low resolution. These must be replace by higher resolution images.
+* Volume 2 b, ITI-40 has and bold/underline text.
+* Volume 1, Section 4, EUA has bold/italic text.
+* the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
 
 ### Styling
