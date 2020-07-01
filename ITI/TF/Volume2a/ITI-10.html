@@ -15,69 +15,47 @@
       <hr />
     </p>
     <h2 xmlns="" id="3.10">3.10 PIX Update Notification [ITI-10]</h2>
-    <p xmlns="">
-      <span>This section corresponds to transaction [ITI-10] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-10] is used by the Patient Identifier Cross-reference Consumer and Patient Identifier Cross-reference Manager Actors.</span>
-    </p>
+    <p xmlns="">This section corresponds to transaction [ITI-10] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-10] is used by the Patient Identifier Cross-reference Consumer and Patient Identifier Cross-reference Manager Actors.</p>
     <h3 xmlns="" id="3.10.1">3.10.1  Scope</h3>
-    <p xmlns="">
-      <span>This transaction involves the Patient Identifier Cross-reference Manager providing notification of updates to patient identifier cross-reference associations to Patient Identifier Cross-reference Consumers that have registered (by configuration on the Cross-reference Manager) their interest in receiving such notifications. This transaction uses HL7’s generic ‘Update Person Information’ message to communicate this patient-centric information.</span>
-    </p>
+    <p xmlns="">This transaction involves the Patient Identifier Cross-reference Manager providing notification of updates to patient identifier cross-reference associations to Patient Identifier Cross-reference Consumers that have registered (by configuration on the Cross-reference Manager) their interest in receiving such notifications. This transaction uses HL7’s generic ‘Update Person Information’ message to communicate this patient-centric information.</p>
     <h3 xmlns="" id="3.10.2">3.10.2  Use Case Roles</h3>
     <img xmlns="" src="media/alql6-rgeyz.024.png" width="412" height="139" alt="" />
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span style="font-weight:bold">Actor:</span>
       <span>Patient Identifier Cross-reference Manager</span>
     </p>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span style="font-weight:bold">Role:</span>
       <span>It serves a well-defined set of Patient Identification Domains. The Patient Identifier Cross-reference Manager manages the cross-referencing of patient identifiers across Patient Identification Domains by providing a list of patient ID “aliases” via notification to a configured list of interested Patient Identifier Cross-reference Consumers.</span>
     </p>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-weight:bold">Actor:</span>
+      <span style="font-weight:bold">Actor:</span>
       <span>Patient Identifier Cross-reference Consumer</span>
     </p>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-weight:bold">Role:</span>
+      <span style="font-weight:bold">Role:</span>
       <span>Receives notifications from the Patient Identifier Cross-reference Manager of changes to patient ID aliases. Typically the Patient Identifier Cross-reference Consumer uses this information to maintain information links about patients in a different patient ID domain.</span>
     </p>
     <h3 xmlns="" id="3.10.3">3.10.3  Referenced Standard</h3>
-    <p xmlns="">
-      <span>HL7 Version 2.5, Chapter 2 – Control, Chapter 3 – Patient Administration</span>
-    </p>
-    <p xmlns="" style="font-size:9pt">
-      <span>Note:  HL7 version 2.5 was selected for this transaction because it was considered the most stable version that contained the functionality required by transactions [ITI-9] and [ITI-10].</span>
-    </p>
+    <p xmlns="">HL7 Version 2.5, Chapter 2 – Control, Chapter 3 – Patient Administration</p>
+    <p xmlns="" style="font-size:9pt">Note:  HL7 version 2.5 was selected for this transaction because it was considered the most stable version that contained the functionality required by transactions [ITI-9] and [ITI-10].</p>
     <h3 xmlns="" id="3.10.4">3.10.4  Messages</h3>
     <img xmlns="" src="media/alql6-rgeyz.025.png" width="462" height="203" alt="" />
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Figure 3.10-1: Update Person Information Sequence</span>
-    </p>
+    <p xmlns="" class="figureTitle">Figure 3.10-1: Update Person Information Sequence</p>
     <h4 xmlns="" id="3.10.4.1">3.10.4.1 Update Person Information</h4>
     <h5 xmlns="" id="3.10.4.1.1">3.10.4.1.1             Trigger Events</h5>
-    <p xmlns="">
-      <span>The Patient Identifier Cross-reference Manager shall notify a Patient Identifier Cross-reference Consumer when there is a change in a set of cross-referenced patient identifiers for any of the patient identifiers belonging to Patient Identifier Domains of interest to the consumer. The configuration of the domains of interest to a Patient Cross-reference Consumer is maintained by the Patient Cross-reference Manager.</span>
-    </p>
-    <p xmlns="">
-      <span>Several notifications may have to be issued to communicate a single update to a set of cross-reference patient identifiers as required to reflect all the changes on the resulting sets of cross-reference patient Identifiers belonging to Patient Identifier Domains of interest to the Patient Identifier Cross-referencing Consumer.</span>
-    </p>
-    <p xmlns="">
-      <span>The following HL7 trigger event will be used to update to the list of patient identifiers:</span>
-    </p>
+    <p xmlns="">The Patient Identifier Cross-reference Manager shall notify a Patient Identifier Cross-reference Consumer when there is a change in a set of cross-referenced patient identifiers for any of the patient identifiers belonging to Patient Identifier Domains of interest to the consumer. The configuration of the domains of interest to a Patient Cross-reference Consumer is maintained by the Patient Cross-reference Manager.</p>
+    <p xmlns="">Several notifications may have to be issued to communicate a single update to a set of cross-reference patient identifiers as required to reflect all the changes on the resulting sets of cross-reference patient Identifiers belonging to Patient Identifier Domains of interest to the Patient Identifier Cross-referencing Consumer.</p>
+    <p xmlns="">The following HL7 trigger event will be used to update to the list of patient identifiers:</p>
     <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
       <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
         <span>A31 – Update Person Information</span>
       </li>
     </ul>
     <h5 xmlns="" id="3.10.4.1.2">3.10.4.1.2             Message Semantics</h5>
-    <p xmlns="">
-      <span>The PIX Update Notification transaction is conducted by the ADT^A31 message. The Patient Identifier Cross-reference Manager initiates this transaction whenever identifier list information is updated for a patient.</span>
-    </p>
-    <p xmlns="">
-      <span>It is wholly the responsibility of the Patient Identifier Cross-reference Manager to perform the matching of patient identifiers based on the patient traits it receives. The information provided by the Patient Identifier Cross-reference Manager to Patient Identifier Cross-reference Consumers shall only contain a list of cross-referenced identifiers for the domains of interest as configured with the Patient Identifier Cross-reference Manager in two or more of the domains managed by the Patient Identifier Cross-reference Manager. Multiple notifications may need to be sent. For example:</span>
-    </p>
-    <p xmlns="">
-      <span>Consumer CON_A is configured to receive update notifications for domains DOM_A and DOM_AD. Notifications are sent as follows:</span>
-    </p>
+    <p xmlns="">The PIX Update Notification transaction is conducted by the ADT^A31 message. The Patient Identifier Cross-reference Manager initiates this transaction whenever identifier list information is updated for a patient.</p>
+    <p xmlns="">It is wholly the responsibility of the Patient Identifier Cross-reference Manager to perform the matching of patient identifiers based on the patient traits it receives. The information provided by the Patient Identifier Cross-reference Manager to Patient Identifier Cross-reference Consumers shall only contain a list of cross-referenced identifiers for the domains of interest as configured with the Patient Identifier Cross-reference Manager in two or more of the domains managed by the Patient Identifier Cross-reference Manager. Multiple notifications may need to be sent. For example:</p>
+    <p xmlns="">Consumer CON_A is configured to receive update notifications for domains DOM_A and DOM_AD. Notifications are sent as follows:</p>
     <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
       <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
         <span>A PIX A01 feed is sent for a patient for DOM_A. The update notification shall contain the patient identifier and assigning authority for DOM_A.</span>
@@ -89,36 +67,16 @@
         <span>A PIX A08 feed is processed for DOM_AD changing the patient address. The Patient Identifier Cross-reference Manager cross references determines this patient is no longer the same patient as DOM_A. Two update notifications shall be sent. One containing the patient identifier and assigning authority for DOM_A. The other one containing the patient identifier and assigning authority for DOM_AD.</span>
       </li>
     </ul>
-    <p xmlns="">
-      <span>The list of cross-references is not made available until the set of policies and processes for managing the cross-reference function have been completed. The policies of administering identities adopted by the cooperating domains are completely internal to the Patient Identifier Cross-reference Manager and are outside of the scope of this standard. Possible matches should not be communicated until the healthcare institution policies and processes embodied in the Patient Identifier Cross-reference Manager reach a positive matching decision.</span>
-    </p>
-    <p xmlns="">
-      <span>The Patient Identifier Cross-reference Manager configuration is expected to have configuration indicating which Consumers are interested in receiving the PIX Update Notification transactions. This configuration information shall include identification of the identity consumer systems interested in receiving notifications and, for each of those systems, a list of the patient identifier domains of interest. The Patient Identifier Cross-reference Manager should account for consumers interested in all domains.</span>
-    </p>
-    <p xmlns="">
-      <span>The segments of the message listed in the table below are required. Other segments are optional.</span>
-    </p>
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Table 3.10-1: ADT Patient Administration Message</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="">
+    <p xmlns="">The list of cross-references is not made available until the set of policies and processes for managing the cross-reference function have been completed. The policies of administering identities adopted by the cooperating domains are completely internal to the Patient Identifier Cross-reference Manager and are outside of the scope of this standard. Possible matches should not be communicated until the healthcare institution policies and processes embodied in the Patient Identifier Cross-reference Manager reach a positive matching decision.</p>
+    <p xmlns="">The Patient Identifier Cross-reference Manager configuration is expected to have configuration indicating which Consumers are interested in receiving the PIX Update Notification transactions. This configuration information shall include identification of the identity consumer systems interested in receiving notifications and, for each of those systems, a list of the patient identifier domains of interest. The Patient Identifier Cross-reference Manager should account for consumers interested in all domains.</p>
+    <p xmlns="">The segments of the message listed in the table below are required. Other segments are optional.</p>
+    <p xmlns="" class="tableTitle">Table 3.10-1: ADT Patient Administration Message</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
-          <td style="width:75.6pt;background-color:#d9d9d9">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">ADT</span>
-            </p>
-          </td>
-          <td style="width:162pt;background-color:#d9d9d9">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">Patient Administration Message</span>
-            </p>
-          </td>
-          <td style="width:79.1pt;background-color:#d9d9d9">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">Chapter in HL7 2.5</span>
-            </p>
-          </td>
+          <td style="width:75.6pt" class="tableHeader">ADT</td>
+          <td style="width:162pt" class="tableHeader">Patient Administration Message</td>
+          <td style="width:79.1pt" class="tableHeader">Chapter in HL7 2.5</td>
         </tr>
       </thead>
       <tbody>
@@ -192,96 +150,60 @@
         </tr>
       </tbody>
     </table>
-    <p xmlns="">
-      <span>Each message shall be acknowledged by the HL7 ACK message sent by the receiver of ADT message to its sender. See ITI TF-2x: C.2.3, “Acknowledgement Modes” for the definition and discussion of the ACK message.</span>
-    </p>
+    <p xmlns="">Each message shall be acknowledged by the HL7 ACK message sent by the receiver of ADT message to its sender. See ITI TF-2x: C.2.3, “Acknowledgement Modes” for the definition and discussion of the ACK message.</p>
     <h6 xmlns="" id="3.10.4.1.2.1">3.10.4.1.2.1      MSH Segment</h6>
-    <p xmlns="">
-      <span>The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2, “Message Control”.</span>
-    </p>
+    <p xmlns="">The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2, “Message Control”.</p>
     <p xmlns="">
       <span>Field</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">MSH-9 Message Type</span>
+      <span style="font-style:italic">MSH-9 Message Type</span>
       <span>shall have all three components populated with a value. The first component shall have a value of ADT; the second component shall have the value of A31. The third component shall have a value of ADT_A05.</span>
     </p>
     <h6 xmlns="" id="3.10.4.1.2.2">3.10.4.1.2.2      EVN Segment</h6>
-    <p xmlns="">
-      <span>See ITI TF-2x: C.2.4 for the list of all required and optional fields within the EVN segment.</span>
-    </p>
+    <p xmlns="">See ITI TF-2x: C.2.4 for the list of all required and optional fields within the EVN segment.</p>
     <h6 xmlns="" id="3.10.4.1.2.3">3.10.4.1.2.3      PID Segment</h6>
     <p xmlns="">
       <span>The Patient Identifier Cross-reference Manager shall provide only those attributes within the PID segment that are required by the HL7 standard:</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-3-Patient Identifier List</span>
+      <span style="font-style:italic">PID-3-Patient Identifier List</span>
       <span>and</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-5-Patient Name</span>
+      <span style="font-style:italic">PID-5-Patient Name</span>
       <span>.</span>
     </p>
     <p xmlns="">
       <span>The Patient Identifier Cross-reference Manager shall use the field</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-3 Patient Identifier List</span>
+      <span style="font-style:italic">PID-3 Patient Identifier List</span>
       <span>to convey the Patient IDs uniquely identifying the patient within each Patient Identification Domain for which a Patient ID exists for the specified patient. Each resulting ID returned in PID-3 shall include a fully qualified Assigning Authority component. In other words, the Assigning Authority component returned shall include ALL subcomponents (namespace ID, Universal ID, and Universal ID type).</span>
     </p>
     <p xmlns="">
       <span>To eliminate the issue of multiple name values between Patient Identifier Domains, the Patient Identifier Cross-reference Manager shall return a single space character in field</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-5-Patient Name</span>
+      <span style="font-style:italic">PID-5-Patient Name</span>
       <span>.</span>
     </p>
     <p xmlns="">
       <span>A single PID segment is sent in which one repetition of</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-3-Patient Identifier List</span>
+      <span style="font-style:italic">PID-3-Patient Identifier List</span>
       <span>is populated for each of the identifiers in the notification. If the Patient Identifier Cross-reference Manager chooses to send multiple identifiers associated with the same domain, it shall return these identifiers grouped in successive repetitions within the</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PID-3-Patient Identifier List</span>
+      <span style="font-style:italic">PID-3-Patient Identifier List</span>
       <span>.</span>
     </p>
     <h6 xmlns="" id="3.10.4.1.2.4">3.10.4.1.2.4      PV1 Segment</h6>
     <p xmlns="">
       <span>As is specified by the HL7 Standard, Version 2.5, the PV1 Segment is required. The required field</span>
-      <span style="font-family:'Times New Roman'; font-style:italic">PV1-2-patient class</span>
+      <span style="font-style:italic">PV1-2-patient class</span>
       <span>shall contain</span>
-      <span style="font-family:'Times New Roman'; font-weight:bold">N</span>
+      <span style="font-weight:bold">N</span>
       <span>(not applicable) to indicate the transmission of patient information outside the context of a visit or encounter. Other fields shall be left blank.</span>
     </p>
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Table 3.10-2: IHE Profile – PV1 segment</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="">
+    <p xmlns="" class="tableTitle">Table 3.10-2: IHE Profile – PV1 segment</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">SEQ</span>
-            </p>
-          </td>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">LEN</span>
-            </p>
-          </td>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">DT</span>
-            </p>
-          </td>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">OPT</span>
-            </p>
-          </td>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">TBL#</span>
-            </p>
-          </td>
-          <td style="width:42.45pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">ITEM#</span>
-            </p>
-          </td>
-          <td style="width:146.75pt;background-color:#e0e0e0">
-            <p style="font-size:10pt">
-              <span style="font-family:Arial; font-weight:bold">ELEMENT NAME</span>
-            </p>
-          </td>
+          <td style="width:42.45pt" class="tableHeader">SEQ</td>
+          <td style="width:42.45pt" class="tableHeader">LEN</td>
+          <td style="width:42.45pt" class="tableHeader">DT</td>
+          <td style="width:42.45pt" class="tableHeader">OPT</td>
+          <td style="width:42.45pt" class="tableHeader">TBL#</td>
+          <td style="width:42.45pt" class="tableHeader">ITEM#</td>
+          <td style="width:146.75pt" class="tableHeader">ELEMENT NAME</td>
         </tr>
       </thead>
       <tbody>
@@ -325,52 +247,44 @@
       </tbody>
     </table>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-style:italic">Adapted from the HL7 Standard, version 2.5</span>
+      <span style="font-style:italic">Adapted from the HL7 Standard, version 2.5</span>
     </p>
     <h5 xmlns="" id="3.10.4.1.3">3.10.4.1.3             Expected Actions</h5>
-    <p xmlns="">
-      <span>The Patient Identifier Cross-reference Consumer, when it receives the ADT^A31 message, shall update its internal identifier information for the affected patient(s) in all domains in which it is interested whenever it receives updated identifier information that results in a change to the cross-referencing of a patient.</span>
-    </p>
-    <p xmlns="">
-      <span>In the case where the returned list of identifiers contains multiple identifiers for a single domain, the Patient Identifier Cross-reference Consumer shall either use ALL of the multiple identifiers from the given domain or it shall ignore ALL of the multiple identifiers from the given domain.</span>
-    </p>
-    <p xmlns="">
-      <span>This allows Patient Identifier Cross-reference Consumers capable of handling multiple identities for a single patient within a single domain (i.e., those that can correctly aggregate the information associated with the different identifiers) to do so. For those Patient Identifier Cross-reference Consumers not capable of handling this situation, ignoring the entire list of different identifiers prevents the consumer from presenting incomplete data.</span>
-    </p>
+    <p xmlns="">The Patient Identifier Cross-reference Consumer, when it receives the ADT^A31 message, shall update its internal identifier information for the affected patient(s) in all domains in which it is interested whenever it receives updated identifier information that results in a change to the cross-referencing of a patient.</p>
+    <p xmlns="">In the case where the returned list of identifiers contains multiple identifiers for a single domain, the Patient Identifier Cross-reference Consumer shall either use ALL of the multiple identifiers from the given domain or it shall ignore ALL of the multiple identifiers from the given domain.</p>
+    <p xmlns="">This allows Patient Identifier Cross-reference Consumers capable of handling multiple identities for a single patient within a single domain (i.e., those that can correctly aggregate the information associated with the different identifiers) to do so. For those Patient Identifier Cross-reference Consumers not capable of handling this situation, ignoring the entire list of different identifiers prevents the consumer from presenting incomplete data.</p>
     <h3 xmlns="" id="3.10.5">3.10.5  Security Considerations</h3>
     <h4 xmlns="" id="3.10.5.1">3.10.5.1 Audit Record Considerations</h4>
-    <p xmlns="">
-      <span>The PIX Update Notification Transaction is a “Patient Record” event, as defined in Table 3.20.4.1.1.1-1 with the following exceptions:</span>
-    </p>
+    <p xmlns="">The PIX Update Notification Transaction is a “Patient Record” event, as defined in Table 3.20.4.1.1.1-1 with the following exceptions:</p>
     <h5 xmlns="" id="3.10.5.1.1">3.10.5.1.1             Patient Identifier Cross-reference Manager audit message:</h5>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
           <div style="height:0pt; writing-mode:tb-rl; -aw-ignore:true" />
         </td>
-        <td style="width:119.7pt;background-color:#d9d9d9">
+        <td style="width:119.7pt" class="tableHeader">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Field Name</span>
+            <span style="font-weight:bold">Field Name</span>
           </p>
         </td>
-        <td style="width:25.2pt;background-color:#d9d9d9">
+        <td style="width:25.2pt" class="tableHeader">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Opt</span>
+            <span style="font-weight:bold">Opt</span>
           </p>
         </td>
-        <td style="width:233.1pt;background-color:#d9d9d9">
+        <td style="width:233.1pt" class="tableHeader">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Value Constraints</span>
+            <span style="font-weight:bold">Value Constraints</span>
           </p>
         </td>
       </tr>
       <tr>
         <td rowspan="5" style="width:62.1pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Event</span>
+            <span style="font-weight:bold">Event</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/EventIdentification</span>
+            <span style="font-weight:bold">AuditMessage/EventIdentification</span>
             <br />
           </p>
         </td>
@@ -410,34 +324,34 @@
       <tr>
         <td style="width:119.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">EventDateTime</span>
+            <span style="font-style:italic">EventDateTime</span>
           </p>
         </td>
         <td style="width:25.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">M</span>
+            <span style="font-style:italic">M</span>
           </p>
         </td>
         <td style="width:233.1pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:119.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">EventOutcomeIndicator</span>
+            <span style="font-style:italic">EventOutcomeIndicator</span>
           </p>
         </td>
         <td style="width:25.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">M</span>
+            <span style="font-style:italic">M</span>
           </p>
         </td>
         <td style="width:233.1pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -494,17 +408,15 @@
         </td>
       </tr>
     </table>
-    <p xmlns="">
-      <span>Where:</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt;float:left">
+    <p xmlns="">Where:</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="7" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Source</span>
+            <span style="font-weight:bold">Source</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
             <br />
           </p>
         </td>
@@ -544,34 +456,34 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserName</span>
+            <span style="font-style:italic">UserName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserIsRequestor</span>
+            <span style="font-style:italic">UserIsRequestor</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -627,14 +539,14 @@
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt;float:left">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="7" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Human Requestor (if known)</span>
+            <span style="font-weight:bold">Human Requestor (if known)</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
             <br />
           </p>
         </td>
@@ -657,51 +569,51 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AlternativeUserID</span>
+            <span style="font-style:italic">AlternativeUserID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserName</span>
+            <span style="font-style:italic">UserName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserIsRequestor</span>
+            <span style="font-style:italic">UserIsRequestor</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -725,46 +637,46 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">NetworkAccessPointTypeCode</span>
+            <span style="font-style:italic">NetworkAccessPointTypeCode</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">NetworkAccessPointID</span>
+            <span style="font-style:italic">NetworkAccessPointID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="7" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Destination</span>
+            <span style="font-weight:bold">Destination</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
             <br />
           </p>
         </td>
@@ -787,51 +699,51 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AlternativeUserID</span>
+            <span style="font-style:italic">AlternativeUserID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserName</span>
+            <span style="font-style:italic">UserName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserIsRequestor</span>
+            <span style="font-style:italic">UserIsRequestor</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -887,76 +799,76 @@
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt;float:left">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="3" style="width:75.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Audit Source</span>
+            <span style="font-weight:bold">Audit Source</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/AuditSourceIdentification</span>
+            <span style="font-weight:bold">AuditMessage/AuditSourceIdentification</span>
             <br />
           </p>
         </td>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditSourceID</span>
+            <span style="font-style:italic">AuditSourceID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditEnterpriseSiteID</span>
+            <span style="font-style:italic">AuditEnterpriseSiteID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditSourceTypeCode</span>
+            <span style="font-style:italic">AuditSourceTypeCode</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="9" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Patient IDs</span>
+            <span style="font-weight:bold">Patient IDs</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
             <br />
           </p>
         </td>
@@ -996,17 +908,17 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectDataLifeCycle</span>
+            <span style="font-style:italic">ParticipantObjectDataLifeCycle</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1023,24 +935,24 @@
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectSensitivity</span>
+            <span style="font-style:italic">ParticipantObjectSensitivity</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1064,34 +976,34 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectName</span>
+            <span style="font-style:italic">ParticipantObjectName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectQuery</span>
+            <span style="font-style:italic">ParticipantObjectQuery</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1114,34 +1026,34 @@
       </tr>
     </table>
     <h5 xmlns="" id="3.10.5.1.2">3.10.5.1.2             Patient Identifier Cross-reference Consumer audit message:</h5>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
           <div style="height:0pt; writing-mode:tb-rl; -aw-ignore:true" />
         </td>
         <td style="width:119.7pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Field Name</span>
+            <span style="font-weight:bold">Field Name</span>
           </p>
         </td>
         <td style="width:25.2pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Opt</span>
+            <span style="font-weight:bold">Opt</span>
           </p>
         </td>
         <td style="width:233.1pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Value Constraints</span>
+            <span style="font-weight:bold">Value Constraints</span>
           </p>
         </td>
       </tr>
       <tr>
         <td rowspan="5" style="width:62.1pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Event</span>
+            <span style="font-weight:bold">Event</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/EventIdentification</span>
+            <span style="font-weight:bold">AuditMessage/EventIdentification</span>
             <br />
           </p>
         </td>
@@ -1181,34 +1093,34 @@
       <tr>
         <td style="width:119.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">EventDateTime</span>
+            <span style="font-style:italic">EventDateTime</span>
           </p>
         </td>
         <td style="width:25.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">M</span>
+            <span style="font-style:italic">M</span>
           </p>
         </td>
         <td style="width:233.1pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:119.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">EventOutcomeIndicator</span>
+            <span style="font-style:italic">EventOutcomeIndicator</span>
           </p>
         </td>
         <td style="width:25.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">M</span>
+            <span style="font-style:italic">M</span>
           </p>
         </td>
         <td style="width:233.1pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1258,17 +1170,15 @@
         </td>
       </tr>
     </table>
-    <p xmlns="">
-      <span>Where:</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt;float:left">
+    <p xmlns="">Where:</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="7" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Source</span>
+            <span style="font-weight:bold">Source</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
             <br />
           </p>
         </td>
@@ -1291,51 +1201,51 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AlternativeUserID</span>
+            <span style="font-style:italic">AlternativeUserID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserName</span>
+            <span style="font-style:italic">UserName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserIsRequestor</span>
+            <span style="font-style:italic">UserIsRequestor</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1391,14 +1301,14 @@
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="7" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Destination</span>
+            <span style="font-weight:bold">Destination</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
             <br />
           </p>
         </td>
@@ -1438,34 +1348,34 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserName</span>
+            <span style="font-style:italic">UserName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">UserIsRequestor</span>
+            <span style="font-style:italic">UserIsRequestor</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1521,76 +1431,76 @@
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt;float:left">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="3" style="width:75.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Audit Source</span>
+            <span style="font-weight:bold">Audit Source</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">AuditMessage/AuditSourceIdentification</span>
+            <span style="font-weight:bold">AuditMessage/AuditSourceIdentification</span>
             <br />
           </p>
         </td>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditSourceID</span>
+            <span style="font-style:italic">AuditSourceID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditEnterpriseSiteID</span>
+            <span style="font-style:italic">AuditEnterpriseSiteID</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:106.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">AuditSourceTypeCode</span>
+            <span style="font-style:italic">AuditSourceTypeCode</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
     </table>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="width:484.05pt">
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td rowspan="9" style="width:66.6pt">
           <p style="font-size:10pt">
-            <span style="font-family:Arial; font-weight:bold">Patient IDs</span>
+            <span style="font-weight:bold">Patient IDs</span>
           </p>
           <p style="font-size:6pt">
-            <span style="font-family:'Times New Roman'; font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
             <br />
           </p>
         </td>
@@ -1630,51 +1540,51 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectDataLifeCycle</span>
+            <span style="font-style:italic">ParticipantObjectDataLifeCycle</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectIDTypeCode</span>
+            <span style="font-style:italic">ParticipantObjectIDTypeCode</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">M</span>
+            <span style="font-style:italic">M</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectSensitivity</span>
+            <span style="font-style:italic">ParticipantObjectSensitivity</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
@@ -1698,34 +1608,34 @@
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectName</span>
+            <span style="font-style:italic">ParticipantObjectName</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>
       <tr>
         <td style="width:115.2pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">ParticipantObjectQuery</span>
+            <span style="font-style:italic">ParticipantObjectQuery</span>
           </p>
         </td>
         <td style="width:20.7pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">U</span>
+            <span style="font-style:italic">U</span>
           </p>
         </td>
         <td style="width:237.6pt">
           <p style="font-size:8pt">
-            <span style="font-family:'Times New Roman'; font-style:italic">not specialized</span>
+            <span style="font-style:italic">not specialized</span>
           </p>
         </td>
       </tr>

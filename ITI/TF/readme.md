@@ -35,15 +35,15 @@ The conversion is a multi step process consisting of the following steps:
 * replaced DIV with table content, if the DIV only contains the table
 * replaced P with image content, if the P only contains the IMG
 * removed all inline styling of images
-* simplified inline style of TD and TABLE elements       
-
+* simplified inline style of TD and TABLE elements 
+* simplified all P elements which have only 1 SPAN element without style setting.
+* iterated all figure and table captions and add a class for them, to be styled in CSS file      
+* set class in TD elements with THEAD parents to allow global styling
 
 ## Open issues:
-* rename TD to TH elements if their parent are THEAD to allow global styling
-* iterate all figure and table captions and add a class for them, to be styled in CSS file
-* Simplify all P elements which have only 1 SPAN element without style setting.
+* remove inline style of TD tags
 * remove inline style of A HREF tags
-* some image captions are put in a P element with the image. Todo: insert the image before the P element.
+* some image captions are put in a P element with the image. Todo: insert the image before the P element. 
 
 	<p xmlns="" style="font-size:11pt">
       <img src="media/a7222-00r44.042.png" width="624" height="374" alt="">
@@ -74,10 +74,11 @@ The processing is done afterwards and contains of:
 * indexing to replace text references with HTML links
 
 ### Word issues:
-* Volume 2 b, ITI-40 has and bold/underline text.
+* Volume 2 b, ITI-40 has and bold/underline text. 
 * Volume 1, Section 4, EUA has bold/italic text.
 * the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
+* The listing in 3.53.4.1.4.3 looks upgly after conversion. It should have the same word style as the listing in 3.53.4.1.4.2 
 
 ### Styling
 - Not defined yet

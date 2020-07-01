@@ -15,73 +15,29 @@
       <hr />
     </p>
     <h1 xmlns="" id="Appendix D">Appendix D: Cross-Profile Interactions of PIX and PSA</h1>
-    <p xmlns="">
-      <span>When the Context Manager in a Patient Synchronized Application Integration Profile is grouped with a Patient Identifier Cross-reference Consumer in a Patient Identifier Cross-referencing Integration Profile, patient identifiers must be accessible to both actors in a consistent manner. This Appendix provides the necessary mapping rules.</span>
-    </p>
-    <p xmlns="">
-      <span>The Patient Identifier Cross-Referencing (PIX) Integration Profile defines a general-purpose mapping of a Patient ID within a Patient Identification Domain to aliases in other Patient Identification Domains. This mapping is intended to be used across all IHE systems that require patient identification in transactions crossing Patient Identification Domains. The PIX Integration Profile relies on HL7 V2 transactions.</span>
-    </p>
-    <p xmlns="">
-      <span>The Patient Synchronized Application Integration Profile relies on HL7 CCOW which, confronted with a similar need, has defined a Patient Mapping API within its architecture. The HTTP Technology mapping for the CCOW Patient Mapping Agent API supports its operation over a network interface, thus creating an alternative to HL7 V2 messages.</span>
-    </p>
-    <p xmlns="">
-      <span>As IHE strives to avoid the inclusion in its integration profiles of incompatible but functionally equivalent variants, it has decided to use HL7 V2 ADT messages for the Patient Identifier Cross-referencing Integration Profiles. In consequence, the combined use of the Patient Synchronized (CCOW based) Integration Profile and of the Patient Identifier Cross-referencing Integration profiles requires that the IHE Context Manager use the services of the PIX Integration Profile. To do so, the Patient Identifier Cross-reference Consumer in communication with the Patient Identifier Cross-reference Manager operates as a substitute for the CCOW Patient Mapping Agent. This is shown in Figure D-1 below as a dashed oval surrounding the Patient Cross-reference Manager and the Patient Identifier Cross-reference Consumer Actors. As a result it is likely that a context management solution would bundle a PMA proxy application that would implement the PIX Query in support of the Patient Identifier Cross-reference Consumer.</span>
-    </p>
+    <p xmlns="">When the Context Manager in a Patient Synchronized Application Integration Profile is grouped with a Patient Identifier Cross-reference Consumer in a Patient Identifier Cross-referencing Integration Profile, patient identifiers must be accessible to both actors in a consistent manner. This Appendix provides the necessary mapping rules.</p>
+    <p xmlns="">The Patient Identifier Cross-Referencing (PIX) Integration Profile defines a general-purpose mapping of a Patient ID within a Patient Identification Domain to aliases in other Patient Identification Domains. This mapping is intended to be used across all IHE systems that require patient identification in transactions crossing Patient Identification Domains. The PIX Integration Profile relies on HL7 V2 transactions.</p>
+    <p xmlns="">The Patient Synchronized Application Integration Profile relies on HL7 CCOW which, confronted with a similar need, has defined a Patient Mapping API within its architecture. The HTTP Technology mapping for the CCOW Patient Mapping Agent API supports its operation over a network interface, thus creating an alternative to HL7 V2 messages.</p>
+    <p xmlns="">As IHE strives to avoid the inclusion in its integration profiles of incompatible but functionally equivalent variants, it has decided to use HL7 V2 ADT messages for the Patient Identifier Cross-referencing Integration Profiles. In consequence, the combined use of the Patient Synchronized (CCOW based) Integration Profile and of the Patient Identifier Cross-referencing Integration profiles requires that the IHE Context Manager use the services of the PIX Integration Profile. To do so, the Patient Identifier Cross-reference Consumer in communication with the Patient Identifier Cross-reference Manager operates as a substitute for the CCOW Patient Mapping Agent. This is shown in Figure D-1 below as a dashed oval surrounding the Patient Cross-reference Manager and the Patient Identifier Cross-reference Consumer Actors. As a result it is likely that a context management solution would bundle a PMA proxy application that would implement the PIX Query in support of the Patient Identifier Cross-reference Consumer.</p>
     <img xmlns="" src="media/asf0a-gktbl.002.png" width="663" height="221" alt="" />
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Figure D-1: Actor Grouping Diagram</span>
-    </p>
-    <p xmlns="">
-      <span>This Appendix provides the definition of the mapping of the CCOW Patient Mapping Agent API methods onto the PIX Query Transaction (HL7 V2 QBP^Q23/RSP^K23) as defined by the PIX Integration Profile.</span>
-    </p>
-    <p xmlns="">
-      <span>Figure D-1 shows the definition of the Patient Mapping Methods parameters as implemented in Web technology. Most of these Arguments relate to the normal operations of the Patient Mapping Agent methods that pose no mapping challenge except for the ItemNames and ItemValues which pose some constraints. The first constraint comes from the translation of Patient Identity Domains for both query and response from and to a CCOW defined name / value pair. The second one comes from the fact that CCOW participant applications can set more than one identifier in context the ability to detect when these identifiers represent the identities of more than one patient. IHE has taken steps to mitigate these issues by further restricting how the IHE Context Participant implements the methods. Each of these constraints is addressed in sections below.</span>
-    </p>
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Table D-1: ContextChangesPending</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="">
+    <p xmlns="" class="figureTitle">Figure D-1: Actor Grouping Diagram</p>
+    <p xmlns="">This Appendix provides the definition of the mapping of the CCOW Patient Mapping Agent API methods onto the PIX Query Transaction (HL7 V2 QBP^Q23/RSP^K23) as defined by the PIX Integration Profile.</p>
+    <p xmlns="">Figure D-1 shows the definition of the Patient Mapping Methods parameters as implemented in Web technology. Most of these Arguments relate to the normal operations of the Patient Mapping Agent methods that pose no mapping challenge except for the ItemNames and ItemValues which pose some constraints. The first constraint comes from the translation of Patient Identity Domains for both query and response from and to a CCOW defined name / value pair. The second one comes from the fact that CCOW participant applications can set more than one identifier in context the ability to detect when these identifiers represent the identities of more than one patient. IHE has taken steps to mitigate these issues by further restricting how the IHE Context Participant implements the methods. Each of these constraints is addressed in sections below.</p>
+    <p xmlns="" class="tableTitle">Table D-1: ContextChangesPending</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
-          <td colspan="3" style="width:439.5pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">HTTP Request Message</span>
-            </p>
-          </td>
+          <td colspan="3" style="width:439.5pt" class="tableHeader">HTTP Request Message</td>
         </tr>
         <tr>
-          <td style="width:75.6pt;background-color:#e6e6e6">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">Argument Name</span>
-            </p>
-          </td>
-          <td style="width:43.2pt;background-color:#e6e6e6">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">Data Type</span>
-            </p>
-          </td>
-          <td style="width:299.1pt;background-color:#e6e6e6">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">Comment</span>
-            </p>
-          </td>
+          <td style="width:75.6pt" class="tableHeader">Argument Name</td>
+          <td style="width:43.2pt" class="tableHeader">Data Type</td>
+          <td style="width:299.1pt" class="tableHeader">Comment</td>
         </tr>
         <tr>
-          <td style="width:75.6pt">
-            <p style="font-size:9pt">
-              <span>Interface</span>
-            </p>
-          </td>
-          <td style="width:43.2pt">
-            <p style="font-size:9pt">
-              <span>string</span>
-            </p>
-          </td>
-          <td style="width:299.1pt">
-            <p style="font-size:9pt">
-              <span>“ContextAgent”</span>
-            </p>
-          </td>
+          <td style="width:75.6pt" class="tableHeader">Interface</td>
+          <td style="width:43.2pt" class="tableHeader">string</td>
+          <td style="width:299.1pt" class="tableHeader">“ContextAgent”</td>
         </tr>
       </thead>
       <tbody>
@@ -207,7 +163,7 @@
         <tr>
           <td colspan="3" style="width:439.5pt;background-color:#e6e6e6">
             <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">HTTP Reply Message</span>
+              <span style="font-weight:bold">HTTP Reply Message</span>
             </p>
           </td>
         </tr>
@@ -333,43 +289,19 @@
       </tbody>
     </table>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
+      <span style="font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
     </p>
     <h2 xmlns="" id="D.1">D.1 Namespace Translation from PIX Query to CCOW</h2>
-    <p xmlns="">
-      <span>The CCOW standard defines multiple identifier items that may be set into the context by an instigating participant application. The current list of valid identifier names are listed in Table D-2.</span>
-    </p>
-    <p xmlns="" style="font-size:11pt">
-      <span style="font-family:Arial; font-weight:bold">Table D-2: Patient Subject Identifiers</span>
-    </p>
-    <table xmlns="" cellspacing="0" cellpadding="0" style="">
+    <p xmlns="">The CCOW standard defines multiple identifier items that may be set into the context by an instigating participant application. The current list of valid identifier names are listed in Table D-2.</p>
+    <p xmlns="" class="tableTitle">Table D-2: Patient Subject Identifiers</p>
+    <table xmlns="" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
-          <td style="width:120.7pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">Patient Subject Identifier Item Name</span>
-            </p>
-          </td>
-          <td style="width:66.35pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">HL7 Meaning</span>
-            </p>
-          </td>
-          <td style="width:33.4pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">HL7 Data Type</span>
-            </p>
-          </td>
-          <td style="width:152.9pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">HL7 Semantic Constraints on Values</span>
-            </p>
-          </td>
-          <td style="width:58.95pt;background-color:#d9d9d9">
-            <p style="font-size:9pt">
-              <span style="font-family:Arial; font-weight:bold">Case Sensitive</span>
-            </p>
-          </td>
+          <td style="width:120.7pt" class="tableHeader">Patient Subject Identifier Item Name</td>
+          <td style="width:66.35pt" class="tableHeader">HL7 Meaning</td>
+          <td style="width:33.4pt" class="tableHeader">HL7 Data Type</td>
+          <td style="width:152.9pt" class="tableHeader">HL7 Semantic Constraints on Values</td>
+          <td style="width:58.95pt" class="tableHeader">Case Sensitive</td>
         </tr>
       </thead>
       <tbody>
@@ -377,7 +309,7 @@
           <td style="width:120.7pt">
             <p style="font-size:9pt">
               <span>Patient.Id.MRN</span>
-              <span style="font-family:'Times New Roman'; font-style:italic">.Suffix</span>
+              <span style="font-style:italic">.Suffix</span>
             </p>
           </td>
           <td style="width:66.35pt">
@@ -488,23 +420,13 @@
       </tbody>
     </table>
     <p xmlns="">
-      <span style="font-family:'Times New Roman'; font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
+      <span style="font-style:italic">Adapted from the HL7 Context Management “CCOW” Standard, version 1.4</span>
     </p>
-    <p xmlns="">
-      <span>IHE has specified in the Context Change Transaction as documented in ITI TF-2a that the Context Participant shall use the Patient.Id.IdList item. The intent is to eliminate translation as the Patient.Id.IdList value maps directly to PIX Query Transaction QPD-3.</span>
-    </p>
-    <p xmlns="">
-      <span>Applications using in their identifier items Patient.Id.MRN.Suffix will need to migrate to the Patient.Id.IdList item as expected by the HL7 CCOW standard.</span>
-    </p>
+    <p xmlns="">IHE has specified in the Context Change Transaction as documented in ITI TF-2a that the Context Participant shall use the Patient.Id.IdList item. The intent is to eliminate translation as the Patient.Id.IdList value maps directly to PIX Query Transaction QPD-3.</p>
+    <p xmlns="">Applications using in their identifier items Patient.Id.MRN.Suffix will need to migrate to the Patient.Id.IdList item as expected by the HL7 CCOW standard.</p>
     <h2 xmlns="" id="D.2">D.2 Processing Multiple Identifiers</h2>
-    <p xmlns="">
-      <span>CCOW participant applications are permitted to populate as many patient identifiers as they have available to them. This means that when a user selects a patient in one of these applications the context is populated with multiple identifiers for the selected patient. When the CCOW Patient Mapping Agent (PMA) accepts multiple patient identifiers as input, the PMA has the responsibility of invalidating patient mapping and causing the context change transaction to be cancelled if it determines that the multiple identifiers supplied as part of the transaction identify more than one patient.</span>
-    </p>
-    <p xmlns="">
-      <span>The QPD segment as defined in the IHE PIX Query Transaction specifies a single identifier uniquely identifying one patient within a given Patient Identification Domain. In the case where multiple identifiers are populated, the context manager may have to process the response to the initial PIX Query Transaction to evaluate if the other identifiers in context are included. If so, no further processing is required. Otherwise, an additional PIX Query will need to be issued and the results processed. Should a non-null result be returned, indicating the identifier uniquely identifies a different patient for the given domain, the context manager shall assume “invalid” in the decision field and “multiple patients identified” in the reason field.</span>
-    </p>
-    <p xmlns="">
-      <span>In order to mitigate this condition, IHE specifies that all context participants supporting the Patient Synchronized Applications Profile shall only set one identifier for the patient when a Patient Identifier Cross-referencing Profile is used by the context manager. This means that the context participant for those applications that manage multiple patient identifiers will need to be configurable as to which identifier item is passed in the Change Context Transaction.</span>
-    </p>
+    <p xmlns="">CCOW participant applications are permitted to populate as many patient identifiers as they have available to them. This means that when a user selects a patient in one of these applications the context is populated with multiple identifiers for the selected patient. When the CCOW Patient Mapping Agent (PMA) accepts multiple patient identifiers as input, the PMA has the responsibility of invalidating patient mapping and causing the context change transaction to be cancelled if it determines that the multiple identifiers supplied as part of the transaction identify more than one patient.</p>
+    <p xmlns="">The QPD segment as defined in the IHE PIX Query Transaction specifies a single identifier uniquely identifying one patient within a given Patient Identification Domain. In the case where multiple identifiers are populated, the context manager may have to process the response to the initial PIX Query Transaction to evaluate if the other identifiers in context are included. If so, no further processing is required. Otherwise, an additional PIX Query will need to be issued and the results processed. Should a non-null result be returned, indicating the identifier uniquely identifies a different patient for the given domain, the context manager shall assume “invalid” in the decision field and “multiple patients identified” in the reason field.</p>
+    <p xmlns="">In order to mitigate this condition, IHE specifies that all context participants supporting the Patient Synchronized Applications Profile shall only set one identifier for the patient when a Patient Identifier Cross-referencing Profile is used by the context manager. This means that the context participant for those applications that manage multiple patient identifiers will need to be configurable as to which identifier item is passed in the Change Context Transaction.</p>
   </body>
 </html>
