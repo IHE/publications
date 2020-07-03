@@ -41,7 +41,7 @@ The conversion is a multi step process consisting of the following steps:
 * set class in TD elements with THEAD parents to allow global styling
 
 ## Open issues:
-* remove inline style of TD tags
+* remove inline style of TD tags (with P children)
 * remove inline style of A HREF tags
 * some image captions are put in a P element with the image. Todo: insert the image before the P element. 
 
@@ -72,13 +72,15 @@ The processing is done afterwards and contains of:
 * cleanup to simplify the generated HTML
 * splitting to sections
 * indexing to replace text references with HTML links
+* cleaning inline styling to be able to use global CSS
 
 ### Word issues:
+* XML Code Listing shall be harmonized: all listings shall have a frame like in 3.40.4.1.2.2.1
 * Volume 2 b, ITI-40 has and bold/underline text. 
 * Volume 1, Section 4, EUA has bold/italic text.
 * the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
-* The listing in 3.53.4.1.4.3 looks upgly after conversion. It should have the same word style as the listing in 3.53.4.1.4.2 
+ 
 
 ### Styling
 - Not defined yet
