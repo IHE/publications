@@ -1,3 +1,4 @@
+
 ## Overview
 
 This folder holds the working copy of the ITI Technical Framework Revision 16.0 – Final Text converted to HTML pages generated from the initial word files.
@@ -39,29 +40,11 @@ The conversion is a multi step process consisting of the following steps:
 * simplified all P elements which have only 1 SPAN element without style setting.
 * iterated all figure and table captions and add a class for them, to be styled in CSS file      
 * set class in TD elements with THEAD parents to allow global styling
+* remove inline style of TD tags (with P children)
+* level 7 and 8 subsections show up in the toc, index and references (html links)
 
 ## Open issues:
-* remove inline style of TD tags (with P children)
 * remove inline style of A HREF tags
-* some image captions are put in a P element with the image. Todo: insert the image before the P element. 
-
-	<p xmlns="" style="font-size:11pt">
-      <img src="media/a7222-00r44.042.png" width="624" height="374" alt="">
-      <span style="font-weight:bold">Figure 10.7.1-1: Example Security Domain Relationships</span>
-    </p>    
-
-* level 7 and 8 subsections do not show up in the toc
-
-	\<p xmlns="" style="margin-top:12pt; margin-bottom:3pt; page-break-after:avoid; font-size:12pt"\>
-      \<span style="font-family:Arial; font-weight:bold"\>3.40.4.1.2.2.1\</span\>
-      \<span style="font-family:Arial; font-weight:bold"\>Patient Identifier Attribute\</span\>
-	\</p\>
-
-(or in 2b ITI-40):
-
-	\<p xmlns=""\>
-      \<span style="font-family:Arial; font-weight:bold"\>3.40.4.1.2.3.1 ATNA encoding of PurposeOfUse\</span\>
-    \</p\>
 
 
 ### Java processing code
