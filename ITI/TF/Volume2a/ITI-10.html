@@ -47,25 +47,17 @@
     <p xmlns="">The Patient Identifier Cross-reference Manager shall notify a Patient Identifier Cross-reference Consumer when there is a change in a set of cross-referenced patient identifiers for any of the patient identifiers belonging to Patient Identifier Domains of interest to the consumer. The configuration of the domains of interest to a Patient Cross-reference Consumer is maintained by the Patient Cross-reference Manager.</p>
     <p xmlns="">Several notifications may have to be issued to communicate a single update to a set of cross-reference patient identifiers as required to reflect all the changes on the resulting sets of cross-reference patient Identifiers belonging to Patient Identifier Domains of interest to the Patient Identifier Cross-referencing Consumer.</p>
     <p xmlns="">The following HL7 trigger event will be used to update to the list of patient identifiers:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A31 – Update Person Information</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">A31 – Update Person Information</li>
     </ul>
     <h5 xmlns="" id="3.10.4.1.2">3.10.4.1.2             Message Semantics</h5>
     <p xmlns="">The PIX Update Notification transaction is conducted by the ADT^A31 message. The Patient Identifier Cross-reference Manager initiates this transaction whenever identifier list information is updated for a patient.</p>
     <p xmlns="">It is wholly the responsibility of the Patient Identifier Cross-reference Manager to perform the matching of patient identifiers based on the patient traits it receives. The information provided by the Patient Identifier Cross-reference Manager to Patient Identifier Cross-reference Consumers shall only contain a list of cross-referenced identifiers for the domains of interest as configured with the Patient Identifier Cross-reference Manager in two or more of the domains managed by the Patient Identifier Cross-reference Manager. Multiple notifications may need to be sent. For example:</p>
     <p xmlns="">Consumer CON_A is configured to receive update notifications for domains DOM_A and DOM_AD. Notifications are sent as follows:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A PIX A01 feed is sent for a patient for DOM_A. The update notification shall contain the patient identifier and assigning authority for DOM_A.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A PIX A01 feed is processed for DOM_AD. The Patient Identifier Cross-reference Manager cross references this patient with DOM_A. The update notification shall contain the patient identifier and assigning authority for DOM_A and DOM_AD.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A PIX A08 feed is processed for DOM_AD changing the patient address. The Patient Identifier Cross-reference Manager cross references determines this patient is no longer the same patient as DOM_A. Two update notifications shall be sent. One containing the patient identifier and assigning authority for DOM_A. The other one containing the patient identifier and assigning authority for DOM_AD.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">A PIX A01 feed is sent for a patient for DOM_A. The update notification shall contain the patient identifier and assigning authority for DOM_A.</li>
+      <li class="bullet-list1">A PIX A01 feed is processed for DOM_AD. The Patient Identifier Cross-reference Manager cross references this patient with DOM_A. The update notification shall contain the patient identifier and assigning authority for DOM_A and DOM_AD.</li>
+      <li class="bullet-list1">A PIX A08 feed is processed for DOM_AD changing the patient address. The Patient Identifier Cross-reference Manager cross references determines this patient is no longer the same patient as DOM_A. Two update notifications shall be sent. One containing the patient identifier and assigning authority for DOM_A. The other one containing the patient identifier and assigning authority for DOM_AD.</li>
     </ul>
     <p xmlns="">The list of cross-references is not made available until the set of policies and processes for managing the cross-reference function have been completed. The policies of administering identities adopted by the cooperating domains are completely internal to the Patient Identifier Cross-reference Manager and are outside of the scope of this standard. Possible matches should not be communicated until the healthcare institution policies and processes embodied in the Patient Identifier Cross-reference Manager reach a positive matching decision.</p>
     <p xmlns="">The Patient Identifier Cross-reference Manager configuration is expected to have configuration indicating which Consumers are interested in receiving the PIX Update Notification transactions. This configuration information shall include identification of the identity consumer systems interested in receiving notifications and, for each of those systems, a list of the patient identifier domains of interest. The Patient Identifier Cross-reference Manager should account for consumers interested in all domains.</p>

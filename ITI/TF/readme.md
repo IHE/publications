@@ -42,6 +42,7 @@ The conversion is a multi step process consisting of the following steps:
 * set class in TD elements with THEAD parents to allow global styling
 * remove inline style of TD tags (with P children)
 * level 7 and 8 subsections show up in the toc, index and references (html links)
+* removed inline style of lists and replaced by classes 
 
 ## Open issues:
 * remove inline style of A HREF tags
@@ -58,13 +59,14 @@ The processing is done afterwards and contains of:
 * cleaning inline styling to be able to use global CSS
 
 ### Word issues:
+* some lists have unusual indent (see Vol1 10.2.9 for example)
 * XML Code Listing shall be harmonized: all listings shall have a frame like in 3.40.4.1.2.2.1
 * Volume 2 b, ITI-40 has and bold/underline text. 
 * Volume 1, Section 4, EUA has bold/italic text.
 * the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
+* 
  
-
 ### Styling
 - Not defined yet
 

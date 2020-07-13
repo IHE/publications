@@ -39,36 +39,30 @@
     <p xmlns="" class="figureTitle">Figure M.2-1: Patient Demographics Supplier in a Multi-domain Environment</p>
     <p xmlns="">Because of the definition of QBP^Q22, it must be determined which patient demographics source a QBP^Q22 query is asking for, before any processing of the query request can proceed. The identification of a need for such determination is the key difference between the IHE PDQ transactions and the original HL7 QBP^Q22 definitions.</p>
     <p xmlns="">Three obvious alternatives exist for determining the patient demographics source.</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
+    <ol xmlns="">
+      <li class="numbered-list1">
         <span>The supplier advertises different application entities for each of the patient demographics sources it manages. By addressing its query to a particular application entity in</span>
         <span style="font-style:italic">MSH-5-Receiving Application</span>
         <span>, the consumer explicitly selects a source it is asking for.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The consumer is required to populate PID-3.4 in QPD-3 (Query Parameter) with the domain name administered by the corresponding source (patient identifier domain) it is asking for.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The consumer includes in QPD-8 (What Domains Returned) the domain name of the corresponding patient information source it is asking for.</span>
-      </li>
+      <li class="numbered-list1">The consumer is required to populate PID-3.4 in QPD-3 (Query Parameter) with the domain name administered by the corresponding source (patient identifier domain) it is asking for.</li>
+      <li class="numbered-list1">The consumer includes in QPD-8 (What Domains Returned) the domain name of the corresponding patient information source it is asking for.</li>
     </ol>
     <p xmlns="">In selecting among these alternatives for the PDQ Profile, IHE-ITI took into account the need to constrain the current HL7 QBP^Q22 definition while maintaining the integrity of the HL7 standard query and at the same time to model the PDQ Profile properly to satisfy its real-world purpose. Based on these considerations, alternative 1 is the best selection, although alternative 2 is acceptable. Alternative 3 is not acceptable because it violates the definition of QPD-8 that is stated in the HL7 Standard.</p>
     <h2 xmlns="" id="M.3">M.3 Implementing PDQ in a multi-domain architecture</h2>
     <p xmlns="">There are three possible approaches in using PDQ in a multi-domain environment:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
+    <ol xmlns="">
+      <li class="numbered-list1">
         <span>Group the PDQ Patient Demographics Supplier with a PIX Patient Identifier Cross-reference Manager. This allows the use of QPD-8 to request</span>
         <span style="font-style:italic;text-decoration:underline">patient identifiers</span>
         <span>from other domains to be returned in the demographics query response to the PDQ Patient Demographics Consumer.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
+      <li class="numbered-list1">
         <span>Group the PDQ Patient Demographics Supplier with a PIX Patient Identifier Cross-reference Consumer. This allows the use of QPD-8 to request</span>
         <span style="font-style:italic;text-decoration:underline">patient identifiers</span>
         <span>from other domains to be returned in the demographics query response to the PDQ Patient Demographics Consumer.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Group the PDQ Patient Demographics Consumer with a PIX Patient Identifier Cross-reference Consumer. This obliges the Patient Demographics Consumer to use separate query requests to obtain patient demographics information (PDQ Query) and patient identifiers from the domains in which it is interested (PIX Query).</span>
-      </li>
+      <li class="numbered-list1">Group the PDQ Patient Demographics Consumer with a PIX Patient Identifier Cross-reference Consumer. This obliges the Patient Demographics Consumer to use separate query requests to obtain patient demographics information (PDQ Query) and patient identifiers from the domains in which it is interested (PIX Query).</li>
     </ol>
     <p xmlns="">Approach 3 is not recommended if Approach 1 or 2 is feasible. To require the Patient Demographics Consumer to issue a separate PIX query increases complexity and might not be permissible in the actual implementation architecture.</p>
     <p xmlns="">

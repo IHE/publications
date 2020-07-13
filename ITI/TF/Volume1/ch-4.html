@@ -27,19 +27,11 @@
     <h2 xmlns="" id="4.1">4.1      EUA Actors/Transactions</h2>
     <p xmlns="">A number of transactions used in this profile conform to the Kerberos v5 standard, defined in RFC1510. This standard has been stable since 1993, is widely implemented on current operating system platforms, has successfully withstood attacks in its 10-year history, and is fully interoperable among platforms. For example, Sun Solaris, Linux, AIX, HPUX, IBM-z/OS, IBM-OS400, Novell, MAC OS X, and Microsoft Windows 2000/XP all implement Kerberos in an interoperable manner. This is not a complete list; many other vendors also support Kerberos.</p>
     <p xmlns="">For additional detailed information on Kerberos, beyond what is specified in this profile, we suggest these references:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>RFC1510 - http://www.ietf.org/rfc/rfc1510.txt</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>MIT's Kerberos home page - http://web.mit.edu/kerberos/www/</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The Moron's Guide to Kerberos - http://www.isi.edu/~brian/security/kerberos.html</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Microsoft Kerberos information http://www.microsoft.com/TechNet/prodtechnol/windows2000serv/deploy/kerberos.asp</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">RFC1510 - http://www.ietf.org/rfc/rfc1510.txt</li>
+      <li class="bullet-list1">MIT's Kerberos home page - http://web.mit.edu/kerberos/www/</li>
+      <li class="bullet-list1">The Moron's Guide to Kerberos - http://www.isi.edu/~brian/security/kerberos.html</li>
+      <li class="bullet-list1">Microsoft Kerberos information http://www.microsoft.com/TechNet/prodtechnol/windows2000serv/deploy/kerberos.asp</li>
     </ul>
     <p xmlns="">
       <span>Kerberos implementations are widely available worldwide. Kerberos does include cryptography that may have restricted use laws in some countries. The US export regulations can be found at .</span>
@@ -197,16 +189,10 @@
     <img xmlns="" src="media/a7222-00r44.008.png" width="645" height="433" alt="" />
     <p xmlns="" class="figureTitle">Figure 4.3.1-1: Basic Process Flow in Enterprise User Authentication Profile</p>
     <p xmlns="">The sequence of events in the use of Enterprise User Authentication is:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The user begins the session. This initiates a local username/password authentication that is converted into the challenge/response system used by Kerberos to avoid transmitting the password over the network. This information is used as part of the Get User Authentication Transaction to get a “Ticket Granting Ticket” (TGT).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The TGT is saved and managed internally by the Client Authentication Agent Actor. The TGT acts as confirmation that the user has been authenticated.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>For each service that has been Kerberized, the Client Authentication Agent uses the Get Service Ticket Transaction to obtain a service ticket. The service ticket is then used as part of the Kerberized Communication Transaction.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The user begins the session. This initiates a local username/password authentication that is converted into the challenge/response system used by Kerberos to avoid transmitting the password over the network. This information is used as part of the Get User Authentication Transaction to get a “Ticket Granting Ticket” (TGT).</li>
+      <li class="bullet-list1">The TGT is saved and managed internally by the Client Authentication Agent Actor. The TGT acts as confirmation that the user has been authenticated.</li>
+      <li class="bullet-list1">For each service that has been Kerberized, the Client Authentication Agent uses the Get Service Ticket Transaction to obtain a service ticket. The service ticket is then used as part of the Kerberized Communication Transaction.</li>
     </ul>
     <p xmlns="">A Kerberized Communication is a Kerberos data exchange that is integrated into another protocol, such as HL7 or DICOM, which is used in another IHE transaction. The details of Kerberization vary and are described separately for the protocols that have been Kerberized. The Kerberization enables the other IHE Actors involved in the other transaction to use the identity of the authenticated user for purposes such as user authorization or audit messages.</p>
     <p xmlns="">The Client Authentication Agent also maintains an internal cache of credentials such as the TGT and service tickets. It renews the tickets as necessary to deal with ticket expirations, re-uses tickets while they are still valid, and removes credentials from the cache when the user session ends. The Client Authentication Agent shall make the Kerberos credentials available using the local operating system mechanisms. Other IHE Actors that need the Kerberos credentials are strongly encouraged to obtain them using the local operating system mechanisms. Operating system support for ticket management has been implemented and has been defined for various operating systems.</p>
@@ -216,31 +202,15 @@
     <img xmlns="" src="media/a7222-00r44.009.png" width="613" height="433" alt="" />
     <p xmlns="" class="figureTitle">Figure 4.3.2-1: Process Flow with User Synchronized Applications</p>
     <p xmlns="">The sequence of events of the User Authentication with User Synchronized Applications is:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The user initiates a login by starting the Client Authentication Agent.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The Client Authentication Agent joins the CCOW user context by sending a Join Context Transaction to the Context Manager Actor. At this point there is no user identity in the context.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The user provides their username and password to the Client Authentication Agent. This authentication information is converted into the challenge/response system used by Kerberos to avoid transmitting the password over the network. This information is used as part of the Get User Authentication Transaction to get a “Ticket Granting Ticket” (TGT).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The TGT is saved and managed internally by the Client Authentication Agent Actor. The TGT acts as confirmation that the user has been authenticated.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A Change Context Transaction is sent to the Context Manager with the users fully qualified user name.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The user is now logged in to the User Context Participant.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>When the user ends the session, a Change Context Transaction is sent to the Context Manager with a NULL user name.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The user is logged out of the User Context Participant.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The user initiates a login by starting the Client Authentication Agent.</li>
+      <li class="bullet-list1">The Client Authentication Agent joins the CCOW user context by sending a Join Context Transaction to the Context Manager Actor. At this point there is no user identity in the context.</li>
+      <li class="bullet-list1">The user provides their username and password to the Client Authentication Agent. This authentication information is converted into the challenge/response system used by Kerberos to avoid transmitting the password over the network. This information is used as part of the Get User Authentication Transaction to get a “Ticket Granting Ticket” (TGT).</li>
+      <li class="bullet-list1">The TGT is saved and managed internally by the Client Authentication Agent Actor. The TGT acts as confirmation that the user has been authenticated.</li>
+      <li class="bullet-list1">A Change Context Transaction is sent to the Context Manager with the users fully qualified user name.</li>
+      <li class="bullet-list1">The user is now logged in to the User Context Participant.</li>
+      <li class="bullet-list1">When the user ends the session, a Change Context Transaction is sent to the Context Manager with a NULL user name.</li>
+      <li class="bullet-list1">The user is logged out of the User Context Participant.</li>
     </ul>
     <h3 xmlns="" id="4.3.3">4.3.3      Fast User Switching with Multiple Applications Process Flow</h3>
     <p xmlns="">The use model in the clinical environment can be characterized as multiple clinicians using the same workstation for short intervals of time many times a day. In this shared workstation environment, the user requires quick access to the patient data contained in the applications. Traditional methods of logging in and out of the workstation at the operating system or network level can take too long and typically force the applications to terminate. This means that the application clients will potentially need to initialize and establish new database connections, introducing further delay to the Clinician access to patient data. The CCOW standard and more specifically the “user” subject provides a means in combination with the Enterprise Authenticator to allow the user to authenticate at the application level and have all of the other applications tune to the new user.</p>

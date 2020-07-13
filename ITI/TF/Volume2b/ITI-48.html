@@ -67,16 +67,10 @@
     <p xmlns="">Having obtained the Value Set OID, the Value Set Consumer will send the Retrieve Value Set Request to the Value Set Repository.</p>
     <h5 xmlns="" id="3.48.4.1.2">3.48.4.1.2 Message Semantics</h5>
     <p xmlns="">The Retrieve Value Set Request shall carry the following information:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required id, representing the Value Set OID that identifies the Expanded Value Set within the Repository.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional version that identifies a specific version of the Expanded Value Set. If no version is specified, the Value Set Consumer is requesting the most recent version of the Value Set</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional lang parameter indicating the requested language locale for the displayName of the Value Set Concepts. (Note: in the SOAP binding, this parameter is represented via the xml:lang XML attribute)</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">A required id, representing the Value Set OID that identifies the Expanded Value Set within the Repository.</li>
+      <li class="bullet-list1">An optional version that identifies a specific version of the Expanded Value Set. If no version is specified, the Value Set Consumer is requesting the most recent version of the Value Set</li>
+      <li class="bullet-list1">An optional lang parameter indicating the requested language locale for the displayName of the Value Set Concepts. (Note: in the SOAP binding, this parameter is represented via the xml:lang XML attribute)</li>
     </ul>
     <p xmlns="">Section 3.48.5 describes the Web Services protocol requirements and the format of the message in full detail.</p>
     <h5 xmlns="" id="3.48.4.1.3">3.48.4.1.3 Expected Actions</h5>
@@ -87,47 +81,31 @@
     <p xmlns="">This message will be triggered by a Retrieve Value Set Request Message.</p>
     <h5 xmlns="" id="3.48.4.2.2">3.48.4.2.2 Message Semantics</h5>
     <p xmlns="">The Retrieve Value Set Response Message shall carry the following information for the returned Expanded Value Set:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required id, representing the Value Set OID that identifies the Value Set within the Value Set Repository. This OID shall be the same as the Value Set OID in the received Retrieve Value Set Request Message.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required displayName that can be used for display purposes.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional version that shall be present if the Expanded Value Set has a version, that identifies the specific version of the Value Set returned.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list1">A required id, representing the Value Set OID that identifies the Value Set within the Value Set Repository. This OID shall be the same as the Value Set OID in the received Retrieve Value Set Request Message.</li>
+      <li class="bullet-list1">A required displayName that can be used for display purposes.</li>
+      <li class="bullet-list1">An optional version that shall be present if the Expanded Value Set has a version, that identifies the specific version of the Value Set returned.</li>
+      <li class="bullet-list1">
         <span>An optional cacheExpirationHint indicating that the Value Set Consumer is not expected to change before this date and time. If the request and the response use the HTTP binding, this information shall be also present in the HTTP</span>
         <span style="font-style:italic">Expire</span>
         <span>header of the response. For details, please see Section 14.21 of IETF RFC2616.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>One or more ConceptList, which provides the Concepts of the Expanded Value Set. If there are multiple translations of the Value Set, each translation is returned as a separate ConceptList, where only the displayName of each Concept, and the language locale represented by xml:lang are different.</span>
-      </li>
+      <li class="bullet-list1">One or more ConceptList, which provides the Concepts of the Expanded Value Set. If there are multiple translations of the Value Set, each translation is returned as a separate ConceptList, where only the displayName of each Concept, and the language locale represented by xml:lang are different.</li>
     </ul>
     <p xmlns="">For each Value Set Concept, the following is returned. These requirements override the requirements of the HL7 schema rules for the CE data type where they conflict.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required code (a code that uniquely identifies a class or concept within the context of a code system)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required displayName (the name of the concept)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required codeSystem (the terminology the concept comes from)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional codeSystemVersion. (the version of the terminology the concept comes from)</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">A required code (a code that uniquely identifies a class or concept within the context of a code system)</li>
+      <li class="bullet-list1">A required displayName (the name of the concept)</li>
+      <li class="bullet-list1">A required codeSystem (the terminology the concept comes from)</li>
+      <li class="bullet-list1">An optional codeSystemVersion. (the version of the terminology the concept comes from)</li>
     </ul>
     <p xmlns="">Section 3.48.5 describes the Web Services requirements and the format of the message in full detail.</p>
     <h5 xmlns="" id="3.48.4.2.3">3.48.4.2.3 Expected Actions</h5>
     <p xmlns="">A Value Set Repository shall return the Expanded Value Set indicated in the request.</p>
     <p xmlns="">If the Value Set Consumer requested a specific language locale, the Value Set Repository shall return only the requested translation of the Expanded Value Set. If the Value Set Consumer did not request a specific language locale, the Value Set Repository shall return all known translations of the Expanded Value Set. This is the only case where more than one ConceptList XML element shall be permitted. The ConceptList shall have the same code values for the Value Set in question; the displayName may have a different value appropriate to the locale.</p>
     <p xmlns="">The Value Set Repository shall return the Expanded Value Set or an error code in case the Value Set could not be expanded. The following error responses may be returned:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt;font-weight:bold">
+    <ol xmlns="">
+      <li class="numbered-list1">
         <span>For the SOAP binding:</span>
         <ol type="a" style="margin-right:0pt; margin-left:0pt; padding-left:0pt">
           <li style="margin-top:6pt;margin-left:31.33pt;padding-left:4.67pt;font-weight:normal">
@@ -139,18 +117,12 @@
         </ol>
       </li>
     </ol>
-    <ol xmlns="" start="2" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt;font-weight:bold">
-        <span>For the HTTP binding:</span>
-      </li>
+    <ol xmlns="" start="2">
+      <li class="numbered-list1">For the HTTP binding:</li>
     </ol>
-    <ol xmlns="" type="a" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:67.33pt;padding-left:4.67pt">
-        <span>An HTTP status code of 404, with an HTTP Warning header containing warn-code of 111, and warn-text of “NAV: Unknown value set”. See sections 10.4.5 and 14.46 of IETF RFC2616 for more information.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:68pt;padding-left:4pt">
-        <span>An HTTP status code of 404, with an HTTP Warning header containing warn-code of 112, and warn-text of “VERUNK: Version unknown”. See sections 10.4.5 and 14.46 of IETF RFC2616 for more information.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list3">An HTTP status code of 404, with an HTTP Warning header containing warn-code of 111, and warn-text of “NAV: Unknown value set”. See sections 10.4.5 and 14.46 of IETF RFC2616 for more information.</li>
+      <li class="numbered-list3">An HTTP status code of 404, with an HTTP Warning header containing warn-code of 112, and warn-text of “VERUNK: Version unknown”. See sections 10.4.5 and 14.46 of IETF RFC2616 for more information.</li>
     </ol>
     <h3 xmlns="" id="3.48.5">3.48.5 Protocol Requirements</h3>
     <p xmlns="">The protocol for the Retrieve Value Set transaction describes two bindings. The first is based on SOAP 1.2, and the second is an HTTP binding. The relevant XML namespace definitions can be seen in Table 3.48.5-1 WSDL Namespace Definitions.</p>
@@ -210,45 +182,23 @@
     <p xmlns="">The /definitions/binding/operation/soap12:operation/@soapActionRequired attribute shall be defined as “false”</p>
     <p xmlns="">These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.48.5.3 Sample SOAP Message.</p>
     <p xmlns="">Within the request message payload the &lt;ihe:RetrieveValueSetRequest/&gt; element is defined as:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required /ihe:RetrieveValueSetRequest/ihe:ValueSet element</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A required /ihe:RetrieveValueSetRequest/ihe:ValueSet@id attribute that contains the ID of the requested Value Set within the Value Set Repository. The Value Set ID shall be formatted as an ISO OID.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@displayName attribute</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@version attribute.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@xml:lang attribute.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">A required /ihe:RetrieveValueSetRequest/ihe:ValueSet element</li>
+      <li class="bullet-list1">A required /ihe:RetrieveValueSetRequest/ihe:ValueSet@id attribute that contains the ID of the requested Value Set within the Value Set Repository. The Value Set ID shall be formatted as an ISO OID.</li>
+      <li class="bullet-list1">An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@displayName attribute</li>
+      <li class="bullet-list1">An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@version attribute.</li>
+      <li class="bullet-list1">An optional /ihe:RetrieveValueSetRequest/ihe:ValueSet@xml:lang attribute.</li>
     </ul>
     <p xmlns="">Value Set Repositories shall include within the response message payload for the SOAP Binding Option the &lt;ihe:RetrieveValueSetResponse/&gt; element which contains:</p>
     <p xmlns="">An optional /ihe:RetrieveValueSetResponse@cacheExpirationHint attribute, indicating that the Value Set Consumer should obtain a new copy before this date and time.</p>
     <p xmlns="">A required /ihe:RetrieveValueSetResponse/ihe:ValueSet element, containing</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>a required /ihe:RetrieveValueSetResponse/ihe:ValueSet@id attribute</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>a required /ihe:RetrieveValueSetResponse/ihe:ValueSet@displayName attribute</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>an optional /ihe:RetrieveValueSetResponse/ihe:ValueSet@version attribute</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>one or more /ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList element, containing:</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>/ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList/xml:lang attribute, representing the language locale of the Concept’s display names</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>one or more /ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList/ihe:Concept elements, representing the concepts within the value set.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">a required /ihe:RetrieveValueSetResponse/ihe:ValueSet@id attribute</li>
+      <li class="bullet-list1">a required /ihe:RetrieveValueSetResponse/ihe:ValueSet@displayName attribute</li>
+      <li class="bullet-list1">an optional /ihe:RetrieveValueSetResponse/ihe:ValueSet@version attribute</li>
+      <li class="bullet-list1">one or more /ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList element, containing:</li>
+      <li class="bullet-list1">/ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList/xml:lang attribute, representing the language locale of the Concept’s display names</li>
+      <li class="bullet-list1">one or more /ihe:RetrieveValueSetResponse/ihe:ValueSet/ihe:ConceptList/ihe:Concept elements, representing the concepts within the value set.</li>
     </ul>
     <p xmlns="">The &lt;ihe:Concept/&gt; element is defined as being of the HL7 V3 CE data type.</p>
     <p xmlns="">The only occurrence of more than one ConceptList element in a response message shall be for the purpose of returning multiple language representations of the same value set.</p>

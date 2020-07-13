@@ -18,19 +18,11 @@
     <p xmlns="">This section corresponds to transaction [ITI-39] of the IHE Technical Framework. Transaction [ITI-39] is used by the Initiating Gateway and Responding Gateway Actors.</p>
     <h3 xmlns="" id="3.39.1">3.39.1 Scope</h3>
     <p xmlns="">The scope of the Cross Gateway Retrieve transaction is semantically the same as the Retrieve Document Set [ITI-43] transaction. Differences from the Retrieve Document Set transactions are:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The Cross Gateway Retrieve is between an Initiating Gateway and a Responding Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The ‘homeCommunityId’ parameter is required. This means that the homeCommunityId parameter which is optional on the Retrieve Document Set transaction is required by this transaction.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Responding Gateways shall support the Asynchronous Web Services Exchange Option on the Cross Gateway Retrieve. Support for this function is required in order to enable use of Asynchronous Web Services Exchange in any cross-community interaction. Without this support an Initiating Gateway would require unique configuration, per Responding Gateway, to know if Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services Exchange will be desired by the majority of communities.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Asynchronous Web Services Exchange is an option on the Initiating Gateway, see <a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a>.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The Cross Gateway Retrieve is between an Initiating Gateway and a Responding Gateway.</li>
+      <li class="bullet-list1">The ‘homeCommunityId’ parameter is required. This means that the homeCommunityId parameter which is optional on the Retrieve Document Set transaction is required by this transaction.</li>
+      <li class="bullet-list1">Responding Gateways shall support the Asynchronous Web Services Exchange Option on the Cross Gateway Retrieve. Support for this function is required in order to enable use of Asynchronous Web Services Exchange in any cross-community interaction. Without this support an Initiating Gateway would require unique configuration, per Responding Gateway, to know if Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services Exchange will be desired by the majority of communities.</li>
+      <li class="bullet-list1">Asynchronous Web Services Exchange is an option on the Initiating Gateway, see <a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a>.</li>
     </ul>
     <h3 xmlns="" id="3.39.2">3.39.2 Use Case Roles</h3>
     <img xmlns="" src="media/ak3aq-ow60c.029.png" width="373" height="129" alt="" />
@@ -111,23 +103,19 @@
       <span style="font-weight:bold">Responding Gateway:</span>
       <span>These are the requirements for the Cross Gateway Retrieve transaction presented in the order in which they would appear in the Responding Gateway WSDL definition:</span>
     </p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The following types shall be imported (xsd:import) in the /definitions/types section:</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The following types shall be imported (xsd:import) in the /definitions/types section:</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list2">namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list1">
         <span>The /definitions/message/part/@element attribute of the Cross Gateway Retrieve Request message shall be defined as “</span>
         <span style="background-color:#ffffff">ihe:RetrieveDocumentSetRequest</span>
         <span>”</span>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+      <li class="bullet-list1">
         <span>The /definitions/message/part/@element attribute of the</span>
         <span style="background-color:#ffffff">Cross Gateway</span>
         <span>Retrieve Response message shall be defined as “</span>
@@ -135,10 +123,8 @@
         <span>Response”</span>
       </li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Refer to Table 3.39.5-2 below for additional attribute requirements</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Refer to Table 3.39.5-2 below for additional attribute requirements</li>
     </ul>
     <p xmlns="" class="tableTitle">Table 3.39.5-2: Requirements for portType and Binding attributes</p>
     <table xmlns="" cellspacing="0" cellpadding="0">
@@ -645,25 +631,15 @@
     <h3 xmlns="" id="3.39.6">3.39.6 Security Considerations</h3>
     <p xmlns="">Both the Initiating Gateway and Responding Gateway shall audit the Cross Gateway Retrieve. The audit entries shall be equivalent to the entries required for the Retrieve Document Set.</p>
     <p xmlns="">The Initiating Gateway:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>If receiving a Retrieve Document Set transaction from a Document Consumer, shall audit as if it were a Document Repository (see Section 3.43.6).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>In addition, shall audit the Cross Gateway Retrieve as if it were a Document Consumer except that for EventTypeCode the Initiating Gateway shall specify EV(“ITI-39”, “IHE Transactions”, and “Cross Gateway Retrieve”) (see Section 3.43.6).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">If receiving a Retrieve Document Set transaction from a Document Consumer, shall audit as if it were a Document Repository (see Section 3.43.6).</li>
+      <li class="bullet-list1">In addition, shall audit the Cross Gateway Retrieve as if it were a Document Consumer except that for EventTypeCode the Initiating Gateway shall specify EV(“ITI-39”, “IHE Transactions”, and “Cross Gateway Retrieve”) (see Section 3.43.6).</li>
+      <li class="bullet-list1">In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</li>
     </ul>
     <p xmlns="">The Responding Gateway:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Shall audit the Cross Gateway Retrieve as if it were a Document Repository except that for EventTypeCode the Responding Gateway shall specify EV(“ITI-39”, “IHE Transactions”, “Cross Gateway Retrieve”) (see Section 3.43.6).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Shall audit the Cross Gateway Retrieve as if it were a Document Repository except that for EventTypeCode the Responding Gateway shall specify EV(“ITI-39”, “IHE Transactions”, “Cross Gateway Retrieve”) (see Section 3.43.6).</li>
+      <li class="bullet-list1">In addition, if interacting with a local Document Repository, shall audit as if it were a Document Consumer (see Section 3.43.6). One audit record shall be created for each Document Repository contacted.</li>
     </ul>
   </body>
 </html>

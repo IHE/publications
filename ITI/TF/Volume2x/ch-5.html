@@ -605,22 +605,12 @@
     <p xmlns="">Since IHE adds additional constraints to the II data type, requirements for populating its elements vary slightly, depending on what actor is originating a transaction (or create a CDA document), in which Patient ID is expressed. If the Patient Identifier Cross-reference Manager is the source of the Patient ID in a message, the requirements (specifically, with respect to populating the assigningAuthorityName elements) are more rigorous than otherwise.</p>
     <p xmlns="">The IHE IT Infrastructure Technical Framework adds constraints to the II data type for Patient ID expression in HL7 V3 messages or CDA documents, in order to maintain compatibility with the explicit relationship between a Patient ID Domain (assigning authority) and a Patient ID issued in the Domain present in the HL7 V2 CX data type. In HL7 V2 messages defined in the IHE IT Infrastructure Technical Framework, Patient ID is expressed in the form of an identifier value (CX.ID) issued in a domain (CX.AssigningAuthority) (see Section E.1). Even though HL7 V3 provides additional mechanisms for an explicit expression of the key concept of Patient ID Domain (via scoping organizations), the constraints added to the II data type in this section enable a seamless interoperability among HL7 V2 messages, HL7 V3 messages, as well as CDA documents, which may participate in the same IT Infrastructure Profile.</p>
     <p xmlns="">At the same time, it is also important to represent the RIM-based association between assigning authority and patient identifiers, which is expected by systems using the rich semantics of the RIM. In order to achieve that IHE imposes several constraints regarding patient IDs on the HL7 V3 models used in IHE transactions:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Identifiers for the patient are class attributes of a specific role, and never of the Person class of the patient.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>When the Patient role is scoped by a Provider organization, only patient IDs assigned by the provider organization are allowed in the Patient class, the root element of the patient IDs shall match the root element of the provider organization ID, and the provider organization ID shall have no extension element.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>When any other role associated with the Person class of the patient is scoped by an organization, the root element of the role IDs shall match the root element of the scoping organization ID, and the scoping organization ID shall have no extension element.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>A receiver of an HL7 v3 message shall consider the IDs in all roles associated with the Person class of the patient as valid patient IDs.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>A receiver of an HL7 v3 message shall not be required to maintain the various roles associated with the Person class of the patient, as long as, when becoming a sender, it can appropriately send all relevant patient IDs according to the requirements of a particular transaction.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Identifiers for the patient are class attributes of a specific role, and never of the Person class of the patient.</li>
+      <li class="numbered-list1">When the Patient role is scoped by a Provider organization, only patient IDs assigned by the provider organization are allowed in the Patient class, the root element of the patient IDs shall match the root element of the provider organization ID, and the provider organization ID shall have no extension element.</li>
+      <li class="numbered-list1">When any other role associated with the Person class of the patient is scoped by an organization, the root element of the role IDs shall match the root element of the scoping organization ID, and the scoping organization ID shall have no extension element.</li>
+      <li class="numbered-list1">A receiver of an HL7 v3 message shall consider the IDs in all roles associated with the Person class of the patient as valid patient IDs.</li>
+      <li class="numbered-list1">A receiver of an HL7 v3 message shall not be required to maintain the various roles associated with the Person class of the patient, as long as, when becoming a sender, it can appropriately send all relevant patient IDs according to the requirements of a particular transaction.</li>
     </ol>
     <h3 xmlns="" id="E.2.1">E.2.1 Patient Identifier Cross-reference Manager requirements</h3>
     <p xmlns="">The Patient Identifier Cross-reference Manager is expected to have access to complete information for a Patient ID value and its issuing Patient ID Domain (assigning authority). To facilitate interoperability, it is required that the Patient Identifier Cross-reference Manager provide all this information in an instance of II the data type to express Patient ID. Table E-2.1-1 specifies the requirements of the II data type to the Patient Identifier Cross-reference Manager.</p>
@@ -707,20 +697,20 @@
     <p xmlns="">The similar case of Metropolitan Medical Center in Section E.1.2 is used to provide HL7 V3 II data type for patient identifier expression in this section. Since element root of the II data type is always required and must be an ISO OID, the example case is adopted (compared to Section E.1.2).</p>
     <h4 xmlns="" id="E.2.3.1">E.2.3.1 Data sent by source systems</h4>
     <p xmlns="">The source systems provide data to the Patient Identifier Cross-reference Manager. These data are sent in a Patient Identity Feed HL7 V3 [ITI-44] transaction.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list1">
         <span>Patient Smith’s Social Security number is 999-99-4452. This number is assigned by the U.S. Social Security Administration, which uses a known ISO Object Identifier for issuing the Social Security Numbers, 2.16.840.1.113883.4.1.</span>
         <a href="#_ftn8" style="text-decoration:none">
           <span style="font-size:8pt;vertical-align:super">[8]</span>
         </a>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+      <li class="bullet-list1">
         <span>Patient Smith’s medical record number is 9990-99497. This number is assigned by Metropolitan Medical Center. The ISO OID of its medical record number domain is 1.2.xx.yyyyy.123.4567.</span>
         <a href="#_ftn9" style="text-decoration:none">
           <span style="font-size:8pt;vertical-align:super">[9]</span>
         </a>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+      <li class="bullet-list1">
         <span>Patient Smith’s medical insurance number is 99998410. This number is assigned by MLH Life &amp; Casualty Company, whose ISO OID for issuing insurance numbers is 1.2.xxx.yyyyy.987.6543.</span>
         <a href="#_ftn10" style="text-decoration:none">
           <span style="font-size:8pt;vertical-align:super">[10]</span>
@@ -759,16 +749,10 @@
       <span style="font-weight:bold">Data sent by the Patient Identifier Cross-reference Manager</span>
     </p>
     <p xmlns="">The Patient Identifier Cross-reference Manager implements HL7 V2 Table 0363, Assigning Authority, which includes the names of identifier domains (assigning authorities) used in the example of Section E.2.3.1:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>US Social Security Administration: USSSA</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Medical record number domain of Metropolitan Medical Center: 99MMC</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Insurance number domain of MLH Life &amp; Casualty Company: 99MLHLIFE</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">US Social Security Administration: USSSA</li>
+      <li class="bullet-list1">Medical record number domain of Metropolitan Medical Center: 99MMC</li>
+      <li class="bullet-list1">Insurance number domain of MLH Life &amp; Casualty Company: 99MLHLIFE</li>
     </ul>
     <p xmlns="">To send the patient identifiers, the Patient Identifier Cross-reference Manager builds a HL7 V3 message as follows:</p>
     <div xmlns="" style="border:0.75pt solid #000000; clear:both">

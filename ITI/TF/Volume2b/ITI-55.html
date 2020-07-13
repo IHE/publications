@@ -19,26 +19,16 @@
     <h3 xmlns="" id="3.55.1">3.55.1 Scope</h3>
     <p xmlns="">The Cross Gateway Patient Discovery transaction supports the ability for Initiating Gateways and Responding Gateways to discover mutually known patients. This transaction assumes an environment where patient data is well described and high quality demographic data is available.</p>
     <p xmlns="">Because the transaction supports the mutual discovery of patients it can be seen as having dual purposes.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>To support a query by the Initiating Gateway requesting a demographically matching patient from within the Responding Gateway’s community.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>To support a feed to Responding Gateway announcing that the patient is known by the Initiating Gateway’s community.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">To support a query by the Initiating Gateway requesting a demographically matching patient from within the Responding Gateway’s community.</li>
+      <li class="bullet-list1">To support a feed to Responding Gateway announcing that the patient is known by the Initiating Gateway’s community.</li>
     </ul>
     <p xmlns="">This dual nature of the transaction is chosen for scalability purposes, as demographic matching algorithms are expensive on a large scale and once a match is identified it is important that both the initiating and responding sides of the transaction can use the results of that successful match.</p>
     <p xmlns="">The Cross Gateway Patient Discovery transaction has several modes, useful in different environments:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Demographic Query only mode – in this mode only the demographics of the patient are included in the request. The initiating community does not have, or does not choose to specify, a patient identifier for use by the Responding Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Demographic Query and Feed – in this mode both the demographic and initiating community identifier are included in the request.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Shared/national Patient Identifier Query and Feed – in this mode only a shared/national identifier is specified. Demographics are not necessary because matching can be done on the identifier alone.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Demographic Query only mode – in this mode only the demographics of the patient are included in the request. The initiating community does not have, or does not choose to specify, a patient identifier for use by the Responding Gateway.</li>
+      <li class="bullet-list1">Demographic Query and Feed – in this mode both the demographic and initiating community identifier are included in the request.</li>
+      <li class="bullet-list1">Shared/national Patient Identifier Query and Feed – in this mode only a shared/national identifier is specified. Demographics are not necessary because matching can be done on the identifier alone.</li>
     </ul>
     <p xmlns="">This transaction can be used synchronously and asynchronously.</p>
     <p xmlns="">
@@ -91,13 +81,9 @@
     <p xmlns="">The Cross Gateway Patient Discovery Request is implemented using the HL7 Patient Registry Query by Demographics (PRPA_MT201306UV02) message.</p>
     <h5 xmlns="" id="3.55.4.1.1">3.55.4.1.1 Trigger Events</h5>
     <p xmlns="">The initiating community needs to determine whether a patient is known by another community. Specific possible trigger events include, but are not limited to:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The initiating community registers a new patient who has permitted sharing of healthcare data with external communities.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A healthcare provider within the community requests that records regarding a particular patient be accessed from a particular external community or all external communities known.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The initiating community registers a new patient who has permitted sharing of healthcare data with external communities.</li>
+      <li class="bullet-list1">A healthcare provider within the community requests that records regarding a particular patient be accessed from a particular external community or all external communities known.</li>
     </ul>
     <h5 xmlns="" id="3.55.4.1.2">3.55.4.1.2 Message Semantics</h5>
     <p xmlns="">The components of the Patient Registry Query by Demographics message with cardinality greater than 0 (as shown below) are required, and the detailed description of the message is provided in Sections 3.55.4.1.2.1 to 3.55.4.1.2.3.</p>
@@ -160,54 +146,24 @@
       <span>.</span>
     </p>
     <p xmlns="">The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201306UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The optional attributes ParameterList.id, MatchCriterionList.id, QueryByParameter responseElementGroupId, QueryByParameter.modifyCode, and QueryByParameter.executionAndDeliveryTime were omitted from the model.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>QueryByParameter.responsePriorityCode is required and is either I (Immediate) or D (Deferred). See Section 3.55.6.2 for use of Deferred.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>QueryByParameter.responseModalityCode is required and is fixed to R (Real Time).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>QueryByParameter.statusCode is defaulted to "new".</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The data type of MatchAlgorithm.value is constrained to ST.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The data type of MinimumDegreeMatch.value is constrained to INT between 0 and 100.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The data type of LivingSubjectName.value is constrained to PN.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The optional SortControl was omitted from the model.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The optional MatchWeight was omitted from the model.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The following optional parameters were omitted from the model:</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The optional attributes ParameterList.id, MatchCriterionList.id, QueryByParameter responseElementGroupId, QueryByParameter.modifyCode, and QueryByParameter.executionAndDeliveryTime were omitted from the model.</li>
+      <li class="bullet-list1">QueryByParameter.responsePriorityCode is required and is either I (Immediate) or D (Deferred). See Section 3.55.6.2 for use of Deferred.</li>
+      <li class="bullet-list1">QueryByParameter.responseModalityCode is required and is fixed to R (Real Time).</li>
+      <li class="bullet-list1">QueryByParameter.statusCode is defaulted to "new".</li>
+      <li class="bullet-list1">The data type of MatchAlgorithm.value is constrained to ST.</li>
+      <li class="bullet-list1">The data type of MinimumDegreeMatch.value is constrained to INT between 0 and 100.</li>
+      <li class="bullet-list1">The data type of LivingSubjectName.value is constrained to PN.</li>
+      <li class="bullet-list1">The optional SortControl was omitted from the model.</li>
+      <li class="bullet-list1">The optional MatchWeight was omitted from the model.</li>
+      <li class="bullet-list1">The following optional parameters were omitted from the model:</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>PatientStatusCode</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>LivingSubjectDeceaseTime</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>OtherIDsScopingOrganization</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>initialQuantity</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>initialQuantityCode</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list2">PatientStatusCode</li>
+      <li class="bullet-list2">LivingSubjectDeceaseTime</li>
+      <li class="bullet-list2">OtherIDsScopingOrganization</li>
+      <li class="bullet-list2">initialQuantity</li>
+      <li class="bullet-list2">initialQuantityCode</li>
     </ul>
     <p xmlns="">The attributes of this model are described in the following table:</p>
     <img xmlns="" src="media/ak3aq-ow60c.064.png" width="608" height="404" alt="PatientRegistryQueryByDemographicsMessage" />
@@ -980,48 +936,24 @@
     <h6 xmlns="" id="3.55.4.2.2.2">3.55.4.2.2.2 Message Information Model of the Patient Registry Find Candidates Response Message</h6>
     <p xmlns="">Below is the Message Information Model for the Patient Registry Find Candidates Response message, as restricted for this transaction. The purpose of the model is to describe the data elements relevant for this transaction. It is a strict common subset of the Patient Registry Find Candidates Response (PRPA_RM201310UV02) RMIM.</p>
     <p xmlns="">The base RMIM can be found on the HL7 V3 2008 Edition CD at Edition2008/domains/uvpa/editable/PRPA_RM201310UV.htm. The following restrictions were made on the original RMIMs to arrive at the restricted model:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The focal entity choice is restricted to be only a person</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The relationship holder of the personal relationship is restricted to be a person (using CMET COCT_MT030207UV)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The following roles are omitted:</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The focal entity choice is restricted to be only a person</li>
+      <li class="bullet-list1">The relationship holder of the personal relationship is restricted to be a person (using CMET COCT_MT030207UV)</li>
+      <li class="bullet-list1">The following roles are omitted:</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>asPatientOfOtherProvider</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>guarantor</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>guardian</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>contactParty</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>asMember</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>careGiver</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>asStudent</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list2">asPatientOfOtherProvider</li>
+      <li class="bullet-list2">guarantor</li>
+      <li class="bullet-list2">guardian</li>
+      <li class="bullet-list2">contactParty</li>
+      <li class="bullet-list2">asMember</li>
+      <li class="bullet-list2">careGiver</li>
+      <li class="bullet-list2">asStudent</li>
     </ul>
     <p xmlns="">The following participations are omitted:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>subjectOf2 (administrativeObservation)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>coveredPartyOf (coverage)</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">subjectOf2 (administrativeObservation)</li>
+      <li class="bullet-list1">coveredPartyOf (coverage)</li>
     </ul>
     <img xmlns="" src="media/ak3aq-ow60c.066.jpeg" width="619" height="288" alt="PRPA_RM201310UV-IHE-XCPI" />
     <p xmlns="" class="figureTitle">Figure 3.55.4.2.2.2-1: Patient Registry Find Candidates Response Message</p>
@@ -1465,13 +1397,9 @@
     <h6 xmlns="" id="3.55.4.2.2.4">3.55.4.2.2.4 Specifying homeCommunityId in Response</h6>
     <p xmlns="">The homeCommunityId is a globally unique identifier for a community – further defined in Section 3.38.4.1.2.1. The Responding Gateway shall specify this value within every RegistrationEvent element in the Cross Gateway Patient Discovery response.</p>
     <p xmlns="">The Responding Gateway may specify the same homeCommunityId in every RegistrationEvent, or may specify different homeCommunityId’s. The Initiating Gateway shall interpret multiple RegistrationEvents as follows:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Multiple RegistrationEvents with the same homeCommunityId represent multiple matches within the homeCommunityId identified community. The Initiating Gateway may choose one of the matches to use for subsequent processing.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Each set of RegistrationEvents with the same homeComunityId represents a different possible source for documents, so in order to get the complete list of relevant documents for the patient, the Initiating Gateway shall select at least one RegistrationEvent from each set with the same homeCommunityId and use the resulting collection of patient identifiers for subsequent processing. See <a href="../Volume1/ch-27.html#27.3.2.2">ITI TF-1: 27.3.2.2</a> for an introduction to this environment.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Multiple RegistrationEvents with the same homeCommunityId represent multiple matches within the homeCommunityId identified community. The Initiating Gateway may choose one of the matches to use for subsequent processing.</li>
+      <li class="bullet-list1">Each set of RegistrationEvents with the same homeComunityId represents a different possible source for documents, so in order to get the complete list of relevant documents for the patient, the Initiating Gateway shall select at least one RegistrationEvent from each set with the same homeCommunityId and use the resulting collection of patient identifiers for subsequent processing. See <a href="../Volume1/ch-27.html#27.3.2.2">ITI TF-1: 27.3.2.2</a> for an introduction to this environment.</li>
     </ul>
     <p xmlns="">The homeCommunityId is specified as the id element within the assignedEntity of the custodian of the RegistrationEvent. The id element designating the homeCommunityId shall have only the root element, the contents of which is the homeCommunityId.</p>
     <p xmlns="">The following example shows part of a response specifying a homeCommunityId value of urn:oid:1.2.840.114350.1.13.99998.8734.</p>
@@ -1777,16 +1705,10 @@
     <p xmlns="">This section presents some considerations regarding caching of information learned through the Cross Gateway Patient Discovery transaction. There are no requirements regarding caching of the information, as this is a complex issue and must be addressed as part of deployment. The caching resulting from receiving and responding to the query is not updating any local information but only saving a record in a cache if so desired.</p>
     <p xmlns="">Both the requesting and responding side of the Cross Gateway Patient Discovery transaction gain knowledge through this transaction. That knowledge may be used immediately, by sending a Cross Gateway Query transaction, or may be cached for use at some other time (or both). This section addresses caching considerations when the Cross Gateway Patient Discovery transaction is used in the Demographic Query and Feed mode. Other modes are a simplification of this mode with corresponding simplifications of the considerations presented.</p>
     <p xmlns="">The knowledge gained on both sides can be represented as a tuple:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:16.48pt">
-        <span>LocalPid – Local patient identifier and demographics associated with that identifier</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:16.48pt">
-        <span>ExternalCommunityId – The homeCommunityId of another community.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:16.48pt">
-        <span>ExternalPid – The patient identifier for the same patient as LocalPid within the community identified by ExternalCommunityId. This identifier also has associated demographics</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">LocalPid – Local patient identifier and demographics associated with that identifier</li>
+      <li class="bullet-list1">ExternalCommunityId – The homeCommunityId of another community.</li>
+      <li class="bullet-list1">ExternalPid – The patient identifier for the same patient as LocalPid within the community identified by ExternalCommunityId. This identifier also has associated demographics</li>
     </ul>
     <p xmlns="">For the Initiating Gateway the ExternalPid may be null indicating that the community represented by ExternalCommunityId has no correlating patient identifier available.</p>
     <p xmlns="">The tuple represents a correlation, or lack thereof, of patients in a pair of communities. The validity of this correlation may degrade over time, as changes in demographics, merge/link events and new patient registrations affect the correlation.</p>
@@ -2726,16 +2648,10 @@
       <span style="font-weight:bold">Cross Gateway Patient Discovery Request Message</span>
     </p>
     <p xmlns="">The Initiating Gateway that supports the Deferred Response Option may request the use of Deferred Response message exchange by specifying the following in the Cross Gateway Patient Discovery Request Message:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201305UV02:Deferred: CrossGatewayPatientDiscovery</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The responsePriorityCode element shall be set to a value of ‘D’ to represent the deferred processing mode.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The respondTo element of the transmission wrapper, see the figure in Section 3.55.4.1.2.4, shall contain a telecom element with the Web Services Endpoint where the response shall be sent.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201305UV02:Deferred: CrossGatewayPatientDiscovery</li>
+      <li class="bullet-list1">The responsePriorityCode element shall be set to a value of ‘D’ to represent the deferred processing mode.</li>
+      <li class="bullet-list1">The respondTo element of the transmission wrapper, see the figure in Section 3.55.4.1.2.4, shall contain a telecom element with the Web Services Endpoint where the response shall be sent.</li>
     </ul>
     <p xmlns="">Example of specifying the respondTo element:</p>
     <div xmlns="" style="border:0.75pt solid #000000; clear:both">
@@ -2760,19 +2676,11 @@
       <span style="font-weight:bold">Cross Gateway Patient Discovery Response Message</span>
     </p>
     <p xmlns="">The Responding Gateway will process the Cross Gateway Patient Discovery Request Message and generate a Cross Gateway Patient Discovery Response Message following all the applicable requirements for the transaction. If the Responding Gateway supports the Deferred Response Option, the Cross Gateway Patient Discovery Response Message will be sent as a new request as follows:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The Responding Gateway shall direct the response message to the address specified in the respondTo element in the transmission wrapper.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The WS-Addressing RelatesTo element of the response message shall be populated with the message identifier from the WS-Addressing MessageID element of the request message</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201306UV02:Deferred:CrossGatewayPatientDiscovery</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Correlation with the request message is also supplied through the queryID element from the request message which shall be the same as the queryID element of the Response message.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">The Responding Gateway shall direct the response message to the address specified in the respondTo element in the transmission wrapper.</li>
+      <li class="bullet-list1">The WS-Addressing RelatesTo element of the response message shall be populated with the message identifier from the WS-Addressing MessageID element of the request message</li>
+      <li class="bullet-list1">The WS-Addressing Action value shall be urn:hl7-org:v3:PRPA_IN201306UV02:Deferred:CrossGatewayPatientDiscovery</li>
+      <li class="bullet-list1">Correlation with the request message is also supplied through the queryID element from the request message which shall be the same as the queryID element of the Response message.</li>
     </ul>
     <p xmlns="">
       <span style="font-weight:bold">Cross Gateway Patient Discovery Response Application Acknowledgement Message</span>

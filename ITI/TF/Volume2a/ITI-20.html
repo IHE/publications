@@ -110,13 +110,9 @@
     <p xmlns="">The Audit Record Repository and Audit Record Forwarder should be prepared to handle Syslog messages in other formats, as well as messages complying with the IHE Audit Trail Format (defined in Section 3.20.7) that are being used for other purposes.</p>
     <h5 xmlns="" id="3.20.4.1.1">3.20.4.1.1 Trigger Events</h5>
     <p xmlns="">There are two trigger events:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>A Secure Node or Secure Application detects an event that should be reported to the Audit Record Repository. This transaction does not specify all of the policies or reasons for reporting events. They may be specified in other IHE profiles, they may be specified by local law or regulation, or they may be specified by local policy.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>An Audit Record Forwarder determines that a received Syslog message should be sent to another Audit Record Repository. This transaction does not specify what rules or policies determine whether a Syslog message should be forwarded.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">A Secure Node or Secure Application detects an event that should be reported to the Audit Record Repository. This transaction does not specify all of the policies or reasons for reporting events. They may be specified in other IHE profiles, they may be specified by local law or regulation, or they may be specified by local policy.</li>
+      <li class="numbered-list1">An Audit Record Forwarder determines that a received Syslog message should be sent to another Audit Record Repository. This transaction does not specify what rules or policies determine whether a Syslog message should be forwarded.</li>
     </ol>
     <p xmlns="">The Secure Node or Secure Application shall create the Audit Event message and transmit it to the Audit Record Repository as soon as possible.</p>
     <p xmlns="">The Audit Record Forwarder shall forward the Audit Event message to the Audit Record Repository as soon as possible.</p>
@@ -323,32 +319,18 @@
     <p xmlns="">An Audit Record Forwarder shall filter and forward Syslog messages unchanged, regardless of their internal format.</p>
     <p xmlns="">A Secure Node or Secure Application shall create and transmit an Audit Event message when reporting an event. This message shall be a Syslog message that is transmitted as described in RFC5424 and formatted as described in Section 3.20.7 Audit Message Format.</p>
     <p xmlns="">Secure Node and Secure Application Actors shall construct the Audit Event message according to the following:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>If the message contains Unicode characters, the characters shall be encoded using the UTF-8 encoding rules. UTF-8 avoids utilizing the control characters that are mandated by the Syslog protocol, but it may appear to be gibberish to a system that is not prepared for UTF-8.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The PRI field shall be set using the facility value of 10 (security/authorization messages). Most Audit Event messages should have the severity value of 5 (normal but significant), although applications may choose values of 4 (Warning condition) if that is appropriate to the more detailed information in the audit message. This means that for most Audit Event messages the PRI field will contain the value “&lt;85&gt;”.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The MSGID field in the HEADER of the SYSLOG-MSG shall be set to “IHE+RFC-3881” (minus the quotes). (Note that the use of RFC3881 in the value is retained for backward compatibility.)</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The STRUCTURED-DATA is not used. The MSG field holds the structured event data.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The MSG field of the SYSLOG-MSG shall be present and shall be an XML structure using UTF-8 minimal length encoding following the DICOM PS3.15 A.5 format, as described in Section 3.20.7 Audit Message Format. The BOM as specified in RFC5424 for use when the MSG is UTF-8 encoded is discouraged, but acceptable, as this is not well supported and discouraged by Unicode.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">If the message contains Unicode characters, the characters shall be encoded using the UTF-8 encoding rules. UTF-8 avoids utilizing the control characters that are mandated by the Syslog protocol, but it may appear to be gibberish to a system that is not prepared for UTF-8.</li>
+      <li class="numbered-list1">The PRI field shall be set using the facility value of 10 (security/authorization messages). Most Audit Event messages should have the severity value of 5 (normal but significant), although applications may choose values of 4 (Warning condition) if that is appropriate to the more detailed information in the audit message. This means that for most Audit Event messages the PRI field will contain the value “&lt;85&gt;”.</li>
+      <li class="numbered-list1">The MSGID field in the HEADER of the SYSLOG-MSG shall be set to “IHE+RFC-3881” (minus the quotes). (Note that the use of RFC3881 in the value is retained for backward compatibility.)</li>
+      <li class="numbered-list1">The STRUCTURED-DATA is not used. The MSG field holds the structured event data.</li>
+      <li class="numbered-list1">The MSG field of the SYSLOG-MSG shall be present and shall be an XML structure using UTF-8 minimal length encoding following the DICOM PS3.15 A.5 format, as described in Section 3.20.7 Audit Message Format. The BOM as specified in RFC5424 for use when the MSG is UTF-8 encoded is discouraged, but acceptable, as this is not well supported and discouraged by Unicode.</li>
     </ol>
     <h6 xmlns="" id="3.20.4.1.2.1">3.20.4.1.2.1 Audit Message Transports</h6>
     <p xmlns="">This transaction defines two transport mechanisms for Record Audit Event messages:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Transmission of Syslog messages over TLS (RFC5425) with The Syslog Protocol (RFC5424) which formalizes sending Syslog messages over a streaming protocol protectable by TLS. See Section 3.20.4.1.2.1.1.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Transmission of Syslog messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) which formalizes and obsoletes BSD Syslog protocol defined in RFC3164. See Section 3.20.4.1.2.1.2.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Transmission of Syslog messages over TLS (RFC5425) with The Syslog Protocol (RFC5424) which formalizes sending Syslog messages over a streaming protocol protectable by TLS. See Section 3.20.4.1.2.1.1.</li>
+      <li class="numbered-list1">Transmission of Syslog messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) which formalizes and obsoletes BSD Syslog protocol defined in RFC3164. See Section 3.20.4.1.2.1.2.</li>
     </ol>
     <p xmlns="">The Audit Record Repository shall support both transport mechanisms.</p>
     <p xmlns="">
@@ -380,29 +362,19 @@
     <p xmlns="">The Reliable Syslog “cooked” mode is no longer specified by this transaction. Applications using Reliable Syslog should switch to transmission of Syslog Messages over TLS.</p>
     <h5 xmlns="" id="3.20.4.1.3">3.20.4.1.3 Expected Actions</h5>
     <p xmlns="">An Audit Record Repository (ARR) shall accept any Syslog message that complies with RFC5424. For each Syslog message it may:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Discard the Syslog message as irrelevant.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Retain the Syslog message in an internal data store.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Perform other processing on the Syslog message.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Discard the Syslog message as irrelevant.</li>
+      <li class="numbered-list1">Retain the Syslog message in an internal data store.</li>
+      <li class="numbered-list1">Perform other processing on the Syslog message.</li>
     </ol>
     <p xmlns="">Audit Record Repositories shall accept UTF-8 encodings and store them without damage, i.e., preserve all 8 bits.</p>
     <p xmlns="">Audit Record Forwarders shall accept UTF-8 encodings and forward them without damage, i.e., preserve all 8 bits.</p>
     <p xmlns="">This transaction does not constrain the kind of Syslog messages that can be conveyed, nor does it specify the capacity or capabilities of the data store in the Audit Record Repository. The expectation is that the internal data store on the Audit Record Repository will be used for subsequent analysis and reporting purposes. This transaction does not specify what such activities will be.</p>
     <p xmlns="">The Audit Record Repository may apply a variety of data retention rules to the data store. This transaction does not specify data retention rules. These are usually dependent upon the purposes assigned to a specific Audit Record Repository.</p>
     <p xmlns="">When the Audit Record Repository is grouped with an Audit Record Forwarder, the Audit Record Forwarder shall:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Apply filtering rules to all Syslog messages received by the Audit Record Repository.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Forward all Syslog messages that match filters to their configured destinations.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Apply filtering rules to all Syslog messages received by the Audit Record Repository.</li>
+      <li class="numbered-list1">Forward all Syslog messages that match filters to their configured destinations.</li>
     </ol>
     <h3 xmlns="" id="3.20.5">3.20.5 Security Considerations</h3>
     <p xmlns="">The use of the TLS transport mechanism is recommended because the audit event messages often contain PHI or other sensitive information. See Section 3.20.4.1.2.1.</p>
@@ -547,36 +519,20 @@
       <br />
       <br />
     </p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Who did the disclosure (the releasing agent), </span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>When did the disclosure happen,</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Who was the data disclosed to (receiving agent machine and other parties, if known),</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>What patient was involved (multiple patients would be done as multiple audit entries), </span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>What data was involved, and </span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Why the disclosure was done </span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Who did the disclosure (the releasing agent), </li>
+      <li class="bullet-list1">When did the disclosure happen,</li>
+      <li class="bullet-list1">Who was the data disclosed to (receiving agent machine and other parties, if known),</li>
+      <li class="bullet-list1">What patient was involved (multiple patients would be done as multiple audit entries), </li>
+      <li class="bullet-list1">What data was involved, and </li>
+      <li class="bullet-list1">Why the disclosure was done </li>
     </ul>
     <p xmlns="">
       <span style="background-color:#ffffff">There is some other information that may be available:</span>
     </p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Who is the custodian of the data (the official organization responsible), and</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Who authorized the release such as a guardian or relative (authorizing agent)?</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Who is the custodian of the data (the official organization responsible), and</li>
+      <li class="bullet-list1">Who authorized the release such as a guardian or relative (authorizing agent)?</li>
     </ul>
     <p xmlns="">The following is the layout of the Disclosure audit event. This pattern will be extended and modified by applications when appropriate.</p>
     <table xmlns="" cellspacing="0" cellpadding="0">

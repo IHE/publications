@@ -43,35 +43,27 @@
     <h3 xmlns="" id="3.31.4">3.31.4  Definition of the concept “Movement”</h3>
     <p xmlns="">As stated in Volume 1, a “Movement” is any change of the situation of the patient (location, patient class, attending doctor, etc.) in the context of the encounter.</p>
     <p xmlns="">The concept of “Movement” is a superset of the concept of “Transfer”. Like a transfer, a movement is an event that can be planned (pending) and executed (effective). Errors detected in the recording of these pending and effective events can later be corrected through cancellations or updates, which are distinct events. Three actions are associated with Movements:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list1">
         <span style="font-weight:bold">Insert</span>
         <span>: This action is the first recording of the Movement.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+      <li class="bullet-list1">
         <span style="font-weight:bold">Update</span>
         <span>: This action corrects some attributes of a Movement formerly inserted. This action is possible only with the option “Historic Movement Management” of transaction [ITI-30].</span>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+      <li class="bullet-list1">
         <span style="font-weight:bold">Cancel</span>
         <span>: This action cancels a Movement that was erroneously recorded, and requests the receiver to delete this Movement from its database. Only the current Movement can be cancelled.</span>
       </li>
     </ul>
     <p xmlns="">In some acute care settings, both the billing process and care provision process require precise knowledge of the movements of the inpatient during his or her stay in the hospital. Applications acting as Patient Encounter Supplier or Patient Encounter Consumer, divide the period of the encounter into “sub-encounters” delimited by the Movements. Each of these “sub-encounters” provides a specific context to record and invoice the acts produced within this period. However, if applications on both ends manage sub-encounters, which are periods of time, the messages of transaction [ITI-31] communicate Movements as events. Hence, applications manage periods of time, but the messages carry the discrete events that delimit these periods of time.</p>
     <p xmlns="">Illustration:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Patient received at Emergency room by attending doctor U. (A04 / patient class E).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Doctor U admits the patient (A06 / patient class = I), into location BB, referring him to attending Doctor X.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The patient is moved to location GG (A02Transfer), keeping X for attending doctor.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>The patient is healed and leaves the hospital (A03: Discharge).</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Patient received at Emergency room by attending doctor U. (A04 / patient class E).</li>
+      <li class="numbered-list1">Doctor U admits the patient (A06 / patient class = I), into location BB, referring him to attending Doctor X.</li>
+      <li class="numbered-list1">The patient is moved to location GG (A02Transfer), keeping X for attending doctor.</li>
+      <li class="numbered-list1">The patient is healed and leaves the hospital (A03: Discharge).</li>
     </ol>
     <p xmlns="">These 4 real world events are expressed with 5 trigger events / messages, two of which occur at the same time (step 2). Here the encounter will be divided into 3 sub-encounters:</p>
     <img xmlns="" src="media/ak3aq-ow60c.007.png" width="500" height="141" alt="" />
@@ -412,41 +404,29 @@
     <p xmlns="">The Movement canceled can only be the current Movement (currently active or pending).</p>
     <p xmlns="">This capability is supported by the addition of segment ZBE below PV1/PV2. With this option, this ZBE segment is required at this position in the messages associated with the following trigger events: A01, A02, A03, A04, A05, A06, A07, A11, A12, A13, A14, A15, A16, A21, A22, A25, A26, A27, A38, A52, A53, A54, A55, Z99. In the following sections the ZBE segment is only shown in the message associated with trigger Z99 which is dedicated to the Historic Movement Management Option. In the other messages, this segment will appear whenever this option is active.</p>
     <p xmlns="">This segment ZBE brings the following features:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It enables unique identification of the Movement (including admission and discharge).</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It carries an action code that describes the action to be performed on this Movement: The three possible actions are:</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">It enables unique identification of the Movement (including admission and discharge).</li>
+      <li class="bullet-list1">It carries an action code that describes the action to be performed on this Movement: The three possible actions are:</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list2">
         <span style="font-weight:bold">INSERT</span>
         <span>: The receiver must interpret the content of this message as a new Movement.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
+      <li class="bullet-list2">
         <span style="font-weight:bold">CANCEL</span>
         <span>: This action code is always associated with a “cancel” trigger event. The receiver shall delete the corresponding Movement (matched with its unique identifier). Only the current Movement can be cancelled.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
+      <li class="bullet-list2">
         <span style="font-weight:bold">UPDATE</span>
         <span>: This action code is associated with the dedicated trigger event Z99 described in Section 3.31.7.30. The receiver shall update the corresponding Movement (matched with its unique identifier), which can be the current Movement or a historic Movement.</span>
       </li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>In the case of UPDATE or CANCEL, the ZBE segment carries the code of the original trigger event that was associated with the action INSERT of the related Movement.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It carries an indicator “Historic Movement” informing whether the action to perform is about the current Movement or a Historic one.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It provides the starting date/time of the “sub-encounter” that this Movement initiates.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It carries the ward to which this patient is assigned during this sub-encounter.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">In the case of UPDATE or CANCEL, the ZBE segment carries the code of the original trigger event that was associated with the action INSERT of the related Movement.</li>
+      <li class="bullet-list1">It carries an indicator “Historic Movement” informing whether the action to perform is about the current Movement or a Historic one.</li>
+      <li class="bullet-list1">It provides the starting date/time of the “sub-encounter” that this Movement initiates.</li>
+      <li class="bullet-list1">It carries the ward to which this patient is assigned during this sub-encounter.</li>
     </ul>
     <p xmlns="">This option may apply to any combination of the previous subsets, except Temporary Patient Transfers Tracking (Temporary Patient Transfers do not need to be uniquely identified).</p>
     <p xmlns="">
@@ -624,28 +604,18 @@
       <span style="font-weight:bold">ZBE-4 – Movement Action (ID)</span>
       <span>: Required. Three possible values:</span>
     </p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>INSERT: With any trigger event that inserts a movement.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>UPDATE: With trigger event Z99</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>CANCEL: With any “cancel” trigger event.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">INSERT: With any trigger event that inserts a movement.</li>
+      <li class="bullet-list1">UPDATE: With trigger event Z99</li>
+      <li class="bullet-list1">CANCEL: With any “cancel” trigger event.</li>
     </ul>
     <p xmlns="">
       <span style="font-weight:bold">ZBE-5 –Historical Movement Indicator (ID)</span>
       <span>: Required. Values:</span>
     </p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>‘Y’ when the message is related to a Historic Movement.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>‘N’ when the message is related to the current (last or next) movement.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">‘Y’ when the message is related to a Historic Movement.</li>
+      <li class="bullet-list1">‘N’ when the message is related to the current (last or next) movement.</li>
     </ul>
     <p xmlns="">
       <span style="font-weight:bold">ZBE-6 – Original trigger event code (ID)</span>

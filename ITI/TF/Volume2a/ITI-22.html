@@ -310,40 +310,26 @@
       </a>
     </p>
     <p xmlns="">As in the Patient Demographics Query [ITI-21] transaction, field QPD-8 restricts the set of domains for which identifiers are returned in PID-3:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
+    <ol xmlns="">
+      <li class="numbered-list1">
         <span>In a multiple-domain environment, QPD-8 may be used to identify one or more domains of interest to the Patient Demographics Consumer and from which the Consumer wishes to obtain a value for</span>
         <span style="font-style:italic">PID-3-Patient Identifier</span>
         <span>. Note that the patient information source designated by MSH-5 may or may not be associated with any of the Patient ID Domains listed in</span>
         <span style="font-style:italic">QPD-8-What Domains Returned</span>
         <span>.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>If QPD-8 is empty, the Patient Demographics Supplier shall return all Patient IDs known by the Patient Demographics Supplier for each patient that matches the search criteria. See Case 1 in Section 3.21.4.2.2.8 for details on how this information is returned.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>If QPD-8 is specified and the domains are recognized, the Patient Demographics Supplier shall return the Patient IDs for each patient that matches the search criteria. See Case 2 in Section 3.21.4.2.2.8 for details on how this information is returned.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Any domain not recognized by the Patient Demographics Supplier is an error condition. See Case 3 in Section 3.21.4.2.2.8 how to handle this condition.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>In a single-domain environment, QPD-8 may be ignored by the Patient Demographics Supplier. The Supplier shall always return the identifier from the Patient ID Domain known by the Patient Demographics Supplier.</span>
-      </li>
+      <li class="numbered-list1">If QPD-8 is empty, the Patient Demographics Supplier shall return all Patient IDs known by the Patient Demographics Supplier for each patient that matches the search criteria. See Case 1 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
+      <li class="numbered-list1">If QPD-8 is specified and the domains are recognized, the Patient Demographics Supplier shall return the Patient IDs for each patient that matches the search criteria. See Case 2 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
+      <li class="numbered-list1">Any domain not recognized by the Patient Demographics Supplier is an error condition. See Case 3 in Section 3.21.4.2.2.8 how to handle this condition.</li>
+      <li class="numbered-list1">In a single-domain environment, QPD-8 may be ignored by the Patient Demographics Supplier. The Supplier shall always return the identifier from the Patient ID Domain known by the Patient Demographics Supplier.</li>
     </ol>
     <p xmlns="">Within field QPD-8, only component 4 (Assigning Authority) shall be valued.</p>
     <p xmlns="">The Patient Demographics Supplier may or may not be able to supply additional identifiers from the domains specified in QPD-8. A discussion of how QPD-8 is processed is included in the architectural discussion in the “Using Patient Data Query (PDQ) in a Multi-Domain Environment” section (<a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a>).</p>
     <p xmlns="">The Patient Demographics Consumer shall be able to support at least one of the following mechanisms for specifying QPD-8:</p>
-    <ol xmlns="" type="1" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Transmit an empty value and receive all identifiers in all domains known by the Patient Demographics Supplier (one or more domains), or</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Transmit a single value and receive zero or more identifiers in a single domain, or</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-        <span>Transmit multiple values and receive multiple identifiers in those multiple domains.</span>
-      </li>
+    <ol xmlns="">
+      <li class="numbered-list1">Transmit an empty value and receive all identifiers in all domains known by the Patient Demographics Supplier (one or more domains), or</li>
+      <li class="numbered-list1">Transmit a single value and receive zero or more identifiers in a single domain, or</li>
+      <li class="numbered-list1">Transmit multiple values and receive multiple identifiers in those multiple domains.</li>
     </ol>
     <h6 xmlns="" id="3.22.4.1.2.3">3.22.4.1.2.3      RCP Segment</h6>
     <p xmlns="">The Patient Demographics Consumer shall send attributes within the RCP segment as described in Table 3.22-5. Fields not listed are optional.</p>
@@ -1047,18 +1033,14 @@
     <h5 xmlns="" id="3.22.4.2.3">3.22.4.2.3             Expected Actions</h5>
     <p xmlns="">The Patient Demographics Consumer will use the demographic information provided by the Patient Demographics Supplier to perform the functions for which it requested the information, e.g., providing a pick list to the user.</p>
     <p xmlns="">If the Supplier has sent a DSC segment containing a continuation pointer value, additional increments of data are available upon request by the Consumer. After receiving each increment of data that includes a DSC segment containing a continuation pointer value, the Consumer should take one of the following actions.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+    <ul xmlns="">
+      <li class="bullet-list1">
         <span>If the Consumer wishes to receive another increment of the data, the Consumer reissues the query message using a new unique value in</span>
         <span style="font-style:italic">MSH-10-message control ID</span>
         <span>and adding the DSC segment after the RCP segment. DSC-1 shall echo the continuation pointer returned in RSP^K22 DSC-1 segment.</span>
       </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>If the Consumer does not wish to receive another increment of the data, the Consumer issues a cancel query (QCN^J01) message.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>If the Consumer does not reissue the query or send a cancel query message, the query will eventually terminate.</span>
-      </li>
+      <li class="bullet-list1">If the Consumer does not wish to receive another increment of the data, the Consumer issues a cancel query (QCN^J01) message.</li>
+      <li class="bullet-list1">If the Consumer does not reissue the query or send a cancel query message, the query will eventually terminate.</li>
     </ul>
     <p xmlns="">If the Supplier has not sent a DSC segment containing a continuation pointer value, no more increments of data are available and no further action by the Consumer is required.</p>
     <h4 xmlns="" id="3.22.4.3">3.22.4.3 Canceling a query</h4>

@@ -51,28 +51,18 @@
     <h4 xmlns="" id="27.1.2.1">27.1.2.1 Cross Gateway Patient Discovery [ITI-55]</h4>
     <p xmlns="">The Cross Gateway Patient Discovery transaction supports the ability for Initiating Gateways and Responding Gateways to discover mutually known patients. This transaction assumes an environment where patient data is well described and high-quality demographic data is available.</p>
     <p xmlns="">Because the transaction supports the mutual discovery of patients it can be seen as having dual purposes.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>To support a query by the Initiating Gateway requesting a demographically matching patient from within the Responding Gateway’s community.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>To support a feed to Responding Gateway announcing that the patient is known by the Initiating Gateway’s community.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">To support a query by the Initiating Gateway requesting a demographically matching patient from within the Responding Gateway’s community.</li>
+      <li class="bullet-list1">To support a feed to Responding Gateway announcing that the patient is known by the Initiating Gateway’s community.</li>
     </ul>
     <p xmlns="">This dual nature of the transaction is chosen for scalability purposes, as demographic matching algorithms are expensive on a large scale and once a match is identified it is important that both the initiating and responding sides of the transaction can use the results of that successful match.</p>
     <p xmlns="">The Cross Gateway Patient Discovery transaction has several modes, useful in different environments:</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Demographic Query only mode – in this mode only the demographics of the patient are included in the request. The initiating community does not have, or does not choose to specify, a patient identifier for use by the Responding Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Demographic Query and Feed – in this mode both the demographic and initiating community identifier are included in the request.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Demographic Query only mode – in this mode only the demographics of the patient are included in the request. The initiating community does not have, or does not choose to specify, a patient identifier for use by the Responding Gateway.</li>
+      <li class="bullet-list1">Demographic Query and Feed – in this mode both the demographic and initiating community identifier are included in the request.</li>
     </ul>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:46.52pt;padding-left:7.48pt">
-        <span>Shared/national Patient Identifier Query and Feed – in this mode only a shared/national identifier is specified. Demographics are not necessary because matching can be done on the identifier alone.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list2">Shared/national Patient Identifier Query and Feed – in this mode only a shared/national identifier is specified. Demographics are not necessary because matching can be done on the identifier alone.</li>
     </ul>
     <p xmlns="">This transaction can be used synchronously and asynchronously.</p>
     <h2 xmlns="" id="27.2">27.2 XCPD Actor Options</h2>
@@ -180,46 +170,20 @@
     <p xmlns="">Figure 27.3.2.1-1 shows the transactions involved in sharing healthcare data for one patient among three communities. Details on each interaction follow the diagram. “I&amp;R Gateway” indicates the grouping of Initiating and Responding Gateways.</p>
     <img xmlns="" src="media/a7222-00r44.103.png" width="584" height="499" alt="" />
     <p xmlns="" class="figureTitle">Figure 27.3.2.1-1: Detailed Interactions Peer-to-peer (Informative)</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[1] The patient registers within Community A and a Patient Feed is sent to the Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[2] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community B. Community B consults with its local MPI and, finding no match, responds with no matches, indicating the patient is not known in community B.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[3] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community C. Community C responds with one match including the patient identifier in C.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[4] Community C consults with its local MPI and finds a match. It saves the identifier designated on the Cross Gateway Patient Discovery transaction as Community A’s identifier for this patient.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[5] Community C pre-loads data for this patient by sending a XCA Cross Gateway Query to community A.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[6] This patient is seen, for the first time, within an organization in community B which subsequently requests data about this patient and sends an XDS Registry Stored Query to its local Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[7] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community A. Community A consults its local MPI and responds with one match including the patient identifier in A. Community A saves the identifier designated on the Cross Gateway Patient Discovery transaction as community B’s identifier for this patient.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[8] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in Community C. Community C responds with one match including the patient identifier in C.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[9] Community C consults with its local MPI and finds a match. It saves the identifier designated on the Cross Gateway Patient Discovery transaction as community B’s identifier for this patient.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[10] The community B gateway sends a XCA Cross Gateway Query to both Community A and C because both responded positively to the Cross Gateway Patient Discovery transaction. Both responses are combined by the community B gateway and returned to the organization which originated the XDS Registry Stored Query in step [6].</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[11] An organization in community A requests data about this patient and sends an XDS Registry Stored Query to its local Gateway.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[12] The Gateway has saved the community B identifier in step [7] and Community A identifier in step [3]. But this query may happen days or weeks or years later. To verify the correlation of the identifier, community A’s gateway repeats the Cross Gateway Patient Discovery to both B and C. B and C will consult their local MPI to identify the match.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>[13] Having verified the correlation, community A sends an XCA Cross Gateway Query to both community B and C and combines the responses in order to respond to the XDS Registry Stored Query from step [11].</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">[1] The patient registers within Community A and a Patient Feed is sent to the Gateway.</li>
+      <li class="bullet-list1">[2] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community B. Community B consults with its local MPI and, finding no match, responds with no matches, indicating the patient is not known in community B.</li>
+      <li class="bullet-list1">[3] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community C. Community C responds with one match including the patient identifier in C.</li>
+      <li class="bullet-list1">[4] Community C consults with its local MPI and finds a match. It saves the identifier designated on the Cross Gateway Patient Discovery transaction as Community A’s identifier for this patient.</li>
+      <li class="bullet-list1">[5] Community C pre-loads data for this patient by sending a XCA Cross Gateway Query to community A.</li>
+      <li class="bullet-list1">[6] This patient is seen, for the first time, within an organization in community B which subsequently requests data about this patient and sends an XDS Registry Stored Query to its local Gateway.</li>
+      <li class="bullet-list1">[7] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in community A. Community A consults its local MPI and responds with one match including the patient identifier in A. Community A saves the identifier designated on the Cross Gateway Patient Discovery transaction as community B’s identifier for this patient.</li>
+      <li class="bullet-list1">[8] The Gateway uses the Cross Gateway Patient Discovery transaction to determine if this patient is known in Community C. Community C responds with one match including the patient identifier in C.</li>
+      <li class="bullet-list1">[9] Community C consults with its local MPI and finds a match. It saves the identifier designated on the Cross Gateway Patient Discovery transaction as community B’s identifier for this patient.</li>
+      <li class="bullet-list1">[10] The community B gateway sends a XCA Cross Gateway Query to both Community A and C because both responded positively to the Cross Gateway Patient Discovery transaction. Both responses are combined by the community B gateway and returned to the organization which originated the XDS Registry Stored Query in step [6].</li>
+      <li class="bullet-list1">[11] An organization in community A requests data about this patient and sends an XDS Registry Stored Query to its local Gateway.</li>
+      <li class="bullet-list1">[12] The Gateway has saved the community B identifier in step [7] and Community A identifier in step [3]. But this query may happen days or weeks or years later. To verify the correlation of the identifier, community A’s gateway repeats the Cross Gateway Patient Discovery to both B and C. B and C will consult their local MPI to identify the match.</li>
+      <li class="bullet-list1">[13] Having verified the correlation, community A sends an XCA Cross Gateway Query to both community B and C and combines the responses in order to respond to the XDS Registry Stored Query from step [11].</li>
     </ul>
     <h4 xmlns="" id="27.3.2.2">27.3.2.2 Hierarchical use of Cross Gateway Patient Discovery (Informative)</h4>
     <p xmlns="">The Cross Gateway Patient Discovery transaction has been designed to support the use of a Responding Gateway representing multiple organizations where each has its own patient identification domain and there is no patient identification domain in common across the organizations represented.</p>
@@ -236,25 +200,15 @@
     <p xmlns="">The purpose of this risk assessment is to notify vendors of some of the risks that they are advised to consider in implementing XCPD actors. For general IHE risks and threats please see <a href="../Volume1/ch-49.html#Appendix L">ITI TF-1: Appendix L</a>. The vendor is also advised that many risks cannot be mitigated by the IHE profile and instead the responsibility for mitigation is transferred to the vendor, and occasionally to the XDS Affinity Domain and enterprises. In these instances, IHE fulfills its responsibility to notify affected parties through the following section.</p>
     <h3 xmlns="" id="27.4.1">27.4.1 Requirements/Recommendations</h3>
     <p xmlns="">The following mitigations shall be implemented by all XCPD actors. These mitigations moderate all high impact risks.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>All actors in XCPD shall be grouped with an ATNA Secure Node (or ATNA Secure Application) and a CT Time Client Actor.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>As a consequence of grouping with ATNA Secure Node or Secure Application both incoming and outgoing messages will be via a secure communication channel, including all WS-Addressing based Asynchronous response messages.</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">All actors in XCPD shall be grouped with an ATNA Secure Node (or ATNA Secure Application) and a CT Time Client Actor.</li>
+      <li class="bullet-list1">As a consequence of grouping with ATNA Secure Node or Secure Application both incoming and outgoing messages will be via a secure communication channel, including all WS-Addressing based Asynchronous response messages.</li>
     </ul>
     <p xmlns="">The following mitigations are transferred to the vendors, XDS Affinity Domains, and enterprises.</p>
-    <ul xmlns="" type="disc" style="margin:0pt; padding-left:0pt">
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>Network protection services are recommended to be sufficient to guard against denial of service attacks on all service interfaces.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>A process that reviews audit records and acts on inappropriate actions is recommended.</span>
-      </li>
-      <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-        <span>It is recommended that service interfaces be implemented with a good design to guard against corruption and denial of service attacks</span>
-      </li>
+    <ul xmlns="">
+      <li class="bullet-list1">Network protection services are recommended to be sufficient to guard against denial of service attacks on all service interfaces.</li>
+      <li class="bullet-list1">A process that reviews audit records and acts on inappropriate actions is recommended.</li>
+      <li class="bullet-list1">It is recommended that service interfaces be implemented with a good design to guard against corruption and denial of service attacks</li>
     </ul>
     <h3 xmlns="" id="27.4.2">27.4.2 Policy Choices</h3>
     <p xmlns="">Policy choices will not be addressed by this profile. Each community may have different policies. The profile has been designed with this fact in mind and an understanding of enough variety of policies so that any reasonable policy can be implemented without violating the profile.</p>
