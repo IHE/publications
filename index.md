@@ -10,8 +10,12 @@
   * [ITI TF volume 3](ITI/TF/Volume3/index.html)
   * etc...
 * Trial Implementation Supplements
-  * [MHD](MHD/index.html)
-  * [FormatCodes](FormatCodes/index.html)
+  * [Mobile Health Documents (MHD)](ITI/MHD/index.html)
+  * [Global IHE defined FormatCode Vocabulary](ITI/FormatCodes/index.html)
+* White Papers and Handbooks
+  * [Enabling Document Sharing Health Information Exchange Using IHE Profiles](https://ihe.github.io/HIE-Whitepaper/)
+  * [Survey of Network Interfaces Form (SNIF)](https://ihe.github.io/SNIF/SNIF-Whitepaper.html)
+  * [Document Sharing Metadata Handbook](https://ihe.github.io/IHE-MetadataHandbook/MetadataHandbook.html)
 
 # PCC
 * Final Text Technical Framework
