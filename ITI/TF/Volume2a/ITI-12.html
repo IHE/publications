@@ -16,9 +16,9 @@
     </p>
     <h2 xmlns="" id="3.12">3.12 Retrieve Document for Display [ITI-12]</h2>
     <p xmlns="">This section corresponds to transaction [ITI-12] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-12] is used by the Information Source and Display Actors.</p>
-    <h3 xmlns="" id="3.12.1">3.12.1  Scope</h3>
+    <h3 xmlns="" id="3.12.1">3.12.1 Scope</h3>
     <p xmlns="">This transaction involves the retrieval of a document (persistent object) for presentation purposes. The uniquely identifiable persistent object means that retrieving the same document instance at a different point in time will provide the same semantics for its presented content. The information content of the document is immutable even if the presentation of such content is provided with the use of different formats, stylesheets, etc.</p>
-    <h3 xmlns="" id="3.12.2">3.12.2  Use Case Roles</h3>
+    <h3 xmlns="" id="3.12.2">3.12.2 Use Case Roles</h3>
     <img xmlns="" src="media/alql6-rgeyz.028.png" width="365" height="125" alt="" />
     <p xmlns="">
       <span style="font-weight:bold">Actor:</span>
@@ -36,7 +36,7 @@
       <span style="font-weight:bold">Role:</span>
       <span>A system that provides specific information in response to the request from the Display Actor, in a presentation-ready format.</span>
     </p>
-    <h3 xmlns="" id="3.12.3">3.12.3  Referenced Standards</h3>
+    <h3 xmlns="" id="3.12.3">3.12.3 Referenced Standards</h3>
     <p xmlns="">RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
     <p xmlns="">
       <span>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000. .</span>
@@ -50,13 +50,13 @@
         <span style="text-decoration:underline">http://www.w3.org/TR/wsdl</span>
       </a>
     </p>
-    <h3 xmlns="" id="3.12.4">3.12.4  Messages</h3>
+    <h3 xmlns="" id="3.12.4">3.12.4 Messages</h3>
     <img xmlns="" src="media/alql6-rgeyz.029.png" width="392" height="192" alt="" />
     <p xmlns="" class="figureTitle">Figure 3.12-1: Request for Persistent Document Sequence</p>
     <h4 xmlns="" id="3.12.4.1">3.12.4.1 Request for Persistent Document</h4>
-    <h5 xmlns="" id="3.12.4.1.1">3.12.4.1.1             Trigger Events</h5>
+    <h5 xmlns="" id="3.12.4.1.1">3.12.4.1.1 Trigger Events</h5>
     <p xmlns="">The request for a document is triggered when a user of the Display needs to review a particular document that is stored by the Information Source Actor.</p>
-    <h5 xmlns="" id="3.12.4.1.2">3.12.4.1.2             Message Semantics</h5>
+    <h5 xmlns="" id="3.12.4.1.2">3.12.4.1.2 Message Semantics</h5>
     <p xmlns="">The Retrieve Document for Display transaction is performed by the invocation of a web service. The Display shall generate the web service request whenever a user needs to review the document stored as part of a patient’s clinical history on the Information Source Actor.</p>
     <p xmlns="">The web service request shall include the following parameters (keys) to identify the document to be returned and its format (see Table 3.12.4-1). All parameter names and values are case-sensitive.</p>
     <p xmlns="" class="tableTitle">Table 3.12.4-1: Query Keys</p>
@@ -172,7 +172,7 @@
     <p xmlns="">The Information Source shall provide info in preferredContentType if capable, otherwise it shall only use a type specified in the Accept Field as appropriate given the information to be returned.</p>
     <p xmlns="">If necessary, the Display may perform the request to the web service utilizing HTTPS protocol.</p>
     <p xmlns="">Information Source Actors may return HTTP redirect responses (responses with values of 301, 302, 303 or 307) in response to a request. Display Actors can expect to receive an error response, or the data requested, or a request to look elsewhere for the data. A Display must follow redirects, but if a loop is detected, it may report an error.</p>
-    <h5 xmlns="" id="3.12.4.1.3">3.12.4.1.3             Expected Actions</h5>
+    <h5 xmlns="" id="3.12.4.1.3">3.12.4.1.3 Expected Actions</h5>
     <p xmlns="">Upon reception of the Request for Specific Information, the Information Source shall parse the request and shall return the retrieved document as specified in Section 3.12.4.2, and HTTP response code 200 - OK.</p>
     <p xmlns="">If the requestType specified is a not a legal value according to this profile, the Information Source shall return HTTP response-code 403 (forbidden) with the suggested reason-phrase “requestType not supported”.</p>
     <p xmlns="">If the Information Source is not able to format the document in any content types listed in the 'Accept' field, it shall return HTTP response code 406 – Not Acceptable.</p>
@@ -184,13 +184,13 @@
     <p xmlns="" style="font-size:9pt">Note:  It is recommended that the Information Source complement returned error code with a human readable description of the error condition.</p>
     <p xmlns="">If an error condition cannot be automatically recovered, at a minimum, the error should be displayed to the user by the Display Actor.</p>
     <h4 xmlns="" id="3.12.4.2">3.12.4.2 Delivery of Persistent Document</h4>
-    <h5 xmlns="" id="3.12.4.2.1">3.12.4.2.1             Trigger Events</h5>
+    <h5 xmlns="" id="3.12.4.2.1">3.12.4.2.1 Trigger Events</h5>
     <p xmlns="">The Delivery of Persistent Document message is the transmission of the requested document in specified format from the Information Source to the Display. This transmission will happen if such document, identified by the documentUID parameter in the request, has been successfully located by the Information Source Actor.</p>
-    <h5 xmlns="" id="3.12.4.2.2">3.12.4.2.2             Message Semantics</h5>
+    <h5 xmlns="" id="3.12.4.2.2">3.12.4.2.2 Message Semantics</h5>
     <p xmlns="">In response to the request from the Display Actor, the Information Source shall format the document according to the preferredContentType specified, and return it in the HTTP response. See Section 3.12.4.1.2 for a discussion of the rules related to preferredContentType.</p>
     <p xmlns="">The Information Source shall maintain global uniqueness of object identifiers.</p>
     <p xmlns="">The Information Source shall set an expiration date compatible with the policies associated with the possible removal of instances of persistent documents (no more than a week).</p>
-    <h5 xmlns="" id="3.12.4.2.3">3.12.4.2.3             Expected Actions</h5>
+    <h5 xmlns="" id="3.12.4.2.3">3.12.4.2.3 Expected Actions</h5>
     <p xmlns="">The Display shall render the received document for the user.</p>
   </body>
 </html>

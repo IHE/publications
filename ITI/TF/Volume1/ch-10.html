@@ -14,7 +14,7 @@
     <p>
       <hr />
     </p>
-    <h1 xmlns="" id="10">10    Cross-Enterprise Document Sharing (XDS.b)</h1>
+    <h1 xmlns="" id="10">10 Cross-Enterprise Document Sharing (XDS.b)</h1>
     <p xmlns="">
       <span>The</span>
       <span style="font-weight:bold;font-style:italic">Cross-Enterprise Document Sharing</span>
@@ -194,25 +194,25 @@
       <span style="width:9.25pt;text-indent:0pt;display:inline-block"> </span>
       <span>Document Registry and Patient Identify Source shall implement at least one of Patient Identity Feed [ITI-8] or Patient Identity Feed HL7v3 [ITI-44].</span>
     </p>
-    <h3 xmlns="" id="10.1.1">10.1.1  Actor Descriptions and Actor Profile Requirements</h3>
+    <h3 xmlns="" id="10.1.1">10.1.1 Actor Descriptions and Actor Profile Requirements</h3>
     <p xmlns="">Most requirements are documented in Transactions (Volume 2). This section documents any additional requirements on this profile’s actors.</p>
-    <h4 xmlns="" id="10.1.1.1">10.1.1.1                    Document Source</h4>
+    <h4 xmlns="" id="10.1.1.1">10.1.1.1 Document Source</h4>
     <p xmlns="">The Document Source is the producer and publisher of documents. It is responsible for sending documents to a Document Repository Actor. It also supplies metadata to the Document Repository for subsequent registration of the documents with the Document Registry Actor.</p>
     <p xmlns="">An implementation of the Document Source shall be able to submit documents. Whether a submission contains a single document or multiple documents depends on workflows, policies, and other external factors which are outside of the scope of this Profile.</p>
-    <h4 xmlns="" id="10.1.1.2">10.1.1.2                    Document Consumer</h4>
+    <h4 xmlns="" id="10.1.1.2">10.1.1.2 Document Consumer</h4>
     <p xmlns="">The Document Consumer queries a Document Registry for documents meeting certain criteria, and retrieves selected documents from one or more Document Repository Actors.</p>
-    <h4 xmlns="" id="10.1.1.3">10.1.1.3                    Document Registry</h4>
+    <h4 xmlns="" id="10.1.1.3">10.1.1.3 Document Registry</h4>
     <p xmlns="">The Document Registry maintains metadata about each registered document in a document entry. This includes a link to the Document in the Repository where it is stored. The Document Registry responds to queries from Document Consumer Actors about documents meeting specific criteria. It also enforces some healthcare specific technical policies at the time of document registration.</p>
-    <h4 xmlns="" id="10.1.1.4">10.1.1.4                    Document Repository</h4>
+    <h4 xmlns="" id="10.1.1.4">10.1.1.4 Document Repository</h4>
     <p xmlns="">The Document Repository is responsible for both the persistent storage of these documents as well as for their registration with the appropriate Document Registry. It assigns a uniqueId to documents for subsequent retrieval by a Document Consumer.</p>
-    <h4 xmlns="" id="10.1.1.5">10.1.1.5                    Patient Identity Source</h4>
+    <h4 xmlns="" id="10.1.1.5">10.1.1.5 Patient Identity Source</h4>
     <p xmlns="">The Patient Identity Source is a provider of unique identifier for each patient and maintains a collection of identity traits. The Patient Identify Source facilitates the validation of patient identifiers by the Registry in its interactions with other actors.</p>
-    <h4 xmlns="" id="10.1.1.6">10.1.1.6                    Integrated Document Source/Repository</h4>
+    <h4 xmlns="" id="10.1.1.6">10.1.1.6 Integrated Document Source/Repository</h4>
     <p xmlns="">The Integrated Document Source/Repository combines the functionality of the Document Source and Document Repository Actors into a single actor that does not initiate nor accept the Provide and Register Document Set transaction. This actor may replace the Document Repository from the perspective of the Register Document Set or Retrieve Document transactions.</p>
     <h4 xmlns="" id="10.1.1.7">10.1.1.7 On-Demand Document Source</h4>
     <p xmlns="">The On-Demand Document Source supports On-Demand Document Entries by registering this type of entry with the Document Registry and by responding to Retrieve Document Set transactions for those entries with a document reflecting current information for the entry requested.</p>
-    <h3 xmlns="" id="10.1.2">10.1.2  Transactions</h3>
-    <h4 xmlns="" id="10.1.2.1">10.1.2.1                    Provide and Register Document Set</h4>
+    <h3 xmlns="" id="10.1.2">10.1.2 Transactions</h3>
+    <h4 xmlns="" id="10.1.2.1">10.1.2.1 Provide and Register Document Set</h4>
     <p xmlns="">A Document Source initiates the Provide and Register Document Set Transaction. For each document in the submitted set, the Document Source provides both the documents as an opaque octet stream and the corresponding metadata to the Document Repository. The Document Repository is responsible to persistently store these documents, and to register them in the Document Registry using the Register Documents transaction by forwarding the document metadata received from the Document Source Actor.</p>
     <p xmlns="">In XDS, the documents and metadata go to the Document Repository and then the metadata is forwarded on to the Document Registry Actor. They move in this direction for several reasons:</p>
     <ul xmlns="">
@@ -222,13 +222,13 @@
       <li class="bullet-list1">It simplifies the common case where the Document Source and the Document Repository are grouped.</li>
     </ul>
     <p xmlns="">This transaction cannot carry an On-Demand DocumentEntry but can be used to replace an On-Demand DocumentEntry with a Stable DocumentEntry.</p>
-    <h4 xmlns="" id="10.1.2.2">10.1.2.2                    Register Document Set</h4>
+    <h4 xmlns="" id="10.1.2.2">10.1.2.2 Register Document Set</h4>
     <p xmlns="">A Document Repository initiates the Register Document Set transaction. This transaction allows a Document Repository to register one or more documents with a Document Registry, by supplying metadata about each document to be registered. This document metadata will be used to create an XDS Document Entry in the registry. The Document Registry ensures that document metadata is valid before allowing documents to be registered. If one or more documents fail the metadata validation, the Register Document Set transaction fails as a whole.</p>
     <p xmlns="">To support composite documents, an XDS Document may be a multipart document. The Document Repository must handle multi-part data sets as an “opaque entity”. The Document Repository does not need to analyze or process its multi-part structure nor the content of any parts in the context of the XDS Integration Profile.</p>
     <p xmlns="">This transaction may also include Associations. For example, an Association may be included to replace an On-Demand DocumentEntry with a Stable DocumentEntry.</p>
     <p xmlns="">This transaction cannot carry an On-Demand DocumentEntry but can be used to replace an On-Demand DocumentEntry with a Stable DocumentEntry.</p>
-    <h4 xmlns="" id="10.1.2.3">10.1.2.3                    Intentionally Left Blank</h4>
-    <h4 xmlns="" id="10.1.2.4">10.1.2.4                    Registry Stored Query</h4>
+    <h4 xmlns="" id="10.1.2.3">10.1.2.3 Intentionally Left Blank</h4>
+    <h4 xmlns="" id="10.1.2.4">10.1.2.4 Registry Stored Query</h4>
     <p xmlns="">The Registry Stored Query transaction is issued by the Document Consumer on behalf of a care provider (EHR-CR) to a Document Registry. The Document Registry searches the registry to locate documents that meet the provider’s specified query criteria. It will return registry metadata containing a list of document entries found to meet the specified criteria including the locations and identifier of each corresponding document in one or more Document Repositories.</p>
     <p xmlns="">In a Stored Query, the definition of the query is stored on the Registry Actor. To invoke the query, an identifier associated with the query is transmitted along with parameters defined by the query. This has the following benefits:</p>
     <ol xmlns="">
@@ -236,18 +236,18 @@
       <li class="numbered-list1">Alternate database styles and schemas can be used to implement the Document Registry Actor. This is because the style of SQL query statements is directly related to the table layout in a relational database.</li>
     </ol>
     <p xmlns="">This profile does not define how Stored Queries are loaded into or implemented in the Document Registry Actor.</p>
-    <h4 xmlns="" id="10.1.2.5">10.1.2.5                    Intentionally Left Blank</h4>
-    <h4 xmlns="" id="10.1.2.6">10.1.2.6                    Patient Identity Feed</h4>
+    <h4 xmlns="" id="10.1.2.5">10.1.2.5 Intentionally Left Blank</h4>
+    <h4 xmlns="" id="10.1.2.6">10.1.2.6 Patient Identity Feed</h4>
     <p xmlns="">The Patient Identity Feed Transaction conveys the patient identifier and corroborating demographic data, captured when a patient’s identity is established, modified or merged or in cases where the key corroborating demographic data has been modified. Its purpose in the XDS Integration Profile is to populate the registry with patient identifiers that have been registered for the XDS Affinity Domains.</p>
     <p xmlns="">The Patient Identify Feed Transaction defined in <a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a> for HL7v2 and in <a href="../Volume2b/ITI-44.html#3.44">ITI TF-2b: 3.44</a> for HL7v3 uses standard HL7 encoding of Patient Identifiers. This is standard encoding for HL7 applications; receiving applications are expected to extract the required data for their use.</p>
     <p xmlns="">When combined with the other XDS transactions, Document Registry Actors and other actors that receive HL7 data with Patient Identifiers are required to map the data received in the HL7 message to the format specified in those other XDS transactions. In those transactions, the Patient ID is treated using ebXML encoding rules and not HL7 encoding rules. Specifically, the Patient ID will be treated as a string, and extra components entered in that string shall cause those transactions to fail. XDS actors are required to use the specified encoding for Patient ID values in other transactions and not merely copy the value received in an HL7 transaction.</p>
     <p xmlns="">XDS.b implementations shall support either Patient Identity Feed (<a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>) or Patient Identity Feed HL7v3 (<a href="../Volume2b/ITI-44.html#3.44">ITI TF-2b: 3.44</a>) or both. It is important to note that the version of HL7 implemented by XDS.b and Patient Identity Feed in a single domain or community need to match in order to allow interoperability. In the case of mixed scenarios, translation between Patient Identity Feed (<a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>) and Patient Identity Feed HL7v3 (<a href="../Volume2b/ITI-44.html#3.44">ITI TF-2b: 3.44</a>) will be required via a bridge or interface engine.</p>
-    <h4 xmlns="" id="10.1.2.7">10.1.2.7                    Retrieve Document Set</h4>
+    <h4 xmlns="" id="10.1.2.7">10.1.2.7 Retrieve Document Set</h4>
     <p xmlns="">A Document Consumer initiates the Retrieve Document Set transaction. The Document Repository or On-Demand Document Source shall return the document set that was specified by the Document Consumer.</p>
     <h4 xmlns="" id="10.1.2.8">10.1.2.8 Register On-Demand Document Entry</h4>
     <p xmlns="">The Register On-Demand Document Entry transaction is used by the On-Demand Document Source to register one or more On-Demand Document Entries in the Document Registry.</p>
     <p xmlns="">This transaction may also include Associations. For example, an Association may be included to replace an On-Demand DocumentEntry with a new On-Demand DocumentEntry, replace a Stable DocumentEntry with an On-Demand DocumentEntry, or add an On-Demand DocumentEntry to a Folder.</p>
-    <h3 xmlns="" id="10.1.3">10.1.3  XDS Document Contents Support</h3>
+    <h3 xmlns="" id="10.1.3">10.1.3 XDS Document Contents Support</h3>
     <p xmlns="">The following table lists a few of the document contents supported in other IHE Integration Profiles, which specify concrete content types for sharing of clinical documents in various domains. These profiles are built on the XDS Profile, and may define additional constraints and semantics for cross-enterprise document sharing in their specific use cases.</p>
     <p xmlns="" class="tableTitle">Table 10.1-1: List of IHE Integration Profiles and Document Types They Support</p>
     <table xmlns="" cellspacing="0" cellpadding="0">
@@ -279,7 +279,7 @@
         </tr>
       </tbody>
     </table>
-    <h2 xmlns="" id="10.2">10.2  XDS.b Actor Options</h2>
+    <h2 xmlns="" id="10.2">10.2 XDS.b Actor Options</h2>
     <p xmlns="">Options that may be selected for each actor in this profile, if any, are listed in Table 10.2-1. Dependencies between options when applicable are specified in notes.</p>
     <p xmlns="" class="tableTitle">Table 10.2-1b: XDS.b - Actors and Options</p>
     <table xmlns="" cellspacing="0" cellpadding="0">
@@ -421,16 +421,16 @@
       <span style="width:9.25pt;text-indent:0pt;display:inline-block"> </span>
       <span>Document Registry and Patient Identify Source shall implement at least one of Patient Identity Feed or Patient Identity Feed HL7v3.</span>
     </p>
-    <h3 xmlns="" id="10.2.1">10.2.1  Document Replacement Option</h3>
+    <h3 xmlns="" id="10.2.1">10.2.1 Document Replacement Option</h3>
     <p xmlns="">In this option the Document Source or Integrated Document Source/Repository shall offer the ability to submit a document as a replacement for another document already in the registry/repository.</p>
     <p xmlns="" style="font-size:9pt">Note: In order to support document replacement, grouping with the Document Consumer may be necessary in order to Query the Document Registry (e.g., for UUIDs of existing document entries).</p>
-    <h3 xmlns="" id="10.2.2">10.2.2  Document Addendum Option</h3>
+    <h3 xmlns="" id="10.2.2">10.2.2 Document Addendum Option</h3>
     <p xmlns="">In this option the Document Source or Integrated Document Source/Repository shall offer the ability to submit a document as an addendum to another document already in the registry/repository.</p>
     <p xmlns="" style="font-size:9pt">Note: In order to support document addendum, grouping with the Document Consumer may be necessary in order to Query the Document Registry (e.g., for UUIDs of existing document entries).</p>
-    <h3 xmlns="" id="10.2.3">10.2.3  Document Transformation Option</h3>
+    <h3 xmlns="" id="10.2.3">10.2.3 Document Transformation Option</h3>
     <p xmlns="">In this option the Document Source or Integrated Document Source/Repository shall offer the ability to submit a document as a transformation of another document already in the registry/repository.</p>
     <p xmlns="" style="font-size:9pt">Note: In order to support document transformation, grouping with the Document Consumer may be necessary in order to Query the Document Registry (e.g., for UUIDs of existing document entries).</p>
-    <h3 xmlns="" id="10.2.4">10.2.4  Folder Management Option</h3>
+    <h3 xmlns="" id="10.2.4">10.2.4 Folder Management Option</h3>
     <p xmlns="">In this option the Document Source offers the ability to perform the following operation:</p>
     <ul xmlns="">
       <li class="bullet-list1">
@@ -442,7 +442,7 @@
       <li class="bullet-list1">Add one or more documents to a folder</li>
     </ul>
     <p xmlns="" style="font-size:9pt">Note: In order to support document addition to an existing folder, grouping with the Document Consumer may be necessary in order to Query the registry (e.g., for UUIDs of existing folder).</p>
-    <h3 xmlns="" id="10.2.5">10.2.5  Asynchronous Web Services Exchange Option (WS-Addressing based)</h3>
+    <h3 xmlns="" id="10.2.5">10.2.5 Asynchronous Web Services Exchange Option (WS-Addressing based)</h3>
     <p xmlns="">Asynchronous processing is necessary to support scaling to large numbers of sources and recipients because Asynchronous Web Services Exchange allows for more efficient handling of latency and scale. This WS-Addressing Asynchronous Web Services Exchange stack relies on the Web Service Addressing Stack (see also ITI TF-2x: Appendix V.3).</p>
     <p xmlns="">Actors that support this option shall support the following:</p>
     <ul xmlns="">
@@ -453,11 +453,11 @@
       <li class="bullet-list1">On-Demand Document Source shall support WS-Addressing based Asynchronous Web Services Exchange for the Register On-Demand Document Entry [ITI-61] and Retrieve Document Set [ITI-43] transactions</li>
     </ul>
     <p xmlns="">Use of Synchronous or Asynchronous Web Services Exchange is dictated by the individual install environment and affinity domain policy.</p>
-    <h3 xmlns="" id="10.2.6">10.2.6  Reference ID Option</h3>
+    <h3 xmlns="" id="10.2.6">10.2.6 Reference ID Option</h3>
     <p xmlns="">A Document Registry that supports this option shall store the referenceIdList value provided in a Register Document Set-b [ITI-42] transaction and shall implement the FindDocumentsByReferenceId query as specified in <a href="../Volume2a/ITI-18.html#3.18.4.1.2.3.7.14">ITI TF-2a: 3.18.4.1.2.3.7.14</a>. Document Consumers may use this query to discover documents that have specified values in the document entry metadata referenceIdList.</p>
     <p xmlns="">Document Consumers that use this query will need to be robust to Registries that don’t support the query, for example, falling back to the FindDocuments query and filtering the results locally. The Document Consumers will need to also be robust to missing reference Id values due to Document Source Actors that don’t include the referenceIdList metadata values, or don’t include all the reference identifier values expected; or where other inconsistent results may be returned (e.g., XCA gateways which may have different or changing availability of relevant reference ids).</p>
     <p xmlns="">Document Consumers may fall back to issuing an alternative query, such as FindDocuments, and filtering locally, if the availability or comprehensiveness of a FindDocumentsByReferenceId result is not assured. For example, if an Affinity Domain cannot guarantee that a FindDocumentsByReferenceId result of a single Document Entry matching an order id is in fact the only Document Entry in the registry for that order id (as opposed to the only Document Entry with that order id in its referenceIdList), then a Document Consumer might issue FindDocuments queries instead.</p>
-    <h3 xmlns="" id="10.2.7">10.2.7  On-Demand Documents Option</h3>
+    <h3 xmlns="" id="10.2.7">10.2.7 On-Demand Documents Option</h3>
     <p xmlns="">The XDS Integration Profile offers a basic service where any document consumer may discover and retrieve any of the documents for a specific patient that document sources have chosen to make available. Time of release and attestation of content are under the full control/responsibility of the document source. The On-Demand Documents Option offers a complementary service for document consumers to discover one or more document sources that have the capability to produce, for a specific patient, an on-demand document with content assembled at the time of processing the document consumer retrieve request.</p>
     <p xmlns="">A Document Consumer declares the On-Demand Documents Option when it is able to specify in a query a request for On-Demand Document Entries and is capable of retrieving such entries.</p>
     <p xmlns="">A Document Registry declares the On-Demand Documents Option when it:</p>
@@ -466,9 +466,9 @@
       <li class="bullet-list1">is also able to respond to Registry Stored Query requests which request On-Demand Document Entries</li>
       <li class="bullet-list1">stores IsSnapShotOf associations received on a Register Document Set-b transaction</li>
     </ul>
-    <h3 xmlns="" id="10.2.8">10.2.8  Persistence of Retrieved Documents Option</h3>
+    <h3 xmlns="" id="10.2.8">10.2.8 Persistence of Retrieved Documents Option</h3>
     <p xmlns="">An On-Demand Document Source which supports the Persistence of Retrieved Documents Option shall be grouped with either a Document Source or an Integrated Document Source/Repository in order to register in the Document Registry a new Stable Document Entry which represents each document created as a result of receipt of a Retrieve Document Set which specified the uniqueID of an On-Demand Document Entry. This grouped Document Source or Integrated Source/Repository shall include in the registration an association indicating that the Document Entry begin registered is a snapshot of the On-Demand Document Entry.</p>
-    <h3 xmlns="" id="10.2.9">10.2.9  Basic Patient Privacy Enforcement Option</h3>
+    <h3 xmlns="" id="10.2.9">10.2.9 Basic Patient Privacy Enforcement Option</h3>
     <p xmlns="">An actor that is claiming the Basic Patient Privacy Enforcement Option will enforce Basic Patient Privacy Policies as identified using the Basic Patient Privacy Consent Profile. The enforcement of Basic Patient Privacy utilizes the DocumentEntry metadata that is relevant to security, see <a href="../Volume3/ch-1.1.html#4.1.3">ITI TF-3:4.1.3</a> “The Purpose of Metadata Attributes”.</p>
     <ul xmlns="">
       <li class="bullet-list0">Actors shall be able to be configured with the Patient Privacy Policies, Patient Privacy Policy Identifiers (OIDs) and associated information necessary to understand and enforce the XDS Affinity Domain Policy. The details of this are product specific and not specified by IHE.</li>
@@ -477,7 +477,7 @@
       <li class="bullet-list0">Document Consumer Actors shall implement the requirements defined in <a href="../Volume2a/ITI-18.html#3.18.4.1.3.5">ITI TF-2a: 3.18.4.1.3.5</a></li>
       <li class="bullet-list0">Actors that create metadata may have user interface or business rule capabilities to determine the appropriate confidentiality codes for each document, see <a href="../Volume3/ch-1.2.html#4.2.3.2.5">ITI TF-3: 4.2.3.2.5</a>. For example, when publishing a document, the Document Source might show a list of checkboxes where a user can select which of the available confidentiality codes a document is to be published with. The details of this are product specific and not specified by IHE. However, the information about how confidentiality codes are assigned should be part of the published policy for the XDS Affinity Domain.</li>
     </ul>
-    <h3 xmlns="" id="10.2.10">10.2.10      Delayed Document Assembly Option</h3>
+    <h3 xmlns="" id="10.2.10">10.2.10 Delayed Document Assembly Option</h3>
     <p xmlns="">A Document Consumer declares the Delayed Document Assembly Option when it is able to understand that some documents included in the response to a Registry Stored Query will have a zero size and hash value but once retrieved those attributes will be updated to the correct values.</p>
     <p xmlns="">An Integrated Document Source/Repository declares the Delayed Document Assembly Option if it is able to:</p>
     <ul xmlns="">
@@ -546,8 +546,8 @@
       <li class="numbered-list1">The patient returns to the cardiologist for the post discharge follow-up visit. The resulting visit note, cardiac rehab and summary letters are placed in a “cardiology office visit” submission set and in the “cardiac treatment” Folder.</li>
       <li class="numbered-list1">The patient goes to rehab sessions as scheduled by the cardiologist. The patient recovers and is seen by the PCP and cardiologist for routine visits.</li>
     </ol>
-    <h2 xmlns="" id="10.4">10.4  General Principles</h2>
-    <h3 xmlns="" id="10.4.1">10.4.1  EDR-CR Concept</h3>
+    <h2 xmlns="" id="10.4">10.4 General Principles</h2>
+    <h3 xmlns="" id="10.4.1">10.4.1 EDR-CR Concept</h3>
     <p xmlns="">An EHR-CR or Care-delivery Record abstracts the information system or systems of a care delivery organization, which may support a broad variety of healthcare facilities: private practice, nursing home, ambulatory clinic, acute care in-patient facility, etc.</p>
     <p xmlns="">Typically, a patient goes through a sequence of encounters in different care settings as depicted in the figure below.</p>
     <img xmlns="" src="media/a7222-00r44.031.png" width="567" height="357" alt="" />
@@ -572,13 +572,13 @@
       <span style="font-weight:bold">Figure 10.4.1-2: Contributing and sharing to a patients’ longitudinal health record</span>
     </p>
     <p xmlns="">This shared clinical record is called an EHR-LR in this Integration Profile.</p>
-    <h3 xmlns="" id="10.4.2">10.4.2  XDS Document Concept</h3>
+    <h3 xmlns="" id="10.4.2">10.4.2 XDS Document Concept</h3>
     <p xmlns="">An XDS Document is the smallest unit of information that may be provided to a Document Repository and be registered as an entry in the Document Registry Actor.</p>
     <p xmlns="">An XDS Document is a composition of clinical information that contains observations and services for the purpose of exchange with the following characteristics: Persistence, Stewardship, Potential for Authentication, and Wholeness. These characteristics are defined in the HL7 Clinical Document Architecture specification. An XDS Document may be human readable (with the appropriate application). In any case, it should comply with a published standard defining its structure, content and encoding. IHE intends to define content-oriented Integration Profiles relying on such content standards to be used in conjunction with XDS.</p>
     <p xmlns="">The XDS Integration Profile manages XDS Documents as a single unit of information; it does not provide mechanisms to access portions of an XDS Document. Only the Document Sources or Document Consumers have access to the internal information of the XDS Document. When submitted for sharing, an XDS Document is provided to the Document Repository as an octet stream. When retrieved through the Retrieve Document Set transaction, it shall be unchanged from the octet stream that was submitted.</p>
     <p xmlns="">The Document Source is responsible for producing the metadata that will be submitted to the Document Registry to form the XDS Document Entry that will be used for query purposes by XDS Consumer Actors. The Document Source maintains responsibilities over the XDS Documents it has registered. It shall replace XDS Documents that may have been submitted in error. See <a href="../Volume1/ch-48.html#Appendix K">ITI TF-1: Appendix K</a> for a more detailed discussion of the concept of XDS Document.</p>
     <p xmlns="">XDS Documents are required to be globally uniquely identified. See <a href="../Volume2x/ch-2.html#Appendix B">ITI TF-2x: Appendix B</a> for a definition of globally unique identifiers.</p>
-    <h3 xmlns="" id="10.4.3">10.4.3  Submission Request</h3>
+    <h3 xmlns="" id="10.4.3">10.4.3 Submission Request</h3>
     <p xmlns="">An XDS Submission Request is a means to share XDS Documents. It may be conveyed:</p>
     <ul xmlns="">
       <li class="bullet-list1">
@@ -597,13 +597,13 @@
       <li class="numbered-list1">Zero or more XDS Document octet streams for the new XDS Documents being submitted.</li>
     </ol>
     <p xmlns="">Following a successful Submission Request, new XDS Documents, Submission Set, and Folders included in the Submission Request are available for sharing in an XDS Affinity Domain. In case of failure to process a Submission Request, the Submission Set and any XDS Documents and Folders shall not be registered.</p>
-    <h3 xmlns="" id="10.4.4">10.4.4  Submission Set Concept</h3>
+    <h3 xmlns="" id="10.4.4">10.4.4 Submission Set Concept</h3>
     <p xmlns="">An XDS Submission Set is related to care event(s) of a single patient provided by the care delivery organization EHR-CR performing the submission request. It creates a permanent record of new XDS Documents as well as pre-existing (i.e., already registered) XDS Documents that have a relationship with the same care event(s). It also includes the record of new XDS Folders creation.</p>
     <p xmlns="">An XDS Submission Set shall be created for each submission request. It is related to a single Document Source and is conveyed by a single Provide &amp; Register Document Set Transaction or a Register Document Set Transaction.</p>
     <p xmlns="">The Document Registry may be queried to find all documents registered in the same XDS Submission Set.</p>
     <p xmlns="">The same XDS Document, initially registered as part of a Submission Set, may also be referenced by later XDS Submission Set. This allows older documents relevant to the present care of a patient to be associated with more recent Submission Sets.</p>
     <p xmlns="">XDS provides complete flexibility to EHR-CRs to relate Documents and Submission Sets to an encounter, a visit, an episode of care, or various workflow processes within EHR-CRs.</p>
-    <h3 xmlns="" id="10.4.5">10.4.5  Concept of Folder</h3>
+    <h3 xmlns="" id="10.4.5">10.4.5 Concept of Folder</h3>
     <p xmlns="">The purpose of an XDS Folder is to provide a collaborative mechanism for several XDS Document Sources to group XDS Documents for a variety of reasons (e.g., a period of care, a problem, immunizations, etc.) and to offer the Document Consumers a means to find all Document Entries placed in the same Folder. The following principles apply to an XDS Folder:</p>
     <ol xmlns="">
       <li class="numbered-list1">A Folder groups a set of XDS Documents related to the care of a single patient,</li>
@@ -617,7 +617,7 @@
       <li class="numbered-list1">The same documents can appear in more than one Folder, and</li>
       <li class="numbered-list1">Folders have a globally unique identifier.</li>
     </ol>
-    <h3 xmlns="" id="10.4.6">10.4.6  Example of use of Submission Request, Submission Set and Folder</h3>
+    <h3 xmlns="" id="10.4.6">10.4.6 Example of use of Submission Request, Submission Set and Folder</h3>
     <p xmlns="">The sequence of figures below shows an example of a submission request that includes two new documents, a reference to a pre-existing document and the use of two folders. The first figure depicts the initial state of a Document Registry in which two Documents have been submitted where one is associated with a Folder A. The second figure depicts a submission request that adds two new documents, placing one of them into a pre-existing folder and the other one into a new Folder B.</p>
     <p xmlns="">
       <a name="_1148560321">
@@ -633,11 +633,11 @@
       </a>
     </p>
     <p xmlns="" class="figureTitle">Figure 10.4.6-2: The logical content of a Submission Set</p>
-    <h3 xmlns="" id="10.4.7">10.4.7  XDS Registry Data Model and Attributes</h3>
+    <h3 xmlns="" id="10.4.7">10.4.7 XDS Registry Data Model and Attributes</h3>
     <p xmlns="">The XDS Integration Profile provides a means to place documents in a repository chosen by the Document Source, and also to place information about this document (or metadata) in an entry of the Document Registry that manages the XDS Affinity Domain.</p>
     <p xmlns="">The term metadata reflects that this information is “about” the documents. The purpose of well-specified document metadata is to enable a uniform mechanism for Document Consumers to locate clinical documents of interest much in the way a card catalog in a library helps readers find the book they want.</p>
     <p xmlns="">This section addresses the high-level data model in which the metadata is registered and against which queries of the XDS Document Registry are performed. Then it presents the specific attributes that may be registered and used to filter the document entries of the registry.</p>
-    <h4 xmlns="" id="10.4.7.1">10.4.7.1                    XDS Document Registry Data Model</h4>
+    <h4 xmlns="" id="10.4.7.1">10.4.7.1 XDS Document Registry Data Model</h4>
     <p xmlns="">The following entities are used in the XDS Document Registry Data Model:</p>
     <p xmlns="">
       <span style="font-weight:bold">XDS Stable Document Entry</span>
@@ -674,7 +674,7 @@
       </a>
     </p>
     <p xmlns="" class="figureTitle">Figure 10.4.7-1: XDS Document Registry Data Model</p>
-    <h4 xmlns="" id="10.4.7.2">10.4.7.2                    Attributes of the XDS Document Entries</h4>
+    <h4 xmlns="" id="10.4.7.2">10.4.7.2 Attributes of the XDS Document Entries</h4>
     <p xmlns="">The specific attributes of each entity in the above registry data model have been selected from document header attributes from several standards (see <a href="../Volume2x/ch-12.html#Appendix L">ITI TF-2x: Appendix L</a>), including:</p>
     <ul xmlns="">
       <li class="bullet-list1">ANSI/HL7 CDA R1-2000</li>
@@ -715,7 +715,7 @@
     <p xmlns="">The three codes (Document Class, Practice Setting and Healthcare Facility Type) are code set that are expected to generally include a limited number of values (between 10 and 100), thus ensuring a reasonably easy search capability.</p>
     <p xmlns="">A number of additional query attributes or attributes used to perform a secondary selection in order to decide to retrieve a specific document are also defined by this Integration Profile. At the Document Level, these include a fine-grained Document Type (e.g., LOINC classification), a list of Event Code that can be used as key word, the document author and associated institution, the document relationship to manage replacement addendum and a variety of transformations, a confidentiality code, language code, etc.</p>
     <p xmlns="">The complete list of attributes and their definition is documented in <a href="../Volume3/ch-1.1.html#4.1">ITI TF-3: 4.1</a>.</p>
-    <h3 xmlns="" id="10.4.8">10.4.8  Concept of an XDS Affinity Domain</h3>
+    <h3 xmlns="" id="10.4.8">10.4.8 Concept of an XDS Affinity Domain</h3>
     <p xmlns="">An XDS Affinity Domain is an administrative structure made of a well-defined set of Document Source Actors, set of Document Repositories, set of Document Consumers organized around a single Document Registry that have agreed to share clinical documents.</p>
     <p xmlns="" style="font-size:9pt">
       <span>Note:</span>
@@ -734,7 +734,7 @@
       <li class="numbered-list1">The Patient Identification Domain (Assigning Authority) used by the Document Registry.</li>
     </ol>
     <p xmlns="">See <a href="../Volume1/ch-48.html#Appendix K">ITI TF-1: Appendix K</a> for a detailed discussion of the concepts of XDS Affinity Domain.</p>
-    <h3 xmlns="" id="10.4.9">10.4.9  Patient Identification Management</h3>
+    <h3 xmlns="" id="10.4.9">10.4.9 Patient Identification Management</h3>
     <p xmlns="">Since the central focus of the XDS Integration Profile is “sharing documents”, it is critical that each document be reliably associated with the corresponding patient (Patient Id).</p>
     <p xmlns="">The XDS Document Registry is not intended to be an authority for patient identification and demographics information. This Integration Profile uses a Patient Identity Source as the authoritative source of Patient Identifiers (master patient ID) for the XDS Affinity Domain.</p>
     <p xmlns="" style="font-size:9pt">
@@ -763,8 +763,8 @@
       </a>
     </p>
     <p xmlns="" class="figureTitle">Figure 10.4.9-1: XDS Affinity Domain with patient ID cross-referencing internal to the EHR-CRs</p>
-    <h3 xmlns="" id="10.4.10">10.4.10                      Document Lifecycle</h3>
-    <h4 xmlns="" id="10.4.10.1">10.4.10.1               Document Availability Status</h4>
+    <h3 xmlns="" id="10.4.10">10.4.10 Document Lifecycle</h3>
+    <h4 xmlns="" id="10.4.10.1">10.4.10.1 Document Availability Status</h4>
     <p xmlns="">Each XDS Document contained in a XDS Document Registry will be assigned one of the following Availability Status codes:</p>
     <p xmlns="">
       <span style="font-style:italic">Approved:</span>
@@ -785,7 +785,7 @@
     <p xmlns="">An “approved” XDS Document may be changed to “deprecated”. It is part of security policies that are beyond the scope of the XDS Profile to have the XDS Repository/Registry enforce this ownership. The reason and responsible party for deprecating a document are tracked as part of the XDS Document Registry audit trail, which is a required capability. A “deprecated” Document remains available for Document Consumer queries. Except for the status change, a “deprecated” Document Entry metadata remains the same as when it was in the “approved” status.</p>
     <p xmlns="">An “approved” or “deprecated” XDS Document Entry may be deleted. This change is associated with the decision to completely remove a Document from an XDS Document Repository and the corresponding Document Entry from the XDS Document Registry. The XDS Affinity Domain shall establish the security policies associated with Document deletion. There are no transactions defined by this XDS Profile to support such operation.</p>
     <p xmlns="">See <a href="../Volume1/ch-48.html#Appendix K">ITI TF-1: Appendix K</a> for a detailed discussion of the concepts of XDS Document life cycle.</p>
-    <h4 xmlns="" id="10.4.10.2">10.4.10.2               Document Relationships</h4>
+    <h4 xmlns="" id="10.4.10.2">10.4.10.2 Document Relationships</h4>
     <p xmlns="">XDS Documents may be related to predecessor documents by one of three methods:</p>
     <ul xmlns="">
       <li class="bullet-list1">Replacement,</li>
@@ -810,14 +810,14 @@
       <span style="text-decoration:underline">transformed</span>
       <span>document is derived by a machine translation from some other format. Examples of transformed documents could be CDA documents converted from DICOM Structured Reporting (SR) reports, or a rendering of a report into a presentation format such as PDF. The transform XDS Document contains the document Id of the previous version in parentId, and its parent relationship contains the code “XFRM”. XDS Affinity Domains may define rules that determine whether or not a transformed XDS Document replaces the source, but typically this would not be the case. If it is, an additional parent relationship of type “RPLC” is to be used.</span>
     </p>
-    <h3 xmlns="" id="10.4.11">10.4.11                      Document Query</h3>
+    <h3 xmlns="" id="10.4.11">10.4.11 Document Query</h3>
     <p xmlns="">Query return info shall be either:</p>
     <ul xmlns="">
       <li class="bullet-list1">a list of Registry Objects Values (e.g., XDS Document Entries)</li>
       <li class="bullet-list1">a list of Registry Objects UUIDs. This allows an XDS Document Consumer to receive a potentially long list of matching entries and to request them by subsets.</li>
     </ul>
-    <h4 xmlns="" id="10.4.11.1">10.4.11.1               Intentionally Left Blank</h4>
-    <h4 xmlns="" id="10.4.11.2">10.4.11.2               XDS Document Entry Types</h4>
+    <h4 xmlns="" id="10.4.11.1">10.4.11.1 Intentionally Left Blank</h4>
+    <h4 xmlns="" id="10.4.11.2">10.4.11.2 XDS Document Entry Types</h4>
     <p xmlns="">Of all the XDS Entity types (see Section 10.4.7.1 for a list of all XDS Entities) there are two that support retrieval of content and are generically referred to as XDS Document Entries.</p>
     <p xmlns="">
       <span style="font-weight:bold">XDS Stable Document Entry</span>
@@ -828,7 +828,7 @@
       <span style="font-weight:bold">On-Demand Document Entry</span>
       <span>: An On-Demand Document Entry contains metadata describing the characteristics of a set of on-demand content and a unique identifier which can be used to create a document which collects the latest, most recent available information at the time of retrieval. On-Demand Document Entries get registered in a Register On-Demand Document Entry transaction by the On-Demand Document Source.</span>
     </p>
-    <h4 xmlns="" id="10.4.11.3">10.4.11.3               Use Cases Summary</h4>
+    <h4 xmlns="" id="10.4.11.3">10.4.11.3 Use Cases Summary</h4>
     <p xmlns="">Each type of XDS Document Entry is designed for a different environment of document sharing. To determine which type of XDS Document Entry should be used, an analysis of the environment is needed. Stable Document Entries and On-Demand Document Entries may co-exist in an XDS Affinity Domain. In particular, queries can be formulated to return both document entry types for a specific patient.</p>
     <p xmlns="">
       <span style="font-weight:bold">Case 1</span>
@@ -919,7 +919,7 @@
       </a>
     </p>
     <p xmlns="">Patient access to an EHR-LR may be supported by a specialized EHR-CR (i.e., a portal) implementing the Document Source and Document Consumer Actors.</p>
-    <h2 xmlns="" id="10.6">10.6  Patient Identifier Communication Requirements</h2>
+    <h2 xmlns="" id="10.6">10.6 Patient Identifier Communication Requirements</h2>
     <p xmlns="">When using the [ITI-8] transaction as the patient identity feed, <a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a> defines the format requirements for the patient identifier in PID-3. Specifically, the value for PID-3.4, Assigning Authority can be omitted, expressed using the first subcomponent (namespace ID) or the second and third subcomponents (universal ID and universal ID type). These rules shall apply in this profile:</p>
     <ol xmlns="">
       <li class="numbered-list1">If the Patient Identity Source does not include a value for PID-3.4, Assigning Authority, then</li>
@@ -938,7 +938,7 @@
     <p xmlns="">When using the [ITI-44] transaction as the patient identity feed, the Assigning Authority is required.</p>
     <p xmlns="">Transactions [ITI-18], [ITI-41] and [ITI-42] express patient ID as a string that is not parsed using typical HL7 parsing logic; please refer to requirements for Patient ID in those transactions. Document Registry Actors will have to map between the Patient ID feed provided in [ITI-8] or [ITI-44] as described above and the PID provided by those transactions in this profile.</p>
     <p xmlns="">XDS.b implementations shall support either Patient Identity Feed [ITI-8] (<a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>) or Patient Identity Feed HL7v3 [ITI-44] (<a href="../Volume2b/ITI-44.html#3.44">ITI TF-2b: 3.44</a>) or both. It is important to note that the version of HL7 implemented by the XDS.b Document Registry and Patient Identity Source actors in a single domain or community needs to match in order to allow interoperability. In the case of mixed scenarios, translation between Patient Identity Feed [ITI-8] and Patient Identity Feed HL7v3 [ITI-44] will be required via a bridge or interface engine.</p>
-    <h2 xmlns="" id="10.7">10.7  Security Considerations</h2>
+    <h2 xmlns="" id="10.7">10.7 Security Considerations</h2>
     <p xmlns="">Coordinating the security and privacy policies of all the care delivery organizations in an XDS Affinity Domain may be a challenge. An agreement is needed on security procedures, goals, auditing, record keeping, etc. This can result in changes to other enterprise policies, such as human resources procedures. XDS Affinity Domain members are trusting to some extent the access of their published data by other members of the XDS Affinity Domain. The level of control is dependent on Policies and application of other security and privacy profiles offered by IHE. This relationship requires a close ongoing partnership that ensures ongoing maintenance of policies, procedures, and activities. If laws change, relevant policies must be adjusted throughout the group. Corporate changes to group members affect the policies. Security events must be managed as a group. This must be managed as a long-term activity, not a one-time event.</p>
     <p xmlns="">Particular problem areas are likely to be:</p>
     <ul xmlns="">

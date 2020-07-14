@@ -42,7 +42,8 @@ The conversion is a multi step process consisting of the following steps:
 * set class in TD elements with THEAD parents to allow global styling
 * remove inline style of TD tags (with P children)
 * level 7 and 8 subsections show up in the toc, index and references (html links)
-* removed inline style of lists and replaced by classes 
+* removed inline style of lists and replaced by classes
+* removed "no-break space" characters from headings 
 
 ## Open issues:
 * remove inline style of A HREF tags

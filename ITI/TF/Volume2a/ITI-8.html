@@ -14,7 +14,7 @@
     <p>
       <hr />
     </p>
-    <h2 xmlns="" id="3.8">3.8      Patient Identity Feed [ITI-8]</h2>
+    <h2 xmlns="" id="3.8">3.8 Patient Identity Feed [ITI-8]</h2>
     <p xmlns="">This section corresponds to transaction [ITI-8] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-8] is used by the Patient Identity Source, Patient Identifier Cross-reference Manager and Document Registry Actors.</p>
     <h3 xmlns="" id="3.8.1">3.8.1 Scope</h3>
     <p xmlns="">This transaction communicates patient information, including corroborating demographic data, after a patient’s identity is established, modified or merged or after the key corroborating demographic data has been modified.</p>
@@ -54,8 +54,8 @@
     <h3 xmlns="" id="3.8.4">3.8.4 Messages</h3>
     <img xmlns="" src="media/alql6-rgeyz.021.png" width="424" height="193" alt="" />
     <p xmlns="" class="figureTitle">Figure 3.8-1: Patient Identity Sequence</p>
-    <h4 xmlns="" id="3.8.4.1">3.8.4.1    Patient Identity Management – Admit/Register or Update Patient</h4>
-    <h5 xmlns="" id="3.8.4.1.1">3.8.4.1.1   Trigger Events</h5>
+    <h4 xmlns="" id="3.8.4.1">3.8.4.1 Patient Identity Management – Admit/Register or Update Patient</h4>
+    <h5 xmlns="" id="3.8.4.1.1">3.8.4.1.1 Trigger Events</h5>
     <p xmlns="">The following events from a Patient Identity Source will trigger one of the Admit/Register or Update messages:</p>
     <ul xmlns="">
       <li class="bullet-list1">A01 – Admission of an in-patient into a facility</li>
@@ -67,7 +67,7 @@
       <li class="bullet-list1">A08 – Update Patient Information</li>
     </ul>
     <p xmlns="">The Patient Identifier Cross-reference Manager shall only perform cross-referencing logic on messages received from Patient Identity Source Actors. For a given Patient Identifier Domain there shall be one and only one Patient Identity Source Actor, but a given Patient Identity Source may serve more than one Patient Identifier Domain.</p>
-    <h5 xmlns="" id="3.8.4.1.2">3.8.4.1.2   Message Semantics</h5>
+    <h5 xmlns="" id="3.8.4.1.2">3.8.4.1.2 Message Semantics</h5>
     <p xmlns="">
       <span>The Patient Identity Feed transaction is conducted by the HL7 ADT message, as defined in the subsequent sections. The Patient Identity Source shall generate the message whenever a patient is admitted, pre-admitted, or registered, or when some piece of patient demographic data changes. Pre-admission of inpatients shall use the A05 trigger event. The segments of the message listed below are required, and their detailed descriptions are provided in the following subsections. </span>
       <br />
@@ -430,7 +430,7 @@
     <p xmlns="">The Patient Identity Source shall provide the patient identifier in the ID component (first component) of the PID-3 field (PID-3.1). The Patient Identity Source shall use component PID-3.4 to convey the assigning authority (Patient Identification Domain) of the patient identifier. Either the first subcomponent (namespace ID) or the second and third subcomponents (universal ID and universal ID type) shall be populated. If all three subcomponents are populated, the first subcomponent shall reference the same entity as is referenced by the second and third components.</p>
     <h6 xmlns="" id="3.8.4.1.2.4">3.8.4.1.2.4 PV1 Segment</h6>
     <p xmlns="">The Admit/ Register or Update Patient message is not required to include any attributes within the PV1 segment beyond what is specified in the HL7 standard.</p>
-    <h5 xmlns="" id="3.8.4.1.3">3.8.4.1.3   Expected Actions – Patient Identifier Cross-reference Manager</h5>
+    <h5 xmlns="" id="3.8.4.1.3">3.8.4.1.3 Expected Actions – Patient Identifier Cross-reference Manager</h5>
     <p xmlns="">The Patient Identifier Cross-reference Manager shall be capable of accepting attributes in the PID segment as specified in HL7 standard as well as their extended field length as defined in Table 3.8-2. This is to ensure that the Patient Identifier Cross-reference Manager can handle a sufficient set of corroborating information in order to perform its cross-referencing function.</p>
     <p xmlns="">If the PID-3.4 (assigning authority) component is not included in the message (as described in Section 3.8.4.1.2.3) the Patient Identifier Cross-reference Manager shall fill PID-3.4 prior to storing the ID information and performing its cross-referencing activities. The information filled by the Patient Identifier Cross-reference Manager is based on the configuration associating each of the Patient Identity Source Actors with the subcomponents of the correct assigning authority (namespace ID, UID and UID type). (See Section 3.8.4.1.3.1 below for a list of required Patient Identifier Cross-reference Manager configuration parameters).</p>
     <p xmlns="">A single Patient Identity Source can serve multiple Patient Identification domains. The Patient Identifier Cross-reference Manager shall only recognize (by configuration) a single Patient Identity Source per domain. (See Section 3.8.4.1.3.1 below for a list of required Patient Identifier Cross-reference Manager configuration parameters).</p>
@@ -442,7 +442,7 @@
       <li class="bullet-list1">Identifier of the Domain. This identifier shall specify all 3 components of the HL7 assigning authority (including the namespace ID and/or both the universal ID and universal ID type subcomponents) of the PID-3 field for the identification of the domain.</li>
       <li class="bullet-list1">Patient Identity Source for the domain. This is expected to be the MSH-3 Sending Application and the corresponding MSH-4 Sending Facility fields in the HL7 ADT message. (Alternative identification schemes might include IP address of the Patient Identity Source or Node Authentication if the Audit Trail and Node Authentication Integration Profile is used.)</li>
     </ul>
-    <h5 xmlns="" id="3.8.4.1.4">3.8.4.1.4   Expected Actions – Document Registry</h5>
+    <h5 xmlns="" id="3.8.4.1.4">3.8.4.1.4 Expected Actions – Document Registry</h5>
     <p xmlns="">The Document Registry shall be capable of accepting attributes in the PID segment as specified in Table 3.8-2a. The Patient Identity Feed transaction contains more triggers and data than what the XDS Document Registry needs for its operation. In particular, A08 – Update Patient Information, if received shall be ignored.</p>
     <p xmlns="" class="tableTitle">Table 3.8-2a: IHE Profile - PID segment</p>
     <table xmlns="" cellspacing="0" cellpadding="0">
@@ -476,14 +476,14 @@
     <ul xmlns="">
       <li class="bullet-list1">Identifier of the Patient Identification Domain of the XDS Affinity Domain. This identifier shall be specified with 3 components of the HL7 assigning authority (data type HD): namespaceID, universal ID and universal ID type. The universal ID shall be an ISO OID (Object Identifier), and therefore the universal ID Type must be “ISO”.</li>
     </ul>
-    <h4 xmlns="" id="3.8.4.2">3.8.4.2    Patient Identity Management –Patient Identity Merge (Merge Patient ID)</h4>
-    <h5 xmlns="" id="3.8.4.2.1">3.8.4.2.1   Trigger Events</h5>
+    <h4 xmlns="" id="3.8.4.2">3.8.4.2 Patient Identity Management –Patient Identity Merge (Merge Patient ID)</h4>
+    <h5 xmlns="" id="3.8.4.2.1">3.8.4.2.1 Trigger Events</h5>
     <p xmlns="">When two patients’ records are found to identify the same patient by a Patient Identity Source in a Patient Identifier Domain and are merged, the Patient Identity Source shall trigger the following message:</p>
     <ul xmlns="">
       <li class="bullet-list1">A40 – Merge Patient – Internal ID</li>
     </ul>
     <p xmlns="">An A40 message indicates that the Patient Identity Source has done a merge within a specific Patient Identification Domain. That is, MRG-1 (patient ID) has been merged into PID-3 (Patient ID).</p>
-    <h5 xmlns="" id="3.8.4.2.2">3.8.4.2.2   Message Semantics</h5>
+    <h5 xmlns="" id="3.8.4.2.2">3.8.4.2.2 Message Semantics</h5>
     <p xmlns="">The Patient Identity Feed transaction is an HL7 ADT message. The message shall be generated by the system (Patient Identity Source Actor) that performs the update whenever two patient records are found to reference the same person.</p>
     <p xmlns="" style="font-size:9pt">
       <span style="font-weight:bold">Note:</span>
@@ -633,13 +633,13 @@
     </p>
     <p xmlns="">The PID and PV1 segments contain the dominant patient information, including patient identifier and the issuing assigning authority. The MRG segment identifies the “old” or secondary patient records to be de-referenced. HL7 does not require that the “old” record be deleted; it does require that the “old” identifier shall not be referenced in future transactions following the merge.</p>
     <p xmlns="">The Patient Identity Source shall send the “old” patient identifier (to be merged) in MRG-1, with the identifier value in the component MRG-1.1 and the assigning authority in the component MRG-1.4. The Patient Identity Source shall populate the same value of the assigning authority in PID-3.4, in the component MRG-1.4.</p>
-    <h6 xmlns="" id="3.8.4.2.2.5">3.8.4.2.2.5  PV1 Segment</h6>
+    <h6 xmlns="" id="3.8.4.2.2.5">3.8.4.2.2.5 PV1 Segment</h6>
     <p xmlns="">PV1 segment shall be constructed as defined in Section 3.8.4.1.2.4.</p>
-    <h5 xmlns="" id="3.8.4.2.3">3.8.4.2.3   Expected Actions</h5>
+    <h5 xmlns="" id="3.8.4.2.3">3.8.4.2.3 Expected Actions</h5>
     <p xmlns="">The Patient Identifier Cross-reference Manager shall be capable of accepting attributes in the MRG segment as specified in Table 3.8-4.</p>
     <p xmlns="">In addition, the Patient Identifier Cross-reference Manager shall perform the Expected Actions as specified in Section 3.8.4.1.3.</p>
     <p xmlns="">When the Patient Identifier Cross-reference Manager receives the ADT^A40 message type of the Patient Identity Feed transaction, it shall cross-reference the patient identifiers provided in the PID-3 and MRG-1 fields of the message by replacing any references it is maintaining internally to the patient ID provided in the MRG-1 field by the patient ID included in the PID-3 field. After the identifier references are replaced, the Patient Identifier Cross-reference Manager shall reapply its internal cross-referencing logic/ policies before providing the updated information via either the PIX Query or PIX Notification Transactions.</p>
-    <h5 xmlns="" id="3.8.4.2.4">3.8.4.2.4   Expected Actions – Document Registry</h5>
+    <h5 xmlns="" id="3.8.4.2.4">3.8.4.2.4 Expected Actions – Document Registry</h5>
     <p xmlns="">The Document Registry shall be capable of accepting attributes in the MRG segment as specified in Table 3.8-4. Other attributes may exist, but the Document Registry shall ignore them.</p>
     <p xmlns="">In addition, the Document Registry shall perform the Expected Actions as specified in Section 3.8.4.1.4.</p>
     <p xmlns="">When the Document Registry receives the ADT^A40 message type of the Patient Identity Feed transaction, it shall merge the patient identity specified in MRG-1 (secondary patient identity) into the patient identity specified in PID-3 (primary patient identity) in its registry. After the merge, all Document Submission Sets (including all Documents and Folders beneath them) under the secondary patient identity before the merge shall point to the primary patient identity. The secondary patient identity shall no longer be referenced in the future services provided by the Document Registry.</p>
@@ -670,9 +670,9 @@
     </ul>
     <p xmlns="" style="font-size:9pt">Note: This transaction does not specify how the merge is to be implemented. It may or may not change the stored form of the metadata. It only specifies the observable results from the perspective of the Registry Stored Query [ITI-18] transaction and the Register Document Set-b [ITI-42] transaction.</p>
     <h3 xmlns="" id="3.8.5">3.8.5 Security Considerations</h3>
-    <h4 xmlns="" id="3.8.5.1">3.8.5.1    Audit Record Considerations – Admit/Register or Update Patient</h4>
+    <h4 xmlns="" id="3.8.5.1">3.8.5.1 Audit Record Considerations – Admit/Register or Update Patient</h4>
     <p xmlns="">The Patient Admit/Register transactions (A01, A04, A05) and Update Patient Information (A08) transaction are to be audited as “Patient Record” events, as defined in Table 3.20.4.1.1.1-1. The following tables show items that are required to be part of the audit record for these specific PIX transactions.</p>
-    <h5 xmlns="" id="3.8.5.1.1">3.8.5.1.1   Patient Identity Source Actor audit message:</h5>
+    <h5 xmlns="" id="3.8.5.1.1">3.8.5.1.1 Patient Identity Source Actor audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
@@ -944,7 +944,7 @@
         <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
       </tr>
     </table>
-    <h5 xmlns="" id="3.8.5.1.2">3.8.5.1.2   Patient Identifier Cross-reference Manager or Document Registry Actor audit message:</h5>
+    <h5 xmlns="" id="3.8.5.1.2">3.8.5.1.2 Patient Identifier Cross-reference Manager or Document Registry Actor audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
@@ -1115,9 +1115,9 @@
         <td style="width:237.6pt">not specialized</td>
       </tr>
     </table>
-    <h4 xmlns="" id="3.8.5.2">3.8.5.2    Audit Record Considerations – Patient Identity Merge (Merge Patient ID)</h4>
+    <h4 xmlns="" id="3.8.5.2">3.8.5.2 Audit Record Considerations – Patient Identity Merge (Merge Patient ID)</h4>
     <p xmlns="">The Patient Identity Merge transaction (A40) is to be audited as a “Patient Record” event, as defined in Table 3.20.4.1.1.1-1. The following tables show items that are required to be part of the audit record for the Patient Identity Merge transaction. Logically, a merge operation consists of a delete on one patient record, and an update of another patient record. Separate audit records shall be written for the delete operation and the update operation.</p>
-    <h5 xmlns="" id="3.8.5.2.1">3.8.5.2.1   Patient Identity Source Actor audit message:</h5>
+    <h5 xmlns="" id="3.8.5.2.1">3.8.5.2.1 Patient Identity Source Actor audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
@@ -1389,7 +1389,7 @@
         <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
       </tr>
     </table>
-    <h5 xmlns="" id="3.8.5.2.2">3.8.5.2.2   Patient Identifier Cross-reference Manager or Document Registry Actor audit message:</h5>
+    <h5 xmlns="" id="3.8.5.2.2">3.8.5.2.2 Patient Identifier Cross-reference Manager or Document Registry Actor audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">

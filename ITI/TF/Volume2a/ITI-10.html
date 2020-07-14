@@ -16,9 +16,9 @@
     </p>
     <h2 xmlns="" id="3.10">3.10 PIX Update Notification [ITI-10]</h2>
     <p xmlns="">This section corresponds to transaction [ITI-10] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-10] is used by the Patient Identifier Cross-reference Consumer and Patient Identifier Cross-reference Manager Actors.</p>
-    <h3 xmlns="" id="3.10.1">3.10.1  Scope</h3>
+    <h3 xmlns="" id="3.10.1">3.10.1 Scope</h3>
     <p xmlns="">This transaction involves the Patient Identifier Cross-reference Manager providing notification of updates to patient identifier cross-reference associations to Patient Identifier Cross-reference Consumers that have registered (by configuration on the Cross-reference Manager) their interest in receiving such notifications. This transaction uses HL7’s generic ‘Update Person Information’ message to communicate this patient-centric information.</p>
-    <h3 xmlns="" id="3.10.2">3.10.2  Use Case Roles</h3>
+    <h3 xmlns="" id="3.10.2">3.10.2 Use Case Roles</h3>
     <img xmlns="" src="media/alql6-rgeyz.024.png" width="412" height="139" alt="" />
     <p xmlns="">
       <span style="font-weight:bold">Actor:</span>
@@ -36,21 +36,21 @@
       <span style="font-weight:bold">Role:</span>
       <span>Receives notifications from the Patient Identifier Cross-reference Manager of changes to patient ID aliases. Typically the Patient Identifier Cross-reference Consumer uses this information to maintain information links about patients in a different patient ID domain.</span>
     </p>
-    <h3 xmlns="" id="3.10.3">3.10.3  Referenced Standard</h3>
+    <h3 xmlns="" id="3.10.3">3.10.3 Referenced Standard</h3>
     <p xmlns="">HL7 Version 2.5, Chapter 2 – Control, Chapter 3 – Patient Administration</p>
     <p xmlns="" style="font-size:9pt">Note:  HL7 version 2.5 was selected for this transaction because it was considered the most stable version that contained the functionality required by transactions [ITI-9] and [ITI-10].</p>
-    <h3 xmlns="" id="3.10.4">3.10.4  Messages</h3>
+    <h3 xmlns="" id="3.10.4">3.10.4 Messages</h3>
     <img xmlns="" src="media/alql6-rgeyz.025.png" width="462" height="203" alt="" />
     <p xmlns="" class="figureTitle">Figure 3.10-1: Update Person Information Sequence</p>
     <h4 xmlns="" id="3.10.4.1">3.10.4.1 Update Person Information</h4>
-    <h5 xmlns="" id="3.10.4.1.1">3.10.4.1.1             Trigger Events</h5>
+    <h5 xmlns="" id="3.10.4.1.1">3.10.4.1.1 Trigger Events</h5>
     <p xmlns="">The Patient Identifier Cross-reference Manager shall notify a Patient Identifier Cross-reference Consumer when there is a change in a set of cross-referenced patient identifiers for any of the patient identifiers belonging to Patient Identifier Domains of interest to the consumer. The configuration of the domains of interest to a Patient Cross-reference Consumer is maintained by the Patient Cross-reference Manager.</p>
     <p xmlns="">Several notifications may have to be issued to communicate a single update to a set of cross-reference patient identifiers as required to reflect all the changes on the resulting sets of cross-reference patient Identifiers belonging to Patient Identifier Domains of interest to the Patient Identifier Cross-referencing Consumer.</p>
     <p xmlns="">The following HL7 trigger event will be used to update to the list of patient identifiers:</p>
     <ul xmlns="">
       <li class="bullet-list1">A31 – Update Person Information</li>
     </ul>
-    <h5 xmlns="" id="3.10.4.1.2">3.10.4.1.2             Message Semantics</h5>
+    <h5 xmlns="" id="3.10.4.1.2">3.10.4.1.2 Message Semantics</h5>
     <p xmlns="">The PIX Update Notification transaction is conducted by the ADT^A31 message. The Patient Identifier Cross-reference Manager initiates this transaction whenever identifier list information is updated for a patient.</p>
     <p xmlns="">It is wholly the responsibility of the Patient Identifier Cross-reference Manager to perform the matching of patient identifiers based on the patient traits it receives. The information provided by the Patient Identifier Cross-reference Manager to Patient Identifier Cross-reference Consumers shall only contain a list of cross-referenced identifiers for the domains of interest as configured with the Patient Identifier Cross-reference Manager in two or more of the domains managed by the Patient Identifier Cross-reference Manager. Multiple notifications may need to be sent. For example:</p>
     <p xmlns="">Consumer CON_A is configured to receive update notifications for domains DOM_A and DOM_AD. Notifications are sent as follows:</p>
@@ -95,16 +95,16 @@
       </tbody>
     </table>
     <p xmlns="">Each message shall be acknowledged by the HL7 ACK message sent by the receiver of ADT message to its sender. See ITI TF-2x: C.2.3, “Acknowledgement Modes” for the definition and discussion of the ACK message.</p>
-    <h6 xmlns="" id="3.10.4.1.2.1">3.10.4.1.2.1      MSH Segment</h6>
+    <h6 xmlns="" id="3.10.4.1.2.1">3.10.4.1.2.1 MSH Segment</h6>
     <p xmlns="">The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2, “Message Control”.</p>
     <p xmlns="">
       <span>Field</span>
       <span style="font-style:italic">MSH-9 Message Type</span>
       <span>shall have all three components populated with a value. The first component shall have a value of ADT; the second component shall have the value of A31. The third component shall have a value of ADT_A05.</span>
     </p>
-    <h6 xmlns="" id="3.10.4.1.2.2">3.10.4.1.2.2      EVN Segment</h6>
+    <h6 xmlns="" id="3.10.4.1.2.2">3.10.4.1.2.2 EVN Segment</h6>
     <p xmlns="">See ITI TF-2x: C.2.4 for the list of all required and optional fields within the EVN segment.</p>
-    <h6 xmlns="" id="3.10.4.1.2.3">3.10.4.1.2.3      PID Segment</h6>
+    <h6 xmlns="" id="3.10.4.1.2.3">3.10.4.1.2.3 PID Segment</h6>
     <p xmlns="">
       <span>The Patient Identifier Cross-reference Manager shall provide only those attributes within the PID segment that are required by the HL7 standard:</span>
       <span style="font-style:italic">PID-3-Patient Identifier List</span>
@@ -129,7 +129,7 @@
       <span style="font-style:italic">PID-3-Patient Identifier List</span>
       <span>.</span>
     </p>
-    <h6 xmlns="" id="3.10.4.1.2.4">3.10.4.1.2.4      PV1 Segment</h6>
+    <h6 xmlns="" id="3.10.4.1.2.4">3.10.4.1.2.4 PV1 Segment</h6>
     <p xmlns="">
       <span>As is specified by the HL7 Standard, Version 2.5, the PV1 Segment is required. The required field</span>
       <span style="font-style:italic">PV1-2-patient class</span>
@@ -165,14 +165,14 @@
     <p xmlns="">
       <span style="font-style:italic">Adapted from the HL7 Standard, version 2.5</span>
     </p>
-    <h5 xmlns="" id="3.10.4.1.3">3.10.4.1.3             Expected Actions</h5>
+    <h5 xmlns="" id="3.10.4.1.3">3.10.4.1.3 Expected Actions</h5>
     <p xmlns="">The Patient Identifier Cross-reference Consumer, when it receives the ADT^A31 message, shall update its internal identifier information for the affected patient(s) in all domains in which it is interested whenever it receives updated identifier information that results in a change to the cross-referencing of a patient.</p>
     <p xmlns="">In the case where the returned list of identifiers contains multiple identifiers for a single domain, the Patient Identifier Cross-reference Consumer shall either use ALL of the multiple identifiers from the given domain or it shall ignore ALL of the multiple identifiers from the given domain.</p>
     <p xmlns="">This allows Patient Identifier Cross-reference Consumers capable of handling multiple identities for a single patient within a single domain (i.e., those that can correctly aggregate the information associated with the different identifiers) to do so. For those Patient Identifier Cross-reference Consumers not capable of handling this situation, ignoring the entire list of different identifiers prevents the consumer from presenting incomplete data.</p>
-    <h3 xmlns="" id="3.10.5">3.10.5  Security Considerations</h3>
+    <h3 xmlns="" id="3.10.5">3.10.5 Security Considerations</h3>
     <h4 xmlns="" id="3.10.5.1">3.10.5.1 Audit Record Considerations</h4>
     <p xmlns="">The PIX Update Notification Transaction is a “Patient Record” event, as defined in Table 3.20.4.1.1.1-1 with the following exceptions:</p>
-    <h5 xmlns="" id="3.10.5.1.1">3.10.5.1.1             Patient Identifier Cross-reference Manager audit message:</h5>
+    <h5 xmlns="" id="3.10.5.1.1">3.10.5.1.1 Patient Identifier Cross-reference Manager audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">
@@ -441,7 +441,7 @@
         <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
       </tr>
     </table>
-    <h5 xmlns="" id="3.10.5.1.2">3.10.5.1.2             Patient Identifier Cross-reference Consumer audit message:</h5>
+    <h5 xmlns="" id="3.10.5.1.2">3.10.5.1.2 Patient Identifier Cross-reference Consumer audit message:</h5>
     <table xmlns="" cellspacing="0" cellpadding="0">
       <tr>
         <td style="width:62.1pt">

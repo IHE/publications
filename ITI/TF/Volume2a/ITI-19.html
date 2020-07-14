@@ -16,10 +16,10 @@
     </p>
     <h2 xmlns="" id="3.19">3.19 Authenticate Node [ITI-19]</h2>
     <p xmlns="">This section corresponds to transaction [19] of the IHE ITI Technical Framework. Transaction [ITI-19] is used by the Secure Node Actors</p>
-    <h3 xmlns="" id="3.19.1">3.19.1  Scope</h3>
+    <h3 xmlns="" id="3.19.1">3.19.1 Scope</h3>
     <p xmlns="">In the Authenticate Node transaction, the local Secure Node presents its identity to a remote Secure Node, and authenticates the identity of the remote node. After this mutual authentication, other secure transactions may take place through this secure pipe between the two nodes.</p>
     <p xmlns="">In addition, the Secure Node authenticates the identity of the user who requests access to the node. This user authentication is a local operation that does not involve communication with a remote node.</p>
-    <h3 xmlns="" id="3.19.2">3.19.2  Use Case Roles</h3>
+    <h3 xmlns="" id="3.19.2">3.19.2 Use Case Roles</h3>
     <p xmlns="">
       <img src="media/alql6-rgeyz.034.png" width="464" height="205" alt="" />
       <br />
@@ -42,7 +42,7 @@
       <span style="font-weight:bold">Role:</span>
       <span>Someone who wants to have access to the data and applications available at the node.</span>
     </p>
-    <h3 xmlns="" id="3.19.3">3.19.3  Referenced Standards</h3>
+    <h3 xmlns="" id="3.19.3">3.19.3 Referenced Standards</h3>
     <p xmlns="">
       <span style="font-weight:bold">DICOM:</span>
     </p>
@@ -66,14 +66,14 @@
     <ul xmlns="">
       <li class="bullet-list1">Recommendation X.509 (03/00). “Information technology - Open Systems Interconnection - The directory: Public-key and attribute certificate frameworks"</li>
     </ul>
-    <h3 xmlns="" id="3.19.4">3.19.4  Messages</h3>
+    <h3 xmlns="" id="3.19.4">3.19.4 Messages</h3>
     <p xmlns="" style="font-size:9pt">Note: This diagram does not imply sequencing of Authentication Node and Local User Authentication.</p>
     <img xmlns="" src="media/alql6-rgeyz.035.png" width="472" height="289" alt="" />
     <p xmlns="" class="figureTitle">Figure 3.19.4-1: Interaction Diagram</p>
-    <h3 xmlns="" id="3.19.5">3.19.5  Trigger Events</h3>
+    <h3 xmlns="" id="3.19.5">3.19.5 Trigger Events</h3>
     <p xmlns="">The Local Secure Node starts the authentication process with the Remote Secure Node when information exchange between the two nodes is requested. The first transaction shall be the Authenticate Node transaction, and all other PHI transactions performed by IHE actors shall be secure transactions. This authentication process is needed when a secure connection is established.</p>
     <p xmlns="">The Basic Secure Node shall always apply the Authenticate Node process to every DICOM, HTTP, or HL7 connection.</p>
-    <h3 xmlns="" id="3.19.6">3.19.6  Message Semantics</h3>
+    <h3 xmlns="" id="3.19.6">3.19.6 Message Semantics</h3>
     <p xmlns="">The Authenticate node transaction involves the exchange of certificates representing the identities of the nodes. These identities are used to authenticate the nodes, to inform authorization, and audit logging.</p>
     <h4 xmlns="" id="3.19.6.1">3.19.6.1 Certificate Validation</h4>
     <p xmlns="">The local organization (e.g., XDS Affinity Domain) will make the choice of what mixture of chain of trust and direct comparison is used to authenticate communications. This may be entirely based on chaining trust to selected CAs, entirely based upon provision of node certificates for direct comparison, or a mixture of both.</p>
@@ -88,21 +88,21 @@
       <li class="bullet-list1">Shall be able to perform direct certificate validation to a set of trusted certificates (see Section 3.19.6.1.2)</li>
     </ul>
     <p xmlns="">It may reject communications when the certificate validation fails, or may restrict communications to only that which is appropriate for an unidentified other party.</p>
-    <h5 xmlns="" id="3.19.6.1.1">3.19.6.1.1             Chain to a trusted certificate authority</h5>
+    <h5 xmlns="" id="3.19.6.1.1">3.19.6.1.1 Chain to a trusted certificate authority</h5>
     <p xmlns="">The Secure Node or Secure Application:</p>
     <ul xmlns="">
       <li class="bullet-list1">Shall provide the means for configuring which CAs are trusted to authenticate node certificates for use in a chain of trust. These CAs shall be identified by means of the public signing certificate for the signing CA.</li>
       <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
       <li class="bullet-list1">Shall accept communications for which there is a certificate that is signed by a CA that is listed as a trusted signing authority.</li>
     </ul>
-    <h5 xmlns="" id="3.19.6.1.2">3.19.6.1.2             Direct certificate validation</h5>
+    <h5 xmlns="" id="3.19.6.1.2">3.19.6.1.2 Direct certificate validation</h5>
     <p xmlns="">The Secure Node or Secure Application:</p>
     <ul xmlns="">
       <li class="bullet-list1">Shall provide means for installing of the required certificates, for example, via removable media or network interchange (where the set of trusted certificates can be a mixture of CA signed certificates and self-signed certificates).</li>
       <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
       <li class="bullet-list1">Shall accept communications for which there is a certificate configured as acceptable for direct certificate validation.</li>
     </ul>
-    <h5 xmlns="" id="3.19.6.1.3">3.19.6.1.3             Other Certificate requirements</h5>
+    <h5 xmlns="" id="3.19.6.1.3">3.19.6.1.3 Other Certificate requirements</h5>
     <p xmlns="">The Secure Node shall not require any specific certificate attribute contents, nor shall it reject certificates that contain unknown attributes or other parameters. Note that for node certificates the CN often is a hostname, attempting to use this hostname provides no additional security and will introduce a new failure mode (e.g., DNS failure).</p>
     <p xmlns="">The certificates used for mutual authentication shall be X.509 certificates based on RSA key with key length in the range of 1024-4096, where the key length chosen is based on local site policy. Maximum expiration time acceptable for certificates should be defined in the applicable security policy. The IHE Technical Framework recommends a maximum expiration time of 2 years.</p>
     <p xmlns="">The method used to determine whether a node is authorized to perform transactions is not specified. This may be use of a set of trusted certificates, based on some attribute value contained in the certificates, access control lists, or some other method. Using a certificate chain back to an external trusted certificate authority to determine authorizations is strongly discouraged.</p>
@@ -120,7 +120,7 @@
     <p xmlns="">All Secure Nodes shall be configurable for use on a physically secured network or not on a physically secured network. If Secure Node is configured for physical security, then it may use the non-TLS DICOM port and protocol.</p>
     <p xmlns="">See RFC7525 “Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)” for recommendations on proper use of TLS and appropriate fallback rules.</p>
     <h4 xmlns="" id="3.19.6.3">3.19.6.3  This Header is empty to preserve header numbering</h4>
-    <h4 xmlns="" id="3.19.6.4">3.19.6.4 Web-Services carrying Protected Information (PI)</h4>
+    <h4 xmlns="" id="3.19.6.4">3.19.6.4Web-Services carrying Protected Information (PI)</h4>
     <p xmlns="">A trusted association shall be established between the two nodes utilizing WS-I Basic Security Profile Version 1.1. This association will be used for all secure transactions between the IHE actors in the two nodes. Note that Section 3.19.6.2 “All Connections carrying Protected Information (PI)” and WS-I Basic Security Profile – Section 3 “Transport Layer Mechanisms” (i.e., http://ws-i.org/profiles/basic-security/1.1/transport) are identical and interoperable.</p>
     <h4 xmlns="" id="3.19.6.5">3.19.6.5 SMTP communication</h4>
     <p xmlns="">When configured to use email on a network that is not physically secured, implementations shall use S/MIME (RFC3851):</p>
@@ -136,7 +136,7 @@
     </ul>
     <p xmlns="">As explained in S/MIME, the sender will generate a unique session key, encrypt the payload of the message using the symmetrical AES algorithm, encrypt the key using the RSA asymmetrical algorithm with each one of receiver(s) public key and attach the result to the message. Each one of the receiver(s) will decrypt this result using its private key, revealing the session key, and decrypt the payload of the message.</p>
     <p xmlns="">This profile does not specify how certificates and keys are obtained or exchanged.</p>
-    <h3 xmlns="" id="3.19.7">3.19.7  Local User Authentication</h3>
+    <h3 xmlns="" id="3.19.7">3.19.7 Local User Authentication</h3>
     <p xmlns="">The Secure Node starts the authentication process with a User when the User wants to log on to the node. The secure node shall not allow access to PHI to an operator who has not successfully completed the local user authentication. Local user authentication is not an IHE specified network transaction, although it may utilize a network system for user authentication.</p>
     <p xmlns="">This is a local invocation of functions at the Secure Node. The identity of the User will be established by the Secure Node based on methods such as:</p>
     <ul xmlns="">

@@ -14,7 +14,7 @@
     <p>
       <hr />
     </p>
-    <h2 xmlns="" id="3.2">3.2      Get User Authentication [ITI-2]</h2>
+    <h2 xmlns="" id="3.2">3.2 Get User Authentication [ITI-2]</h2>
     <p xmlns="">This section corresponds to transaction [ITI-2] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-2] is used by the Client Authentication Agent and Kerberos Authentication Server Actors.</p>
     <h3 xmlns="" id="3.2.1">3.2.1 Scope</h3>
     <p xmlns="">This transaction is used to authenticate an enterprise-wide user identity. A challenge-response method verifies that the user knows the correct password. Once the user is authenticated, the Kerberos Authentication Server sends a Ticket Granting Ticket (TGT) to the Client Authentication Agent to permit optimization of subsequent interactions. The TGT acts as a substitute for repeated login/password type activity.</p>
@@ -47,17 +47,17 @@
     <p xmlns="">The Client Authentication Agent communicates to the Kerberos Authentication Server a Kerberos Authentication Service Request (KRB_AS_REQ). This message identifies the user, the name of the ticket-granting service and authentication data. The authentication data is usually a timestamp encrypted with the user’s long-term key. (See RFC1510 for the exception cases.)</p>
     <img xmlns="" src="media/alql6-rgeyz.007.png" width="558" height="211" alt="" />
     <p xmlns="" class="figureTitle">Figure 3.2.4-1: Get User Authentication Messages</p>
-    <h4 xmlns="" id="3.2.4.1">3.2.4.1    Get User Authentication (Request/Response)</h4>
-    <h5 xmlns="" id="3.2.4.1.1">3.2.4.1.1   Trigger Events</h5>
+    <h4 xmlns="" id="3.2.4.1">3.2.4.1 Get User Authentication (Request/Response)</h4>
+    <h5 xmlns="" id="3.2.4.1.1">3.2.4.1.1 Trigger Events</h5>
     <p xmlns="">The Kerberos User Authentication transactions normally take place:</p>
     <ol xmlns="">
       <li class="numbered-list1">Upon login or session start for a new user, and</li>
       <li class="numbered-list1">Shortly before expiration of a TGT. TGT timeouts are selected to minimize the need for this transaction, but they may expire prior to user logout/ session complete.</li>
     </ol>
     <p xmlns="">When the Client Authentication Agent supports the Authentication for User Context Option, the Client Authentication Agent shall resolve any Context Manager interface issues before starting the user authentication. For instance the Client Authentication Agent needs to be sure that it will be accepted by the Context Manager as the one and only user authenticator in the context for this user session. Similar issues may apply with non-IHE uses of CCOW.</p>
-    <h5 xmlns="" id="3.2.4.1.2">3.2.4.1.2   Message Semantics</h5>
+    <h5 xmlns="" id="3.2.4.1.2">3.2.4.1.2 Message Semantics</h5>
     <p xmlns="">The Client Authentication Agent shall support use of this transaction with the Kerberos user name/password system defined in RFC1510. The username and password shall consist of the 94 printable characters specified in the International Reference Version of ISO-646/ECMA-6 (aka U.S. ASCII).</p>
-    <h5 xmlns="" id="3.2.4.1.3">3.2.4.1.3   Expected Actions</h5>
+    <h5 xmlns="" id="3.2.4.1.3">3.2.4.1.3 Expected Actions</h5>
     <p xmlns="">The Client Authentication Agent shall perform TGT management, so that subsequent activities can re-use TGTs from a credentials cache. The Client Authentication Agent shall ensure that a user has access to only to his or her own tickets (both TGT and Service Tickets). This is most often done by clearing the credentials cache upon user logout or session completion.</p>
     <p xmlns="">When the Client Authentication Agent supports the Authenticator for User Context Option, the agent shall perform the Change Context Transaction to set the user identity in the context managed by the Context Manager.</p>
     <p xmlns="">When the user session ends, the Client Authentication Agent shall remove the user credentials from its cache. If it supports the Authenticator for User Context Option, the agent shall perform the Change Context Transaction to set the user to NULL prior to removing the user credentials.</p>
