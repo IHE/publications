@@ -43,10 +43,12 @@ The conversion is a multi step process consisting of the following steps:
 * remove inline style of TD tags (with P children)
 * level 7 and 8 subsections show up in the toc, index and references (html links)
 * removed inline style of lists and replaced by classes
-* removed "no-break space" characters from headings 
+* removed "no-break space" characters from headings
+* removed inline style of <p> containing notes and replaced by classes 
 
 ## Open issues:
 * remove inline style of A HREF tags
+* Vol2 Glossars (2a, 2b, 2x) are not detected as sections. 
 
 
 ### Java processing code

@@ -10,6 +10,7 @@
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
     <p>Technical Framework</p>
+    <p>Volume 3</p>
     <p>Revision 16.0 – Final Text</p>
     <p>
       <hr />
@@ -491,7 +492,7 @@
     </div>
     <h4 xmlns="" id="4.2.2.1">4.2.2.1 HasMember</h4>
     <p xmlns="">In the Document Sharing abstract metadata model, many different relationships are defined between SubmissionSet, DocumentEntry and Folder objects. In this section, each of these relationships is given its own name, like SS-DE HasMember - SubmissionSetHasMemberDocumentEntry. In the underlying ebRIM model, all of these relationships are created using the ebRIM HasMember Association type.</p>
-    <p xmlns="" style="font-size:9pt">Note: There are four variants of the HasMember Association. See Section 4.1.2 for an overview.</p>
+    <p xmlns="" class="note">Note: There are four variants of the HasMember Association. See Section 4.1.2 for an overview.</p>
     <h5 xmlns="" id="4.2.2.1.1">4.2.2.1.1 SS-DE HasMember</h5>
     <p xmlns="">
       <span style="font-weight:bold">HasMember -</span>
@@ -802,7 +803,7 @@
         <td style="width:317.2pt">The current document is a snapshot in time of the parent which shall be an on-demand document</td>
       </tr>
     </table>
-    <p xmlns="" style="font-size:9pt">Adapted from HL7 CDA Release 2, Committee Ballot 2</p>
+    <p xmlns="" class="note">Adapted from HL7 CDA Release 2, Committee Ballot 2</p>
     <p xmlns="">A submitting actor creates a document relationship by submitting a SubmissionSet containing:</p>
     <ol xmlns="">
       <li class="numbered-list1">
@@ -827,9 +828,9 @@
     <ol xmlns="" start="3">
       <li class="numbered-list2">The Association Type is one of the relationships in Table 4.2.2.2-1: Document Relationships.</li>
     </ol>
-    <p xmlns="" style="font-size:9pt">Note: Some transactions may limit the choice on the linked DocumentEntry.</p>
+    <p xmlns="" class="note">Note: Some transactions may limit the choice on the linked DocumentEntry.</p>
     <p xmlns="">To specify the entryUUID of an existing DocumentEntry in targetObject, the submitting actor will need to discover the value using a Registry Stored Query [ITI-18] transaction, or by other means.</p>
-    <p xmlns="" style="font-size:9pt">Note to implementers: A submitting actor using saved entryUUIDs in future transactions can run into consistency problems. For example, a second actor can replace (and therefore deprecate) the DocumentEntry. The saved entryUUID will point to the deprecated DocumentEntry and not the replacement DocumentEntry. Once a DocumentEntry is deprecated, new Associations to that DocumentEntry will be rejected.</p>
+    <p xmlns="" class="note">Note to implementers: A submitting actor using saved entryUUIDs in future transactions can run into consistency problems. For example, a second actor can replace (and therefore deprecate) the DocumentEntry. The saved entryUUID will point to the deprecated DocumentEntry and not the replacement DocumentEntry. Once a DocumentEntry is deprecated, new Associations to that DocumentEntry will be rejected.</p>
     <p xmlns="">Document Relationship Associations may include documentation describing the Association (type of transformation, reason for replacement, etc.). If documentation is included, it shall be specified as a Classification on the Association as follows:</p>
     <ol xmlns="">
       <li class="numbered-list1">Classifications shall be coded following the restrictions set forth in Section 4.2.3.1.2, “Creating Coded Attributes.”</li>
@@ -1052,7 +1053,7 @@
         <span>&lt;/rim:ExtrinsicObject&gt;</span>
       </p>
     </div>
-    <p xmlns="" style="font-size:9pt">Note: This example does not show the SubmissionSet object or the SubmissionSet to DocumentEntry HasMember association.</p>
+    <p xmlns="" class="note">Note: This example does not show the SubmissionSet object or the SubmissionSet to DocumentEntry HasMember association.</p>
     <p xmlns="">This Association shall be submitted together with the Stable DocumentEntry representing the snapshot of the On-Demand Document. The sourceObject attribute references the snapshot and the targetObject references the On-Demand DocumentEntry already in the Document Registry.</p>
     <h3 xmlns="" id="4.2.3">4.2.3 Metadata Attributes</h3>
     <p xmlns="">This section details the coding of metadata attributes using in Document Sharing profiles.</p>
@@ -1229,7 +1230,7 @@
       <span>– shall be used in the Name element. It is expected that the name be semantically consistent with the code value. The same code value may have multiple valid human-readable representations in different languages or in different, but semantically equivalent, wording. The displayName is a convenience provided by the actor that creates the metadata (“metadata creator”), indicating the meaning of the code in a local language used at the “metadata creator”. It is the responsibility of the actor that consumes the metadata (“metadata consumer”) to resolve code values in metadata into human-readable display values. A “metadata consumer” may use the displayName found in the metadata provided by the “metadata creator”, or it may choose another local designation for the code, for example to translate it from English into French.</span>
     </p>
     <p xmlns="">Some coded attributes allow multiple values. EventCodeList is an example. These attributes may contain the letters ‘List’ in their name. These codes are XML encoded identically to the above example except the entire Classification element may be repeated to specify additional values.</p>
-    <p xmlns="" style="font-size:9pt">Note: The attribute DocumentEntry.languageCode is not encoded as a coded attribute as shown above. See Table 4.2.3.1.7-2 for details.</p>
+    <p xmlns="" class="note">Note: The attribute DocumentEntry.languageCode is not encoded as a coded attribute as shown above. See Table 4.2.3.1.7-2 for details.</p>
     <h5 xmlns="" id="4.2.3.1.3">4.2.3.1.3 Creating External Identifiers</h5>
     <p xmlns="">Several attributes of DocumentEntry, SubmissionSet and Folder (Table 4.2.3.2-1, Table, 4.2.3.3-1 and Table 4.2.3.4-1) are identifiers defined as ebRIM ExternalIdentifiers. These identifiers, such as patient IDs or document unique IDs are considered to be real-world identifiers that have global meaning external to an ebXML registry or other transaction.</p>
     <p xmlns="">The identifiers consist of a single, opaque string stored in the value attribute of an ExternalIdentifier element. The meaning and format depend on the particular identifier. An example of an identifier in a submission request is:</p>
@@ -1316,8 +1317,8 @@
       <li class="bullet-list2">authorTelecommunication – zero or more</li>
     </ul>
     <p xmlns="">At least an authorPerson, authorTelecommunication or authorInstitution sub-attribute shall be present when the author attribute is included in the metadata.</p>
-    <p xmlns="" style="font-size:9pt">Note: Even if the authorPerson sub-attribute is not present, then the human or machine who authored the document or SubmissionSet exists but is not known. The other author sub-attributes apply to that unknown authorPerson.</p>
-    <p xmlns="" style="font-size:9pt">Note: Author sub-attributes can contain lists of values. IHE does not define a positional correspondence between values in the sub-attributes; e.g., the second authorTelecom value might be a second way of contacting the authorPerson in the first authorInstitution, or might apply to the second (or third) authorInstitution.</p>
+    <p xmlns="" class="note">Note: Even if the authorPerson sub-attribute is not present, then the human or machine who authored the document or SubmissionSet exists but is not known. The other author sub-attributes apply to that unknown authorPerson.</p>
+    <p xmlns="" class="note">Note: Author sub-attributes can contain lists of values. IHE does not define a positional correspondence between values in the sub-attributes; e.g., the second authorTelecom value might be a second way of contacting the authorPerson in the first authorInstitution, or might apply to the second (or third) authorInstitution.</p>
     <p xmlns="">
       <span style="font-weight:bold">Coding:</span>
     </p>
@@ -3259,7 +3260,7 @@
     </p>
     <p xmlns="">The hash of the contents of the document.</p>
     <p xmlns="">The hash attribute can be used to identify accidental document corruption, mistaken duplicate IDs, etc. The SHA1 algorithm and hash attribute should not be used for identifying malicious alterations.</p>
-    <p xmlns="" style="font-size:9pt">Note: Environments requiring a higher level of protection against document modification should consider using a digital signature such as defined in the Digital Signature (DSG) Profile (see <a href="../Volume1/ch-37.html#37">ITI TF-1: 37</a>).</p>
+    <p xmlns="" class="note">Note: Environments requiring a higher level of protection against document modification should consider using a digital signature such as defined in the Digital Signature (DSG) Profile (see <a href="../Volume1/ch-37.html#37">ITI TF-1: 37</a>).</p>
     <p xmlns="">
       <span style="font-weight:bold">Coding:</span>
     </p>
@@ -3968,7 +3969,7 @@
       <li class="bullet-list1">For documents using URIs, the uniqueId should be the URI, except for URNs with the “urn:oid:” and “urn:uuid:” namespaces (see OID and UUID above).</li>
     </ul>
     <p xmlns="">All guidance regarding the structure and format of the identifier is meant to support document creators in following best practices for identifier management. From the perspective of all other actors, the uniqueId should be considered an opaque string.</p>
-    <p xmlns="" style="font-size:9pt">Note: Some IHE profiles may restrict the length and format of this attribute.</p>
+    <p xmlns="" class="note">Note: Some IHE profiles may restrict the length and format of this attribute.</p>
     <div xmlns="" style="border:0.75pt solid #000000; clear:both">
       <p style="font-size:10pt">
         <span>&lt;rim:ExternalIdentifier</span>
@@ -5044,7 +5045,7 @@
       <span style="font-weight:bold">Description:</span>
     </p>
     <p xmlns="">Comments associated with the Folder. Free form text or IHE profile-specified usage.</p>
-    <p xmlns="" style="font-size:9pt">Note: Prior to the availability of the Folder.title attribute, the comments attribute might have been used to hold the title of the folder (folder name). With the addition of the title attribute, the comments attribute shall not hold the folder name.</p>
+    <p xmlns="" class="note">Note: Prior to the availability of the Folder.title attribute, the comments attribute might have been used to hold the title of the folder (folder name). With the addition of the title attribute, the comments attribute shall not hold the folder name.</p>
     <p xmlns="">
       <span style="font-weight:bold">Coding:</span>
     </p>
@@ -5192,7 +5193,7 @@
       <span style="font-weight:bold">Description:</span>
     </p>
     <p xmlns="">Shall contain the title of the Folder.</p>
-    <p xmlns="" style="font-size:9pt">Note: Prior to the availability of this attribute, the comments attribute might have been used to hold the title of the folder. With the addition of this attribute, the comments attribute shall not hold the folder title.</p>
+    <p xmlns="" class="note">Note: Prior to the availability of this attribute, the comments attribute might have been used to hold the title of the folder. With the addition of this attribute, the comments attribute shall not hold the folder title.</p>
     <p xmlns="">
       <span style="font-weight:bold">Coding:</span>
     </p>
@@ -5750,22 +5751,22 @@
         </tr>
       </tbody>
     </table>
-    <p xmlns="" style="font-size:9pt">
+    <p xmlns="" class="note">
       <span style="font-weight:bold">Note 1:</span>
     </p>
-    <p xmlns="" style="font-size:9pt">P = Provide and Register-b</p>
-    <p xmlns="" style="font-size:9pt">R = Register-b</p>
-    <p xmlns="" style="font-size:9pt">SQ = Stored Query</p>
-    <p xmlns="" style="font-size:9pt">RS = Retrieve Document Set</p>
-    <p xmlns="" style="font-size:9pt">XGQ = Cross Gateway Query</p>
-    <p xmlns="" style="font-size:9pt">XGR = Cross Gateway Retrieve</p>
-    <p xmlns="" style="font-size:9pt">
+    <p xmlns="" class="note">P = Provide and Register-b</p>
+    <p xmlns="" class="note">R = Register-b</p>
+    <p xmlns="" class="note">SQ = Stored Query</p>
+    <p xmlns="" class="note">RS = Retrieve Document Set</p>
+    <p xmlns="" class="note">XGQ = Cross Gateway Query</p>
+    <p xmlns="" class="note">XGR = Cross Gateway Retrieve</p>
+    <p xmlns="" class="note">
       <span style="font-weight:bold">Note 2:</span>
     </p>
-    <p xmlns="" style="font-size:9pt">Two examples of the use of error code XDSUnavailableCommunity are:</p>
-    <p xmlns="" style="font-size:9pt">1. A Cross Gateway Query or Cross Gateway Retrieve fails because the community identified by a homeCommunityId could not be contacted.</p>
-    <p xmlns="" style="font-size:9pt">2. A Cross Gateway Query based on Patient ID could not contact some known communities to relay the query.</p>
-    <p xmlns="" style="font-size:9pt">The error would be generated by the Initiating Gateway and returned in the Registry Stored Query [ITI-18] or Retrieve Document Set [ITI-43] transaction. This would only apply when XDS Affinity Domain Option was used.</p>
+    <p xmlns="" class="note">Two examples of the use of error code XDSUnavailableCommunity are:</p>
+    <p xmlns="" class="note">1. A Cross Gateway Query or Cross Gateway Retrieve fails because the community identified by a homeCommunityId could not be contacted.</p>
+    <p xmlns="" class="note">2. A Cross Gateway Query based on Patient ID could not contact some known communities to relay the query.</p>
+    <p xmlns="" class="note">The error would be generated by the Initiating Gateway and returned in the Registry Stored Query [ITI-18] or Retrieve Document Set [ITI-43] transaction. This would only apply when XDS Affinity Domain Option was used.</p>
     <h4 xmlns="" id="4.2.4.2">4.2.4.2 Error responses</h4>
     <p xmlns="">The following tables explain the meaning of the status attribute in RegistryResponse and AdhocQueryResponse. Tables 4.2.4.2-1, 4.2.4.2-2, 4.2.4.2-3 and 4.2.4.2-4 below indicate whether the RegistryErrorList element shall be present and what other content shall be part of the response.</p>
     <p xmlns="" style="font-size:11pt">
