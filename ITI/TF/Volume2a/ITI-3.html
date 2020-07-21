@@ -1,64 +1,64 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
   <head>
-    <meta charset="utf-8" />
-    <title>IHE_ITI_TF_Rev16-0_Vol2a_FT</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF Rev17 Vol2a</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
-  <body>
+  <body xmlns="">
     <p>
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
     <p>Technical Framework</p>
     <p>Volume 2</p>
-    <p>Revision 16.0 – Final Text</p>
+    <p>Revision 17.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h2 xmlns="" id="3.3">3.3 Get Service Ticket [ITI-3]</h2>
-    <p xmlns="">This section corresponds to transaction [ITI-3] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-3] is used by the Client Authentication Agent and Kerberos Authentication Server Actors.</p>
-    <h3 xmlns="" id="3.3.1">3.3.1 Scope</h3>
-    <p xmlns="">The Client Authentication Agent uses this transaction to obtain the service ticket that will be sent to a Kerberized Server to authenticate this user to a Kerberized Server.</p>
-    <h3 xmlns="" id="3.3.2">3.3.2 Use Case Roles</h3>
-    <img xmlns="" src="media/alql6-rgeyz.008.png" width="365" height="123" alt="" />
-    <p xmlns="">
+    <h2 id="3.3">3.3 Get Service Ticket [ITI-3]</h2>
+    <p>This section corresponds to transaction [ITI-3] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-3] is used by the Client Authentication Agent and Kerberos Authentication Server Actors.</p>
+    <h3 id="3.3.1">3.3.1 Scope</h3>
+    <p>The Client Authentication Agent uses this transaction to obtain the service ticket that will be sent to a Kerberized Server to authenticate this user to a Kerberized Server.</p>
+    <h3 id="3.3.2">3.3.2 Use Case Roles</h3>
+    <img src="media/amdr0-jc4sx.008.png" width="365" height="123" alt="" />
+    <p>
       <span style="font-weight:bold">Actor:</span>
       <span>Client Authentication Agent.</span>
     </p>
-    <p xmlns="">
+    <p>
       <span style="font-weight:bold">Role:</span>
       <span>Client communicates authentication information to the Kerberos Authentication Server, receives a Service Ticket, and performs internal ticket management.</span>
     </p>
-    <p xmlns="">
+    <p>
       <span style="font-weight:bold">Actor:</span>
       <span>Kerberos Authentication Server. In RFC1510 this is called a Key Distribution Center (KDC).</span>
     </p>
-    <p xmlns="">
+    <p>
       <span style="font-weight:bold">Role:</span>
       <span>Verifies the authentication information, creates a ticket, and sends it to the Client Authentication Agent.</span>
     </p>
-    <h3 xmlns="" id="3.3.3">3.3.3 Referenced Standard</h3>
-    <p xmlns="">
+    <h3 id="3.3.3">3.3.3 Referenced Standard</h3>
+    <p>
       <span>RFC1510</span>
       <span style="width:25.32pt;display:inline-block"> </span>
       <span>The Kerberos Network Authentication Service (V5)</span>
     </p>
-    <h3 xmlns="" id="3.3.4">3.3.4 Messages</h3>
-    <img xmlns="" src="media/alql6-rgeyz.009.png" width="557" height="240" alt="" />
-    <p xmlns="" class="figureTitle">Figure 3.3.4-1: Interaction Diagram</p>
-    <h4 xmlns="" id="3.3.4.1">3.3.4.1 Get Service Ticket</h4>
-    <p xmlns="">The Client Authentication Agent requests a service ticket that will be sent to a Kerberized Server to authenticate this user to a Kerberized Server.</p>
-    <h5 xmlns="" id="3.3.4.1.1">3.3.4.1.1 Trigger Events</h5>
-    <p xmlns="">A service ticket is requested prior to communicating with a Kerberized Server. This ticket will be provided to that service as part of the Kerberized communication process.</p>
-    <h5 xmlns="" id="3.3.4.1.2">3.3.4.1.2 Message Semantics</h5>
-    <p xmlns="">The Client Authentication Agent requests credentials for a service by sending the Kerberos Authentication Server a Kerberos Ticket-Granting Service Request (KRB_TGS_REQ). This message includes the user’s name, an authenticator encrypted with the user’s logon session key, the TGT obtained in the Get User Authentication Transaction, and the name of the service for which the user wants a ticket.</p>
-    <p xmlns="">When the Kerberos Authentication Server receives KRB_TGS_REQ, it decrypts the TGT with its own secret key, extracting the logon session key. It uses the logon session key to decrypt the authenticator and evaluates that. If the authenticator passes the test, the Kerberos Authentication Server extracts the authorization data from the TGT and invents a session key for the client to share with the Kerberized Server that supports the service. The Kerberos Authentication Server encrypts one copy of this session key with the user’s logon session key. It embeds another copy of the session key in a ticket, along with the authorization data, and encrypts this ticket with the service’s long-term key. The Kerberos Authentication Server then sends these credentials back to the client in a Kerberos Ticket-Granting Service Reply (KRB_TGS_REP).</p>
-    <p xmlns="">There are no IHE specific extensions or modifications to the Kerberos messaging.</p>
-    <h5 xmlns="" id="3.3.4.1.3">3.3.4.1.3 Expected Actions</h5>
-    <p xmlns="">When the Client Authentication Agent receives the reply, it uses the logon session key to decrypt the session key to use with the service, and stores the key in its credentials cache. Then it extracts the ticket for the service and stores that in its cache. The client shall maintain the ticket in the credentials cache for later use.</p>
-    <h5 xmlns="" id="3.3.4.1.4">3.3.4.1.4 Service Registration</h5>
-    <p xmlns="">The Kerberized Communication services supported in an enterprise shall be registered on the Kerberos Authentication Server according to the RFC1510 protocol specification used. The registration of the service on the KDC is outside the scope of this profile.</p>
-    <h3 xmlns="" id="3.3.5">3.3.5 Security Considerations</h3>
-    <p xmlns="">The Get Service Ticket [ITI-3] transaction is not required to log an ATNA UserAuthentication event in the case of successful communications. An ATNA UserAuthentication event shall be logged when the communications fails for the purpose of authentication failure.</p>
+    <h3 id="3.3.4">3.3.4 Messages</h3>
+    <img src="media/amdr0-jc4sx.009.png" width="557" height="240" alt="" />
+    <p class="figureTitle">Figure 3.3.4-1: Interaction Diagram</p>
+    <h4 id="3.3.4.1">3.3.4.1 Get Service Ticket</h4>
+    <p>The Client Authentication Agent requests a service ticket that will be sent to a Kerberized Server to authenticate this user to a Kerberized Server.</p>
+    <h5 id="3.3.4.1.1">3.3.4.1.1 Trigger Events</h5>
+    <p>A service ticket is requested prior to communicating with a Kerberized Server. This ticket will be provided to that service as part of the Kerberized communication process.</p>
+    <h5 id="3.3.4.1.2">3.3.4.1.2 Message Semantics</h5>
+    <p>The Client Authentication Agent requests credentials for a service by sending the Kerberos Authentication Server a Kerberos Ticket-Granting Service Request (KRB_TGS_REQ). This message includes the user’s name, an authenticator encrypted with the user’s logon session key, the TGT obtained in the Get User Authentication Transaction, and the name of the service for which the user wants a ticket.</p>
+    <p>When the Kerberos Authentication Server receives KRB_TGS_REQ, it decrypts the TGT with its own secret key, extracting the logon session key. It uses the logon session key to decrypt the authenticator and evaluates that. If the authenticator passes the test, the Kerberos Authentication Server extracts the authorization data from the TGT and invents a session key for the client to share with the Kerberized Server that supports the service. The Kerberos Authentication Server encrypts one copy of this session key with the user’s logon session key. It embeds another copy of the session key in a ticket, along with the authorization data, and encrypts this ticket with the service’s long-term key. The Kerberos Authentication Server then sends these credentials back to the client in a Kerberos Ticket-Granting Service Reply (KRB_TGS_REP).</p>
+    <p>There are no IHE specific extensions or modifications to the Kerberos messaging.</p>
+    <h5 id="3.3.4.1.3">3.3.4.1.3 Expected Actions</h5>
+    <p>When the Client Authentication Agent receives the reply, it uses the logon session key to decrypt the session key to use with the service, and stores the key in its credentials cache. Then it extracts the ticket for the service and stores that in its cache. The client shall maintain the ticket in the credentials cache for later use.</p>
+    <h5 id="3.3.4.1.4">3.3.4.1.4 Service Registration</h5>
+    <p>The Kerberized Communication services supported in an enterprise shall be registered on the Kerberos Authentication Server according to the RFC1510 protocol specification used. The registration of the service on the KDC is outside the scope of this profile.</p>
+    <h3 id="3.3.5">3.3.5 Security Considerations</h3>
+    <p>The Get Service Ticket [ITI-3] transaction is not required to log an ATNA UserAuthentication event in the case of successful communications. An ATNA UserAuthentication event shall be logged when the communications fails for the purpose of authentication failure.</p>
   </body>
 </html>

@@ -45,6 +45,7 @@ The conversion is a multi step process consisting of the following steps:
 * removed inline style of lists and replaced by classes
 * removed "no-break space" characters from headings
 * removed inline style of <p> containing notes and replaced by classes 
+* switched to ITI-TF Version 17.0 Final Text 
 
 ## Open issues:
 * remove inline style of A HREF tags

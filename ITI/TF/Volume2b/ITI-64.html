@@ -1,45 +1,1372 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
   <head>
-    <meta charset="utf-8" />
-    <title>IHE_ITI_TF_Rev16-0_Vol2b_FT</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF Rev17 Vol2b</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
-  <body>
+  <body xmlns="">
     <p>
       <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
     </p>
     <p>IHE IT Infrastructure (ITI)</p>
     <p>Technical Framework</p>
     <p>Volume 2</p>
-    <p>Revision 16.0 – Final Text</p>
+    <p>Revision 17.0 – Final Text</p>
     <p>
       <hr />
     </p>
-    <h2 xmlns="" id="3.64">3.64 Reserved for Notify XAP-PID Link Change [ITI-64]</h2>
-    <div xmlns="" style="-aw-different-first-page:true; -aw-headerfooter-type:footer-primary">
+    <h2 id="3.64">3.64 Notify XAP-PID Link Change [ITI-64]</h2>
+    <p>
+      <span>This section corresponds to Transaction ITI-64. “</span>
+      <span style="font-weight:bold">Notify XAD-PID Link Change</span>
+      <span>” of the IHE Technical Framework. Transaction ITI-64 is used by the Patient Identity Cross-Reference Manager and Document Registry Actors.</span>
+    </p>
+    <p>The following definitions are key to understanding this transaction:</p>
+    <ul>
+      <li class="bullet-list1">
+        <span style="font-weight:bold">"XAD Assigning Authority"</span>
+        <span>refers to the patient identifier Assigning Authority that is the authoritative source of patient identifiers for the XDS Affinity Domain.</span>
+      </li>
+    </ul>
+    <p>For a given patient,</p>
+    <ul>
+      <li class="bullet-list1">
+        <span>"</span>
+        <span style="font-weight:bold">XAD-PID</span>
+        <span>" is a patient identifier created by the XAD Assigning Authority. The patient should only have one XAD-PID assigned.</span>
+      </li>
+      <li class="bullet-list1">
+        <span>"</span>
+        <span style="font-weight:bold">local patient ID</span>
+        <span>" is the patient ID used by a particular local domain. This value was placed in the "</span>
+        <span style="font-style:italic">sourcePatientID</span>
+        <span>" metadata attribute for all documents related to the patient from that local domain that have been submitted to the Document Registry.</span>
+      </li>
+      <li class="bullet-list1">
+        <span>"</span>
+        <span style="font-weight:bold">previous XAD-PID</span>
+        <span>" is the XAD-PID to which the</span>
+        <span style="font-weight:bold">“local patient ID”</span>
+        <span>was originally linked. This value was placed in the "</span>
+        <span style="font-style:italic">patientID</span>
+        <span>" metadata attribute for all documents related to the patient from that local domain that have been submitted to the Document Registry</span>
+      </li>
+      <li class="bullet-list1">
+        <span>"</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>" is the correct XAD-PID to which the</span>
+        <span style="font-weight:bold">“local patient ID”</span>
+        <span>is now linked. It will replace</span>
+        <span style="font-weight:bold">“previous XAD-PID”</span>
+        <span>in all documents submitted to the Document Registry for the given</span>
+        <span style="font-weight:bold">“local patient ID”</span>
+        <span>.</span>
+      </li>
+      <li class="bullet-list1">
+        <span>“</span>
+        <span style="font-weight:bold">subsumed local patient ID</span>
+        <span>” is the patient ID previously used by a local domain that is being merged as a part of this message. On the original submission this value was placed in the "</span>
+        <span style="font-weight:bold;font-style:italic">sourcePatientID</span>
+        <span>" metadata attribute. As part of this transaction the “</span>
+        <span style="font-weight:bold;font-style:italic">sourcePatientID</span>
+        <span>” value must be updated to the “</span>
+        <span style="font-weight:bold;font-style:italic">local patient ID</span>
+        <span>”.</span>
+      </li>
+    </ul>
+    <h3 id="3.64.1">3.64.1 Scope</h3>
+    <p>
+      <span>This transaction informs the recipient that there has been a change to the link between a</span>
+      <span style="font-weight:bold">“local patient ID”</span>
+      <span>(i.e., that used by the Document Source) and its corresponding XAD-PID (XDS Affinity Domain Patient Identifier).</span>
+    </p>
+    <p>It should not to be confused with the similar link/unlink events documented in the Patient Identity Management [ITI-30] transaction which is used by patient demographic suppliers to notify other interested systems about changes to its own local patient identity records.</p>
+    <p>The transaction can be used in any setting where it is appropriate to have XAD-PID link changes processed as a single event, rather than require individual metadata updates to each object.</p>
+    <h3 id="3.64.2">3.64.2 Use Case Roles</h3>
+    <img src="media/ai8zh-w242m.073.jpeg" width="394" height="207" alt="XPID Diagram-12" />
+    <p>
+      <span style="font-weight:bold">Actor</span>
+      <span>: Patient Identity Cross-Reference Manager</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Role</span>
+      <span>:  Notifies of the occurrence of changes to a link between local patient identifiers and their corresponding XAD-PID</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Actor:</span>
+      <span>Document Registry</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Role</span>
+      <span>:  Receives notification and performs automatic changes to the metadata of affected objects.</span>
+    </p>
+    <h3 id="3.64.3">3.64.3 Referenced Standard</h3>
+    <p>
+      <span style="font-style:italic">HL7 v2.5, chapters 2, 3, 6, 15</span>
+    </p>
+    <h3 id="3.64.4">3.64.4 Interaction Diagram</h3>
+    <img src="media/ai8zh-w242m.074.jpeg" width="303" height="184" alt="XPID Diagram-11" />
+    <h4 id="3.64.4.1">3.64.4.1 Notify XAD-PID Link Change</h4>
+    <h5 id="3.64.4.1.1">3.64.4.1.1 Trigger Events</h5>
+    <p>
+      <span>The Patient Identity Cross-Reference Manager has made a change in the link between a patient's</span>
+      <span style="font-weight:bold">“local patient ID”</span>
+      <span>and its corresponding XAD-PID or a “</span>
+      <span style="font-weight:bold">local patient ID</span>
+      <span>” has been merged.</span>
+    </p>
+    <h5 id="3.64.4.1.2">3.64.4.1.2 Message Semantics</h5>
+    <p>The Patient Identifier Cross-Reference Manager shall encode the Notify XAD-PID Link Change message using the ADT^A43 message. The segments of the message listed in Table 3.64-1 shall be present. Other segments are optional.</p>
+    <p class="tableTitle">Table 3.64.4.1.2-1: Notify XAD-PID Link Change</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width:100.95pt" class="tableHeader">ADT</td>
+        <td style="width:196.65pt" class="tableHeader">Notify XAD-PID Link Change</td>
+        <td style="width:148.8pt" class="tableHeader">Chapters in HL7 2.5</td>
+      </tr>
+      <tr>
+        <td style="width:100.95pt">MSH</td>
+        <td style="width:196.65pt">Message Header</td>
+        <td style="width:148.8pt">2</td>
+      </tr>
+      <tr>
+        <td style="width:100.95pt">EVN</td>
+        <td style="width:196.65pt">Event Type</td>
+        <td style="width:148.8pt">3</td>
+      </tr>
+      <tr>
+        <td style="width:100.95pt">PID</td>
+        <td style="width:196.65pt">Patient Identification</td>
+        <td style="width:148.8pt">3</td>
+      </tr>
+      <tr>
+        <td style="width:100.95pt">MRG</td>
+        <td style="width:196.65pt">Merge Patient Information</td>
+        <td style="width:148.8pt">3</td>
+      </tr>
+    </table>
+    <p>This transaction shall use the HL7 v2 original acknowledgement mode. The Document Registry shall acknowledge each ADT^A43 message with the HL7 v2 Accept ACK message. See ITI TF-2x: C.2.3, “Acknowledgement Modes” for the definition and discussion of the ACK message.</p>
+    <h6 id="3.64.4.1.2.1">3.64.4.1.2.1 MSH Segment</h6>
+    <p>The MSH segment shall be constructed as defined in ITI TF-2x: C.2.2, “Message Control”.</p>
+    <ul>
+      <li class="bullet-list1">Field MSH-3 Sending Application shall contain the OID for the Patient Identity Cross-Reference Manager system. This OID will be different than the OID for the assigning authority.</li>
+      <li class="bullet-list1">Field MSH-9 Message Type shall have a value of ADT^A43.</li>
+    </ul>
+    <h6 id="3.64.4.1.2.2">3.64.4.1.2.2 EVN Segment</h6>
+    <p>See ITI TF-2x: C.2.4 for the list of all required and optional fields within the EVN segment.</p>
+    <h6 id="3.64.4.1.2.3">3.64.4.1.2.3 PID Segment</h6>
+    <p>A single PID segment shall include a list with two identifiers in PID-3 as follows:</p>
+    <ul>
+      <li class="bullet-list1">
+        <span>The first repetition contains the "</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>", as the one the Patient Identity Cross-Reference Manager has linked to the "</span>
+        <span style="font-weight:bold">local patient ID</span>
+        <span>"</span>
+      </li>
+      <li class="bullet-list1">
+        <span>The second repetition contains the "</span>
+        <span style="font-weight:bold">local patient ID</span>
+        <span>"</span>
+      </li>
+    </ul>
+    <p>Both patient IDs included in PID-3 shall include an Assigning Authority component. The Assigning Authority component returned shall include the subcomponents Universal ID, and Universal ID type. It may include the namespace ID, in which case it shall reference the same entity as is referenced by the other two subcomponents.</p>
+    <p>To eliminate the issue of multiple name values between Patient Identifier Domains, field PID-5-Patient Name shall have a value of " ", i.e., a single space character (ASCII 0x20).</p>
+    <h6 id="3.64.4.1.2.4">3.64.4.1.2.4 MRG Segment</h6>
+    <p>A single MRG segment shall include one or two identifiers in MRG-1 as follows:</p>
+    <ul>
+      <li class="bullet-list0">
+        <span>The first repetition shall contain the “</span>
+        <span style="font-weight:bold">previous XAD-PID</span>
+        <span>”. If only a local patient identifier merge is being reflected, the “</span>
+        <span style="font-weight:bold">previous XAD-PID</span>
+        <span>” shall be the same as the “</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>”.</span>
+      </li>
+      <li class="bullet-list0">
+        <span>The second repetition, if present, shall contain the “</span>
+        <span style="font-weight:bold">subsumed local patient ID</span>
+        <span>”. This identifier shall have the same Assigning Authority as the “</span>
+        <span style="font-weight:bold">local patient ID</span>
+        <span>” in the PID Segment. The presence of the “</span>
+        <span style="font-weight:bold">subsumed local patient ID</span>
+        <span>” indicates that it is being merged into the “</span>
+        <span style="font-weight:bold">local patient ID</span>
+        <span>” specified in the PID segment.</span>
+      </li>
+    </ul>
+    <p>Any patient ID included in MRG-1 shall include an Assigning Authority component. The Assigning Authority component shall include the subcomponents Universal ID, and Universal ID type. It may include the namespace ID, in which case it shall reference the same entity as is referenced by the other two subcomponents.</p>
+    <h5 id="3.64.4.1.3">3.64.4.1.3 Expected Actions</h5>
+    <p>This section documents the expected outcome of the Notify XAD-PID Link Change transaction when received by the Document Registry. It is only applicable when the Document Registry is also supporting the XDS Profile (i.e., the Registry Stored Query [ITI-18] transaction).</p>
+    <p>Upon receipt of this message, the Document Registry shall perform all necessary actions to ensure that it has applied the XAD-PID link change notification to all applicable objects within its database.</p>
+    <p>After processing the XAD-PID link change, the Document Registry shall ensure that:</p>
+    <ul>
+      <li class="bullet-list1">
+        <span>Responses to any subsequent Registry Stored Query [ITI-18] transaction for documents related to the "</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>" (i.e., patientId in the Document) shall include matching documents for that patientID including all those containing a sourcePatientId value of "</span>
+        <span style="font-weight:bold">local Patient ID</span>
+        <span>".</span>
+      </li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">
+        <span>Responses to any subsequent Registry Stored Query [ITI-18] for documents related to the "</span>
+        <span style="font-weight:bold">previous XAD-PID</span>
+        <span>" shall not include any document with sourcePatientId value of "</span>
+        <span style="font-weight:bold">local Patient ID</span>
+        <span>".</span>
+      </li>
+      <li class="bullet-list1">
+        <span>If “</span>
+        <span style="font-weight:bold">subsumed local patient ID</span>
+        <span>” is present, responses to any subsequent Registry Stored Query [ITI-18] shall show the "</span>
+        <span style="font-weight:bold">local Patient ID</span>
+        <span>" in the sourcePatientId attribute for any document that previously contained the "</span>
+        <span style="font-weight:bold">subsumed local patient ID</span>
+        <span>" as the sourcePatientId.</span>
+      </li>
+    </ul>
+    <p>
+      <span>The first two rules essentially reflect the XPID Profile requirement that all DocumentEntry objects assigned to the</span>
+      <span style="font-weight:bold">“local patient ID”</span>
+      <span>must now have a patientID value of</span>
+      <span style="font-weight:bold">“new XAD-PID”</span>
+      <span>not</span>
+      <span style="font-weight:bold">“previous XAD-PID”</span>
+      <span>. The last rule reflects the XPID Profile requirement that all DocumentEntry objects previously assigned to the “</span>
+      <span style="font-weight:bold">subsumed local patient ID</span>
+      <span>” shall now have sourcePatientId equal to “</span>
+      <span style="font-weight:bold">local Patient ID</span>
+      <span>” and patientID equal to “</span>
+      <span style="font-weight:bold">new XAD-PID</span>
+      <span>”.</span>
+    </p>
+    <h6 id="3.64.4.1.3.1">3.64.4.1.3.1 Document Registry Object Updates</h6>
+    <p>This section describes the requirements for Document Registry object updates that result from processing the Notify XAD-PID Link Change transaction. The resulting metadata shall be generated by the Document Registry so that the changes, as viewed through the Registry Stored Query [ITI-18] transaction, appear to have been created through the mechanism described in ITI TF-3: 4.1.15 “Metadata Versioning Semantics” (currently in the Trial Implementation Supplement - XDS Metadata Update). This section describes this mechanism as applied to this transaction.</p>
+    <p>After the Notify XAD-PID Link Change transaction is processed, the contents of the Document Registry shall remain in a consistent state with regard to associations linking objects that carry a Patient ID attribute, specifically, that two objects linked by such an Association shall have the same Patient ID. See Section 3.64.4.1.3.2 for discussion of constraint conflict resolution. The exception is a SubmissionSet to DocumentEntry HasMember association that is labeled ‘Reference’. This situation is described in Section 3.64.4.1.3.1.4, item #5.</p>
+    <p>The following sections detail the required changes for each of the conditions listed. These changes shall be applied to each object to be updated in the Document Registry as described.</p>
+    <p class="heading7" id="3.64.4.1.3.1.1">3.64.4.1.3.1.1 Creation of a New SubmissionSet</p>
+    <p>Each Notify XAD-PID Link Change transaction, which updates the XAD-PID associated with a single sourcePatientId, shall result in the creation of a new SubmissionSet object in the Document Registry. Changes to Document Registry objects shall be linked to this new SubmissionSet. These changes include:</p>
+    <ul>
+      <li class="bullet-list1">Creating a new version of a DocumentEntry and deprecating the previous version</li>
+      <li class="bullet-list1">Creating a new version of a Folder and deprecating the previous version</li>
+      <li class="bullet-list1">Deprecating an Association</li>
+      <li class="bullet-list1">Creating a new Association</li>
+    </ul>
+    <p>The following table shall be used to code the attributes of the new SubmissionSet. Attributes missing from the table are unchanged from normal SubmissionSet object coding.</p>
+    <p class="tableTitle">Table 3.64.4.1.3.1.1-1: New SubmissionSet Attributes</p>
+    <table cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <td style="width:129.3pt" class="tableHeader">Attribute</td>
+          <td style="width:291.9pt" class="tableHeader">Description</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width:129.3pt">author</td>
+          <td style="width:291.9pt">Not included</td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">contentTypeCode</td>
+          <td style="width:291.9pt">XDS Affinity Domain defined code indicating the SubmissionSet was created as a result of a Notify XAD-PID Link Change transaction</td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">homeCommunityId</td>
+          <td style="width:291.9pt">Not included</td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">intendedRecipient</td>
+          <td style="width:291.9pt">Not included</td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">patientId</td>
+          <td style="width:291.9pt">
+            <p>
+              <span>Value of “</span>
+              <span style="font-weight:bold">new XAD-PID</span>
+              <span>”</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">sourceId</td>
+          <td style="width:291.9pt">OID for the sending application as provided in the MSH-3 field of the transaction (see Section 3.64.4.1.2.1)</td>
+        </tr>
+        <tr>
+          <td style="width:129.3pt">submissionTime</td>
+          <td style="width:291.9pt">The time the Document Registry processed the transaction</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="heading7" id="3.64.4.1.3.1.2">3.64.4.1.3.1.2 Overlapping Updates</p>
+    <p>When interpreting the rules described in the sections that follow, the results of a single Notify XAD-PID Link Change transaction shall not create two new versions of any logical object. The rules are written from the point of view of non-overlapping updates. The implementer shall manage overlaps.</p>
+    <p class="heading7" id="3.64.4.1.3.1.3">3.64.4.1.3.1.3 Deprecated Objects</p>
+    <p>The Document Registry shall not make changes to any DocumentEntry or Folder objects with availabilityStatus of “Deprecated”.</p>
+    <p class="heading7" id="3.64.4.1.3.1.4">3.64.4.1.3.1.4 DocumentEntry, not part of a Folder, not linked to other DocumentEntries</p>
+    <p>The Document Registry shall:</p>
+    <ol>
+      <li class="numbered-list1">Extract the version and logicalId attributes from the most current version of the DocumentEntry object.</li>
+      <li class="numbered-list1">Create a new copy of the DocumentEntry adding the following changes:</li>
+    </ol>
+    <ul>
+      <li class="bullet-list2">Version attribute has value of one more than the version attribute of the existing DocumentEntry</li>
+      <li class="bullet-list2">logicalId is kept the same</li>
+      <li class="bullet-list2">id attribute is a new UUID (this has a cascading effect to some attributes within; Classifications and ExternalIdentifiers within will also need new id attribute values (UUIDs))</li>
+      <li class="bullet-list2">
+        <span>The PatientID attribute is set to the “</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>”</span>
+      </li>
+      <li class="bullet-list2">
+        <span>If</span>
+        <span style="font-weight:bold">“subsumed local patient  ID”</span>
+        <span>is present, the sourcePatientId  attribute is set to the new</span>
+        <span style="font-weight:bold">“local Patient Id”</span>
+      </li>
+    </ul>
+    <ol start="4">
+      <li class="numbered-list1">Assign existing DocumentEntry an availabilityStatus of “Deprecated”.</li>
+      <li class="numbered-list1">Create a HasMember Association in the new SubmissionSet linked to the new DocumentEntry. Its PreviousVersion slot shall contain the value of the version attribute of the existing DocumentEntry.</li>
+      <li class="numbered-list1">If the existing version is linked to an existing SubmissionSet via a HasMember Association with SubmissionSetStatus set to ‘Reference’, then deprecate that Association and create a new Association between that existing SubmissionSet and the new DocumentEntry. (Note: this is the only case where associated objects do not have the same PatientID attribute value.)</li>
+    </ol>
+    <p class="heading7" id="3.64.4.1.3.1.5">3.64.4.1.3.1.5 DocumentEntry, not part of a Folder but linked to other DocumentEntries</p>
+    <p>The Document Registry shall:</p>
+    <ol>
+      <li class="numbered-list1">Perform the actions described in Section 3.64.4.1.3.1.4.</li>
+      <li class="numbered-list1">For each DocumentEntry to DocumentEntry Association linked to the existing DocumentEntry:</li>
+    </ol>
+    <ul>
+      <li class="bullet-list2">
+        <span>If, after this update, both DocumentEntries will have the “</span>
+        <span style="font-weight:bold">new XAD-PID</span>
+        <span>” then create a new copy of the DocumentEntry to DocumentEntry Association linking the associated DocumentEntry to the new version of the changed DocumentEntry. Note that the associated DocumentEntry may or may not have been updated by this transaction. It is the net effect that is important: Patient IDs in these DocumentEntry objects either match or don’t match. If both DocumentEntries are updated by this transaction then only a single new Association is created.</span>
+      </li>
+      <li class="bullet-list2">If, after this XAD-PID update, the two DocumentEntries have different XAD-PIDs then a Document Registry constraint conflict can occur. Refer to Section 3.64.4.1.3.2 for various options on how to proceed.</li>
+    </ul>
+    <p>A side effect of this step is that all RPLC and XFRM_RPLC Associations are lost. The targetObject attribute of these Associations always references a deprecated DocumentEntry that cannot have its XAD-PID updated, as described in Section 3.64.4.1.3.1.3. To trace RPLC and XFRM_RPLC Associations each of the previous versions of the new DocumentEntry must be examined.</p>
+    <p class="heading7" id="3.64.4.1.3.1.6">3.64.4.1.3.1.6 DocumentEntry, part of a Folder, not linked to other DocumentEntries</p>
+    <p>If all DocumentEntries that are members of the Folder carry the same sourcePatientId then the Document Registry shall:</p>
+    <ol>
+      <li class="numbered-list1">Perform the actions described in Section 3.64.4.1.3.1.4 on each DocumentEntry.</li>
+      <li class="numbered-list1">Extract the version and logicalId attributes from the existing version of the Folder</li>
+      <li class="numbered-list1">Create a copy of the Folder adding the following changes:</li>
+    </ol>
+    <ul>
+      <li class="bullet-list2">Version attribute has value of one more than the existing version</li>
+      <li class="bullet-list2">logicalId is kept the same</li>
+      <li class="bullet-list2">id attribute is a new UUID (this has a cascading effect to some attributes within; Classifications and ExternalIdentifiers within will also need new id attribute values (UUIDs))</li>
+      <li class="bullet-list2">The Patient ID attribute is set to the new XAD-PID.</li>
+    </ul>
+    <ol start="4">
+      <li class="numbered-list1">Assign existing version of the Folder status of “Deprecated”.</li>
+      <li class="numbered-list1">Create a HasMember Association in the new SubmissionSet linked to the new Folder. It will contain a Slot with name PreviousVersion. This Slot shall contain the value of the version attribute of the existing Folder.</li>
+      <li class="numbered-list1">Create a HasMember Association connecting the new Folder to each of the new DocumentEntries according to the usual rules for inclusion in a Folder.</li>
+      <li class="numbered-list1">Create a HasMember Association in the new SubmissionSet for each of the Associations created in the previous step according to the usual rules for adding DocumentEntries to Folders.</li>
+    </ol>
+    <p>If all DocumentEntries that are members of the Folder do not carry the same sourcePatientId then a Document Registry constraint conflict can occur. Refer to Section 3.64.4.1.3.2 for various options on how to proceed.</p>
+    <p class="heading7" id="3.64.4.1.3.1.7">3.64.4.1.3.1.7 DocumentEntry, part of a Folder and linked to other DocumentEntries via Associations</p>
+    <p>For a single Notify XAD-PID Link Change transaction, the Document Registry shall perform the instructions in Sections 3.64.4.1.3.1.5 and 3.64.4.1.3.1.6, not repeating any operation:</p>
+    <ol>
+      <li class="numbered-list1">A single new version of a particular logical DocumentEntry is created, never more</li>
+      <li class="numbered-list1">A single new version of a particular logical Folder is created, never more</li>
+      <li class="numbered-list1">A single new version of a particular logical Association is created, never more</li>
+    </ol>
+    <p>An example of the interpretation of these rules is for a DocumentEntry that is both a member of a Folder and part of a DocumentEntry to DocumentEntry Association; only a single new version of the DocumentEntry is created that becomes part of the new version of the Folder and is also included in the new DocumentEntry to DocumentEntry association.</p>
+    <h6 id="3.64.4.1.3.2">3.64.4.1.3.2 Constraint Conflict Resolution</h6>
+    <p>
+      <span>Implementers of Document Registries must also consider that in addition to Document Entry updates, this transaction will also affect existing associations (XFRM, APND, RPLC and XFRM_RPLC) and folders that involve any of these updated Document Entries. The Document Registry shall maintain all the appropriate validation rules and constraints defined in the XDS metadata model. This includes the requirement that all members of folders and associations must have the same</span>
+      <span style="font-style:italic">patientId</span>
+      <span>. As the Document Registry processes this transaction, this condition may no longer apply, requiring that the Document Registry take corrective action. For example, if a folder contains Document Entries with different values for</span>
+      <span style="font-style:italic">sourcePatientId</span>
+      <span>. Since the other documents will preserve their current value for</span>
+      <span style="font-style:italic">patientId</span>
+      <span>, it becomes clear that they cannot all remain together in the same folder. Similar situations can occur with the other association types.</span>
+    </p>
+    <p>The manner by which the Document Registry will handle these situations is not mandated by IHE. However, the approach the Document Registry uses shall preserve the consistency of its database and be properly documented so that users and administrators can have a clear expectation on the system behavior under these conditions and know how to proceed with manual interventions required to correct the Document Registry state.</p>
+    <p>Strategies on how to deal with this problem can vary considerably. Here are two possible approaches that may be used by the implementers:</p>
+    <ol>
+      <li class="numbered-list1">The requirements for this transaction preserve relationships when all participants have the same sourcePatientId. In this first approach, the presence of a single Document Entry with a different value for sourcePatientId would prevent such action and result in all changed Document Entries being dropped from the relationship. This action is only applied to the relationship in question. Since it may not be possible to correctly restore folders for all cases, the update would have to be followed by a report or alert mechanism by which users or (more likely) system administrators could investigate if any of these dropped relationships need to be re-established.</li>
+      <li class="numbered-list1">In another approach, in the presence of a single patientID conflict, the update is aborted and no changes are made to the Document Registry. Rather, it puts a “hold” on the Notify XAD-PID Link Changes transaction. In this approach the entire transaction is passed to a system administrator to manually resolve the discrepancies and complete the transaction.</li>
+    </ol>
+    <p>
+      <span>These are just two possible strategies, and one is not necessarily more “</span>
+      <span style="font-style:italic">correct”</span>
+      <span>than the other. Implementers will have to evaluate the pros-cons of each alternative in respect to their product architecture and the needs of the client environments and decide which one is more appropriate for them. The important point here is that in regards to which strategy is chosen, implementers must provide clear documentation on the matter describing the behavior of their system.</span>
+    </p>
+    <h3 id="3.64.5">3.64.5 Security Considerations</h3>
+    <p>No transaction-specific security considerations.</p>
+    <h4 id="3.64.5.1">3.64.5.1 Security Audit Considerations</h4>
+    <p>The Notify XAD-PID Link Change transaction (A43) is to be audited as “Patient Record” events, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The actors involved in the transaction shall create audit data in conformance with DICOM “Patient Record”. Logically, a link change operation consists of updates to possibly many patient records.</p>
+    <p>The following tables show items that are required to be part of the audit record for this transaction.</p>
+    <br style="page-break-before:always; clear:both" />
+    <h5 id="3.64.5.1.1">3.64.5.1.1 Patient Identity Cross Reference Manager audit message</h5>
+    <p>The Patient Identity Cross Reference Manager shall record one audit event as a result of this transaction.</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width:71.1pt">
+          <div />
+        </td>
+        <td style="width:110.7pt" class="tableHeader">Field Name</td>
+        <td style="width:25.2pt" class="tableHeader">Opt</td>
+        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
+      </tr>
+      <tr>
+        <td rowspan="5" style="width:71.1pt">
+          <p>Event</p>
+          <p>AuditMessage/EventIdentification</p>
+        </td>
+        <td style="width:110.7pt">EventID</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">EV(110110, DCM, “Patient Record”)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">EventActionCode</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">“U” (update) for A43</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">EventDateTime</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">EventOutcomeIndicator</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">EventTypeCode</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">EV(“ITI-64”, “IHE Transactions”, “Notify XAD-PID Link Change”)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Source (Patient Identifier Cross-Reference Manager) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Destination (Document Registry) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Audit Source (Patient Identifier Cross-Reference Manager) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">localPatientId (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">subsumedLocalPatientId (0..1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">newPatientId(1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">previousPatientId(1)</td>
+      </tr>
+    </table>
+    <p>Where:</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="7" style="width:71.1pt">
+          <p>Source</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:110.7pt">UserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The identity of the Patient Identity Cross-Reference Manager facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">AlternativeUserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserIsRequestor</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">RoleIDCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">NetworkAccessPointTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">NetworkAccessPointID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The machine name or IP address</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="7" style="width:71.1pt">
+          <p>Human Requestor (if known)</p>
+          <p>AuditMessage/ActiveParticipant</p>
+        </td>
+        <td style="width:110.7pt">UserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:233.1pt">Identity of the human that initiated the transaction.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">AlternativeUserID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserIsRequestor</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">RoleIDCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">NetworkAccessPointTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">NetworkAccessPointID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="7" style="width:70.2pt">
+          <p>Destination</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:110.7pt">UserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The identity of the Document Registry facility and receiving application from the HL7 message; concatenated together, separated by the character.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">AlternativeUserID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">UserIsRequestor</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">RoleIDCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">NetworkAccessPointTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+      </tr>
+      <tr style="height:4.35pt">
+        <td style="width:110.7pt">NetworkAccessPointID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The machine name or IP address.</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="3" style="width:71.1pt">
+          <p>Audit Source</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/AuditSourceIdentification</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:108.9pt">AuditSourceID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:108.9pt">AuditEnterpriseSiteID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr style="height:16.8pt">
+        <td style="width:108.9pt">AuditSourceTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>localPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:110.7pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If subsumedLocalPatientId is present, then this value shall equal "1" (Origination / Creation). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">the patient ID in HL7 CX format</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="localPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>subsumedLocalPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:127.55pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">"14" (Logical deletion)</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:220.75pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">the patient ID in HL7 CX format</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:220.75pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:220.75pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:127.55pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:220.75pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="subsumedPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>newPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:110.7pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If newPatientId and previousPatientId are not equal, then this value shall equal "1" (Origination / Creation). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">the patient ID in HL7 CX format</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string) Value="newPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:65.7pt">
+          <p>previousPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If newPatientId and previousPatientId are not equal, then this value shall equal "14" (Logical deletion). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">the patient ID in HL7 CX format</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="previousPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <h5>
+      <span> </span>
+      <a name="_Toc486580954">
+        <span>3.64.5.1.2 Document Registry audit message</span>
+      </a>
+      <span />
+    </h5>
+    <p>The Document Registry shall record one audit event as a result of this transaction.</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width:62.1pt">
+          <div />
+        </td>
+        <td style="width:119.7pt" class="tableHeader">Field Name</td>
+        <td style="width:25.2pt" class="tableHeader">Opt</td>
+        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
+      </tr>
+      <tr>
+        <td rowspan="5" style="width:62.1pt">
+          <p>Event</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/EventIdentification</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:119.7pt">EventID</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">EV(110110, DCM, “Patient Record”)</td>
+      </tr>
+      <tr>
+        <td style="width:119.7pt">EventActionCode</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">“U” (update) for A43</td>
+      </tr>
+      <tr>
+        <td style="width:119.7pt">EventDateTime</td>
+        <td style="width:25.2pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:119.7pt">EventOutcomeIndicator</td>
+        <td style="width:25.2pt">U</td>
+        <td style="width:233.1pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:119.7pt">EventTypeCode</td>
+        <td style="width:25.2pt">M</td>
+        <td style="width:233.1pt">EV(“ITI-64”, “IHE Transactions”, “Notify XAD-PID Link Change”)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Source (Patient Identifier Cross-Reference Manager) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Destination (Document Registry) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">Audit Source (Document Registry) (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">localPatientId (1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">subsumedLocalPatientId (0..1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">newPatientId(1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">previousPatientId(1)</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="width:472.5pt">SubmissionSet (1)</td>
+      </tr>
+    </table>
+    <p>Where:</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="7" style="width:66.6pt">
+          <p>Source</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">UserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The identity of the Patient Identity Cross-Reference Manager facility and sending application from the HL7 message; concatenated together, separated by the character.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">AlternativeUserID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">UserName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">UserIsRequestor</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">RoleIDCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">NetworkAccessPointID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The machine name or IP address</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="7" style="width:66.6pt">
+          <p>Destination</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/ActiveParticipant</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">UserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The identity of the Document Registry facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">AlternativeUserID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">UserName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">UserIsRequestor</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">RoleIDCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">NetworkAccessPointID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The machine name or IP address</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="3" style="width:67.3pt">
+          <p>Audit Source</p>
+          <p>
+            <span style="font-weight:bold">AuditMessage/AuditSourceIdentification</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:116.3pt">AuditSourceID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:116.3pt">AuditEnterpriseSiteID</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:116.3pt">AuditSourceTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>localPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If subsumedLocalPatientId is present, then this value shall equal "1" (Origination / Creation). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="localPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:74.7pt">
+          <p>subsumedLocalPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:110.7pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:253.55pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:253.55pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:253.55pt">"14" (Logical deletion)</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:253.55pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:253.55pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:253.55pt">The patient ID in HL7 CX format.</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:253.55pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:253.55pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:110.7pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:253.55pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="subsumedPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>newPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If newPatientId and previousPatientId are not equal, then this value shall equal "1" (Origination / Creation). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element will occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="newPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:70.2pt">
+          <p>previousPatientId</p>
+          <p>
+            <span style="font-weight:bold">(AuditMessage/ParticipantObjectIdentification)</span>
+            <br />
+          </p>
+        </td>
+        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (person)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">“1” (patient)</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">C</td>
+        <td style="width:237.6pt">If newPatientId and previousPatientId are not equal, then this value shall equal "14" (Logical deletion). Otherwise, this value is not specialized.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:237.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:115.2pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:237.6pt">
+          <p>The ParticipantObjectDetail element shall occur twice.</p>
+          <p>In the first element:</p>
+          <p>Type=MSH-10 (the literal string)</p>
+          <p>Value=the value of MSH-10 (from the message content, base64 encoded)</p>
+          <p>In the second element:</p>
+          <p>Type="urn:ihe:iti:xpid:2017:patientIdentifierType" (the literal string)</p>
+          <p>Value="previousPatientId" (the literal string, base64 encoded)</p>
+        </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="9" style="width:96.25pt">
+          <p>SubmissionSet</p>
+          <p>(AuditMessage/</p>
+          <p>ParticipantObjectIdentification)</p>
+        </td>
+        <td style="width:126.05pt">ParticipantObjectTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:192.6pt">“2” (System)</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectTypeCodeRole</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:192.6pt">“20” (job)</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectDataLifeCycle</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:192.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectIDTypeCode</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:192.6pt">EV(“urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, “submission set classificationNode”)</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectSensitivity</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:192.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectID</td>
+        <td style="width:20.7pt">M</td>
+        <td style="width:192.6pt">The value of the XDSSubmissionSet.entryUUID</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectName</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:192.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectQuery</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:192.6pt">not specialized</td>
+      </tr>
+      <tr>
+        <td style="width:126.05pt">ParticipantObjectDetail</td>
+        <td style="width:20.7pt">U</td>
+        <td style="width:192.6pt">not specialized</td>
+      </tr>
+    </table>
+    <div style="-aw-different-first-page:true; -aw-headerfooter-type:footer-primary">
       <p>
         <span>__________________________________________________________________________</span>
       </p>
       <p style="font-size:10pt">
-        <span>Rev. 16.0 Final Text – 2019-07-12                         1                          Copyright © 2019 IHE International, Inc.</span>
+        <span>Rev. 17.0 Final Text – 2020-07-20                         1                          Copyright © 2020 IHE International, Inc.</span>
       </p>
     </div>
-    <hr xmlns="" style="width:33%; height:1px; text-align:left; -aw-footnote-numberstyle:0; -aw-footnote-startnumber:1; -aw-footnote-type:0" />
-    <p xmlns="" style="font-size:10pt">
+    <hr style="width:33%; height:1px; text-align:left; -aw-footnote-numberstyle:0; -aw-footnote-startnumber:1; -aw-footnote-type:0" />
+    <p style="font-size:10pt">
       <a href="#_ftnref1" style="text-decoration:none">
         <span style="font-size:6.67pt;vertical-align:super">[1]</span>
-      </a>
-      <span>HL7 is the registered trademark of Health Level Seven International.</span>
-    </p>
-    <p xmlns="" style="font-size:10pt">
-      <a href="#_ftnref2" style="text-decoration:none">
-        <span style="font-size:6.67pt;vertical-align:super">[2]</span>
-      </a>
-      <span>DICOM is the registered trademark of the National Electrical Manufacturers Association for its standards publications relating to digital communications of medical information.</span>
-    </p>
-    <p xmlns="" style="font-size:10pt">
-      <a href="#_ftnref3" style="text-decoration:none">
-        <span style="font-size:6.67pt;vertical-align:super">[3]</span>
       </a>
       <span>Returning a list of matches may potentially expose information that is unrelated to the patient requested. Implementers are encouraged to consider ways to keep the number of elements in a list to a minimum. Deployment organizations may choose to declare a limit to the number of elements allowed to be returned.</span>
     </p>
