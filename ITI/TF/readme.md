@@ -45,11 +45,12 @@ The conversion is a multi step process consisting of the following steps:
 * removed inline style of lists and replaced by classes
 * removed "no-break space" characters from headings
 * removed inline style of <p> containing notes and replaced by classes 
-* switched to ITI-TF Version 17.0 Final Text 
+* switched to ITI-TF Version 17.0 Final Text
+* solved bug with merge of SPAN elements, if the sequence contains a link 
 
-## Open issues:
-* remove inline style of A HREF tags
-* Vol2 Glossars (2a, 2b, 2x) are not detected as sections. 
+## Open issues: 
+* MAJOR: Vol2 Glossars (2a, 2b, 2x) are not detected as sections. 
+* MINOR: remove inline style of A HREF tags
 
 
 ### Java processing code
@@ -69,7 +70,6 @@ The processing is done afterwards and contains of:
 * Volume 1, Section 4, EUA has bold/italic text.
 * the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
-* 
  
 ### Styling
 - Not defined yet
