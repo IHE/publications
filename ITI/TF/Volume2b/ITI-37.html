@@ -5,430 +5,456 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.37">3.37 Retrieve Clarifications [ITI-37]</h2>
-    <p>This section corresponds to transaction [ITI-37] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-37] is used by the Form Filler and Form Manager or Form Processor Actors.</p>
-    <h3 id="3.37.1">3.37.1 Scope</h3>
-    <p>This transaction involves a Form Filler requesting a set of clarifications from a Form Manager or Form Processor. A Form Filler supporting the Retrieve Clarifications Option shall perform this request periodically, based upon a duration defined by or agreed upon with the Form Manager / Form Receiver or Form Processor. Note that not all use cases will need to support this option.</p>
-    <p>The Form Filler has an orgID, obtained by a means that is outside the scope of this transaction, and the Form Manager or Form Processor will either return a form that contains either the data to be clarified or a set of links to other forms that can be retrieved using the Retrieve Form transaction. All updates / clarifications / new data are submitted to the Form Receiver using the Submit Form transaction.</p>
-    <h3 id="3.37.2">3.37.2 Use Case Roles</h3>
-    <img src="media/ai8zh-w242m.025.png" width="373" height="131" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Form Filler</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A forms display and editing system capable of allowing form fields to be completed.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Form Manager</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A system that provides clarification information based upon requests that provide specific orgIDs.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor</span>
-      <span>: Form Processor</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role</span>
-      <span>: A system that provides clarification information based upon requests that provide specific orgIDs.</span>
-    </p>
-    <h3 id="3.37.3">3.37.3 Referenced Standards</h3>
-    <p>
-      <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
-      <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
-    </p>
-    <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
-    <p>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000. http://www.w3.org/TR/REC-xml.</p>
-    <p><a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a> Web Services for IHE Transactions</p>
-    <p>
-      <span>XForms 1.1, W3C Working Draft.</span>
-      <a href="http://www.w3.org/TR/2004/WD-xforms11-20041115/">http://www.w3.org/TR/2004/WD-xforms11-20041115/</a>
-    </p>
-    <h3 id="3.37.4">3.37.4 Messages</h3>
-    <img src="media/ai8zh-w242m.026.png" width="404" height="244" alt="" />
-    <p class="figureTitle">Figure 3.37.4-1: Interaction Diagram</p>
-    <h4 id="3.37.4.1">3.37.4.1 Retrieve Clarifications Request</h4>
-    <p>This transaction is initiated whenever a Form Filler which supports the Retrieve Clarifications Option needs to obtain clarification information relevant to the organization or site.</p>
-    <h5 id="3.37.4.1.1">3.37.4.1.1 Trigger Events</h5>
-    <p>The Retrieve Clarification event is triggered by the need for information on current clarifications to be made available within an EHR system. The transaction does not specify when the Retrieve Clarification happens, only that this transaction is available when information regarding clarifications is needed from a Form Manager or Form Processor. It is the responsibility of the Form Filler that supports this option to periodically execute this transaction.</p>
-    <h5 id="3.37.4.1.2">3.37.4.1.2 Message Semantics</h5>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <p>The following parameters are specified for this transaction.</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:92.45pt" class="tableHeader">Parameter Name</td>
-          <td style="width:57.2pt" class="tableHeader">Optionality</td>
-          <td style="width:129.35pt" class="tableHeader">Description</td>
-          <td style="width:120.35pt" class="tableHeader">Value</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:92.45pt">clarificationData</td>
-          <td style="width:57.2pt">R</td>
-          <td style="width:129.35pt">The xml representation of clarification specific values.</td>
-          <td style="width:120.35pt">This value is a well-formed xml document.as defined below.</td>
-        </tr>
-        <tr>
-          <td style="width:92.45pt">orgID</td>
-          <td style="width:57.2pt">R</td>
-          <td style="width:129.35pt" />
-          <td style="width:120.35pt">A string identifying the organization</td>
-        </tr>
-        <tr>
-          <td style="width:92.45pt">encodedResponse</td>
-          <td style="width:57.2pt">R</td>
-          <td style="width:129.35pt">Tells the Form Manager whether or not to return an encoded response</td>
-          <td style="width:120.35pt">{true,false}</td>
-        </tr>
-        <tr>
-          <td style="width:92.45pt">archiveURL</td>
-          <td style="width:57.2pt">R</td>
-          <td style="width:129.35pt">Tells the Form Manager whether or not the Form Filler is exercising the Archive Option</td>
-          <td style="width:120.35pt">the URL of any Form Filler identified Form Archiver; may be nil</td>
-        </tr>
-        <tr>
-          <td style="width:92.45pt">context</td>
-          <td style="width:57.2pt">R</td>
-          <td style="width:129.35pt">The xml specifics of workflow context</td>
-          <td style="width:120.35pt">Defined by content profiles; may be nil</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>The clarificationData may be extended by IHE content profiles with further definition of the &lt;context&gt; element.</p>
-    <p>The content of clarificationData shall minimally be:</p>
-    <p>&lt;clarificationData&gt;</p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;orgID&gt;a String identifying the form&lt;/orgID&gt;</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;encodedResponse&gt;false&lt;/encodedResponse&gt;</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;archiveURL /&gt;</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;context/&gt;</span>
-    </p>
-    <p>&lt;/clarificationData&gt;</p>
-    <h5 id="3.37.4.1.3">3.37.4.1.3 Expected Actions</h5>
-    <p>Upon receipt of the Retrieve Clarifications request, the Form Manager or Form Processor shall parse the request and shall return the requested response in the RetrieveClarificationsResponse element, or errors with SOAP Faults.</p>
-    <p>The Form Manager or Form Processor shall return the form or URL based on the values of: a) the encodedResponse; b) the orgID; c) any additional clarificationData.</p>
-    <p>If no clarification information is available, this is shall be indicated by a form indicating that no clarification information is available.</p>
-    <p>If encodedResponse is ‘true’, then the response from the Form Manager or Form Processor shall be either a Structured (XML) or Unstructured (non-XML) element. When the encodedResponse parameter is 'true' all anchor addresses that are not fragment identifiers shall be composed of absolute URIs.</p>
-    <p>If encodedResponse is ‘false’, then the response from the Form Manager or Form Processor shall be a URL element that can be used directly by a web browser for retrieval and operation of the form.</p>
-    <p>The value of the orgID has been previously assigned by the Form Manager or Form Processor and identifies use one of the named format options. A Form Manager may support multiple named options, but for each orgID there is only one named option that is supported.</p>
-    <p>The Form Manager shall use the SOAP Faults defined in Table 3.37.4.1.3-1 when appropriate. Form Fillers shall be capable of accepting other values beyond the ones specified here.</p>
-    <p class="tableTitle">Table 3.37.4.1.3-1: SOAP Faults</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:13.85pt">
-          <td class="tableHeader">Description of error</td>
-          <td style="width:42.4pt" class="tableHeader">Code</td>
-          <td style="width:160.2pt" class="tableHeader">Reason Text</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="height:11.8pt">
-          <td>There is missing information, such as no orgID</td>
-          <td style="width:42.4pt">Sender</td>
-          <td style="width:160.2pt">Required Information Missing</td>
-        </tr>
-        <tr>
-          <td>No form is available</td>
-          <td style="width:42.4pt">Sender</td>
-          <td style="width:160.2pt">Unknown orgID</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>An example of a SOAP Fault is:</p>
-    <div style="margin-top:6pt; border:0.75pt solid #000000; clear:both">
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"</span>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">       xmlns:xml="http://www.w3.org/XML/1998/namespace"&gt;</span>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">&lt;env:Body&gt;</span>
+    </header>
+    <main>
+      <h2 id="3.37">3.37 Retrieve Clarifications [ITI-37]</h2>
+      <p>This section corresponds to transaction [ITI-37] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-37] is used by the Form Filler and Form Manager or Form Processor Actors.</p>
+      <h3 id="3.37.1">3.37.1 Scope</h3>
+      <p>This transaction involves a Form Filler requesting a set of clarifications from a Form Manager or Form Processor. A Form Filler supporting the Retrieve Clarifications Option shall perform this request periodically, based upon a duration defined by or agreed upon with the Form Manager / Form Receiver or Form Processor. Note that not all use cases will need to support this option.</p>
+      <p>The Form Filler has an orgID, obtained by a means that is outside the scope of this transaction, and the Form Manager or Form Processor will either return a form that contains either the data to be clarified or a set of links to other forms that can be retrieved using the Retrieve Form transaction. All updates / clarifications / new data are submitted to the Form Receiver using the Submit Form transaction.</p>
+      <h3 id="3.37.2">3.37.2 Use Case Roles</h3>
+      <img src="media/ai8zh-w242m.025.png" width="373" height="131" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Form Filler</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">  &lt;env:Fault&gt;</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A forms display and editing system capable of allowing form fields to be completed.</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">    &lt;env:Code&gt;</span>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Form Manager</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">      &lt;env:Value&gt;env:Sender&lt;/env:Value&gt;</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A system that provides clarification information based upon requests that provide specific orgIDs.</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">     &lt;/env:Code&gt;</span>
+      <p>
+        <span style="font-weight:bold">Actor</span>
+        <span>: Form Processor</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">     &lt;env:Reason&gt;</span>
+      <p>
+        <span style="font-weight:bold">Role</span>
+        <span>: A system that provides clarification information based upon requests that provide specific orgIDs.</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">       &lt;env:Text xml:lang="en"&gt;Unknown orgID&lt;/env:Text&gt;</span>
+      <h3 id="3.37.3">3.37.3 Referenced Standards</h3>
+      <p>
+        <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
+        <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">    &lt;/env:Reason&gt;</span>
+      <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
+      <p>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000. http://www.w3.org/TR/REC-xml.</p>
+      <p>
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        Web Services for IHE Transactions
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">  &lt;/env:Fault&gt;</span>
+      <p>
+        <span>XForms 1.1, W3C Working Draft.</span>
+        <a href="http://www.w3.org/TR/2004/WD-xforms11-20041115/">http://www.w3.org/TR/2004/WD-xforms11-20041115/</a>
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">&lt;/env:Body&gt;</span>
+      <h3 id="3.37.4">3.37.4 Messages</h3>
+      <img src="media/ai8zh-w242m.026.png" width="404" height="244" alt="" />
+      <p class="figureTitle">Figure 3.37.4-1: Interaction Diagram</p>
+      <h4 id="3.37.4.1">3.37.4.1 Retrieve Clarifications Request</h4>
+      <p>This transaction is initiated whenever a Form Filler which supports the Retrieve Clarifications Option needs to obtain clarification information relevant to the organization or site.</p>
+      <h5 id="3.37.4.1.1">3.37.4.1.1 Trigger Events</h5>
+      <p>The Retrieve Clarification event is triggered by the need for information on current clarifications to be made available within an EHR system. The transaction does not specify when the Retrieve Clarification happens, only that this transaction is available when information regarding clarifications is needed from a Form Manager or Form Processor. It is the responsibility of the Form Filler that supports this option to periodically execute this transaction.</p>
+      <h5 id="3.37.4.1.2">3.37.4.1.2 Message Semantics</h5>
+      <p>
+        Implementors of this transaction shall comply with all requirements described in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
       </p>
-      <p style="font-size:10pt">
-        <span style="letter-spacing:-1pt">&lt;/env:Envelope&gt;</span>
+      <p>The following parameters are specified for this transaction.</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:92.45pt" class="tableHeader">Parameter Name</td>
+            <td style="width:57.2pt" class="tableHeader">Optionality</td>
+            <td style="width:129.35pt" class="tableHeader">Description</td>
+            <td style="width:120.35pt" class="tableHeader">Value</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:92.45pt">clarificationData</td>
+            <td style="width:57.2pt">R</td>
+            <td style="width:129.35pt">The xml representation of clarification specific values.</td>
+            <td style="width:120.35pt">This value is a well-formed xml document.as defined below.</td>
+          </tr>
+          <tr>
+            <td style="width:92.45pt">orgID</td>
+            <td style="width:57.2pt">R</td>
+            <td style="width:129.35pt" />
+            <td style="width:120.35pt">A string identifying the organization</td>
+          </tr>
+          <tr>
+            <td style="width:92.45pt">encodedResponse</td>
+            <td style="width:57.2pt">R</td>
+            <td style="width:129.35pt">Tells the Form Manager whether or not to return an encoded response</td>
+            <td style="width:120.35pt">{true,false}</td>
+          </tr>
+          <tr>
+            <td style="width:92.45pt">archiveURL</td>
+            <td style="width:57.2pt">R</td>
+            <td style="width:129.35pt">Tells the Form Manager whether or not the Form Filler is exercising the Archive Option</td>
+            <td style="width:120.35pt">the URL of any Form Filler identified Form Archiver; may be nil</td>
+          </tr>
+          <tr>
+            <td style="width:92.45pt">context</td>
+            <td style="width:57.2pt">R</td>
+            <td style="width:129.35pt">The xml specifics of workflow context</td>
+            <td style="width:120.35pt">Defined by content profiles; may be nil</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The clarificationData may be extended by IHE content profiles with further definition of the &lt;context&gt; element.</p>
+      <p>The content of clarificationData shall minimally be:</p>
+      <p>&lt;clarificationData&gt;</p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;orgID&gt;a String identifying the form&lt;/orgID&gt;</span>
       </p>
-    </div>
-    <p>The orgID has been assigned by the Form Manager or Form Processor use one of the named format options. A Form Manager or Form Processor may support multiple named options, but for each orgID there is only one named option that is supported.</p>
-    <h5 id="3.37.4.1.4">3.37.4.1.4 Security Considerations</h5>
-    <p>The security considerations for the Retrieve Clarifications request message are no different than those of the Retrieve Form request message (see Section 3.34.4.1.4).</p>
-    <h4 id="3.37.4.2">3.37.4.2 Retrieve Clarifications Response</h4>
-    <h5 id="3.37.4.2.1">3.37.4.2.1 Trigger Events</h5>
-    <p>The Delivery of a Form is triggered by a Form Manager or Form Processor providing a form based upon the orgID supplied with the Retrieve Clarifications transaction.</p>
-    <h5 id="3.37.4.2.2">3.37.4.2.2 Message Semantics</h5>
-    <p>The form or URL is returned in response to the Retrieve Clarifications.</p>
-    <h5 id="3.37.4.2.3">3.37.4.2.3 Expected Actions</h5>
-    <p>The Form Filler may display the form or navigate to the returned URL to retrieve the form.</p>
-    <h6 id="3.37.4.2.3.1">3.37.4.2.3.1 XHTML Handling</h6>
-    <p>A Form Manager or Form Processor shall return a form, whether returned as the response or referenced by a returned URL, formatted as XHTML using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation. The returned form shall support the Submit and all required Archive transactions.</p>
-    <h6 id="3.37.4.2.3.2">3.37.4.2.3.2 XForm Option</h6>
-    <p>A Form Manager or Form Processor that supports the XForms Option shall additionally be capable of returning a form, whether returned as the response or referenced by a returned URL, that conforms to XForms 1.1. The host language for the XForm shall be XHTML Basic according to the W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation. The returned form shall support the Submit and all required Archive transactions.</p>
-    <h3 id="3.37.5">3.37.5 Protocol Requirements</h3>
-    <p>The Retrieve Clarifications request and response shall be transmitted using Synchronous Web Services Exchange, according to the requirements specified in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>.</p>
-    <p>The Retrieve Clarifications transaction shall use SOAP 1.2.</p>
-    <p style="font-size:11pt">
-      <span style="font-weight:bold">WSDL Namespace Definitions</span>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:89.1pt">ihe</td>
-        <td style="width:299.7pt">urn:ihe:iti:rfd:2007</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">soap12</td>
-        <td style="width:299.7pt">http://schemas.xmlsoap.org/wsdl/soap12/</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">wsaw</td>
-        <td style="width:299.7pt">http://www.w3.org/2005/08/addressing</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">xsd</td>
-        <td style="width:299.7pt">http://www.w3.org/2001/XMLSchema</td>
-      </tr>
-    </table>
-    <p>These are the requirements for the Retrieve Clarifications transaction presented in the order in which they would appear in the WSDL definition:</p>
-    <ul>
-      <li class="bullet-list1">The following types shall be imported (xds:import) in the /definitions/types section:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">Namespace=” urn:ihe:iti:rfd:2007”, schema=”RFD.xsd”</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Retrieve Clarifications Request message shall be defined as: “ihe:RetrieveClarificationsRequest”</li>
-      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Retrieve Clarifications Response message shall be defined as: “ihe:RetrieveClarificationsResponse”</li>
-      <li class="bullet-list1">The /definitions/portType/operation/input/@wsaw:Action attribute for the Retrieve Clarifications Request message shall be defined as “urn:ihe:iti:2007:RetrieveClarifications”</li>
-      <li class="bullet-list1">The /definitions/portType/operation/output/@wsaw:Action attribute for the Retrieve Clarifications Response message shall be defined as: “urn:ihe:iti:2007:RetrieveClarificationsResponse”</li>
-      <li class="bullet-list1">The /definitions/binding/operation/soap12:operation/@soapActionRequired attribute shall be defined as “false”</li>
-    </ul>
-    <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.34.5.1 Sample SOAP Messages.</p>
-    <p>An informative WSDL for the Form Manager and a full XML Schema Document for the RFD types are available online. See <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <h4 id="3.37.5.1">3.37.5.1 Sample SOAP Messages</h4>
-    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;,</p>
-    <p>&lt;MessageID/&gt;, …; these WS-Addressing headers are populated according to</p>
-    <p><a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <h5 id="3.37.5.1.1">3.37.5.1.1 Sample Retrieve Clarifications SOAP Request</h5>
-    <div style="border:0.75pt solid #000000; clear:both">
-      <p style="font-size:10pt">
-        <span>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;soap:Header&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>       </span>
-        <span style="width:23.99pt;display:inline-block"> </span>
-        <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:RetrieveClarifications&lt;/wsa:Action&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;/soap:Header&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;soap:Body&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span>&lt;RetrieveClarificationsRequest xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;clarificationData&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
-        <span>&lt;orgID&gt;123&lt;/formID&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
         <span>&lt;encodedResponse&gt;false&lt;/encodedResponse&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
         <span>&lt;archiveURL /&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
-        <span>&lt;context /&gt;</span>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;context/&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;/clarificationData&gt;</span>
+      <p>&lt;/clarificationData&gt;</p>
+      <h5 id="3.37.4.1.3">3.37.4.1.3 Expected Actions</h5>
+      <p>Upon receipt of the Retrieve Clarifications request, the Form Manager or Form Processor shall parse the request and shall return the requested response in the RetrieveClarificationsResponse element, or errors with SOAP Faults.</p>
+      <p>The Form Manager or Form Processor shall return the form or URL based on the values of: a) the encodedResponse; b) the orgID; c) any additional clarificationData.</p>
+      <p>If no clarification information is available, this is shall be indicated by a form indicating that no clarification information is available.</p>
+      <p>If encodedResponse is ‘true’, then the response from the Form Manager or Form Processor shall be either a Structured (XML) or Unstructured (non-XML) element. When the encodedResponse parameter is 'true' all anchor addresses that are not fragment identifiers shall be composed of absolute URIs.</p>
+      <p>If encodedResponse is ‘false’, then the response from the Form Manager or Form Processor shall be a URL element that can be used directly by a web browser for retrieval and operation of the form.</p>
+      <p>The value of the orgID has been previously assigned by the Form Manager or Form Processor and identifies use one of the named format options. A Form Manager may support multiple named options, but for each orgID there is only one named option that is supported.</p>
+      <p>The Form Manager shall use the SOAP Faults defined in Table 3.37.4.1.3-1 when appropriate. Form Fillers shall be capable of accepting other values beyond the ones specified here.</p>
+      <p class="tableTitle">Table 3.37.4.1.3-1: SOAP Faults</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:13.85pt">
+            <td class="tableHeader">Description of error</td>
+            <td style="width:42.4pt" class="tableHeader">Code</td>
+            <td style="width:160.2pt" class="tableHeader">Reason Text</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:11.8pt">
+            <td>There is missing information, such as no orgID</td>
+            <td style="width:42.4pt">Sender</td>
+            <td style="width:160.2pt">Required Information Missing</td>
+          </tr>
+          <tr>
+            <td>No form is available</td>
+            <td style="width:42.4pt">Sender</td>
+            <td style="width:160.2pt">Unknown orgID</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>An example of a SOAP Fault is:</p>
+      <div style="margin-top:6pt; border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">       xmlns:xml="http://www.w3.org/XML/1998/namespace"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">&lt;env:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">  &lt;env:Fault&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">    &lt;env:Code&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">      &lt;env:Value&gt;env:Sender&lt;/env:Value&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">     &lt;/env:Code&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">     &lt;env:Reason&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">       &lt;env:Text xml:lang="en"&gt;Unknown orgID&lt;/env:Text&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">    &lt;/env:Reason&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">  &lt;/env:Fault&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">&lt;/env:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="letter-spacing:-1pt">&lt;/env:Envelope&gt;</span>
+        </p>
+      </div>
+      <p>The orgID has been assigned by the Form Manager or Form Processor use one of the named format options. A Form Manager or Form Processor may support multiple named options, but for each orgID there is only one named option that is supported.</p>
+      <h5 id="3.37.4.1.4">3.37.4.1.4 Security Considerations</h5>
+      <p>The security considerations for the Retrieve Clarifications request message are no different than those of the Retrieve Form request message (see Section 3.34.4.1.4).</p>
+      <h4 id="3.37.4.2">3.37.4.2 Retrieve Clarifications Response</h4>
+      <h5 id="3.37.4.2.1">3.37.4.2.1 Trigger Events</h5>
+      <p>The Delivery of a Form is triggered by a Form Manager or Form Processor providing a form based upon the orgID supplied with the Retrieve Clarifications transaction.</p>
+      <h5 id="3.37.4.2.2">3.37.4.2.2 Message Semantics</h5>
+      <p>The form or URL is returned in response to the Retrieve Clarifications.</p>
+      <h5 id="3.37.4.2.3">3.37.4.2.3 Expected Actions</h5>
+      <p>The Form Filler may display the form or navigate to the returned URL to retrieve the form.</p>
+      <h6 id="3.37.4.2.3.1">3.37.4.2.3.1 XHTML Handling</h6>
+      <p>A Form Manager or Form Processor shall return a form, whether returned as the response or referenced by a returned URL, formatted as XHTML using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation. The returned form shall support the Submit and all required Archive transactions.</p>
+      <h6 id="3.37.4.2.3.2">3.37.4.2.3.2 XForm Option</h6>
+      <p>A Form Manager or Form Processor that supports the XForms Option shall additionally be capable of returning a form, whether returned as the response or referenced by a returned URL, that conforms to XForms 1.1. The host language for the XForm shall be XHTML Basic according to the W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation. The returned form shall support the Submit and all required Archive transactions.</p>
+      <h3 id="3.37.5">3.37.5 Protocol Requirements</h3>
+      <p>
+        The Retrieve Clarifications request and response shall be transmitted using Synchronous Web Services Exchange, according to the requirements specified in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        .
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span>&lt;/RetrieveClarificationsRequest&gt;</span>
+      <p>The Retrieve Clarifications transaction shall use SOAP 1.2.</p>
+      <p style="font-size:11pt">
+        <span style="font-weight:bold">WSDL Namespace Definitions</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;/soap:Body&gt;</span>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:89.1pt">ihe</td>
+          <td style="width:299.7pt">urn:ihe:iti:rfd:2007</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">soap12</td>
+          <td style="width:299.7pt">http://schemas.xmlsoap.org/wsdl/soap12/</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">wsaw</td>
+          <td style="width:299.7pt">http://www.w3.org/2005/08/addressing</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">xsd</td>
+          <td style="width:299.7pt">http://www.w3.org/2001/XMLSchema</td>
+        </tr>
+      </table>
+      <p>These are the requirements for the Retrieve Clarifications transaction presented in the order in which they would appear in the WSDL definition:</p>
+      <ul>
+        <li class="bullet-list1">The following types shall be imported (xds:import) in the /definitions/types section:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">Namespace=” urn:ihe:iti:rfd:2007”, schema=”RFD.xsd”</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Retrieve Clarifications Request message shall be defined as: “ihe:RetrieveClarificationsRequest”</li>
+        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Retrieve Clarifications Response message shall be defined as: “ihe:RetrieveClarificationsResponse”</li>
+        <li class="bullet-list1">The /definitions/portType/operation/input/@wsaw:Action attribute for the Retrieve Clarifications Request message shall be defined as “urn:ihe:iti:2007:RetrieveClarifications”</li>
+        <li class="bullet-list1">The /definitions/portType/operation/output/@wsaw:Action attribute for the Retrieve Clarifications Response message shall be defined as: “urn:ihe:iti:2007:RetrieveClarificationsResponse”</li>
+        <li class="bullet-list1">The /definitions/binding/operation/soap12:operation/@soapActionRequired attribute shall be defined as “false”</li>
+      </ul>
+      <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.34.5.1 Sample SOAP Messages.</p>
+      <p>
+        An informative WSDL for the Form Manager and a full XML Schema Document for the RFD types are available online. See
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
       </p>
-      <p style="font-size:10pt">
-        <span>&lt;/soap:Envelope&gt;</span>
+      <h4 id="3.37.5.1">3.37.5.1 Sample SOAP Messages</h4>
+      <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;,</p>
+      <p>&lt;MessageID/&gt;, …; these WS-Addressing headers are populated according to</p>
+      <p>
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
       </p>
-    </div>
-    <h5 id="3.37.5.1.2">3.37.5.1.2 Sample Retrieve Clarifications SOAP Response</h5>
-    <div style="border:0.75pt solid #000000; clear:both">
-      <p style="font-size:10pt">
-        <span>&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</span>
+      <h5 id="3.37.5.1.1">3.37.5.1.1 Sample Retrieve Clarifications SOAP Request</h5>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;soap:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>       </span>
+          <span style="width:23.99pt;display:inline-block"> </span>
+          <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:RetrieveClarifications&lt;/wsa:Action&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;/soap:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;soap:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span>&lt;RetrieveClarificationsRequest xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;clarificationData&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+          <span>&lt;orgID&gt;123&lt;/formID&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+          <span>&lt;encodedResponse&gt;false&lt;/encodedResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+          <span>&lt;archiveURL /&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+          <span>&lt;context /&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;/clarificationData&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span>&lt;/RetrieveClarificationsRequest&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;/soap:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>&lt;/soap:Envelope&gt;</span>
+        </p>
+      </div>
+      <h5 id="3.37.5.1.2">3.37.5.1.2 Sample Retrieve Clarifications SOAP Response</h5>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span>&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;soap:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>       </span>
+          <span style="width:23.99pt;display:inline-block"> </span>
+          <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:RetrieveClarificationsResponse&lt;/wsa:Action&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;/soap:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;soap:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span>&lt;RetrieveClarificationsResponse xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;form&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+          <span>&lt;URL&gt;http://somehost/xxx/services/someForm&lt;/URL&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;/form&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;contentType /&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
+          <span>&lt;responseCode /&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
+          <span>&lt;/RetrieveClarificationsResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
+          <span>&lt;/soap:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>&lt;/soap:Envelope&gt;</span>
+        </p>
+      </div>
+    </main>
+    <footer>
+      <p>
+        <hr />
       </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;soap:Header&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>       </span>
-        <span style="width:23.99pt;display:inline-block"> </span>
-        <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:RetrieveClarificationsResponse&lt;/wsa:Action&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;/soap:Header&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;soap:Body&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span>&lt;RetrieveClarificationsResponse xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;form&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
-        <span>&lt;URL&gt;http://somehost/xxx/services/someForm&lt;/URL&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;/form&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;contentType /&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:27.35pt"> </span>
-        <span>&lt;responseCode /&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:18pt"> </span>
-        <span>&lt;/RetrieveClarificationsResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-        <span>&lt;/soap:Body&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>&lt;/soap:Envelope&gt;</span>
-      </p>
-    </div>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

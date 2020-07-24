@@ -5,157 +5,165 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.13">3.13 Follow Context [ITI-13]</h2>
-    <p>This section corresponds to transaction [ITI-13] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-13] is used by the Patient Context Participant, User Context Participant and Context Manager Actors.</p>
-    <h3 id="3.13.1">3.13.1 Scope</h3>
-    <p>This transaction allows the Context Manager to force other context participant actors to synchronize based on the new context values.</p>
-    <p>
-      <span>This transaction is composed of multiple methods as defined by the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard</span>
-      <span>. It has multiple phases consisting of surveying the participants, indication to them of final decision as to whether the context changed or not, and retrieval of the new context values by the context participants.</span>
-    </p>
-    <p>Each of the context participant actors follows a specific subject. The Patient Context Participant follows the patient subject and does not expect the user subject to be set in context. The User Context Participant follows the user subject.</p>
-    <p>
-      <span>The semantics of the methods used are defined in the documents</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Component Technology Mapping: ActiveX</span>
-      <span>or</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Component Technology Mapping: Web</span>
-      <span>, in conjunction with the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Subject Data Definitions</span>
-      <span>document. A Context Participant can implement either technology. The Context Manager shall support both technologies in order to interoperate with joining participants implementing the technology of their choice.</span>
-    </p>
-    <h3 id="3.13.2">3.13.2 Use Case Roles</h3>
-    <img src="media/amdr0-jc4sx.030.png" width="432" height="288" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Patient Context Participant</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Responds to context survey. Synchronizes display to new value(s) in the patient subject of a context it follows.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>User Context Participant</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Responds to context survey. Synchronizes display to new value(s) in the patient subject of a context it follows.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Context Manager</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Conducts context survey, notifies the context participants of acceptance or cancellation of a change, and provides context values.</span>
-    </p>
-    <h3 id="3.13.3">3.13.3 Referenced Standard</h3>
-    <p>HL7 Context Management “CCOW” Standard, Version 1.4</p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>Technology and Subject Independent Architecture</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>Component Technology Mapping: ActiveX</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>Component Technology Mapping: Web</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>Subject Data Definitions</span>
-    </p>
-    <h3 id="3.13.4">3.13.4 Messages</h3>
-    <img src="media/amdr0-jc4sx.031.png" width="433" height="288" alt="" />
-    <p class="figureTitle">Figure 3.13-1: Follow Context – ContextChangesPending Method Sequence</p>
-    <h4 id="3.13.4.1">3.13.4.1 Follow Context – ContextChangesPending Method</h4>
-    <p>The ContextChangesPending method is invoked by the Context Manager to survey context participant actors with regard to acceptability of changes proposed by a Patient Context Participant or Client Authentication Agent Actors.</p>
-    <h5 id="3.13.4.1.1">3.13.4.1.1 Trigger Events</h5>
-    <p>The ContextChangesPending method is triggered when the Context Manager receives invocation of the EndContextChanges method.</p>
-    <h5 id="3.13.4.1.2">3.13.4.1.2 Message Semantics</h5>
-    <p>ContextChangesPending is defined as a method on the ContextParticipant interface and allows the Context Manager to survey a context participant as to whether or not it is ready to follow the changes in the context.</p>
-    <p>In the invocation of this method, the Context Manager shall provide the pending context’s coupon.</p>
-    <p>
-      <span>Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>document, Section 17.3.7.2, for a description of the parameters associated with this method.</span>
-    </p>
-    <h5 id="3.13.4.1.3">3.13.4.1.3 Expected Actions</h5>
-    <p>Performing the ContextChangesPending method, the Patient Context Participant or User Context Participant makes a decision whether or not it can accept change of context (for example due to operation being in progress). To reach this decision, it may invoke the GetItemValues method to inspect proposed new values in the context.</p>
-    <p>
-      <span>As a response, a Context Participant will respond with an indication to Accept or Conditionally Accept the proposed change. Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>document, Section 17.3.7.2, for the specifics of the response formation.</span>
-    </p>
-    <h4 id="3.13.4.2">3.13.4.2 Follow Context – ContextChangesAccepted Method</h4>
-    <p>The ContextChangesAccepted method is invoked by the Context Manager to confirm to the context participants that instigator of change accepted proposed changes.</p>
-    <h5 id="3.13.4.2.1">3.13.4.2.1 Trigger Events</h5>
-    <p>The ContextChangesAccepted method is triggered when the Context Manager receives invocation of the PublishChangesDecision method indicating that the changes have been accepted.</p>
-    <h5 id="3.13.4.2.2">3.13.4.2.2 Message Semantics</h5>
-    <p>ContextChangesAccepted is defined as a method on the ContextParticipant interface and allows the Context Manager to inform a context participant that the context value(s) have been changed.</p>
-    <p>In the invocation of this method, the Context Manager provides the new context coupon.</p>
-    <p>
-      <span>Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>, Section 17.3.7.3 for a description of the parameters associated with this method.</span>
-    </p>
-    <h5 id="3.13.4.2.3">3.13.4.2.3 Expected Actions</h5>
-    <p>Performing the ContextChangesAccepted method, the Patient Context Participant or User Context Participant accepts new context and can subsequently retrieve new values using the GetItemValues method.</p>
-    <p>
-      <span>It responds with confirmation of success or an exception. Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>document, Section 17.3.7.3, for the specifics of the response formation.</span>
-    </p>
-    <h4 id="3.13.4.3">3.13.4.3 Follow Context – ContextChangesCancelled Method</h4>
-    <p>The ContextChangesCancelled method is invoked by the Context Manager to inform the context participants that instigator of change cancelled proposed changes.</p>
-    <h5 id="3.13.4.3.1">3.13.4.3.1 Trigger Events</h5>
-    <p>The ContextChangesCancelled method is triggered when the Context Manager receives invocation of the PublishChangesDecision method indicating that the changes have been cancelled.</p>
-    <h5 id="3.13.4.3.2">3.13.4.3.2 Message Semantics</h5>
-    <p>ContextChangesCancelled is defined as a method on the ContextParticipant interface and allows the Context Manager to inform a context participant that the pending context change has been cancelled.</p>
-    <p>In the invocation of this method, the Context Manager provides the pending context’s coupon.</p>
-    <p>
-      <span>Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>, Section 17.3.7.4 for a description of the parameters associated with this method.</span>
-    </p>
-    <h5 id="3.13.4.3.3">3.13.4.3.3 Expected Actions</h5>
-    <p>Performing the ContextChangesCancelled method, the Patient Context Participant or User Context Participant keeps its current context and destroys information about a pending context change that has been cancelled.</p>
-    <p>
-      <span>It responds with confirmation of success or an exception. Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
-      <span>document, Section 17.3.7.4, for the specifics of the response formation.</span>
-    </p>
-    <h4 id="3.13.4.4">3.13.4.4 Follow Context – GetItemValues Method</h4>
-    <p>The GetItemValues method is invoked by a Context Participant to retrieve value(s) from the context it follows.</p>
-    <h5 id="3.13.4.4.1">3.13.4.4.1 Trigger Events</h5>
-    <p>The GetItemValues method is triggered by a Context Participant after it receives the context coupon as a result of the ContextChangesPending, ContextChangesAccepted or GetContextCoupon methods.</p>
-    <h5 id="3.13.4.4.2">3.13.4.4.2 Message Semantics</h5>
-    <p>GetItemValues is defined as a method on the ContextData or SecureContextData interface. If the context is not secured when a participant actor has joined the context (i.e., Patient Context Participant that only follows patient context), then this method should be invoked on the ContextData interface. Otherwise, it shall be invoked on the SecureContextData interface.</p>
-    <p>By invocation of this method without specification of the list of item names, a context participant retrieves values of all items presently set in context. It can also first invoke the GetItemNames method on the same interface (as specified in CCOW Standard) and use the list of items for selective retrieval of item values from the context via GetItemValues method. The Patient Context Participant needs to search through the resulting list of Patient.Id.IdList.&lt;n&gt; values until a recognized Patient Domain is found. The Patient Context Participant may choose to be grouped with a PIX Patient Identifier Cross-reference Consumer to handle the cases where no known Patient Domain is found in the resulting IdList.</p>
-    <p>
-      <span>Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture document</span>
-      <span>, Section 17.3.4.5, for the Patient Context Participant Actor, and Section 17.3.13.2, for the User Context Participant, for a description of parameters associated with this method.</span>
-    </p>
-    <h5 id="3.13.4.4.3">3.13.4.4.3 Expected Actions</h5>
-    <p>
-      <span>Context Manager shall return the values of requested items or an exception. Refer to the</span>
-      <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture document</span>
-      <span>, Section 17.3.4.5, for the Patient Context Participant Actor, and Section 17.3.13.2, for the User Context Participant, for a description of the response issued by the Context Manager Actor.</span>
-      <a name="_Toc214462905"> </a>
-    </p>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.13">3.13 Follow Context [ITI-13]</h2>
+      <p>This section corresponds to transaction [ITI-13] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-13] is used by the Patient Context Participant, User Context Participant and Context Manager Actors.</p>
+      <h3 id="3.13.1">3.13.1 Scope</h3>
+      <p>This transaction allows the Context Manager to force other context participant actors to synchronize based on the new context values.</p>
+      <p>
+        <span>This transaction is composed of multiple methods as defined by the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard</span>
+        <span>. It has multiple phases consisting of surveying the participants, indication to them of final decision as to whether the context changed or not, and retrieval of the new context values by the context participants.</span>
+      </p>
+      <p>Each of the context participant actors follows a specific subject. The Patient Context Participant follows the patient subject and does not expect the user subject to be set in context. The User Context Participant follows the user subject.</p>
+      <p>
+        <span>The semantics of the methods used are defined in the documents</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Component Technology Mapping: ActiveX</span>
+        <span>or</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Component Technology Mapping: Web</span>
+        <span>, in conjunction with the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Subject Data Definitions</span>
+        <span>document. A Context Participant can implement either technology. The Context Manager shall support both technologies in order to interoperate with joining participants implementing the technology of their choice.</span>
+      </p>
+      <h3 id="3.13.2">3.13.2 Use Case Roles</h3>
+      <img src="media/amdr0-jc4sx.030.png" width="432" height="288" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Patient Context Participant</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Responds to context survey. Synchronizes display to new value(s) in the patient subject of a context it follows.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>User Context Participant</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Responds to context survey. Synchronizes display to new value(s) in the patient subject of a context it follows.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Context Manager</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Conducts context survey, notifies the context participants of acceptance or cancellation of a change, and provides context values.</span>
+      </p>
+      <h3 id="3.13.3">3.13.3 Referenced Standard</h3>
+      <p>HL7 Context Management “CCOW” Standard, Version 1.4</p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Technology and Subject Independent Architecture</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Component Technology Mapping: ActiveX</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Component Technology Mapping: Web</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Subject Data Definitions</span>
+      </p>
+      <h3 id="3.13.4">3.13.4 Messages</h3>
+      <img src="media/amdr0-jc4sx.031.png" width="433" height="288" alt="" />
+      <p class="figureTitle">Figure 3.13-1: Follow Context – ContextChangesPending Method Sequence</p>
+      <h4 id="3.13.4.1">3.13.4.1 Follow Context – ContextChangesPending Method</h4>
+      <p>The ContextChangesPending method is invoked by the Context Manager to survey context participant actors with regard to acceptability of changes proposed by a Patient Context Participant or Client Authentication Agent Actors.</p>
+      <h5 id="3.13.4.1.1">3.13.4.1.1 Trigger Events</h5>
+      <p>The ContextChangesPending method is triggered when the Context Manager receives invocation of the EndContextChanges method.</p>
+      <h5 id="3.13.4.1.2">3.13.4.1.2 Message Semantics</h5>
+      <p>ContextChangesPending is defined as a method on the ContextParticipant interface and allows the Context Manager to survey a context participant as to whether or not it is ready to follow the changes in the context.</p>
+      <p>In the invocation of this method, the Context Manager shall provide the pending context’s coupon.</p>
+      <p>
+        <span>Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>document, Section 17.3.7.2, for a description of the parameters associated with this method.</span>
+      </p>
+      <h5 id="3.13.4.1.3">3.13.4.1.3 Expected Actions</h5>
+      <p>Performing the ContextChangesPending method, the Patient Context Participant or User Context Participant makes a decision whether or not it can accept change of context (for example due to operation being in progress). To reach this decision, it may invoke the GetItemValues method to inspect proposed new values in the context.</p>
+      <p>
+        <span>As a response, a Context Participant will respond with an indication to Accept or Conditionally Accept the proposed change. Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>document, Section 17.3.7.2, for the specifics of the response formation.</span>
+      </p>
+      <h4 id="3.13.4.2">3.13.4.2 Follow Context – ContextChangesAccepted Method</h4>
+      <p>The ContextChangesAccepted method is invoked by the Context Manager to confirm to the context participants that instigator of change accepted proposed changes.</p>
+      <h5 id="3.13.4.2.1">3.13.4.2.1 Trigger Events</h5>
+      <p>The ContextChangesAccepted method is triggered when the Context Manager receives invocation of the PublishChangesDecision method indicating that the changes have been accepted.</p>
+      <h5 id="3.13.4.2.2">3.13.4.2.2 Message Semantics</h5>
+      <p>ContextChangesAccepted is defined as a method on the ContextParticipant interface and allows the Context Manager to inform a context participant that the context value(s) have been changed.</p>
+      <p>In the invocation of this method, the Context Manager provides the new context coupon.</p>
+      <p>
+        <span>Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>, Section 17.3.7.3 for a description of the parameters associated with this method.</span>
+      </p>
+      <h5 id="3.13.4.2.3">3.13.4.2.3 Expected Actions</h5>
+      <p>Performing the ContextChangesAccepted method, the Patient Context Participant or User Context Participant accepts new context and can subsequently retrieve new values using the GetItemValues method.</p>
+      <p>
+        <span>It responds with confirmation of success or an exception. Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>document, Section 17.3.7.3, for the specifics of the response formation.</span>
+      </p>
+      <h4 id="3.13.4.3">3.13.4.3 Follow Context – ContextChangesCancelled Method</h4>
+      <p>The ContextChangesCancelled method is invoked by the Context Manager to inform the context participants that instigator of change cancelled proposed changes.</p>
+      <h5 id="3.13.4.3.1">3.13.4.3.1 Trigger Events</h5>
+      <p>The ContextChangesCancelled method is triggered when the Context Manager receives invocation of the PublishChangesDecision method indicating that the changes have been cancelled.</p>
+      <h5 id="3.13.4.3.2">3.13.4.3.2 Message Semantics</h5>
+      <p>ContextChangesCancelled is defined as a method on the ContextParticipant interface and allows the Context Manager to inform a context participant that the pending context change has been cancelled.</p>
+      <p>In the invocation of this method, the Context Manager provides the pending context’s coupon.</p>
+      <p>
+        <span>Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>, Section 17.3.7.4 for a description of the parameters associated with this method.</span>
+      </p>
+      <h5 id="3.13.4.3.3">3.13.4.3.3 Expected Actions</h5>
+      <p>Performing the ContextChangesCancelled method, the Patient Context Participant or User Context Participant keeps its current context and destroys information about a pending context change that has been cancelled.</p>
+      <p>
+        <span>It responds with confirmation of success or an exception. Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture</span>
+        <span>document, Section 17.3.7.4, for the specifics of the response formation.</span>
+      </p>
+      <h4 id="3.13.4.4">3.13.4.4 Follow Context – GetItemValues Method</h4>
+      <p>The GetItemValues method is invoked by a Context Participant to retrieve value(s) from the context it follows.</p>
+      <h5 id="3.13.4.4.1">3.13.4.4.1 Trigger Events</h5>
+      <p>The GetItemValues method is triggered by a Context Participant after it receives the context coupon as a result of the ContextChangesPending, ContextChangesAccepted or GetContextCoupon methods.</p>
+      <h5 id="3.13.4.4.2">3.13.4.4.2 Message Semantics</h5>
+      <p>GetItemValues is defined as a method on the ContextData or SecureContextData interface. If the context is not secured when a participant actor has joined the context (i.e., Patient Context Participant that only follows patient context), then this method should be invoked on the ContextData interface. Otherwise, it shall be invoked on the SecureContextData interface.</p>
+      <p>By invocation of this method without specification of the list of item names, a context participant retrieves values of all items presently set in context. It can also first invoke the GetItemNames method on the same interface (as specified in CCOW Standard) and use the list of items for selective retrieval of item values from the context via GetItemValues method. The Patient Context Participant needs to search through the resulting list of Patient.Id.IdList.&lt;n&gt; values until a recognized Patient Domain is found. The Patient Context Participant may choose to be grouped with a PIX Patient Identifier Cross-reference Consumer to handle the cases where no known Patient Domain is found in the resulting IdList.</p>
+      <p>
+        <span>Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture document</span>
+        <span>, Section 17.3.4.5, for the Patient Context Participant Actor, and Section 17.3.13.2, for the User Context Participant, for a description of parameters associated with this method.</span>
+      </p>
+      <h5 id="3.13.4.4.3">3.13.4.4.3 Expected Actions</h5>
+      <p>
+        <span>Context Manager shall return the values of requested items or an exception. Refer to the</span>
+        <span style="font-style:italic">HL7 Context Management “CCOW” Standard: Technology and Subject-Independent Architecture document</span>
+        <span>, Section 17.3.4.5, for the Patient Context Participant Actor, and Section 17.3.13.2, for the User Context Participant, for a description of the response issued by the Context Manager Actor.</span>
+        <a name="_Toc214462905"> </a>
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

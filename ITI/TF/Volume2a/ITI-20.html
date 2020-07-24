@@ -5,1261 +5,1269 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.20">3.20 Record Audit Event [ITI-20]</h2>
-    <p>This section corresponds to the Record Audit Event [ITI-20] transaction of the IHE IT Infrastructure Technical Framework. This transaction is used to report auditable events to an Audit Record Repository.</p>
-    <h3 id="3.20.1">3.20.1 Scope</h3>
-    <p>This transaction is used to report auditable events to an Audit Record Repository.</p>
-    <h3 id="3.20.2">3.20.2 Actor Roles</h3>
-    <p class="tableTitle">Table 3.20.2-1: Actor Roles</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:38.9pt">Actor:</td>
-        <td style="width:416.9pt">Any actor or any other application that is grouped with the Secure Node or Secure Application.</td>
-      </tr>
-      <tr>
-        <td style="width:38.9pt">Role:</td>
-        <td style="width:416.9pt">Create an audit record and transmit this record to the Audit Record Repository.</td>
-      </tr>
-      <tr>
-        <td style="width:38.9pt">Actor:</td>
-        <td style="width:416.9pt">Audit Record Repository</td>
-      </tr>
-      <tr>
-        <td style="width:38.9pt">Role:</td>
-        <td style="width:416.9pt">Receive an audit record from the Audit Record Creator and store this for audit purposes.</td>
-      </tr>
-      <tr>
-        <td style="width:38.9pt">Actor:</td>
-        <td style="width:416.9pt">Audit Record Forwarder</td>
-      </tr>
-      <tr>
-        <td style="width:38.9pt">Role:</td>
-        <td style="width:416.9pt">Forward an audit record to Audit Record Repositories.</td>
-      </tr>
-    </table>
-    <p>
-      <a name="_Toc416778533"> </a>
-    </p>
-    <h3 id="3.20.3">3.20.3 Referenced Standards</h3>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:88.2pt">RFC5424</td>
-        <td style="width:368.1pt">The Syslog Protocol.</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">RFC5425</td>
-        <td style="width:368.1pt">Transmission of Syslog Messages over TLS</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">RFC5426</td>
-        <td style="width:368.1pt">Transmission of Syslog Messages over UDP</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">RFC7525</td>
-        <td style="width:368.1pt">Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">DICOM</td>
-        <td style="width:368.1pt">
-          <p>
-            <span>DICOM PS3.15 Annex A.5</span>
-            <a href="http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html">http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html</a>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">ASTM E2147-01</td>
-        <td style="width:368.1pt">Standard Specification for Audit and Disclosure Logs for Use in Health Information Systems</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">NIST SP 800-92</td>
-        <td style="width:368.1pt">Guide to Computer Security Log Management.</td>
-      </tr>
-      <tr>
-        <td style="width:88.2pt">W3C XML 1.0</td>
-        <td style="width:368.1pt">Extensible Markup Language (XML) 1.0</td>
-      </tr>
-    </table>
-    <h3 id="3.20.4">3.20.4 Messages</h3>
-    <img src="media/amdr0-jc4sx.036.png" width="624" height="337" alt="cp-872-diagram" />
-    <p class="note">
-      <span style="font-weight:bold">Note 1:</span>
-      <span>Any actor initiating [ITI-20] may send to more than one Audit Record Repository.</span>
-    </p>
-    <p class="note">
-      <span style="font-weight:bold">Note 2:</span>
-      <span>The Audit Repository that receives an [ITI-20] transaction may or may not be grouped with an Audit Record Forwarder. This diagram does not show a chain of forwarding between actors.</span>
-    </p>
-    <p style="font-size:11pt">
-      <a name="_Toc426535218">Figure 3.20.4-1: Interaction Diagram</a>
-    </p>
-    <h4 id="3.20.4.1">3.20.4.1 Send Audit Event – Syslog Integration</h4>
-    <p>An actor that is grouped with Secure Node or Secure Application detects an event that should be reported and uses the Audit Event message to send a report about the event to an Audit Record Repository.</p>
-    <p>This Audit Event message uses the Syslog protocol defined by RFC5424. The Syslog protocol is also used for a wide variety of other event reporting purposes.</p>
-    <p>RFC5424 defines a Syslog message that includes a free-form message. This Audit Event constrains the Syslog message to use a DICOM schema to specify the message content. See Section 3.20.7.</p>
-    <p>DICOM has defined a basic event report schema, and some basic event descriptions. IHE has extended this to define other specific event reports for security and privacy events. The Audit Event messages defined in this transaction can be mixed together with other Syslog messages. Organizations and systems may also be using these event schema for reporting events not defined by IHE or DICOM.</p>
-    <p>The Audit Record Repository and Audit Record Forwarder should be prepared to handle Syslog messages in other formats, as well as messages complying with the IHE Audit Trail Format (defined in Section 3.20.7) that are being used for other purposes.</p>
-    <h5 id="3.20.4.1.1">3.20.4.1.1 Trigger Events</h5>
-    <p>There are two trigger events:</p>
-    <ol>
-      <li class="numbered-list1">A Secure Node or Secure Application detects an event that should be reported to the Audit Record Repository. This transaction does not specify all of the policies or reasons for reporting events. They may be specified in other IHE profiles, they may be specified by local law or regulation, or they may be specified by local policy.</li>
-      <li class="numbered-list1">An Audit Record Forwarder determines that a received Syslog message should be sent to another Audit Record Repository. This transaction does not specify what rules or policies determine whether a Syslog message should be forwarded.</li>
-    </ol>
-    <p>The Secure Node or Secure Application shall create the Audit Event message and transmit it to the Audit Record Repository as soon as possible.</p>
-    <p>The Audit Record Forwarder shall forward the Audit Event message to the Audit Record Repository as soon as possible.</p>
-    <p>If the Secure Application, Secure Node, or Audit Record Forwarder is unable to send the message to the Audit Record Repository (e.g., it has lost network connectivity or has lost the TLS connection to the Audit Record Repository), then the actor shall store the audit record locally and send it when it is able.</p>
-    <p>The Audit Record Forwarder may delete its local copy of the Audit Record after this record has been transmitted to the target Audit Record Repository.</p>
-    <h6 id="3.20.4.1.1.1">3.20.4.1.1.1 DICOM and IHE Audit Event messages</h6>
-    <p>An actor in any IHE profile, when grouped with a Secure Node or Secure Application, shall be able to report the events defined in Table 3.20.4.1.1.1-1 (previously Table 3.20.6-1). Additional reportable events are often identified for specific events in other IHE profiles, and are documented in that profile or transaction.</p>
-    <p>These events in this table shall be formatted in accordance with Section 3.20.7.</p>
-    <p class="tableTitle">Table 3.20.4.1.1.1-1: Audit Event triggers (previously Table 3.20.6-1)</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.20">3.20 Record Audit Event [ITI-20]</h2>
+      <p>This section corresponds to the Record Audit Event [ITI-20] transaction of the IHE IT Infrastructure Technical Framework. This transaction is used to report auditable events to an Audit Record Repository.</p>
+      <h3 id="3.20.1">3.20.1 Scope</h3>
+      <p>This transaction is used to report auditable events to an Audit Record Repository.</p>
+      <h3 id="3.20.2">3.20.2 Actor Roles</h3>
+      <p class="tableTitle">Table 3.20.2-1: Actor Roles</p>
+      <table cellspacing="0" cellpadding="0">
         <tr>
-          <td style="width:113.8pt" class="tableHeader">Audit Event Trigger</td>
-          <td style="width:227.8pt" class="tableHeader">Description</td>
-          <td style="width:108.3pt" class="tableHeader">Source Vocabulary</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:113.8pt">Actor-start-stop</td>
-          <td style="width:227.8pt">Startup and shutdown of any actor. Applies to all actors. Is distinct from hardware powerup and shutdown.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Application Activity”</td>
+          <td style="width:38.9pt">Actor:</td>
+          <td style="width:416.9pt">Any actor or any other application that is grouped with the Secure Node or Secure Application.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Audit-Log-Used</td>
-          <td style="width:227.8pt">The audit trail repository has been accessed or modified by something other than the arrival of audit trail messages.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Audit Log Used”</td>
+          <td style="width:38.9pt">Role:</td>
+          <td style="width:416.9pt">Create an audit record and transmit this record to the Audit Record Repository.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Begin-storing-instances</td>
-          <td style="width:227.8pt">Begin storing SOP Instances for a study. This may be a mix of instances.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Begin Transferring DICOM Instances”</td>
+          <td style="width:38.9pt">Actor:</td>
+          <td style="width:416.9pt">Audit Record Repository</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Health-service-event</td>
-          <td style="width:227.8pt">Health services scheduled and performed within an instance or episode of care. This includes scheduling, initiation, updates or amendments, performing or completing the act, and cancellation. See note below.</td>
-          <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Health Services Provision Event”</td>
+          <td style="width:38.9pt">Role:</td>
+          <td style="width:416.9pt">Receive an audit record from the Audit Record Creator and store this for audit purposes.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Instances-deleted</td>
-          <td style="width:227.8pt">SOP Instances are deleted from a specific study. One event covers all instances deleted for the particular study.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed” or “DICOM Study Deleted”</td>
+          <td style="width:38.9pt">Actor:</td>
+          <td style="width:416.9pt">Audit Record Forwarder</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Instances-Stored</td>
-          <td style="width:227.8pt">Instances for a particular study have been stored on this system. One event covers all instances stored for the particular study.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Transferred”</td>
+          <td style="width:38.9pt">Role:</td>
+          <td style="width:416.9pt">Forward an audit record to Audit Record Repositories.</td>
+        </tr>
+      </table>
+      <p>
+        <a name="_Toc416778533"> </a>
+      </p>
+      <h3 id="3.20.3">3.20.3 Referenced Standards</h3>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:88.2pt">RFC5424</td>
+          <td style="width:368.1pt">The Syslog Protocol.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Medication</td>
-          <td style="width:227.8pt">
-            <p>Medication orders and administration within an instance or episode of care. This includes initial order, dispensing, delivery, and cancellation.</p>
-            <p>See note below.</p>
-          </td>
-          <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Medication Event”</td>
+          <td style="width:88.2pt">RFC5425</td>
+          <td style="width:368.1pt">Transmission of Syslog Messages over TLS</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Mobile-machine-event</td>
-          <td style="width:227.8pt">Mobile machine joins or leaves secure domain.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Network Entry”</td>
+          <td style="width:88.2pt">RFC5426</td>
+          <td style="width:368.1pt">Transmission of Syslog Messages over UDP</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Node-Authentication-failure</td>
-          <td style="width:227.8pt">A secure node authentication failure has occurred during TLS negotiation, e.g., invalid certificate.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Security Alert”</td>
+          <td style="width:88.2pt">RFC7525</td>
+          <td style="width:368.1pt">Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Order-record-event</td>
-          <td style="width:227.8pt">Order record created, accessed, modified or deleted. Involved actors: Order Placer. This includes initial order, updates or amendments, delivery, completion, and cancellation. See note below.</td>
-          <td style="width:108.3pt">DICOM PS3.16 Annex D “Order Record”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Patient-care-assignment</td>
-          <td style="width:227.8pt">Staffing or participant assignment actions relevant to the assignment of healthcare professionals, caregivers attending physician, residents, medical students, consultants, etc. to a patient It also includes change in assigned role or authorization, e.g., relative to healthcare status change, and de-assignment</td>
-          <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Resource Assignment”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Patient-care-episode</td>
-          <td style="width:227.8pt">Specific patient care episodes or problems that occur within an instance of care. This includes initial assignment, updates or amendments, resolution, completion, and cancellation. See note below.</td>
-          <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Episode”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Patient-care-protocol</td>
-          <td style="width:227.8pt">Patient association with a care protocol. This includes initial assignment, scheduling, updates or amendments, completion, and cancellation. See note below.</td>
-          <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Protocol”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Patient-record-event</td>
-          <td style="width:227.8pt">Patient record created, modified, or accessed.</td>
-          <td style="width:108.3pt">DICOM PS3.16 Annex D “Patient Record”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">PHI-export</td>
-          <td style="width:227.8pt">Any export of PHI on media, either removable physical media such as CD-ROM or electronic transfer of files such as email. Any printing activity, paper or film, local or remote, which prints PHI.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Export”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">PHI-import</td>
-          <td style="width:227.8pt">Any import of PHI on media, either removable physical media such as CD-ROM or electronic transfers of files such as email.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Import”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Procedure-record-event</td>
-          <td style="width:227.8pt">Procedure record created, modified, accessed or deleted.</td>
-          <td style="width:108.3pt">DICOM PS3.16 Annex D “Procedure Record”</td>
-        </tr>
-        <tr>
-          <td style="width:113.8pt">Query Information</td>
-          <td style="width:227.8pt">
-            <p>A query has been received, either as part of an IHE transaction, or as part other products functions.</p>
-            <p>For example:</p>
-            <p>1) Modality Worklist Query</p>
-            <p>2) Instance or Image Availability Query</p>
-            <p>3) PIX, PDQ, or XDS Query</p>
+          <td style="width:88.2pt">DICOM</td>
+          <td style="width:368.1pt">
             <p>
-              <span>Notes:</span>
-              <span style="width:6.65pt;display:inline-block"> </span>
-              <span>The general guidance is to log the query event with the query parameters and not the result of the query. The result of a query may be very large and is likely to be of limited value vs. the overhead. The query parameters can be used effectively to detect bad behavior and the expectation is that given the query parameters the result could be regenerated if necessary.</span>
+              <span>DICOM PS3.15 Annex A.5</span>
+              <a href="http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html">http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html</a>
             </p>
           </td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Query”</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Security Alert</td>
-          <td style="width:227.8pt">
-            <p>Security Administrative actions create, modify, delete, query, and display the following:</p>
-            <p>Configuration and other changes, e.g., software updates that affect any software that processes protected information. Hardware changes may also be reported in this event.</p>
-            <p>
-              <span>1.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Security attributes and auditable events for the application functions used for patient management, clinical processes, registry of business objects and methods (e.g., WSDL, UDDI), program creation and maintenance, etc.</span>
-            </p>
-            <p>
-              <span>2.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Security domains according to various organizational categories such as entity-wide, institutional, departmental, etc.</span>
-            </p>
-            <p>
-              <span>3.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Security categories or groupings for functions and data such as patient management, nursing, clinical, etc.</span>
-            </p>
-            <p>
-              <span>4.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>The allowable access permissions associated with functions and data, such as create, read, update, delete, and execution of specific functional units or object access or manipulation methods.</span>
-            </p>
-            <p>
-              <span>5.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Security roles according to various task-grouping categories such as security administration, admissions desk, nurses, physicians, clinical specialists, etc. It also includes the association of permissions with roles for role-based access control.</span>
-            </p>
-            <p>
-              <span>6.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>User accounts. This includes assigning or changing password or other authentication data. It also includes the association of roles with users for role-based access control, or permissions with users for user-based access control.</span>
-            </p>
-            <p>
-              <span>7.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Unauthorized user attempt to use security administration functions.</span>
-            </p>
-            <p>
-              <span>8.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>Audit enabling and disabling.</span>
-            </p>
-            <p>
-              <span>9.</span>
-              <span style="font:7pt 'Times New Roman'">         </span>
-              <span>User authentication revocation.</span>
-            </p>
-            <p>
-              <span>10.</span>
-              <span style="font:7pt 'Times New Roman'">      </span>
-              <span>Emergency Mode Access (aka Break-Glass)</span>
-            </p>
-            <p>Security administration events should always be audited.</p>
+          <td style="width:88.2pt">ASTM E2147-01</td>
+          <td style="width:368.1pt">Standard Specification for Audit and Disclosure Logs for Use in Health Information Systems</td>
+        </tr>
+        <tr>
+          <td style="width:88.2pt">NIST SP 800-92</td>
+          <td style="width:368.1pt">Guide to Computer Security Log Management.</td>
+        </tr>
+        <tr>
+          <td style="width:88.2pt">W3C XML 1.0</td>
+          <td style="width:368.1pt">Extensible Markup Language (XML) 1.0</td>
+        </tr>
+      </table>
+      <h3 id="3.20.4">3.20.4 Messages</h3>
+      <img src="media/amdr0-jc4sx.036.png" width="624" height="337" alt="cp-872-diagram" />
+      <p class="note">
+        <span style="font-weight:bold">Note 1:</span>
+        <span>Any actor initiating [ITI-20] may send to more than one Audit Record Repository.</span>
+      </p>
+      <p class="note">
+        <span style="font-weight:bold">Note 2:</span>
+        <span>The Audit Repository that receives an [ITI-20] transaction may or may not be grouped with an Audit Record Forwarder. This diagram does not show a chain of forwarding between actors.</span>
+      </p>
+      <p style="font-size:11pt">
+        <a name="_Toc426535218">Figure 3.20.4-1: Interaction Diagram</a>
+      </p>
+      <h4 id="3.20.4.1">3.20.4.1 Send Audit Event – Syslog Integration</h4>
+      <p>An actor that is grouped with Secure Node or Secure Application detects an event that should be reported and uses the Audit Event message to send a report about the event to an Audit Record Repository.</p>
+      <p>This Audit Event message uses the Syslog protocol defined by RFC5424. The Syslog protocol is also used for a wide variety of other event reporting purposes.</p>
+      <p>RFC5424 defines a Syslog message that includes a free-form message. This Audit Event constrains the Syslog message to use a DICOM schema to specify the message content. See Section 3.20.7.</p>
+      <p>DICOM has defined a basic event report schema, and some basic event descriptions. IHE has extended this to define other specific event reports for security and privacy events. The Audit Event messages defined in this transaction can be mixed together with other Syslog messages. Organizations and systems may also be using these event schema for reporting events not defined by IHE or DICOM.</p>
+      <p>The Audit Record Repository and Audit Record Forwarder should be prepared to handle Syslog messages in other formats, as well as messages complying with the IHE Audit Trail Format (defined in Section 3.20.7) that are being used for other purposes.</p>
+      <h5 id="3.20.4.1.1">3.20.4.1.1 Trigger Events</h5>
+      <p>There are two trigger events:</p>
+      <ol>
+        <li class="numbered-list1">A Secure Node or Secure Application detects an event that should be reported to the Audit Record Repository. This transaction does not specify all of the policies or reasons for reporting events. They may be specified in other IHE profiles, they may be specified by local law or regulation, or they may be specified by local policy.</li>
+        <li class="numbered-list1">An Audit Record Forwarder determines that a received Syslog message should be sent to another Audit Record Repository. This transaction does not specify what rules or policies determine whether a Syslog message should be forwarded.</li>
+      </ol>
+      <p>The Secure Node or Secure Application shall create the Audit Event message and transmit it to the Audit Record Repository as soon as possible.</p>
+      <p>The Audit Record Forwarder shall forward the Audit Event message to the Audit Record Repository as soon as possible.</p>
+      <p>If the Secure Application, Secure Node, or Audit Record Forwarder is unable to send the message to the Audit Record Repository (e.g., it has lost network connectivity or has lost the TLS connection to the Audit Record Repository), then the actor shall store the audit record locally and send it when it is able.</p>
+      <p>The Audit Record Forwarder may delete its local copy of the Audit Record after this record has been transmitted to the target Audit Record Repository.</p>
+      <h6 id="3.20.4.1.1.1">3.20.4.1.1.1 DICOM and IHE Audit Event messages</h6>
+      <p>An actor in any IHE profile, when grouped with a Secure Node or Secure Application, shall be able to report the events defined in Table 3.20.4.1.1.1-1 (previously Table 3.20.6-1). Additional reportable events are often identified for specific events in other IHE profiles, and are documented in that profile or transaction.</p>
+      <p>These events in this table shall be formatted in accordance with Section 3.20.7.</p>
+      <p class="tableTitle">Table 3.20.4.1.1.1-1: Audit Event triggers (previously Table 3.20.6-1)</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:113.8pt" class="tableHeader">Audit Event Trigger</td>
+            <td style="width:227.8pt" class="tableHeader">Description</td>
+            <td style="width:108.3pt" class="tableHeader">Source Vocabulary</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:113.8pt">Actor-start-stop</td>
+            <td style="width:227.8pt">Startup and shutdown of any actor. Applies to all actors. Is distinct from hardware powerup and shutdown.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Application Activity”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Audit-Log-Used</td>
+            <td style="width:227.8pt">The audit trail repository has been accessed or modified by something other than the arrival of audit trail messages.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Audit Log Used”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Begin-storing-instances</td>
+            <td style="width:227.8pt">Begin storing SOP Instances for a study. This may be a mix of instances.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Begin Transferring DICOM Instances”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Health-service-event</td>
+            <td style="width:227.8pt">Health services scheduled and performed within an instance or episode of care. This includes scheduling, initiation, updates or amendments, performing or completing the act, and cancellation. See note below.</td>
+            <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Health Services Provision Event”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Instances-deleted</td>
+            <td style="width:227.8pt">SOP Instances are deleted from a specific study. One event covers all instances deleted for the particular study.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed” or “DICOM Study Deleted”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Instances-Stored</td>
+            <td style="width:227.8pt">Instances for a particular study have been stored on this system. One event covers all instances stored for the particular study.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Transferred”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Medication</td>
+            <td style="width:227.8pt">
+              <p>Medication orders and administration within an instance or episode of care. This includes initial order, dispensing, delivery, and cancellation.</p>
+              <p>See note below.</p>
+            </td>
+            <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Medication Event”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Mobile-machine-event</td>
+            <td style="width:227.8pt">Mobile machine joins or leaves secure domain.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Network Entry”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Node-Authentication-failure</td>
+            <td style="width:227.8pt">A secure node authentication failure has occurred during TLS negotiation, e.g., invalid certificate.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Security Alert”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Order-record-event</td>
+            <td style="width:227.8pt">Order record created, accessed, modified or deleted. Involved actors: Order Placer. This includes initial order, updates or amendments, delivery, completion, and cancellation. See note below.</td>
+            <td style="width:108.3pt">DICOM PS3.16 Annex D “Order Record”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Patient-care-assignment</td>
+            <td style="width:227.8pt">Staffing or participant assignment actions relevant to the assignment of healthcare professionals, caregivers attending physician, residents, medical students, consultants, etc. to a patient It also includes change in assigned role or authorization, e.g., relative to healthcare status change, and de-assignment</td>
+            <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Resource Assignment”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Patient-care-episode</td>
+            <td style="width:227.8pt">Specific patient care episodes or problems that occur within an instance of care. This includes initial assignment, updates or amendments, resolution, completion, and cancellation. See note below.</td>
+            <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Episode”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Patient-care-protocol</td>
+            <td style="width:227.8pt">Patient association with a care protocol. This includes initial assignment, scheduling, updates or amendments, completion, and cancellation. See note below.</td>
+            <td style="width:108.3pt">IHE Extension (ITI TF-2a: 3.20.7.3) “Patient Care Protocol”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Patient-record-event</td>
+            <td style="width:227.8pt">Patient record created, modified, or accessed.</td>
+            <td style="width:108.3pt">DICOM PS3.16 Annex D “Patient Record”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">PHI-export</td>
+            <td style="width:227.8pt">Any export of PHI on media, either removable physical media such as CD-ROM or electronic transfer of files such as email. Any printing activity, paper or film, local or remote, which prints PHI.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Export”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">PHI-import</td>
+            <td style="width:227.8pt">Any import of PHI on media, either removable physical media such as CD-ROM or electronic transfers of files such as email.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Import”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Procedure-record-event</td>
+            <td style="width:227.8pt">Procedure record created, modified, accessed or deleted.</td>
+            <td style="width:108.3pt">DICOM PS3.16 Annex D “Procedure Record”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Query Information</td>
+            <td style="width:227.8pt">
+              <p>A query has been received, either as part of an IHE transaction, or as part other products functions.</p>
+              <p>For example:</p>
+              <p>1) Modality Worklist Query</p>
+              <p>2) Instance or Image Availability Query</p>
+              <p>3) PIX, PDQ, or XDS Query</p>
+              <p>
+                <span>Notes:</span>
+                <span style="width:6.65pt;display:inline-block"> </span>
+                <span>The general guidance is to log the query event with the query parameters and not the result of the query. The result of a query may be very large and is likely to be of limited value vs. the overhead. The query parameters can be used effectively to detect bad behavior and the expectation is that given the query parameters the result could be regenerated if necessary.</span>
+              </p>
+            </td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Query”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Security Alert</td>
+            <td style="width:227.8pt">
+              <p>Security Administrative actions create, modify, delete, query, and display the following:</p>
+              <p>Configuration and other changes, e.g., software updates that affect any software that processes protected information. Hardware changes may also be reported in this event.</p>
+              <p>
+                <span>1.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Security attributes and auditable events for the application functions used for patient management, clinical processes, registry of business objects and methods (e.g., WSDL, UDDI), program creation and maintenance, etc.</span>
+              </p>
+              <p>
+                <span>2.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Security domains according to various organizational categories such as entity-wide, institutional, departmental, etc.</span>
+              </p>
+              <p>
+                <span>3.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Security categories or groupings for functions and data such as patient management, nursing, clinical, etc.</span>
+              </p>
+              <p>
+                <span>4.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>The allowable access permissions associated with functions and data, such as create, read, update, delete, and execution of specific functional units or object access or manipulation methods.</span>
+              </p>
+              <p>
+                <span>5.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Security roles according to various task-grouping categories such as security administration, admissions desk, nurses, physicians, clinical specialists, etc. It also includes the association of permissions with roles for role-based access control.</span>
+              </p>
+              <p>
+                <span>6.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>User accounts. This includes assigning or changing password or other authentication data. It also includes the association of roles with users for role-based access control, or permissions with users for user-based access control.</span>
+              </p>
+              <p>
+                <span>7.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Unauthorized user attempt to use security administration functions.</span>
+              </p>
+              <p>
+                <span>8.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>Audit enabling and disabling.</span>
+              </p>
+              <p>
+                <span>9.</span>
+                <span style="font:7pt 'Times New Roman'">         </span>
+                <span>User authentication revocation.</span>
+              </p>
+              <p>
+                <span>10.</span>
+                <span style="font:7pt 'Times New Roman'">      </span>
+                <span>Emergency Mode Access (aka Break-Glass)</span>
+              </p>
+              <p>Security administration events should always be audited.</p>
+            </td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Security Alert”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">User Authentication</td>
+            <td style="width:227.8pt">This message describes the event of a user log on or log off, whether successful or not. No Participant Objects are needed for this message.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “User Authentication”. For log off based on inactivity, specify UserIsRequestor=false in the User element to indicate that this was not user initiated.</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Study-Object-Event</td>
+            <td style="width:227.8pt">Study is created, modified, accessed, or deleted. This reports on addition of new instances to existing studies as well as creation of new studies.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed”</td>
+          </tr>
+          <tr>
+            <td style="width:113.8pt">Study-used</td>
+            <td style="width:227.8pt">SOP Instances from a specific study are created, modified or accessed. One event covers all instances used for the particular study.</td>
+            <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed”</td>
+          </tr>
+        </tbody>
+      </table>
+      <h6 id="3.20.4.1.1.2">3.20.4.1.1.2 Other event reports</h6>
+      <p>A Secure Node or Secure Application may also report audit events that do not correspond to DICOM events or audit events defined in IHE profiles. For example, a Disclosure can be recorded when an application knows that the act meets the measure of a Disclosure in the legal domain. The Disclosure event is further explained in Section 3.20.8.</p>
+      <p>Other events may be reported using extensions to the format in Section 3.20.7 or may be reported in another format.</p>
+      <h5 id="3.20.4.1.2">3.20.4.1.2 Message Semantics</h5>
+      <p>The Audit Event message describes an event performed by users or systems. Typical events are queries, views, additions, deletions and changes to data.</p>
+      <p>An Audit Record Forwarder shall filter and forward Syslog messages unchanged, regardless of their internal format.</p>
+      <p>A Secure Node or Secure Application shall create and transmit an Audit Event message when reporting an event. This message shall be a Syslog message that is transmitted as described in RFC5424 and formatted as described in Section 3.20.7 Audit Message Format.</p>
+      <p>Secure Node and Secure Application Actors shall construct the Audit Event message according to the following:</p>
+      <ol>
+        <li class="numbered-list1">If the message contains Unicode characters, the characters shall be encoded using the UTF-8 encoding rules. UTF-8 avoids utilizing the control characters that are mandated by the Syslog protocol, but it may appear to be gibberish to a system that is not prepared for UTF-8.</li>
+        <li class="numbered-list1">The PRI field shall be set using the facility value of 10 (security/authorization messages). Most Audit Event messages should have the severity value of 5 (normal but significant), although applications may choose values of 4 (Warning condition) if that is appropriate to the more detailed information in the audit message. This means that for most Audit Event messages the PRI field will contain the value “&lt;85&gt;”.</li>
+        <li class="numbered-list1">The MSGID field in the HEADER of the SYSLOG-MSG shall be set to “IHE+RFC-3881” (minus the quotes). (Note that the use of RFC3881 in the value is retained for backward compatibility.)</li>
+        <li class="numbered-list1">The STRUCTURED-DATA is not used. The MSG field holds the structured event data.</li>
+        <li class="numbered-list1">The MSG field of the SYSLOG-MSG shall be present and shall be an XML structure using UTF-8 minimal length encoding following the DICOM PS3.15 A.5 format, as described in Section 3.20.7 Audit Message Format. The BOM as specified in RFC5424 for use when the MSG is UTF-8 encoded is discouraged, but acceptable, as this is not well supported and discouraged by Unicode.</li>
+      </ol>
+      <h6 id="3.20.4.1.2.1">3.20.4.1.2.1 Audit Message Transports</h6>
+      <p>This transaction defines two transport mechanisms for Record Audit Event messages:</p>
+      <ol>
+        <li class="numbered-list1">Transmission of Syslog messages over TLS (RFC5425) with The Syslog Protocol (RFC5424) which formalizes sending Syslog messages over a streaming protocol protectable by TLS. See Section 3.20.4.1.2.1.1.</li>
+        <li class="numbered-list1">Transmission of Syslog messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) which formalizes and obsoletes BSD Syslog protocol defined in RFC3164. See Section 3.20.4.1.2.1.2.</li>
+      </ol>
+      <p>The Audit Record Repository shall support both transport mechanisms.</p>
+      <p>The Secure Node, Secure Application, and Audit Record Forwarder Actors shall support at least one of the transport mechanisms.</p>
+      <p>
+        <a name="_Toc426535224">3.20.4.1.2.1.1 Transmission of Syslog Messages over TLS</a>
+        <span style="font-weight:bold" />
+      </p>
+      <p>
+        <a name="_Toc426535225">
+          <span>Transmission of Syslog messages over TLS (</span>
+          <span>RFC</span>
+          <span>5425) with the Syslog Protocol (</span>
+          <span>RFC</span>
+          <span>5424) formalizes sending Syslog messages over a streaming protocol protectable by TLS</span>
+          <span>.</span>
+        </a>
+      </p>
+      <p>RFC5424 states that this MUST be TLS version 1.2. For this transaction, that requirement is relaxed to be that it MUST be TLS; version 1.2 is RECOMMENDED.</p>
+      <p class="heading7" id="3.20.4.1.2.1.2">3.20.4.1.2.1.2 Transmission of Syslog Messages over UDP (formerly:BSD Syslog)</p>
+      <p>Transmission of Syslog Messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) formalizes and obsoletes the BSD Syslog protocol (RFC3164). This transport mechanism, originally defined in the IHE Radiology Technical Framework, is appropriate in some situations.</p>
+      <p>The underlying UDP transport may truncate messages longer than 1024 bytes or the MTU size minus the UDP header length. The Audit Record Repository should accept arbitrarily truncated messages and use its best effort to preserve those fragments (e.g., modify truncated messages so that such messages are well-formed XML, e.g., closing open elements), including possibly partial multi-byte encodings of characters. Because of the potential loss of information, the Audit Record Repository may track modified audits by adding informational text.</p>
+      <p>Because of the potential for truncated messages and other security concerns, the transmission of Syslog messages over TLS is recommended.</p>
+      <p>
+        <a name="_Toc426535226">3.20.4.1.2.1.3 Reliable Syslog (deprecated)</a>
+      </p>
+      <p>The Reliable Syslog “cooked” mode is no longer specified by this transaction. Applications using Reliable Syslog should switch to transmission of Syslog Messages over TLS.</p>
+      <h5 id="3.20.4.1.3">3.20.4.1.3 Expected Actions</h5>
+      <p>An Audit Record Repository (ARR) shall accept any Syslog message that complies with RFC5424. For each Syslog message it may:</p>
+      <ol>
+        <li class="numbered-list1">Discard the Syslog message as irrelevant.</li>
+        <li class="numbered-list1">Retain the Syslog message in an internal data store.</li>
+        <li class="numbered-list1">Perform other processing on the Syslog message.</li>
+      </ol>
+      <p>Audit Record Repositories shall accept UTF-8 encodings and store them without damage, i.e., preserve all 8 bits.</p>
+      <p>Audit Record Forwarders shall accept UTF-8 encodings and forward them without damage, i.e., preserve all 8 bits.</p>
+      <p>This transaction does not constrain the kind of Syslog messages that can be conveyed, nor does it specify the capacity or capabilities of the data store in the Audit Record Repository. The expectation is that the internal data store on the Audit Record Repository will be used for subsequent analysis and reporting purposes. This transaction does not specify what such activities will be.</p>
+      <p>The Audit Record Repository may apply a variety of data retention rules to the data store. This transaction does not specify data retention rules. These are usually dependent upon the purposes assigned to a specific Audit Record Repository.</p>
+      <p>When the Audit Record Repository is grouped with an Audit Record Forwarder, the Audit Record Forwarder shall:</p>
+      <ol>
+        <li class="numbered-list1">Apply filtering rules to all Syslog messages received by the Audit Record Repository.</li>
+        <li class="numbered-list1">Forward all Syslog messages that match filters to their configured destinations.</li>
+      </ol>
+      <h3 id="3.20.5">3.20.5 Security Considerations</h3>
+      <p>The use of the TLS transport mechanism is recommended because the audit event messages often contain PHI or other sensitive information. See Section 3.20.4.1.2.1.</p>
+      <p>The use of the TLS transport mechanism is not always required because there are other means of protection that may be more appropriate in some situations. The decision to use the UDP transport mechanism should be based upon a security and privacy risk analysis.</p>
+      <p>The data store within the Audit Record Repository may contain sensitive information, and the Audit Record Repository analysis facilities may allow sensitive queries. It will be a high value target for malicious actors, and should be protected accordingly.</p>
+      <p>The Audit Record Repository is required to generate audit event messages for various kinds of use of the data store and configuration changes. This is specified in Section 3.20.4.1.1.</p>
+      <h3 id="3.20.6">3.20.6 Retired</h3>
+      <p>This section has been retired. Most of the previous content has been moved to Section 3.20.4. Table 3.20.6-1 "Audit Record trigger events" is now Table 3.20.4.1.1.1-1.</p>
+      <h3 id="3.20.7">3.20.7 Audit Message Format</h3>
+      <p>All IHE actors shall utilize the IHE Audit Trail Message Format in Section 3.20.7.1. This is a schema based on the standards developed and issued by the IETF, HL7, and DICOM organizations to meet the medical auditing needs as specified by ASTM E2147-01.</p>
+      <p>Note: The IHE Provisional Audit Message Format has been retired.</p>
+      <h4 id="3.20.7.1">3.20.7.1 IHE Audit Trail Message Format</h4>
+      <p>
+        <span>The DICOM Standard, Part 15, Annex A.5 Audit Trail Message Format Profile (see</span>
+        <a href="http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html">http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html</a>
+        <span>) provides vocabulary and specification of a schema for events that may occur in the context of DICOM equipment. This XML schema was defined based upon joint work by IHE, HL7, DICOM, ASTM E31, and the Joint NEMA/COCIR/JIRA Security and Privacy Committee.</span>
+      </p>
+      <p>The DICOM Standard provides a schema for the basic messages and states that extensions are valid. This profile does not restrict private extensions that comply with the W3C XML encoding rules for the use of schemas, namespaces, etc.</p>
+      <p>IHE has extended the DICOM audit schema for more general healthcare use. Some IHE profiles have defined additional events and appropriate audit event messages for those events. Those audit event messages are often directly associated with IHE transactions. The events are documented in the context of those transactions, and are not documented as part of this transaction.</p>
+      <p>These audit requirements may be found in the Technical Frameworks from any IHE domain, not just the ITI domain. The notation used in this documentation, which often is in the form of an audit message table, is that used in the DICOM standard. The messages shall be encoded as instances based on the DICOM schema.</p>
+      <p>The following notation is used for optionality:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:56.7pt">
+            <ul type="disc">
+              <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+                <span>M</span>
+              </li>
+            </ul>
           </td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “Security Alert”</td>
+          <td style="width:385.2pt">This field is mandatory.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">User Authentication</td>
-          <td style="width:227.8pt">This message describes the event of a user log on or log off, whether successful or not. No Participant Objects are needed for this message.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “User Authentication”. For log off based on inactivity, specify UserIsRequestor=false in the User element to indicate that this was not user initiated.</td>
+          <td style="width:56.7pt">
+            <ul type="disc">
+              <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+                <span>U</span>
+              </li>
+            </ul>
+          </td>
+          <td style="width:385.2pt">The optionality of this field is unspecialized. The optionality of the underlying standard applies.</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Study-Object-Event</td>
-          <td style="width:227.8pt">Study is created, modified, accessed, or deleted. This reports on addition of new instances to existing studies as well as creation of new studies.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed”</td>
+          <td style="width:56.7pt">
+            <ul type="disc">
+              <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
+                <span>C</span>
+              </li>
+            </ul>
+          </td>
+          <td style="width:385.2pt">This field is mandatory if a specified condition is true.</td>
+        </tr>
+      </table>
+      <p>The IHE Audit Trail Message Format describes events with respect to a single patient. In situations where there is an event that applies to more than one identifiable patient, there shall be a separate audit event message for each patient.</p>
+      <h5 id="3.20.7.1.1">3.20.7.1.1 RoleIDCode with access control roles</h5>
+      <p>When describing a human user’s participation in an event, the RoleIDCode value should represent the access control roles/permissions that authorized the event. RoleIDCode is a CodedValueType. Use of standards-based roles/permissions is recommended, rather than use of site or application specific codes. Many older security systems are unable to produce this data, hence it is optional, but should be provided when known.</p>
+      <p>For example: at a site "St Fraser" they have defined a functional role code "NURSEA" for attending nurse. This can be represented as</p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>EV("NURSEA", "St Fraser", "Attending Nurse")</span>
+      </p>
+      <p>Candidate standards based structural/functional role codes can be found at ISO, HL7, ASTM, and various other sources.</p>
+      <h5 id="3.20.7.1.2">3.20.7.1.2 Audit Encoding of the Purpose of Use value</h5>
+      <p>
+        <span>The Purpose of Use value in the schema indicates the expected ultimate use of the data, rather than a likely near-term use such as “send to X”. As explained in the</span>
+        <a href="http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_WhitePaper_AccessControl_2009-09-28.pdf">IHE Access Control White Paper</a>
+        <span>, there are Access Control decisions that are based on the ultimate use of the data. For example, a Patient may have provided a BPPC Consent/Authorization for treatment purposes, but explicitly disallowed any use for research regardless of de-identification methods used.</span>
+      </p>
+      <p>The Purpose Of Use is also included in the Audit Event message to enable some forms of reporting of Accounting of Disclosures and Breach Notification. To enable this type of Audit Logging and Access Control decision, the assertion in the Provide User Assertion [ITI-40] transaction in the Cross-Enterprise User Assertion (XUA) Profile includes the intended purpose for which the data will be used. One specific PurposeOfUse would be a “Break-Glass”/Emergency-Mode-Access.</p>
+      <p>The PurposeOfUse value will come from a Value Set. This Value Set should be derived from the codes found in ISO 14265, or XSPA (Cross-Enterprise Security and Privacy Authorization). Implementations should expect that the Value Set used may be using locally defined values. The use of the IHE Sharing Value Sets (SVS) Profile may assist with this.</p>
+      <p>When a PurposeOfUse value is available it shall be encoded in the EventIdentification section as “PurposeOfUse” element encoded as a CodedValueType.</p>
+      <p>For example, the following is how an explicit Disclosure can be recorded when an application knows that the act meets the measure of a Disclosure in the legal domain.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt" class="tableHeader">Field Name</td>
+          <td style="width:25.2pt" class="tableHeader">Opt</td>
+          <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
         </tr>
         <tr>
-          <td style="width:113.8pt">Study-used</td>
-          <td style="width:227.8pt">SOP Instances from a specific study are created, modified or accessed. One event covers all instances used for the particular study.</td>
-          <td style="width:108.3pt">DICOM PS3.15 A.5.3 “DICOM Instances Accessed”</td>
+          <td rowspan="6" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
         </tr>
-      </tbody>
-    </table>
-    <h6 id="3.20.4.1.1.2">3.20.4.1.1.2 Other event reports</h6>
-    <p>A Secure Node or Secure Application may also report audit events that do not correspond to DICOM events or audit events defined in IHE profiles. For example, a Disclosure can be recorded when an application knows that the act meets the measure of a Disclosure in the legal domain. The Disclosure event is further explained in Section 3.20.8.</p>
-    <p>Other events may be reported using extensions to the format in Section 3.20.7 or may be reported in another format.</p>
-    <h5 id="3.20.4.1.2">3.20.4.1.2 Message Semantics</h5>
-    <p>The Audit Event message describes an event performed by users or systems. Typical events are queries, views, additions, deletions and changes to data.</p>
-    <p>An Audit Record Forwarder shall filter and forward Syslog messages unchanged, regardless of their internal format.</p>
-    <p>A Secure Node or Secure Application shall create and transmit an Audit Event message when reporting an event. This message shall be a Syslog message that is transmitted as described in RFC5424 and formatted as described in Section 3.20.7 Audit Message Format.</p>
-    <p>Secure Node and Secure Application Actors shall construct the Audit Event message according to the following:</p>
-    <ol>
-      <li class="numbered-list1">If the message contains Unicode characters, the characters shall be encoded using the UTF-8 encoding rules. UTF-8 avoids utilizing the control characters that are mandated by the Syslog protocol, but it may appear to be gibberish to a system that is not prepared for UTF-8.</li>
-      <li class="numbered-list1">The PRI field shall be set using the facility value of 10 (security/authorization messages). Most Audit Event messages should have the severity value of 5 (normal but significant), although applications may choose values of 4 (Warning condition) if that is appropriate to the more detailed information in the audit message. This means that for most Audit Event messages the PRI field will contain the value “&lt;85&gt;”.</li>
-      <li class="numbered-list1">The MSGID field in the HEADER of the SYSLOG-MSG shall be set to “IHE+RFC-3881” (minus the quotes). (Note that the use of RFC3881 in the value is retained for backward compatibility.)</li>
-      <li class="numbered-list1">The STRUCTURED-DATA is not used. The MSG field holds the structured event data.</li>
-      <li class="numbered-list1">The MSG field of the SYSLOG-MSG shall be present and shall be an XML structure using UTF-8 minimal length encoding following the DICOM PS3.15 A.5 format, as described in Section 3.20.7 Audit Message Format. The BOM as specified in RFC5424 for use when the MSG is UTF-8 encoded is discouraged, but acceptable, as this is not well supported and discouraged by Unicode.</li>
-    </ol>
-    <h6 id="3.20.4.1.2.1">3.20.4.1.2.1 Audit Message Transports</h6>
-    <p>This transaction defines two transport mechanisms for Record Audit Event messages:</p>
-    <ol>
-      <li class="numbered-list1">Transmission of Syslog messages over TLS (RFC5425) with The Syslog Protocol (RFC5424) which formalizes sending Syslog messages over a streaming protocol protectable by TLS. See Section 3.20.4.1.2.1.1.</li>
-      <li class="numbered-list1">Transmission of Syslog messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) which formalizes and obsoletes BSD Syslog protocol defined in RFC3164. See Section 3.20.4.1.2.1.2.</li>
-    </ol>
-    <p>The Audit Record Repository shall support both transport mechanisms.</p>
-    <p>The Secure Node, Secure Application, and Audit Record Forwarder Actors shall support at least one of the transport mechanisms.</p>
-    <p>
-      <a name="_Toc426535224">3.20.4.1.2.1.1 Transmission of Syslog Messages over TLS</a>
-      <span style="font-weight:bold" />
-    </p>
-    <p>
-      <a name="_Toc426535225">
-        <span>Transmission of Syslog messages over TLS (</span>
-        <span>RFC</span>
-        <span>5425) with the Syslog Protocol (</span>
-        <span>RFC</span>
-        <span>5424) formalizes sending Syslog messages over a streaming protocol protectable by TLS</span>
-        <span>.</span>
-      </a>
-    </p>
-    <p>RFC5424 states that this MUST be TLS version 1.2. For this transaction, that requirement is relaxed to be that it MUST be TLS; version 1.2 is RECOMMENDED.</p>
-    <p class="heading7" id="3.20.4.1.2.1.2">3.20.4.1.2.1.2 Transmission of Syslog Messages over UDP (formerly:BSD Syslog)</p>
-    <p>Transmission of Syslog Messages over UDP (RFC5426) with The Syslog Protocol (RFC5424) formalizes and obsoletes the BSD Syslog protocol (RFC3164). This transport mechanism, originally defined in the IHE Radiology Technical Framework, is appropriate in some situations.</p>
-    <p>The underlying UDP transport may truncate messages longer than 1024 bytes or the MTU size minus the UDP header length. The Audit Record Repository should accept arbitrarily truncated messages and use its best effort to preserve those fragments (e.g., modify truncated messages so that such messages are well-formed XML, e.g., closing open elements), including possibly partial multi-byte encodings of characters. Because of the potential loss of information, the Audit Record Repository may track modified audits by adding informational text.</p>
-    <p>Because of the potential for truncated messages and other security concerns, the transmission of Syslog messages over TLS is recommended.</p>
-    <p>
-      <a name="_Toc426535226">3.20.4.1.2.1.3 Reliable Syslog (deprecated)</a>
-    </p>
-    <p>The Reliable Syslog “cooked” mode is no longer specified by this transaction. Applications using Reliable Syslog should switch to transmission of Syslog Messages over TLS.</p>
-    <h5 id="3.20.4.1.3">3.20.4.1.3 Expected Actions</h5>
-    <p>An Audit Record Repository (ARR) shall accept any Syslog message that complies with RFC5424. For each Syslog message it may:</p>
-    <ol>
-      <li class="numbered-list1">Discard the Syslog message as irrelevant.</li>
-      <li class="numbered-list1">Retain the Syslog message in an internal data store.</li>
-      <li class="numbered-list1">Perform other processing on the Syslog message.</li>
-    </ol>
-    <p>Audit Record Repositories shall accept UTF-8 encodings and store them without damage, i.e., preserve all 8 bits.</p>
-    <p>Audit Record Forwarders shall accept UTF-8 encodings and forward them without damage, i.e., preserve all 8 bits.</p>
-    <p>This transaction does not constrain the kind of Syslog messages that can be conveyed, nor does it specify the capacity or capabilities of the data store in the Audit Record Repository. The expectation is that the internal data store on the Audit Record Repository will be used for subsequent analysis and reporting purposes. This transaction does not specify what such activities will be.</p>
-    <p>The Audit Record Repository may apply a variety of data retention rules to the data store. This transaction does not specify data retention rules. These are usually dependent upon the purposes assigned to a specific Audit Record Repository.</p>
-    <p>When the Audit Record Repository is grouped with an Audit Record Forwarder, the Audit Record Forwarder shall:</p>
-    <ol>
-      <li class="numbered-list1">Apply filtering rules to all Syslog messages received by the Audit Record Repository.</li>
-      <li class="numbered-list1">Forward all Syslog messages that match filters to their configured destinations.</li>
-    </ol>
-    <h3 id="3.20.5">3.20.5 Security Considerations</h3>
-    <p>The use of the TLS transport mechanism is recommended because the audit event messages often contain PHI or other sensitive information. See Section 3.20.4.1.2.1.</p>
-    <p>The use of the TLS transport mechanism is not always required because there are other means of protection that may be more appropriate in some situations. The decision to use the UDP transport mechanism should be based upon a security and privacy risk analysis.</p>
-    <p>The data store within the Audit Record Repository may contain sensitive information, and the Audit Record Repository analysis facilities may allow sensitive queries. It will be a high value target for malicious actors, and should be protected accordingly.</p>
-    <p>The Audit Record Repository is required to generate audit event messages for various kinds of use of the data store and configuration changes. This is specified in Section 3.20.4.1.1.</p>
-    <h3 id="3.20.6">3.20.6 Retired</h3>
-    <p>This section has been retired. Most of the previous content has been moved to Section 3.20.4. Table 3.20.6-1 "Audit Record trigger events" is now Table 3.20.4.1.1.1-1.</p>
-    <h3 id="3.20.7">3.20.7 Audit Message Format</h3>
-    <p>All IHE actors shall utilize the IHE Audit Trail Message Format in Section 3.20.7.1. This is a schema based on the standards developed and issued by the IETF, HL7, and DICOM organizations to meet the medical auditing needs as specified by ASTM E2147-01.</p>
-    <p>Note: The IHE Provisional Audit Message Format has been retired.</p>
-    <h4 id="3.20.7.1">3.20.7.1 IHE Audit Trail Message Format</h4>
-    <p>
-      <span>The DICOM Standard, Part 15, Annex A.5 Audit Trail Message Format Profile (see</span>
-      <a href="http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html">http://medical.nema.org/medical/dicom/current/output/chtml/part15/sect_A.5.html</a>
-      <span>) provides vocabulary and specification of a schema for events that may occur in the context of DICOM equipment. This XML schema was defined based upon joint work by IHE, HL7, DICOM, ASTM E31, and the Joint NEMA/COCIR/JIRA Security and Privacy Committee.</span>
-    </p>
-    <p>The DICOM Standard provides a schema for the basic messages and states that extensions are valid. This profile does not restrict private extensions that comply with the W3C XML encoding rules for the use of schemas, namespaces, etc.</p>
-    <p>IHE has extended the DICOM audit schema for more general healthcare use. Some IHE profiles have defined additional events and appropriate audit event messages for those events. Those audit event messages are often directly associated with IHE transactions. The events are documented in the context of those transactions, and are not documented as part of this transaction.</p>
-    <p>These audit requirements may be found in the Technical Frameworks from any IHE domain, not just the ITI domain. The notation used in this documentation, which often is in the form of an audit message table, is that used in the DICOM standard. The messages shall be encoded as instances based on the DICOM schema.</p>
-    <p>The following notation is used for optionality:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:56.7pt">
-          <ul type="disc">
-            <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-              <span>M</span>
-            </li>
-          </ul>
-        </td>
-        <td style="width:385.2pt">This field is mandatory.</td>
-      </tr>
-      <tr>
-        <td style="width:56.7pt">
-          <ul type="disc">
-            <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-              <span>U</span>
-            </li>
-          </ul>
-        </td>
-        <td style="width:385.2pt">The optionality of this field is unspecialized. The optionality of the underlying standard applies.</td>
-      </tr>
-      <tr>
-        <td style="width:56.7pt">
-          <ul type="disc">
-            <li style="margin-top:6pt;margin-left:28.52pt;padding-left:7.48pt">
-              <span>C</span>
-            </li>
-          </ul>
-        </td>
-        <td style="width:385.2pt">This field is mandatory if a specified condition is true.</td>
-      </tr>
-    </table>
-    <p>The IHE Audit Trail Message Format describes events with respect to a single patient. In situations where there is an event that applies to more than one identifiable patient, there shall be a separate audit event message for each patient.</p>
-    <h5 id="3.20.7.1.1">3.20.7.1.1 RoleIDCode with access control roles</h5>
-    <p>When describing a human user’s participation in an event, the RoleIDCode value should represent the access control roles/permissions that authorized the event. RoleIDCode is a CodedValueType. Use of standards-based roles/permissions is recommended, rather than use of site or application specific codes. Many older security systems are unable to produce this data, hence it is optional, but should be provided when known.</p>
-    <p>For example: at a site "St Fraser" they have defined a functional role code "NURSEA" for attending nurse. This can be represented as</p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>EV("NURSEA", "St Fraser", "Attending Nurse")</span>
-    </p>
-    <p>Candidate standards based structural/functional role codes can be found at ISO, HL7, ASTM, and various other sources.</p>
-    <h5 id="3.20.7.1.2">3.20.7.1.2 Audit Encoding of the Purpose of Use value</h5>
-    <p>
-      <span>The Purpose of Use value in the schema indicates the expected ultimate use of the data, rather than a likely near-term use such as “send to X”. As explained in the</span>
-      <a href="http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_WhitePaper_AccessControl_2009-09-28.pdf">IHE Access Control White Paper</a>
-      <span>, there are Access Control decisions that are based on the ultimate use of the data. For example, a Patient may have provided a BPPC Consent/Authorization for treatment purposes, but explicitly disallowed any use for research regardless of de-identification methods used.</span>
-    </p>
-    <p>The Purpose Of Use is also included in the Audit Event message to enable some forms of reporting of Accounting of Disclosures and Breach Notification. To enable this type of Audit Logging and Access Control decision, the assertion in the Provide User Assertion [ITI-40] transaction in the Cross-Enterprise User Assertion (XUA) Profile includes the intended purpose for which the data will be used. One specific PurposeOfUse would be a “Break-Glass”/Emergency-Mode-Access.</p>
-    <p>The PurposeOfUse value will come from a Value Set. This Value Set should be derived from the codes found in ISO 14265, or XSPA (Cross-Enterprise Security and Privacy Authorization). Implementations should expect that the Value Set used may be using locally defined values. The use of the IHE Sharing Value Sets (SVS) Profile may assist with this.</p>
-    <p>When a PurposeOfUse value is available it shall be encoded in the EventIdentification section as “PurposeOfUse” element encoded as a CodedValueType.</p>
-    <p>For example, the following is how an explicit Disclosure can be recorded when an application knows that the act meets the measure of a Disclosure in the legal domain.</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt" class="tableHeader">Field Name</td>
-        <td style="width:25.2pt" class="tableHeader">Opt</td>
-        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="6" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“R” (Read)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">PurposeOfUse</td>
-        <td style="width:25.2pt">O</td>
-        <td style="width:233.1pt">EV(12, 1.0.14265.1, “Law Enforcement”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“IHE0006”, “IHE”, “Disclosure”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Repository) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Document (1..n)</td>
-      </tr>
-    </table>
-    <p>
-      <a name="_Toc426535234"> </a>
-    </p>
-    <h5 id="3.20.7.1.3">3.20.7.1.3 ParticipantObjectIDTypeCode</h5>
-    <p>The DICOM schema mandates codeSystemName and originalText for all coded types. When standard codes are not available and the Audit Event Report is still using the integer values that were specified in RFC3881, IHE actors shall use the integer from RFC3881 as the codeValue, the description from RFC3881 in the originalText attribute and "RFC-3881" in the codeSystemName attribute. Where codes from other coding systems are available, those codes should be used because RFC3881 has been deprecated.</p>
-    <h4 id="3.20.7.2">3.20.7.2 RFC3881 format (Deprecated)</h4>
-    <p>The use of RFC3881 has been deprecated by IHE and IETF.</p>
-    <h3 id="3.20.8">3.20.8 Disclosures audit message</h3>
-    <p>
-      <span style="background-color:#ffffff">In some countries a Patient has the right to get an accounting of disclosures. This report includes disclosures of their data that meet regulatory criteria. Most audit events, including export events, must be post-analyzed to determine whether they describe an event that needs to be included in the accounting of disclosures. For example, in the USA these rules are defined in HIPAA, and only a few kinds of export events meet the criteria to be included in an accounting of disclosures report. When it is known, at the time the event is recorded, that the event is indeed a disclosure, the disclosure audit message can be used to document the event.</span>
-    </p>
-    <p>
-      <span style="background-color:#ffffff">The requirements of an accounting of disclosures are defined in ASTM-2147. A disclosure shall include the following, when the value is known:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">Who did the disclosure (the releasing agent), </li>
-      <li class="bullet-list1">When did the disclosure happen,</li>
-      <li class="bullet-list1">Who was the data disclosed to (receiving agent machine and other parties, if known),</li>
-      <li class="bullet-list1">What patient was involved (multiple patients would be done as multiple audit entries), </li>
-      <li class="bullet-list1">What data was involved, and </li>
-      <li class="bullet-list1">Why the disclosure was done </li>
-    </ul>
-    <p>
-      <span style="background-color:#ffffff">There is some other information that may be available:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">Who is the custodian of the data (the official organization responsible), and</li>
-      <li class="bullet-list1">Who authorized the release such as a guardian or relative (authorizing agent)?</li>
-    </ul>
-    <p>The following is the layout of the Disclosure audit event. This pattern will be extended and modified by applications when appropriate.</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:87.45pt" />
-        <td style="width:123pt" class="tableHeader">Field Name</td>
-        <td style="width:24.45pt" class="tableHeader">Opt</td>
-        <td style="width:182.7pt" class="tableHeader">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="6" style="width:77.65pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:123pt">EventID</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">EV(110106, DCM, “Export”)</td>
-      </tr>
-      <tr>
-        <td style="width:123pt">EventActionCode</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">“R” (Read)  for Export</td>
-      </tr>
-      <tr>
-        <td style="width:123pt">EventDateTime</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:123pt">EventOutcomeIndicator</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:123pt">PurposeOfUse</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">why was the data disclosed</td>
-      </tr>
-      <tr>
-        <td style="width:123pt">EventTypeCode</td>
-        <td style="width:24.45pt">M</td>
-        <td style="width:182.7pt">EV(IHE0006, “IHE”, “Disclosure”) - indicates type</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ActiveParticipant - Releasing Agents (0..*)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ActiveParticipant - Custodian (0..1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ActiveParticipant - Authorizing Agent (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ActiveParticipant - Receiving Agent (1..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">Audit Source (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ParticipantObject – Patient (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:440.2pt">ParticipantObject – Data (Document) released (1..n)</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:90.1pt" class="tableHeader">
-          <p>Releasing Agent</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">Identity of the human that initiated the Disclosure.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“true”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>
-            <span style="font-weight:bold">Custodian</span>
-            <br />
-            <span style="font-weight:bold">(if known)</span>
-          </p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(159541003, SNOMED CT, “Record keeping/library clerk")</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>Authorizing Agent</p>
-          <p>(if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(429577009, SNOMED CT, "Patient Advocate")</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>Receiving Agent</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:89.1pt" class="tableHeader">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">AuditSourceID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AuditEnterpriseSiteID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AuditSourceTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:89.1pt" class="tableHeader">
-          <p>Patient</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>   2 = patient</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:89.1pt" class="tableHeader">
-          <p>Data (Document) Released</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>  11 = disclosure</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>9 = Report Number</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>Releasing Agent</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">Identity of the human that initiated the Disclosure.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“true”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">The machine name or IP address, as available</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>
-            <span style="font-weight:bold">Custodian </span>
-            <br />
-            <span style="font-weight:bold">(if known)</span>
-          </p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(159541003, SNOMED CT, “Record keeping/library clerk")</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">NA</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">NA</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>Authorizing Agent</p>
-          <p>(if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(429577009, SNOMED CT, "Patient Advocate")</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">NA</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">NA</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:89.1pt" class="tableHeader">
-          <p>Receiving Agent</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">UserID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:89.1pt" class="tableHeader">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">AuditSourceID</td>
-        <td style="width:20.05pt" class="tableHeader">U</td>
-        <td style="width:185.05pt" class="tableHeader">not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AuditEnterpriseSiteID</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">AuditSourceTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:89.1pt" class="tableHeader">
-          <p>Patient </p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>   2 = patient</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:89.1pt" class="tableHeader">
-          <p>Data (Document) Released</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
-        <td style="width:20.05pt" class="tableHeader">M</td>
-        <td style="width:185.05pt" class="tableHeader">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>  11 = disclosure</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">
-          <p>Shall be:</p>
-          <p>9 = Report Number</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
-        <td style="width:20.05pt;background-color:#ffffff">M</td>
-        <td style="width:185.05pt;background-color:#ffffff">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
-        <td style="width:20.05pt;background-color:#ffffff">U</td>
-        <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
-      </tr>
-    </table>
-    <br style="page-break-before:always; clear:both" />
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“R” (Read)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">PurposeOfUse</td>
+          <td style="width:25.2pt">O</td>
+          <td style="width:233.1pt">EV(12, 1.0.14265.1, “Law Enforcement”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“IHE0006”, “IHE”, “Disclosure”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Repository) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Document (1..n)</td>
+        </tr>
+      </table>
+      <p>
+        <a name="_Toc426535234"> </a>
+      </p>
+      <h5 id="3.20.7.1.3">3.20.7.1.3 ParticipantObjectIDTypeCode</h5>
+      <p>The DICOM schema mandates codeSystemName and originalText for all coded types. When standard codes are not available and the Audit Event Report is still using the integer values that were specified in RFC3881, IHE actors shall use the integer from RFC3881 as the codeValue, the description from RFC3881 in the originalText attribute and "RFC-3881" in the codeSystemName attribute. Where codes from other coding systems are available, those codes should be used because RFC3881 has been deprecated.</p>
+      <h4 id="3.20.7.2">3.20.7.2 RFC3881 format (Deprecated)</h4>
+      <p>The use of RFC3881 has been deprecated by IHE and IETF.</p>
+      <h3 id="3.20.8">3.20.8 Disclosures audit message</h3>
+      <p>
+        <span style="background-color:#ffffff">In some countries a Patient has the right to get an accounting of disclosures. This report includes disclosures of their data that meet regulatory criteria. Most audit events, including export events, must be post-analyzed to determine whether they describe an event that needs to be included in the accounting of disclosures. For example, in the USA these rules are defined in HIPAA, and only a few kinds of export events meet the criteria to be included in an accounting of disclosures report. When it is known, at the time the event is recorded, that the event is indeed a disclosure, the disclosure audit message can be used to document the event.</span>
+      </p>
+      <p>
+        <span style="background-color:#ffffff">The requirements of an accounting of disclosures are defined in ASTM-2147. A disclosure shall include the following, when the value is known:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">Who did the disclosure (the releasing agent), </li>
+        <li class="bullet-list1">When did the disclosure happen,</li>
+        <li class="bullet-list1">Who was the data disclosed to (receiving agent machine and other parties, if known),</li>
+        <li class="bullet-list1">What patient was involved (multiple patients would be done as multiple audit entries), </li>
+        <li class="bullet-list1">What data was involved, and </li>
+        <li class="bullet-list1">Why the disclosure was done </li>
+      </ul>
+      <p>
+        <span style="background-color:#ffffff">There is some other information that may be available:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">Who is the custodian of the data (the official organization responsible), and</li>
+        <li class="bullet-list1">Who authorized the release such as a guardian or relative (authorizing agent)?</li>
+      </ul>
+      <p>The following is the layout of the Disclosure audit event. This pattern will be extended and modified by applications when appropriate.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:87.45pt" />
+          <td style="width:123pt" class="tableHeader">Field Name</td>
+          <td style="width:24.45pt" class="tableHeader">Opt</td>
+          <td style="width:182.7pt" class="tableHeader">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="6" style="width:77.65pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:123pt">EventID</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">EV(110106, DCM, “Export”)</td>
+        </tr>
+        <tr>
+          <td style="width:123pt">EventActionCode</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">“R” (Read)  for Export</td>
+        </tr>
+        <tr>
+          <td style="width:123pt">EventDateTime</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:123pt">EventOutcomeIndicator</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:123pt">PurposeOfUse</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">why was the data disclosed</td>
+        </tr>
+        <tr>
+          <td style="width:123pt">EventTypeCode</td>
+          <td style="width:24.45pt">M</td>
+          <td style="width:182.7pt">EV(IHE0006, “IHE”, “Disclosure”) - indicates type</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ActiveParticipant - Releasing Agents (0..*)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ActiveParticipant - Custodian (0..1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ActiveParticipant - Authorizing Agent (0..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ActiveParticipant - Receiving Agent (1..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">Audit Source (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ParticipantObject – Patient (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:440.2pt">ParticipantObject – Data (Document) released (1..n)</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:90.1pt" class="tableHeader">
+            <p>Releasing Agent</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">Identity of the human that initiated the Disclosure.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“true”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>
+              <span style="font-weight:bold">Custodian</span>
+              <br />
+              <span style="font-weight:bold">(if known)</span>
+            </p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(159541003, SNOMED CT, “Record keeping/library clerk")</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>Authorizing Agent</p>
+            <p>(if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(429577009, SNOMED CT, "Patient Advocate")</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>Receiving Agent</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:89.1pt" class="tableHeader">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">AuditSourceID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AuditEnterpriseSiteID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AuditSourceTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:89.1pt" class="tableHeader">
+            <p>Patient</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>   2 = patient</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:89.1pt" class="tableHeader">
+            <p>Data (Document) Released</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>  11 = disclosure</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>9 = Report Number</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>Releasing Agent</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">Identity of the human that initiated the Disclosure.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“true”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">The machine name or IP address, as available</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>
+              <span style="font-weight:bold">Custodian </span>
+              <br />
+              <span style="font-weight:bold">(if known)</span>
+            </p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(159541003, SNOMED CT, “Record keeping/library clerk")</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">NA</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">NA</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>Authorizing Agent</p>
+            <p>(if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(429577009, SNOMED CT, "Patient Advocate")</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">NA</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">NA</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:89.1pt" class="tableHeader">
+            <p>Receiving Agent</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">UserID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AlternativeUserID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">UserIsRequestor</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">RoleIDCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">NetworkAccessPointID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:89.1pt" class="tableHeader">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">AuditSourceID</td>
+          <td style="width:20.05pt" class="tableHeader">U</td>
+          <td style="width:185.05pt" class="tableHeader">not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AuditEnterpriseSiteID</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">AuditSourceTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:89.1pt" class="tableHeader">
+            <p>Patient </p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>   2 = patient</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:89.1pt" class="tableHeader">
+            <p>Data (Document) Released</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:118pt" class="tableHeader">ParticipantObjectTypeCode</td>
+          <td style="width:20.05pt" class="tableHeader">M</td>
+          <td style="width:185.05pt" class="tableHeader">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>  11 = disclosure</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">
+            <p>Shall be:</p>
+            <p>9 = Report Number</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectSensitivity</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectID</td>
+          <td style="width:20.05pt;background-color:#ffffff">M</td>
+          <td style="width:185.05pt;background-color:#ffffff">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectName</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectQuery</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:118pt;background-color:#ffffff">ParticipantObjectDetail</td>
+          <td style="width:20.05pt;background-color:#ffffff">U</td>
+          <td style="width:185.05pt;background-color:#ffffff">not specialized</td>
+        </tr>
+      </table>
+      <br style="page-break-before:always; clear:both" />
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

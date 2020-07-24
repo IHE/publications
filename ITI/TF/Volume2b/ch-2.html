@@ -5,45 +5,136 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h1 id="2">2 Conventions</h1>
-    <p>This document has adopted the following conventions for representing the framework concepts and specifying how the standards upon which the IHE IT Infrastructure Technical Framework is based should be applied.</p>
-    <h2 id="2.1">2.1 The Generic IHE Transaction Model</h2>
-    <p>Transaction descriptions are provided in Section 3. In each transaction description, the actors, the roles they play, and the transactions between them are presented as use cases.</p>
-    <p>The generic IHE transaction description includes the following components:</p>
-    <p>Scope: a brief description of the transaction.</p>
-    <p>Use case roles: textual definitions of the actors and their roles, with a simple diagram relating them, e.g.,:</p>
-    <img src="media/ai8zh-w242m.002.png" width="321" height="208" alt="" />
-    <p>
-      <span style="font-style:italic">Referenced Standards</span>
-      <span>: the standards (stating the specific parts, chapters or sections thereof) to be used for the transaction.</span>
-    </p>
-    <p>
-      <span style="font-style:italic">Interaction Diagram</span>
-      <span>: a graphical depiction of the actors and messages that support the transaction, with related processing within an actor shown as a rectangle and time progressing downward, similar to:</span>
-    </p>
-    <img src="media/ai8zh-w242m.003.png" width="303" height="232" alt="" />
-    <p>
-      <span>The interaction diagrams used in the IHE IT Infrastructure Technical Framework are modeled after those described in Grady Booch, James Rumbaugh, and Ivar Jacobson,</span>
-      <span style="font-style:italic">The Unified Modeling Language User Guide</span>
-      <span>, ISBN 0-201-57168-4. Simple acknowledgment messages are often omitted from the diagrams for brevity. One or more messages may be required to satisfy a transaction. Each message is represented as an arrow starting from the actor initiating the message.</span>
-    </p>
-    <p>
-      <span style="font-style:italic">Message definitions</span>
-      <span>: descriptions of each message involved in the transaction, the events that trigger the message, its semantics, and the actions that the message triggers in the receiver.</span>
-    </p>
-    <h2 id="2.2">2.2 HL7 Profiling Conventions</h2>
-    <p>See <a href="../Volume2x/ch-3.html#Appendix C"><a href="../Volume2x/ch-3.html#Appendix C">ITI TF-2x: Appendix C</a></a> for the HL7 profiling conventions as well as the networking implementation guidelines.</p>
-    <h2 id="2.3">2.3 Use of Coded Entities and Coding Schemes</h2>
-    <p>IHE does not produce, maintain or otherwise specify a coding scheme or other resource for controlled terminology (coded entities). Where applicable, coding schemes required by the HL7 and DICOM standards take precedence. In the cases where such resources are not explicitly identified by standards, implementations may utilize any resource (including proprietary or local) provided any licensing/copyright requirements are satisfied.</p>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1 id="Appendix B">Appendix B: Definition of Unique Ids</h1>
+      <p>Many IHE Profiles rely on the globally unique identification of persistent objects. It is the responsibility of the creating actor (or its delegate) to assign a globally-unique identifier to an object before the object is submitted or, is available for retrieval. This allows other actors to retrieve the same object at different points in time and to obtain the same semantics for its presented content.</p>
+      <p>
+        <span>This appendix describes how unique identifiers shall be created. The requirements specified in this appendix are derived from the common practices and definitions of OIDs in ISO 8824, HL7</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <a href="ch-24.html#footnote-2_1" class="footnoteRef">[1]</a>
+        <span>V3 and CDA</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <a href="ch-24.html#footnote-2_2" class="footnoteRef">[2]</a>
+        <span>and UIDs in DICOM</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <a href="ch-24.html#footnote-2_3" class="footnoteRef">[3]</a>
+        <span>. They guarantee uniqueness across multiple countries, sites, vendors and equipment.</span>
+      </p>
+      <h2 id="B.1">B.1 Requirements for UIDs</h2>
+      <p>The UID identification scheme is based on the OSI Object Identification (numeric form) as defined by the ISO 8824 standard.</p>
+      <p>All Unique Identifiers used within the context of a Document Sharing transaction shall be extensions of registered values as defined by ISO 9834-3 to ensure global uniqueness. These requirements result in the following structure for unique Ids.</p>
+      <h2 id="B.2">B.2 Structure of a UID</h2>
+      <p>Each UID is composed of two parts, an &lt;org root&gt; and a &lt;suffix&gt; separated by a “period”. Therefore: UID = &lt;org root&gt;.&lt;suffix&gt;</p>
+      <p>The &lt;org root&gt; portion of the UID uniquely identifies an organization, (e.g., manufacturer, research organization, hospital, etc.), and is composed of a number of numeric components as defined by ISO 8824. The &lt;suffix&gt; portion of the UID is also composed of a number of numeric components, and shall be unique within the scope of the &lt;org root&gt;. This implies that the organization identified in the &lt;org root&gt; is responsible for guaranteeing &lt;suffix&gt; uniqueness by providing registration policies. These policies shall guarantee &lt;suffix&gt; uniqueness for all UIDs created by that organization. Unlike the &lt;org root&gt;, which may be common for UIDs in an organization, the &lt;suffix&gt; shall take different unique values between different UIDs that identify different objects. The &lt;org root&gt; is used only for uniqueness and not for any other purpose.</p>
+      <p>Although a specific implementation may choose some particular structure for its generated UIDs, it should never assume that a UID carries any semantics. A UID shall not be "parsed" to find a particular value or component. Component definition (for the suffix) is implementation-specific and may change as long as uniqueness is maintained. Parsing UIDs (including extracting the root) may jeopardize the ability to inter-operate as implementations evolve.</p>
+      <h2 id="B.3">B.3 UID encoding rules</h2>
+      <p>The UID encoding rules are defined as follows:</p>
+      <ul>
+        <li class="bullet-list1">Each component of a UID is a number and shall consist of one or more digits. The first digit of each component shall not be zero unless the component is a single digit.</li>
+      </ul>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Registration authorities may distribute components with non-significant leading zeroes. The leading zeroes should be ignored when being encoded (i.e., “00029” would be encoded “29”).</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">Each component numeric value shall be encoded using the characters 0-9 of the Basic G0 Set of the International Reference Version of ISO 646:1990. This particular encoding is the same as the UTF-8 encoding for these characters in UNICODE.</li>
+        <li class="bullet-list1">Components shall be separated by the character "." (2EH).</li>
+        <li class="bullet-list1">UIDs shall not exceed 64 total characters, including the digits of each component, and separators between components.</li>
+      </ul>
+      <h2 id="B.4">B.4 How to obtain a UID registration root?</h2>
+      <p>Organizations that define UIDs are responsible for properly registering their UIDs (at least obtain a registered &lt;Org Root&gt;) as defined for OSI Object Identifiers (ISO 9834-3). The organization defining the UID shall accept the responsibility of ensuring its uniqueness. IHE will not register UIDs or issue registered organization roots. There are a large number of means to obtain an organization root free or for a reasonable fee.</p>
+      <p>A useful resource that is often used by the DICOM community lists many ways to obtain a registered UID Root for a small fee or even for free, anywhere in the world.</p>
+      <p>
+        <a href="http://www.dclunie.com/medical-image-faq/html/part8.html#UIDRegistration">http://www.dclunie.com/medical-image-faq/html/part8.html#UIDRegistration</a>
+      </p>
+      <p>The manner in which the suffix of a UID is defined is not constrained by any IHE Integration Profile. Only the guarantee of its uniqueness by the defining organization is required by IHE.</p>
+      <h2 id="B.5">B.5 Example of a UID</h2>
+      <p>This example presents a particular choice made by a specific organization in defining its suffix to guarantee uniqueness. A variant is discussed.</p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>"1.2.840.xxxxx.4076078054086.11059664469.235212"</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">   </span>
+        <span>(root)</span>
+        <span style="width:8.68pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>(suffix)</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>In this example, the root is:</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>1</span>
+        <span style="width:30pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Identifies ISO</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>2</span>
+        <span style="width:30pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Identifies ANSI Member Body</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>840</span>
+        <span style="width:18pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Country code of a specific Member Body (U.S. for ANSI)</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>xxxxx</span>
+        <span style="width:6pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Identifies a specific Organization (provided by ANSI)</span>
+      </p>
+      <p>In this example the remaining components of the suffix relate to the identification of a specific instance:</p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>4076078054086</span>
+        <span style="width:30pt;display:inline-block"> </span>
+        <span>802.3 MAC Address (004 076 078 054 086)</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>11059664469</span>
+        <span style="width:6pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>Time system was booted (July 31, 2033 10:14:29)</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>235212</span>
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>Monotonically increasing sequence number</span>
+      </p>
+      <p>In this example, the organization has chosen these components to guarantee uniqueness. Other organizations may choose an entirely different series of components to uniquely identify its objects.</p>
+      <p>Because of the flexibility allowed in creating UIDs, implementations should not depend on any assumed structure of UIDs and should not attempt to parse UIDs to extract the semantics of some of its components.</p>
+      <h2 id="B.6">B.6 Representing UUIDs as OIDs</h2>
+      <p>The standards ITU X.667 and ISO 9834-8 define a particular OID root for the UUIDs, and define the translation between these two formats. The top node 2.25 is assigned for all UUIDs. This means that the UUID that can be written as urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6 (using hexadecimal notation) is also 2.25.329800735698586629295641978511506172918 (using dotted decimal notation). It can also be encoded using the ASN.1 rules in a binary form internally within X.509 Certificates and some LDAP messages. All of these are the same OID. The reverse is not true. Not all OIDs can be represented as UUIDs. UUIDs are a subset of the OIDs.</p>
+      <p>This relationship is one way to obtain OIDs in situations where an OID is needed. It is not necessary to use the 2.25 root. An OID assigning authority might take advantage of the UUID generation mechanisms to assign new OIDs within its own root domain. These OIDs would not be UUIDs, but they would be valid OIDs.</p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

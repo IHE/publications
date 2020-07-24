@@ -5,887 +5,895 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 3</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="4.1">4.1 Abstract Metadata Model</h2>
-    <p>The metadata used in Document Sharing profiles is characterized by three types of objects and two types of Associations. In Figure 4.1-1, the three objects types and two Association types are depicted using UML to show their relationships. The three object types are:</p>
-    <ul>
-      <li class="bullet-list1">SubmissionSet – metadata describing a collection of Folders, DocumentEntries, and Associations submitted together.</li>
-      <li class="bullet-list1">Folder – metadata describing a collection of related DocumentEntries.</li>
-      <li class="bullet-list1">DocumentEntry – metadata describing a Document.</li>
-    </ul>
-    <p>The two Association types are:</p>
-    <ul>
-      <li class="bullet-list1">HasMember – represents membership of an object in a collection. The four variations of HasMember are described in Section 4.1.2.</li>
-      <li class="bullet-list1">Relationship – represents a relationship (such as a transform) between two Documents (represented by DocumentEntries). The Relationship associations are described in Section 4.1.2.</li>
-    </ul>
-    <img src="media/a9c4z-k6ku9.002.png" width="624" height="309" alt="Figure 4" />
-    <p style="font-size:11pt">
-      <a name="_Ref354041282">
-        <span style="font-weight:bold">Figure</span>
-        <span style="font-weight:bold">4.1-1</span>
-        <span style="font-weight:bold">: Document Sharing Objects and Associations</span>
-      </a>
-    </p>
-    <h3 id="4.1.1">4.1.1 Metadata Object Types</h3>
-    <p>There are three metadata object types supported by the Document Sharing metadata, as seen in Figure 4.1-1:</p>
-    <ul>
-      <li class="bullet-list1">SubmissionSet</li>
-      <li class="bullet-list1">Folder</li>
-      <li class="bullet-list1">DocumentEntry</li>
-    </ul>
-    <p>
-      <span style="font-weight:bold">SubmissionSet</span>
-      <span>– The SubmissionSet can be thought of as the packing slip of a postal package. The details of the submission of DocumentEntries, Folders, and Associations are captured in the SubmissionSet object. The creating entity of each submission must group the DocumentEntries, Folders and Associations into a unique SubmissionSet. The Document Sharing profiles ensure that the documents are treated as a unit for submission purposes – either all of the documents arrive at their destination, or none of them do. An example of the use of a Submission Set is packaging all documents related to a care episode at the end of the hospital stay. The EHR system can submit the package. If the submission fails, none of the documents made it to their destination, and a retry is possible.</span>
-    </p>
-    <p>SubmissionsSets, once submitted, are a permanent record of the collection of submitted content. DocumentEntries may be bundled into a SubmissionSet by a human, machine, or process. For example, a laboratory machine might automatically submit results associated with a given lab order when they are ready, rather than waiting for a human to bundle them. SubmissionSets may contain DocumentEntries for multiple patients, but there are specific limitations on how this is done.</p>
-    <p>A SubmissionSet shall be the source of at least one Association of type SS-FD HasMember, SS-HM HasMember, and/or SS-DE HasMember.</p>
-    <p>
-      <span style="font-weight:bold">Folder</span>
-      <span>– A Folder is a logical collection of DocumentEntries that are related in some way, such as to a clinical use case. A Folder is an arbitrary grouping relationship. Folders may be updated by multiple SubmissionSets sent from multiple departments that are submitting their DocumentEntry objects at different times. For example, a Folder may be used to collect the DocumentEntry objects for the patient’s documents that relate to an exam event, such as the exam request and prior results as well as the eventual exam results. As the exam results become available, the DocumentEntry objects can be added to the Folder for the exam records.</span>
-    </p>
-    <p>All DocumentEntries in a Folder shall be for the same patient.</p>
-    <p>The metadata structure discussed in this volume only specifies how to describe a Folder, and imposes no requirements for when or how a Folder should be used. Additional detail on when and how to use a Folder may be described in IHE profiles.</p>
-    <p>
-      <span style="font-weight:bold">DocumentEntry</span>
-      <span>– DocumentEntry is a metadata object representing a document. This metadata object does not contain the contents of the document; instead it contains attributes describing the document.</span>
-    </p>
-    <p>Details on how documents and metadata are managed depend on the requirements in a particular Document Sharing Profile.</p>
-    <p>For example, in XDS, a Stable DocumentEntry is the logical representation in the Registry of the Document that the Source submitted to a Repository. An entire document’s contents can constitute several megabytes, but can be described in a few kilobytes of metadata. The DocumentEntry metadata that describes the document are sufficient for the purposes of storing, organizing and locating documents for retrieval. Submitting a Stable DocumentEntry to a Registry in lieu of submitting the document creates a separation of concerns, allowing the Registry to specialize in indexing, while the Repository manages document storage.</p>
-    <p>There are two DocumentEntry Types: Stable DocumentEntry and On-Demand Document Entry. The following sections describe these types in detail.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Stable Document Entry</span>
-      </li>
-    </ul>
-    <p>A Stable Document Entry contains metadata about an already created document available for retrieval. Each Stable DocumentEntry represents a single document. This document is stable because the contents have been effectively combined in the exact representation that will be returned in a Retrieve Document Set. A Stable Document Entry is an XDSDocument Entry with objectType equal to the UUID for Stable (see Section 4.2.5.2 for the UUID) and availabilityStatus equal to Approved or Deprecated. All metadata fields contain valid values.</p>
-    <p>The uniqueID metadata attribute of a Stable DocumentEntry identifies the specific document associated with the entry. It is used in a retrieve request to identify which specific document should be retrieved.</p>
-    <p>If the document returned on a retrieve request is CDA, it will have in the ClinicalDocument/id field in the HL7 CDA R2 document header the same value as the value of the DocumentEntry uniqueId.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">On-Demand Document Entry</span>
-      </li>
-    </ul>
-    <p>An On-Demand Document Entry provides a unique identifier which can be used to create an on-demand document which collects the latest, most recent available information at the time of retrieval. On-Demand Document Entries never reflect actual document content, but rather the potential for a document with the characteristics described in the metadata of the entry. An On-Demand DocumentEntry has objectType equal to the UUID for On-Demand (see Section 4.2.5.2 for the UUID) and availabilityStatus equal to Approved or Deprecated. An On-Demand Document Entry may be replaced and deprecated. If an On-Demand Document Entry is deprecated, the retrieval of that uniqueID may not have the most recent information and should return an error.</p>
-    <p>The uniqueID associated with an On-Demand Document Entry will never represent an actual document. A retrieve request specifying an On-Demand Document Entry uniqueID will return content identified by a uniqueID different than the specified uniqueID.</p>
-    <p>Every On-Demand Document Entry with the same uniqueID will refer to the same potential content. Actual content depends on the time of retrieval. The On-Demand Document Entry uniqueID is valid for as long as the entry has availabilityStatus equal to Approved. The holder of the uniqueID may re-use it in a retrieve request to get the latest information, without the need for an additional query.</p>
-    <p>When a retrieve request is received specifying an On-Demand Document Entry uniqueID, the responder may choose to persist the document generated as a result and allow the requestor future access to the metadata and document. This capability is declared through the Persistence of Retrieved Documents Option on the On-Demand Document Source and Responding Gateway Actors. The persistence refers not only to the saving of the content for re-use, but more specifically, to the ability of the requester to use retrieve to access that exact, possibly now historic, content and use a query to get metadata about the content.</p>
-    <p>Unless otherwise specified in a transaction, On-Demand DocumentEntry objects shall not be included in the transaction.</p>
-    <h3 id="4.1.2">4.1.2 Association Types</h3>
-    <p>Associations represent a link from the source object to a target object. Association objects describe all aspects of this link including references to source and target objects, the specific variant or name of the Association, and status and version information.</p>
-    <p>There are two types of Associations: HasMember and Relationship.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">HasMember</span>
-        <span>- defines a membership relationship between two objects. There are four variants of the HasMember Association depending on the types of the source and target object, see Figure 4.1-1.</span>
-      </li>
-    </ul>
-    <p>SS-FD HasMember: An association from a SubmissionSet to a Folder identifies the Folder as a member of that SubmissionSet. It identifies the Submission Set that contained the initial creation of the Folder.</p>
-    <p>FD-DE HasMember: An association from a Folder to a DocumentEntry identifies that DocumentEntry as a member of that Folder. Folders have a many-to-many relationship to DocumentEntries (i.e., one folder may be linked to many DocumentEntries, and one DocumentEntry may be linked to many folders).</p>
-    <p>SS-HM HasMember: An association from a SubmissionSet to a FD-DE HasMember Association identifies that FD-DE HasMember as a member of that SubmissionSet. This makes it possible to identify the Submission Set in which the link between the Folder and the DocumentEntry was created.</p>
-    <p>SS-DE HasMember: An association from a SubmissionSet to a DocumentEntry identifies the DocumentEntry as a member of that SubmissionSet. The association between the SubmissionSet and the DocumentEntry provides information about the submission of the Documents. With this association of a DocumentEntry, you can find the Submission Set and know when the document was submitted, who the author of the submission was, and other information contained in the attributes of that SubmissionSet.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Relationship</span>
-        <span>– defines an association between two DocumentEntry objects. There are five variants based on the type of relationship between the DocumentEntry objects.</span>
-      </li>
-    </ul>
-    <p>Replace – indicates the replacement of a previous document with a new document.</p>
-    <p>Transform - indicates the transformation of a previous document into a new document.</p>
-    <p>Append – indicates a new document that appends to the contents of a previous document.</p>
-    <p>Transform and Replace – indicates a transformed replacement of a previous document with a new document.</p>
-    <p>Signs – indicates a new document is a signature for a previous document, as in new document signs previous document.</p>
-    <h3 id="4.1.3">4.1.3 Metadata Attributes</h3>
-    <p>Each metadata object holds attributes used for a variety of purposes. This section outlines the variety of purposes metadata attributes serve as well as a general description of each attribute. Detail about the coding of attributes is described in Section 4.2.3.</p>
-    <h4 id="4.1.3.1">4.1.3.1 The Purpose of Metadata Attributes (Informative)</h4>
-    <p>Metadata attributes can be categorized according to specific document-handling purposes. Each metadata attribute typically has more than one purpose, although some have only one. Metadata in the Document Sharing profiles has one or more of these purposes.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Patient Identity</span>
-        <span>– Attributes that describe the subject of the document. This includes patient Id, patient name, and other demographics.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Provenance</span>
-        <span>– Attributes that describe where the document comes from. These items are highly influenced by medical records regulations. This includes human author, identification of system that authored, the organization that authored, predecessor documents, successor documents, and the pathway that the document took.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Security &amp; Privacy</span>
-        <span>– Attributes that are used by Privacy and Security rules to appropriately control the document. These values enable conformance to Privacy and Security regulations. These characteristics would be those referenced in Privacy or Security rules. These characteristics would also be used to protect against security risks to confidentiality, integrity, and availability.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Descriptive</span>
-        <span>– Attributes that are used to describe the clinical value, so they are expressly healthcare-specific. These values are critical for query models and enable workflows in all exchange models. The number of attributes in this category is kept to minimum so the metadata does not simply duplicate the document, and to keep disclosure risk to a minimum. Thus, the metadata attribute values tend to be from a small set of codes. Because this category is close to the clinical values it tends to have few mandatory attributes, allowing policy to choose to not populate. For healthcare documents, this is typically very closely associated with the clinical workflows but also must recognize other uses of healthcare documents such as quality reporting, public health reporting, authorized clinical research, patient access, etc.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Object Lifecycle</span>
-        <span>– Attributes that describe the current lifecycle state of the document including relationships to other documents. This would include classic lifecycle states of created, published, replaced, transformed, and deprecated.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-weight:bold">Exchange --</span>
-        <span>Attributes that enable the transfer of the document for both push type transfers, and pull type transfers. These attributes are used for low-level automated processing of the document. These attributes are not the workflow routing, but rather the administrative overhead necessary to make the transfer. This includes the document unique Id, location, size, MIME types, and document format.</span>
-      </li>
-    </ul>
-    <img src="media/a9c4z-k6ku9.003.png" width="480" height="317" alt="" />
-    <p class="figureTitle">Figure 4.1.3.1-1: Pictorial of Overlapping Document Sharing Metadata Purpose</p>
-    <p>All metadata attributes describe the document and are not a replacement for the document. Not all metadata attributes are always required; indeed, some metadata attributes would be used only for specific uses. Care has been taken to limit the metadata to the minimum metadata attributes necessary to achieve the goal. Each metadata element was assessed for risks posed by exposing it as metadata. All metadata attributes are defined to assure that when the element is needed that it be consistently assigned and processed.</p>
-    <p>
-      <br style="page-break-before:always; clear:both" />
-    </p>
-    <h4 id="4.1.3.2">4.1.3.2 DocumentEntry Metadata Attributes</h4>
-    <p>Table 4.1.3.2-1 provides a conceptual view of the metadata attributes associated with a DocumentEntry object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full DocumentEntry metadata attribute definition, including data type and coding is in Section 4.2.3.2.</p>
-    <p style="font-size:11pt">
-      <a name="_Ref355171007">Table</a>
-      <span style="font-weight:bold">4.1.3.2-1: DocumentEntry Metadata Attribute Definition</span>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:87.25pt">
-          <td style="width:93.9pt" class="tableHeader">DocumentEntry Metadata Attribute</td>
-          <td style="width:200.9pt" class="tableHeader">Description</td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Patient identity</span>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 3</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="4.1">4.1 Abstract Metadata Model</h2>
+      <p>The metadata used in Document Sharing profiles is characterized by three types of objects and two types of Associations. In Figure 4.1-1, the three objects types and two Association types are depicted using UML to show their relationships. The three object types are:</p>
+      <ul>
+        <li class="bullet-list1">SubmissionSet – metadata describing a collection of Folders, DocumentEntries, and Associations submitted together.</li>
+        <li class="bullet-list1">Folder – metadata describing a collection of related DocumentEntries.</li>
+        <li class="bullet-list1">DocumentEntry – metadata describing a Document.</li>
+      </ul>
+      <p>The two Association types are:</p>
+      <ul>
+        <li class="bullet-list1">HasMember – represents membership of an object in a collection. The four variations of HasMember are described in Section 4.1.2.</li>
+        <li class="bullet-list1">Relationship – represents a relationship (such as a transform) between two Documents (represented by DocumentEntries). The Relationship associations are described in Section 4.1.2.</li>
+      </ul>
+      <img src="media/a9c4z-k6ku9.002.png" width="624" height="309" alt="Figure 4" />
+      <p style="font-size:11pt">
+        <a name="_Ref354041282">
+          <span style="font-weight:bold">Figure</span>
+          <span style="font-weight:bold">4.1-1</span>
+          <span style="font-weight:bold">: Document Sharing Objects and Associations</span>
+        </a>
+      </p>
+      <h3 id="4.1.1">4.1.1 Metadata Object Types</h3>
+      <p>There are three metadata object types supported by the Document Sharing metadata, as seen in Figure 4.1-1:</p>
+      <ul>
+        <li class="bullet-list1">SubmissionSet</li>
+        <li class="bullet-list1">Folder</li>
+        <li class="bullet-list1">DocumentEntry</li>
+      </ul>
+      <p>
+        <span style="font-weight:bold">SubmissionSet</span>
+        <span>– The SubmissionSet can be thought of as the packing slip of a postal package. The details of the submission of DocumentEntries, Folders, and Associations are captured in the SubmissionSet object. The creating entity of each submission must group the DocumentEntries, Folders and Associations into a unique SubmissionSet. The Document Sharing profiles ensure that the documents are treated as a unit for submission purposes – either all of the documents arrive at their destination, or none of them do. An example of the use of a Submission Set is packaging all documents related to a care episode at the end of the hospital stay. The EHR system can submit the package. If the submission fails, none of the documents made it to their destination, and a retry is possible.</span>
+      </p>
+      <p>SubmissionsSets, once submitted, are a permanent record of the collection of submitted content. DocumentEntries may be bundled into a SubmissionSet by a human, machine, or process. For example, a laboratory machine might automatically submit results associated with a given lab order when they are ready, rather than waiting for a human to bundle them. SubmissionSets may contain DocumentEntries for multiple patients, but there are specific limitations on how this is done.</p>
+      <p>A SubmissionSet shall be the source of at least one Association of type SS-FD HasMember, SS-HM HasMember, and/or SS-DE HasMember.</p>
+      <p>
+        <span style="font-weight:bold">Folder</span>
+        <span>– A Folder is a logical collection of DocumentEntries that are related in some way, such as to a clinical use case. A Folder is an arbitrary grouping relationship. Folders may be updated by multiple SubmissionSets sent from multiple departments that are submitting their DocumentEntry objects at different times. For example, a Folder may be used to collect the DocumentEntry objects for the patient’s documents that relate to an exam event, such as the exam request and prior results as well as the eventual exam results. As the exam results become available, the DocumentEntry objects can be added to the Folder for the exam records.</span>
+      </p>
+      <p>All DocumentEntries in a Folder shall be for the same patient.</p>
+      <p>The metadata structure discussed in this volume only specifies how to describe a Folder, and imposes no requirements for when or how a Folder should be used. Additional detail on when and how to use a Folder may be described in IHE profiles.</p>
+      <p>
+        <span style="font-weight:bold">DocumentEntry</span>
+        <span>– DocumentEntry is a metadata object representing a document. This metadata object does not contain the contents of the document; instead it contains attributes describing the document.</span>
+      </p>
+      <p>Details on how documents and metadata are managed depend on the requirements in a particular Document Sharing Profile.</p>
+      <p>For example, in XDS, a Stable DocumentEntry is the logical representation in the Registry of the Document that the Source submitted to a Repository. An entire document’s contents can constitute several megabytes, but can be described in a few kilobytes of metadata. The DocumentEntry metadata that describes the document are sufficient for the purposes of storing, organizing and locating documents for retrieval. Submitting a Stable DocumentEntry to a Registry in lieu of submitting the document creates a separation of concerns, allowing the Registry to specialize in indexing, while the Repository manages document storage.</p>
+      <p>There are two DocumentEntry Types: Stable DocumentEntry and On-Demand Document Entry. The following sections describe these types in detail.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Stable Document Entry</span>
+        </li>
+      </ul>
+      <p>A Stable Document Entry contains metadata about an already created document available for retrieval. Each Stable DocumentEntry represents a single document. This document is stable because the contents have been effectively combined in the exact representation that will be returned in a Retrieve Document Set. A Stable Document Entry is an XDSDocument Entry with objectType equal to the UUID for Stable (see Section 4.2.5.2 for the UUID) and availabilityStatus equal to Approved or Deprecated. All metadata fields contain valid values.</p>
+      <p>The uniqueID metadata attribute of a Stable DocumentEntry identifies the specific document associated with the entry. It is used in a retrieve request to identify which specific document should be retrieved.</p>
+      <p>If the document returned on a retrieve request is CDA, it will have in the ClinicalDocument/id field in the HL7 CDA R2 document header the same value as the value of the DocumentEntry uniqueId.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">On-Demand Document Entry</span>
+        </li>
+      </ul>
+      <p>An On-Demand Document Entry provides a unique identifier which can be used to create an on-demand document which collects the latest, most recent available information at the time of retrieval. On-Demand Document Entries never reflect actual document content, but rather the potential for a document with the characteristics described in the metadata of the entry. An On-Demand DocumentEntry has objectType equal to the UUID for On-Demand (see Section 4.2.5.2 for the UUID) and availabilityStatus equal to Approved or Deprecated. An On-Demand Document Entry may be replaced and deprecated. If an On-Demand Document Entry is deprecated, the retrieval of that uniqueID may not have the most recent information and should return an error.</p>
+      <p>The uniqueID associated with an On-Demand Document Entry will never represent an actual document. A retrieve request specifying an On-Demand Document Entry uniqueID will return content identified by a uniqueID different than the specified uniqueID.</p>
+      <p>Every On-Demand Document Entry with the same uniqueID will refer to the same potential content. Actual content depends on the time of retrieval. The On-Demand Document Entry uniqueID is valid for as long as the entry has availabilityStatus equal to Approved. The holder of the uniqueID may re-use it in a retrieve request to get the latest information, without the need for an additional query.</p>
+      <p>When a retrieve request is received specifying an On-Demand Document Entry uniqueID, the responder may choose to persist the document generated as a result and allow the requestor future access to the metadata and document. This capability is declared through the Persistence of Retrieved Documents Option on the On-Demand Document Source and Responding Gateway Actors. The persistence refers not only to the saving of the content for re-use, but more specifically, to the ability of the requester to use retrieve to access that exact, possibly now historic, content and use a query to get metadata about the content.</p>
+      <p>Unless otherwise specified in a transaction, On-Demand DocumentEntry objects shall not be included in the transaction.</p>
+      <h3 id="4.1.2">4.1.2 Association Types</h3>
+      <p>Associations represent a link from the source object to a target object. Association objects describe all aspects of this link including references to source and target objects, the specific variant or name of the Association, and status and version information.</p>
+      <p>There are two types of Associations: HasMember and Relationship.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">HasMember</span>
+          <span>- defines a membership relationship between two objects. There are four variants of the HasMember Association depending on the types of the source and target object, see Figure 4.1-1.</span>
+        </li>
+      </ul>
+      <p>SS-FD HasMember: An association from a SubmissionSet to a Folder identifies the Folder as a member of that SubmissionSet. It identifies the Submission Set that contained the initial creation of the Folder.</p>
+      <p>FD-DE HasMember: An association from a Folder to a DocumentEntry identifies that DocumentEntry as a member of that Folder. Folders have a many-to-many relationship to DocumentEntries (i.e., one folder may be linked to many DocumentEntries, and one DocumentEntry may be linked to many folders).</p>
+      <p>SS-HM HasMember: An association from a SubmissionSet to a FD-DE HasMember Association identifies that FD-DE HasMember as a member of that SubmissionSet. This makes it possible to identify the Submission Set in which the link between the Folder and the DocumentEntry was created.</p>
+      <p>SS-DE HasMember: An association from a SubmissionSet to a DocumentEntry identifies the DocumentEntry as a member of that SubmissionSet. The association between the SubmissionSet and the DocumentEntry provides information about the submission of the Documents. With this association of a DocumentEntry, you can find the Submission Set and know when the document was submitted, who the author of the submission was, and other information contained in the attributes of that SubmissionSet.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Relationship</span>
+          <span>– defines an association between two DocumentEntry objects. There are five variants based on the type of relationship between the DocumentEntry objects.</span>
+        </li>
+      </ul>
+      <p>Replace – indicates the replacement of a previous document with a new document.</p>
+      <p>Transform - indicates the transformation of a previous document into a new document.</p>
+      <p>Append – indicates a new document that appends to the contents of a previous document.</p>
+      <p>Transform and Replace – indicates a transformed replacement of a previous document with a new document.</p>
+      <p>Signs – indicates a new document is a signature for a previous document, as in new document signs previous document.</p>
+      <h3 id="4.1.3">4.1.3 Metadata Attributes</h3>
+      <p>Each metadata object holds attributes used for a variety of purposes. This section outlines the variety of purposes metadata attributes serve as well as a general description of each attribute. Detail about the coding of attributes is described in Section 4.2.3.</p>
+      <h4 id="4.1.3.1">4.1.3.1 The Purpose of Metadata Attributes (Informative)</h4>
+      <p>Metadata attributes can be categorized according to specific document-handling purposes. Each metadata attribute typically has more than one purpose, although some have only one. Metadata in the Document Sharing profiles has one or more of these purposes.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Patient Identity</span>
+          <span>– Attributes that describe the subject of the document. This includes patient Id, patient name, and other demographics.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Provenance</span>
+          <span>– Attributes that describe where the document comes from. These items are highly influenced by medical records regulations. This includes human author, identification of system that authored, the organization that authored, predecessor documents, successor documents, and the pathway that the document took.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Security &amp; Privacy</span>
+          <span>– Attributes that are used by Privacy and Security rules to appropriately control the document. These values enable conformance to Privacy and Security regulations. These characteristics would be those referenced in Privacy or Security rules. These characteristics would also be used to protect against security risks to confidentiality, integrity, and availability.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Descriptive</span>
+          <span>– Attributes that are used to describe the clinical value, so they are expressly healthcare-specific. These values are critical for query models and enable workflows in all exchange models. The number of attributes in this category is kept to minimum so the metadata does not simply duplicate the document, and to keep disclosure risk to a minimum. Thus, the metadata attribute values tend to be from a small set of codes. Because this category is close to the clinical values it tends to have few mandatory attributes, allowing policy to choose to not populate. For healthcare documents, this is typically very closely associated with the clinical workflows but also must recognize other uses of healthcare documents such as quality reporting, public health reporting, authorized clinical research, patient access, etc.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Object Lifecycle</span>
+          <span>– Attributes that describe the current lifecycle state of the document including relationships to other documents. This would include classic lifecycle states of created, published, replaced, transformed, and deprecated.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-weight:bold">Exchange --</span>
+          <span>Attributes that enable the transfer of the document for both push type transfers, and pull type transfers. These attributes are used for low-level automated processing of the document. These attributes are not the workflow routing, but rather the administrative overhead necessary to make the transfer. This includes the document unique Id, location, size, MIME types, and document format.</span>
+        </li>
+      </ul>
+      <img src="media/a9c4z-k6ku9.003.png" width="480" height="317" alt="" />
+      <p class="figureTitle">Figure 4.1.3.1-1: Pictorial of Overlapping Document Sharing Metadata Purpose</p>
+      <p>All metadata attributes describe the document and are not a replacement for the document. Not all metadata attributes are always required; indeed, some metadata attributes would be used only for specific uses. Care has been taken to limit the metadata to the minimum metadata attributes necessary to achieve the goal. Each metadata element was assessed for risks posed by exposing it as metadata. All metadata attributes are defined to assure that when the element is needed that it be consistently assigned and processed.</p>
+      <p>
+        <br style="page-break-before:always; clear:both" />
+      </p>
+      <h4 id="4.1.3.2">4.1.3.2 DocumentEntry Metadata Attributes</h4>
+      <p>Table 4.1.3.2-1 provides a conceptual view of the metadata attributes associated with a DocumentEntry object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full DocumentEntry metadata attribute definition, including data type and coding is in Section 4.2.3.2.</p>
+      <p style="font-size:11pt">
+        <a name="_Ref355171007">Table</a>
+        <span style="font-weight:bold">4.1.3.2-1: DocumentEntry Metadata Attribute Definition</span>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:87.25pt">
+            <td style="width:93.9pt" class="tableHeader">DocumentEntry Metadata Attribute</td>
+            <td style="width:200.9pt" class="tableHeader">Description</td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Patient identity</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Provenance</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:23.65pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Security &amp;Privacy</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Descriptive</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Object Lifecycle</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:18.75pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Exchange</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:93.9pt">author</td>
+            <td style="width:200.9pt">The humans and/or machines that authored the document. This attribute contains the sub-attributes: authorInstitution, authorPerson, authorRole, authorSpecialty and authorTelecommunication.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">availabilityStatus</td>
+            <td style="width:200.9pt">
+              <p>
+                <a name="OLE_LINK2">
+                  <span>The</span>
+                  <span>lifecycle status of the DocumentEntry</span>
+                </a>
               </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Provenance</span>
+            </td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">classCode</td>
+            <td style="width:200.9pt">The code specifying the high-level use classification of the document type (e.g., Report, Summary, Images, Treatment Plan, Patient Preferences, Workflow).</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">comments</td>
+            <td style="width:200.9pt">Comments associated with the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">confidentialityCode</td>
+            <td style="width:200.9pt">The code specifying the level of confidentiality of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">creationTime</td>
+            <td style="width:200.9pt">The time the author created the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">entryUUID</td>
+            <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">eventCodeList</td>
+            <td style="width:200.9pt">This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">formatCode</td>
+            <td style="width:200.9pt">The code specifying the detailed technical format of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr style="height:19.3pt">
+            <td style="width:93.9pt">hash</td>
+            <td style="width:200.9pt">The hash of the contents of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">
+              <p>
+                <span>healthcareFacility</span>
+                <br />
+                <span>TypeCode</span>
               </p>
-            </div>
-          </td>
-          <td style="width:23.65pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Security &amp;Privacy</span>
+            </td>
+            <td style="width:200.9pt">This code represents the type of organizational setting of the clinical encounter during which the documented act occurred.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">homeCommunityId</td>
+            <td style="width:200.9pt">A globally unique identifier for a community.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">languageCode</td>
+            <td style="width:200.9pt">Specifies the human language of character data in the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">legalAuthenticator</td>
+            <td style="width:200.9pt">Represents a participant within an authorInstitution who has legally authenticated or attested the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">limitedMetadata</td>
+            <td style="width:200.9pt">Indicates whether the DocumentEntry was created using the less rigorous requirements of metadata as defined for the Metadata-Limited Document Source.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">mimeType</td>
+            <td style="width:200.9pt">MIME type of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">objectType</td>
+            <td style="width:200.9pt">The type of DocumentEntry (e.g., On-Demand DocumentEntry).</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">patientId</td>
+            <td style="width:200.9pt">The patientId represents the subject of care of the document.</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">practiceSettingCode</td>
+            <td style="width:200.9pt">The code specifying the clinical specialty where the act that resulted in the document was performed (e.g., Family Practice, Laboratory, Radiology).</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">referenceIdList</td>
+            <td style="width:200.9pt">A list of identifiers related to the document</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">repositoryUniqueId</td>
+            <td style="width:200.9pt">The globally unique identifier of the repository where the document can be accessed.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">serviceStartTime</td>
+            <td style="width:200.9pt">The start time of the service being documented.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">serviceStopTime</td>
+            <td style="width:200.9pt">The stop time of the service being documented.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">size</td>
+            <td style="width:200.9pt">Size in bytes of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">sourcePatientId</td>
+            <td style="width:200.9pt">The sourcePatientId represents the subject of care’s medical record identifier (e.g., Patient Id) in the local patient identifier domain of the creating entity.</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">sourcePatientInfo</td>
+            <td style="width:200.9pt">This attribute contains demographic information of the source patient to whose medical record this document belongs.</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">title</td>
+            <td style="width:200.9pt">The title of the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">typeCode</td>
+            <td style="width:200.9pt">The code specifying the precise type of document from the user perspective (e.g., LOINC code).</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">uniqueId</td>
+            <td style="width:200.9pt">Globally unique identifier assigned to the document by its creator.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">
+              <p>
+                <span>URI</span>
+                <br />
+                <span> </span>
               </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Descriptive</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Object Lifecycle</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:18.75pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Exchange</span>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:93.9pt">author</td>
-          <td style="width:200.9pt">The humans and/or machines that authored the document. This attribute contains the sub-attributes: authorInstitution, authorPerson, authorRole, authorSpecialty and authorTelecommunication.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">availabilityStatus</td>
-          <td style="width:200.9pt">
-            <p>
-              <a name="OLE_LINK2">
-                <span>The</span>
-                <span>lifecycle status of the DocumentEntry</span>
-              </a>
-            </p>
-          </td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">classCode</td>
-          <td style="width:200.9pt">The code specifying the high-level use classification of the document type (e.g., Report, Summary, Images, Treatment Plan, Patient Preferences, Workflow).</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">comments</td>
-          <td style="width:200.9pt">Comments associated with the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">confidentialityCode</td>
-          <td style="width:200.9pt">The code specifying the level of confidentiality of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">creationTime</td>
-          <td style="width:200.9pt">The time the author created the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">entryUUID</td>
-          <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">eventCodeList</td>
-          <td style="width:200.9pt">This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">formatCode</td>
-          <td style="width:200.9pt">The code specifying the detailed technical format of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr style="height:19.3pt">
-          <td style="width:93.9pt">hash</td>
-          <td style="width:200.9pt">The hash of the contents of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">
-            <p>
-              <span>healthcareFacility</span>
-              <br />
-              <span>TypeCode</span>
-            </p>
-          </td>
-          <td style="width:200.9pt">This code represents the type of organizational setting of the clinical encounter during which the documented act occurred.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">homeCommunityId</td>
-          <td style="width:200.9pt">A globally unique identifier for a community.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">languageCode</td>
-          <td style="width:200.9pt">Specifies the human language of character data in the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">legalAuthenticator</td>
-          <td style="width:200.9pt">Represents a participant within an authorInstitution who has legally authenticated or attested the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">limitedMetadata</td>
-          <td style="width:200.9pt">Indicates whether the DocumentEntry was created using the less rigorous requirements of metadata as defined for the Metadata-Limited Document Source.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">mimeType</td>
-          <td style="width:200.9pt">MIME type of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">objectType</td>
-          <td style="width:200.9pt">The type of DocumentEntry (e.g., On-Demand DocumentEntry).</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">patientId</td>
-          <td style="width:200.9pt">The patientId represents the subject of care of the document.</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">practiceSettingCode</td>
-          <td style="width:200.9pt">The code specifying the clinical specialty where the act that resulted in the document was performed (e.g., Family Practice, Laboratory, Radiology).</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">referenceIdList</td>
-          <td style="width:200.9pt">A list of identifiers related to the document</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">repositoryUniqueId</td>
-          <td style="width:200.9pt">The globally unique identifier of the repository where the document can be accessed.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">serviceStartTime</td>
-          <td style="width:200.9pt">The start time of the service being documented.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">serviceStopTime</td>
-          <td style="width:200.9pt">The stop time of the service being documented.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">size</td>
-          <td style="width:200.9pt">Size in bytes of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">sourcePatientId</td>
-          <td style="width:200.9pt">The sourcePatientId represents the subject of care’s medical record identifier (e.g., Patient Id) in the local patient identifier domain of the creating entity.</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">sourcePatientInfo</td>
-          <td style="width:200.9pt">This attribute contains demographic information of the source patient to whose medical record this document belongs.</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">title</td>
-          <td style="width:200.9pt">The title of the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">typeCode</td>
-          <td style="width:200.9pt">The code specifying the precise type of document from the user perspective (e.g., LOINC code).</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">uniqueId</td>
-          <td style="width:200.9pt">Globally unique identifier assigned to the document by its creator.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">
-            <p>
-              <span>URI</span>
-              <br />
-              <span> </span>
-            </p>
-          </td>
-          <td style="width:200.9pt">The URI for the document.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <br style="page-break-before:always; clear:both" />
-    </p>
-    <h4 id="4.1.3.3">4.1.3.3 SubmissionSet Metadata Attributes</h4>
-    <p>Table 4.1.3.3-1 provides a conceptual view of the metadata attributes associated with a SubmissionSet object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full SubmissionSet metadata attribute definition, including data type and coding is in Section 4.2.3.3.</p>
-    <p class="tableTitle">Table 4.1.3.3-1: SubmissionSet Metadata Attribute Definition</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:87.25pt">
-          <td style="width:93.9pt" class="tableHeader">Submission Set Metadata Attribute</td>
-          <td style="width:200.9pt" class="tableHeader">Description</td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Patient identity</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Provenance</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:23.65pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Security &amp;Privacy</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Descriptive</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Object Lifecycle</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:18.75pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Exchange</span>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:93.9pt">author</td>
-          <td style="width:200.9pt">The humans and/or machines that authored the SubmissionSet. This attribute contains the sub-attributes: authorInstitution, authorPerson, authorRole, authorSpecialty, authorTelecommunication.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">availabilityStatus</td>
-          <td style="width:200.9pt">The lifecycle status of the SubmissionSet.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">comments</td>
-          <td style="width:200.9pt">Comments associated with the SubmissionSet.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">contentTypeCode</td>
-          <td style="width:200.9pt">The code specifying the type of clinical activity that resulted in placing the associated content in the SubmissionSet.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">entryUUID</td>
-          <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">homeCommunityId</td>
-          <td style="width:200.9pt">A globally unique identifier for a community.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">intendedRecipient</td>
-          <td style="width:200.9pt">The organizations or persons for whom the SubmissionSet is intended.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">limitedMetadata</td>
-          <td style="width:200.9pt">A flag that the associated SubmissionSet was created using the less rigorous metadata requirements as defined for the Metadata-Limited Document Source.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">patientId</td>
-          <td style="width:200.9pt">The patientId represents the primary subject of care of the SubmissionSet.</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">sourceId</td>
-          <td style="width:200.9pt">Identifier of the entity that contributed the SubmissionSet.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">submissionTime</td>
-          <td style="width:200.9pt">Point in time at the creating entity when the SubmissionSet was created.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">title</td>
-          <td style="width:200.9pt">The title of the SubmissionSet.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">uniqueId</td>
-          <td style="width:200.9pt">Globally unique identifier for the SubmissionSet assigned by the creating entity.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <a name="_Toc367876931"> </a>
-    </p>
-    <h4 id="4.1.3.4">4.1.3.4 Folder Metadata Attributes</h4>
-    <p>Table 4.1.3.4-1 provides a conceptual view of the metadata attributes associated with a Folder object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full Folder metadata attribute definition, including data type and coding is in Section 4.2.3.4.</p>
-    <p class="tableTitle">Table 4.1.3.4-1: Folder Metadata Attribute Definition</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:87.25pt">
-          <td style="width:93.9pt" class="tableHeader">Folder Metadata Attribute</td>
-          <td style="width:200.9pt" class="tableHeader">Description</td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Patient identity</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Provenance</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:23.65pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Security &amp;Privacy</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Descriptive</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:13.8pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Object Lifecycle</span>
-              </p>
-            </div>
-          </td>
-          <td style="width:18.75pt;background-color:#d9d9d9">
-            <div>
-              <p style="font-size:10pt">
-                <span style="font-weight:bold">Exchange</span>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:93.9pt">availabilityStatus</td>
-          <td style="width:200.9pt">The lifecycle status of the Folder.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">codeList</td>
-          <td style="width:200.9pt">The set of codes specifying the type of clinical activities that resulted in placing DocumentEntry objects in the Folder.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">comments</td>
-          <td style="width:200.9pt">Comments associated with the Folder.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">entryUUID</td>
-          <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">homeCommunityId</td>
-          <td style="width:200.9pt">A globally unique identifier for a community.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">lastUpdateTime</td>
-          <td style="width:200.9pt">Most recent point in time that the Folder has been modified.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">limitedMetadata</td>
-          <td style="width:200.9pt">A flag that the associated Folder was created using the less rigorous metadata requirements as defined for the Metadata-Limited Document Source.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:18.75pt">X</td>
-        </tr>
-        <tr>
-          <td style="width:93.9pt">patientId</td>
-          <td style="width:200.9pt">The patientId represents the primary subject of care of the Folder.</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">title</td>
-          <td style="width:200.9pt">The title of the Folder.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt" />
-          <td style="width:13.8pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt" />
-        </tr>
-        <tr>
-          <td style="width:93.9pt">uniqueId</td>
-          <td style="width:200.9pt">Globally unique identifier for the Folder.</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:23.65pt">X</td>
-          <td style="width:13.8pt" />
-          <td style="width:13.8pt" />
-          <td style="width:18.75pt">X</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <a name="_Toc367876932"> </a>
-    </p>
-    <h3 id="4.1.4">4.1.4 Submission Request</h3>
-    <p>A Submission Request is a collection of metadata transferred between one Document Sharing Actor and another. A Submission Request shall contain:</p>
-    <ol>
-      <li class="numbered-list1">One SubmissionSet object</li>
-      <li class="numbered-list1">
-        <span>At least one of the following:</span>
-        <ol type="a" style="margin-right:0pt; margin-left:0pt; padding-left:0pt">
-          <li style="margin-top:6pt;margin-left:31.33pt;padding-left:4.67pt">
-            <span>One or more DocumentEntry objects</span>
-          </li>
-          <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
-            <span>One or more Folder objects</span>
-          </li>
-          <li style="margin-top:6pt;margin-left:31.33pt;padding-left:4.67pt">
-            <span>One or more FD-DE HasMember Associations</span>
-          </li>
-        </ol>
-      </li>
-      <li class="numbered-list1">For each object in (2), one HasMember Association linking the SubmissionSet in (1) to that object.</li>
-      <li class="numbered-list1">Zero or more Relationship Associations</li>
-    </ol>
-    <p>Individual transactions or profiles may impose restrictions on the content.</p>
+            </td>
+            <td style="width:200.9pt">The URI for the document.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <br style="page-break-before:always; clear:both" />
+      </p>
+      <h4 id="4.1.3.3">4.1.3.3 SubmissionSet Metadata Attributes</h4>
+      <p>Table 4.1.3.3-1 provides a conceptual view of the metadata attributes associated with a SubmissionSet object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full SubmissionSet metadata attribute definition, including data type and coding is in Section 4.2.3.3.</p>
+      <p class="tableTitle">Table 4.1.3.3-1: SubmissionSet Metadata Attribute Definition</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:87.25pt">
+            <td style="width:93.9pt" class="tableHeader">Submission Set Metadata Attribute</td>
+            <td style="width:200.9pt" class="tableHeader">Description</td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Patient identity</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Provenance</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:23.65pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Security &amp;Privacy</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Descriptive</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Object Lifecycle</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:18.75pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Exchange</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:93.9pt">author</td>
+            <td style="width:200.9pt">The humans and/or machines that authored the SubmissionSet. This attribute contains the sub-attributes: authorInstitution, authorPerson, authorRole, authorSpecialty, authorTelecommunication.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">availabilityStatus</td>
+            <td style="width:200.9pt">The lifecycle status of the SubmissionSet.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">comments</td>
+            <td style="width:200.9pt">Comments associated with the SubmissionSet.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">contentTypeCode</td>
+            <td style="width:200.9pt">The code specifying the type of clinical activity that resulted in placing the associated content in the SubmissionSet.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">entryUUID</td>
+            <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">homeCommunityId</td>
+            <td style="width:200.9pt">A globally unique identifier for a community.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">intendedRecipient</td>
+            <td style="width:200.9pt">The organizations or persons for whom the SubmissionSet is intended.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">limitedMetadata</td>
+            <td style="width:200.9pt">A flag that the associated SubmissionSet was created using the less rigorous metadata requirements as defined for the Metadata-Limited Document Source.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">patientId</td>
+            <td style="width:200.9pt">The patientId represents the primary subject of care of the SubmissionSet.</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">sourceId</td>
+            <td style="width:200.9pt">Identifier of the entity that contributed the SubmissionSet.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">submissionTime</td>
+            <td style="width:200.9pt">Point in time at the creating entity when the SubmissionSet was created.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">title</td>
+            <td style="width:200.9pt">The title of the SubmissionSet.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">uniqueId</td>
+            <td style="width:200.9pt">Globally unique identifier for the SubmissionSet assigned by the creating entity.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a name="_Toc367876931"> </a>
+      </p>
+      <h4 id="4.1.3.4">4.1.3.4 Folder Metadata Attributes</h4>
+      <p>Table 4.1.3.4-1 provides a conceptual view of the metadata attributes associated with a Folder object. The table describes each attribute and provides a mapping between the attribute and the purposes that attribute is designed to support. The full Folder metadata attribute definition, including data type and coding is in Section 4.2.3.4.</p>
+      <p class="tableTitle">Table 4.1.3.4-1: Folder Metadata Attribute Definition</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:87.25pt">
+            <td style="width:93.9pt" class="tableHeader">Folder Metadata Attribute</td>
+            <td style="width:200.9pt" class="tableHeader">Description</td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Patient identity</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Provenance</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:23.65pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Security &amp;Privacy</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Descriptive</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:13.8pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Object Lifecycle</span>
+                </p>
+              </div>
+            </td>
+            <td style="width:18.75pt;background-color:#d9d9d9">
+              <div>
+                <p style="font-size:10pt">
+                  <span style="font-weight:bold">Exchange</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:93.9pt">availabilityStatus</td>
+            <td style="width:200.9pt">The lifecycle status of the Folder.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">codeList</td>
+            <td style="width:200.9pt">The set of codes specifying the type of clinical activities that resulted in placing DocumentEntry objects in the Folder.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">comments</td>
+            <td style="width:200.9pt">Comments associated with the Folder.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">entryUUID</td>
+            <td style="width:200.9pt">A globally unique identifier used to manage the entry.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">homeCommunityId</td>
+            <td style="width:200.9pt">A globally unique identifier for a community.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">lastUpdateTime</td>
+            <td style="width:200.9pt">Most recent point in time that the Folder has been modified.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">limitedMetadata</td>
+            <td style="width:200.9pt">A flag that the associated Folder was created using the less rigorous metadata requirements as defined for the Metadata-Limited Document Source.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:18.75pt">X</td>
+          </tr>
+          <tr>
+            <td style="width:93.9pt">patientId</td>
+            <td style="width:200.9pt">The patientId represents the primary subject of care of the Folder.</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">title</td>
+            <td style="width:200.9pt">The title of the Folder.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt" />
+            <td style="width:13.8pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt" />
+          </tr>
+          <tr>
+            <td style="width:93.9pt">uniqueId</td>
+            <td style="width:200.9pt">Globally unique identifier for the Folder.</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:23.65pt">X</td>
+            <td style="width:13.8pt" />
+            <td style="width:13.8pt" />
+            <td style="width:18.75pt">X</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a name="_Toc367876932"> </a>
+      </p>
+      <h3 id="4.1.4">4.1.4 Submission Request</h3>
+      <p>A Submission Request is a collection of metadata transferred between one Document Sharing Actor and another. A Submission Request shall contain:</p>
+      <ol>
+        <li class="numbered-list1">One SubmissionSet object</li>
+        <li class="numbered-list1">
+          <span>At least one of the following:</span>
+          <ol type="a" style="margin-right:0pt; margin-left:0pt; padding-left:0pt">
+            <li style="margin-top:6pt;margin-left:31.33pt;padding-left:4.67pt">
+              <span>One or more DocumentEntry objects</span>
+            </li>
+            <li style="margin-top:6pt;margin-left:32pt;padding-left:4pt">
+              <span>One or more Folder objects</span>
+            </li>
+            <li style="margin-top:6pt;margin-left:31.33pt;padding-left:4.67pt">
+              <span>One or more FD-DE HasMember Associations</span>
+            </li>
+          </ol>
+        </li>
+        <li class="numbered-list1">For each object in (2), one HasMember Association linking the SubmissionSet in (1) to that object.</li>
+        <li class="numbered-list1">Zero or more Relationship Associations</li>
+      </ol>
+      <p>Individual transactions or profiles may impose restrictions on the content.</p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

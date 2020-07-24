@@ -5,557 +5,573 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.11">3.11 Retrieve Specific Information for Display [ITI-11]</h2>
-    <p>This section corresponds to transaction [ITI-11] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-11] is used by the Information Source and Display Actors.</p>
-    <h3 id="3.11.1">3.11.1 Scope</h3>
-    <p>This transaction involves the query of information for presentation purposes. This may occur when a user attempts to lookup information associated with certain patient that is stored on a different system. Note that the retrieved information is always related to a well-identified patient (Patient ID), but its content, although of a specific type (lab summary, or radiology summary, list of allergies), is generally dynamic (i.e., retrieving the same type of specific information at a different point in time is likely to result in different content); for example, a list of allergies may have been updated between two requests.</p>
-    <p>To support a wide range of display capabilities, the information provided is formatted into well-formed XHTML. Such formatting shall be done using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
-    <h3 id="3.11.2">3.11.2 Use Case Roles</h3>
-    <img src="media/amdr0-jc4sx.026.png" width="365" height="123" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Display</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A system that requests specific information for display, and displays it.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Information Source</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A system that provides specific information in response to the request from the Display Actor, in a presentation-ready format.</span>
-    </p>
-    <h3 id="3.11.3">3.11.3 Referenced Standards</h3>
-    <p>
-      <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
-      <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
-    </p>
-    <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
-    <p>
-      <span>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000.</span>
-      <a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a>
-      <span>.</span>
-    </p>
-    <p>
-      <span>Web Services Description Language (WSDL) 1.1. W3C Note 15 March 2001.</span>
-      <a href="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</a>
-      <span>.</span>
-    </p>
-    <p>
-      <span>XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition).A Reformulation of HTML 4 in XML 1.0. W3C Recommendation 26 January 2000, revised 1 August 2002.</span>
-      <a href="http://www.w3.org/TR/xhtml1">http://www.w3.org/TR/xhtml1</a>
-      <span>.</span>
-    </p>
-    <p>
-      <span>XHTML™ Basic. W3C Recommendation 19 December 2000.</span>
-      <a href="http://www.w3.org/TR/xhtml-basic">http://www.w3.org/TR/xhtm-basic.</a>
-    </p>
-    <p>
-      <a href="http://www.w3.org/TR/xhtml-basic">http://www.w3.org/TR/xhtml-basic</a>
-      <span />
-    </p>
-    <h3 id="3.11.4">3.11.4 Messages</h3>
-    <img src="media/amdr0-jc4sx.027.png" width="394" height="192" alt="" />
-    <p class="figureTitle">Figure 3.11.4-1: Request For Specific Information – Summary sequence</p>
-    <h4 id="3.11.4.1">3.11.4.1 Request For Specific Information - Summary</h4>
-    <h5 id="3.11.4.1.1">3.11.4.1.1 Trigger Events</h5>
-    <p>The following event will trigger a Request for Specific Information:</p>
-    <ul>
-      <li class="bullet-list1">User of the Display needs to review a summary list of information/ reports that are part of a patient’s clinical history (i.e., summary of lab reports, summary of radiology exam reports, etc.) with the intent of selecting a specific item off the list for subsequent retrieval as a persistent object via the Retrieve Document for Display Transaction</li>
-    </ul>
-    <h5 id="3.11.4.1.2">3.11.4.1.2 Message Semantics</h5>
-    <p>The Retrieve Specific Information for Display transaction is performed by the invocation of a web service. The Display shall generate a web service request whenever a user needs to review the information stored as part of a patient’s clinical history on the Information Source Actor.</p>
-    <p>To specify the type of information that needs to be returned, a web service request shall include the following parameters (keys) to filter the subset of information (see Table 3.11.4-1). All parameter names and values (see Table 3.11.4-2) are case-sensitive.</p>
-    <p class="tableTitle">Table 3.11.4-1: Web Service Request Keys</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:78.15pt" class="tableHeader">Parameter Name</td>
-          <td style="width:28.9pt" class="tableHeader">REQ</td>
-          <td style="width:151.4pt" class="tableHeader">Description</td>
-          <td style="width:180.65pt" class="tableHeader">Notes</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:78.15pt">requestType</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
-          <td style="width:180.65pt">See Table 3.11.4-2 for the list of possible values.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">patientID</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
-          <td style="width:180.65pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">lowerDateTime</td>
-          <td style="width:28.9pt">O</td>
-          <td style="width:151.4pt">Used to constrain the earliest date/time of creation of information.</td>
-          <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">upperDateTime</td>
-          <td style="width:28.9pt">O</td>
-          <td style="width:151.4pt">Used to constrain the latest date/time of creation of information.</td>
-          <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">mostRecentResults</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">The numeric value that indicates the number of most recent results to be included into the response, i.e., 1 indicates to provide the latest result.</td>
-          <td style="width:180.65pt">Value of 0 indicates that all available results shall be returned.</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="tableTitle">Table 3.11.4-2: Web Service Request Types</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:210.6pt" class="tableHeader">requestType value</td>
-          <td style="width:249.2pt" class="tableHeader">Description</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:210.6pt">SUMMARY</td>
-          <td style="width:249.2pt">Summary of all reports known to the Information Source</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-RADIOLOGY</td>
-          <td style="width:249.2pt">Summary of radiology reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-CARDIOLOGY</td>
-          <td style="width:249.2pt">Summary of cardiology reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-LABORATORY</td>
-          <td style="width:249.2pt">Summary of laboratory reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-SURGERY</td>
-          <td style="width:249.2pt">Summary of surgery reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-EMERGENCY</td>
-          <td style="width:249.2pt">Summary of emergency reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-DISCHARGE</td>
-          <td style="width:249.2pt">Summary of discharge reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-ICU</td>
-          <td style="width:249.2pt">Summary of intensive care reports</td>
-        </tr>
-        <tr>
-          <td style="width:210.6pt">SUMMARY-RX</td>
-          <td style="width:249.2pt">Summary of Prescriptions</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="note">Note: parameter values that contain reserved characters need to be encoded using %&lt;hex&gt;&lt;hex&gt; notation. Reserved characters include slash (/, encode as %2f) and ampersand (&amp;, encode as %26).</p>
-    <p>Formal definition of the web service in WSDL is provided in <a href="../Volume2x/ch-1.html#Appendix A"><a href="../Volume2x/ch-1.html#Appendix A">ITI TF-2x: Appendix A</a></a>.</p>
-    <p>The only binding required for both the Display and Information Source is the binding to the HTTP-GET. In this binding the sample message will be formatted as follows:</p>
-    <p>http://&lt;location&gt;/IHERetrieveSummaryInfo?requestType=SUMMARY&amp;patientID=99998410^^^%26www.mlhlife.com%26DNS &amp;lowerDateTime=2003-01-01T00:00:00&amp;upperDateTime=2003-01-01T23:59:59&amp;mostRecentResults=1</p>
-    <p>The &lt;location&gt; part of the URL is configurable by the implementation, and must contain the host name, an optional port address, and may be followed by an optional path. The path if present may not contain a ‘?’ character. The remainder of the URL, including IHERetrieveSummaryInfo and the following request parameters are specified by the WSDL and may not be changed.</p>
-    <p>More specifically, using the definitions from RFC1738, the &lt;location&gt; part of the URL must match the production for location from the figure below:</p>
-    <div style="margin-top:6pt; border:0.75pt solid #000000; clear:both">
-      <p style="font-size:10pt">
-        <span>location</span>
-        <span style="width:43.59pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:91.6pt"> </span>
-        <span>= hostport [ "/" hpath ]</span>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
       </p>
-      <p style="font-size:10pt">
-        <br />
-        <span>hostport       = host [ ":" port ]</span>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
       </p>
-      <p style="font-size:10pt">
-        <span>host           = hostname | hostnumber</span>
+    </header>
+    <main>
+      <h2 id="3.11">3.11 Retrieve Specific Information for Display [ITI-11]</h2>
+      <p>This section corresponds to transaction [ITI-11] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-11] is used by the Information Source and Display Actors.</p>
+      <h3 id="3.11.1">3.11.1 Scope</h3>
+      <p>This transaction involves the query of information for presentation purposes. This may occur when a user attempts to lookup information associated with certain patient that is stored on a different system. Note that the retrieved information is always related to a well-identified patient (Patient ID), but its content, although of a specific type (lab summary, or radiology summary, list of allergies), is generally dynamic (i.e., retrieving the same type of specific information at a different point in time is likely to result in different content); for example, a list of allergies may have been updated between two requests.</p>
+      <p>To support a wide range of display capabilities, the information provided is formatted into well-formed XHTML. Such formatting shall be done using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
+      <h3 id="3.11.2">3.11.2 Use Case Roles</h3>
+      <img src="media/amdr0-jc4sx.026.png" width="365" height="123" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Display</span>
       </p>
-      <p style="font-size:10pt">
-        <span>hostname       = *[ domainlabel "." ] toplabel</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A system that requests specific information for display, and displays it.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>domainlabel    = alphadigit | alphadigit *[ alphadigit | "-" ] alphadigit</span>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Information Source</span>
       </p>
-      <p style="font-size:10pt">
-        <span>toplabel       = alpha | alpha *[ alphadigit | "-" ] alphadigit</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A system that provides specific information in response to the request from the Display Actor, in a presentation-ready format.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>alphadigit     = alpha | digit</span>
+      <h3 id="3.11.3">3.11.3 Referenced Standards</h3>
+      <p>
+        <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
+        <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
       </p>
-      <p style="font-size:10pt">
-        <span>hostnumber     = digits "." digits "." digits "." digits</span>
+      <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
+      <p>
+        <span>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000.</span>
+        <a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a>
+        <span>.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>port           = digits</span>
+      <p>
+        <span>Web Services Description Language (WSDL) 1.1. W3C Note 15 March 2001.</span>
+        <a href="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</a>
+        <span>.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>hpath          = hsegment *[ "/" hsegment ]</span>
+      <p>
+        <span>XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition).A Reformulation of HTML 4 in XML 1.0. W3C Recommendation 26 January 2000, revised 1 August 2002.</span>
+        <a href="http://www.w3.org/TR/xhtml1">http://www.w3.org/TR/xhtml1</a>
+        <span>.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>hsegment       = *[ uchar | ";" | ":" | "@" | "&amp;" | "=" ]</span>
+      <p>
+        <span>XHTML™ Basic. W3C Recommendation 19 December 2000.</span>
+        <a href="http://www.w3.org/TR/xhtml-basic">http://www.w3.org/TR/xhtm-basic.</a>
       </p>
-      <p style="font-size:10pt">
-        <span>lowalpha       = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" |</span>
+      <p>
+        <a href="http://www.w3.org/TR/xhtml-basic">http://www.w3.org/TR/xhtml-basic</a>
+        <span />
       </p>
-      <p style="font-size:10pt">
-        <span>                 "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" |</span>
+      <h3 id="3.11.4">3.11.4 Messages</h3>
+      <img src="media/amdr0-jc4sx.027.png" width="394" height="192" alt="" />
+      <p class="figureTitle">Figure 3.11.4-1: Request For Specific Information – Summary sequence</p>
+      <h4 id="3.11.4.1">3.11.4.1 Request For Specific Information - Summary</h4>
+      <h5 id="3.11.4.1.1">3.11.4.1.1 Trigger Events</h5>
+      <p>The following event will trigger a Request for Specific Information:</p>
+      <ul>
+        <li class="bullet-list1">User of the Display needs to review a summary list of information/ reports that are part of a patient’s clinical history (i.e., summary of lab reports, summary of radiology exam reports, etc.) with the intent of selecting a specific item off the list for subsequent retrieval as a persistent object via the Retrieve Document for Display Transaction</li>
+      </ul>
+      <h5 id="3.11.4.1.2">3.11.4.1.2 Message Semantics</h5>
+      <p>The Retrieve Specific Information for Display transaction is performed by the invocation of a web service. The Display shall generate a web service request whenever a user needs to review the information stored as part of a patient’s clinical history on the Information Source Actor.</p>
+      <p>To specify the type of information that needs to be returned, a web service request shall include the following parameters (keys) to filter the subset of information (see Table 3.11.4-1). All parameter names and values (see Table 3.11.4-2) are case-sensitive.</p>
+      <p class="tableTitle">Table 3.11.4-1: Web Service Request Keys</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:78.15pt" class="tableHeader">Parameter Name</td>
+            <td style="width:28.9pt" class="tableHeader">REQ</td>
+            <td style="width:151.4pt" class="tableHeader">Description</td>
+            <td style="width:180.65pt" class="tableHeader">Notes</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:78.15pt">requestType</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
+            <td style="width:180.65pt">See Table 3.11.4-2 for the list of possible values.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">patientID</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
+            <td style="width:180.65pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">lowerDateTime</td>
+            <td style="width:28.9pt">O</td>
+            <td style="width:151.4pt">Used to constrain the earliest date/time of creation of information.</td>
+            <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">upperDateTime</td>
+            <td style="width:28.9pt">O</td>
+            <td style="width:151.4pt">Used to constrain the latest date/time of creation of information.</td>
+            <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">mostRecentResults</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">The numeric value that indicates the number of most recent results to be included into the response, i.e., 1 indicates to provide the latest result.</td>
+            <td style="width:180.65pt">Value of 0 indicates that all available results shall be returned.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="tableTitle">Table 3.11.4-2: Web Service Request Types</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:210.6pt" class="tableHeader">requestType value</td>
+            <td style="width:249.2pt" class="tableHeader">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:210.6pt">SUMMARY</td>
+            <td style="width:249.2pt">Summary of all reports known to the Information Source</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-RADIOLOGY</td>
+            <td style="width:249.2pt">Summary of radiology reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-CARDIOLOGY</td>
+            <td style="width:249.2pt">Summary of cardiology reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-LABORATORY</td>
+            <td style="width:249.2pt">Summary of laboratory reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-SURGERY</td>
+            <td style="width:249.2pt">Summary of surgery reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-EMERGENCY</td>
+            <td style="width:249.2pt">Summary of emergency reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-DISCHARGE</td>
+            <td style="width:249.2pt">Summary of discharge reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-ICU</td>
+            <td style="width:249.2pt">Summary of intensive care reports</td>
+          </tr>
+          <tr>
+            <td style="width:210.6pt">SUMMARY-RX</td>
+            <td style="width:249.2pt">Summary of Prescriptions</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">Note: parameter values that contain reserved characters need to be encoded using %&lt;hex&gt;&lt;hex&gt; notation. Reserved characters include slash (/, encode as %2f) and ampersand (&amp;, encode as %26).</p>
+      <p>
+        Formal definition of the web service in WSDL is provided in
+        <a href="../Volume2x/ch-1.html#Appendix A">ITI TF-2x: Appendix A</a>
+        .
       </p>
-      <p style="font-size:10pt">
-        <span>                 "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" |</span>
+      <p>The only binding required for both the Display and Information Source is the binding to the HTTP-GET. In this binding the sample message will be formatted as follows:</p>
+      <p>http://&lt;location&gt;/IHERetrieveSummaryInfo?requestType=SUMMARY&amp;patientID=99998410^^^%26www.mlhlife.com%26DNS &amp;lowerDateTime=2003-01-01T00:00:00&amp;upperDateTime=2003-01-01T23:59:59&amp;mostRecentResults=1</p>
+      <p>The &lt;location&gt; part of the URL is configurable by the implementation, and must contain the host name, an optional port address, and may be followed by an optional path. The path if present may not contain a ‘?’ character. The remainder of the URL, including IHERetrieveSummaryInfo and the following request parameters are specified by the WSDL and may not be changed.</p>
+      <p>More specifically, using the definitions from RFC1738, the &lt;location&gt; part of the URL must match the production for location from the figure below:</p>
+      <div style="margin-top:6pt; border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span>location</span>
+          <span style="width:43.59pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:91.6pt"> </span>
+          <span>= hostport [ "/" hpath ]</span>
+        </p>
+        <p style="font-size:10pt">
+          <br />
+          <span>hostport       = host [ ":" port ]</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>host           = hostname | hostnumber</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hostname       = *[ domainlabel "." ] toplabel</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>domainlabel    = alphadigit | alphadigit *[ alphadigit | "-" ] alphadigit</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>toplabel       = alpha | alpha *[ alphadigit | "-" ] alphadigit</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>alphadigit     = alpha | digit</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hostnumber     = digits "." digits "." digits "." digits</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>port           = digits</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hpath          = hsegment *[ "/" hsegment ]</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hsegment       = *[ uchar | ";" | ":" | "@" | "&amp;" | "=" ]</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>lowalpha       = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "y" | "z"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hialpha        = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>alpha          = lowalpha | hialpha</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "8" | "9"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>safe           = "$" | "-" | "_" | "." | "+"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>extra          = "!" | "*" | "'" | "(" | ")" | ","</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>hex            = digit | "A" | "B" | "C" | "D" | "E" | "F" |</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>                 "a" | "b" | "c" | "d" | "e" | "f"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>escape         = "%" hex</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>unreserved     = alpha | digit | safe | extra</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>uchar          = unreserved | escape</span>
+        </p>
+      </div>
+      <p>The following location values are legal according to this specification:</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:216.3pt" class="tableHeader">&lt;location&gt; value</td>
+            <td style="width:233.6pt" class="tableHeader">Resulting URL</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:216.3pt">myhost</td>
+            <td style="width:233.6pt">http://myhost/IHERetrieveSummaryInfo?…</td>
+          </tr>
+          <tr>
+            <td style="width:216.3pt">myhost:8080</td>
+            <td style="width:233.6pt">http://myhost:8080/IHERetrieveSummaryInfo?…</td>
+          </tr>
+          <tr>
+            <td style="width:216.3pt">myhost/MyAspPageThatLooksLikeItCouldBeAFolder.aspx</td>
+            <td style="width:233.6pt">http://myhost/MyAspPageThatLooksLikeItCouldBeAFolder.aspx/IHERetrieveSummaryInfo?…</td>
+          </tr>
+          <tr>
+            <td style="width:216.3pt">myhost:8080/MyAspPageThatLooksLikeItCouldBeAFolder.aspx</td>
+            <td style="width:233.6pt">http://myhost:8080/MyAspPageThatLooksLikeItCouldBeAFolder.aspx/IHERetrieveSummaryInfo?…</td>
+          </tr>
+          <tr>
+            <td style="width:216.3pt">myhost/MyJspPage.jsp</td>
+            <td style="width:233.6pt">http://myhost/MyJspPage.jsp/IHERetrieveSummaryInfo?…</td>
+          </tr>
+          <tr>
+            <td style="width:216.3pt">myhost:8080/MyJspPageThatLooksLikeItCouldBeAFolder.jsp</td>
+            <td style="width:233.6pt">http://myhost/MyJspPage.jsp/ IHERetrieveSummaryInfo?…</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The following location values are not legal:</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:19.8pt">
+            <td style="width:216.3pt" class="tableHeader">&lt;location&gt; value</td>
+            <td style="width:233.6pt" class="tableHeader">Resulting URL</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:19.8pt">
+            <td style="width:216.3pt">My+Computer</td>
+            <td style="width:233.6pt">‘+’ is not a legal character in a host name.</td>
+          </tr>
+          <tr style="height:19.8pt">
+            <td style="width:216.3pt">myhost:99999</td>
+            <td style="width:233.6pt">99999 is not a valid port.</td>
+          </tr>
+          <tr style="height:19.85pt">
+            <td style="width:216.3pt">myhost/myPath.jsp?request=</td>
+            <td style="width:233.6pt">‘?’ is not valid in a path.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>In addition, the Display shall support the following field of the HTTP request:</p>
+      <p class="tableTitle">Table 3.11.4-3: HTTP Request and Response Fields</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:53.1pt" class="tableHeader">HTTP Field</td>
+            <td style="width:31.45pt" class="tableHeader">REQ</td>
+            <td style="width:212.45pt" class="tableHeader">Description</td>
+            <td style="width:142.1pt" class="tableHeader">Values</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:53.1pt">Accept-Language</td>
+            <td style="width:31.45pt">O</td>
+            <td style="width:212.45pt">This field restricts the set of natural languages that are preferred as a response to the request.</td>
+            <td style="width:142.1pt">Any valid value according to RFC2616</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The Information Source shall support the following field of the HTTP response.</p>
+      <p class="tableTitle">Table 3.11.4-4: HTTP Response Fields</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:46.8pt" class="tableHeader">HTTP Field</td>
+            <td style="width:37.75pt" class="tableHeader">REQ</td>
+            <td style="width:146.05pt" class="tableHeader">Description</td>
+            <td style="width:208.5pt" class="tableHeader">Values</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:46.8pt">Expires</td>
+            <td style="width:37.75pt">R</td>
+            <td style="width:146.05pt">This field gives the date/time after which the response is considered stale</td>
+            <td style="width:208.5pt">Shall be 0. This is now deprecated usage, but it is the widely supported means of specifying no caching.</td>
+          </tr>
+          <tr>
+            <td style="width:46.8pt">Cache-Control</td>
+            <td style="width:37.75pt">R</td>
+            <td style="width:146.05pt">This field indicates that this response should not be cached.</td>
+            <td style="width:208.5pt">Shall be no-cache</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>If necessary, the Display may perform the request to the web service utilizing HTTPS protocol.</p>
+      <p>Information Source Actors may return HTTP redirect responses (responses with values of 301, 302, 303 or 307) in response to a request. Display Actors can expect to receive an error response, or the data requested, or a request to look elsewhere for the data. A Display must follow redirects, but if a loop is detected, it may report an error.</p>
+      <h5 id="3.11.4.1.3">3.11.4.1.3 Expected Actions</h5>
+      <p>Upon reception of the Request for Specific Information, the Information Source shall parse the request and if there are no errors, return the Response with Specific Information as specified in Section 3.11.4.2, and HTTP response code 200 - OK.</p>
+      <p>To specify the type of information that needs to be processed, an Information Source shall support the following parameters (keys) to filter the subset of information (see Table 3.11.4-5).</p>
+      <p class="tableTitle">Table 3.11.4-5: Web Service Request Keys</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:78.15pt" class="tableHeader">Parameter Name</td>
+            <td style="width:28.9pt" class="tableHeader">REQ</td>
+            <td style="width:151.4pt" class="tableHeader">Description</td>
+            <td style="width:180.65pt" class="tableHeader">Notes</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:78.15pt">requestType</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
+            <td style="width:180.65pt">See Table 3.11.4-2 for the list of possible values.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">patientID</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
+            <td style="width:180.65pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">lowerDateTime</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">Used to constrain the earliest date/time of creation of information.</td>
+            <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">upperDateTime</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">Used to constrain the latest date/time of creation of information.</td>
+            <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
+          </tr>
+          <tr>
+            <td style="width:78.15pt">mostRecentResults</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:151.4pt">The numeric value that indicates the number of most recent results to be included into the response, i.e., 1 indicates to provide the latest result.</td>
+            <td style="width:180.65pt">Value of 0 indicates that all available results shall be returned.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>If the requestType specified is not supported, the Information Source shall return HTTP response-code 404 (not found) with the suggested reason-phrase “requestType not supported”. If the Information Source is not able to format the document in any content types listed in the 'Accept' field, it shall return HTTP response code 406 – Not Acceptable.</p>
+      <p>If the Patient ID specified by the Display is not known to the Information Source Actor, it shall return HTTP response-code 404 (not found) with the suggested reason-phrase “Patient ID not found”. If the Display provides the Patient ID from a different domain than the one the Information Source belongs to, and the Information Source is grouped with the Patient ID Consumer Actor, it may attempt to obtain a mapping of the provided Patient ID into its domain before responding.</p>
+      <p class="note">Note: Other HTTP response codes may be returned by the Information Source Actor, indicating conditions outside of the scope of this profile, for example, 401 – Authentication Failed might be returned if Information Source is grouped with the Kerberized Server Actor.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
+        <span>It is recommended that the Information Source complement the returned error code with a human readable description of the error condition.</span>
       </p>
-      <p style="font-size:10pt">
-        <span>                 "y" | "z"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>hialpha        = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" |</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>                 "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" |</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>                 "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>alpha          = lowalpha | hialpha</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" |</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>                 "8" | "9"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>safe           = "$" | "-" | "_" | "." | "+"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>extra          = "!" | "*" | "'" | "(" | ")" | ","</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>hex            = digit | "A" | "B" | "C" | "D" | "E" | "F" |</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>                 "a" | "b" | "c" | "d" | "e" | "f"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>escape         = "%" hex</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>unreserved     = alpha | digit | safe | extra</span>
-      </p>
-      <p style="font-size:10pt">
-        <span>uchar          = unreserved | escape</span>
-      </p>
-    </div>
-    <p>The following location values are legal according to this specification:</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
+      <p>If an error condition cannot be automatically recovered, at a minimum, the error should be displayed to the user by the Display Actor.</p>
+      <p>If lowerDateTime and/or upperDateTime parameters are specified, they shall define the lower and/or upper inclusive boundary of the temporal range in which returned information should have been created. The value of the mostRecentResults parameter shall be interpreted within such specified date/time range.</p>
+      <h4 id="3.11.4.2">3.11.4.2 Response with Specific Information - Summary</h4>
+      <h5 id="3.11.4.2.1">3.11.4.2.1 Trigger Events</h5>
+      <p>This message is sent by the Information Source in response to the Request For Specific Information web service request.</p>
+      <h5 id="3.11.4.2.2">3.11.4.2.2 Message Semantics</h5>
+      <p>Information Source shall support at least one of the values of the requestType parameter specified in Table 3.11.4-2.</p>
+      <p>The Information Source shall set an expiration of zero to ensure no caching. The message shall be formatted using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
+      <p>The Display may request the Information Source to provide any specific information including a summary of reports of different types pertaining to a particular patient. The exact content of the summary is determined by the Information Source and may be regulated by the institution policy. For example, it may contain the hyperlink to a persistent object so that it can be retrieved by using the Retrieve Document for Display [ITI-12] transaction. In the case of retrieving a summary of documents (requestType of SUMMARY[-xx]), it is strongly recommended to include a link to the relevant documents, for each item of the summary. If present, the link will have to be formatted as a web service request in accordance to the requirements in Section 3.12. It may also contain a hyperlink representing the invocation of the Request for Specific Information for display, as specified in this Section.</p>
+      <h5 id="3.11.4.2.3">3.11.4.2.3 Expected Actions</h5>
+      <p>The Display shall render the received response for the user. It shall not assume that the content of the document may be meaningfully parsed beyond determination of XHTML tags necessary for accurate presentation of provided information.</p>
+      <p>When the summary responses include links to documents or other specific information, Information Source Actors are strongly encouraged to format them according to the requirements stated in Section 3.11 and 3.12, to facilitate retrieval of information from other information sources.</p>
+      <h4 id="3.11.4.3">3.11.4.3 Request For Specific Information - List</h4>
+      <h5 id="3.11.4.3.1">3.11.4.3.1 Trigger Events</h5>
+      <p>The following event will trigger a Request for Specific Information:</p>
+      <ul>
+        <li class="bullet-list1">User of the Display needs to review a particular subset of information that is part of a patient’s clinical history (i.e., lab report, radiology exam report, list of medications, etc.) that is stored on the Information Source system.</li>
+      </ul>
+      <h5 id="3.11.4.3.2">3.11.4.3.2 Message Semantics</h5>
+      <p>The Retrieve Specific Information for Display transaction is performed by the invocation of a web service. The Display shall generate a web service request whenever a user needs to review the information stored as part of a patient’s clinical history on the Information Source Actor.</p>
+      <p>To specify the type of information to be returned, a web service request shall include the following parameters (keys) to filter the subset of information (see Table 3.11.4-7). All parameter names and values (see Table 3.11.4-7) are case-sensitive.</p>
+      <p class="tableTitle">Table 3.11.4-6: Web Service Request Keys</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:62.75pt" class="tableHeader">Parameter Name</td>
+            <td style="width:28.9pt" class="tableHeader">REQ</td>
+            <td style="width:150.2pt" class="tableHeader">Description</td>
+            <td style="width:197.25pt" class="tableHeader">Notes</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:62.75pt">requestType</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:150.2pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
+            <td style="width:197.25pt">See Table 3.11.4-7 for the list of possible values.</td>
+          </tr>
+          <tr>
+            <td style="width:62.75pt">patientID</td>
+            <td style="width:28.9pt">R</td>
+            <td style="width:150.2pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
+            <td style="width:197.25pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="tableTitle">Table 3.11.4-7: Web Service Request Types</p>
+      <table cellspacing="0" cellpadding="0">
         <tr>
-          <td style="width:216.3pt" class="tableHeader">&lt;location&gt; value</td>
-          <td style="width:233.6pt" class="tableHeader">Resulting URL</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:216.3pt">myhost</td>
-          <td style="width:233.6pt">http://myhost/IHERetrieveSummaryInfo?…</td>
+          <td style="width:95.05pt" class="tableHeader">requestType value</td>
+          <td style="width:314.35pt" class="tableHeader">Description</td>
         </tr>
         <tr>
-          <td style="width:216.3pt">myhost:8080</td>
-          <td style="width:233.6pt">http://myhost:8080/IHERetrieveSummaryInfo?…</td>
+          <td style="width:95.05pt">LIST-ALLERGIES</td>
+          <td style="width:314.35pt">List of allergies and adverse reactions for a patient known to the Information Source</td>
         </tr>
         <tr>
-          <td style="width:216.3pt">myhost/MyAspPageThatLooksLikeItCouldBeAFolder.aspx</td>
-          <td style="width:233.6pt">http://myhost/MyAspPageThatLooksLikeItCouldBeAFolder.aspx/IHERetrieveSummaryInfo?…</td>
+          <td style="width:95.05pt">LIST-MEDS</td>
+          <td style="width:314.35pt">List of medications currently taken by or administered to a patient</td>
         </tr>
-        <tr>
-          <td style="width:216.3pt">myhost:8080/MyAspPageThatLooksLikeItCouldBeAFolder.aspx</td>
-          <td style="width:233.6pt">http://myhost:8080/MyAspPageThatLooksLikeItCouldBeAFolder.aspx/IHERetrieveSummaryInfo?…</td>
-        </tr>
-        <tr>
-          <td style="width:216.3pt">myhost/MyJspPage.jsp</td>
-          <td style="width:233.6pt">http://myhost/MyJspPage.jsp/IHERetrieveSummaryInfo?…</td>
-        </tr>
-        <tr>
-          <td style="width:216.3pt">myhost:8080/MyJspPageThatLooksLikeItCouldBeAFolder.jsp</td>
-          <td style="width:233.6pt">http://myhost/MyJspPage.jsp/ IHERetrieveSummaryInfo?…</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>The following location values are not legal:</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:19.8pt">
-          <td style="width:216.3pt" class="tableHeader">&lt;location&gt; value</td>
-          <td style="width:233.6pt" class="tableHeader">Resulting URL</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="height:19.8pt">
-          <td style="width:216.3pt">My+Computer</td>
-          <td style="width:233.6pt">‘+’ is not a legal character in a host name.</td>
-        </tr>
-        <tr style="height:19.8pt">
-          <td style="width:216.3pt">myhost:99999</td>
-          <td style="width:233.6pt">99999 is not a valid port.</td>
-        </tr>
-        <tr style="height:19.85pt">
-          <td style="width:216.3pt">myhost/myPath.jsp?request=</td>
-          <td style="width:233.6pt">‘?’ is not valid in a path.</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>In addition, the Display shall support the following field of the HTTP request:</p>
-    <p class="tableTitle">Table 3.11.4-3: HTTP Request and Response Fields</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:53.1pt" class="tableHeader">HTTP Field</td>
-          <td style="width:31.45pt" class="tableHeader">REQ</td>
-          <td style="width:212.45pt" class="tableHeader">Description</td>
-          <td style="width:142.1pt" class="tableHeader">Values</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:53.1pt">Accept-Language</td>
-          <td style="width:31.45pt">O</td>
-          <td style="width:212.45pt">This field restricts the set of natural languages that are preferred as a response to the request.</td>
-          <td style="width:142.1pt">Any valid value according to RFC2616</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>The Information Source shall support the following field of the HTTP response.</p>
-    <p class="tableTitle">Table 3.11.4-4: HTTP Response Fields</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:46.8pt" class="tableHeader">HTTP Field</td>
-          <td style="width:37.75pt" class="tableHeader">REQ</td>
-          <td style="width:146.05pt" class="tableHeader">Description</td>
-          <td style="width:208.5pt" class="tableHeader">Values</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:46.8pt">Expires</td>
-          <td style="width:37.75pt">R</td>
-          <td style="width:146.05pt">This field gives the date/time after which the response is considered stale</td>
-          <td style="width:208.5pt">Shall be 0. This is now deprecated usage, but it is the widely supported means of specifying no caching.</td>
-        </tr>
-        <tr>
-          <td style="width:46.8pt">Cache-Control</td>
-          <td style="width:37.75pt">R</td>
-          <td style="width:146.05pt">This field indicates that this response should not be cached.</td>
-          <td style="width:208.5pt">Shall be no-cache</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>If necessary, the Display may perform the request to the web service utilizing HTTPS protocol.</p>
-    <p>Information Source Actors may return HTTP redirect responses (responses with values of 301, 302, 303 or 307) in response to a request. Display Actors can expect to receive an error response, or the data requested, or a request to look elsewhere for the data. A Display must follow redirects, but if a loop is detected, it may report an error.</p>
-    <h5 id="3.11.4.1.3">3.11.4.1.3 Expected Actions</h5>
-    <p>Upon reception of the Request for Specific Information, the Information Source shall parse the request and if there are no errors, return the Response with Specific Information as specified in Section 3.11.4.2, and HTTP response code 200 - OK.</p>
-    <p>To specify the type of information that needs to be processed, an Information Source shall support the following parameters (keys) to filter the subset of information (see Table 3.11.4-5).</p>
-    <p class="tableTitle">Table 3.11.4-5: Web Service Request Keys</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:78.15pt" class="tableHeader">Parameter Name</td>
-          <td style="width:28.9pt" class="tableHeader">REQ</td>
-          <td style="width:151.4pt" class="tableHeader">Description</td>
-          <td style="width:180.65pt" class="tableHeader">Notes</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:78.15pt">requestType</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
-          <td style="width:180.65pt">See Table 3.11.4-2 for the list of possible values.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">patientID</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
-          <td style="width:180.65pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">lowerDateTime</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">Used to constrain the earliest date/time of creation of information.</td>
-          <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">upperDateTime</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">Used to constrain the latest date/time of creation of information.</td>
-          <td style="width:180.65pt">This value shall be encoded in the XML primitive dateTime format.</td>
-        </tr>
-        <tr>
-          <td style="width:78.15pt">mostRecentResults</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:151.4pt">The numeric value that indicates the number of most recent results to be included into the response, i.e., 1 indicates to provide the latest result.</td>
-          <td style="width:180.65pt">Value of 0 indicates that all available results shall be returned.</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>If the requestType specified is not supported, the Information Source shall return HTTP response-code 404 (not found) with the suggested reason-phrase “requestType not supported”. If the Information Source is not able to format the document in any content types listed in the 'Accept' field, it shall return HTTP response code 406 – Not Acceptable.</p>
-    <p>If the Patient ID specified by the Display is not known to the Information Source Actor, it shall return HTTP response-code 404 (not found) with the suggested reason-phrase “Patient ID not found”. If the Display provides the Patient ID from a different domain than the one the Information Source belongs to, and the Information Source is grouped with the Patient ID Consumer Actor, it may attempt to obtain a mapping of the provided Patient ID into its domain before responding.</p>
-    <p class="note">Note: Other HTTP response codes may be returned by the Information Source Actor, indicating conditions outside of the scope of this profile, for example, 401 – Authentication Failed might be returned if Information Source is grouped with the Kerberized Server Actor.</p>
-    <p class="note">
-      <span>Note:</span>
-      <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
-      <span>It is recommended that the Information Source complement the returned error code with a human readable description of the error condition.</span>
-    </p>
-    <p>If an error condition cannot be automatically recovered, at a minimum, the error should be displayed to the user by the Display Actor.</p>
-    <p>If lowerDateTime and/or upperDateTime parameters are specified, they shall define the lower and/or upper inclusive boundary of the temporal range in which returned information should have been created. The value of the mostRecentResults parameter shall be interpreted within such specified date/time range.</p>
-    <h4 id="3.11.4.2">3.11.4.2 Response with Specific Information - Summary</h4>
-    <h5 id="3.11.4.2.1">3.11.4.2.1 Trigger Events</h5>
-    <p>This message is sent by the Information Source in response to the Request For Specific Information web service request.</p>
-    <h5 id="3.11.4.2.2">3.11.4.2.2 Message Semantics</h5>
-    <p>Information Source shall support at least one of the values of the requestType parameter specified in Table 3.11.4-2.</p>
-    <p>The Information Source shall set an expiration of zero to ensure no caching. The message shall be formatted using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
-    <p>The Display may request the Information Source to provide any specific information including a summary of reports of different types pertaining to a particular patient. The exact content of the summary is determined by the Information Source and may be regulated by the institution policy. For example, it may contain the hyperlink to a persistent object so that it can be retrieved by using the Retrieve Document for Display [ITI-12] transaction. In the case of retrieving a summary of documents (requestType of SUMMARY[-xx]), it is strongly recommended to include a link to the relevant documents, for each item of the summary. If present, the link will have to be formatted as a web service request in accordance to the requirements in Section 3.12. It may also contain a hyperlink representing the invocation of the Request for Specific Information for display, as specified in this Section.</p>
-    <h5 id="3.11.4.2.3">3.11.4.2.3 Expected Actions</h5>
-    <p>The Display shall render the received response for the user. It shall not assume that the content of the document may be meaningfully parsed beyond determination of XHTML tags necessary for accurate presentation of provided information.</p>
-    <p>When the summary responses include links to documents or other specific information, Information Source Actors are strongly encouraged to format them according to the requirements stated in Section 3.11 and 3.12, to facilitate retrieval of information from other information sources.</p>
-    <h4 id="3.11.4.3">3.11.4.3 Request For Specific Information - List</h4>
-    <h5 id="3.11.4.3.1">3.11.4.3.1 Trigger Events</h5>
-    <p>The following event will trigger a Request for Specific Information:</p>
-    <ul>
-      <li class="bullet-list1">User of the Display needs to review a particular subset of information that is part of a patient’s clinical history (i.e., lab report, radiology exam report, list of medications, etc.) that is stored on the Information Source system.</li>
-    </ul>
-    <h5 id="3.11.4.3.2">3.11.4.3.2 Message Semantics</h5>
-    <p>The Retrieve Specific Information for Display transaction is performed by the invocation of a web service. The Display shall generate a web service request whenever a user needs to review the information stored as part of a patient’s clinical history on the Information Source Actor.</p>
-    <p>To specify the type of information to be returned, a web service request shall include the following parameters (keys) to filter the subset of information (see Table 3.11.4-7). All parameter names and values (see Table 3.11.4-7) are case-sensitive.</p>
-    <p class="tableTitle">Table 3.11.4-6: Web Service Request Keys</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:62.75pt" class="tableHeader">Parameter Name</td>
-          <td style="width:28.9pt" class="tableHeader">REQ</td>
-          <td style="width:150.2pt" class="tableHeader">Description</td>
-          <td style="width:197.25pt" class="tableHeader">Notes</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:62.75pt">requestType</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:150.2pt">requestType specifies what type of information shall be retrieved. This parameter shall always be valued.</td>
-          <td style="width:197.25pt">See Table 3.11.4-7 for the list of possible values.</td>
-        </tr>
-        <tr>
-          <td style="width:62.75pt">patientID</td>
-          <td style="width:28.9pt">R</td>
-          <td style="width:150.2pt">This attribute identifies the subject of the results being queried for. Its value shall include identification of assigning authority.</td>
-          <td style="width:197.25pt">PatientID value shall be formatted as HL7 CX data type (including assigning authority) according to the requirements specified for the Patient Identity Feed transaction (see Section 3.8.4.1.2.3)</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="tableTitle">Table 3.11.4-7: Web Service Request Types</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:95.05pt" class="tableHeader">requestType value</td>
-        <td style="width:314.35pt" class="tableHeader">Description</td>
-      </tr>
-      <tr>
-        <td style="width:95.05pt">LIST-ALLERGIES</td>
-        <td style="width:314.35pt">List of allergies and adverse reactions for a patient known to the Information Source</td>
-      </tr>
-      <tr>
-        <td style="width:95.05pt">LIST-MEDS</td>
-        <td style="width:314.35pt">List of medications currently taken by or administered to a patient</td>
-      </tr>
-    </table>
-    <p>Formal definition of the web service in WSDL is provided in the <a href="../Volume2x/ch-1.html#Appendix A"><a href="../Volume2x/ch-1.html#Appendix A">ITI TF-2x: Appendix A</a></a>.</p>
-    <p>The only binding required for both Display and Information Source is the binding to the HTTP-GET. In this binding the sample message will be formatted as follows:</p>
-    <p>http://&lt;location&gt;/IHERetrieveListInfo?requestType=LIST-MEDS&amp;patientID=99998410^^^%26www.mlhlife.com%26DNS</p>
-    <p>The &lt;location&gt; part of the URL is configurable by the implementation, and must contain the host name, an optional port address, and may be followed by an optional path. The path if present may not contain a ‘?’ character. The remainder of the URL, including IHERetrieveListInfo and the following request parameters are specified by the WSDL and may not be changed. See the discussion about location in Section 3.11.4.1.2 Message Semantics above.</p>
-    <p>In addition, the Display shall support the following field of the HTTP request:</p>
-    <p class="tableTitle">Table 3.11.4-8: HTTP Request and Response Fields</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:59.9pt" class="tableHeader">HTTP Field</td>
-          <td style="width:38.15pt" class="tableHeader">REQ</td>
-          <td style="width:227.35pt" class="tableHeader">Description</td>
-          <td style="width:113.7pt" class="tableHeader">Values</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:59.9pt">Accept-Language</td>
-          <td style="width:38.15pt">O</td>
-          <td style="width:227.35pt">This field restricts the set of natural languages that are preferred as a response to the request.</td>
-          <td style="width:113.7pt">Any valid value according to RFC2616</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>The Information Source shall support the following field of the HTTP response.</p>
-    <p class="tableTitle">Table 3.11.4-9: HTTP Request Fields</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:59.35pt" class="tableHeader">HTTP Field</td>
-          <td style="width:38.7pt" class="tableHeader">REQ</td>
-          <td style="width:227.7pt" class="tableHeader">Description</td>
-          <td style="width:113.35pt" class="tableHeader">Values</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:59.35pt">Expires</td>
-          <td style="width:38.7pt">R</td>
-          <td style="width:227.7pt">This field gives the date/time after which the response is considered stale</td>
-          <td style="width:113.35pt">Shall be 0. This is now deprecated usage, but it is the widely supported means of specifying no caching.</td>
-        </tr>
-        <tr>
-          <td style="width:59.35pt">Cache-Control</td>
-          <td style="width:38.7pt">R</td>
-          <td style="width:227.7pt">This field indicates that this response should not be cached.</td>
-          <td style="width:113.35pt">Shall be no-cache</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>If necessary, the Display may perform the request to the web service utilizing HTTPS protocol.</p>
-    <p>Information Source Actors may return HTTP redirect responses (responses with values of 301, 302, 303 or 307) in response to a request. Display Actors can expect to receive an error response, or the data requested, or a request to look elsewhere for the data. A Display must follow redirects, but if a loop is detected, it may report an error.</p>
-    <h5 id="3.11.4.3.3">3.11.4.3.3 Expected Actions</h5>
-    <p>Upon reception of the Request for Specific Information, the Information Source shall parse the request and if there are no errors, shall return the Response with Specific Information as specified in Section 3.11.4.2, and HTTP response code 200 - OK.</p>
-    <p>If the requestType specified is not supported, the Information Source shall return HTTP response-code 404 (not found) with the suggested reason-phrase “requestType not supported”. If the Information Source is not able to format the document in any content types listed in the 'Accept' field, it shall return HTTP response code 406 – Not Acceptable.</p>
-    <p>If the Patient ID specified by the Display is not known to the Information Source Actor, it shall return HTTP response-code 404 (not found) with the suggested reason-phrase “Patient ID not found”. If the Display provides the Patient ID from a different domain than the one the Information Source belongs to, and the Information Source is grouped with the Patient ID Consumer Actor, it may attempt to obtain a mapping of the provided Patient ID into its domain before responding.</p>
-    <p class="note">Note: Other HTTP response codes may be returned by the Information Source Actor, indicating conditions outside of the scope of this profile, for example, 401 – Authentication Failed might be returned if Information Source is grouped with the Kerberized Server Actor.</p>
-    <p class="note">Note:  It is recommended that the Information Source complement returned error code with a human readable description of the error condition.</p>
-    <p>If an error condition cannot be automatically recovered, at a minimum, the error should be displayed to the user by the Display Actor.</p>
-    <h4 id="3.11.4.4">3.11.4.4 Response with Specific Information - List</h4>
-    <h5 id="3.11.4.4.1">3.11.4.4.1 Trigger Events</h5>
-    <p>This message is sent by the Information Source in response to the Request For Specific Information web service request.</p>
-    <h5 id="3.11.4.4.2">3.11.4.4.2 Message Semantics</h5>
-    <p>Information Source shall support at least one of the values of the requestType parameter specified in Table 3.11.4-7.</p>
-    <p>The Information Source shall set an expiration of zero to ensure no caching. The message shall be formatted using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
-    <p>The Display may request the Information Source to provide a list of information items (pertaining to a particular patient) that the Information Source has presently recorded. The exact content of the list is determined by the Information Source Actor.</p>
-    <p>The Display shall not use the lowerDateTime, upperDateTime or mostRecentResults parameters in a query. The Information Source shall ignore them if they are specified.</p>
-    <h5 id="3.11.4.4.3">3.11.4.4.3 Expected Actions</h5>
-    <p>
-      <span>The Display shall render the received response for the user. It shall not assume that the content of the document may be meaningfully parsed beyond determination of XHTML tags necessary for accurate presentation of provided information.</span>
-      <br style="page-break-before:always; clear:both" />
-    </p>
+      </table>
+      <p>
+        Formal definition of the web service in WSDL is provided in the
+        <a href="../Volume2x/ch-1.html#Appendix A">ITI TF-2x: Appendix A</a>
+        .
+      </p>
+      <p>The only binding required for both Display and Information Source is the binding to the HTTP-GET. In this binding the sample message will be formatted as follows:</p>
+      <p>http://&lt;location&gt;/IHERetrieveListInfo?requestType=LIST-MEDS&amp;patientID=99998410^^^%26www.mlhlife.com%26DNS</p>
+      <p>The &lt;location&gt; part of the URL is configurable by the implementation, and must contain the host name, an optional port address, and may be followed by an optional path. The path if present may not contain a ‘?’ character. The remainder of the URL, including IHERetrieveListInfo and the following request parameters are specified by the WSDL and may not be changed. See the discussion about location in Section 3.11.4.1.2 Message Semantics above.</p>
+      <p>In addition, the Display shall support the following field of the HTTP request:</p>
+      <p class="tableTitle">Table 3.11.4-8: HTTP Request and Response Fields</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:59.9pt" class="tableHeader">HTTP Field</td>
+            <td style="width:38.15pt" class="tableHeader">REQ</td>
+            <td style="width:227.35pt" class="tableHeader">Description</td>
+            <td style="width:113.7pt" class="tableHeader">Values</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:59.9pt">Accept-Language</td>
+            <td style="width:38.15pt">O</td>
+            <td style="width:227.35pt">This field restricts the set of natural languages that are preferred as a response to the request.</td>
+            <td style="width:113.7pt">Any valid value according to RFC2616</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The Information Source shall support the following field of the HTTP response.</p>
+      <p class="tableTitle">Table 3.11.4-9: HTTP Request Fields</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:59.35pt" class="tableHeader">HTTP Field</td>
+            <td style="width:38.7pt" class="tableHeader">REQ</td>
+            <td style="width:227.7pt" class="tableHeader">Description</td>
+            <td style="width:113.35pt" class="tableHeader">Values</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:59.35pt">Expires</td>
+            <td style="width:38.7pt">R</td>
+            <td style="width:227.7pt">This field gives the date/time after which the response is considered stale</td>
+            <td style="width:113.35pt">Shall be 0. This is now deprecated usage, but it is the widely supported means of specifying no caching.</td>
+          </tr>
+          <tr>
+            <td style="width:59.35pt">Cache-Control</td>
+            <td style="width:38.7pt">R</td>
+            <td style="width:227.7pt">This field indicates that this response should not be cached.</td>
+            <td style="width:113.35pt">Shall be no-cache</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>If necessary, the Display may perform the request to the web service utilizing HTTPS protocol.</p>
+      <p>Information Source Actors may return HTTP redirect responses (responses with values of 301, 302, 303 or 307) in response to a request. Display Actors can expect to receive an error response, or the data requested, or a request to look elsewhere for the data. A Display must follow redirects, but if a loop is detected, it may report an error.</p>
+      <h5 id="3.11.4.3.3">3.11.4.3.3 Expected Actions</h5>
+      <p>Upon reception of the Request for Specific Information, the Information Source shall parse the request and if there are no errors, shall return the Response with Specific Information as specified in Section 3.11.4.2, and HTTP response code 200 - OK.</p>
+      <p>If the requestType specified is not supported, the Information Source shall return HTTP response-code 404 (not found) with the suggested reason-phrase “requestType not supported”. If the Information Source is not able to format the document in any content types listed in the 'Accept' field, it shall return HTTP response code 406 – Not Acceptable.</p>
+      <p>If the Patient ID specified by the Display is not known to the Information Source Actor, it shall return HTTP response-code 404 (not found) with the suggested reason-phrase “Patient ID not found”. If the Display provides the Patient ID from a different domain than the one the Information Source belongs to, and the Information Source is grouped with the Patient ID Consumer Actor, it may attempt to obtain a mapping of the provided Patient ID into its domain before responding.</p>
+      <p class="note">Note: Other HTTP response codes may be returned by the Information Source Actor, indicating conditions outside of the scope of this profile, for example, 401 – Authentication Failed might be returned if Information Source is grouped with the Kerberized Server Actor.</p>
+      <p class="note">Note:  It is recommended that the Information Source complement returned error code with a human readable description of the error condition.</p>
+      <p>If an error condition cannot be automatically recovered, at a minimum, the error should be displayed to the user by the Display Actor.</p>
+      <h4 id="3.11.4.4">3.11.4.4 Response with Specific Information - List</h4>
+      <h5 id="3.11.4.4.1">3.11.4.4.1 Trigger Events</h5>
+      <p>This message is sent by the Information Source in response to the Request For Specific Information web service request.</p>
+      <h5 id="3.11.4.4.2">3.11.4.4.2 Message Semantics</h5>
+      <p>Information Source shall support at least one of the values of the requestType parameter specified in Table 3.11.4-7.</p>
+      <p>The Information Source shall set an expiration of zero to ensure no caching. The message shall be formatted using XHTML Basic and W3C HTML Compatibility Guidelines provided in the Appendix C of the W3C XHTML 1.0 Recommendation.</p>
+      <p>The Display may request the Information Source to provide a list of information items (pertaining to a particular patient) that the Information Source has presently recorded. The exact content of the list is determined by the Information Source Actor.</p>
+      <p>The Display shall not use the lowerDateTime, upperDateTime or mostRecentResults parameters in a query. The Information Source shall ignore them if they are specified.</p>
+      <h5 id="3.11.4.4.3">3.11.4.4.3 Expected Actions</h5>
+      <p>
+        <span>The Display shall render the received response for the user. It shall not assume that the content of the document may be meaningfully parsed beyond determination of XHTML tags necessary for accurate presentation of provided information.</span>
+        <br style="page-break-before:always; clear:both" />
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

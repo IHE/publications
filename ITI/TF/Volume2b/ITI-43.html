@@ -5,1676 +5,1728 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.43">3.43Retrieve Document Set [ITI-43]</h2>
-    <p>This section corresponds to transaction [ITI-43] of the IHE Technical Framework. The Document Consumer, Document Repository, On-Demand Document Source, and Initiating Gateway Actors use transaction [ITI-43].</p>
-    <p>
-      <a name="_Toc80454086"> </a>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:243.7pt" class="tableHeader">Integration Profiles using this Transaction</td>
-      </tr>
-      <tr>
-        <td style="width:243.7pt">Cross-Enterprise Document Sharing-b (XDS.b)</td>
-      </tr>
-      <tr>
-        <td style="width:243.7pt">Cross-Community Access (XCA)</td>
-      </tr>
-    </table>
-    <p>
-      <a name="_Toc168486459"> </a>
-    </p>
-    <p>
-      <span>Actors that support the Asynchronous Web Services Exchange Option shall support Asynchronous Web Services Exchange on all XDS.b transactions they implement. Refer to Section ITI TF-2</span>
-      <a name="_Toc199194972">
-        <span>x: V.</span>
-        <span>3</span>
-        <span>Synchronous and Asynchronous</span>
-        <span>(WS-Addressing based)</span>
-        <span>Web Services Exchange for an explanation of Asynchronous Web Services Exchange.</span>
-      </a>
-    </p>
-    <h3 id="3.43.1">3.43.1 Scope</h3>
-    <p>This transaction is used by the Document Consumer to retrieve a set of documents from the Document Repository, On-Demand Document Source, or Initiating Gateway. The Document Consumer has already obtained the XDSDocumentEntry uniqueId and the Document Repository repositoryUniqueId from the Document Registry/Initiating Gateway by means of the Registry Stored Query transaction.</p>
-    <h3 id="3.43.2">3.43.2 Use Case Roles</h3>
-    <p> </p>
-    <img src="media/ai8zh-w242m.035.png" width="532" height="146" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Document Consumer</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Obtains document.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Document Repository or Integrated Document Source/Repository</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Provides documents.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor</span>
-      <span>: Initiating Gateway</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role</span>
-      <span>: An Initiating Gateway which implements the XDS Affinity Domain Option retrieves a set of documents by using the Cross Gateway Retrieve transaction and/or a Retrieve Document Set transaction.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor</span>
-      <span>:</span>
-      <span style="width:3.35pt;display:inline-block"> </span>
-      <span>On-Demand Document Source</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role</span>
-      <span>:</span>
-      <span style="width:9.34pt;display:inline-block"> </span>
-      <span>Creates documents in response to a request for retrieval of an on-demand document entry.</span>
-    </p>
-    <p class="note">Note: Within this transaction, the Document Repository and Integrated Document Source/Repository Actors can be used interchangeably.</p>
-    <h3 id="3.43.3">3.43.3 Referenced Standard</h3>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:61.2pt">ebRIM</td>
-        <td style="width:396pt">OASIS/ebXML Registry Information Model v3.0</td>
-      </tr>
-      <tr>
-        <td style="width:61.2pt">ebRS</td>
-        <td style="width:396pt">OASIS/ebXML Registry Services Specifications v3.0</td>
-      </tr>
-      <tr>
-        <td style="width:61.2pt">ITI TF-3:4</td>
-        <td style="width:396pt">Metadata in Document Sharing profiles</td>
-      </tr>
-      <tr>
-        <td style="width:61.2pt">MTOM</td>
-        <td style="width:396pt">
-          <p>
-            <span>SOAP Message Transmission Optimization Mechanism</span>
-            <a href="http://www.w3.org/TR/soap12-mtom/">http://www.w3.org/TR/soap12-mtom/</a>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:61.2pt">XOP</td>
-        <td style="width:396pt">XML-binary Optimized Packaging http://www.w3.org/TR/2005/REC-xop10-20050125/</td>
-      </tr>
-    </table>
-    <h3 id="3.43.4">3.43.4 Messages</h3>
-    <img src="media/ai8zh-w242m.036.png" width="375" height="191" alt="" />
-    <p class="figureTitle">Figure 3.43.4-1: Interaction Diagram</p>
-    <h4 id="3.43.4.1">3.43.4.1 Retrieve Document Set Request</h4>
-    <h5 id="3.43.4.1.1">3.43.4.1.1Trigger Events</h5>
-    <p>The Document Consumer obtains document(s) uniqueId via the Registry Stored Query transaction. If the Registry Stored Query was sent to the Initiating Gateway the Document Consumer shall address the Retrieve Document Set to the Initiating Gateway. In this case no resolution of repositoryUniqueId is needed by the Document Consumer. The Document Consumer shall specify the homeCommunityId element in the Retrieve Document Set transaction if it was found in the entry containing the uniqueId of the document being retrieved. For more information regarding the homeCommunityId, see Section 3.38.4.1.2.</p>
-    <p>Once the document(s) uniqueId have been obtained, the Document Consumer will start the Retrieve Document Set Request with the Document Repository.</p>
-    <h5 id="3.43.4.1.2">3.43.4.1.2 Message Semantics</h5>
-    <p>The Retrieve Document Set Request shall carry the following information:</p>
-    <ul>
-      <li class="bullet-list1">A required repositoryUniqueId that identifies the repository from which the document is to be retrieved. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
-      <li class="bullet-list1">A required documentUniqueId that identifies the document within the repository. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
-      <li class="bullet-list1">If available, the homeCommunityId element that identifies the community holding the document. The homeCommunityId element shall be specified if the XDSDocumentEntry containing the uniqueId of the document contains the homeCommunityId attribute. See <a href="../Volume2a/ITI-18.html#3.18.4.1.2"><a href="../Volume2a/ITI-18.html#3.18.4.1.2">ITI TF-2a: 3.18.4.1.2</a></a> for details.</li>
-    </ul>
-    <p>The repositoryUniqueId associated to each document requested can be different therefore allowing a single request to identify multiple repositories.</p>
-    <h5 id="3.43.4.1.3">3.43.4.1.3 Expected Actions</h5>
-    <p>
-      <a name="_Toc80450250">When receiving a Retrieve Document Set Request, a Document Repository or an Initiating Gateway shall generate a Retrieve Document Set Response containing the requested documents or error codes if the documents could not be retrieved.</a>
-    </p>
-    <p>An XCA Initiating Gateway receiving the Retrieve Document Set Request shall use the homeCommunityId to obtain the Web Services endpoint of the Responding Gateways or, in the case where homeCommunityId identifies the local community, use the repositoryUniqueId to obtain the Web Services endpoint of the Document Repositories. The process of obtaining the Web Services endpoint is not further specified in this transaction. The Initiating Gateway shall send Cross Gateway Retrieves/Retrieve Document Set transactions to each appropriate Responding Gateway/Document Repository, consolidate the results, and return them to the Document Consumer.</p>
-    <h6 id="3.43.4.1.3.1">3.43.4.1.3.1 Basic Patient Privacy Enforcement Option</h6>
-    <p>If the Basic Patient Privacy Enforcement Option is implemented:</p>
-    <ul>
-      <li class="bullet-list1">The Document Consumer shall abide by the XDS Affinity Domain Policies represented by the confidentialityCode in the metadata associated with the document. The Document Consumer likely will have user access controls or business rule capabilities to determine the details of how confidentiality codes apply to query results. The details of this are product specific and not specified by IHE. These rules shall reduce the query results to only those that are appropriate to the current situation for that actor and user.</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">The Document Consumer shall be able to be configured with Patient Privacy Policies, Patient Privacy Policy Identifiers (OIDs) and associated information necessary to understand and enforce the XDS Affinity Domain Policy. The details of this are product specific and not specified by IHE.</li>
-    </ul>
-    <h6 id="3.43.4.1.3.2">3.43.4.1.3.2 Delayed Document Assembly Option</h6>
-    <p>If an Integrated Document Source/Repository supports the Delayed Document Assembly Option and has registered the document being retrieved with</p>
-    <ul>
-      <li class="bullet-list1">size = 0 (zero)</li>
-      <li class="bullet-list1">hash = da39a3ee5e6b4b0d3255bfef95601890afd80709 (SHA1 hash of a zero length file)</li>
-    </ul>
-    <p>then it shall:</p>
-    <ul>
-      <li class="bullet-list1">Assemble into a complete document the content identified at the time the Integrated Document Source/Repository registered the associated Stable Document Entry in the Document Registry.</li>
-      <li class="bullet-list1">Return the assembled document in response to the Retrieve Document Set Request</li>
-      <li class="bullet-list1">Save the assembled document for future retrievals since all future retrievals shall return the identical content.</li>
-      <li class="bullet-list1">Update the Stable Document Entry in the Document Registry with the size and hash values consistent with the assembled document. This update shall be accomplished by grouping with the Document Administrator in the XDS.b Profile and using the Update Document Set [ITI-57] transaction.</li>
-    </ul>
-    <h4 id="3.43.4.2">3.43.4.2 Retrieve Document Set Response</h4>
-    <h5 id="3.43.4.2.1">3.43.4.2.1 Trigger Events</h5>
-    <p>This message will be triggered by a Retrieve Document Set Request Message</p>
-    <h5 id="3.43.4.2.2">3.43.4.2.2 Message Semantics</h5>
-    <p>The Retrieve Document Set Response Message shall carry the following information, for each of the returned documents:</p>
-    <ul>
-      <li class="bullet-list1">A homeCommunityId. This value shall be the same as the homeCommunityId value in the Retrieve Document Set Request Message. If the homeCommunityId value is not present in the Retrieve Document Set Request Message, this shall not be present.</li>
-      <li class="bullet-list1">A required repositoryUniqueId that identifies the repository from which the document is to be retrieved. This value shall be the same as the value of the repositoryUniqueId in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
-      <li class="bullet-list1">A required documentUniqueId that identifies the document within the repository. This value shall be the same as the documentUniqueId in the original Retrieve Document Set Request Message. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
-      <li class="bullet-list1">The retrieved document as a XOP Infoset</li>
-      <li class="bullet-list1">The MIME type of the retrieved document</li>
-      <li class="bullet-list1">Errors or warnings in case the document(s) could not be retrieved successfully</li>
-    </ul>
-    <p>If the documentUniqueId is associated with an On-Demand Document Entry, the Retrieve Document Set Response Message shall contain a NewDocumentUniqueId element that identifies the document that is returned in the Retrieve Document Set Response. This identifier shall be different than the DocumentUniqueId element which identifies the On-Demand Document Entry. The Retrieve Document Set Response Message may also include a NewRepositoryUniqueId element that identifies the Document Repository which holds the document returned in the Retrieve Document Set Response. If this element is not included, the document returned in the response has not been persisted for later retrieval. If the On-Demand Document Source implements the Persistence of Retrieved Documents Option, this element shall be specified. If a future Retrieve Document Set Message for the same DocumentUniqueId returns the same NewDocumentUniqueId, the content of the document shall be identical to the prior returned content. On-Demand Document Source Actors are encouraged to re-use Document uniqueId’s whenever content has not changed in order to facilitate identification of new content by Document Consumers.</p>
-    <h5 id="3.43.4.2.3">3.43.4.2.3 Expected Actions</h5>
-    <p>A Document Repository or On-Demand Document Source shall return the document(s) indicated in the request.</p>
-    <p>The Document Repository shall return the document or an error code in case the document could not be return. The conditions of failure and possible error messages are given in the ebRS standard and detailed in <a href="../Volume3/ch-1.2.html#4.2.4"><a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a></a> Error Reporting.</p>
-    <p>An On-Demand Document Source which supports the Persistence of Retrieved Documents Option shall save the document content returned in the retrieve response and issue a Register Document Set-b [ITI-42] transaction to register a Stable Document Entry which describes the saved document. The On-Demand Document Source shall complete the registration of the Stable Document Entry prior to responding to the Retrieve Document Set request. The registration of the new Stable Document Entry shall include:</p>
-    <ul>
-      <li class="bullet-list1">A Submission Set</li>
-      <li class="bullet-list1">A DocumentEntry representing the Stable DocumentEntry.</li>
-      <li class="bullet-list1">A HasMember association linking DocumentEntry to SubmissionSet.</li>
-      <li class="bullet-list1">An IsSnapshotOf Association which identifies the sourceObject as the new Stable Document Entry and the targetObject as the On-Demand Document Entry which contains the uniqueID used in the Retrieve Document Set request. See <a href="../Volume3/ch-1.2.html#4.2.2.2"><a href="../Volume3/ch-1.2.html#4.2.2.2">ITI TF-3: 4.2.2.2</a></a> for information about the IsSnapshotOf Association.</li>
-    </ul>
-    <p>If the On-Demand Document Source has previously registered a snapshot of the On-Demand DocumentEntry, the registration of the new Stable DocumentEntry may also include a RPLC association, identifying the new Stable DocumentEntry as a replacement of the previously-registered Stable DocumentEntry.</p>
-    <p>If this is not the first request for this on-demand document and a prior document was replaced, a Replace Association which identifies the prior document.</p>
-    <h6 id="3.43.4.2.3.1">3.43.4.2.3.1 Compatibility of Options</h6>
-    <p>If the Document Consumer does not support the On-Demand Documents Option it will never send a Retrieve Document Set request for an On-Demand Document entry. In this case, none of the new attributes will be included in the response.</p>
-    <p>If the Document Consumer does support the On-Demand Documents Option, it will only direct requests for On-Demand Document Entries to responders which have specified their unique repositoryUniqueId in the On-Demand Document Entry from the registry. Thus, unless there is an error in the metadata, there are no compatibility concerns with this transaction.</p>
-    <h6 id="3.43.4.2.3.2">3.43.4.2.3.2 Delayed Document Assembly Option</h6>
-    <p>If a Document Consumer supports the Delayed Document Assembly Option, it shall not use the size=0 and hash=SHA1 hash of a zero length file values to verify documents. If verification is desired the Document Consumer shall use an appropriate stored query from the Registry Stored Query [ITI-18] transaction to get the updated size and hash values.</p>
-    <h3 id="3.43.5">3.43.5 Protocol Requirements</h3>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <p>The Retrieve Document Set transaction shall use SOAP12 and MTOM with XOP encoding (labeled MTOM/XOP in this specification). See ITI TF-2x: Appendix V.3 for details.</p>
-    <p>The Document Repository shall:</p>
-    <ul>
-      <li class="bullet-list1">Accept the Retrieve Document Set Request message in MTOM/XOP format.</li>
-      <li class="bullet-list1">Generate the Retrieve Document Set Response message in MTOM/XOP format</li>
-    </ul>
-    <p>The Document Consumer shall:</p>
-    <ul>
-      <li class="bullet-list1">Generate the Retrieve Document Set Request message in MTOM/XOP format.</li>
-      <li class="bullet-list1">Accept the Retrieve Document Set Response message in MTOM/XOP format.</li>
-    </ul>
-    <p>XML namespace prefixes are for informational purposes only and are documented in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>, Table V.2.4-1.</p>
-    <p>Document Repository: These are the requirements for the Retrieve Document Set transaction presented in the order in which they would appear in the Document Repository WSDL definition:</p>
-    <ul>
-      <li class="bullet-list1">The following types shall be imported (xsd:import) in the /definitions/types section:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">
-        <span>The /definitions/message/part/@element attribute of the Retrieve Document Set Request message shall be defined as “</span>
-        <span style="background-color:#ffffff">ihe:RetrieveDocumentSetRequest</span>
-        <span>”</span>
-      </li>
-      <li class="bullet-list1">
-        <span>The /definitions/message/part/@element attribute of the Retrieve Document Set Response message shall be defined as “</span>
-        <span style="background-color:#ffffff">ihe:RetrieveDocumentSet</span>
-        <span>Response”</span>
-      </li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">Refer to Table 3.43.5.b below for additional attribute requirements</li>
-    </ul>
-    <p>To support the WS-Addressing Asynchronous Web Services Exchange Option on the Document Consumer, the Document Repository shall support the use of a non-anonymous response EPR in the WS-Addressing replyTo header.</p>
-    <p class="tableTitle">Table 3.43.5.b: Additional Attribute Requirements</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:173.7pt" class="tableHeader">Attribute</td>
-          <td style="width:175.95pt" class="tableHeader">Value</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:173.7pt">/definitions/portType/operation@name</td>
-          <td style="width:175.95pt">DocumentConsumer_RetrieveDocumentSet</td>
-        </tr>
-        <tr>
-          <td style="width:173.7pt">/definitions/portType/operation/input/@wsaw:Action</td>
-          <td style="width:175.95pt">urn:ihe:iti:2007:RetrieveDocumentSet</td>
-        </tr>
-        <tr>
-          <td style="width:173.7pt">/definitions/portType/operation/output/@wsaw:Action</td>
-          <td style="width:175.95pt">urn:ihe:iti:2007:RetrieveDocumentSetResponse</td>
-        </tr>
-        <tr>
-          <td style="width:173.7pt">/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
-          <td style="width:175.95pt">false</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <span>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section</span>
-      <a href="#_Ref167821063">3.43.5.1 Sample SOAP Messages</a>
-      <span>.</span>
-    </p>
-    <p>An informative WSDL for the Document Repository is available online:  see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <p>The &lt;ihe:RetrieveDocumentSetRequest/&gt; element is defined as:</p>
-    <ul>
-      <li class="bullet-list1">One or more &lt;ihe:DocumentRequest/&gt; elements, each one representing an individual document that the Document Consumer wants to retrieve from the Document Repository. Each &lt;ihe:DocumentRequest/&gt; element contains:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">A required &lt;ihe:RepositoryUniqueId/&gt; element that identifies the repository from which the document is to be retrieved. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
-      <li class="bullet-list2">A required &lt;ihe:DocumentUniqueId/&gt; that identifies the document within the repository. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
-      <li class="bullet-list2">An optional &lt;ihe:HomeCommunityId/&gt; element that corresponds to the home attribute of the Identifiable class in ebRIM.</li>
-    </ul>
-    <p>This allows the Document Consumer to specify one or more documents to retrieve from the Document Repository.</p>
-    <p>The &lt;ihe:RetrieveDocumentResponse/&gt; element is defined as:</p>
-    <ul>
-      <li class="bullet-list1">A required /ihe:RetrieveDocumentSetResponse/rs:RegistryResponse element</li>
-      <li class="bullet-list1">An optional sequence of &lt;ihe:DocumentResponse/&gt; elements containing</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">A &lt;ihe:HomeCommunityId/&gt; element. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/HomeCommunityId element in the Retrieve Document Set Request Message. If the &lt;ihe:HomeCommunityId/&gt; element is not present in the Retrieve Document Set Request Message, this value shall not be present.</li>
-      <li class="bullet-list2">A required &lt;ihe:RepositoryUniqueId/&gt; that identifies the repository from which the document is to be retrieved. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/RepositoryUniqueId element in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
-      <li class="bullet-list2">A required &lt;ihe:DocumentUniqueId/&gt; that identifies the document within the repository. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/DocumentUniqueId element in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.uniqueId.</li>
-      <li class="bullet-list2">A required &lt;ihe:Document/&gt; element that contains the retrieved document using the xsi:base64Binary data type. (Note: This is the logical representation of the document in the XML. The wire format may be different; see ITI TF-2x: Appendix V.8.)</li>
-      <li class="bullet-list2">A required &lt;ihe:mimeType/&gt; element that indicates the MIME type of the retrieved document</li>
-      <li class="bullet-list2">An optional &lt;ihe:NewDocumentUniqueId/&gt; element that identifies the document returned in the request when retrieval is of an On-Demand Document. This is required when retrieval is of an On-Demand Document.</li>
-      <li class="bullet-list2">An optional &lt;ihe:NewRepositoryUniqueId/&gt; element that identifies the Document Repository that will support retrieval of the document created as a result of retrieval of the On-Demand Document. This is required when the On-Demand Document Source supports the Persistence of Retrieved Documents Option.</li>
-    </ul>
-    <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/@status attributes provides the overall status of the request: It shall contain one of the following values:</p>
-    <p style="font-size:10pt">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success</p>
-    <p style="font-size:10pt">urn:ihe:iti:2007:ResponseStatusType:PartialSuccess</p>
-    <p style="font-size:10pt">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure</p>
-    <p>See <a href="../Volume3/ch-1.2.html#4.2.4"><a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a></a> Error Reporting for the interpretation of these values.</p>
-    <p>For each document requested in a /RetrieveDocumentSetRequest/DocumentRequest element:</p>
-    <ul>
-      <li class="bullet-list1">If a warning is reported when retrieving the document, then a /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be returned with:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">@severity is urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Warning</li>
-      <li class="bullet-list2">@errorCode is specified</li>
-      <li class="bullet-list2">@codeContext contains the warning message</li>
-      <li class="bullet-list2">@location contains the DocumentUniqueId of the document requested</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">The document shall be returned in an instance of /RetrieveDocumentSetResponse/DocumentResponse/Document as a XOP Infoset. The returned document and warning are correlated via the DocumentUniqueId.</li>
-      <li class="bullet-list1">If an error is reported when retrieving a document, then a /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be returned with:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">@severity is urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error</li>
-      <li class="bullet-list2">@errorCode is specified</li>
-      <li class="bullet-list2">@codeContext contains the error message</li>
-      <li class="bullet-list2">@location contains the DocumentUniqueId of the document requested</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">No corresponding RetrieveDocumentSetResponse/DocumentResponse element shall be returned</li>
-      <li class="bullet-list1">If the document is successfully retrieved (without warning) then no /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be present and a /RetrieveDocumentSetResponse/DocumentResponse/Document element shall be returned containing the document as a XOP Infoset.</li>
-    </ul>
-    <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:ResponseSlotList element is not used in this transaction.</p>
-    <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/@requestId attribute is not used in this transaction.</p>
-    <p>A full XML Schema Document for the XDS.b types is available online:  see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <h4 id="3.43.5.1">3.43.5.1 Sample SOAP Messages</h4>
-    <p>The samples in the following two sections show a typical request and its relative response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;, &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <h5 id="3.43.5.1.1">3.43.5.1.1 Sample Retrieve Document Set SOAP Request</h5>
-    <h6 id="3.43.5.1.1.1">3.43.5.1.1.1 Synchronous Web Services Exchange</h6>
-    <p class="note">
-      <span style="background-color:#ffffff">POST /tf6/services/xdsrepositoryb HTTP/1.1</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    type="application/xop+xml";</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    start="&lt;0.urn:uuid:3448B7F8EA6E8B9DFC1289514997518@apache.org&gt;";</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    start-info="application/soap+xml"</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">User-Agent: Axis2</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">Host: ihexds.nist.gov:5000</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    type="application/soap+xml"</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:3448B7F8EA6E8B9DFC1289514997518@apache.org&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    &lt;soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">        &lt;wsa:To soapenv:mustUnderstand="1"</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">            &gt;http://localhost:5000/tf6/services/xdsrepositoryb&lt;/wsa:To&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">        &lt;wsa:MessageID soapenv:mustUnderstand="1"</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">            &gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:MessageID&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">            &gt;urn:ihe:iti:2007:RetrieveDocumentSet&lt;/wsa:Action&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">        &lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">            &lt;DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">                &lt;RepositoryUniqueId&gt;1.19.6.24.109.42.1.5&lt;/RepositoryUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">                &lt;DocumentUniqueId&gt;1.42.20101110141555.15&lt;/DocumentUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">            &lt;/DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">        &lt;/RetrieveDocumentSetRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517--</span>
-    </p>
-    <p>This request message is in MTOM/XOP format because request/response message pairs must always be in the same format (MTOM/XOP vs. SIMPLE SOAP) and the response requires MTOM/XOP: one part for descriptive metadata and a second part for document contents.             </p>
-    <h6 id="3.43.5.1.1.2">3.43.5.1.1.2 Asynchronous Web Services Exchange</h6>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;s:Envelope</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSet&lt;/a:Action&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;a:Address&gt; http://192.168.2.4:9080/XdsService/</span>
-      <span>DocumentConsumerReceiver.svc</span>
-      <span style="background-color:#ffffff">&lt;/a:Address&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentRepositoryReceiver.svc&lt;/a:To&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-    </p>
-    <h5 id="3.43.5.1.2">3.43.5.1.2 Sample Retrieve Document Set SOAP Response</h5>
-    <h6 id="3.43.5.1.2.1">3.43.5.1.2.1 Synchronous Web Services Exchange</h6>
-    <p>In the following example, the HTTP header Transfer-Encoding: chunked and the corresponding chunk annotations were removed for readability.</p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">HTTP/1.1 200 OK</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Server: Apache-Coyote/1.1</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    type="application/xop+xml";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    start="0.urn:uuid:E910375860336E2B8F1289514978311@apache.org";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    start-info="application/soap+xml";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Date: Thu, 11 Nov 2010 22:36:15 GMT</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    type="application/soap+xml"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:E910375860336E2B8F1289514978311@apache.org&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;soapenv:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">             &gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/wsa:Action&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;wsa:RelatesTo&gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:RelatesTo&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;rs:RegistryResponse xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">             status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;xdsb:DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:RepositoryUniqueId</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                  &gt;1.19.6.24.109.42.1.5&lt;/xdsb:RepositoryUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:DocumentUniqueId</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                  &gt;1.42.20101110141555.15&lt;/xdsb:DocumentUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:mimeType&gt;text/plain&lt;/xdsb:mimeType&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                    &lt;xop:Include</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                   href="cid:1.urn:uuid:E910375860336E2B8F1289514978312@apache.org"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                        xmlns:xop="http://www.w3.org/2004/08/xop/include"/&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;/xdsb:Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;/xdsb:DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;/xdsb:RetrieveDocumentSetResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Type: text/plain</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-ID: &lt;1.urn:uuid:E910375860336E2B8F1289514978312@apache.org&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310--</span>
-    </p>
-    <p>This example shows the ‘wire format’ for MTOM/XOP. The Document element contains a &lt;xop:Include&gt; element that points to the document contents as a separate attachment.</p>
-    <p class="note">
-      <span>Note:</span>
-      <span style="width:13.75pt;text-indent:0pt;display:inline-block"> </span>
-      <span>In some systems, the ‘in memory’ format replaces the &lt;xop:Include&gt; with the Base64 encoded contents of the document. This is done so the entire message contents fits into an XML parse tree.</span>
-    </p>
-    <p>A second form of the response is possible, an un-optimized MTOM/XOP message. In this form the message is still formatted as a multipart but the document contents is not split out into a separate part of the multipart. Some popular Web Service toolkits generate this form for very small documents. The same response in this form looks like:</p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">HTTP/1.1 200 OK</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Server: Apache-Coyote/1.1</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    type="application/xop+xml";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    start="0.urn:uuid:E910375860336E2B8F1289514978311@apache.org";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    start-info="application/soap+xml";</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Date: Thu, 11 Nov 2010 22:36:15 GMT</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    type="application/soap+xml"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:E910375860336E2B8F1289514978311@apache.org&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;soapenv:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">             &gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/wsa:Action&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;wsa:RelatesTo&gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:RelatesTo&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;rs:RegistryResponse</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">             xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">             status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;xdsb:DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:RepositoryUniqueId</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                  &gt;1.19.6.24.109.42.1.5&lt;/xdsb:RepositoryUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:DocumentUniqueId</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                  &gt;1.42.20101110141555.15&lt;/xdsb:DocumentUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:mimeType&gt;text/plain&lt;/xdsb:mimeType&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;xdsb:Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                    Base64 encoded contents of document go here</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">                &lt;/xdsb:Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">          &lt;/xdsb:DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">        &lt;/xdsb:RetrieveDocumentSetResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310--</span>
-    </p>
-    <h6 id="3.43.5.1.2.2">3.43.5.1.2.2 Asynchronous Web Services Exchange</h6>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/a:Action&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/</span>
-      <span>a</span>
-      <span style="background-color:#ffffff">:MessageID&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentConsumerReceiver.svc&lt;/a:To&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-    </p>
-    <p style="font-size:8pt">
-      <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-    </p>
-    <h5 id="3.43.5.1.3">3.43.5.1.3 Sample Retrieve Document Set Response from On-Demand Document Entry</h5>
-    <p>The following example shows the response to retrieval of a dynamic document entry where the responder supports later retrieval of the document created.</p>
-    <div style="border:0.75pt solid #000000; clear:both">
-      <p style="font-size:10pt">
-        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.43">3.43Retrieve Document Set [ITI-43]</h2>
+      <p>This section corresponds to transaction [ITI-43] of the IHE Technical Framework. The Document Consumer, Document Repository, On-Demand Document Source, and Initiating Gateway Actors use transaction [ITI-43].</p>
+      <p>
+        <a name="_Toc80454086"> </a>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:243.7pt" class="tableHeader">Integration Profiles using this Transaction</td>
+        </tr>
+        <tr>
+          <td style="width:243.7pt">Cross-Enterprise Document Sharing-b (XDS.b)</td>
+        </tr>
+        <tr>
+          <td style="width:243.7pt">Cross-Community Access (XCA)</td>
+        </tr>
+      </table>
+      <p>
+        <a name="_Toc168486459"> </a>
+      </p>
+      <p>
+        <span>Actors that support the Asynchronous Web Services Exchange Option shall support Asynchronous Web Services Exchange on all XDS.b transactions they implement. Refer to Section ITI TF-2</span>
+        <a name="_Toc199194972">
+          <span>x: V.</span>
+          <span>3</span>
+          <span>Synchronous and Asynchronous</span>
+          <span>(WS-Addressing based)</span>
+          <span>Web Services Exchange for an explanation of Asynchronous Web Services Exchange.</span>
+        </a>
+      </p>
+      <h3 id="3.43.1">3.43.1 Scope</h3>
+      <p>This transaction is used by the Document Consumer to retrieve a set of documents from the Document Repository, On-Demand Document Source, or Initiating Gateway. The Document Consumer has already obtained the XDSDocumentEntry uniqueId and the Document Repository repositoryUniqueId from the Document Registry/Initiating Gateway by means of the Registry Stored Query transaction.</p>
+      <h3 id="3.43.2">3.43.2 Use Case Roles</h3>
+      <p> </p>
+      <img src="media/ai8zh-w242m.035.png" width="532" height="146" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Document Consumer</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Obtains document.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Document Repository or Integrated Document Source/Repository</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Provides documents.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor</span>
+        <span>: Initiating Gateway</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role</span>
+        <span>: An Initiating Gateway which implements the XDS Affinity Domain Option retrieves a set of documents by using the Cross Gateway Retrieve transaction and/or a Retrieve Document Set transaction.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor</span>
+        <span>:</span>
+        <span style="width:3.35pt;display:inline-block"> </span>
+        <span>On-Demand Document Source</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role</span>
+        <span>:</span>
+        <span style="width:9.34pt;display:inline-block"> </span>
+        <span>Creates documents in response to a request for retrieval of an on-demand document entry.</span>
+      </p>
+      <p class="note">Note: Within this transaction, the Document Repository and Integrated Document Source/Repository Actors can be used interchangeably.</p>
+      <h3 id="3.43.3">3.43.3 Referenced Standard</h3>
+      <p>
+        Implementors of this transaction shall comply with all requirements described in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:61.2pt">ebRIM</td>
+          <td style="width:396pt">OASIS/ebXML Registry Information Model v3.0</td>
+        </tr>
+        <tr>
+          <td style="width:61.2pt">ebRS</td>
+          <td style="width:396pt">OASIS/ebXML Registry Services Specifications v3.0</td>
+        </tr>
+        <tr>
+          <td style="width:61.2pt">ITI TF-3:4</td>
+          <td style="width:396pt">Metadata in Document Sharing profiles</td>
+        </tr>
+        <tr>
+          <td style="width:61.2pt">MTOM</td>
+          <td style="width:396pt">
+            <p>
+              <span>SOAP Message Transmission Optimization Mechanism</span>
+              <a href="http://www.w3.org/TR/soap12-mtom/">http://www.w3.org/TR/soap12-mtom/</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:61.2pt">XOP</td>
+          <td style="width:396pt">XML-binary Optimized Packaging http://www.w3.org/TR/2005/REC-xop10-20050125/</td>
+        </tr>
+      </table>
+      <h3 id="3.43.4">3.43.4 Messages</h3>
+      <img src="media/ai8zh-w242m.036.png" width="375" height="191" alt="" />
+      <p class="figureTitle">Figure 3.43.4-1: Interaction Diagram</p>
+      <h4 id="3.43.4.1">3.43.4.1 Retrieve Document Set Request</h4>
+      <h5 id="3.43.4.1.1">3.43.4.1.1Trigger Events</h5>
+      <p>The Document Consumer obtains document(s) uniqueId via the Registry Stored Query transaction. If the Registry Stored Query was sent to the Initiating Gateway the Document Consumer shall address the Retrieve Document Set to the Initiating Gateway. In this case no resolution of repositoryUniqueId is needed by the Document Consumer. The Document Consumer shall specify the homeCommunityId element in the Retrieve Document Set transaction if it was found in the entry containing the uniqueId of the document being retrieved. For more information regarding the homeCommunityId, see Section 3.38.4.1.2.</p>
+      <p>Once the document(s) uniqueId have been obtained, the Document Consumer will start the Retrieve Document Set Request with the Document Repository.</p>
+      <h5 id="3.43.4.1.2">3.43.4.1.2 Message Semantics</h5>
+      <p>The Retrieve Document Set Request shall carry the following information:</p>
+      <ul>
+        <li class="bullet-list1">A required repositoryUniqueId that identifies the repository from which the document is to be retrieved. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
+        <li class="bullet-list1">A required documentUniqueId that identifies the document within the repository. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
+        <li class="bullet-list1">
+          If available, the homeCommunityId element that identifies the community holding the document. The homeCommunityId element shall be specified if the XDSDocumentEntry containing the uniqueId of the document contains the homeCommunityId attribute. See
+          <a href="../Volume2a/ITI-18.html#3.18.4.1.2">ITI TF-2a: 3.18.4.1.2</a>
+          for details.
+        </li>
+      </ul>
+      <p>The repositoryUniqueId associated to each document requested can be different therefore allowing a single request to identify multiple repositories.</p>
+      <h5 id="3.43.4.1.3">3.43.4.1.3 Expected Actions</h5>
+      <p>
+        <a name="_Toc80450250">When receiving a Retrieve Document Set Request, a Document Repository or an Initiating Gateway shall generate a Retrieve Document Set Response containing the requested documents or error codes if the documents could not be retrieved.</a>
+      </p>
+      <p>An XCA Initiating Gateway receiving the Retrieve Document Set Request shall use the homeCommunityId to obtain the Web Services endpoint of the Responding Gateways or, in the case where homeCommunityId identifies the local community, use the repositoryUniqueId to obtain the Web Services endpoint of the Document Repositories. The process of obtaining the Web Services endpoint is not further specified in this transaction. The Initiating Gateway shall send Cross Gateway Retrieves/Retrieve Document Set transactions to each appropriate Responding Gateway/Document Repository, consolidate the results, and return them to the Document Consumer.</p>
+      <h6 id="3.43.4.1.3.1">3.43.4.1.3.1 Basic Patient Privacy Enforcement Option</h6>
+      <p>If the Basic Patient Privacy Enforcement Option is implemented:</p>
+      <ul>
+        <li class="bullet-list1">The Document Consumer shall abide by the XDS Affinity Domain Policies represented by the confidentialityCode in the metadata associated with the document. The Document Consumer likely will have user access controls or business rule capabilities to determine the details of how confidentiality codes apply to query results. The details of this are product specific and not specified by IHE. These rules shall reduce the query results to only those that are appropriate to the current situation for that actor and user.</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">The Document Consumer shall be able to be configured with Patient Privacy Policies, Patient Privacy Policy Identifiers (OIDs) and associated information necessary to understand and enforce the XDS Affinity Domain Policy. The details of this are product specific and not specified by IHE.</li>
+      </ul>
+      <h6 id="3.43.4.1.3.2">3.43.4.1.3.2 Delayed Document Assembly Option</h6>
+      <p>If an Integrated Document Source/Repository supports the Delayed Document Assembly Option and has registered the document being retrieved with</p>
+      <ul>
+        <li class="bullet-list1">size = 0 (zero)</li>
+        <li class="bullet-list1">hash = da39a3ee5e6b4b0d3255bfef95601890afd80709 (SHA1 hash of a zero length file)</li>
+      </ul>
+      <p>then it shall:</p>
+      <ul>
+        <li class="bullet-list1">Assemble into a complete document the content identified at the time the Integrated Document Source/Repository registered the associated Stable Document Entry in the Document Registry.</li>
+        <li class="bullet-list1">Return the assembled document in response to the Retrieve Document Set Request</li>
+        <li class="bullet-list1">Save the assembled document for future retrievals since all future retrievals shall return the identical content.</li>
+        <li class="bullet-list1">Update the Stable Document Entry in the Document Registry with the size and hash values consistent with the assembled document. This update shall be accomplished by grouping with the Document Administrator in the XDS.b Profile and using the Update Document Set [ITI-57] transaction.</li>
+      </ul>
+      <h4 id="3.43.4.2">3.43.4.2 Retrieve Document Set Response</h4>
+      <h5 id="3.43.4.2.1">3.43.4.2.1 Trigger Events</h5>
+      <p>This message will be triggered by a Retrieve Document Set Request Message</p>
+      <h5 id="3.43.4.2.2">3.43.4.2.2 Message Semantics</h5>
+      <p>The Retrieve Document Set Response Message shall carry the following information, for each of the returned documents:</p>
+      <ul>
+        <li class="bullet-list1">A homeCommunityId. This value shall be the same as the homeCommunityId value in the Retrieve Document Set Request Message. If the homeCommunityId value is not present in the Retrieve Document Set Request Message, this shall not be present.</li>
+        <li class="bullet-list1">A required repositoryUniqueId that identifies the repository from which the document is to be retrieved. This value shall be the same as the value of the repositoryUniqueId in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
+        <li class="bullet-list1">A required documentUniqueId that identifies the document within the repository. This value shall be the same as the documentUniqueId in the original Retrieve Document Set Request Message. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
+        <li class="bullet-list1">The retrieved document as a XOP Infoset</li>
+        <li class="bullet-list1">The MIME type of the retrieved document</li>
+        <li class="bullet-list1">Errors or warnings in case the document(s) could not be retrieved successfully</li>
+      </ul>
+      <p>If the documentUniqueId is associated with an On-Demand Document Entry, the Retrieve Document Set Response Message shall contain a NewDocumentUniqueId element that identifies the document that is returned in the Retrieve Document Set Response. This identifier shall be different than the DocumentUniqueId element which identifies the On-Demand Document Entry. The Retrieve Document Set Response Message may also include a NewRepositoryUniqueId element that identifies the Document Repository which holds the document returned in the Retrieve Document Set Response. If this element is not included, the document returned in the response has not been persisted for later retrieval. If the On-Demand Document Source implements the Persistence of Retrieved Documents Option, this element shall be specified. If a future Retrieve Document Set Message for the same DocumentUniqueId returns the same NewDocumentUniqueId, the content of the document shall be identical to the prior returned content. On-Demand Document Source Actors are encouraged to re-use Document uniqueId’s whenever content has not changed in order to facilitate identification of new content by Document Consumers.</p>
+      <h5 id="3.43.4.2.3">3.43.4.2.3 Expected Actions</h5>
+      <p>A Document Repository or On-Demand Document Source shall return the document(s) indicated in the request.</p>
+      <p>
+        The Document Repository shall return the document or an error code in case the document could not be return. The conditions of failure and possible error messages are given in the ebRS standard and detailed in
+        <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a>
+        Error Reporting.
+      </p>
+      <p>An On-Demand Document Source which supports the Persistence of Retrieved Documents Option shall save the document content returned in the retrieve response and issue a Register Document Set-b [ITI-42] transaction to register a Stable Document Entry which describes the saved document. The On-Demand Document Source shall complete the registration of the Stable Document Entry prior to responding to the Retrieve Document Set request. The registration of the new Stable Document Entry shall include:</p>
+      <ul>
+        <li class="bullet-list1">A Submission Set</li>
+        <li class="bullet-list1">A DocumentEntry representing the Stable DocumentEntry.</li>
+        <li class="bullet-list1">A HasMember association linking DocumentEntry to SubmissionSet.</li>
+        <li class="bullet-list1">
+          An IsSnapshotOf Association which identifies the sourceObject as the new Stable Document Entry and the targetObject as the On-Demand Document Entry which contains the uniqueID used in the Retrieve Document Set request. See
+          <a href="../Volume3/ch-1.2.html#4.2.2.2">ITI TF-3: 4.2.2.2</a>
+          for information about the IsSnapshotOf Association.
+        </li>
+      </ul>
+      <p>If the On-Demand Document Source has previously registered a snapshot of the On-Demand DocumentEntry, the registration of the new Stable DocumentEntry may also include a RPLC association, identifying the new Stable DocumentEntry as a replacement of the previously-registered Stable DocumentEntry.</p>
+      <p>If this is not the first request for this on-demand document and a prior document was replaced, a Replace Association which identifies the prior document.</p>
+      <h6 id="3.43.4.2.3.1">3.43.4.2.3.1 Compatibility of Options</h6>
+      <p>If the Document Consumer does not support the On-Demand Documents Option it will never send a Retrieve Document Set request for an On-Demand Document entry. In this case, none of the new attributes will be included in the response.</p>
+      <p>If the Document Consumer does support the On-Demand Documents Option, it will only direct requests for On-Demand Document Entries to responders which have specified their unique repositoryUniqueId in the On-Demand Document Entry from the registry. Thus, unless there is an error in the metadata, there are no compatibility concerns with this transaction.</p>
+      <h6 id="3.43.4.2.3.2">3.43.4.2.3.2 Delayed Document Assembly Option</h6>
+      <p>If a Document Consumer supports the Delayed Document Assembly Option, it shall not use the size=0 and hash=SHA1 hash of a zero length file values to verify documents. If verification is desired the Document Consumer shall use an appropriate stored query from the Registry Stored Query [ITI-18] transaction to get the updated size and hash values.</p>
+      <h3 id="3.43.5">3.43.5 Protocol Requirements</h3>
+      <p>
+        Implementors of this transaction shall comply with all requirements described in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
+      </p>
+      <p>The Retrieve Document Set transaction shall use SOAP12 and MTOM with XOP encoding (labeled MTOM/XOP in this specification). See ITI TF-2x: Appendix V.3 for details.</p>
+      <p>The Document Repository shall:</p>
+      <ul>
+        <li class="bullet-list1">Accept the Retrieve Document Set Request message in MTOM/XOP format.</li>
+        <li class="bullet-list1">Generate the Retrieve Document Set Response message in MTOM/XOP format</li>
+      </ul>
+      <p>The Document Consumer shall:</p>
+      <ul>
+        <li class="bullet-list1">Generate the Retrieve Document Set Request message in MTOM/XOP format.</li>
+        <li class="bullet-list1">Accept the Retrieve Document Set Response message in MTOM/XOP format.</li>
+      </ul>
+      <p>
+        XML namespace prefixes are for informational purposes only and are documented in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        , Table V.2.4-1.
+      </p>
+      <p>Document Repository: These are the requirements for the Retrieve Document Set transaction presented in the order in which they would appear in the Document Repository WSDL definition:</p>
+      <ul>
+        <li class="bullet-list1">The following types shall be imported (xsd:import) in the /definitions/types section:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">namespace="urn:ihe:iti:xds-b:2007", schema="IHEXDS.xsd"</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">
+          <span>The /definitions/message/part/@element attribute of the Retrieve Document Set Request message shall be defined as “</span>
+          <span style="background-color:#ffffff">ihe:RetrieveDocumentSetRequest</span>
+          <span>”</span>
+        </li>
+        <li class="bullet-list1">
+          <span>The /definitions/message/part/@element attribute of the Retrieve Document Set Response message shall be defined as “</span>
+          <span style="background-color:#ffffff">ihe:RetrieveDocumentSet</span>
+          <span>Response”</span>
+        </li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">Refer to Table 3.43.5.b below for additional attribute requirements</li>
+      </ul>
+      <p>To support the WS-Addressing Asynchronous Web Services Exchange Option on the Document Consumer, the Document Repository shall support the use of a non-anonymous response EPR in the WS-Addressing replyTo header.</p>
+      <p class="tableTitle">Table 3.43.5.b: Additional Attribute Requirements</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:173.7pt" class="tableHeader">Attribute</td>
+            <td style="width:175.95pt" class="tableHeader">Value</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:173.7pt">/definitions/portType/operation@name</td>
+            <td style="width:175.95pt">DocumentConsumer_RetrieveDocumentSet</td>
+          </tr>
+          <tr>
+            <td style="width:173.7pt">/definitions/portType/operation/input/@wsaw:Action</td>
+            <td style="width:175.95pt">urn:ihe:iti:2007:RetrieveDocumentSet</td>
+          </tr>
+          <tr>
+            <td style="width:173.7pt">/definitions/portType/operation/output/@wsaw:Action</td>
+            <td style="width:175.95pt">urn:ihe:iti:2007:RetrieveDocumentSetResponse</td>
+          </tr>
+          <tr>
+            <td style="width:173.7pt">/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
+            <td style="width:175.95pt">false</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <span>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section</span>
+        <a href="#_Ref167821063">3.43.5.1 Sample SOAP Messages</a>
+        <span>.</span>
+      </p>
+      <p>
+        An informative WSDL for the Document Repository is available online:  see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
+      </p>
+      <p>The &lt;ihe:RetrieveDocumentSetRequest/&gt; element is defined as:</p>
+      <ul>
+        <li class="bullet-list1">One or more &lt;ihe:DocumentRequest/&gt; elements, each one representing an individual document that the Document Consumer wants to retrieve from the Document Repository. Each &lt;ihe:DocumentRequest/&gt; element contains:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">A required &lt;ihe:RepositoryUniqueId/&gt; element that identifies the repository from which the document is to be retrieved. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
+        <li class="bullet-list2">A required &lt;ihe:DocumentUniqueId/&gt; that identifies the document within the repository. This value corresponds to the XDSDocumentEntry.uniqueId.</li>
+        <li class="bullet-list2">An optional &lt;ihe:HomeCommunityId/&gt; element that corresponds to the home attribute of the Identifiable class in ebRIM.</li>
+      </ul>
+      <p>This allows the Document Consumer to specify one or more documents to retrieve from the Document Repository.</p>
+      <p>The &lt;ihe:RetrieveDocumentResponse/&gt; element is defined as:</p>
+      <ul>
+        <li class="bullet-list1">A required /ihe:RetrieveDocumentSetResponse/rs:RegistryResponse element</li>
+        <li class="bullet-list1">An optional sequence of &lt;ihe:DocumentResponse/&gt; elements containing</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">A &lt;ihe:HomeCommunityId/&gt; element. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/HomeCommunityId element in the Retrieve Document Set Request Message. If the &lt;ihe:HomeCommunityId/&gt; element is not present in the Retrieve Document Set Request Message, this value shall not be present.</li>
+        <li class="bullet-list2">A required &lt;ihe:RepositoryUniqueId/&gt; that identifies the repository from which the document is to be retrieved. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/RepositoryUniqueId element in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.repositoryUniqueId.</li>
+        <li class="bullet-list2">A required &lt;ihe:DocumentUniqueId/&gt; that identifies the document within the repository. The value of this element shall be the same as the value of the /RetrieveDocumentSetRequest/DocumentRequest/DocumentUniqueId element in the original Retrieve Document Set Request Message. This value corresponds to XDSDocumentEntry.uniqueId.</li>
+        <li class="bullet-list2">A required &lt;ihe:Document/&gt; element that contains the retrieved document using the xsi:base64Binary data type. (Note: This is the logical representation of the document in the XML. The wire format may be different; see ITI TF-2x: Appendix V.8.)</li>
+        <li class="bullet-list2">A required &lt;ihe:mimeType/&gt; element that indicates the MIME type of the retrieved document</li>
+        <li class="bullet-list2">An optional &lt;ihe:NewDocumentUniqueId/&gt; element that identifies the document returned in the request when retrieval is of an On-Demand Document. This is required when retrieval is of an On-Demand Document.</li>
+        <li class="bullet-list2">An optional &lt;ihe:NewRepositoryUniqueId/&gt; element that identifies the Document Repository that will support retrieval of the document created as a result of retrieval of the On-Demand Document. This is required when the On-Demand Document Source supports the Persistence of Retrieved Documents Option.</li>
+      </ul>
+      <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/@status attributes provides the overall status of the request: It shall contain one of the following values:</p>
+      <p style="font-size:10pt">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success</p>
+      <p style="font-size:10pt">urn:ihe:iti:2007:ResponseStatusType:PartialSuccess</p>
+      <p style="font-size:10pt">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure</p>
+      <p>
+        See
+        <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a>
+        Error Reporting for the interpretation of these values.
+      </p>
+      <p>For each document requested in a /RetrieveDocumentSetRequest/DocumentRequest element:</p>
+      <ul>
+        <li class="bullet-list1">If a warning is reported when retrieving the document, then a /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be returned with:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">@severity is urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Warning</li>
+        <li class="bullet-list2">@errorCode is specified</li>
+        <li class="bullet-list2">@codeContext contains the warning message</li>
+        <li class="bullet-list2">@location contains the DocumentUniqueId of the document requested</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">The document shall be returned in an instance of /RetrieveDocumentSetResponse/DocumentResponse/Document as a XOP Infoset. The returned document and warning are correlated via the DocumentUniqueId.</li>
+        <li class="bullet-list1">If an error is reported when retrieving a document, then a /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be returned with:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">@severity is urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error</li>
+        <li class="bullet-list2">@errorCode is specified</li>
+        <li class="bullet-list2">@codeContext contains the error message</li>
+        <li class="bullet-list2">@location contains the DocumentUniqueId of the document requested</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">No corresponding RetrieveDocumentSetResponse/DocumentResponse element shall be returned</li>
+        <li class="bullet-list1">If the document is successfully retrieved (without warning) then no /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:RegistryErrorList/ rs:RegistryError element shall be present and a /RetrieveDocumentSetResponse/DocumentResponse/Document element shall be returned containing the document as a XOP Infoset.</li>
+      </ul>
+      <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/rs:ResponseSlotList element is not used in this transaction.</p>
+      <p>The /RetrieveDocumentSetResponse/rs:RegistryResponse/@requestId attribute is not used in this transaction.</p>
+      <p>
+        A full XML Schema Document for the XDS.b types is available online:  see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
+      </p>
+      <h4 id="3.43.5.1">3.43.5.1 Sample SOAP Messages</h4>
+      <p>
+        The samples in the following two sections show a typical request and its relative response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;, &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
+      </p>
+      <h5 id="3.43.5.1.1">3.43.5.1.1 Sample Retrieve Document Set SOAP Request</h5>
+      <h6 id="3.43.5.1.1.1">3.43.5.1.1.1 Synchronous Web Services Exchange</h6>
+      <p class="note">
+        <span style="background-color:#ffffff">POST /tf6/services/xdsrepositoryb HTTP/1.1</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    type="application/xop+xml";</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    start="&lt;0.urn:uuid:3448B7F8EA6E8B9DFC1289514997518@apache.org&gt;";</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    start-info="application/soap+xml"</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">User-Agent: Axis2</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">Host: ihexds.nist.gov:5000</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    type="application/soap+xml"</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:3448B7F8EA6E8B9DFC1289514997518@apache.org&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    &lt;soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">        &lt;wsa:To soapenv:mustUnderstand="1"</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">            &gt;http://localhost:5000/tf6/services/xdsrepositoryb&lt;/wsa:To&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">        &lt;wsa:MessageID soapenv:mustUnderstand="1"</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">            &gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:MessageID&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">            &gt;urn:ihe:iti:2007:RetrieveDocumentSet&lt;/wsa:Action&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">        &lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">            &lt;DocumentRequest&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">                &lt;RepositoryUniqueId&gt;1.19.6.24.109.42.1.5&lt;/RepositoryUniqueId&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">                &lt;DocumentUniqueId&gt;1.42.20101110141555.15&lt;/DocumentUniqueId&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">            &lt;/DocumentRequest&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">        &lt;/RetrieveDocumentSetRequest&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
+      </p>
+      <p class="note">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_3448B7F8EA6E8B9DFC1289514997517--</span>
+      </p>
+      <p>This request message is in MTOM/XOP format because request/response message pairs must always be in the same format (MTOM/XOP vs. SIMPLE SOAP) and the response requires MTOM/XOP: one part for descriptive metadata and a second part for document contents.             </p>
+      <h6 id="3.43.5.1.1.2">3.43.5.1.1.2 Asynchronous Web Services Exchange</h6>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;s:Envelope</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
         <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/a:Action&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSet&lt;/a:Action&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:MessageID&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;a:Address&gt; http://192.168.2.4:9080/XdsService/</span>
+        <span>DocumentConsumerReceiver.svc</span>
+        <span style="background-color:#ffffff">&lt;/a:Address&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentRepositoryReceiver.svc&lt;/a:To&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
         <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
         <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;RetrieveDocumentSetRequest xmlns="urn:ihe:iti:xds-b:2007"&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;DocumentRequest&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
         <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
         <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span>      &lt;NewDocumentUniqueId&gt;1.3.6.1.4...2897&lt;/NewDocumentUniqueId&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span>      &lt;NewRepositoryUniqueId&gt;</span>
-        <span style="background-color:#ffffff">1.3.6.1.4...1000</span>
-        <span>&lt;/NewRepositoryUniqueId&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;DocumentRequest&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
         <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2301&lt;/DocumentUniqueId&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;/DocumentRequest&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
-        <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetRequest&gt;</span>
       </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
-        <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
-      </p>
-      <p style="font-size:10pt">
-        <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
         <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
       </p>
-      <p style="font-size:10pt">
+      <p class="note">
         <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
       </p>
-    </div>
-    <h3 id="3.43.6">3.43.6 Security Considerations</h3>
-    <p>Relevant XDS Affinity Domain Security background is discussed in the XDS Security Considerations Section (see <a href="../Volume1/ch-10.html#10.7"><a href="../Volume1/ch-10.html#10.7">ITI TF-1: 10.7</a></a>).</p>
-    <h4 id="3.43.6.1">3.43.6.1 Audit Record Considerations</h4>
-    <p>The Retrieve Document Set transaction is either a PHI-Import event or a PHI-Export event, depending on the actor, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1, with the following exceptions.</p>
-    <p>The Document Repository Actor, On-Demand Document Source, and Initiating Gateway shall generate an “Export” event. This may be an event for each Retrieve Document transaction, or multiple transactions for the same patient may be heuristically combined. The heuristics for this combination are not specified by IHE. It is intended to reduce the volume of audit records. Combination is permitted when the active participants and patient are the same, and the time difference is considered insignificant.</p>
-    <p>The Document Consumer shall generate an “Import” event. This may be one event per transaction, or multiple transactions may be reported as a single event using a heuristic for combining transactions. Combination is permitted when the active participants and patient are the same, and the time difference is considered insignificant.</p>
-    <p>If some documents were retrieved successfully and others were not, the actors involved shall record a “success” audit event for those documents retrieved successfully and a “failure” audit event for those documents not retrieved successfully.</p>
-    <h5 id="3.43.6.1.1">3.43.6.1.1 Document Consumer audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt" class="tableHeader">Field Name</td>
-        <td style="width:25.2pt" class="tableHeader">Opt</td>
-        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“C” (Create)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-43”, “IHE Transactions”, “Retrieve Document Set”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (0..1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">
-          <p>
-            <span>Document (1..n)</span>
-            <span style="font-style:italic">(see combining rules above)</span>
-          </p>
-        </td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Human Requestor (if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>(if-known)</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Document</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">C</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">
-          <p>The ParticipantObjectDetail element may occur more than once.</p>
-          <p>In one element, the value of &lt;ihe:RepositoryUniqueId/&gt; in value attribute, “Repository Unique Id” in type attribute</p>
-          <p>
-            <span>In another element, the value of “ihe:homeCommunityID” as the value of the attribute</span>
-            <span style="font-style:italic">type</span>
-            <span>and the value of the homeCommunityID as the value of the attribute</span>
-            <span style="font-style:italic">value</span>
-          </p>
-        </td>
-      </tr>
-    </table>
-    <h5 id="3.43.6.1.2">3.43.6.1.2 Document Repository, On-Demand Document Source, and Initiating Gateway audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt" class="tableHeader">Field Name</td>
-        <td style="width:25.2pt" class="tableHeader">Opt</td>
-        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“R” (Read)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-43”, “IHE Transactions”, “Retrieve Document Set”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Repository) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">
-          <p>
-            <span>Document (1..n)</span>
-            <span style="font-style:italic">(see combining rules above)</span>
-          </p>
-        </td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Document URI</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">C</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">
-          <p>The ParticipantObjectDetail element may occur more than once.</p>
-          <p>In one element, the value of &lt;ihe:RepositoryUniqueId/&gt; in value attribute, “Repository Unique Id” in type attribute</p>
-          <p>
-            <span>In another element, the value of “ihe:homeCommunityID” as the value of the attribute</span>
-            <span style="font-style:italic">type</span>
-            <span>and the value of the homeCommunityID as the value of the attribute</span>
-            <span style="font-style:italic">value</span>
-          </p>
-        </td>
-      </tr>
-    </table>
-    <p>
-      <a name="_Toc269212454"> </a>
-    </p>
+      <h5 id="3.43.5.1.2">3.43.5.1.2 Sample Retrieve Document Set SOAP Response</h5>
+      <h6 id="3.43.5.1.2.1">3.43.5.1.2.1 Synchronous Web Services Exchange</h6>
+      <p>In the following example, the HTTP header Transfer-Encoding: chunked and the corresponding chunk annotations were removed for readability.</p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">HTTP/1.1 200 OK</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Server: Apache-Coyote/1.1</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    type="application/xop+xml";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    start="0.urn:uuid:E910375860336E2B8F1289514978311@apache.org";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    start-info="application/soap+xml";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Date: Thu, 11 Nov 2010 22:36:15 GMT</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    type="application/soap+xml"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:E910375860336E2B8F1289514978311@apache.org&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;soapenv:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">             &gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/wsa:Action&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;wsa:RelatesTo&gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:RelatesTo&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;rs:RegistryResponse xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">             status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;xdsb:DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:RepositoryUniqueId</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                  &gt;1.19.6.24.109.42.1.5&lt;/xdsb:RepositoryUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:DocumentUniqueId</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                  &gt;1.42.20101110141555.15&lt;/xdsb:DocumentUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:mimeType&gt;text/plain&lt;/xdsb:mimeType&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                    &lt;xop:Include</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                   href="cid:1.urn:uuid:E910375860336E2B8F1289514978312@apache.org"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                        xmlns:xop="http://www.w3.org/2004/08/xop/include"/&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;/xdsb:Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;/xdsb:DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;/xdsb:RetrieveDocumentSetResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Type: text/plain</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-ID: &lt;1.urn:uuid:E910375860336E2B8F1289514978312@apache.org&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310--</span>
+      </p>
+      <p>This example shows the ‘wire format’ for MTOM/XOP. The Document element contains a &lt;xop:Include&gt; element that points to the document contents as a separate attachment.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:13.75pt;text-indent:0pt;display:inline-block"> </span>
+        <span>In some systems, the ‘in memory’ format replaces the &lt;xop:Include&gt; with the Base64 encoded contents of the document. This is done so the entire message contents fits into an XML parse tree.</span>
+      </p>
+      <p>A second form of the response is possible, an un-optimized MTOM/XOP message. In this form the message is still formatted as a multipart but the document contents is not split out into a separate part of the multipart. Some popular Web Service toolkits generate this form for very small documents. The same response in this form looks like:</p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">HTTP/1.1 200 OK</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Server: Apache-Coyote/1.1</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Type: multipart/related;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    boundary=MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    type="application/xop+xml";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    start="0.urn:uuid:E910375860336E2B8F1289514978311@apache.org";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    start-info="application/soap+xml";</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Date: Thu, 11 Nov 2010 22:36:15 GMT</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Type: application/xop+xml; charset=UTF-8;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    type="application/soap+xml"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-Transfer-Encoding: binary</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">Content-ID: &lt;0.urn:uuid:E910375860336E2B8F1289514978311@apache.org&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    xmlns:wsa="http://www.w3.org/2005/08/addressing"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;soapenv:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;wsa:Action soapenv:mustUnderstand="1"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">             &gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/wsa:Action&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;wsa:RelatesTo&gt;urn:uuid:3448B7F8EA6E8B9DFC1289514997508&lt;/wsa:RelatesTo&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;soapenv:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;rs:RegistryResponse</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">             xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">             status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;xdsb:DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:RepositoryUniqueId</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                  &gt;1.19.6.24.109.42.1.5&lt;/xdsb:RepositoryUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:DocumentUniqueId</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                  &gt;1.42.20101110141555.15&lt;/xdsb:DocumentUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:mimeType&gt;text/plain&lt;/xdsb:mimeType&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;xdsb:Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                    Base64 encoded contents of document go here</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">                &lt;/xdsb:Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">          &lt;/xdsb:DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">        &lt;/xdsb:RetrieveDocumentSetResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">    &lt;/soapenv:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;/soapenv:Envelope&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">--MIMEBoundaryurn_uuid_E910375860336E2B8F1289514978310--</span>
+      </p>
+      <h6 id="3.43.5.1.2.2">3.43.5.1.2.2 Asynchronous Web Services Exchange</h6>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/a:Action&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/</span>
+        <span>a</span>
+        <span style="background-color:#ffffff">:MessageID&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentConsumerReceiver.svc&lt;/a:To&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
+      </p>
+      <p style="font-size:8pt">
+        <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+      </p>
+      <h5 id="3.43.5.1.3">3.43.5.1.3 Sample Retrieve Document Set Response from On-Demand Document Entry</h5>
+      <p>The following example shows the response to retrieval of a dynamic document entry where the responder supports later retrieval of the document created.</p>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RetrieveDocumentSetResponse&lt;/a:Action&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:0fbfdced-6c01-4d09-a110-2201afedaa02&lt;/a:RelatesTo&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="background-color:#ffffff">&lt;RetrieveDocumentSetResponse</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">xmlns="urn:ihe:iti:xds-b:2007"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="background-color:#ffffff">&lt;rs:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>      &lt;NewDocumentUniqueId&gt;1.3.6.1.4...2897&lt;/NewDocumentUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>      &lt;NewRepositoryUniqueId&gt;</span>
+          <span style="background-color:#ffffff">1.3.6.1.4...1000</span>
+          <span>&lt;/NewRepositoryUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="background-color:#ffffff">&lt;DocumentResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;RepositoryUniqueId&gt;1.3.6.1.4...1000&lt;/RepositoryUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;DocumentUniqueId&gt;1.3.6.1.4...2300&lt;/DocumentUniqueId&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;mimeType&gt;text/xml&lt;/mimeType&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="width:7.05pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:28.35pt"> </span>
+          <span style="background-color:#ffffff">&lt;Document&gt;UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi&lt;/Document&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:21.3pt"> </span>
+          <span style="background-color:#ffffff">&lt;/DocumentResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:14.2pt"> </span>
+          <span style="background-color:#ffffff">&lt;/RetrieveDocumentSetResponse&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:7.1pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:7.1pt"> </span>
+          <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
+        </p>
+      </div>
+      <h3 id="3.43.6">3.43.6 Security Considerations</h3>
+      <p>
+        Relevant XDS Affinity Domain Security background is discussed in the XDS Security Considerations Section (see
+        <a href="../Volume1/ch-10.html#10.7">ITI TF-1: 10.7</a>
+        ).
+      </p>
+      <h4 id="3.43.6.1">3.43.6.1 Audit Record Considerations</h4>
+      <p>The Retrieve Document Set transaction is either a PHI-Import event or a PHI-Export event, depending on the actor, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1, with the following exceptions.</p>
+      <p>The Document Repository Actor, On-Demand Document Source, and Initiating Gateway shall generate an “Export” event. This may be an event for each Retrieve Document transaction, or multiple transactions for the same patient may be heuristically combined. The heuristics for this combination are not specified by IHE. It is intended to reduce the volume of audit records. Combination is permitted when the active participants and patient are the same, and the time difference is considered insignificant.</p>
+      <p>The Document Consumer shall generate an “Import” event. This may be one event per transaction, or multiple transactions may be reported as a single event using a heuristic for combining transactions. Combination is permitted when the active participants and patient are the same, and the time difference is considered insignificant.</p>
+      <p>If some documents were retrieved successfully and others were not, the actors involved shall record a “success” audit event for those documents retrieved successfully and a “failure” audit event for those documents not retrieved successfully.</p>
+      <h5 id="3.43.6.1.1">3.43.6.1.1 Document Consumer audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt" class="tableHeader">Field Name</td>
+          <td style="width:25.2pt" class="tableHeader">Opt</td>
+          <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“C” (Create)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-43”, “IHE Transactions”, “Retrieve Document Set”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (0..1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">
+            <p>
+              <span>Document (1..n)</span>
+              <span style="font-style:italic">(see combining rules above)</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Human Requestor (if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>(if-known)</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Document</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">C</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">
+            <p>The ParticipantObjectDetail element may occur more than once.</p>
+            <p>In one element, the value of &lt;ihe:RepositoryUniqueId/&gt; in value attribute, “Repository Unique Id” in type attribute</p>
+            <p>
+              <span>In another element, the value of “ihe:homeCommunityID” as the value of the attribute</span>
+              <span style="font-style:italic">type</span>
+              <span>and the value of the homeCommunityID as the value of the attribute</span>
+              <span style="font-style:italic">value</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <h5 id="3.43.6.1.2">3.43.6.1.2 Document Repository, On-Demand Document Source, and Initiating Gateway audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt" class="tableHeader">Field Name</td>
+          <td style="width:25.2pt" class="tableHeader">Opt</td>
+          <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“R” (Read)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-43”, “IHE Transactions”, “Retrieve Document Set”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Document Repository) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Repository) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">
+            <p>
+              <span>Document (1..n)</span>
+              <span style="font-style:italic">(see combining rules above)</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">If Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Document URI</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The value of &lt;ihe:DocumentUniqueId/&gt;</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">C</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">
+            <p>The ParticipantObjectDetail element may occur more than once.</p>
+            <p>In one element, the value of &lt;ihe:RepositoryUniqueId/&gt; in value attribute, “Repository Unique Id” in type attribute</p>
+            <p>
+              <span>In another element, the value of “ihe:homeCommunityID” as the value of the attribute</span>
+              <span style="font-style:italic">type</span>
+              <span>and the value of the homeCommunityID as the value of the attribute</span>
+              <span style="font-style:italic">value</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <a name="_Toc269212454"> </a>
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

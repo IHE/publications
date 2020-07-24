@@ -5,1496 +5,1508 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.21">3.21 Patient Demographics Query [ITI-21]</h2>
-    <p>This section corresponds to transaction [ITI-21] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-21] is used by the Patient Demographics Consumer and Patient Demographics Supplier Actors.</p>
-    <h3 id="3.21.1">3.21.1 Scope</h3>
-    <p>This transaction involves a request by the Patient Demographics Consumer for information about patients whose demographic data match data provided in the query message. The request is received by the Patient Demographics Supplier Actor. The Patient Demographics Supplier immediately processes the request and returns a response in the form of demographic information for matching patients.</p>
-    <h3 id="3.21.2">3.21.2 Use Case Roles</h3>
-    <img src="media/amdr0-jc4sx.037.png" width="365" height="154" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Patient Demographics Consumer</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Requests a list of patients matching a minimal set of demographic criteria (e.g., ID or partial name) from the Patient Demographics Supplier. Populates its attributes with demographic information received from the Patient Demographics Supplier.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Patient Demographics Supplier</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Returns demographic information for all patients matching the demographic criteria provided by the Patient Demographics Consumer.</span>
-    </p>
-    <h3 id="3.21.3">3.21.3 Referenced Standards</h3>
-    <p>
-      <span style="font-weight:bold">HL7</span>
-      <span>:</span>
-      <span style="width:9.33pt;display:inline-block"> </span>
-      <span>Version 2.5, Chapter 2 – Control</span>
-    </p>
-    <p>Version 2.5, Chapter 3 – Patient Administration</p>
-    <p>Version 2.5, Chapter 5 – Query</p>
-    <h3 id="3.21.4">3.21.4 Messages</h3>
-    <img src="media/amdr0-jc4sx.038.png" width="337" height="202" alt="" />
-    <p class="figureTitle">Figure 3.21.4-1: Interaction Diagram</p>
-    <h4 id="3.21.4.1">3.21.4.1 Patient Demographics Query</h4>
-    <h5 id="3.21.4.1.1">3.21.4.1.1 Trigger Events</h5>
-    <p>A Patient Demographics Consumer’s need to select a patient based on demographic information about patients whose information matches a minimal set of known data will trigger the Patient Demographics Query based on the following HL7 trigger event:</p>
-    <p>Q22 – Find Candidates</p>
-    <h5 id="3.21.4.1.2">3.21.4.1.2 Message Semantics</h5>
-    <p>The Patient Demographics Query is conducted by the HL7 QBP^Q22 message. The Patient Demographics Consumer shall generate the query message whenever it needs to select from a list of patients whose information matches a minimal set of demographic data. The segments of the message listed below are required, and their detailed descriptions are provided in the following subsections.</p>
-    <p class="tableTitle">Table 3.21-1: QBP Query by Parameter</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:30.75pt" class="tableHeader">QBP</td>
-        <td style="width:110.2pt" class="tableHeader">Query by Parameter</td>
-        <td style="width:98.5pt" class="tableHeader">Chapter in HL7 2.5</td>
-      </tr>
-      <tr>
-        <td style="width:30.75pt">MSH</td>
-        <td style="width:110.2pt">Message Header</td>
-        <td style="width:98.5pt">2</td>
-      </tr>
-      <tr>
-        <td style="width:30.75pt">QPD</td>
-        <td style="width:110.2pt">Query Parameter Definition</td>
-        <td style="width:98.5pt">5</td>
-      </tr>
-      <tr>
-        <td style="width:30.75pt">RCP</td>
-        <td style="width:110.2pt">Response Control Parameter</td>
-        <td style="width:98.5pt">5</td>
-      </tr>
-      <tr>
-        <td style="width:30.75pt">[DSC]</td>
-        <td style="width:110.2pt">Continuation Pointer</td>
-        <td style="width:98.5pt">2</td>
-      </tr>
-    </table>
-    <p>The receiver shall respond to the query by sending the RSP^K22 message. This satisfies the requirements of original mode acknowledgment; no intermediate ACK message is to be sent.</p>
-    <p>
-      <span>Each Patient Demographics Query request specifies two distinct concepts. The Patient Demographics Query is always targeted at a single source of patient demographic information (referred to in this transaction as the</span>
-      <span style="font-weight:bold;font-style:italic">patient information source</span>
-      <span>). A Patient Demographics Supplier may have knowledge of more than one source of demographics. A Patient Demographics Supplier shall support at least one source of patient demographics and may support multiple sources of demographics. Section 3.21.4.1.2.1 describes how the Patient Demographics Consumer specifies which source of demographics is requested by the query. Each query response shall return demographics from a single patient information source.</span>
-    </p>
-    <p>The second concept present in the query is the set of patient identifier domains referenced by the query. These patient identifier domains may or may not be associated with the patient information source. A Patient Demographics Supplier shall support at least one patient identifier domain and may support multiple identifier domains. Section 3.21.4.1.2.2 describes how the Patient Demographics Consumer requests identifiers from one or more patient identifier domains. Query responses may return patient identifiers from 0, 1 or multiple patient identifier domains.</p>
-    <h6 id="3.21.4.1.2.1">3.21.4.1.2.1 MSH Segment</h6>
-    <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
-    <p>
-      <span>The Patient Demographics Supplier is able to obtain demographics from at least one and possibly multiple patient information sources. When more than one patient information source is available, Field</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>specifies the patient information source that this query is targeting. The Patient Demographics Supplier shall return this value in</span>
-      <span style="font-style:italic">MSH-3-Sending Application</span>
-      <span>of the RSP^K22 response. The value specified in MSH-5 is not related to the value requested in QPD-8 What Domains Returned.</span>
-    </p>
-    <p>A list shall be published of all Receiving Applications that the Patient Demographics Supplier supports, for the Patient Demographics Consumer to choose from. Each query is processed against one and only one source of patient demographic information.</p>
-    <p>
-      <span>Field</span>
-      <span style="font-style:italic">MSH-9-Message Type</span>
-      <span>shall have all three components populated with a value. The first component shall have a value of</span>
-      <span style="font-weight:bold">QBP</span>
-      <span>; the second component shall have a value of</span>
-      <span style="font-weight:bold">Q22</span>
-      <span>. The third component it shall have a value of</span>
-      <span style="font-weight:bold">QBP_Q21</span>
-      <span>.</span>
-    </p>
-    <h6 id="3.21.4.1.2.2">3.21.4.1.2.2 QPD Segment</h6>
-    <p>The Patient Demographics Consumer shall send attributes within the QPD segment as described in Table 3.21-2.</p>
-    <p class="tableTitle">Table 3.21-2: IHE Profile - QPD segment</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:41.4pt" class="tableHeader">SEQ</td>
-        <td style="width:39.75pt" class="tableHeader">LEN</td>
-        <td style="width:24.6pt" class="tableHeader">DT</td>
-        <td style="width:35.25pt" class="tableHeader">OPT</td>
-        <td style="width:34.05pt" class="tableHeader">TBL#</td>
-        <td style="width:54.45pt" class="tableHeader">ITEM#</td>
-        <td style="width:164.55pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:41.4pt">1</td>
-        <td style="width:39.75pt">250</td>
-        <td style="width:24.6pt">CE</td>
-        <td style="width:35.25pt">R</td>
-        <td style="width:34.05pt">0471</td>
-        <td style="width:54.45pt">01375</td>
-        <td style="width:164.55pt">Message Query Name</td>
-      </tr>
-      <tr>
-        <td style="width:41.4pt">2</td>
-        <td style="width:39.75pt">32</td>
-        <td style="width:24.6pt">ST</td>
-        <td style="width:35.25pt">R+</td>
-        <td style="width:34.05pt" />
-        <td style="width:54.45pt">00696</td>
-        <td style="width:164.55pt">Query Tag</td>
-      </tr>
-      <tr>
-        <td style="width:41.4pt">3</td>
-        <td style="width:39.75pt" />
-        <td style="width:24.6pt">QIP</td>
-        <td style="width:35.25pt">R</td>
-        <td style="width:34.05pt" />
-        <td style="width:54.45pt" />
-        <td style="width:164.55pt">Demographics Fields</td>
-      </tr>
-      <tr>
-        <td style="width:41.4pt">8</td>
-        <td style="width:39.75pt" />
-        <td style="width:24.6pt">CX</td>
-        <td style="width:35.25pt">O</td>
-        <td style="width:34.05pt" />
-        <td style="width:54.45pt" />
-        <td style="width:164.55pt">What Domains Returned</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
-    </p>
-    <p>The Consumer shall specify “IHE PDQ Query” for QPD-1.1 Message Query Name. All other components of Message Query Name shall not be populated.</p>
-    <h6 id="3.21.4.1.2.3">3.21.4.1.2.3 Populating QPD-3-Demographics Fields</h6>
-    <p>
-      <span>Field</span>
-      <span style="font-style:italic">QPD-3-Demographics Fields</span>
-      <span>consists of one or more repetitions, each of which contains two components that together contain the name and value of a distinct parameter to the query. Acceptable segments are PID and PD1. Requirements stated in Appendix E apply to parameters of the datatype CX. In particular, specifying @PID.3.1 without @PID.3.4 is not allowed.</span>
-    </p>
-    <p class="note">
-      <span>Note:</span>
-      <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
-      <span>The Patient Demographics Consumer may need to provide an Assigning Authority if the human operator has not provided one.</span>
-    </p>
-    <p>The first component of each parameter contains the name of an HL7 element in the form</p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>@&lt;seg&gt;.&lt;field no&gt;.&lt;component no&gt;.&lt;subcomponent no&gt;</span>
-    </p>
-    <p>The above format is populated according to common HL7 usage for specifying elements used in query parameters, as follows:</p>
-    <p>&lt;seg&gt; represents a 3-character segment ID from the HL7 Standard.</p>
-    <p>&lt;field no&gt; is the number of a field within the segment as shown in the SEQ column of the segment attribute table for the segment selected.</p>
-    <p>&lt;component no&gt;, for fields whose data types contain multiple components, shall contain the cardinal number of the component being valued. For fields whose data types do not contain multiple components, &lt;component no&gt; shall not be valued and its preceding period shall not appear.</p>
-    <p>&lt;subcomponent no&gt;, for components whose data types contain multiple subcomponents, shall contain the cardinal number of the subcomponent being valued. For components whose data types do not contain multiple subcomponents, &lt;subcomponent no&gt; shall not be valued and its preceding period shall not appear.</p>
-    <p>The second subcomponent of each parameter contains the value that is to be matched. If it is desired to constrain the quality of a match within the bounds of an algorithm known to the Supplier, the algorithm and constraint values may be specified in Fields QPD-4 through QPD-7.</p>
-    <p>The Patient Demographics Consumer may specify, and the Patient Demographics Supplier shall support, the fields in Table 3.21-3. If the Pediatric Demographics Option is supported, then additionally, the Patient Demographics Consumer may specify, and the Patient Demographics Supplier shall support, the fields in Table 3.21-4.</p>
-    <p>The Patient Demographics Supplier shall return demographic records that reflect the best fit to all of the search criteria.</p>
-    <p class="tableTitle">Table 3.21-3: IHE Profile – QPD-3 fields required to be supported</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.21">3.21 Patient Demographics Query [ITI-21]</h2>
+      <p>This section corresponds to transaction [ITI-21] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-21] is used by the Patient Demographics Consumer and Patient Demographics Supplier Actors.</p>
+      <h3 id="3.21.1">3.21.1 Scope</h3>
+      <p>This transaction involves a request by the Patient Demographics Consumer for information about patients whose demographic data match data provided in the query message. The request is received by the Patient Demographics Supplier Actor. The Patient Demographics Supplier immediately processes the request and returns a response in the form of demographic information for matching patients.</p>
+      <h3 id="3.21.2">3.21.2 Use Case Roles</h3>
+      <img src="media/amdr0-jc4sx.037.png" width="365" height="154" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Patient Demographics Consumer</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Requests a list of patients matching a minimal set of demographic criteria (e.g., ID or partial name) from the Patient Demographics Supplier. Populates its attributes with demographic information received from the Patient Demographics Supplier.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Patient Demographics Supplier</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Returns demographic information for all patients matching the demographic criteria provided by the Patient Demographics Consumer.</span>
+      </p>
+      <h3 id="3.21.3">3.21.3 Referenced Standards</h3>
+      <p>
+        <span style="font-weight:bold">HL7</span>
+        <span>:</span>
+        <span style="width:9.33pt;display:inline-block"> </span>
+        <span>Version 2.5, Chapter 2 – Control</span>
+      </p>
+      <p>Version 2.5, Chapter 3 – Patient Administration</p>
+      <p>Version 2.5, Chapter 5 – Query</p>
+      <h3 id="3.21.4">3.21.4 Messages</h3>
+      <img src="media/amdr0-jc4sx.038.png" width="337" height="202" alt="" />
+      <p class="figureTitle">Figure 3.21.4-1: Interaction Diagram</p>
+      <h4 id="3.21.4.1">3.21.4.1 Patient Demographics Query</h4>
+      <h5 id="3.21.4.1.1">3.21.4.1.1 Trigger Events</h5>
+      <p>A Patient Demographics Consumer’s need to select a patient based on demographic information about patients whose information matches a minimal set of known data will trigger the Patient Demographics Query based on the following HL7 trigger event:</p>
+      <p>Q22 – Find Candidates</p>
+      <h5 id="3.21.4.1.2">3.21.4.1.2 Message Semantics</h5>
+      <p>The Patient Demographics Query is conducted by the HL7 QBP^Q22 message. The Patient Demographics Consumer shall generate the query message whenever it needs to select from a list of patients whose information matches a minimal set of demographic data. The segments of the message listed below are required, and their detailed descriptions are provided in the following subsections.</p>
+      <p class="tableTitle">Table 3.21-1: QBP Query by Parameter</p>
+      <table cellspacing="0" cellpadding="0">
         <tr>
-          <td style="width:51.38pt" class="tableHeader">FLD</td>
+          <td style="width:30.75pt" class="tableHeader">QBP</td>
+          <td style="width:110.2pt" class="tableHeader">Query by Parameter</td>
+          <td style="width:98.5pt" class="tableHeader">Chapter in HL7 2.5</td>
+        </tr>
+        <tr>
+          <td style="width:30.75pt">MSH</td>
+          <td style="width:110.2pt">Message Header</td>
+          <td style="width:98.5pt">2</td>
+        </tr>
+        <tr>
+          <td style="width:30.75pt">QPD</td>
+          <td style="width:110.2pt">Query Parameter Definition</td>
+          <td style="width:98.5pt">5</td>
+        </tr>
+        <tr>
+          <td style="width:30.75pt">RCP</td>
+          <td style="width:110.2pt">Response Control Parameter</td>
+          <td style="width:98.5pt">5</td>
+        </tr>
+        <tr>
+          <td style="width:30.75pt">[DSC]</td>
+          <td style="width:110.2pt">Continuation Pointer</td>
+          <td style="width:98.5pt">2</td>
+        </tr>
+      </table>
+      <p>The receiver shall respond to the query by sending the RSP^K22 message. This satisfies the requirements of original mode acknowledgment; no intermediate ACK message is to be sent.</p>
+      <p>
+        <span>Each Patient Demographics Query request specifies two distinct concepts. The Patient Demographics Query is always targeted at a single source of patient demographic information (referred to in this transaction as the</span>
+        <span style="font-weight:bold;font-style:italic">patient information source</span>
+        <span>). A Patient Demographics Supplier may have knowledge of more than one source of demographics. A Patient Demographics Supplier shall support at least one source of patient demographics and may support multiple sources of demographics. Section 3.21.4.1.2.1 describes how the Patient Demographics Consumer specifies which source of demographics is requested by the query. Each query response shall return demographics from a single patient information source.</span>
+      </p>
+      <p>The second concept present in the query is the set of patient identifier domains referenced by the query. These patient identifier domains may or may not be associated with the patient information source. A Patient Demographics Supplier shall support at least one patient identifier domain and may support multiple identifier domains. Section 3.21.4.1.2.2 describes how the Patient Demographics Consumer requests identifiers from one or more patient identifier domains. Query responses may return patient identifiers from 0, 1 or multiple patient identifier domains.</p>
+      <h6 id="3.21.4.1.2.1">3.21.4.1.2.1 MSH Segment</h6>
+      <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
+      <p>
+        <span>The Patient Demographics Supplier is able to obtain demographics from at least one and possibly multiple patient information sources. When more than one patient information source is available, Field</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>specifies the patient information source that this query is targeting. The Patient Demographics Supplier shall return this value in</span>
+        <span style="font-style:italic">MSH-3-Sending Application</span>
+        <span>of the RSP^K22 response. The value specified in MSH-5 is not related to the value requested in QPD-8 What Domains Returned.</span>
+      </p>
+      <p>A list shall be published of all Receiving Applications that the Patient Demographics Supplier supports, for the Patient Demographics Consumer to choose from. Each query is processed against one and only one source of patient demographic information.</p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">MSH-9-Message Type</span>
+        <span>shall have all three components populated with a value. The first component shall have a value of</span>
+        <span style="font-weight:bold">QBP</span>
+        <span>; the second component shall have a value of</span>
+        <span style="font-weight:bold">Q22</span>
+        <span>. The third component it shall have a value of</span>
+        <span style="font-weight:bold">QBP_Q21</span>
+        <span>.</span>
+      </p>
+      <h6 id="3.21.4.1.2.2">3.21.4.1.2.2 QPD Segment</h6>
+      <p>The Patient Demographics Consumer shall send attributes within the QPD segment as described in Table 3.21-2.</p>
+      <p class="tableTitle">Table 3.21-2: IHE Profile - QPD segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:41.4pt" class="tableHeader">SEQ</td>
+          <td style="width:39.75pt" class="tableHeader">LEN</td>
+          <td style="width:24.6pt" class="tableHeader">DT</td>
+          <td style="width:35.25pt" class="tableHeader">OPT</td>
+          <td style="width:34.05pt" class="tableHeader">TBL#</td>
+          <td style="width:54.45pt" class="tableHeader">ITEM#</td>
+          <td style="width:164.55pt" class="tableHeader">ELEMENT NAME</td>
+        </tr>
+        <tr>
+          <td style="width:41.4pt">1</td>
+          <td style="width:39.75pt">250</td>
+          <td style="width:24.6pt">CE</td>
+          <td style="width:35.25pt">R</td>
+          <td style="width:34.05pt">0471</td>
+          <td style="width:54.45pt">01375</td>
+          <td style="width:164.55pt">Message Query Name</td>
+        </tr>
+        <tr>
+          <td style="width:41.4pt">2</td>
+          <td style="width:39.75pt">32</td>
+          <td style="width:24.6pt">ST</td>
+          <td style="width:35.25pt">R+</td>
+          <td style="width:34.05pt" />
+          <td style="width:54.45pt">00696</td>
+          <td style="width:164.55pt">Query Tag</td>
+        </tr>
+        <tr>
+          <td style="width:41.4pt">3</td>
+          <td style="width:39.75pt" />
+          <td style="width:24.6pt">QIP</td>
+          <td style="width:35.25pt">R</td>
+          <td style="width:34.05pt" />
+          <td style="width:54.45pt" />
+          <td style="width:164.55pt">Demographics Fields</td>
+        </tr>
+        <tr>
+          <td style="width:41.4pt">8</td>
+          <td style="width:39.75pt" />
+          <td style="width:24.6pt">CX</td>
+          <td style="width:35.25pt">O</td>
+          <td style="width:34.05pt" />
+          <td style="width:54.45pt" />
+          <td style="width:164.55pt">What Domains Returned</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
+      </p>
+      <p>The Consumer shall specify “IHE PDQ Query” for QPD-1.1 Message Query Name. All other components of Message Query Name shall not be populated.</p>
+      <h6 id="3.21.4.1.2.3">3.21.4.1.2.3 Populating QPD-3-Demographics Fields</h6>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">QPD-3-Demographics Fields</span>
+        <span>consists of one or more repetitions, each of which contains two components that together contain the name and value of a distinct parameter to the query. Acceptable segments are PID and PD1. Requirements stated in Appendix E apply to parameters of the datatype CX. In particular, specifying @PID.3.1 without @PID.3.4 is not allowed.</span>
+      </p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
+        <span>The Patient Demographics Consumer may need to provide an Assigning Authority if the human operator has not provided one.</span>
+      </p>
+      <p>The first component of each parameter contains the name of an HL7 element in the form</p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>@&lt;seg&gt;.&lt;field no&gt;.&lt;component no&gt;.&lt;subcomponent no&gt;</span>
+      </p>
+      <p>The above format is populated according to common HL7 usage for specifying elements used in query parameters, as follows:</p>
+      <p>&lt;seg&gt; represents a 3-character segment ID from the HL7 Standard.</p>
+      <p>&lt;field no&gt; is the number of a field within the segment as shown in the SEQ column of the segment attribute table for the segment selected.</p>
+      <p>&lt;component no&gt;, for fields whose data types contain multiple components, shall contain the cardinal number of the component being valued. For fields whose data types do not contain multiple components, &lt;component no&gt; shall not be valued and its preceding period shall not appear.</p>
+      <p>&lt;subcomponent no&gt;, for components whose data types contain multiple subcomponents, shall contain the cardinal number of the subcomponent being valued. For components whose data types do not contain multiple subcomponents, &lt;subcomponent no&gt; shall not be valued and its preceding period shall not appear.</p>
+      <p>The second subcomponent of each parameter contains the value that is to be matched. If it is desired to constrain the quality of a match within the bounds of an algorithm known to the Supplier, the algorithm and constraint values may be specified in Fields QPD-4 through QPD-7.</p>
+      <p>The Patient Demographics Consumer may specify, and the Patient Demographics Supplier shall support, the fields in Table 3.21-3. If the Pediatric Demographics Option is supported, then additionally, the Patient Demographics Consumer may specify, and the Patient Demographics Supplier shall support, the fields in Table 3.21-4.</p>
+      <p>The Patient Demographics Supplier shall return demographic records that reflect the best fit to all of the search criteria.</p>
+      <p class="tableTitle">Table 3.21-3: IHE Profile – QPD-3 fields required to be supported</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:51.38pt" class="tableHeader">FLD</td>
+            <td style="width:99.95pt" class="tableHeader">ELEMENT NAME</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:51.38pt">PID.3</td>
+            <td style="width:99.95pt">Patient Identifier List</td>
+          </tr>
+          <tr>
+            <td style="width:51.38pt">PID.5</td>
+            <td style="width:99.95pt">Patient Name</td>
+          </tr>
+          <tr>
+            <td style="width:51.38pt">PID.7</td>
+            <td style="width:99.95pt">Date/Time of Birth</td>
+          </tr>
+          <tr>
+            <td style="width:51.38pt">PID.8</td>
+            <td style="width:99.95pt">Administrative Sex</td>
+          </tr>
+          <tr>
+            <td style="width:51.38pt">PID.11</td>
+            <td style="width:99.95pt">Patient Address</td>
+          </tr>
+          <tr>
+            <td style="width:51.38pt">PID.18</td>
+            <td style="width:99.95pt">Patient Account Number</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="tableTitle">Table 3.21-4: IHE Profile – Additional QPD-3 fields required to be supported if the Pediatric Demographic Option is supported</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:42.38pt" class="tableHeader">FLD</td>
           <td style="width:99.95pt" class="tableHeader">ELEMENT NAME</td>
         </tr>
-      </thead>
-      <tbody>
         <tr>
-          <td style="width:51.38pt">PID.3</td>
+          <td style="width:42.38pt">PID.6</td>
+          <td style="width:99.95pt">Mother’s Maiden Name</td>
+        </tr>
+        <tr>
+          <td style="width:42.38pt">PID.13</td>
+          <td style="width:99.95pt">Phone Number - Home</td>
+        </tr>
+      </table>
+      <p>An example of parameter expressions in QPD-3:</p>
+      <p style="font-size:10pt">@PID.5.1.1^SMITH~@PID.8^F</p>
+      <p>requests all patients whose family name (first subcomponent (data type ST) of the first component (data type FN) of PID-5-Patient Name (data type XPN)) matches the value ‘SMITH’ and whose sex (PID-8-Sex (data type IS)) matches the value ‘female’.</p>
+      <h6 id="3.21.4.1.2.4">3.21.4.1.2.4 Populating QPD-8-What Domains Returned</h6>
+      <p>As is specified in the discussion of the Find Candidates (Q22) Query in Chapter 3 of the HL7 Standard, field QPD-8 restricts the set of domains for which identifiers are returned in PID-3:</p>
+      <ol>
+        <li class="numbered-list1">
+          <span>In a multiple-domain environment, QPD-8 may be used to identify one or more domains of interest to the Patient Demographics Consumer and from which the Consumer wishes to obtain a value for</span>
+          <span style="font-style:italic">PID-3-Patient Identifier</span>
+          <span>. Note that the patient information source designated by MSH-5 may or may not be associated with any of the Patient ID Domains listed in</span>
+          <span style="font-style:italic">QPD-8-What Domains Returned</span>
+          <span>.</span>
+        </li>
+        <li class="numbered-list1">If QPD-8 is empty, the Patient Demographics Supplier shall return all Patient IDs known by the Patient Demographics Supplier for each patient that matches the search criteria. See Case 1 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
+        <li class="numbered-list1">If QPD-8 is specified and the domains are recognized, the Patient Demographics Supplier shall return the Patient IDs for each patient that matches the search criteria. See Case 2 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
+        <li class="numbered-list1">Any domain not recognized by the Patient Demographics Supplier is an error condition. See Case 3 in Section 3.21.4.2.2.8 how to handle this condition.</li>
+        <li class="numbered-list1">In a single-domain environment, QPD-8 may be ignored by the Patient Demographics Supplier. The Supplier shall always return the identifier from the Patient ID Domain known by the Patient Demographics Supplier.</li>
+      </ol>
+      <p>Within field QPD-8, only component 4 (Assigning Authority) shall be valued.</p>
+      <p>
+        The Patient Demographics Supplier may or may not be able to supply additional identifiers from the domains specified in QPD-8. A discussion of how QPD-8 is processed is included in the architectural discussion in the “Using Patient Data Query (PDQ) in a Multi-Domain Environment” section (
+        <a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a>
+        ).
+      </p>
+      <p>The Patient Demographics Consumer shall be able to support at least one of the following mechanisms for specifying QPD-8:</p>
+      <ol>
+        <li class="numbered-list1">Transmit an empty value and receive all identifiers in all domains known by the Patient Demographics Supplier (one or more domains), or</li>
+        <li class="numbered-list1">Transmit a single value and receive zero or more identifiers in a single domain, or</li>
+        <li class="numbered-list1">Transmit multiple values and receive multiple identifiers in those multiple domains.</li>
+      </ol>
+      <h6 id="3.21.4.1.2.5">3.21.4.1.2.5 RCP Segment</h6>
+      <p>The Patient Demographics Consumer shall send attributes within the RCP segment as described in Table 3.21-5. Fields not listed are optional and may be ignored.</p>
+      <p class="tableTitle">Table 3.21-5: IHE Profile - RCP segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:28.48pt" class="tableHeader">SEQ</td>
+          <td style="width:27.38pt" class="tableHeader">LEN</td>
+          <td style="width:20.68pt" class="tableHeader">DT</td>
+          <td style="width:27.92pt" class="tableHeader">OPT</td>
+          <td style="width:32.38pt" class="tableHeader">TBL#</td>
+          <td style="width:36.78pt" class="tableHeader">ITEM#</td>
+          <td style="width:103.95pt" class="tableHeader">ELEMENT NAME</td>
+        </tr>
+        <tr>
+          <td style="width:28.48pt">1</td>
+          <td style="width:27.38pt">1</td>
+          <td style="width:20.68pt">ID</td>
+          <td style="width:27.92pt">R</td>
+          <td style="width:32.38pt">0091</td>
+          <td style="width:36.78pt">00027</td>
+          <td style="width:103.95pt">Query Priority</td>
+        </tr>
+        <tr>
+          <td style="width:28.48pt">2</td>
+          <td style="width:27.38pt">10</td>
+          <td style="width:20.68pt">CQ</td>
+          <td style="width:27.92pt">O</td>
+          <td style="width:32.38pt">0126</td>
+          <td style="width:36.78pt">00031</td>
+          <td style="width:103.95pt">Quantity Limited Request</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">3.21.4.1.2.5.1</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <a name="_Toc174248984">Populating RCP-1-Query Priority</a>
+      </p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">RCP-1-Query Priority</span>
+        <span>shall always contain</span>
+        <span style="font-weight:bold">I</span>
+        <span>, signifying that the response to the query is to be returned in Immediate mode.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">3.21.4.1.2.5.2</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <a name="_Toc174248985">Populating RCP-2-Quantity Limited Request</a>
+      </p>
+      <p>The Patient Demographics Consumer may request that responses to the query be sent, using the HL7 Continuation Protocol, in increments of a specified number of patient records. (In the context of the HL7 query, a patient record is defined as the PID segment and any segments accompanying it for each patient.) It is desirable to request an incremental response if the query could result in hundreds or thousands of matches or “hits.”</p>
+      <p>The Patient Demographics Supplier shall support the HL7 Continuation Protocol.</p>
+      <p>Field RCP-2 is of data type CQ, which contains two components. The first component contains the number of increments, always expressed as an integer greater than 0, while the second component contains the kind of increment, always RD to signify that incremental replies are specified in terms of records.</p>
+      <p>For example, 50^RD requests 50 records at a time.</p>
+      <p>See the “Incremental Response Processing” (Section 3.21.4.1.3.3) and the “Expected Actions” section of the Patient Demographics Query Response message (Section 3.21.4.2.3) for more information on the implementation of the continuation protocol.</p>
+      <h6 id="3.21.4.1.2.6">3.21.4.1.2.6 DSC Segment</h6>
+      <p>The Patient Demographics Consumer may request additional increments of data by specifying this segment on the query request. This segment should be omitted on the initial query request. Its purpose is to request additional increments of the data from the Patient Demographic Supplier.</p>
+      <p style="font-size:11pt">
+        <a name="OLE_LINK20">Table 3.21-9: IHE Profile - DSC segment</a>
+        <span style="font-weight:bold" />
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:29.7pt" class="tableHeader">SEQ</td>
+          <td style="width:29.7pt" class="tableHeader">LEN</td>
+          <td style="width:20.7pt" class="tableHeader">DT</td>
+          <td style="width:29.7pt" class="tableHeader">OPT</td>
+          <td style="width:33.45pt" class="tableHeader">TBL#</td>
+          <td style="width:35.35pt" class="tableHeader">ITEM#</td>
+          <td style="width:99.5pt" class="tableHeader">ELEMENT NAME</td>
+        </tr>
+        <tr>
+          <td style="width:29.7pt">1</td>
+          <td style="width:29.7pt">180</td>
+          <td style="width:20.7pt">ST</td>
+          <td style="width:29.7pt">O</td>
+          <td style="width:33.45pt" />
+          <td style="width:35.35pt">00014</td>
+          <td style="width:99.5pt">Continuation Pointer</td>
+        </tr>
+        <tr>
+          <td style="width:29.7pt">2</td>
+          <td style="width:29.7pt">1</td>
+          <td style="width:20.7pt">ID</td>
+          <td style="width:29.7pt">O</td>
+          <td style="width:33.45pt">0398</td>
+          <td style="width:35.35pt">01354</td>
+          <td style="width:99.5pt">Continuation Style</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight:bold">3.21.4.1.2.6.1</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <span style="font-weight:bold">Populating DSC-1 Continuation Pointer</span>
+      </p>
+      <p>
+        <span>To request additional increments of data, DSC-1 (Continuation Pointer)</span>
+        <span style="font-style:italic" />
+        <span>shall echo the value from RSP^K22 DSC-1.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">3.21.4.1.2.6.2</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <span style="font-weight:bold">Populating DSC-2 Continuation Style</span>
+      </p>
+      <p>
+        <span>DSC-2 (Continuation Style)</span>
+        <span style="font-style:italic" />
+        <span>shall always contain I, signifying that this is part of an interactive continuation message.</span>
+      </p>
+      <h5 id="3.21.4.1.3">3.21.4.1.3 Expected Actions</h5>
+      <h6 id="3.21.4.1.3.1">3.21.4.1.3.1 Immediate Acknowledgement</h6>
+      <p>
+        <span>The Patient Demographics Supplier shall immediately return an RSP^K22 response message as specified below in Section 3.21.4.2, “Patient Demographics Response.”  The RSP^K22 response message incorporates original mode application acknowledgment as specified in the “Acknowledgment Modes” section (ITI TF-2x: C.2.3). The Supplier shall use</span>
+        <span style="font-style:italic">MSH-3</span>
+        <span>-</span>
+        <span style="font-style:italic">Sending Application</span>
+        <span>of the RSP^K22 to return the value it received from the Patient Demographics Consumer in Field</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>of the QBP^Q22 message.</span>
+      </p>
+      <h6 id="3.21.4.1.3.2">3.21.4.1.3.2 Query Parameter Processing</h6>
+      <p>The Patient Demographics Supplier shall be capable of accepting, searching on, and responding with attributes in the QPD segment as specified in Table 3.21-2.</p>
+      <p>The Patient Demographics Supplier must be capable of receiving all possible representations of an Assigning Authority (patient identifier domain) in QPD.8.4 (What Domain Returned): 1) namespace, 2) universal id (OID) and 3) both namespace and universal id (OID).</p>
+      <p>Handling of phonetic issues, alternate spellings, upper and lower case, wildcards, accented characters, etc., if deemed appropriate, is to be supported by the Patient Demographics Supplier rather than by the Patient Demographics Consumer. The Supplier shall return at least all exact matches to the query parameters sent by the Consumer; IHE does not further specify matching requirements.</p>
+      <h6 id="3.21.4.1.3.3">3.21.4.1.3.3 Incremental Response Processing</h6>
+      <p>
+        <span>The Patient Demographics Supplier shall be capable of accepting and processing attributes in the RCP segment as listed in Table 3.21-5. In particular, the Patient Demographics Supplier shall respond in immediate mode (as specified by a</span>
+        <span style="font-style:italic">RCP-1-Query Priority</span>
+        <span>value of</span>
+        <span style="font-weight:bold">I</span>
+        <span>).</span>
+      </p>
+      <p>
+        <span>Also, the Patient Demographics Supplier shall be able to interpret</span>
+        <span style="font-style:italic">RCP-2-Quantity Limited Request</span>
+        <span>to return successive responses of partial lists of records according to the HL7 Continuation Protocol, as described in Section 3.21.4.2 below and in the HL7 Standard.</span>
+      </p>
+      <h4 id="3.21.4.2">3.21.4.2 Patient Demographics Response</h4>
+      <h5 id="3.21.4.2.1">3.21.4.2.1 Trigger Events</h5>
+      <p>The Patient Demographics Supplier’s response to the Find Candidates message shall be the following message:</p>
+      <p>K22 – Find Candidates response</p>
+      <h5 id="3.21.4.2.2">3.21.4.2.2 Message Semantics</h5>
+      <p>The Patient Demographics Response is conducted by the RSP^K22 message. The Patient Demographics Supplier shall generate this message in direct response to the QBP^Q22 message previously received. This message satisfies the Application Level, Original Mode Acknowledgement for the HL7 QBP^Q22 message.</p>
+      <p>The segments of the message listed without enclosing square brackets in the table below are required. Detailed descriptions of all segments listed in the table below are provided in the following subsections. Other segments of the message are optional.</p>
+      <p class="tableTitle">Table 3.21-6: RSP Segment Pattern Response</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:49.55pt" class="tableHeader">RSP</td>
+            <td style="width:137.25pt" class="tableHeader">Segment Pattern Response</td>
+            <td style="width:98.5pt" class="tableHeader">Chapter in HL7 2.5</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:49.55pt">MSH</td>
+            <td style="width:137.25pt">Message Header</td>
+            <td style="width:98.5pt">2</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">MSA</td>
+            <td style="width:137.25pt">Message Acknowledgement</td>
+            <td style="width:98.5pt">2</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">[ {ERR} ]</td>
+            <td style="width:137.25pt">Error</td>
+            <td style="width:98.5pt">2</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">QAK</td>
+            <td style="width:137.25pt">Query Acknowledgement</td>
+            <td style="width:98.5pt">5</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">QPD</td>
+            <td style="width:137.25pt">Query Parameter Definition</td>
+            <td style="width:98.5pt">5</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">[ { PID</td>
+            <td style="width:137.25pt">Patient Identification</td>
+            <td style="width:98.5pt">3</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">  [ PD1 ]</td>
+            <td style="width:137.25pt" />
+            <td style="width:98.5pt" />
+          </tr>
+          <tr>
+            <td style="width:49.55pt">  [ QRI ] } ]</td>
+            <td style="width:137.25pt">Query Response Instance</td>
+            <td style="width:98.5pt">5</td>
+          </tr>
+          <tr>
+            <td style="width:49.55pt">[ DSC ]</td>
+            <td style="width:137.25pt">Continuation Pointer</td>
+            <td style="width:98.5pt">2</td>
+          </tr>
+        </tbody>
+      </table>
+      <h6 id="3.21.4.2.2.1">3.21.4.2.2.1 MSH Segment</h6>
+      <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">MSH-3-Sending Application</span>
+        <span>specifies the patient information source that processed the query. The Patient Demographics Supplier shall use Field</span>
+        <span style="font-style:italic">MSH-3-Sending Application</span>
+        <span>of the RSP^K22 message to return the value it received from the Patient Demographics Consumer in Field</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>of the QBP^Q22 message.</span>
+      </p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">MSH-9-Message Type</span>
+        <span>shall have all three components populated with a value. The first component shall have a value of</span>
+        <span style="font-weight:bold">RSP</span>
+        <span>; the second component shall have a value of</span>
+        <span style="font-weight:bold">K22</span>
+        <span>. The third component shall have a value of</span>
+        <span style="font-weight:bold">RSP_K21</span>
+        <span>.</span>
+      </p>
+      <h6 id="3.21.4.2.2.2">3.21.4.2.2.2 MSA Segment</h6>
+      <p>The Patient Demographics Supplier is not required to send any attributes within the MSA segment beyond what is specified in the HL7 standard. See the “Acknowledgment Modes” section (ITI TF-2x: C.2.3) for the list of all required and optional fields within the MSA segment.</p>
+      <h6 id="3.21.4.2.2.3">3.21.4.2.2.3 QAK Segment</h6>
+      <p>The Patient Demographics Supplier shall send attributes within the QAK segment as defined in Table 3.21-7. For the details on filling in QAK-2 (Query Response Status) refer to the “Patient Demographics Supplier Actor Query Response Behavior” in Section 3.21.4.2.2.8.</p>
+      <p>QAK-1 (Query Tag) shall echo the same value of QPD-2 (Query Tag) of the QBP^Q22 message, to allow the Patient Demographics Query Consumer to match the response to the corresponding query request.</p>
+      <p class="tableTitle">Table 3.21-7: IHE Profile - QAK segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:42.82pt" class="tableHeader">SEQ</td>
+          <td style="width:42.82pt" class="tableHeader">LEN</td>
+          <td style="width:42.82pt" class="tableHeader">DT</td>
+          <td style="width:42.82pt" class="tableHeader">OPT</td>
+          <td style="width:42.82pt" class="tableHeader">TBL#</td>
+          <td style="width:42.82pt" class="tableHeader">ITEM#</td>
+          <td style="width:146.75pt" class="tableHeader">ELEMENT NAME</td>
+        </tr>
+        <tr>
+          <td style="width:42.82pt">1</td>
+          <td style="width:42.82pt">32</td>
+          <td style="width:42.82pt">ST</td>
+          <td style="width:42.82pt">R</td>
+          <td style="width:42.82pt" />
+          <td style="width:42.82pt">00696</td>
+          <td style="width:146.75pt">Query Tag</td>
+        </tr>
+        <tr>
+          <td style="width:42.82pt">2</td>
+          <td style="width:42.82pt">2</td>
+          <td style="width:42.82pt">ID</td>
+          <td style="width:42.82pt">R+</td>
+          <td style="width:42.82pt">0208</td>
+          <td style="width:42.82pt">00708</td>
+          <td style="width:146.75pt">Query Response Status</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
+      </p>
+      <h6 id="3.21.4.2.2.4">3.21.4.2.2.4 QPD Segment</h6>
+      <p>The Patient Demographics Supplier shall echo the QPD Segment value that was sent in the QBP^Q22 message.</p>
+      <h6 id="3.21.4.2.2.5">3.21.4.2.2.5 PID Segment</h6>
+      <p>The Patient Demographics Supplier shall return one PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) for each matching patient record found. The Supplier shall return the attributes within the PID segment as specified in Table 3.21-8. In addition, the Patient Demographics Supplier shall return all other attributes within the PID segment for which it is able to supply values.</p>
+      <p class="tableTitle">Table 3.21-8: IHE Profile - PID segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:28.48pt" class="tableHeader">SEQ</td>
+          <td style="width:27.38pt" class="tableHeader">LEN</td>
+          <td style="width:26.82pt" class="tableHeader">DT</td>
+          <td style="width:27.92pt" class="tableHeader">OPT</td>
+          <td style="width:32.38pt" class="tableHeader">TBL#</td>
+          <td style="width:36.78pt" class="tableHeader">ITEM#</td>
+          <td style="width:99.95pt" class="tableHeader">ELEMENT NAME</td>
+        </tr>
+        <tr>
+          <td style="width:28.48pt">3</td>
+          <td style="width:27.38pt">250</td>
+          <td style="width:26.82pt">CX</td>
+          <td style="width:27.92pt">R</td>
+          <td style="width:32.38pt" />
+          <td style="width:36.78pt">00106</td>
           <td style="width:99.95pt">Patient Identifier List</td>
         </tr>
         <tr>
-          <td style="width:51.38pt">PID.5</td>
+          <td style="width:28.48pt">5</td>
+          <td style="width:27.38pt">250</td>
+          <td style="width:26.82pt">XPN</td>
+          <td style="width:27.92pt">R</td>
+          <td style="width:32.38pt" />
+          <td style="width:36.78pt">00108</td>
           <td style="width:99.95pt">Patient Name</td>
         </tr>
         <tr>
-          <td style="width:51.38pt">PID.7</td>
+          <td style="width:28.48pt">7</td>
+          <td style="width:27.38pt">26</td>
+          <td style="width:26.82pt">TS</td>
+          <td style="width:27.92pt">R2</td>
+          <td style="width:32.38pt" />
+          <td style="width:36.78pt">00110</td>
           <td style="width:99.95pt">Date/Time of Birth</td>
         </tr>
         <tr>
-          <td style="width:51.38pt">PID.8</td>
+          <td style="width:28.48pt">8</td>
+          <td style="width:27.38pt">1</td>
+          <td style="width:26.82pt">IS</td>
+          <td style="width:27.92pt">R2</td>
+          <td style="width:32.38pt">0001</td>
+          <td style="width:36.78pt">00111</td>
           <td style="width:99.95pt">Administrative Sex</td>
         </tr>
         <tr>
-          <td style="width:51.38pt">PID.11</td>
+          <td style="width:28.48pt">11</td>
+          <td style="width:27.38pt">250</td>
+          <td style="width:26.82pt">XAD</td>
+          <td style="width:27.92pt">R2</td>
+          <td style="width:32.38pt" />
+          <td style="width:36.78pt">00114</td>
           <td style="width:99.95pt">Patient Address</td>
         </tr>
         <tr>
-          <td style="width:51.38pt">PID.18</td>
+          <td style="width:28.48pt">18</td>
+          <td style="width:27.38pt">250</td>
+          <td style="width:26.82pt">CX</td>
+          <td style="width:27.92pt">R2</td>
+          <td style="width:32.38pt" />
+          <td style="width:36.78pt">00121</td>
           <td style="width:99.95pt">Patient Account Number</td>
         </tr>
-      </tbody>
-    </table>
-    <p class="tableTitle">Table 3.21-4: IHE Profile – Additional QPD-3 fields required to be supported if the Pediatric Demographic Option is supported</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:42.38pt" class="tableHeader">FLD</td>
-        <td style="width:99.95pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:42.38pt">PID.6</td>
-        <td style="width:99.95pt">Mother’s Maiden Name</td>
-      </tr>
-      <tr>
-        <td style="width:42.38pt">PID.13</td>
-        <td style="width:99.95pt">Phone Number - Home</td>
-      </tr>
-    </table>
-    <p>An example of parameter expressions in QPD-3:</p>
-    <p style="font-size:10pt">@PID.5.1.1^SMITH~@PID.8^F</p>
-    <p>requests all patients whose family name (first subcomponent (data type ST) of the first component (data type FN) of PID-5-Patient Name (data type XPN)) matches the value ‘SMITH’ and whose sex (PID-8-Sex (data type IS)) matches the value ‘female’.</p>
-    <h6 id="3.21.4.1.2.4">3.21.4.1.2.4 Populating QPD-8-What Domains Returned</h6>
-    <p>As is specified in the discussion of the Find Candidates (Q22) Query in Chapter 3 of the HL7 Standard, field QPD-8 restricts the set of domains for which identifiers are returned in PID-3:</p>
-    <ol>
-      <li class="numbered-list1">
-        <span>In a multiple-domain environment, QPD-8 may be used to identify one or more domains of interest to the Patient Demographics Consumer and from which the Consumer wishes to obtain a value for</span>
-        <span style="font-style:italic">PID-3-Patient Identifier</span>
-        <span>. Note that the patient information source designated by MSH-5 may or may not be associated with any of the Patient ID Domains listed in</span>
+      </table>
+      <p>
+        <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
+      </p>
+      <p>The Patient Demographics Supplier may or may not be able to supply additional identifiers from the domains specified in QPD-8. Inability to supply an identifier in a particular domain is not an error, provided that the domain is recognized.</p>
+      <p>
+        <span>The PID segment and its associated PD1 and QRI segments are returned only when the Patient Demographics Supplier is able to associate the search information in QPD-3 with one or more patient records in the patient information source associated with</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>. See the “Patient Demographics Supplier Actor Query Response Behavior” Section 3.21.4.2.2.8 for a detailed description of how the Patient Demographics Supplier responds to the query request under various circumstances.</span>
+      </p>
+      <h6 id="3.21.4.2.2.6">3.21.4.2.2.6 QRI Segment</h6>
+      <p>For each patient for which the Patient Demographics Supplier returns a PID Segment, it may optionally return the QRI (Query Response Instance) segment, but is not required to do so. Refer to the HL7 Standard, Version 2.5, Chapter 5, Section 5.5.5, for more information.</p>
+      <h6 id="3.21.4.2.2.7">3.21.4.2.2.7 DSC Segment</h6>
+      <p>
+        <span>If the number of records is specified in</span>
+        <span style="font-style:italic">RCP-2-Quantity Limited Request</span>
+        <span>, the Patient Demographics Supplier shall return an incremental response of that number of records when the number of matching records it finds exceeds the number of records specified in RCP-2.</span>
+      </p>
+      <p>As long as the Patient Demographics Supplier has records to return in addition to those returned in the incremental response, the Supplier shall return a DSC Segment. The single field of the DSC Segment shall contain a unique alphanumeric value (the Continuation Pointer) that the Patient Demographics Consumer may return in the DSC of the QBP^Q22 message to request the next increment of responses. The Supplier shall return increments as many times as the Consumer requests them (and there are increments to return), and shall stop when the Consumer sends a cancel query (QCN^J01) message (or when there are no more increments to return).</p>
+      <h6 id="3.21.4.2.2.8">3.21.4.2.2.8 Patient Demographics Supplier Actor Query Response Behavior</h6>
+      <p>
+        <span>The Patient Demographics Supplier shall perform the matching of patient data based on the query parameter values it receives. The information provided by the Patient Demographics Supplier to Patient Demographics Consumer Actors is a list of possible matching patients from the patient information source associated with the value that the Consumer sent in</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>of the query message.</span>
+      </p>
+      <p>
+        <span>If domains are specified in</span>
+        <span style="font-style:italic">QPD-8-What Domains Returned</span>
+        <span>and are recognized by the Patient Demographics Supplier, the response will also, for each patient, contain any Patient ID values found in the specified domains.</span>
+      </p>
+      <p>The mechanics of the matching algorithms used are internal to the Patient Demographics Supplier and are outside of the scope of this framework.</p>
+      <p>The Patient Demographics Supplier shall respond to the query request as described by the following 3 cases:</p>
+      <p>
+        <span style="font-weight:bold">Case 1</span>
+        <span>: The Patient Demographics Supplier finds (in the patient information source associated with</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>) at least one patient record matching the criteria sent in</span>
+        <span style="font-style:italic">QPD-3-Demographics Fields</span>
+        <span>. No patient identifier domains are requested in</span>
         <span style="font-style:italic">QPD-8-What Domains Returned</span>
         <span>.</span>
-      </li>
-      <li class="numbered-list1">If QPD-8 is empty, the Patient Demographics Supplier shall return all Patient IDs known by the Patient Demographics Supplier for each patient that matches the search criteria. See Case 1 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
-      <li class="numbered-list1">If QPD-8 is specified and the domains are recognized, the Patient Demographics Supplier shall return the Patient IDs for each patient that matches the search criteria. See Case 2 in Section 3.21.4.2.2.8 for details on how this information is returned.</li>
-      <li class="numbered-list1">Any domain not recognized by the Patient Demographics Supplier is an error condition. See Case 3 in Section 3.21.4.2.2.8 how to handle this condition.</li>
-      <li class="numbered-list1">In a single-domain environment, QPD-8 may be ignored by the Patient Demographics Supplier. The Supplier shall always return the identifier from the Patient ID Domain known by the Patient Demographics Supplier.</li>
-    </ol>
-    <p>Within field QPD-8, only component 4 (Assigning Authority) shall be valued.</p>
-    <p>The Patient Demographics Supplier may or may not be able to supply additional identifiers from the domains specified in QPD-8. A discussion of how QPD-8 is processed is included in the architectural discussion in the “Using Patient Data Query (PDQ) in a Multi-Domain Environment” section (<a href="../Volume2x/ch-13.html#Appendix M"><a href="../Volume2x/ch-13.html#Appendix M">ITI TF-2x: Appendix M</a></a>).</p>
-    <p>The Patient Demographics Consumer shall be able to support at least one of the following mechanisms for specifying QPD-8:</p>
-    <ol>
-      <li class="numbered-list1">Transmit an empty value and receive all identifiers in all domains known by the Patient Demographics Supplier (one or more domains), or</li>
-      <li class="numbered-list1">Transmit a single value and receive zero or more identifiers in a single domain, or</li>
-      <li class="numbered-list1">Transmit multiple values and receive multiple identifiers in those multiple domains.</li>
-    </ol>
-    <h6 id="3.21.4.1.2.5">3.21.4.1.2.5 RCP Segment</h6>
-    <p>The Patient Demographics Consumer shall send attributes within the RCP segment as described in Table 3.21-5. Fields not listed are optional and may be ignored.</p>
-    <p class="tableTitle">Table 3.21-5: IHE Profile - RCP segment</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:28.48pt" class="tableHeader">SEQ</td>
-        <td style="width:27.38pt" class="tableHeader">LEN</td>
-        <td style="width:20.68pt" class="tableHeader">DT</td>
-        <td style="width:27.92pt" class="tableHeader">OPT</td>
-        <td style="width:32.38pt" class="tableHeader">TBL#</td>
-        <td style="width:36.78pt" class="tableHeader">ITEM#</td>
-        <td style="width:103.95pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">1</td>
-        <td style="width:27.38pt">1</td>
-        <td style="width:20.68pt">ID</td>
-        <td style="width:27.92pt">R</td>
-        <td style="width:32.38pt">0091</td>
-        <td style="width:36.78pt">00027</td>
-        <td style="width:103.95pt">Query Priority</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">2</td>
-        <td style="width:27.38pt">10</td>
-        <td style="width:20.68pt">CQ</td>
-        <td style="width:27.92pt">O</td>
-        <td style="width:32.38pt">0126</td>
-        <td style="width:36.78pt">00031</td>
-        <td style="width:103.95pt">Quantity Limited Request</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">3.21.4.1.2.5.1</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <a name="_Toc174248984">Populating RCP-1-Query Priority</a>
-    </p>
-    <p>
-      <span>Field</span>
-      <span style="font-style:italic">RCP-1-Query Priority</span>
-      <span>shall always contain</span>
-      <span style="font-weight:bold">I</span>
-      <span>, signifying that the response to the query is to be returned in Immediate mode.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">3.21.4.1.2.5.2</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <a name="_Toc174248985">Populating RCP-2-Quantity Limited Request</a>
-    </p>
-    <p>The Patient Demographics Consumer may request that responses to the query be sent, using the HL7 Continuation Protocol, in increments of a specified number of patient records. (In the context of the HL7 query, a patient record is defined as the PID segment and any segments accompanying it for each patient.) It is desirable to request an incremental response if the query could result in hundreds or thousands of matches or “hits.”</p>
-    <p>The Patient Demographics Supplier shall support the HL7 Continuation Protocol.</p>
-    <p>Field RCP-2 is of data type CQ, which contains two components. The first component contains the number of increments, always expressed as an integer greater than 0, while the second component contains the kind of increment, always RD to signify that incremental replies are specified in terms of records.</p>
-    <p>For example, 50^RD requests 50 records at a time.</p>
-    <p>See the “Incremental Response Processing” (Section 3.21.4.1.3.3) and the “Expected Actions” section of the Patient Demographics Query Response message (Section 3.21.4.2.3) for more information on the implementation of the continuation protocol.</p>
-    <h6 id="3.21.4.1.2.6">3.21.4.1.2.6 DSC Segment</h6>
-    <p>The Patient Demographics Consumer may request additional increments of data by specifying this segment on the query request. This segment should be omitted on the initial query request. Its purpose is to request additional increments of the data from the Patient Demographic Supplier.</p>
-    <p style="font-size:11pt">
-      <a name="OLE_LINK20">Table 3.21-9: IHE Profile - DSC segment</a>
-      <span style="font-weight:bold" />
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:29.7pt" class="tableHeader">SEQ</td>
-        <td style="width:29.7pt" class="tableHeader">LEN</td>
-        <td style="width:20.7pt" class="tableHeader">DT</td>
-        <td style="width:29.7pt" class="tableHeader">OPT</td>
-        <td style="width:33.45pt" class="tableHeader">TBL#</td>
-        <td style="width:35.35pt" class="tableHeader">ITEM#</td>
-        <td style="width:99.5pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:29.7pt">1</td>
-        <td style="width:29.7pt">180</td>
-        <td style="width:20.7pt">ST</td>
-        <td style="width:29.7pt">O</td>
-        <td style="width:33.45pt" />
-        <td style="width:35.35pt">00014</td>
-        <td style="width:99.5pt">Continuation Pointer</td>
-      </tr>
-      <tr>
-        <td style="width:29.7pt">2</td>
-        <td style="width:29.7pt">1</td>
-        <td style="width:20.7pt">ID</td>
-        <td style="width:29.7pt">O</td>
-        <td style="width:33.45pt">0398</td>
-        <td style="width:35.35pt">01354</td>
-        <td style="width:99.5pt">Continuation Style</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-weight:bold">3.21.4.1.2.6.1</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <span style="font-weight:bold">Populating DSC-1 Continuation Pointer</span>
-    </p>
-    <p>
-      <span>To request additional increments of data, DSC-1 (Continuation Pointer)</span>
-      <span style="font-style:italic" />
-      <span>shall echo the value from RSP^K22 DSC-1.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">3.21.4.1.2.6.2</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <span style="font-weight:bold">Populating DSC-2 Continuation Style</span>
-    </p>
-    <p>
-      <span>DSC-2 (Continuation Style)</span>
-      <span style="font-style:italic" />
-      <span>shall always contain I, signifying that this is part of an interactive continuation message.</span>
-    </p>
-    <h5 id="3.21.4.1.3">3.21.4.1.3 Expected Actions</h5>
-    <h6 id="3.21.4.1.3.1">3.21.4.1.3.1 Immediate Acknowledgement</h6>
-    <p>
-      <span>The Patient Demographics Supplier shall immediately return an RSP^K22 response message as specified below in Section 3.21.4.2, “Patient Demographics Response.”  The RSP^K22 response message incorporates original mode application acknowledgment as specified in the “Acknowledgment Modes” section (ITI TF-2x: C.2.3). The Supplier shall use</span>
-      <span style="font-style:italic">MSH-3</span>
-      <span>-</span>
-      <span style="font-style:italic">Sending Application</span>
-      <span>of the RSP^K22 to return the value it received from the Patient Demographics Consumer in Field</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>of the QBP^Q22 message.</span>
-    </p>
-    <h6 id="3.21.4.1.3.2">3.21.4.1.3.2 Query Parameter Processing</h6>
-    <p>The Patient Demographics Supplier shall be capable of accepting, searching on, and responding with attributes in the QPD segment as specified in Table 3.21-2.</p>
-    <p>The Patient Demographics Supplier must be capable of receiving all possible representations of an Assigning Authority (patient identifier domain) in QPD.8.4 (What Domain Returned): 1) namespace, 2) universal id (OID) and 3) both namespace and universal id (OID).</p>
-    <p>Handling of phonetic issues, alternate spellings, upper and lower case, wildcards, accented characters, etc., if deemed appropriate, is to be supported by the Patient Demographics Supplier rather than by the Patient Demographics Consumer. The Supplier shall return at least all exact matches to the query parameters sent by the Consumer; IHE does not further specify matching requirements.</p>
-    <h6 id="3.21.4.1.3.3">3.21.4.1.3.3 Incremental Response Processing</h6>
-    <p>
-      <span>The Patient Demographics Supplier shall be capable of accepting and processing attributes in the RCP segment as listed in Table 3.21-5. In particular, the Patient Demographics Supplier shall respond in immediate mode (as specified by a</span>
-      <span style="font-style:italic">RCP-1-Query Priority</span>
-      <span>value of</span>
-      <span style="font-weight:bold">I</span>
-      <span>).</span>
-    </p>
-    <p>
-      <span>Also, the Patient Demographics Supplier shall be able to interpret</span>
-      <span style="font-style:italic">RCP-2-Quantity Limited Request</span>
-      <span>to return successive responses of partial lists of records according to the HL7 Continuation Protocol, as described in Section 3.21.4.2 below and in the HL7 Standard.</span>
-    </p>
-    <h4 id="3.21.4.2">3.21.4.2 Patient Demographics Response</h4>
-    <h5 id="3.21.4.2.1">3.21.4.2.1 Trigger Events</h5>
-    <p>The Patient Demographics Supplier’s response to the Find Candidates message shall be the following message:</p>
-    <p>K22 – Find Candidates response</p>
-    <h5 id="3.21.4.2.2">3.21.4.2.2 Message Semantics</h5>
-    <p>The Patient Demographics Response is conducted by the RSP^K22 message. The Patient Demographics Supplier shall generate this message in direct response to the QBP^Q22 message previously received. This message satisfies the Application Level, Original Mode Acknowledgement for the HL7 QBP^Q22 message.</p>
-    <p>The segments of the message listed without enclosing square brackets in the table below are required. Detailed descriptions of all segments listed in the table below are provided in the following subsections. Other segments of the message are optional.</p>
-    <p class="tableTitle">Table 3.21-6: RSP Segment Pattern Response</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
+      </p>
+      <p>
+        <span style="font-weight:bold">AA</span>
+        <span>(application accept) is returned in MSA-1.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">OK</span>
+        <span>(data found, no errors) is returned in QAK-2.</span>
+      </p>
+      <p>One PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) is returned from the patient information source for each patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the PID segment group.</p>
+      <p>
+        <span>Within each PID segment, field</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>contains one or more identifiers from the set of Patient ID Domains known by the Patient Demographics Supplier.</span>
+      </p>
+      <p>
+        <span>If an incremental number of records are specified in</span>
+        <span style="font-style:italic">RCP-2</span>
+        <span>-</span>
+        <span style="font-style:italic">Quantity Limited Request</span>
+        <span>, and the number of records to be sent exceeds that incremental number, the Supplier returns only the incremental number of records, followed by a DSC segment containing a uniquely valued Continuation Pointer.</span>
+      </p>
+      <p>The consumer will specify the value of the continuation pointer in the DSC segment on the subsequent query request to request the next increment of responses.</p>
+      <p>
+        <span style="font-weight:bold">Case 2</span>
+        <span>: The Patient Demographics Supplier finds (in the patient information source associated with</span>
+        <span style="font-style:italic">MSH-5-Receiving Application</span>
+        <span>) at least one patient record matching the criteria sent in</span>
+        <span style="font-style:italic">QPD-3-Demographics Fields</span>
+        <span>. One or more patient identifier domains are requested in</span>
+        <span style="font-style:italic">QPD-8-What Domains Returned</span>
+        <span>;</span>
+        <span style="font-style:italic" />
+        <span>the Supplier recognizes all the requested domains.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">AA</span>
+        <span>(application accept) is returned in MSA-1.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">OK</span>
+        <span>(data found, no errors) is returned in QAK-2.</span>
+      </p>
+      <p>One PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) is returned for each matching patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the PID segment group.</p>
+      <p>
+        <span>Within each PID segment, field</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>contains, in successive occurrences delimited by the repetition separator, the identifiers from all the Patient ID Domains requested in QPD-8. In each occurrence of PID-3, component 4 contains the assigning authority value for one Patient ID Domain, and component 1 contains the Patient ID value in that domain. If an identifier does not exist for a domain that was specified on QPD-8, that identifier is not returned in the list. If all entries in the list of patient identifiers are eliminated, which would leave PID-3 empty, then the corresponding PID segment group shall not be present in the response at all.</span>
+      </p>
+      <p>
+        <span>If an incremental number of records is specified in</span>
+        <span style="font-style:italic">RCP-2</span>
+        <span>-</span>
+        <span style="font-style:italic">Quantity Limited Request</span>
+        <span>, and the number of records to be sent exceeds that incremental number, the Supplier returns only the incremental number of records, followed by a DSC segment containing a uniquely valued Continuation Pointer.</span>
+      </p>
+      <p>The consumer will specify the value of the continuation pointer in the DSC segment on the subsequent query request to request the next increment of responses.</p>
+      <p>
+        <span style="font-weight:bold">Case 3</span>
+        <span>: The Patient Demographics Supplier does not recognize one or more of the domains in</span>
+        <span style="font-style:italic">QPD-8-What Domains Returned</span>
+        <span>.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">AE</span>
+        <span>(application error) is returned in MSA-1 and in QAK-2.</span>
+      </p>
+      <p>
+        <span>For each domain that was not recognized, an ERR segment is returned in which the components of</span>
+        <span style="font-style:italic">ERR-2-Error Location</span>
+        <span>are valued as follows.</span>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:45.55pt" class="tableHeader">COMP #</td>
+            <td style="width:104.45pt" class="tableHeader">COMPONENT NAME</td>
+            <td style="width:51.95pt" class="tableHeader">VALUE</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:45.55pt">1</td>
+            <td style="width:104.45pt">Segment ID</td>
+            <td style="width:51.95pt">QPD</td>
+          </tr>
+          <tr>
+            <td style="width:45.55pt">2</td>
+            <td style="width:104.45pt">Sequence</td>
+            <td style="width:51.95pt">1</td>
+          </tr>
+          <tr>
+            <td style="width:45.55pt">3</td>
+            <td style="width:104.45pt">Field Position</td>
+            <td style="width:51.95pt">8</td>
+          </tr>
+          <tr>
+            <td style="width:45.55pt">4</td>
+            <td style="width:104.45pt">Field Repetition</td>
+            <td style="width:51.95pt">(see below)</td>
+          </tr>
+          <tr>
+            <td style="width:45.55pt">5</td>
+            <td style="width:104.45pt">Component Number</td>
+            <td style="width:51.95pt">(empty)</td>
+          </tr>
+          <tr>
+            <td style="width:45.55pt">6</td>
+            <td style="width:104.45pt">Subcomponent Number</td>
+            <td style="width:51.95pt">(empty)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <span style="font-style:italic">ERR-2.4-Field Repetition</span>
+        <span>identifies the ordinal occurrence of QPD-8 that contained the unrecognized domain. As specified by HL7,</span>
+        <span style="font-style:italic">ERR-2.5-Component Number</span>
+        <span>and</span>
+        <span style="font-style:italic">ERR-2.6-Subcomponent Number</span>
+        <span>are not valued because we are referring to the entire field QPD-8.</span>
+      </p>
+      <p>
+        <span style="font-style:italic">ERR-3-HL7 Error Code</span>
+        <span>is populated with the error condition code 204 (unknown key identifier). Together with the values in ERR-2, this signifies that the Patient Demographics Supplier did not recognize the domain for</span>
+        <span style="font-style:italic">QPD-8-What Domains Returned</span>
+        <span>.</span>
+      </p>
+      <h5 id="3.21.4.2.3">3.21.4.2.3 Expected Actions</h5>
+      <p>The Patient Demographics Consumer will use the demographic information provided by the Patient Demographics Supplier to perform the functions for which it requested the information, e.g., providing a pick list to the user.</p>
+      <p>If the Supplier has sent a DSC segment containing a continuation pointer value, additional increments of data are available upon request by the Consumer. After receiving each increment of data that includes a DSC segment containing a continuation pointer value, the Consumer should take one of the following actions.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span>If the Consumer wishes to receive another increment of the data, the Consumer reissues the query message using a new unique value in</span>
+          <span style="font-style:italic">MSH-10-message control ID</span>
+          <span>and adding the DSC segment after the RCP segment. DSC-1 shall echo the continuation pointer returned in RSP^K22 DSC-1 segment.</span>
+        </li>
+        <li class="bullet-list1">If the Consumer does not wish to receive another increment of the data, the Consumer issues a cancel query (QCN^J01) message. The consumer shall echo the query tag from QAK-1 in QID-1 and the query message name from QPD-1 in QID-2.</li>
+        <li class="bullet-list1">If the Consumer does not reissue the query or send a cancel query message, the query will eventually terminate.</li>
+      </ul>
+      <p>If the Supplier has not sent a DSC segment containing a continuation pointer value, no more increments of data are available and no further action by the Consumer is required.</p>
+      <h4 id="3.21.4.3">3.21.4.3 Canceling a query</h4>
+      <p>The Patient Demographic Consumer can send a cancel trigger to notify the Patient Demographic Supplier that no more incremental responses will be requested, and the interactive query can be terminated. This cancellation trigger is optional. How long the Patient Demographic Supplier retains query results (for incremental response) is an implementation decision and therefore beyond the scope of IHE.</p>
+      <h5 id="3.21.4.3.1">3.21.4.3.1 Trigger Events</h5>
+      <p>The Patient Demographic Consumer which received a RSP^K22 response message indicating there are more incremental responses data available, can terminate the interactive query with the following HL7 trigger event:</p>
+      <p>J01 – Cancel query status</p>
+      <h5 id="3.21.4.3.2">3.21.4.3.2 Message Semantics</h5>
+      <p>Canceling a query is conducted by the QCN^J01 message. The Patient Demographic Consumer can generate this message to notify the Patient Demographic Supplier that no more data is desired. The segments of the message listed below are required, and their details descriptions are provided in the following subsections.</p>
+      <p style="font-size:11pt">
+        <a name="OLE_LINK17">
+          <span style="font-weight:bold">Table 3.21</span>
+          <span style="font-weight:bold">-10</span>
+          <span style="font-weight:bold">: QCN Cancel query</span>
+        </a>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:34.2pt" class="tableHeader">QCN</td>
+            <td style="width:126.15pt" class="tableHeader">Cancel query</td>
+            <td style="width:108.9pt" class="tableHeader">Chapter in HL7 2.5</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:34.2pt">MSH</td>
+            <td style="width:126.15pt">Message Header</td>
+            <td style="width:108.9pt">2</td>
+          </tr>
+          <tr>
+            <td style="width:34.2pt">QID</td>
+            <td style="width:126.15pt">Query identification Segment</td>
+            <td style="width:108.9pt">5</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The receiver shall acknowledge this cancel by the HL7 ACK message. See ITI TF-2x: C.2.3, “Acknowledgement Modes”, for definition and discussion of the ACK message.</p>
+      <h6 id="3.21.4.3.2.1">3.21.4.3.2.1 MSH Segment</h6>
+      <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
+      <p>MSH-9 (Message Type) shall have three components. The first component shall have the value of QCN; the second component shall have a value of J01. The third component shall have the value of QCN_J01.</p>
+      <h6 id="3.21.4.3.2.2">3.21.4.3.2.2 QID Segment</h6>
+      <p>The QID segment contains the information necessary to uniquely identify the query being cancelled.</p>
+      <p style="font-size:11pt">
+        <a name="OLE_LINK22">
+          <span style="font-weight:bold">Table 3.21-</span>
+          <span style="font-weight:bold">11</span>
+          <span style="font-weight:bold">: IHE Profile - QID segment</span>
+        </a>
+        <span style="font-weight:bold" />
+      </p>
+      <table cellspacing="0" cellpadding="0">
         <tr>
-          <td style="width:49.55pt" class="tableHeader">RSP</td>
-          <td style="width:137.25pt" class="tableHeader">Segment Pattern Response</td>
-          <td style="width:98.5pt" class="tableHeader">Chapter in HL7 2.5</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:49.55pt">MSH</td>
-          <td style="width:137.25pt">Message Header</td>
-          <td style="width:98.5pt">2</td>
-        </tr>
-        <tr>
-          <td style="width:49.55pt">MSA</td>
-          <td style="width:137.25pt">Message Acknowledgement</td>
-          <td style="width:98.5pt">2</td>
-        </tr>
-        <tr>
-          <td style="width:49.55pt">[ {ERR} ]</td>
-          <td style="width:137.25pt">Error</td>
-          <td style="width:98.5pt">2</td>
-        </tr>
-        <tr>
-          <td style="width:49.55pt">QAK</td>
-          <td style="width:137.25pt">Query Acknowledgement</td>
-          <td style="width:98.5pt">5</td>
-        </tr>
-        <tr>
-          <td style="width:49.55pt">QPD</td>
-          <td style="width:137.25pt">Query Parameter Definition</td>
-          <td style="width:98.5pt">5</td>
-        </tr>
-        <tr>
-          <td style="width:49.55pt">[ { PID</td>
-          <td style="width:137.25pt">Patient Identification</td>
-          <td style="width:98.5pt">3</td>
+          <td style="width:43.2pt" class="tableHeader">SEQ</td>
+          <td style="width:34.2pt" class="tableHeader">LEN</td>
+          <td style="width:34.2pt" class="tableHeader">DT</td>
+          <td style="width:33.15pt" class="tableHeader">OPT</td>
+          <td style="width:39.75pt" class="tableHeader">TBL#</td>
+          <td style="width:38.7pt" class="tableHeader">ITEM#</td>
+          <td style="width:97.2pt" class="tableHeader">ELEMENT NAME</td>
         </tr>
         <tr>
-          <td style="width:49.55pt">  [ PD1 ]</td>
-          <td style="width:137.25pt" />
-          <td style="width:98.5pt" />
+          <td style="width:43.2pt">1</td>
+          <td style="width:34.2pt">32</td>
+          <td style="width:34.2pt">ST</td>
+          <td style="width:33.15pt">R</td>
+          <td style="width:39.75pt" />
+          <td style="width:38.7pt">00696</td>
+          <td style="width:97.2pt">Query Tag</td>
         </tr>
         <tr>
-          <td style="width:49.55pt">  [ QRI ] } ]</td>
-          <td style="width:137.25pt">Query Response Instance</td>
-          <td style="width:98.5pt">5</td>
+          <td style="width:43.2pt">2</td>
+          <td style="width:34.2pt">250</td>
+          <td style="width:34.2pt">CE</td>
+          <td style="width:33.15pt">R</td>
+          <td style="width:39.75pt">0471</td>
+          <td style="width:38.7pt">01375</td>
+          <td style="width:97.2pt">Message Query Name</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight:bold">3.21.4.3.2.2.1</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <a name="_Toc174249011">Populating QID-1 Query Tag</a>
+      </p>
+      <p>QID-1 (Query Tag) uniquely identifies the query to be canceled. This field shall contain the same value specified in QPD-2.</p>
+      <p>
+        <span style="font-weight:bold">3.21.4.3.2.2.2</span>
+        <span style="font:7pt 'Times New Roman'">                       </span>
+        <a name="_Toc174249012">Populating QID-2 Message Query Name</a>
+      </p>
+      <p>QID-2 (Message Query Name) identifies the name of the query. It is an identifier of the conformance statement for this query. This field shall contain the same value specified in QPD-1.</p>
+      <h3 id="3.21.5">3.21.5 Security Considerations</h3>
+      <h4 id="3.21.5.1">3.21.5.1 Audit Record Considerations</h4>
+      <p>The Patient Demographics Query Transaction is a Query Information event as defined in Table 3.20.4.1.1.1-1. The Actors involved shall record audit events according to the following:</p>
+      <h5 id="3.21.5.1.1">3.21.5.1.1 Patient Demographics Consumer audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt" class="tableHeader">Field Name</td>
+          <td style="width:25.2pt" class="tableHeader">Opt</td>
+          <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
         </tr>
         <tr>
-          <td style="width:49.55pt">[ DSC ]</td>
-          <td style="width:137.25pt">Continuation Pointer</td>
-          <td style="width:98.5pt">2</td>
-        </tr>
-      </tbody>
-    </table>
-    <h6 id="3.21.4.2.2.1">3.21.4.2.2.1 MSH Segment</h6>
-    <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
-    <p>
-      <span>Field</span>
-      <span style="font-style:italic">MSH-3-Sending Application</span>
-      <span>specifies the patient information source that processed the query. The Patient Demographics Supplier shall use Field</span>
-      <span style="font-style:italic">MSH-3-Sending Application</span>
-      <span>of the RSP^K22 message to return the value it received from the Patient Demographics Consumer in Field</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>of the QBP^Q22 message.</span>
-    </p>
-    <p>
-      <span>Field</span>
-      <span style="font-style:italic">MSH-9-Message Type</span>
-      <span>shall have all three components populated with a value. The first component shall have a value of</span>
-      <span style="font-weight:bold">RSP</span>
-      <span>; the second component shall have a value of</span>
-      <span style="font-weight:bold">K22</span>
-      <span>. The third component shall have a value of</span>
-      <span style="font-weight:bold">RSP_K21</span>
-      <span>.</span>
-    </p>
-    <h6 id="3.21.4.2.2.2">3.21.4.2.2.2 MSA Segment</h6>
-    <p>The Patient Demographics Supplier is not required to send any attributes within the MSA segment beyond what is specified in the HL7 standard. See the “Acknowledgment Modes” section (ITI TF-2x: C.2.3) for the list of all required and optional fields within the MSA segment.</p>
-    <h6 id="3.21.4.2.2.3">3.21.4.2.2.3 QAK Segment</h6>
-    <p>The Patient Demographics Supplier shall send attributes within the QAK segment as defined in Table 3.21-7. For the details on filling in QAK-2 (Query Response Status) refer to the “Patient Demographics Supplier Actor Query Response Behavior” in Section 3.21.4.2.2.8.</p>
-    <p>QAK-1 (Query Tag) shall echo the same value of QPD-2 (Query Tag) of the QBP^Q22 message, to allow the Patient Demographics Query Consumer to match the response to the corresponding query request.</p>
-    <p class="tableTitle">Table 3.21-7: IHE Profile - QAK segment</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:42.82pt" class="tableHeader">SEQ</td>
-        <td style="width:42.82pt" class="tableHeader">LEN</td>
-        <td style="width:42.82pt" class="tableHeader">DT</td>
-        <td style="width:42.82pt" class="tableHeader">OPT</td>
-        <td style="width:42.82pt" class="tableHeader">TBL#</td>
-        <td style="width:42.82pt" class="tableHeader">ITEM#</td>
-        <td style="width:146.75pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:42.82pt">1</td>
-        <td style="width:42.82pt">32</td>
-        <td style="width:42.82pt">ST</td>
-        <td style="width:42.82pt">R</td>
-        <td style="width:42.82pt" />
-        <td style="width:42.82pt">00696</td>
-        <td style="width:146.75pt">Query Tag</td>
-      </tr>
-      <tr>
-        <td style="width:42.82pt">2</td>
-        <td style="width:42.82pt">2</td>
-        <td style="width:42.82pt">ID</td>
-        <td style="width:42.82pt">R+</td>
-        <td style="width:42.82pt">0208</td>
-        <td style="width:42.82pt">00708</td>
-        <td style="width:146.75pt">Query Response Status</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
-    </p>
-    <h6 id="3.21.4.2.2.4">3.21.4.2.2.4 QPD Segment</h6>
-    <p>The Patient Demographics Supplier shall echo the QPD Segment value that was sent in the QBP^Q22 message.</p>
-    <h6 id="3.21.4.2.2.5">3.21.4.2.2.5 PID Segment</h6>
-    <p>The Patient Demographics Supplier shall return one PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) for each matching patient record found. The Supplier shall return the attributes within the PID segment as specified in Table 3.21-8. In addition, the Patient Demographics Supplier shall return all other attributes within the PID segment for which it is able to supply values.</p>
-    <p class="tableTitle">Table 3.21-8: IHE Profile - PID segment</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:28.48pt" class="tableHeader">SEQ</td>
-        <td style="width:27.38pt" class="tableHeader">LEN</td>
-        <td style="width:26.82pt" class="tableHeader">DT</td>
-        <td style="width:27.92pt" class="tableHeader">OPT</td>
-        <td style="width:32.38pt" class="tableHeader">TBL#</td>
-        <td style="width:36.78pt" class="tableHeader">ITEM#</td>
-        <td style="width:99.95pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">3</td>
-        <td style="width:27.38pt">250</td>
-        <td style="width:26.82pt">CX</td>
-        <td style="width:27.92pt">R</td>
-        <td style="width:32.38pt" />
-        <td style="width:36.78pt">00106</td>
-        <td style="width:99.95pt">Patient Identifier List</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">5</td>
-        <td style="width:27.38pt">250</td>
-        <td style="width:26.82pt">XPN</td>
-        <td style="width:27.92pt">R</td>
-        <td style="width:32.38pt" />
-        <td style="width:36.78pt">00108</td>
-        <td style="width:99.95pt">Patient Name</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">7</td>
-        <td style="width:27.38pt">26</td>
-        <td style="width:26.82pt">TS</td>
-        <td style="width:27.92pt">R2</td>
-        <td style="width:32.38pt" />
-        <td style="width:36.78pt">00110</td>
-        <td style="width:99.95pt">Date/Time of Birth</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">8</td>
-        <td style="width:27.38pt">1</td>
-        <td style="width:26.82pt">IS</td>
-        <td style="width:27.92pt">R2</td>
-        <td style="width:32.38pt">0001</td>
-        <td style="width:36.78pt">00111</td>
-        <td style="width:99.95pt">Administrative Sex</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">11</td>
-        <td style="width:27.38pt">250</td>
-        <td style="width:26.82pt">XAD</td>
-        <td style="width:27.92pt">R2</td>
-        <td style="width:32.38pt" />
-        <td style="width:36.78pt">00114</td>
-        <td style="width:99.95pt">Patient Address</td>
-      </tr>
-      <tr>
-        <td style="width:28.48pt">18</td>
-        <td style="width:27.38pt">250</td>
-        <td style="width:26.82pt">CX</td>
-        <td style="width:27.92pt">R2</td>
-        <td style="width:32.38pt" />
-        <td style="width:36.78pt">00121</td>
-        <td style="width:99.95pt">Patient Account Number</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-style:italic">Adapted from the HL7 standard, version 2.5</span>
-    </p>
-    <p>The Patient Demographics Supplier may or may not be able to supply additional identifiers from the domains specified in QPD-8. Inability to supply an identifier in a particular domain is not an error, provided that the domain is recognized.</p>
-    <p>
-      <span>The PID segment and its associated PD1 and QRI segments are returned only when the Patient Demographics Supplier is able to associate the search information in QPD-3 with one or more patient records in the patient information source associated with</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>. See the “Patient Demographics Supplier Actor Query Response Behavior” Section 3.21.4.2.2.8 for a detailed description of how the Patient Demographics Supplier responds to the query request under various circumstances.</span>
-    </p>
-    <h6 id="3.21.4.2.2.6">3.21.4.2.2.6 QRI Segment</h6>
-    <p>For each patient for which the Patient Demographics Supplier returns a PID Segment, it may optionally return the QRI (Query Response Instance) segment, but is not required to do so. Refer to the HL7 Standard, Version 2.5, Chapter 5, Section 5.5.5, for more information.</p>
-    <h6 id="3.21.4.2.2.7">3.21.4.2.2.7 DSC Segment</h6>
-    <p>
-      <span>If the number of records is specified in</span>
-      <span style="font-style:italic">RCP-2-Quantity Limited Request</span>
-      <span>, the Patient Demographics Supplier shall return an incremental response of that number of records when the number of matching records it finds exceeds the number of records specified in RCP-2.</span>
-    </p>
-    <p>As long as the Patient Demographics Supplier has records to return in addition to those returned in the incremental response, the Supplier shall return a DSC Segment. The single field of the DSC Segment shall contain a unique alphanumeric value (the Continuation Pointer) that the Patient Demographics Consumer may return in the DSC of the QBP^Q22 message to request the next increment of responses. The Supplier shall return increments as many times as the Consumer requests them (and there are increments to return), and shall stop when the Consumer sends a cancel query (QCN^J01) message (or when there are no more increments to return).</p>
-    <h6 id="3.21.4.2.2.8">3.21.4.2.2.8 Patient Demographics Supplier Actor Query Response Behavior</h6>
-    <p>
-      <span>The Patient Demographics Supplier shall perform the matching of patient data based on the query parameter values it receives. The information provided by the Patient Demographics Supplier to Patient Demographics Consumer Actors is a list of possible matching patients from the patient information source associated with the value that the Consumer sent in</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>of the query message.</span>
-    </p>
-    <p>
-      <span>If domains are specified in</span>
-      <span style="font-style:italic">QPD-8-What Domains Returned</span>
-      <span>and are recognized by the Patient Demographics Supplier, the response will also, for each patient, contain any Patient ID values found in the specified domains.</span>
-    </p>
-    <p>The mechanics of the matching algorithms used are internal to the Patient Demographics Supplier and are outside of the scope of this framework.</p>
-    <p>The Patient Demographics Supplier shall respond to the query request as described by the following 3 cases:</p>
-    <p>
-      <span style="font-weight:bold">Case 1</span>
-      <span>: The Patient Demographics Supplier finds (in the patient information source associated with</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>) at least one patient record matching the criteria sent in</span>
-      <span style="font-style:italic">QPD-3-Demographics Fields</span>
-      <span>. No patient identifier domains are requested in</span>
-      <span style="font-style:italic">QPD-8-What Domains Returned</span>
-      <span>.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">AA</span>
-      <span>(application accept) is returned in MSA-1.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">OK</span>
-      <span>(data found, no errors) is returned in QAK-2.</span>
-    </p>
-    <p>One PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) is returned from the patient information source for each patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the PID segment group.</p>
-    <p>
-      <span>Within each PID segment, field</span>
-      <span style="font-style:italic">PID-3-Patient Identifier List</span>
-      <span>contains one or more identifiers from the set of Patient ID Domains known by the Patient Demographics Supplier.</span>
-    </p>
-    <p>
-      <span>If an incremental number of records are specified in</span>
-      <span style="font-style:italic">RCP-2</span>
-      <span>-</span>
-      <span style="font-style:italic">Quantity Limited Request</span>
-      <span>, and the number of records to be sent exceeds that incremental number, the Supplier returns only the incremental number of records, followed by a DSC segment containing a uniquely valued Continuation Pointer.</span>
-    </p>
-    <p>The consumer will specify the value of the continuation pointer in the DSC segment on the subsequent query request to request the next increment of responses.</p>
-    <p>
-      <span style="font-weight:bold">Case 2</span>
-      <span>: The Patient Demographics Supplier finds (in the patient information source associated with</span>
-      <span style="font-style:italic">MSH-5-Receiving Application</span>
-      <span>) at least one patient record matching the criteria sent in</span>
-      <span style="font-style:italic">QPD-3-Demographics Fields</span>
-      <span>. One or more patient identifier domains are requested in</span>
-      <span style="font-style:italic">QPD-8-What Domains Returned</span>
-      <span>;</span>
-      <span style="font-style:italic" />
-      <span>the Supplier recognizes all the requested domains.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">AA</span>
-      <span>(application accept) is returned in MSA-1.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">OK</span>
-      <span>(data found, no errors) is returned in QAK-2.</span>
-    </p>
-    <p>One PID segment group (i.e., one PID segment plus any segments associated with it in the message syntax shown in Table 3.21-6) is returned for each matching patient record found. If the Patient Demographics Supplier returns data for multiple patients, it shall return these data in successive occurrences of the PID segment group.</p>
-    <p>
-      <span>Within each PID segment, field</span>
-      <span style="font-style:italic">PID-3-Patient Identifier List</span>
-      <span>contains, in successive occurrences delimited by the repetition separator, the identifiers from all the Patient ID Domains requested in QPD-8. In each occurrence of PID-3, component 4 contains the assigning authority value for one Patient ID Domain, and component 1 contains the Patient ID value in that domain. If an identifier does not exist for a domain that was specified on QPD-8, that identifier is not returned in the list. If all entries in the list of patient identifiers are eliminated, which would leave PID-3 empty, then the corresponding PID segment group shall not be present in the response at all.</span>
-    </p>
-    <p>
-      <span>If an incremental number of records is specified in</span>
-      <span style="font-style:italic">RCP-2</span>
-      <span>-</span>
-      <span style="font-style:italic">Quantity Limited Request</span>
-      <span>, and the number of records to be sent exceeds that incremental number, the Supplier returns only the incremental number of records, followed by a DSC segment containing a uniquely valued Continuation Pointer.</span>
-    </p>
-    <p>The consumer will specify the value of the continuation pointer in the DSC segment on the subsequent query request to request the next increment of responses.</p>
-    <p>
-      <span style="font-weight:bold">Case 3</span>
-      <span>: The Patient Demographics Supplier does not recognize one or more of the domains in</span>
-      <span style="font-style:italic">QPD-8-What Domains Returned</span>
-      <span>.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">AE</span>
-      <span>(application error) is returned in MSA-1 and in QAK-2.</span>
-    </p>
-    <p>
-      <span>For each domain that was not recognized, an ERR segment is returned in which the components of</span>
-      <span style="font-style:italic">ERR-2-Error Location</span>
-      <span>are valued as follows.</span>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:45.55pt" class="tableHeader">COMP #</td>
-          <td style="width:104.45pt" class="tableHeader">COMPONENT NAME</td>
-          <td style="width:51.95pt" class="tableHeader">VALUE</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:45.55pt">1</td>
-          <td style="width:104.45pt">Segment ID</td>
-          <td style="width:51.95pt">QPD</td>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110112, DCM, “Query”)</td>
         </tr>
         <tr>
-          <td style="width:45.55pt">2</td>
-          <td style="width:104.45pt">Sequence</td>
-          <td style="width:51.95pt">1</td>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“E” (Execute)</td>
         </tr>
         <tr>
-          <td style="width:45.55pt">3</td>
-          <td style="width:104.45pt">Field Position</td>
-          <td style="width:51.95pt">8</td>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
         </tr>
         <tr>
-          <td style="width:45.55pt">4</td>
-          <td style="width:104.45pt">Field Repetition</td>
-          <td style="width:51.95pt">(see below)</td>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
         </tr>
         <tr>
-          <td style="width:45.55pt">5</td>
-          <td style="width:104.45pt">Component Number</td>
-          <td style="width:51.95pt">(empty)</td>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
         </tr>
         <tr>
-          <td style="width:45.55pt">6</td>
-          <td style="width:104.45pt">Subcomponent Number</td>
-          <td style="width:51.95pt">(empty)</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <span style="font-style:italic">ERR-2.4-Field Repetition</span>
-      <span>identifies the ordinal occurrence of QPD-8 that contained the unrecognized domain. As specified by HL7,</span>
-      <span style="font-style:italic">ERR-2.5-Component Number</span>
-      <span>and</span>
-      <span style="font-style:italic">ERR-2.6-Subcomponent Number</span>
-      <span>are not valued because we are referring to the entire field QPD-8.</span>
-    </p>
-    <p>
-      <span style="font-style:italic">ERR-3-HL7 Error Code</span>
-      <span>is populated with the error condition code 204 (unknown key identifier). Together with the values in ERR-2, this signifies that the Patient Demographics Supplier did not recognize the domain for</span>
-      <span style="font-style:italic">QPD-8-What Domains Returned</span>
-      <span>.</span>
-    </p>
-    <h5 id="3.21.4.2.3">3.21.4.2.3 Expected Actions</h5>
-    <p>The Patient Demographics Consumer will use the demographic information provided by the Patient Demographics Supplier to perform the functions for which it requested the information, e.g., providing a pick list to the user.</p>
-    <p>If the Supplier has sent a DSC segment containing a continuation pointer value, additional increments of data are available upon request by the Consumer. After receiving each increment of data that includes a DSC segment containing a continuation pointer value, the Consumer should take one of the following actions.</p>
-    <ul>
-      <li class="bullet-list1">
-        <span>If the Consumer wishes to receive another increment of the data, the Consumer reissues the query message using a new unique value in</span>
-        <span style="font-style:italic">MSH-10-message control ID</span>
-        <span>and adding the DSC segment after the RCP segment. DSC-1 shall echo the continuation pointer returned in RSP^K22 DSC-1 segment.</span>
-      </li>
-      <li class="bullet-list1">If the Consumer does not wish to receive another increment of the data, the Consumer issues a cancel query (QCN^J01) message. The consumer shall echo the query tag from QAK-1 in QID-1 and the query message name from QPD-1 in QID-2.</li>
-      <li class="bullet-list1">If the Consumer does not reissue the query or send a cancel query message, the query will eventually terminate.</li>
-    </ul>
-    <p>If the Supplier has not sent a DSC segment containing a continuation pointer value, no more increments of data are available and no further action by the Consumer is required.</p>
-    <h4 id="3.21.4.3">3.21.4.3 Canceling a query</h4>
-    <p>The Patient Demographic Consumer can send a cancel trigger to notify the Patient Demographic Supplier that no more incremental responses will be requested, and the interactive query can be terminated. This cancellation trigger is optional. How long the Patient Demographic Supplier retains query results (for incremental response) is an implementation decision and therefore beyond the scope of IHE.</p>
-    <h5 id="3.21.4.3.1">3.21.4.3.1 Trigger Events</h5>
-    <p>The Patient Demographic Consumer which received a RSP^K22 response message indicating there are more incremental responses data available, can terminate the interactive query with the following HL7 trigger event:</p>
-    <p>J01 – Cancel query status</p>
-    <h5 id="3.21.4.3.2">3.21.4.3.2 Message Semantics</h5>
-    <p>Canceling a query is conducted by the QCN^J01 message. The Patient Demographic Consumer can generate this message to notify the Patient Demographic Supplier that no more data is desired. The segments of the message listed below are required, and their details descriptions are provided in the following subsections.</p>
-    <p style="font-size:11pt">
-      <a name="OLE_LINK17">
-        <span style="font-weight:bold">Table 3.21</span>
-        <span style="font-weight:bold">-10</span>
-        <span style="font-weight:bold">: QCN Cancel query</span>
-      </a>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:34.2pt" class="tableHeader">QCN</td>
-          <td style="width:126.15pt" class="tableHeader">Cancel query</td>
-          <td style="width:108.9pt" class="tableHeader">Chapter in HL7 2.5</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:34.2pt">MSH</td>
-          <td style="width:126.15pt">Message Header</td>
-          <td style="width:108.9pt">2</td>
+          <td colspan="4" style="width:472.5pt">Source (Patient Demographics Consumer) (1)</td>
         </tr>
         <tr>
-          <td style="width:34.2pt">QID</td>
-          <td style="width:126.15pt">Query identification Segment</td>
-          <td style="width:108.9pt">5</td>
+          <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
         </tr>
-      </tbody>
-    </table>
-    <p>The receiver shall acknowledge this cancel by the HL7 ACK message. See ITI TF-2x: C.2.3, “Acknowledgement Modes”, for definition and discussion of the ACK message.</p>
-    <h6 id="3.21.4.3.2.1">3.21.4.3.2.1 MSH Segment</h6>
-    <p>The MSH segment shall be constructed as defined in the “Message Control” section (ITI TF-2x: C.2.2).</p>
-    <p>MSH-9 (Message Type) shall have three components. The first component shall have the value of QCN; the second component shall have a value of J01. The third component shall have the value of QCN_J01.</p>
-    <h6 id="3.21.4.3.2.2">3.21.4.3.2.2 QID Segment</h6>
-    <p>The QID segment contains the information necessary to uniquely identify the query being cancelled.</p>
-    <p style="font-size:11pt">
-      <a name="OLE_LINK22">
-        <span style="font-weight:bold">Table 3.21-</span>
-        <span style="font-weight:bold">11</span>
-        <span style="font-weight:bold">: IHE Profile - QID segment</span>
-      </a>
-      <span style="font-weight:bold" />
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:43.2pt" class="tableHeader">SEQ</td>
-        <td style="width:34.2pt" class="tableHeader">LEN</td>
-        <td style="width:34.2pt" class="tableHeader">DT</td>
-        <td style="width:33.15pt" class="tableHeader">OPT</td>
-        <td style="width:39.75pt" class="tableHeader">TBL#</td>
-        <td style="width:38.7pt" class="tableHeader">ITEM#</td>
-        <td style="width:97.2pt" class="tableHeader">ELEMENT NAME</td>
-      </tr>
-      <tr>
-        <td style="width:43.2pt">1</td>
-        <td style="width:34.2pt">32</td>
-        <td style="width:34.2pt">ST</td>
-        <td style="width:33.15pt">R</td>
-        <td style="width:39.75pt" />
-        <td style="width:38.7pt">00696</td>
-        <td style="width:97.2pt">Query Tag</td>
-      </tr>
-      <tr>
-        <td style="width:43.2pt">2</td>
-        <td style="width:34.2pt">250</td>
-        <td style="width:34.2pt">CE</td>
-        <td style="width:33.15pt">R</td>
-        <td style="width:39.75pt">0471</td>
-        <td style="width:38.7pt">01375</td>
-        <td style="width:97.2pt">Message Query Name</td>
-      </tr>
-    </table>
-    <p>
-      <span style="font-weight:bold">3.21.4.3.2.2.1</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <a name="_Toc174249011">Populating QID-1 Query Tag</a>
-    </p>
-    <p>QID-1 (Query Tag) uniquely identifies the query to be canceled. This field shall contain the same value specified in QPD-2.</p>
-    <p>
-      <span style="font-weight:bold">3.21.4.3.2.2.2</span>
-      <span style="font:7pt 'Times New Roman'">                       </span>
-      <a name="_Toc174249012">Populating QID-2 Message Query Name</a>
-    </p>
-    <p>QID-2 (Message Query Name) identifies the name of the query. It is an identifier of the conformance statement for this query. This field shall contain the same value specified in QPD-1.</p>
-    <h3 id="3.21.5">3.21.5 Security Considerations</h3>
-    <h4 id="3.21.5.1">3.21.5.1 Audit Record Considerations</h4>
-    <p>The Patient Demographics Query Transaction is a Query Information event as defined in Table 3.20.4.1.1.1-1. The Actors involved shall record audit events according to the following:</p>
-    <h5 id="3.21.5.1.1">3.21.5.1.1 Patient Demographics Consumer audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt" class="tableHeader">Field Name</td>
-        <td style="width:25.2pt" class="tableHeader">Opt</td>
-        <td style="width:233.1pt" class="tableHeader">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110112, DCM, “Query”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“E” (Execute)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Patient Demographics Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Patient Demographics Supplier) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Patient Demographics Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Query Parameters (1)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The identity of the Patient Demographics Consumer facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Human Requestor (if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The identity of the Patient Demographics Source facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">
-          <p>
-            <span style="font-style:italic">UserIsRequesto</span>
-            <span>r</span>
-          </p>
-        </td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Query Parameters</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (system object)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“24” (query)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The complete query message (including MSH and QPD segments), base64 encoded.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
-      </tr>
-    </table>
-    <h5 id="3.21.5.1.2">3.21.5.1.2 Patient Demographics Source audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt">Field Name</td>
-        <td style="width:25.2pt">Opt</td>
-        <td style="width:233.1pt">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110112, DCM, “Query”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“E” (Execute)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Patient Demographics Consumer) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Patient Demographics Supplier) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Patient Demographics Supplier) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Query Parameters (1)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The identity of the Patient Demographics Consumer facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The identity of the Patient Demographics Supplier facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Query Parameters</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (system object)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“24” (query)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The complete query message (including MSH and QPD segments), base64 encoded.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
-      </tr>
-    </table>
-    <br style="page-break-before:always; clear:both" />
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Patient Demographics Supplier) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Patient Demographics Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (0..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Query Parameters (1)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The identity of the Patient Demographics Consumer facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Human Requestor (if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The identity of the Patient Demographics Source facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">
+            <p>
+              <span style="font-style:italic">UserIsRequesto</span>
+              <span>r</span>
+            </p>
+          </td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Query Parameters</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (system object)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“24” (query)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The complete query message (including MSH and QPD segments), base64 encoded.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+        </tr>
+      </table>
+      <h5 id="3.21.5.1.2">3.21.5.1.2 Patient Demographics Source audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt">Field Name</td>
+          <td style="width:25.2pt">Opt</td>
+          <td style="width:233.1pt">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110112, DCM, “Query”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“E” (Execute)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Patient Demographics Consumer) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Patient Demographics Supplier) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Patient Demographics Supplier) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (0..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Query Parameters (1)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The identity of the Patient Demographics Consumer facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The identity of the Patient Demographics Supplier facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Query Parameters</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (system object)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“24” (query)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(“ITI-21”, “IHE Transactions”, “Patient Demographics Query”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The complete query message (including MSH and QPD segments), base64 encoded.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+        </tr>
+      </table>
+      <br style="page-break-before:always; clear:both" />
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

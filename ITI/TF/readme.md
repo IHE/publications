@@ -46,12 +46,15 @@ The conversion is a multi step process consisting of the following steps:
 * removed "no-break space" characters from headings
 * removed inline style of <p> containing notes and replaced by classes 
 * switched to ITI-TF Version 17.0 Final Text
-* solved bug with merge of SPAN elements, if the sequence contains a link 
+* solved bug with merge of SPAN elements, if the sequence contains a link
+* removed inline style of A HREF tags
+* Vol 1 Glossary does appear in the TOC and index file 
+* Vol 2 Glossar in vol 2x appears in the TOC and index file 
+* removed inline style of A HREF tags
+* made footnote references work  
 
-## Open issues: 
-* MAJOR: Vol2 Glossars (2a, 2b, 2x) are not detected as sections. 
-* MINOR: remove inline style of A HREF tags
-
+## Open issues:  
+Footnotes do not appear on the same page they are referenced in. This cannot be easily solved by processing and must be edited manually. 	
 
 ### Java processing code
 Initial conversion is done with online conversion tool:

@@ -5,309 +5,348 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.35">3.35 Submit Form [ITI-35]</h2>
-    <p>This section corresponds to transaction [ITI-35] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-35] is used by the Form Filler and Form Receiver or Form Processor Actors.</p>
-    <h3 id="3.35.1">3.35.1 Scope</h3>
-    <p>This transaction involves a Form Filler submitting a form to a Form Receiver or Form Processor.</p>
-    <h3 id="3.35.2">3.35.2 Use Case Roles</h3>
-    <img src="media/ai8zh-w242m.021.png" width="373" height="131" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Form Filler</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A forms display and editing system capable of allowing form fields to be completed.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Form Receiver</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>A system that receives submitted forms from a Form Filler.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor</span>
-      <span>: Form Processor</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role</span>
-      <span>: A system that receives submitted forms from a Form Filler and processes them.</span>
-    </p>
-    <h3 id="3.35.3">3.35.3 Referenced Standards</h3>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <p>
-      <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
-      <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
-    </p>
-    <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
-    <p>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000. http://www.w3.org/TR/REC-xml.</p>
-    <p><a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a> Web Services for IHE Transactions</p>
-    <h3 id="3.35.4">3.35.4 Messages</h3>
-    <img src="media/ai8zh-w242m.022.png" width="534" height="244" alt="" />
-    <p class="figureTitle">Figure 3.35.4-1: Interaction Diagram</p>
-    <h4 id="3.35.4.1">3.35.4.1 Submit Form</h4>
-    <p>This transaction is initiated by a Form Filler submitting form instance data, using XML as a format, to a Form Receiver or Form Processor.</p>
-    <h5 id="3.35.4.1.1">3.35.4.1.1 Trigger Events</h5>
-    <p>The Submit Form transaction is triggered by the submission action from within the form.</p>
-    <h5 id="3.35.4.1.2">3.35.4.1.2 Message Semantics</h5>
-    <p>The Submit Form transaction shall carry a SubmitFormRequest element, with submitted form data as XML child elements of the SubmitFormRequest element. Content profiles may further constrain the content of the SubmitFormRequest element.</p>
-    <p>See the schema provided with the support materials (see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>).</p>
-    <h5 id="3.35.4.1.3">3.35.4.1.3 Expected Actions</h5>
-    <p>Upon receipt of the Submit Form request, the Form Receiver or Form Processor shall return a SubmitFormResponse element, or errors with SOAP Faults, for example if the posted data cannot be recognized.</p>
-    <p>The Form Filler may display the results of the response from the Form Receiver or Form Processor.</p>
-    <p>The Form Receiver or Form Processor shall use the SOAP Faults defined in Table 3.35.4.1.3-1 when appropriate. Form Fillers shall be capable of accepting other values beyond the ones specified here.</p>
-    <p class="tableTitle">Table 3.35.4.1.3-1: SOAP Faults</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:187.2pt" class="tableHeader">Description of error</td>
-        <td style="width:52.2pt" class="tableHeader">Code</td>
-        <td style="width:128.7pt" class="tableHeader">Reason Text</td>
-      </tr>
-      <tr style="height:11.8pt">
-        <td style="width:187.2pt">Cannot recognize the posted data</td>
-        <td style="width:52.2pt">Sender</td>
-        <td style="width:128.7pt">Required Information Missing</td>
-      </tr>
-    </table>
-    <p>An example of a SOAP Fault is:</p>
-    <p class="note">&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"</p>
-    <p class="note">       xmlns:xml="http://www.w3.org/XML/1998/namespace"&gt;</p>
-    <p class="note">&lt;env:Body&gt;</p>
-    <p class="note">  &lt;env:Fault&gt;</p>
-    <p class="note">    &lt;env:Code&gt;</p>
-    <p class="note">      &lt;env:Value&gt;env:Sender&lt;/env:Value&gt;</p>
-    <p class="note">    &lt;/env:Code&gt;</p>
-    <p class="note">    &lt;env:Reason&gt;</p>
-    <p class="note">      &lt;env:Text xml:lang="en"&gt;Required Information Missing&lt;/env:Text&gt;</p>
-    <p class="note">    &lt;/env:Reason&gt;</p>
-    <p class="note">  &lt;/env:Fault&gt;</p>
-    <p class="note">&lt;/env:Body&gt;</p>
-    <p class="note">&lt;/env:Envelope&gt;</p>
-    <h4 id="3.35.4.2">3.35.4.2 Submit Form Response</h4>
-    <h5 id="3.35.4.2.1">3.35.4.2.1 Trigger Events</h5>
-    <p>This message is triggered by a Form Filler submitting form instance data.</p>
-    <h5 id="3.34.4.2.2">3.34.4.2.2 Message Semantics</h5>
-    <p>The Submit Form Response shall return a SubmitFormResponseType element containing:</p>
-    <ul>
-      <li class="bullet-list1">A responseCode string that may be constrained by Content Profiles</li>
-      <li class="bullet-list1">An optional content element containing formData, as is returned by RetrieveFormResponse</li>
-      <li class="bullet-list1">An optional contentType string that may be constrained by Content Profiles.</li>
-    </ul>
-    <p>See the schema provided with the support materials (see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>).</p>
-    <h5 id="3.35.4.2.3">3.35.4.2.3 Expected Actions</h5>
-    <p>The Form Filler may display the results of the response from the Form Receiver or Form Processor. The form behavior may be further profiled by content domain profiles.</p>
-    <h3 id="3.35.5">3.35.5 Protocol Requirements</h3>
-    <p>Implementors of this transaction shall comply with all requirements described in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions.</p>
-    <p>The Submit Form transaction shall use SOAP 1.2.</p>
-    <p style="font-size:11pt">
-      <span style="font-weight:bold">WSDL Namespace Definitions</span>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:89.1pt">ihe</td>
-        <td style="width:299.7pt">urn:ihe:iti:rfd:2007</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">soap12</td>
-        <td style="width:299.7pt">http://schemas.xmlsoap.org/wsdl/soap12/</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">wsaw</td>
-        <td style="width:299.7pt">http://www.w3.org/2005/08/addressing</td>
-      </tr>
-      <tr>
-        <td style="width:89.1pt">xsd</td>
-        <td style="width:299.7pt">http://www.w3.org/2001/XMLSchema</td>
-      </tr>
-    </table>
-    <p>These are the requirements for the Submit Form transaction presented in the order in which they would appear in the RFD Submit Form WSDL definition:</p>
-    <ul>
-      <li class="bullet-list1">The following types shall be imported (xds:import) in the /definitions/types section:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">Namespace=”urn:ihe:iti:rfd:2007”, schema=”RFD.xsd”</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Submit Form Request message shall be defined as: “ihe:SubmitFormRequest”</li>
-      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Submit Form Response message shall be defined as: “ihe:SubmitFormResponse”</li>
-      <li class="bullet-list1">Refer to Table 3.35.5-1 for additional attribute requirements.</li>
-    </ul>
-    <p class="tableTitle">Table 3.35.5-1: Additional Attribute Requirements</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:209.1pt" class="tableHeader">Attribute</td>
-        <td style="width:156.85pt" class="tableHeader">Value</td>
-      </tr>
-      <tr>
-        <td style="width:209.1pt">/definitions/portType/operation@name</td>
-        <td style="width:156.85pt">SubmitForm</td>
-      </tr>
-      <tr>
-        <td style="width:209.1pt">/definitions/portType/operation/input/@wsaw:Action</td>
-        <td style="width:156.85pt">urn:ihe:iti:2007:SubmitForm</td>
-      </tr>
-      <tr>
-        <td style="width:209.1pt">/definitions/portType/operation/output/@wsaw:Action</td>
-        <td style="width:156.85pt">urn:ihe:iti:2007:SubmitFormResponse</td>
-      </tr>
-      <tr>
-        <td style="width:209.1pt">/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
-        <td style="width:156.85pt">false</td>
-      </tr>
-    </table>
-    <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.35.5.1 Sample SOAP Messages.</p>
-    <p>For informative WSDL see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <p>The &lt;ihe:SubmitFormRequest&gt; element is defined as:</p>
-    <ul>
-      <li class="bullet-list1">One or more &lt;xs:any&gt; elements</li>
-    </ul>
-    <p>This allows the Form Manager to construct forms that submit form data using any XML representation.</p>
-    <p>The &lt;ihe:SubmitFormResponseType&gt; element is defined as:</p>
-    <ul>
-      <li class="bullet-list1">An optional &lt;ihe:content&gt; element which is of type &lt;ihe:formDataType&gt; as also used in the Retrieve Form Response. If present it shall contain:</li>
-      <li class="bullet-list1">One of the following:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">&lt;ihe:Structured&gt; containing XML encoding of a form</li>
-      <li class="bullet-list2">&lt;ihe:Unstructured&gt; containing base64Binary encoding of a form</li>
-      <li class="bullet-list2">&lt;ihe:URL&gt; containing the URL of a form</li>
-      <li class="bullet-list2">An optional &lt;ihe:instanceID&gt; of type xs:string.</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">An optional &lt;ihe:contentType&gt; element, of type xs:string.</li>
-      <li class="bullet-list1">A required &lt;ihe:responseCode&gt; element of type xs:string.</li>
-    </ul>
-    <h4 id="3.35.5.1">3.35.5.1 Sample SOAP Messages</h4>
-    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;,</p>
-    <p>&lt;MessageID/&gt;, .; these WS-Addressing headers are populated according to <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>: Web Services for IHE Transactions. Some of the body of the SOAP message is omitted for brevity.</p>
-    <h5 id="3.35.5.1.1">3.35.5.1.1 Sample Submit Form SOAP Request</h5>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
-    </p>
-    <p class="note">&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;soap:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span> </span>
-      <span style="width:25.2pt;display:inline-block"> </span>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>    &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>    &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:SubmitForm&lt;/wsa:Action&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;/soap:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;soap:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span>&lt;SubmitFormRequest xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span>…</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span>&lt;/SubmitFormRequest&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;/soap:Body&gt;</span>
-    </p>
-    <p class="note">&lt;/soap:Envelope&gt;</p>
-    <h5 id="3.35.5.1.2">3.35.5.1.2 Sample Submit Form SOAP Response</h5>
-    <p class="note">
-      <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
-    </p>
-    <p class="note">&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;soap:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span>       </span>
-      <span style="width:28.79pt;display:inline-block"> </span>
-      <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:SubmitFormResponse&lt;/wsa:Action&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;/soap:Header&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;soap:Body&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span>&lt;SubmitFormResponseType xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span>&lt;content&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span>&lt;URL&gt;http://somehost/xxx/services/someForm&lt;/URL&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span>&lt;instanceID&gt;1.2.3.4.5&lt;/instanceID&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">    </span>
-      <span>&lt;/content&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span>&lt;contentType /&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">   </span>
-      <span>&lt;responseCode /&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block">  </span>
-      <span>&lt;/SubmitFormResponseType&gt;</span>
-    </p>
-    <p class="note">
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>&lt;/soap:Body&gt;</span>
-    </p>
-    <p class="note">&lt;/soap:Envelope&gt;</p>
-    <h3 id="3.35.6">3.35.6 Security Considerations</h3>
-    <p>As noted in the mitigations section of <a href="../Volume1/ch-17.html#17.5"><a href="../Volume1/ch-17.html#17.5">ITI TF-1: 17.5</a></a> Security Considerations, endpoints are free to implement TLS as needed for additional privacy and protection. Content profiles, based upon the nature of the data, may require use of ATNA.</p>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.35">3.35 Submit Form [ITI-35]</h2>
+      <p>This section corresponds to transaction [ITI-35] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-35] is used by the Form Filler and Form Receiver or Form Processor Actors.</p>
+      <h3 id="3.35.1">3.35.1 Scope</h3>
+      <p>This transaction involves a Form Filler submitting a form to a Form Receiver or Form Processor.</p>
+      <h3 id="3.35.2">3.35.2 Use Case Roles</h3>
+      <img src="media/ai8zh-w242m.021.png" width="373" height="131" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Form Filler</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A forms display and editing system capable of allowing form fields to be completed.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Form Receiver</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>A system that receives submitted forms from a Form Filler.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor</span>
+        <span>: Form Processor</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role</span>
+        <span>: A system that receives submitted forms from a Form Filler and processes them.</span>
+      </p>
+      <h3 id="3.35.3">3.35.3 Referenced Standards</h3>
+      <p>
+        Implementors of this transaction shall comply with all requirements described in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
+      </p>
+      <p>
+        <span>RFC1738, Uniform Resource Locators (URL), December 1994,</span>
+        <a href="http://www.faqs.org/rfcs/rfc1738.html">http://www.faqs.org/rfcs/rfc1738.html</a>
+      </p>
+      <p>RFC2616 HyperText Transfer Protocol HTTP/1.1</p>
+      <p>Extensible Markup Language (XML) 1.0 (Second Edition). W3C Recommendation 6 October 2000. http://www.w3.org/TR/REC-xml.</p>
+      <p>
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        Web Services for IHE Transactions
+      </p>
+      <h3 id="3.35.4">3.35.4 Messages</h3>
+      <img src="media/ai8zh-w242m.022.png" width="534" height="244" alt="" />
+      <p class="figureTitle">Figure 3.35.4-1: Interaction Diagram</p>
+      <h4 id="3.35.4.1">3.35.4.1 Submit Form</h4>
+      <p>This transaction is initiated by a Form Filler submitting form instance data, using XML as a format, to a Form Receiver or Form Processor.</p>
+      <h5 id="3.35.4.1.1">3.35.4.1.1 Trigger Events</h5>
+      <p>The Submit Form transaction is triggered by the submission action from within the form.</p>
+      <h5 id="3.35.4.1.2">3.35.4.1.2 Message Semantics</h5>
+      <p>The Submit Form transaction shall carry a SubmitFormRequest element, with submitted form data as XML child elements of the SubmitFormRequest element. Content profiles may further constrain the content of the SubmitFormRequest element.</p>
+      <p>
+        See the schema provided with the support materials (see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        ).
+      </p>
+      <h5 id="3.35.4.1.3">3.35.4.1.3 Expected Actions</h5>
+      <p>Upon receipt of the Submit Form request, the Form Receiver or Form Processor shall return a SubmitFormResponse element, or errors with SOAP Faults, for example if the posted data cannot be recognized.</p>
+      <p>The Form Filler may display the results of the response from the Form Receiver or Form Processor.</p>
+      <p>The Form Receiver or Form Processor shall use the SOAP Faults defined in Table 3.35.4.1.3-1 when appropriate. Form Fillers shall be capable of accepting other values beyond the ones specified here.</p>
+      <p class="tableTitle">Table 3.35.4.1.3-1: SOAP Faults</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:187.2pt" class="tableHeader">Description of error</td>
+          <td style="width:52.2pt" class="tableHeader">Code</td>
+          <td style="width:128.7pt" class="tableHeader">Reason Text</td>
+        </tr>
+        <tr style="height:11.8pt">
+          <td style="width:187.2pt">Cannot recognize the posted data</td>
+          <td style="width:52.2pt">Sender</td>
+          <td style="width:128.7pt">Required Information Missing</td>
+        </tr>
+      </table>
+      <p>An example of a SOAP Fault is:</p>
+      <p class="note">&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"</p>
+      <p class="note">       xmlns:xml="http://www.w3.org/XML/1998/namespace"&gt;</p>
+      <p class="note">&lt;env:Body&gt;</p>
+      <p class="note">  &lt;env:Fault&gt;</p>
+      <p class="note">    &lt;env:Code&gt;</p>
+      <p class="note">      &lt;env:Value&gt;env:Sender&lt;/env:Value&gt;</p>
+      <p class="note">    &lt;/env:Code&gt;</p>
+      <p class="note">    &lt;env:Reason&gt;</p>
+      <p class="note">      &lt;env:Text xml:lang="en"&gt;Required Information Missing&lt;/env:Text&gt;</p>
+      <p class="note">    &lt;/env:Reason&gt;</p>
+      <p class="note">  &lt;/env:Fault&gt;</p>
+      <p class="note">&lt;/env:Body&gt;</p>
+      <p class="note">&lt;/env:Envelope&gt;</p>
+      <h4 id="3.35.4.2">3.35.4.2 Submit Form Response</h4>
+      <h5 id="3.35.4.2.1">3.35.4.2.1 Trigger Events</h5>
+      <p>This message is triggered by a Form Filler submitting form instance data.</p>
+      <h5 id="3.34.4.2.2">3.34.4.2.2 Message Semantics</h5>
+      <p>The Submit Form Response shall return a SubmitFormResponseType element containing:</p>
+      <ul>
+        <li class="bullet-list1">A responseCode string that may be constrained by Content Profiles</li>
+        <li class="bullet-list1">An optional content element containing formData, as is returned by RetrieveFormResponse</li>
+        <li class="bullet-list1">An optional contentType string that may be constrained by Content Profiles.</li>
+      </ul>
+      <p>
+        See the schema provided with the support materials (see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        ).
+      </p>
+      <h5 id="3.35.4.2.3">3.35.4.2.3 Expected Actions</h5>
+      <p>The Form Filler may display the results of the response from the Form Receiver or Form Processor. The form behavior may be further profiled by content domain profiles.</p>
+      <h3 id="3.35.5">3.35.5 Protocol Requirements</h3>
+      <p>
+        Implementors of this transaction shall comply with all requirements described in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions.
+      </p>
+      <p>The Submit Form transaction shall use SOAP 1.2.</p>
+      <p style="font-size:11pt">
+        <span style="font-weight:bold">WSDL Namespace Definitions</span>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:89.1pt">ihe</td>
+          <td style="width:299.7pt">urn:ihe:iti:rfd:2007</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">soap12</td>
+          <td style="width:299.7pt">http://schemas.xmlsoap.org/wsdl/soap12/</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">wsaw</td>
+          <td style="width:299.7pt">http://www.w3.org/2005/08/addressing</td>
+        </tr>
+        <tr>
+          <td style="width:89.1pt">xsd</td>
+          <td style="width:299.7pt">http://www.w3.org/2001/XMLSchema</td>
+        </tr>
+      </table>
+      <p>These are the requirements for the Submit Form transaction presented in the order in which they would appear in the RFD Submit Form WSDL definition:</p>
+      <ul>
+        <li class="bullet-list1">The following types shall be imported (xds:import) in the /definitions/types section:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">Namespace=”urn:ihe:iti:rfd:2007”, schema=”RFD.xsd”</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Submit Form Request message shall be defined as: “ihe:SubmitFormRequest”</li>
+        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Submit Form Response message shall be defined as: “ihe:SubmitFormResponse”</li>
+        <li class="bullet-list1">Refer to Table 3.35.5-1 for additional attribute requirements.</li>
+      </ul>
+      <p class="tableTitle">Table 3.35.5-1: Additional Attribute Requirements</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:209.1pt" class="tableHeader">Attribute</td>
+          <td style="width:156.85pt" class="tableHeader">Value</td>
+        </tr>
+        <tr>
+          <td style="width:209.1pt">/definitions/portType/operation@name</td>
+          <td style="width:156.85pt">SubmitForm</td>
+        </tr>
+        <tr>
+          <td style="width:209.1pt">/definitions/portType/operation/input/@wsaw:Action</td>
+          <td style="width:156.85pt">urn:ihe:iti:2007:SubmitForm</td>
+        </tr>
+        <tr>
+          <td style="width:209.1pt">/definitions/portType/operation/output/@wsaw:Action</td>
+          <td style="width:156.85pt">urn:ihe:iti:2007:SubmitFormResponse</td>
+        </tr>
+        <tr>
+          <td style="width:209.1pt">/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
+          <td style="width:156.85pt">false</td>
+        </tr>
+      </table>
+      <p>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section 3.35.5.1 Sample SOAP Messages.</p>
+      <p>
+        For informative WSDL see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
+      </p>
+      <p>The &lt;ihe:SubmitFormRequest&gt; element is defined as:</p>
+      <ul>
+        <li class="bullet-list1">One or more &lt;xs:any&gt; elements</li>
+      </ul>
+      <p>This allows the Form Manager to construct forms that submit form data using any XML representation.</p>
+      <p>The &lt;ihe:SubmitFormResponseType&gt; element is defined as:</p>
+      <ul>
+        <li class="bullet-list1">An optional &lt;ihe:content&gt; element which is of type &lt;ihe:formDataType&gt; as also used in the Retrieve Form Response. If present it shall contain:</li>
+        <li class="bullet-list1">One of the following:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">&lt;ihe:Structured&gt; containing XML encoding of a form</li>
+        <li class="bullet-list2">&lt;ihe:Unstructured&gt; containing base64Binary encoding of a form</li>
+        <li class="bullet-list2">&lt;ihe:URL&gt; containing the URL of a form</li>
+        <li class="bullet-list2">An optional &lt;ihe:instanceID&gt; of type xs:string.</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">An optional &lt;ihe:contentType&gt; element, of type xs:string.</li>
+        <li class="bullet-list1">A required &lt;ihe:responseCode&gt; element of type xs:string.</li>
+      </ul>
+      <h4 id="3.35.5.1">3.35.5.1 Sample SOAP Messages</h4>
+      <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;,</p>
+      <p>
+        &lt;MessageID/&gt;, .; these WS-Addressing headers are populated according to
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        : Web Services for IHE Transactions. Some of the body of the SOAP message is omitted for brevity.
+      </p>
+      <h5 id="3.35.5.1.1">3.35.5.1.1 Sample Submit Form SOAP Request</h5>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
+      </p>
+      <p class="note">&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;soap:Header&gt;</span>
+      </p>
+      <p class="note">
+        <span> </span>
+        <span style="width:25.2pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>    &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>    &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:SubmitForm&lt;/wsa:Action&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;/soap:Header&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;soap:Body&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>&lt;SubmitFormRequest xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span>…</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>&lt;/SubmitFormRequest&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;/soap:Body&gt;</span>
+      </p>
+      <p class="note">&lt;/soap:Envelope&gt;</p>
+      <h5 id="3.35.5.1.2">3.35.5.1.2 Sample Submit Form SOAP Response</h5>
+      <p class="note">
+        <span style="background-color:#ffffff">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span>
+      </p>
+      <p class="note">&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;</p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;soap:Header&gt;</span>
+      </p>
+      <p class="note">
+        <span>       </span>
+        <span style="width:28.79pt;display:inline-block"> </span>
+        <span>&lt;wsa:To&gt;http://localhost:4040/axis2/services/someservice&lt;/wsa:To&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>        &lt;wsa:MessageID&gt;urn:uuid:76A2C3D9BCD3AECFF31217932910053&lt;/wsa:MessageID&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>        &lt;wsa:Action soap:mustUnderstand="1"&gt;urn:ihe:iti: 2007:SubmitFormResponse&lt;/wsa:Action&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;/soap:Header&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;soap:Body&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>&lt;SubmitFormResponseType xmlns="urn:ihe:iti:rfd:2007"&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span>&lt;content&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span>&lt;URL&gt;http://somehost/xxx/services/someForm&lt;/URL&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span>&lt;instanceID&gt;1.2.3.4.5&lt;/instanceID&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">    </span>
+        <span>&lt;/content&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span>&lt;contentType /&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">   </span>
+        <span>&lt;responseCode /&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block">  </span>
+        <span>&lt;/SubmitFormResponseType&gt;</span>
+      </p>
+      <p class="note">
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>&lt;/soap:Body&gt;</span>
+      </p>
+      <p class="note">&lt;/soap:Envelope&gt;</p>
+      <h3 id="3.35.6">3.35.6 Security Considerations</h3>
+      <p>
+        As noted in the mitigations section of
+        <a href="../Volume1/ch-17.html#17.5">ITI TF-1: 17.5</a>
+        Security Considerations, endpoints are free to implement TLS as needed for additional privacy and protection. Content profiles, based upon the nature of the data, may require use of ATNA.
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

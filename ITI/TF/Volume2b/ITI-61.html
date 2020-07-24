@@ -5,817 +5,887 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.61">3.61 Register On-Demand Document Entry [ITI-61]</h2>
-    <p>This section corresponds to transaction [ITI-61] of the IHE ITI Technical Framework. Transaction [ITI-61] is used by the On-Demand Document Source and Document Registry Actors.</p>
-    <h3 id="3.61.1">3.61.1 Scope</h3>
-    <p>The Register On-Demand Document Entry transaction passes a Document Submission Request (see <a href="../Volume3/ch-1.2.html#4.2.1.5"><a href="../Volume3/ch-1.2.html#4.2.1.5">ITI TF-3: 4.2.1.5</a></a>) from an On-Demand Document Source to a Document Registry. The Document Submission Request for this transaction contains metadata describing one or more On-Demand DocumentEntry objects and, optionally, Folders and Associations.</p>
-    <h3 id="3.61.2">3.61.2 Use Case Roles</h3>
-    <img src="media/ai8zh-w242m.071.png" width="407" height="149" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span style="width:2.69pt;display:inline-block"> </span>
-      <span>On-Demand Document Source</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span style="width:8.68pt;display:inline-block"> </span>
-      <span>A Provider of On-Demand Documents that registers a patient-specific on-demand document to the Document Registry.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span style="width:2.69pt;display:inline-block"> </span>
-      <span>Document Registry</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span style="width:8.68pt;display:inline-block"> </span>
-      <span>A document indexing system that receives and stores metadata about available on-demand documents.</span>
-    </p>
-    <h3 id="3.61.3">3.61.3 Referenced Standard</h3>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:60.35pt">ebRIM</td>
-        <td style="width:385.55pt">
-          <p>OASIS/ebXML Registry Information Model v3.0</p>
-          <p>This model defines the types of metadata and content that can be stored in an ebXML Registry, a basis for and subset of XDS metadata.</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:60.35pt">ebRS</td>
-        <td style="width:385.55pt">
-          <p>OASIS/ebXML Registry Services Specifications v3.0</p>
-          <p>This defines the services and protocols for an ebXML Registry, used as the basis for the XDS Registry</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:61.2pt">HL7V2</td>
-        <td style="width:396pt">HL7 Version 2.5</td>
-      </tr>
-      <tr>
-        <td colspan="2" style="width:456.7pt">See ITI TF 2x: Appendix V for other referenced standards for SOAP encoding.</td>
-      </tr>
-      <tr>
-        <td colspan="2" style="width:456.7pt">See ITI TF 3: 4.2 for other referenced standards for metadata element encoding.</td>
-      </tr>
-    </table>
-    <h3 id="3.61.4">3.61.4 Messages</h3>
-    <img src="media/ai8zh-w242m.072.png" width="349" height="203" alt="" />
-    <p class="figureTitle">Figure 3.61.4-1: Interaction Diagram</p>
-    <h4 id="3.61.4.1">3.61.4.1 Register On-Demand Document Entry Request</h4>
-    <p>The Register On-Demand Document Entry Request message is used to register metadata that can be used to request an on-demand document. An on-demand document is one which collects the latest, most recent available information at the time of retrieval. For more information about the On-Demand DocumentEntry specified in the request message see <a href="../Volume3/ch-1.1.html#4.1.1"><a href="../Volume3/ch-1.1.html#4.1.1">ITI TF-3: 4.1.1</a></a>.</p>
-    <p>The On-Demand Document Source sends metadata to the Document Registry. The metadata contains one or more patient-specific On-Demand DocumentEntry objects and, optionally, Folders and Associations.</p>
-    <h5 id="3.61.4.1.1">3.61.4.1.1 Trigger Events</h5>
-    <p>The Register On-Demand Document Entry Request message is triggered when the On-Demand Document Source chooses to make available an on-demand document for a particular patient.</p>
-    <h5 id="3.61.4.1.2">3.61.4.1.2 Message Semantics</h5>
-    <p>The Register On-Demand Document Entry Request message shall use SOAP 1.2 and Simple SOAP. Implementors of this transaction shall comply with all requirements described in ITI TF-2x: Appendix V.3.</p>
-    <p>The Register On-Demand Document Entry Request message shall contain a Submission Request, as defined in <a href="../Volume3/ch-1.1.html#4.1.4"><a href="../Volume3/ch-1.1.html#4.1.4">ITI TF-3: 4.1.4</a></a> except that it shall include at least one On-Demand DocumentEntry. All DocumentEntry objects in this Submission Request shall be On-Demand DocumentEntry objects and, therefore, will not be Stable DocumentEntry objects.</p>
-    <p>This transaction imposes no restrictions on the use of Folders or Associations. In particular, workflows which replace a Stable DocumentEntry with an On-Demand DocumentEntry, add an On-Demand DocumentEntry to a Folder, or replace an On-Demand DocumentEntry with a new On-Demand DocumentEntry are all valid.</p>
-    <p class="note">Note: Because a Stable DocumentEntry cannot be submitted in this transaction, Associations which require the simultaneous submission of a Stable DocumentEntry cannot be included in this transaction. For example, workflows which replace an On-Demand DocumentEntry with a Stable DocumentEntry are not allowed.</p>
-    <p>See <a href="../Volume3/ch-1.2.html#4.2.1.4"><a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a></a> for a description of the ebRS/ebRIM representation of a Submission Request. The metadata requirements for this Submission Request are defined in <a href="../Volume3/ch-1.3.html#4.3.1"><a href="../Volume3/ch-1.3.html#4.3.1">ITI TF-3: 4.3.1</a></a>. In its use of metadata, the On-Demand DocumentEntry has the same requirements as a Stable DocumentEntry, except for the following:</p>
-    <ul>
-      <li class="bullet-list1">creationTime – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
-      <li class="bullet-list1">hash – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
-      <li class="bullet-list1">legalAuthenticator – Recommend this not be specified as having no clear meaning in the context of an On-Demand DocumentEntry.</li>
-      <li class="bullet-list1">repositoryUniqueId – The globally unique immutable identifier of the On-Demand Document Source which provides an On-Demand Document corresponding to this On-Demand DocumentEntry. This unique identifier for the On-Demand Document Source may be used to identify and connect to the specific On-Demand Document Source where a current instance of the on-demand document may be retrieved.</li>
-      <li class="bullet-list1">size – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
-      <li class="bullet-list1">serviceStartTime and serviceStopTime - For On-Demand DocumentEntry objects this attribute represents the earliest time(serviceStartTime)/most recent time(serviceStopTime) health service was rendered for which data is available on-demand. For some On-Demand Document Sources this attribute is not applicable and so would not be present.</li>
-      <li class="bullet-list1">uniqueId – The globally unique identifier assigned by the On-Demand Document Source to this On-Demand DocumentEntry. It is used in the Retrieve Document Set [ITI-43] transaction to identify the correct On-Demand Document to access. The use of uniqueId in On-Demand DocumentEntry objects is different from Stable DocumentEntry objects as this value will never represent an actual document. See <a href="../Volume3/ch-1.1.html#4.1.1"><a href="../Volume3/ch-1.1.html#4.1.1">ITI TF-3: 4.1.1</a></a> for more details regarding use of uniqueId by On-Demand DocumentEntry objects.</li>
-    </ul>
-    <p>A full example of document metadata submission is available online:  see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <p>XML namespace prefixes used in text and in examples below are for informative purposes only and are documented in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>, Table 2.4-1.</p>
-    <p>The requirements for the request message with the Synchronous and the WS-Addressing based Asynchronous Web Services stack are:</p>
-    <ul>
-      <li class="bullet-list1">the &lt;wsa:Action&gt; SOAP element shall contain the value urn:ihe:iti:2010:RegisterOnDemandDocumentEntry</li>
-      <li class="bullet-list1">the &lt;soap12:Body&gt; shall contain one &lt;lcm:SubmitObjectsRequest&gt; element representing the Submission Request (see <a href="../Volume3/ch-1.2.html#4.2.1.4"><a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a></a> for details of expressing a Submission Request).</li>
-    </ul>
-    <p>A full XML Schema Document for the XDS types is available online:  see <a href="../Volume2x/ch-23.html#Appendix W"><a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a></a>.</p>
-    <p>Below is an example of the SOAP Body for a Register On-Demand Document Entry Request message:</p>
-    <p style="font-size:8pt">        &lt;soap12:Body&gt;</p>
-    <p style="font-size:8pt">            &lt;lcm:SubmitObjectsRequest&gt;</p>
-    <p style="font-size:8pt">                &lt;!-- Submission Request contents – See <a href="../Volume3/ch-1.2.html#4.2.1.4"><a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a></a> --&gt;</p>
-    <p style="font-size:8pt">                &lt;rim:RegistryObjectList&gt;</p>
-    <p style="font-size:8pt">                 &lt;!-- Registry Metadata goes here --&gt;</p>
-    <p style="font-size:8pt">                &lt;/rim:RegistryObjectList&gt;</p>
-    <p style="font-size:8pt">            &lt;/lcm:SubmitObjectsRequest&gt;</p>
-    <p style="font-size:8pt">        &lt;/soap12:Body&gt;</p>
-    <p>If the On-Demand Document Source supports the Asynchronous Web Services Exchange Option, it shall be able to generate a WS-Addressing based Asynchronous Web Services request as defined in ITI TF-2x: Appendix V.3.</p>
-    <p>If the On-Demand Document Source supports the Basic Patient Privacy Enforcement Option, it shall comply with the requirements as described in <a href="../Volume1/ch-10.html#10.2.9"><a href="../Volume1/ch-10.html#10.2.9">ITI TF-1: 10.2.9</a></a>.</p>
-    <h5 id="3.61.4.1.3">3.61.4.1.3 Expected Actions</h5>
-    <p>Upon receipt of a Register On-Demand Document Entry Request message, the Document Registry shall:</p>
-    <ul>
-      <li class="bullet-list1">Perform metadata validations</li>
-      <li class="bullet-list1">Store all IHE-defined metadata attributes received so that they are available to return in responses to future queries.</li>
-      <li class="bullet-list1">Return a response message giving the status of the operation.</li>
-    </ul>
-    <p>If the Document Registry rejects the metadata, it shall:</p>
-    <ul>
-      <li class="bullet-list1">Return an error including at least one error message in the response. For a complete list of applicable codes, refer to ITI TF-3: Table 4.2.4.1-2.</li>
-      <li class="bullet-list1">Roll back any changes made.</li>
-    </ul>
-    <p>The Document Registry shall comply with all of the requirements specified in Sections 3.42.4.1.3.1 through 3.42.4.1.3.7 except for Section 3.42.4.1.3.3.1 which describes the validation of DocumentEntry.uniqueId. In terms of this metadata attribute, the Document Registry shall reject the message and return an error if the uniqueId attribute matches the uniqueId attribute of a Stable DocumentEntry currently within the Document Registry. If the uniqueId attribute matches the uniqueId attribute of an On-Demand DocumentEntry currently within the Document Registry the Document Registry shall accept the transaction and thereby create a new On-Demand DocumentEntry with the same uniqueId.</p>
-    <h4 id="3.61.4.2">3.61.4.2 Register On-Demand Document Entry Response</h4>
-    <p>The Document Registry sends the result of processing the On-Demand DocumentEntry metadata to the On-Demand Document Source.</p>
-    <h5 id="3.61.4.2.1">3.61.4.2.1 Trigger Events</h5>
-    <p>The Document Registry finishes processing a Register On-Demand Document Entry Request message and shall return a Register On-Demand Document Entry Response message.</p>
-    <h5 id="3.61.4.2.2">3.61.4.2.2 Message Semantics</h5>
-    <p>The Register On-Demand Document Entry Response message shall use SOAP 1.2 and Simple SOAP. Implementors of this transaction shall comply with all requirements described in: ITI TF-2x: Appendix V.3.</p>
-    <p>The Register On-Demand Document Entry Response message shall carry the status of the requested operation. The response message may carry warning messages. If the requested operation fails, the response message shall carry at least one error message. The conditions of failure and possible warning and error messages are given in the ebRS standard and detailed in <a href="../Volume3/ch-1.2.html#4.2.4"><a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a></a> Error Reporting. This transaction does not support a partial success response.</p>
-    <p>If creationTime, hash or size metadata attributes are received in a Register On-Demand Document Entry Request message, the Document Registry shall return an XDSRegistryMetadataError.</p>
-    <p>XML namespace prefixes used in text and in examples below are for informational purposes only and are documented in <a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a>, Table 2.4-1.</p>
-    <p>The requirements for the response message with the Synchronous and the WS-Addressing based Asynchronous Web Services stack are:</p>
-    <ul>
-      <li class="bullet-list1">
-        <span>the &lt;wsa:Action&gt; soap header shall contain the value</span>
-        <span style="background-color:#ffffff">urn:ihe:iti:2010:Register</span>
-        <span>OnDemandDocumentResponse</span>
-      </li>
-      <li class="bullet-list1">the &lt;soap12:Body&gt; soap element shall contain one &lt;rs:RegistryResponse&gt; element</li>
-    </ul>
-    <p>See <a href="../Volume3/ch-1.2.html#4.2.4"><a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a></a> for examples of response messages.</p>
-    <p>If the Document Registry supports the Asynchronous Web Services Exchange Option and it receives a WS-Addressing based Asynchronous Web Services request, it shall respond as defined in ITI TF-2x: Appendix V.3.</p>
-    <h5 id="3.61.4.2.3">3.61.4.2.3 Expected Actions</h5>
-    <p>The On-Demand Document Source now knows that the transaction succeeded/failed and can continue. The metadata added to the Document Registry as a result of this transaction is now available for discovery.</p>
-    <h3 id="3.61.5">3.61.5 Security Considerations</h3>
-    <p>Relevant XDS Affinity Domain Security background is discussed in the XDS Security Considerations Section (see <a href="../Volume1/ch-10.html#10.7"><a href="../Volume1/ch-10.html#10.7">ITI TF-1: 10.7</a></a>).</p>
-    <h4 id="3.61.5.1">3.61.5.1 Audit Record Considerations</h4>
-    <p>The Register On-Demand Document Entry transaction is PHI-Export event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1 with the following exceptions.</p>
-    <h5 id="3.61.5.1.1">3.61.5.1.1 On-Demand Document Source audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt">Field Name</td>
-        <td style="width:25.2pt">Opt</td>
-        <td style="width:233.1pt">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“R” (Read)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-61”, “IHE Transactions”, “Register On-Demand Document Entry”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (On-Demand Document Source) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Human Requestor (0..1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Registry) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (On-Demand Document Source) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">SubmissionSet (1)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Human Requestor (if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“true”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the patient ID in HL7 CX format..</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Submission Set</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“20” (job)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(“urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, “submission set classificationNode”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The submissionSet unique ID</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <h5 id="3.61.5.1.2">3.61.5.1.2 Document Registry audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt">Field Name</td>
-        <td style="width:25.2pt">Opt</td>
-        <td style="width:233.1pt">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“C” (Create)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-61”, “IHE Transactions”, “Register On-Demand Document Entry”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (On-Demand Document Source) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Human Requestor (0..1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Registry ) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Registry) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">SubmissionSet (1)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Human Requestor (if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“true”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <a name="OLE_LINK9">
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.61">3.61 Register On-Demand Document Entry [ITI-61]</h2>
+      <p>This section corresponds to transaction [ITI-61] of the IHE ITI Technical Framework. Transaction [ITI-61] is used by the On-Demand Document Source and Document Registry Actors.</p>
+      <h3 id="3.61.1">3.61.1 Scope</h3>
+      <p>
+        The Register On-Demand Document Entry transaction passes a Document Submission Request (see
+        <a href="../Volume3/ch-1.2.html#4.2.1.5">ITI TF-3: 4.2.1.5</a>
+        ) from an On-Demand Document Source to a Document Registry. The Document Submission Request for this transaction contains metadata describing one or more On-Demand DocumentEntry objects and, optionally, Folders and Associations.
+      </p>
+      <h3 id="3.61.2">3.61.2 Use Case Roles</h3>
+      <img src="media/ai8zh-w242m.071.png" width="407" height="149" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span style="width:2.69pt;display:inline-block"> </span>
+        <span>On-Demand Document Source</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span style="width:8.68pt;display:inline-block"> </span>
+        <span>A Provider of On-Demand Documents that registers a patient-specific on-demand document to the Document Registry.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span style="width:2.69pt;display:inline-block"> </span>
+        <span>Document Registry</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span style="width:8.68pt;display:inline-block"> </span>
+        <span>A document indexing system that receives and stores metadata about available on-demand documents.</span>
+      </p>
+      <h3 id="3.61.3">3.61.3 Referenced Standard</h3>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:60.35pt">ebRIM</td>
+          <td style="width:385.55pt">
+            <p>OASIS/ebXML Registry Information Model v3.0</p>
+            <p>This model defines the types of metadata and content that can be stored in an ebXML Registry, a basis for and subset of XDS metadata.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:60.35pt">ebRS</td>
+          <td style="width:385.55pt">
+            <p>OASIS/ebXML Registry Services Specifications v3.0</p>
+            <p>This defines the services and protocols for an ebXML Registry, used as the basis for the XDS Registry</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:61.2pt">HL7V2</td>
+          <td style="width:396pt">HL7 Version 2.5</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="width:456.7pt">See ITI TF 2x: Appendix V for other referenced standards for SOAP encoding.</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="width:456.7pt">See ITI TF 3: 4.2 for other referenced standards for metadata element encoding.</td>
+        </tr>
+      </table>
+      <h3 id="3.61.4">3.61.4 Messages</h3>
+      <img src="media/ai8zh-w242m.072.png" width="349" height="203" alt="" />
+      <p class="figureTitle">Figure 3.61.4-1: Interaction Diagram</p>
+      <h4 id="3.61.4.1">3.61.4.1 Register On-Demand Document Entry Request</h4>
+      <p>
+        The Register On-Demand Document Entry Request message is used to register metadata that can be used to request an on-demand document. An on-demand document is one which collects the latest, most recent available information at the time of retrieval. For more information about the On-Demand DocumentEntry specified in the request message see
+        <a href="../Volume3/ch-1.1.html#4.1.1">ITI TF-3: 4.1.1</a>
+        .
+      </p>
+      <p>The On-Demand Document Source sends metadata to the Document Registry. The metadata contains one or more patient-specific On-Demand DocumentEntry objects and, optionally, Folders and Associations.</p>
+      <h5 id="3.61.4.1.1">3.61.4.1.1 Trigger Events</h5>
+      <p>The Register On-Demand Document Entry Request message is triggered when the On-Demand Document Source chooses to make available an on-demand document for a particular patient.</p>
+      <h5 id="3.61.4.1.2">3.61.4.1.2 Message Semantics</h5>
+      <p>The Register On-Demand Document Entry Request message shall use SOAP 1.2 and Simple SOAP. Implementors of this transaction shall comply with all requirements described in ITI TF-2x: Appendix V.3.</p>
+      <p>
+        The Register On-Demand Document Entry Request message shall contain a Submission Request, as defined in
+        <a href="../Volume3/ch-1.1.html#4.1.4">ITI TF-3: 4.1.4</a>
+        except that it shall include at least one On-Demand DocumentEntry. All DocumentEntry objects in this Submission Request shall be On-Demand DocumentEntry objects and, therefore, will not be Stable DocumentEntry objects.
+      </p>
+      <p>This transaction imposes no restrictions on the use of Folders or Associations. In particular, workflows which replace a Stable DocumentEntry with an On-Demand DocumentEntry, add an On-Demand DocumentEntry to a Folder, or replace an On-Demand DocumentEntry with a new On-Demand DocumentEntry are all valid.</p>
+      <p class="note">Note: Because a Stable DocumentEntry cannot be submitted in this transaction, Associations which require the simultaneous submission of a Stable DocumentEntry cannot be included in this transaction. For example, workflows which replace an On-Demand DocumentEntry with a Stable DocumentEntry are not allowed.</p>
+      <p>
+        See
+        <a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a>
+        for a description of the ebRS/ebRIM representation of a Submission Request. The metadata requirements for this Submission Request are defined in
+        <a href="../Volume3/ch-1.3.html#4.3.1">ITI TF-3: 4.3.1</a>
+        . In its use of metadata, the On-Demand DocumentEntry has the same requirements as a Stable DocumentEntry, except for the following:
+      </p>
+      <ul>
+        <li class="bullet-list1">creationTime – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
+        <li class="bullet-list1">hash – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
+        <li class="bullet-list1">legalAuthenticator – Recommend this not be specified as having no clear meaning in the context of an On-Demand DocumentEntry.</li>
+        <li class="bullet-list1">repositoryUniqueId – The globally unique immutable identifier of the On-Demand Document Source which provides an On-Demand Document corresponding to this On-Demand DocumentEntry. This unique identifier for the On-Demand Document Source may be used to identify and connect to the specific On-Demand Document Source where a current instance of the on-demand document may be retrieved.</li>
+        <li class="bullet-list1">size – Not Applicable; shall not be specified in a Register On-Demand Document Entry Request.</li>
+        <li class="bullet-list1">serviceStartTime and serviceStopTime - For On-Demand DocumentEntry objects this attribute represents the earliest time(serviceStartTime)/most recent time(serviceStopTime) health service was rendered for which data is available on-demand. For some On-Demand Document Sources this attribute is not applicable and so would not be present.</li>
+        <li class="bullet-list1">
+          uniqueId – The globally unique identifier assigned by the On-Demand Document Source to this On-Demand DocumentEntry. It is used in the Retrieve Document Set [ITI-43] transaction to identify the correct On-Demand Document to access. The use of uniqueId in On-Demand DocumentEntry objects is different from Stable DocumentEntry objects as this value will never represent an actual document. See
+          <a href="../Volume3/ch-1.1.html#4.1.1">ITI TF-3: 4.1.1</a>
+          for more details regarding use of uniqueId by On-Demand DocumentEntry objects.
+        </li>
+      </ul>
+      <p>
+        A full example of document metadata submission is available online:  see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
+      </p>
+      <p>
+        XML namespace prefixes used in text and in examples below are for informative purposes only and are documented in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        , Table 2.4-1.
+      </p>
+      <p>The requirements for the request message with the Synchronous and the WS-Addressing based Asynchronous Web Services stack are:</p>
+      <ul>
+        <li class="bullet-list1">the &lt;wsa:Action&gt; SOAP element shall contain the value urn:ihe:iti:2010:RegisterOnDemandDocumentEntry</li>
+        <li class="bullet-list1">
+          the &lt;soap12:Body&gt; shall contain one &lt;lcm:SubmitObjectsRequest&gt; element representing the Submission Request (see
+          <a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a>
+          for details of expressing a Submission Request).
+        </li>
+      </ul>
+      <p>
+        A full XML Schema Document for the XDS types is available online:  see
+        <a href="../Volume2x/ch-23.html#Appendix W">ITI TF-2x: Appendix W</a>
+        .
+      </p>
+      <p>Below is an example of the SOAP Body for a Register On-Demand Document Entry Request message:</p>
+      <p style="font-size:8pt">        &lt;soap12:Body&gt;</p>
+      <p style="font-size:8pt">            &lt;lcm:SubmitObjectsRequest&gt;</p>
+      <p style="font-size:8pt">
+                        &lt;!-- Submission Request contents – See
+        <a href="../Volume3/ch-1.2.html#4.2.1.4">ITI TF-3: 4.2.1.4</a>
+        --&gt;
+      </p>
+      <p style="font-size:8pt">                &lt;rim:RegistryObjectList&gt;</p>
+      <p style="font-size:8pt">                 &lt;!-- Registry Metadata goes here --&gt;</p>
+      <p style="font-size:8pt">                &lt;/rim:RegistryObjectList&gt;</p>
+      <p style="font-size:8pt">            &lt;/lcm:SubmitObjectsRequest&gt;</p>
+      <p style="font-size:8pt">        &lt;/soap12:Body&gt;</p>
+      <p>If the On-Demand Document Source supports the Asynchronous Web Services Exchange Option, it shall be able to generate a WS-Addressing based Asynchronous Web Services request as defined in ITI TF-2x: Appendix V.3.</p>
+      <p>
+        If the On-Demand Document Source supports the Basic Patient Privacy Enforcement Option, it shall comply with the requirements as described in
+        <a href="../Volume1/ch-10.html#10.2.9">ITI TF-1: 10.2.9</a>
+        .
+      </p>
+      <h5 id="3.61.4.1.3">3.61.4.1.3 Expected Actions</h5>
+      <p>Upon receipt of a Register On-Demand Document Entry Request message, the Document Registry shall:</p>
+      <ul>
+        <li class="bullet-list1">Perform metadata validations</li>
+        <li class="bullet-list1">Store all IHE-defined metadata attributes received so that they are available to return in responses to future queries.</li>
+        <li class="bullet-list1">Return a response message giving the status of the operation.</li>
+      </ul>
+      <p>If the Document Registry rejects the metadata, it shall:</p>
+      <ul>
+        <li class="bullet-list1">Return an error including at least one error message in the response. For a complete list of applicable codes, refer to ITI TF-3: Table 4.2.4.1-2.</li>
+        <li class="bullet-list1">Roll back any changes made.</li>
+      </ul>
+      <p>The Document Registry shall comply with all of the requirements specified in Sections 3.42.4.1.3.1 through 3.42.4.1.3.7 except for Section 3.42.4.1.3.3.1 which describes the validation of DocumentEntry.uniqueId. In terms of this metadata attribute, the Document Registry shall reject the message and return an error if the uniqueId attribute matches the uniqueId attribute of a Stable DocumentEntry currently within the Document Registry. If the uniqueId attribute matches the uniqueId attribute of an On-Demand DocumentEntry currently within the Document Registry the Document Registry shall accept the transaction and thereby create a new On-Demand DocumentEntry with the same uniqueId.</p>
+      <h4 id="3.61.4.2">3.61.4.2 Register On-Demand Document Entry Response</h4>
+      <p>The Document Registry sends the result of processing the On-Demand DocumentEntry metadata to the On-Demand Document Source.</p>
+      <h5 id="3.61.4.2.1">3.61.4.2.1 Trigger Events</h5>
+      <p>The Document Registry finishes processing a Register On-Demand Document Entry Request message and shall return a Register On-Demand Document Entry Response message.</p>
+      <h5 id="3.61.4.2.2">3.61.4.2.2 Message Semantics</h5>
+      <p>The Register On-Demand Document Entry Response message shall use SOAP 1.2 and Simple SOAP. Implementors of this transaction shall comply with all requirements described in: ITI TF-2x: Appendix V.3.</p>
+      <p>
+        The Register On-Demand Document Entry Response message shall carry the status of the requested operation. The response message may carry warning messages. If the requested operation fails, the response message shall carry at least one error message. The conditions of failure and possible warning and error messages are given in the ebRS standard and detailed in
+        <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a>
+        Error Reporting. This transaction does not support a partial success response.
+      </p>
+      <p>If creationTime, hash or size metadata attributes are received in a Register On-Demand Document Entry Request message, the Document Registry shall return an XDSRegistryMetadataError.</p>
+      <p>
+        XML namespace prefixes used in text and in examples below are for informational purposes only and are documented in
+        <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        , Table 2.4-1.
+      </p>
+      <p>The requirements for the response message with the Synchronous and the WS-Addressing based Asynchronous Web Services stack are:</p>
+      <ul>
+        <li class="bullet-list1">
+          <span>the &lt;wsa:Action&gt; soap header shall contain the value</span>
+          <span style="background-color:#ffffff">urn:ihe:iti:2010:Register</span>
+          <span>OnDemandDocumentResponse</span>
+        </li>
+        <li class="bullet-list1">the &lt;soap12:Body&gt; soap element shall contain one &lt;rs:RegistryResponse&gt; element</li>
+      </ul>
+      <p>
+        See
+        <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a>
+        for examples of response messages.
+      </p>
+      <p>If the Document Registry supports the Asynchronous Web Services Exchange Option and it receives a WS-Addressing based Asynchronous Web Services request, it shall respond as defined in ITI TF-2x: Appendix V.3.</p>
+      <h5 id="3.61.4.2.3">3.61.4.2.3 Expected Actions</h5>
+      <p>The On-Demand Document Source now knows that the transaction succeeded/failed and can continue. The metadata added to the Document Registry as a result of this transaction is now available for discovery.</p>
+      <h3 id="3.61.5">3.61.5 Security Considerations</h3>
+      <p>
+        Relevant XDS Affinity Domain Security background is discussed in the XDS Security Considerations Section (see
+        <a href="../Volume1/ch-10.html#10.7">ITI TF-1: 10.7</a>
+        ).
+      </p>
+      <h4 id="3.61.5.1">3.61.5.1 Audit Record Considerations</h4>
+      <p>The Register On-Demand Document Entry transaction is PHI-Export event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1 with the following exceptions.</p>
+      <h5 id="3.61.5.1.1">3.61.5.1.1 On-Demand Document Source audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt">Field Name</td>
+          <td style="width:25.2pt">Opt</td>
+          <td style="width:233.1pt">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“R” (Read)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-61”, “IHE Transactions”, “Register On-Demand Document Entry”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (On-Demand Document Source) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Human Requestor (0..1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Registry) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (On-Demand Document Source) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">SubmissionSet (1)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
               <span style="font-weight:bold">AuditMessage/</span>
               <br />
               <span style="font-weight:bold">ActiveParticipant</span>
-            </a>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“false”</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address.</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the patient ID in HL7 CX format..</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Submission Set</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“20” (job)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(“urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, “submission set classificationNode”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The submissionSet unique ID</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Human Requestor (if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“true”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the patient ID in HL7 CX format..</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Submission Set</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“20” (job)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(“urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, “submission set classificationNode”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The submissionSet unique ID</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <h5 id="3.61.5.1.2">3.61.5.1.2 Document Registry audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt">Field Name</td>
+          <td style="width:25.2pt">Opt</td>
+          <td style="width:233.1pt">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“C” (Create)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-61”, “IHE Transactions”, “Register On-Demand Document Entry”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (On-Demand Document Source) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Human Requestor (0..1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Registry ) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Registry) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">SubmissionSet (1)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">If WS-Addressing based Asynchronous Web Services Exchange is being used, the content of the &lt;wsa:ReplyTo/&gt; element. Otherwise, not specialized.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Human Requestor (if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“true”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <a name="OLE_LINK9">
+                <span style="font-weight:bold">AuditMessage/</span>
+                <br />
+                <span style="font-weight:bold">ActiveParticipant</span>
+              </a>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“false”</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address.</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the patient ID in HL7 CX format..</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Submission Set</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“20” (job)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(“urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, “submission set classificationNode”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The submissionSet unique ID</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

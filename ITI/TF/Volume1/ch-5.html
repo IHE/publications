@@ -5,291 +5,339 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 1</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h1 id="5">5 Patient Identifier Cross-referencing (PIX)</h1>
-    <p>
-      <span>The</span>
-      <span style="font-weight:bold;font-style:italic">Patient Identifier Cross-referencing Integration Profile (PIX)</span>
-      <span>is targeted at healthcare enterprises of a broad range of sizes (hospital, a clinic, a physician office, etc.). It supports the cross-referencing of patient identifiers from multiple Patient Identifier Domains via the following interactions:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">The transmission of patient identity information from an identity source to the Patient Identifier Cross-reference Manager.</li>
-      <li class="bullet-list1">The ability to access the list(s) of cross-referenced patient identifiers either via a query/ response or via update notification.</li>
-    </ul>
-    <p>By specifying the above transactions among specific actors, this integration profile does not define any specific enterprise policies or cross-referencing algorithms. By encapsulating these behaviors in a single actor, this integration profile provides the necessary interoperability while maintaining the flexibility to be used with any cross-referencing policy and algorithm as deemed adequate by the enterprise.</p>
-    <p>
-      <img src="media/au2nx-2e2p1.011.png" width="734" height="401" alt="" />
-      <br />
-      <span>The following diagram shows the intended scope of this profile (as described above).</span>
-    </p>
-    <p class="figureTitle">Figure 5-1: Process Flow with Patient Identifier Cross-referencing</p>
-    <p>The diagram illustrates two types of Identifier Domains: a Patient Identifier Domain and a Patient Identifier Cross-reference Domain.</p>
-    <p>A Patient Identifier Domain is defined as a single system or a set of interconnected systems that all share a common identification scheme (an identifier and an assignment process to a patient) and issuing authority for patient identifiers. Additionally, a Patient Identifier Domain has the following properties:</p>
-    <ul>
-      <li class="bullet-list1">A set of policies that describe how identities will be defined and managed according to the specific requirements of the domain.</li>
-      <li class="bullet-list1">An administration authority for administering identity related policies within the domain.</li>
-      <li class="bullet-list1">
-        <span>A</span>
-        <span style="font-weight:bold">single</span>
-        <span>system, known as a patient identity source system, that assigns a unique identifier to each instance of a patient-related object as well as maintaining a collection of identity traits.</span>
-      </li>
-      <li class="bullet-list1">Ideally, only one identifier is uniquely associated with a single patient within a given Patient Identifier Domain, though a single Patient Identity Source may assign multiple identifiers to the same patient and communicate this fact to the Patient Identifier Cross-reference Manager. For a description of how the Patient Identifier Cross-reference Manager responds to requests for a list of cross-referenced identifiers that include these “duplicates” see <a href="../Volume2a/ITI-9.html#3.9.4.2.2.6"><a href="../Volume2a/ITI-9.html#3.9.4.2.2.6">ITI TF-2a: 3.9.4.2.2.6</a></a>).</li>
-      <li class="bullet-list1">An “Identifier Domain Identifier” (known as assigning authority) that is unique within a Patient Identifier Cross-reference Domain.</li>
-      <li class="bullet-list1">Other systems in the Patient Identifier Domain rely upon the identifiers assigned by the patient identity source system of the domain to which they belong.</li>
-    </ul>
-    <p>A Patient Identifier Cross-reference Domain consists of a set of Patient Identifier Domains known and managed by a Patient Identifier Cross-reference Manager Actor. The Patient Identifier Cross-reference Manager is responsible for creating, maintaining and providing lists of identifiers that are aliases of one another across different Patient Identifier Domains.</p>
-    <p>The Patient Identifier Cross-reference Domain embodies the following assumptions about agreement within the group of individual Identifier Domains:</p>
-    <ul>
-      <li class="bullet-list1">They have agreed to a set of policies that describe how patient identities will be cross-referenced across participating domains;</li>
-      <li class="bullet-list1">they have agreed to a set of processes for administering these policies;</li>
-      <li class="bullet-list1">they have agreed to an administration authority for managing these processes and policies.</li>
-    </ul>
-    <p>All these assumptions are critical to the successful implementation of this profile. This integration profile imposes minimal constraints on the participating Patient Identifier Domains and centralizes most of the operational constraints for the overall Patient Identification Cross-reference Domain in the Patient Identifier Cross-reference Manager Actor. If the individual Identifier Domains cannot agree to the items outlined above, implementation of this profile may not provide the expected results.</p>
-    <p>The Patient Identifier Cross-reference Manager is not responsible for improving the quality of identification information provided to it by the Identity Source Actors. It is assumed that the Identity Source Actors are responsible for providing high quality data to the Patient Identifier Cross-reference Manager. For example, the Patient Identifier Cross-reference Manager is NOT responsible to provide a single reference for patient demographics. The intent is to leave the responsibility for the quality and management of its patient demographics information and the integrity of the identifiers it uses within each Patient Identity Domain (Source actors). When receiving reports and displays from multiple PIX domains, it is inevitable that some of those reports and displays will have inconsistent names.</p>
-    <p>The Patient Identifier Cross-reference Consumer may use either a query for sets of cross-reference patient identifiers or use both a notification about cross-reference changes and a query transaction. In the case of using a notification, the Patient Identifier Cross-reference Consumer may also use the PIX Query Transaction to address situations where the Patient Identifier Cross-reference Consumer may be out of synch with the Patient Identifier Cross-reference Manager. This Integration Profile does not specify the consumer policies in using the PIX Query Transaction (<a href="../Volume2a/ITI-9.html#3.9"><a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a></a>).</p>
-    <p>For a discussion of the relationship between this Integration Profile and an enterprise master patient index (eMPI) see Section 5.4.</p>
-    <h2 id="5.1">5.1 PIX Actors/Transactions</h2>
-    <p>Figure 5.1-1 shows the actors directly involved in the Patient Identifier Cross-referencing Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in other related profiles are not shown.</p>
-    <img src="media/au2nx-2e2p1.012.png" width="604" height="203" alt="" />
-    <p class="figureTitle">Figure 5.1-1: Patient Identifier Cross-referencing Actor Diagram</p>
-    <p>Table 5.1-1 lists the transactions for each actor directly involved in the Patient Identifier Cross-referencing Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile and that implementations may choose to support is listed in the Section 5.2.</p>
-    <p class="tableTitle">Table 5.1-1: Patient Identifier Cross-referencing Integration for MPI Profile - Actors and Transactions</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:155.7pt" class="tableHeader">Actors</td>
-          <td style="width:152pt" class="tableHeader">Transactions</td>
-          <td style="width:61.55pt" class="tableHeader">Optionality</td>
-          <td style="width:66.85pt" class="tableHeader">Section</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="2" style="width:155.7pt">Patient Identity Source</td>
-          <td style="width:152pt">Patient Identity Feed [ITI-8]</td>
-          <td style="width:61.55pt">R</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-8.html#3.8"><a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a></a></td>
-        </tr>
-        <tr>
-          <td style="width:152pt">Patient Identity Management [ITI-30]</td>
-          <td style="width:61.55pt">O</td>
-          <td style="width:66.85pt"><a href="../Volume2b/ITI-30.html#3.30"><a href="../Volume2b/ITI-30.html#3.30">ITI TF-2b: 3.30</a></a></td>
-        </tr>
-        <tr style="height:14.85pt">
-          <td rowspan="2" style="width:155.7pt">Patient Identifier Cross-reference Consumer</td>
-          <td style="width:152pt">PIX Query [ITI-9]</td>
-          <td style="width:61.55pt">R</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-9.html#3.9"><a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a></a></td>
-        </tr>
-        <tr>
-          <td style="width:152pt">PIX Update Notification [ITI-10]</td>
-          <td style="width:61.55pt">O</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-10.html#3.10"><a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a></a></td>
-        </tr>
-        <tr style="height:14.85pt">
-          <td rowspan="4" style="width:155.7pt">Patient Identifier Cross-reference Manager</td>
-          <td style="width:152pt">Patient Identity Feed [ITI-8]</td>
-          <td style="width:61.55pt">R</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-8.html#3.8"><a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a></a></td>
-        </tr>
-        <tr style="height:18.5pt">
-          <td style="width:152pt">Patient Identity Management [ITI-30]</td>
-          <td style="width:61.55pt">O</td>
-          <td style="width:66.85pt"><a href="../Volume2b/ITI-30.html#3.30"><a href="../Volume2b/ITI-30.html#3.30">ITI TF-2b: 3.30</a></a></td>
-        </tr>
-        <tr style="height:14.85pt">
-          <td style="width:152pt">PIX Query [ITI-9]</td>
-          <td style="width:61.55pt">R</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-9.html#3.9"><a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a></a></td>
-        </tr>
-        <tr>
-          <td style="width:152pt">PIX Update Notification [ITI-10]</td>
-          <td style="width:61.55pt">R</td>
-          <td style="width:66.85pt"><a href="../Volume2a/ITI-10.html#3.10"><a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a></a></td>
-        </tr>
-      </tbody>
-    </table>
-    <h3 id="5.1.1">5.1.1 PIX Required Actor Groupings</h3>
-    <p>
-      <span>An actor from this profile (Column 1) shall implement all of the required transactions and/or content modules in this profile</span>
-      <span style="font-weight:bold;font-style:italic">in addition to</span>
-      <span />
-      <span style="font-weight:bold;font-style:italic;text-decoration:underline">all</span>
-      <span>of the requirements for the grouped actor (Column 2).</span>
-    </p>
-    <p class="tableTitle">Table 5.1.1-1: PIX - Required Actor Groupings</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:173.45pt" class="tableHeader">PIX Actor</td>
-          <td style="width:137.7pt" class="tableHeader">Actor(s) to be grouped with</td>
-          <td style="width:70.2pt" class="tableHeader">Reference</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:173.45pt">Patient Identity Source</td>
-          <td style="width:137.7pt">CT / Consistent Time</td>
-          <td style="width:70.2pt"><a href="../Volume1/ch-7.html#7.1"><a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a></a></td>
-        </tr>
-        <tr style="height:16.15pt">
-          <td style="width:173.45pt">Patient Identifier Cross-reference Consumer</td>
-          <td style="width:137.7pt">CT / Consistent Time</td>
-          <td style="width:70.2pt"><a href="../Volume1/ch-7.html#7.1"><a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a></a></td>
-        </tr>
-        <tr style="height:16.15pt">
-          <td style="width:173.45pt">Patient Identifier Cross-reference Manager</td>
-          <td style="width:137.7pt">CT / Consistent Time</td>
-          <td style="width:70.2pt"><a href="../Volume1/ch-7.html#7.1"><a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a></a></td>
-        </tr>
-      </tbody>
-    </table>
-    <h2 id="5.2">5.2 PIX Actor Options</h2>
-    <p>Options that may be selected for this Integration Profile are listed in the Table 5.2-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
-    <p class="tableTitle">Table 5.2-1: Patient Identifier Cross-referencing - Actors and Options</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:175.4pt" class="tableHeader">Actor</td>
-          <td style="width:101.7pt" class="tableHeader">Options</td>
-          <td style="width:71.85pt" class="tableHeader">Vol. &amp; Section</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="height:16.6pt">
-          <td style="width:175.4pt">Patient Identity Source</td>
-          <td style="width:101.7pt">Pediatric Demographics</td>
-          <td style="width:71.85pt"><a href="../Volume1/ch-5.html#5.2.1"><a href="../Volume1/ch-5.html#5.2.1">ITI TF-1: 5.2.1</a></a></td>
-        </tr>
-        <tr style="height:16.6pt">
-          <td style="width:175.4pt">Patient Identifier Cross-reference Manager</td>
-          <td style="width:101.7pt">Pediatric Demographics</td>
-          <td style="width:71.85pt"><a href="../Volume1/ch-5.html#5.2.1"><a href="../Volume1/ch-5.html#5.2.1">ITI TF-1: 5.2.1</a></a></td>
-        </tr>
-        <tr style="height:18.4pt">
-          <td style="width:175.4pt">Patient Identifier Cross-reference Consumer</td>
-          <td style="width:101.7pt">PIX Update Notification</td>
-          <td style="width:71.85pt"><a href="../Volume2a/ITI-10.html#3.10"><a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a></a></td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <a name="_Toc214425607"> </a>
-    </p>
-    <h3 id="5.2.1">5.2.1 Pediatric Demographics Option</h3>
-    <p>The experience of immunization registries and other public health population databases has shown that matching and linking patient records from different sources for the same individual person in environments with large proportions of pediatric records requires additional demographic data.</p>
-    <p>In particular, distinguishing records for children who are twins, triplets, etc. – that is, avoiding false positive matches - may be difficult because much of the demographic data for the two individuals matches. For instance, twin children may have identical last names, parents, addresses, and dates of birth; their first names may be very similar, possibly differing by only one letter. It can be very difficult for a computer or even a human being to determine in this situation whether the slight first name difference points to two distinct individuals or just a typographical error in one of the records. Additional information is extremely helpful in making this determination.</p>
-    <p>Pediatric Demographics makes use of the following six additional demographic fields to aid record matching in databases with many pediatric records.</p>
-    <p class="tableTitle">Table 5.2.1-1: Additional Patient Demographics Fields</p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr style="height:15.75pt">
-          <td style="width:94.2pt" class="tableHeader">Field</td>
-          <td style="width:150.2pt" class="tableHeader">Reason for inclusion</td>
-          <td style="width:147.2pt" class="tableHeader">Value</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="height:47.25pt">
-          <td style="width:94.2pt">Mother’s Maiden Name</td>
-          <td style="width:150.2pt">Any information about the mother is helpful in making a match</td>
-          <td style="width:147.2pt">Helps create true positive matches</td>
-        </tr>
-        <tr style="height:31.5pt">
-          <td style="width:94.2pt">Patient Home Telephone</td>
-          <td style="width:150.2pt">A telecom helps match into the right household</td>
-          <td style="width:147.2pt">Helps create true positive matches</td>
-        </tr>
-        <tr style="height:31.5pt">
-          <td style="width:94.2pt">Patient Multiple Birth Indicator</td>
-          <td style="width:150.2pt">Indicates this person is a multiple - twin, triplet, etc.</td>
-          <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
-        </tr>
-        <tr style="height:31.5pt">
-          <td style="width:94.2pt">Patient Birth Order</td>
-          <td style="width:150.2pt">Distinguishes among those multiples.</td>
-          <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
-        </tr>
-        <tr style="height:90.4pt">
-          <td style="width:94.2pt">Last Update Date/Time, Last Update Facility</td>
-          <td style="width:150.2pt">These fields, although not strictly demographic, can effectively substitute when multiple birth indicator and birth order are not collected. They indirectly provide visit information. Provider visits on the same day may likely indicate two children brought to a doctor together.</td>
-          <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>Patient Identity Source Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction and shall provide values, when available, for the fields identified as Pediatric Demographics fields.</p>
-    <p>Patient Identifier Cross-reference Manager Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction, and if values for one or more of the Pediatric Demographics fields are specified in the Patient Identity Management [ITI-30] transaction, they shall be considered as part of the matching algorithm of the PIX Manager.</p>
-    <p>Pediatric Demographics are defined as all of the following:</p>
-    <ul>
-      <li class="bullet-list1">Mother’s Maiden Name</li>
-      <li class="bullet-list1">Patient Home Telephone</li>
-      <li class="bullet-list1">Patient Multiple Birth Indicator</li>
-      <li class="bullet-list1">Patient Birth Order</li>
-      <li class="bullet-list1">Last Update Date/Time</li>
-      <li class="bullet-list1">Last Update Facility</li>
-    </ul>
-    <p>Pediatric Demographic is particularly focused on two data issues:</p>
-    <ul>
-      <li class="bullet-list1">Locating a record where the data or the search criterion have differences, but both the data record and the search criterion represent the same person, and</li>
-      <li class="bullet-list1">Avoiding improper linkage of very similar records that do not belong to the same person. This problem is most often encountered in multiple birth situations where twins may be given extremely similar names</li>
-    </ul>
-    <h2 id="5.3">5.3 Patient Identifier Cross-referencing Profile Process Flows</h2>
-    <p>The following sections describe use cases that this profile addresses.</p>
-    <h3 id="5.3.1">5.3.1 Use Case: Multiple Identifier Domains within a Single Facility/ Enterprise</h3>
-    <p>A clinician in the Intensive Care Unit at General Hospital is reviewing a patient chart on the Intensive Care information system and wishes to review or monitor the patient’s glucose level, which is included in a laboratory report stored in the hospital’s main laboratory system. The Intensive Care system needs to map its own patient ID, which it generates internally, to the patient’s medical record number (MRN), which is generated from the hospital’s main ADT system and is used as the patient identity by the lab system. In this case the Intensive Care system is essentially in a different identifier domain than the rest of the hospital since it has its own notion of patient identity.</p>
-    <p>In this scenario, the hospital’s main ADT system (acting as a Patient Identity Source) would provide a Patient Identity Feed (using the patient’s MRN as the identifier) to the Patient Identifier Cross-reference Manager. Similarly, the Intensive Care system would also provide a Patient Identity Feed to the Patient Identifier Cross-reference Manager using the internally generated patient ID as the patient identifier and providing its own unique identifier domain identifier.</p>
-    <p>Once the Patient Identifier Cross-reference Manager receives the Patient Identity Feed transactions, it performs its internal logic to determine which, if any, patient identifiers can be “linked together” as being the same patient based on the corroborating information included in the Feed transactions it has received. The cross-referencing process (algorithm, human decisions, etc.) is performed within the Patient Identifier Cross-reference Manager and is outside the scope of IHE. (See <a href="../Volume2a/ITI-9.html#3.9.4.2.2.6"><a href="../Volume2a/ITI-9.html#3.9.4.2.2.6">ITI TF-2a: 3.9.4.2.2.6</a></a> for a more complete description of the scope of the cross-referencing logic boundary.)</p>
-    <p>
-      <span>The Intensive Care system wants to get lab information associated with a patient that the Intensive Care system knows as patient ID = ‘MC-123’. It requests the lab report from the lab system using its own patient ID (MC-123) including the domain identifier/ assigning authority. Upon receipt of the request, the lab system determines that the request is for a patient outside of its own identifier domain (</span>
-      <span style="text-decoration:underline">ADT Domain</span>
-      <span>). It requests a list of patient ID aliases corresponding to patient ID = ‘MC-123’ (within the “</span>
-      <span style="text-decoration:underline">Intensive Care domain</span>
-      <span>”) from the Patient Identifier Cross-reference Manager. Having linked this patient with a patient known by medical record number = ‘007’ in the ‘</span>
-      <span style="text-decoration:underline">ADT Domain</span>
-      <span>’, the Patient Identifier Cross-reference Manger returns this list to the lab system so that it may retrieve the lab report for the desired patient and return it to the Intensive Care system. Figure 5.3-1 illustrates this process flow.</span>
-    </p>
-    <img src="media/au2nx-2e2p1.013.png" width="644" height="406" alt="" />
-    <p class="figureTitle">Figure 5.3-1: Multiple ID Domains in a Single Facility Process Flow in PIX Profile</p>
-    <p class="note">Note: Request and Response portions of the Retrieve Document for Display transaction are not part of this profile and included for illustration purposes only.</p>
-    <h3 id="5.3.2">5.3.2 Use Case: Multiple ID Domains across Cooperating Enterprises</h3>
-    <p>A healthcare enterprise is established by the consolidation of two hospitals, each having its own separate patient registration process run by different hospital information systems. When a patient is treated in one hospital, the access to its electronic records managed by the other hospital is necessary. The following use case illustrates this scenario.</p>
-    <p>Hospitals A and B have been consolidated and have a single Patient Identifier Cross-reference Manager that maintains the ID links between the two hospitals. Each hospital has a different HIS that is responsible for registering patients, but they have consolidated their cardiology information systems. The cardiology system has been configured with a Patient Identifier Cross-reference Consumer to receive patient identity notifications when cross-referencing activity occurs.</p>
-    <p>A patient is registered and then has some diagnostic stress tests done at hospital A. The cardiology information system queries the Patient Identifier Cross-reference Manager to get a list of possible ID aliases for the patient to see if any past cardiology reports may be available. No patient ID aliases are found. Sometime later the same patient goes to hospital B to have a second diagnostic stress test done. The patient is registered via the HIS in hospital B which then sends that identity information to the Patient Identifier Cross-reference Manager. The Patient Identifier Cross-reference Manager determines this is in fact the same patient as was registered previously at hospital A. The cardiology information system was previously configured with the Patient Identifier Cross-reference Manager to receive notifications; thus a notification is sent to the cardiology system to inform it of the patient identifier aliases. This notification is done to allow systems that are aware of multiple identifier domains to maintain synchronization with patient identifier changes that occur in any of the identifier domains that they are aware of.</p>
-    <p>Figure 5.3-2 illustrates the process flow for this use case.</p>
-    <img src="media/au2nx-2e2p1.014.png" width="588" height="508" alt="" />
-    <p class="figureTitle">Figure 5.3-2: Multiple ID Domains Across Cooperating Enterprises Process Flow in PIX Profile</p>
-    <p class="note">Note: PIX Update Notifications are not sent for the first Patient Identity Feed for a patient, since no cross-referencing activity occurred after this first Patient Identity Feed Transaction.</p>
-    <p>
-      <a name="_Toc214425608"> </a>
-    </p>
-    <h3 id="5.3.3">5.3.3 Pediatric Demographic Option Use Cases</h3>
-    <p>The following sections describe use cases that the Pediatric Demographics Option addresses.</p>
-    <h4 id="5.3.3.1">5.3.3.1 Use Case: High Quality Demographic Feed from a Birth Registry</h4>
-    <p>A regional Immunization Information System (IIS) receives birth registry information about a pair of twins. These twins are named “Lalainne” and “Lalannie” Smith. All of the data elements in the received registration are populated, and they are all identical, except for the Given Name, the Birth Order, and the Birth Certificate #. The IIS cross-referencing system can clearly identify this very similar data as belonging to two separate individuals, because they are both flagged as having been part of a Multiple Birth, their Birth Order numbers are different, and their Birth Certificate #s are different.</p>
-    <h4 id="5.3.3.2">5.3.3.2 Use Case: Normal Demographic Feed from a Point of Care</h4>
-    <p>A couple years later, the mother of these two twins, who has now divorced and remarried, takes them to Pediatric Healthcare, where they get the immunizations appropriate for 2-year olds. Pediatric Healthcare completes a registration for each of them, and submits the resulting data to the IIS. This data has their new Family Name as “Gomez,” but the clerks had appropriately recorded the Birth Order of each twin. Again, the IIS was able to distinguish the two registration records as belonging to separate individuals, and it was able to match them up to their earlier records because the mother’s Maiden Name was present in both the earlier records and the records submitted from Pediatric Healthcare. Pediatric Healthcare was able to download the full immunization history of each twin.</p>
-    <h4 id="5.3.3.3">5.3.3.3 Use Case: Minimal Demographic Feed from a Health Fair</h4>
-    <p>The Jackson County Health Department puts on an annual Health Fair in a shopping mall every August, partly to screen school age children for the minimum shots required for admission to the first grade. Mrs. Gomez is now working to pay for her new apartment, but her sister-in-law takes the children to the Health Fair where they are given shots based on the paper “yellow card” the sister-in-law brings with the two twins. Jackson County Health Department staff records the children’s names, and the shots they were given. This information is entered into the computer back at the Clinic the next day, and submitted to the regional IIS.</p>
-    <p>At this point, even though both children’s names were misspelled as “Lane” and “Lanna”, the Immunization Registry was again able to recognize that the records belonged to twins rather than the same person because, although the demographic data was almost identical, the Last Update Date/Time were very close (Date was the same) and Last Update Facility indicated the same clinic. Unfortunately, they didn’t write down the mother’s information at the Health Fair, but recorded her sister-in-law’s name and address instead, so the Immunization Registry was not able to automatically link this new information to the information it already had for “Lalainne” and “Lalannie”.</p>
-    <p>Other Possibilities:</p>
-    <p>A better outcome could have happened if the clinic had recorded any one of several different data elements that would have helped tie this new data to the previous data. Any one of the Mothers Maiden Name (even the Mother’s First Name component), the Home Phone Number, or the unique identifier for the kids which was printed on the “yellow card” from Pediatric Healthcare would have helped.</p>
-    <h2 id="5.4">5.4 Relationship between the PIX Integration Profile and eMPI</h2>
-    <p>The PIX Integration Profile achieves the integration of disparate Patient Identifier Domains by using a cross-referencing approach between Patient Identifiers associated with the same patient. This section discusses how this approach is compatible with environments that wish to establish master patient identifiers (MPI), or enterprise MPI (eMPI) systems. An eMPI may be considered a particular variation in implementation of the PIX Integration Profile.</p>
-    <p>The concept of an MPI is a rather broad concept, yet it is most often associated with the creation of a master patient identifier domain. Such a master domain is considered more broadly applicable or more “enterprise-level” than the other patient identifier domains it includes. Such a hierarchical inclusion of patient identification domains into a “master patient identification domain” can be considered a particular case of patient cross-reference, where the patient identifiers in the various domains are cross-referenced to the patient identifiers of the master domain. Two possible configurations are depicted by Figure 5.4-1.</p>
-    <p style="font-size:11pt">
-      <img src="media/au2nx-2e2p1.015.png" width="672" height="328" alt="" />
-      <span style="font-weight:bold">Figure 5.4-1: PIX Profile Relationship to eMPI</span>
-    </p>
-    <p>Figure 5.4-1 above shows how the Master Patient Identifier Domain (Domain C), in a typical MPI approach, is simply another patient Identification Domain when considered in a Cross-referencing approach. The decision to place enterprise-wide systems such as Clinical Data Repositories into the so-called master domain is simply a configuration choice. In addition, such a configuration sometimes assumes that any system in Patient Domain A not only manages the patient Identifiers of Domain A but is also aware of those of Domain C. In the Patient Identifier Cross-reference Integration Profile, this is a configuration choice where certain systems have been designed and configured to operate across multiple domains. Thus the entity often called an MPI (shown by the oval) is actually the combination of a Patient Identity Source (ADT) along with a Patient Identifier Cross-reference Manager.</p>
-    <p>The PIX Integration Profile can coexist with environments that have chosen to deploy a distinct MPI, and provides a more scalable approach. Many other configurations can also be deployed, in particular those where the creation of a master domain “including” the other domains is not necessary (i.e., a simple federation of domains where none is actually the master).</p>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 1</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1 id="5">5 Patient Identifier Cross-referencing (PIX)</h1>
+      <p>
+        <span>The</span>
+        <span style="font-weight:bold;font-style:italic">Patient Identifier Cross-referencing Integration Profile (PIX)</span>
+        <span>is targeted at healthcare enterprises of a broad range of sizes (hospital, a clinic, a physician office, etc.). It supports the cross-referencing of patient identifiers from multiple Patient Identifier Domains via the following interactions:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">The transmission of patient identity information from an identity source to the Patient Identifier Cross-reference Manager.</li>
+        <li class="bullet-list1">The ability to access the list(s) of cross-referenced patient identifiers either via a query/ response or via update notification.</li>
+      </ul>
+      <p>By specifying the above transactions among specific actors, this integration profile does not define any specific enterprise policies or cross-referencing algorithms. By encapsulating these behaviors in a single actor, this integration profile provides the necessary interoperability while maintaining the flexibility to be used with any cross-referencing policy and algorithm as deemed adequate by the enterprise.</p>
+      <p>
+        <img src="media/au2nx-2e2p1.011.png" width="734" height="401" alt="" />
+        <br />
+        <span>The following diagram shows the intended scope of this profile (as described above).</span>
+      </p>
+      <p class="figureTitle">Figure 5-1: Process Flow with Patient Identifier Cross-referencing</p>
+      <p>The diagram illustrates two types of Identifier Domains: a Patient Identifier Domain and a Patient Identifier Cross-reference Domain.</p>
+      <p>A Patient Identifier Domain is defined as a single system or a set of interconnected systems that all share a common identification scheme (an identifier and an assignment process to a patient) and issuing authority for patient identifiers. Additionally, a Patient Identifier Domain has the following properties:</p>
+      <ul>
+        <li class="bullet-list1">A set of policies that describe how identities will be defined and managed according to the specific requirements of the domain.</li>
+        <li class="bullet-list1">An administration authority for administering identity related policies within the domain.</li>
+        <li class="bullet-list1">
+          <span>A</span>
+          <span style="font-weight:bold">single</span>
+          <span>system, known as a patient identity source system, that assigns a unique identifier to each instance of a patient-related object as well as maintaining a collection of identity traits.</span>
+        </li>
+        <li class="bullet-list1">
+          Ideally, only one identifier is uniquely associated with a single patient within a given Patient Identifier Domain, though a single Patient Identity Source may assign multiple identifiers to the same patient and communicate this fact to the Patient Identifier Cross-reference Manager. For a description of how the Patient Identifier Cross-reference Manager responds to requests for a list of cross-referenced identifiers that include these “duplicates” see
+          <a href="../Volume2a/ITI-9.html#3.9.4.2.2.6">ITI TF-2a: 3.9.4.2.2.6</a>
+          ).
+        </li>
+        <li class="bullet-list1">An “Identifier Domain Identifier” (known as assigning authority) that is unique within a Patient Identifier Cross-reference Domain.</li>
+        <li class="bullet-list1">Other systems in the Patient Identifier Domain rely upon the identifiers assigned by the patient identity source system of the domain to which they belong.</li>
+      </ul>
+      <p>A Patient Identifier Cross-reference Domain consists of a set of Patient Identifier Domains known and managed by a Patient Identifier Cross-reference Manager Actor. The Patient Identifier Cross-reference Manager is responsible for creating, maintaining and providing lists of identifiers that are aliases of one another across different Patient Identifier Domains.</p>
+      <p>The Patient Identifier Cross-reference Domain embodies the following assumptions about agreement within the group of individual Identifier Domains:</p>
+      <ul>
+        <li class="bullet-list1">They have agreed to a set of policies that describe how patient identities will be cross-referenced across participating domains;</li>
+        <li class="bullet-list1">they have agreed to a set of processes for administering these policies;</li>
+        <li class="bullet-list1">they have agreed to an administration authority for managing these processes and policies.</li>
+      </ul>
+      <p>All these assumptions are critical to the successful implementation of this profile. This integration profile imposes minimal constraints on the participating Patient Identifier Domains and centralizes most of the operational constraints for the overall Patient Identification Cross-reference Domain in the Patient Identifier Cross-reference Manager Actor. If the individual Identifier Domains cannot agree to the items outlined above, implementation of this profile may not provide the expected results.</p>
+      <p>The Patient Identifier Cross-reference Manager is not responsible for improving the quality of identification information provided to it by the Identity Source Actors. It is assumed that the Identity Source Actors are responsible for providing high quality data to the Patient Identifier Cross-reference Manager. For example, the Patient Identifier Cross-reference Manager is NOT responsible to provide a single reference for patient demographics. The intent is to leave the responsibility for the quality and management of its patient demographics information and the integrity of the identifiers it uses within each Patient Identity Domain (Source actors). When receiving reports and displays from multiple PIX domains, it is inevitable that some of those reports and displays will have inconsistent names.</p>
+      <p>
+        The Patient Identifier Cross-reference Consumer may use either a query for sets of cross-reference patient identifiers or use both a notification about cross-reference changes and a query transaction. In the case of using a notification, the Patient Identifier Cross-reference Consumer may also use the PIX Query Transaction to address situations where the Patient Identifier Cross-reference Consumer may be out of synch with the Patient Identifier Cross-reference Manager. This Integration Profile does not specify the consumer policies in using the PIX Query Transaction (
+        <a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a>
+        ).
+      </p>
+      <p>For a discussion of the relationship between this Integration Profile and an enterprise master patient index (eMPI) see Section 5.4.</p>
+      <h2 id="5.1">5.1 PIX Actors/Transactions</h2>
+      <p>Figure 5.1-1 shows the actors directly involved in the Patient Identifier Cross-referencing Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in other related profiles are not shown.</p>
+      <img src="media/au2nx-2e2p1.012.png" width="604" height="203" alt="" />
+      <p class="figureTitle">Figure 5.1-1: Patient Identifier Cross-referencing Actor Diagram</p>
+      <p>Table 5.1-1 lists the transactions for each actor directly involved in the Patient Identifier Cross-referencing Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile and that implementations may choose to support is listed in the Section 5.2.</p>
+      <p class="tableTitle">Table 5.1-1: Patient Identifier Cross-referencing Integration for MPI Profile - Actors and Transactions</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:155.7pt" class="tableHeader">Actors</td>
+            <td style="width:152pt" class="tableHeader">Transactions</td>
+            <td style="width:61.55pt" class="tableHeader">Optionality</td>
+            <td style="width:66.85pt" class="tableHeader">Section</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2" style="width:155.7pt">Patient Identity Source</td>
+            <td style="width:152pt">Patient Identity Feed [ITI-8]</td>
+            <td style="width:61.55pt">R</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:152pt">Patient Identity Management [ITI-30]</td>
+            <td style="width:61.55pt">O</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2b/ITI-30.html#3.30">ITI TF-2b: 3.30</a>
+            </td>
+          </tr>
+          <tr style="height:14.85pt">
+            <td rowspan="2" style="width:155.7pt">Patient Identifier Cross-reference Consumer</td>
+            <td style="width:152pt">PIX Query [ITI-9]</td>
+            <td style="width:61.55pt">R</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:152pt">PIX Update Notification [ITI-10]</td>
+            <td style="width:61.55pt">O</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a>
+            </td>
+          </tr>
+          <tr style="height:14.85pt">
+            <td rowspan="4" style="width:155.7pt">Patient Identifier Cross-reference Manager</td>
+            <td style="width:152pt">Patient Identity Feed [ITI-8]</td>
+            <td style="width:61.55pt">R</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-8.html#3.8">ITI TF-2a: 3.8</a>
+            </td>
+          </tr>
+          <tr style="height:18.5pt">
+            <td style="width:152pt">Patient Identity Management [ITI-30]</td>
+            <td style="width:61.55pt">O</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2b/ITI-30.html#3.30">ITI TF-2b: 3.30</a>
+            </td>
+          </tr>
+          <tr style="height:14.85pt">
+            <td style="width:152pt">PIX Query [ITI-9]</td>
+            <td style="width:61.55pt">R</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-9.html#3.9">ITI TF-2a: 3.9</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:152pt">PIX Update Notification [ITI-10]</td>
+            <td style="width:61.55pt">R</td>
+            <td style="width:66.85pt">
+              <a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="5.1.1">5.1.1 PIX Required Actor Groupings</h3>
+      <p>
+        <span>An actor from this profile (Column 1) shall implement all of the required transactions and/or content modules in this profile</span>
+        <span style="font-weight:bold;font-style:italic">in addition to</span>
+        <span />
+        <span style="font-weight:bold;font-style:italic;text-decoration:underline">all</span>
+        <span>of the requirements for the grouped actor (Column 2).</span>
+      </p>
+      <p class="tableTitle">Table 5.1.1-1: PIX - Required Actor Groupings</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:173.45pt" class="tableHeader">PIX Actor</td>
+            <td style="width:137.7pt" class="tableHeader">Actor(s) to be grouped with</td>
+            <td style="width:70.2pt" class="tableHeader">Reference</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:173.45pt">Patient Identity Source</td>
+            <td style="width:137.7pt">CT / Consistent Time</td>
+            <td style="width:70.2pt">
+              <a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a>
+            </td>
+          </tr>
+          <tr style="height:16.15pt">
+            <td style="width:173.45pt">Patient Identifier Cross-reference Consumer</td>
+            <td style="width:137.7pt">CT / Consistent Time</td>
+            <td style="width:70.2pt">
+              <a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a>
+            </td>
+          </tr>
+          <tr style="height:16.15pt">
+            <td style="width:173.45pt">Patient Identifier Cross-reference Manager</td>
+            <td style="width:137.7pt">CT / Consistent Time</td>
+            <td style="width:70.2pt">
+              <a href="../Volume1/ch-7.html#7.1">ITI TF-1: 7.1</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 id="5.2">5.2 PIX Actor Options</h2>
+      <p>Options that may be selected for this Integration Profile are listed in the Table 5.2-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
+      <p class="tableTitle">Table 5.2-1: Patient Identifier Cross-referencing - Actors and Options</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:175.4pt" class="tableHeader">Actor</td>
+            <td style="width:101.7pt" class="tableHeader">Options</td>
+            <td style="width:71.85pt" class="tableHeader">Vol. &amp; Section</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:16.6pt">
+            <td style="width:175.4pt">Patient Identity Source</td>
+            <td style="width:101.7pt">Pediatric Demographics</td>
+            <td style="width:71.85pt">
+              <a href="../Volume1/ch-5.html#5.2.1">ITI TF-1: 5.2.1</a>
+            </td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td style="width:175.4pt">Patient Identifier Cross-reference Manager</td>
+            <td style="width:101.7pt">Pediatric Demographics</td>
+            <td style="width:71.85pt">
+              <a href="../Volume1/ch-5.html#5.2.1">ITI TF-1: 5.2.1</a>
+            </td>
+          </tr>
+          <tr style="height:18.4pt">
+            <td style="width:175.4pt">Patient Identifier Cross-reference Consumer</td>
+            <td style="width:101.7pt">PIX Update Notification</td>
+            <td style="width:71.85pt">
+              <a href="../Volume2a/ITI-10.html#3.10">ITI TF-2a: 3.10</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a name="_Toc214425607"> </a>
+      </p>
+      <h3 id="5.2.1">5.2.1 Pediatric Demographics Option</h3>
+      <p>The experience of immunization registries and other public health population databases has shown that matching and linking patient records from different sources for the same individual person in environments with large proportions of pediatric records requires additional demographic data.</p>
+      <p>In particular, distinguishing records for children who are twins, triplets, etc. – that is, avoiding false positive matches - may be difficult because much of the demographic data for the two individuals matches. For instance, twin children may have identical last names, parents, addresses, and dates of birth; their first names may be very similar, possibly differing by only one letter. It can be very difficult for a computer or even a human being to determine in this situation whether the slight first name difference points to two distinct individuals or just a typographical error in one of the records. Additional information is extremely helpful in making this determination.</p>
+      <p>Pediatric Demographics makes use of the following six additional demographic fields to aid record matching in databases with many pediatric records.</p>
+      <p class="tableTitle">Table 5.2.1-1: Additional Patient Demographics Fields</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="height:15.75pt">
+            <td style="width:94.2pt" class="tableHeader">Field</td>
+            <td style="width:150.2pt" class="tableHeader">Reason for inclusion</td>
+            <td style="width:147.2pt" class="tableHeader">Value</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:47.25pt">
+            <td style="width:94.2pt">Mother’s Maiden Name</td>
+            <td style="width:150.2pt">Any information about the mother is helpful in making a match</td>
+            <td style="width:147.2pt">Helps create true positive matches</td>
+          </tr>
+          <tr style="height:31.5pt">
+            <td style="width:94.2pt">Patient Home Telephone</td>
+            <td style="width:150.2pt">A telecom helps match into the right household</td>
+            <td style="width:147.2pt">Helps create true positive matches</td>
+          </tr>
+          <tr style="height:31.5pt">
+            <td style="width:94.2pt">Patient Multiple Birth Indicator</td>
+            <td style="width:150.2pt">Indicates this person is a multiple - twin, triplet, etc.</td>
+            <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
+          </tr>
+          <tr style="height:31.5pt">
+            <td style="width:94.2pt">Patient Birth Order</td>
+            <td style="width:150.2pt">Distinguishes among those multiples.</td>
+            <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
+          </tr>
+          <tr style="height:90.4pt">
+            <td style="width:94.2pt">Last Update Date/Time, Last Update Facility</td>
+            <td style="width:150.2pt">These fields, although not strictly demographic, can effectively substitute when multiple birth indicator and birth order are not collected. They indirectly provide visit information. Provider visits on the same day may likely indicate two children brought to a doctor together.</td>
+            <td style="width:147.2pt">Helps avoid false positive matches of multiples</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Patient Identity Source Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction and shall provide values, when available, for the fields identified as Pediatric Demographics fields.</p>
+      <p>Patient Identifier Cross-reference Manager Actors which support the Pediatric Demographics Option are required to support the Patient Identity Management [ITI-30] transaction, and if values for one or more of the Pediatric Demographics fields are specified in the Patient Identity Management [ITI-30] transaction, they shall be considered as part of the matching algorithm of the PIX Manager.</p>
+      <p>Pediatric Demographics are defined as all of the following:</p>
+      <ul>
+        <li class="bullet-list1">Mother’s Maiden Name</li>
+        <li class="bullet-list1">Patient Home Telephone</li>
+        <li class="bullet-list1">Patient Multiple Birth Indicator</li>
+        <li class="bullet-list1">Patient Birth Order</li>
+        <li class="bullet-list1">Last Update Date/Time</li>
+        <li class="bullet-list1">Last Update Facility</li>
+      </ul>
+      <p>Pediatric Demographic is particularly focused on two data issues:</p>
+      <ul>
+        <li class="bullet-list1">Locating a record where the data or the search criterion have differences, but both the data record and the search criterion represent the same person, and</li>
+        <li class="bullet-list1">Avoiding improper linkage of very similar records that do not belong to the same person. This problem is most often encountered in multiple birth situations where twins may be given extremely similar names</li>
+      </ul>
+      <h2 id="5.3">5.3 Patient Identifier Cross-referencing Profile Process Flows</h2>
+      <p>The following sections describe use cases that this profile addresses.</p>
+      <h3 id="5.3.1">5.3.1 Use Case: Multiple Identifier Domains within a Single Facility/ Enterprise</h3>
+      <p>A clinician in the Intensive Care Unit at General Hospital is reviewing a patient chart on the Intensive Care information system and wishes to review or monitor the patient’s glucose level, which is included in a laboratory report stored in the hospital’s main laboratory system. The Intensive Care system needs to map its own patient ID, which it generates internally, to the patient’s medical record number (MRN), which is generated from the hospital’s main ADT system and is used as the patient identity by the lab system. In this case the Intensive Care system is essentially in a different identifier domain than the rest of the hospital since it has its own notion of patient identity.</p>
+      <p>In this scenario, the hospital’s main ADT system (acting as a Patient Identity Source) would provide a Patient Identity Feed (using the patient’s MRN as the identifier) to the Patient Identifier Cross-reference Manager. Similarly, the Intensive Care system would also provide a Patient Identity Feed to the Patient Identifier Cross-reference Manager using the internally generated patient ID as the patient identifier and providing its own unique identifier domain identifier.</p>
+      <p>
+        Once the Patient Identifier Cross-reference Manager receives the Patient Identity Feed transactions, it performs its internal logic to determine which, if any, patient identifiers can be “linked together” as being the same patient based on the corroborating information included in the Feed transactions it has received. The cross-referencing process (algorithm, human decisions, etc.) is performed within the Patient Identifier Cross-reference Manager and is outside the scope of IHE. (See
+        <a href="../Volume2a/ITI-9.html#3.9.4.2.2.6">ITI TF-2a: 3.9.4.2.2.6</a>
+        for a more complete description of the scope of the cross-referencing logic boundary.)
+      </p>
+      <p>
+        <span>The Intensive Care system wants to get lab information associated with a patient that the Intensive Care system knows as patient ID = ‘MC-123’. It requests the lab report from the lab system using its own patient ID (MC-123) including the domain identifier/ assigning authority. Upon receipt of the request, the lab system determines that the request is for a patient outside of its own identifier domain (</span>
+        <span style="text-decoration:underline">ADT Domain</span>
+        <span>). It requests a list of patient ID aliases corresponding to patient ID = ‘MC-123’ (within the “</span>
+        <span style="text-decoration:underline">Intensive Care domain</span>
+        <span>”) from the Patient Identifier Cross-reference Manager. Having linked this patient with a patient known by medical record number = ‘007’ in the ‘</span>
+        <span style="text-decoration:underline">ADT Domain</span>
+        <span>’, the Patient Identifier Cross-reference Manger returns this list to the lab system so that it may retrieve the lab report for the desired patient and return it to the Intensive Care system. Figure 5.3-1 illustrates this process flow.</span>
+      </p>
+      <img src="media/au2nx-2e2p1.013.png" width="644" height="406" alt="" />
+      <p class="figureTitle">Figure 5.3-1: Multiple ID Domains in a Single Facility Process Flow in PIX Profile</p>
+      <p class="note">Note: Request and Response portions of the Retrieve Document for Display transaction are not part of this profile and included for illustration purposes only.</p>
+      <h3 id="5.3.2">5.3.2 Use Case: Multiple ID Domains across Cooperating Enterprises</h3>
+      <p>A healthcare enterprise is established by the consolidation of two hospitals, each having its own separate patient registration process run by different hospital information systems. When a patient is treated in one hospital, the access to its electronic records managed by the other hospital is necessary. The following use case illustrates this scenario.</p>
+      <p>Hospitals A and B have been consolidated and have a single Patient Identifier Cross-reference Manager that maintains the ID links between the two hospitals. Each hospital has a different HIS that is responsible for registering patients, but they have consolidated their cardiology information systems. The cardiology system has been configured with a Patient Identifier Cross-reference Consumer to receive patient identity notifications when cross-referencing activity occurs.</p>
+      <p>A patient is registered and then has some diagnostic stress tests done at hospital A. The cardiology information system queries the Patient Identifier Cross-reference Manager to get a list of possible ID aliases for the patient to see if any past cardiology reports may be available. No patient ID aliases are found. Sometime later the same patient goes to hospital B to have a second diagnostic stress test done. The patient is registered via the HIS in hospital B which then sends that identity information to the Patient Identifier Cross-reference Manager. The Patient Identifier Cross-reference Manager determines this is in fact the same patient as was registered previously at hospital A. The cardiology information system was previously configured with the Patient Identifier Cross-reference Manager to receive notifications; thus a notification is sent to the cardiology system to inform it of the patient identifier aliases. This notification is done to allow systems that are aware of multiple identifier domains to maintain synchronization with patient identifier changes that occur in any of the identifier domains that they are aware of.</p>
+      <p>Figure 5.3-2 illustrates the process flow for this use case.</p>
+      <img src="media/au2nx-2e2p1.014.png" width="588" height="508" alt="" />
+      <p class="figureTitle">Figure 5.3-2: Multiple ID Domains Across Cooperating Enterprises Process Flow in PIX Profile</p>
+      <p class="note">Note: PIX Update Notifications are not sent for the first Patient Identity Feed for a patient, since no cross-referencing activity occurred after this first Patient Identity Feed Transaction.</p>
+      <p>
+        <a name="_Toc214425608"> </a>
+      </p>
+      <h3 id="5.3.3">5.3.3 Pediatric Demographic Option Use Cases</h3>
+      <p>The following sections describe use cases that the Pediatric Demographics Option addresses.</p>
+      <h4 id="5.3.3.1">5.3.3.1 Use Case: High Quality Demographic Feed from a Birth Registry</h4>
+      <p>A regional Immunization Information System (IIS) receives birth registry information about a pair of twins. These twins are named “Lalainne” and “Lalannie” Smith. All of the data elements in the received registration are populated, and they are all identical, except for the Given Name, the Birth Order, and the Birth Certificate #. The IIS cross-referencing system can clearly identify this very similar data as belonging to two separate individuals, because they are both flagged as having been part of a Multiple Birth, their Birth Order numbers are different, and their Birth Certificate #s are different.</p>
+      <h4 id="5.3.3.2">5.3.3.2 Use Case: Normal Demographic Feed from a Point of Care</h4>
+      <p>A couple years later, the mother of these two twins, who has now divorced and remarried, takes them to Pediatric Healthcare, where they get the immunizations appropriate for 2-year olds. Pediatric Healthcare completes a registration for each of them, and submits the resulting data to the IIS. This data has their new Family Name as “Gomez,” but the clerks had appropriately recorded the Birth Order of each twin. Again, the IIS was able to distinguish the two registration records as belonging to separate individuals, and it was able to match them up to their earlier records because the mother’s Maiden Name was present in both the earlier records and the records submitted from Pediatric Healthcare. Pediatric Healthcare was able to download the full immunization history of each twin.</p>
+      <h4 id="5.3.3.3">5.3.3.3 Use Case: Minimal Demographic Feed from a Health Fair</h4>
+      <p>The Jackson County Health Department puts on an annual Health Fair in a shopping mall every August, partly to screen school age children for the minimum shots required for admission to the first grade. Mrs. Gomez is now working to pay for her new apartment, but her sister-in-law takes the children to the Health Fair where they are given shots based on the paper “yellow card” the sister-in-law brings with the two twins. Jackson County Health Department staff records the children’s names, and the shots they were given. This information is entered into the computer back at the Clinic the next day, and submitted to the regional IIS.</p>
+      <p>At this point, even though both children’s names were misspelled as “Lane” and “Lanna”, the Immunization Registry was again able to recognize that the records belonged to twins rather than the same person because, although the demographic data was almost identical, the Last Update Date/Time were very close (Date was the same) and Last Update Facility indicated the same clinic. Unfortunately, they didn’t write down the mother’s information at the Health Fair, but recorded her sister-in-law’s name and address instead, so the Immunization Registry was not able to automatically link this new information to the information it already had for “Lalainne” and “Lalannie”.</p>
+      <p>Other Possibilities:</p>
+      <p>A better outcome could have happened if the clinic had recorded any one of several different data elements that would have helped tie this new data to the previous data. Any one of the Mothers Maiden Name (even the Mother’s First Name component), the Home Phone Number, or the unique identifier for the kids which was printed on the “yellow card” from Pediatric Healthcare would have helped.</p>
+      <h2 id="5.4">5.4 Relationship between the PIX Integration Profile and eMPI</h2>
+      <p>The PIX Integration Profile achieves the integration of disparate Patient Identifier Domains by using a cross-referencing approach between Patient Identifiers associated with the same patient. This section discusses how this approach is compatible with environments that wish to establish master patient identifiers (MPI), or enterprise MPI (eMPI) systems. An eMPI may be considered a particular variation in implementation of the PIX Integration Profile.</p>
+      <p>The concept of an MPI is a rather broad concept, yet it is most often associated with the creation of a master patient identifier domain. Such a master domain is considered more broadly applicable or more “enterprise-level” than the other patient identifier domains it includes. Such a hierarchical inclusion of patient identification domains into a “master patient identification domain” can be considered a particular case of patient cross-reference, where the patient identifiers in the various domains are cross-referenced to the patient identifiers of the master domain. Two possible configurations are depicted by Figure 5.4-1.</p>
+      <p style="font-size:11pt">
+        <img src="media/au2nx-2e2p1.015.png" width="672" height="328" alt="" />
+        <span style="font-weight:bold">Figure 5.4-1: PIX Profile Relationship to eMPI</span>
+      </p>
+      <p>Figure 5.4-1 above shows how the Master Patient Identifier Domain (Domain C), in a typical MPI approach, is simply another patient Identification Domain when considered in a Cross-referencing approach. The decision to place enterprise-wide systems such as Clinical Data Repositories into the so-called master domain is simply a configuration choice. In addition, such a configuration sometimes assumes that any system in Patient Domain A not only manages the patient Identifiers of Domain A but is also aware of those of Domain C. In the Patient Identifier Cross-reference Integration Profile, this is a configuration choice where certain systems have been designed and configured to operate across multiple domains. Thus the entity often called an MPI (shown by the oval) is actually the combination of a Patient Identity Source (ADT) along with a Patient Identifier Cross-reference Manager.</p>
+      <p>The PIX Integration Profile can coexist with environments that have chosen to deploy a distinct MPI, and provides a more scalable approach. Many other configurations can also be deployed, in particular those where the creation of a master domain “including” the other domains is not necessary (i.e., a simple federation of domains where none is actually the master).</p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

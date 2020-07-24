@@ -5,202 +5,210 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.19">3.19 Authenticate Node [ITI-19]</h2>
-    <p>This section corresponds to transaction [19] of the IHE ITI Technical Framework. Transaction [ITI-19] is used by the Secure Node Actors</p>
-    <h3 id="3.19.1">3.19.1 Scope</h3>
-    <p>In the Authenticate Node transaction, the local Secure Node presents its identity to a remote Secure Node, and authenticates the identity of the remote node. After this mutual authentication, other secure transactions may take place through this secure pipe between the two nodes.</p>
-    <p>In addition, the Secure Node authenticates the identity of the user who requests access to the node. This user authentication is a local operation that does not involve communication with a remote node.</p>
-    <h3 id="3.19.2">3.19.2 Use Case Roles</h3>
-    <img src="media/amdr0-jc4sx.034.png" width="402" height="228" alt="" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Secure Node</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Establish a protocol specific trust relationship between two nodes in a network. Establishes the identity of a user, and authorizes access to the patient data and applications at the node.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>User</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Someone who wants to have access to the data and applications available at the node.</span>
-    </p>
-    <h3 id="3.19.3">3.19.3 Referenced Standards</h3>
-    <p>
-      <span style="font-weight:bold">DICOM:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">PS3.15 Security Profiles. Annex B:  Secure Transport Connection Profiles</li>
-    </ul>
-    <p>
-      <span style="font-weight:bold">IETF:</span>
-      <span style="width:4pt;display:inline-block"> </span>
-    </p>
-    <ul>
-      <li class="bullet-list1">RFC2246 - Transport Layer Security (TLS) Protocol Version 1.0</li>
-      <li class="bullet-list1">RFC4346 - Transport Layer Security (TLS) Protocol Version 1.1</li>
-      <li class="bullet-list1">RFC5246 - Transport Layer Security (TLS) Protocol Version 1.2</li>
-      <li class="bullet-list1">RFC3851 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.1                        Message Specification</li>
-      <li class="bullet-list1">RFC6125 - Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)</li>
-      <li class="bullet-list1">BCP195 - Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS), MAY 2015</li>
-    </ul>
-    <p>
-      <span style="font-weight:bold">ITU-T:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">Recommendation X.509 (03/00). “Information technology - Open Systems Interconnection - The directory: Public-key and attribute certificate frameworks"</li>
-    </ul>
-    <p>
-      <span style="font-weight:bold">WS-I:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">
-        <span>Basic Security Profile 1.1 </span>
-        <a href="http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html">http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html</a>
-      </li>
-    </ul>
-    <h3 id="3.19.4">3.19.4 Messages</h3>
-    <p class="note">Note: This diagram does not imply sequencing of Authentication Node and Local User Authentication.</p>
-    <img src="media/amdr0-jc4sx.035.png" width="472" height="289" alt="" />
-    <p style="font-size:11pt">
-      <a name="_Toc174248938">Figure 3.19.4-1: Interaction Diagram</a>
-    </p>
-    <h3 id="3.19.5">3.19.5 Trigger Events</h3>
-    <p>The Local Secure Node starts the authentication process with the Remote Secure Node when information exchange between the two nodes is requested. The first transaction shall be the Authenticate Node transaction, and all other PHI transactions performed by IHE actors shall be secure transactions. This authentication process is needed when a secure connection is established.</p>
-    <p>The Basic Secure Node shall always apply the Authenticate Node process to every DICOM, HTTP, or HL7 connection.</p>
-    <h3 id="3.19.6">3.19.6 Message Semantics</h3>
-    <p>The Authenticate node transaction involves the exchange of certificates representing the identities of the nodes. These identities are used to authenticate the nodes, to inform authorization, and audit logging.</p>
-    <p>The cipher suites specified here set a baseline to ensure that interoperability is possible. This baseline shall not prohibit more secure configurations from being used. The actual cipher suites used shall be the most secure configuration possible according to local policies.</p>
-    <h4 id="3.19.6.1">3.19.6.1 Certificate Validation</h4>
-    <p>The local organization (e.g., XDS Affinity Domain) will make the choice of what mixture of chain of trust and direct comparison is used to authenticate communications. This may be entirely based on chaining trust to selected CAs, entirely based upon provision of node certificates for direct comparison, or a mixture of both.</p>
-    <p class="note">
-      <span>Note:</span>
-      <span style="width:13.75pt;text-indent:0pt;display:inline-block"> </span>
-      <span>The CAs used for ATNA chain of trust will be different than the default browser trusted list of CAs used for authenticating internet web servers. A worldwide CA, such as VeriSign, is not generally trusted to determine which individual nodes within an organization should and should not communicate patient identifiable information.</span>
-    </p>
-    <p>When Authenticating the Remote Secure Node, the Local Secure Node:</p>
-    <ul>
-      <li class="bullet-list1">Shall be able to perform certificate validation based on signature by a trusted CA (see Section 3.19.6.1.1) and</li>
-      <li class="bullet-list1">Shall be able to perform direct certificate validation to a set of trusted certificates (see Section 3.19.6.1.2)</li>
-    </ul>
-    <p>It may reject communications when the certificate validation fails, or may restrict communications to only that which is appropriate for an unidentified other party.</p>
-    <h5 id="3.19.6.1.1">3.19.6.1.1 Chain to a trusted certificate authority</h5>
-    <p>The Secure Node or Secure Application:</p>
-    <ul>
-      <li class="bullet-list1">Shall provide the means for configuring which CAs are trusted to authenticate node certificates for use in a chain of trust. These CAs shall be identified by means of the public signing certificate for the signing CA.</li>
-      <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
-      <li class="bullet-list1">Shall accept communications for which there is a certificate that is signed by a CA that is listed as a trusted signing authority.</li>
-    </ul>
-    <h5 id="3.19.6.1.2">3.19.6.1.2 Direct certificate validation</h5>
-    <p>The Secure Node or Secure Application:</p>
-    <ul>
-      <li class="bullet-list1">Shall provide means for installing of the required certificates, for example, via removable media or network interchange (where the set of trusted certificates can be a mixture of CA signed certificates and self-signed certificates).</li>
-      <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
-      <li class="bullet-list1">Shall accept communications for which there is a certificate configured as acceptable for direct certificate validation.</li>
-    </ul>
-    <h5 id="3.19.6.1.3">3.19.6.1.3 Other Certificate requirements</h5>
-    <p>The Secure Node shall not require any specific certificate attribute contents, nor shall it reject certificates that contain unknown attributes or other parameters. Note that for node certificates the CN often is a hostname, attempting to use this hostname provides no additional security and will introduce a new failure mode (e.g., DNS failure).</p>
-    <p>The certificates used for mutual authentication shall be X.509 certificates based on either:</p>
-    <ul>
-      <li class="bullet-list1">RSA key with key length in the range of 1024-4096, where the key length chosen is based on local site policy, or</li>
-      <li class="bullet-list1">BCP195 certificate recommendations.</li>
-    </ul>
-    <p>Maximum expiration time acceptable for certificates should be defined in the applicable security policy. The IHE Technical Framework recommends a maximum expiration time of 2 years.</p>
-    <p>The method used to determine whether a node is authorized to perform transactions is not specified. This may be use of a set of trusted certificates, based on some attribute value contained in the certificates, access control lists, or some other method. Using a certificate chain back to an external trusted certificate authority to determine authorizations is strongly discouraged.</p>
-    <h5 id="3.19.6.1.4">3.19.6.1.4 FQDN Validation of Server Certificate Option</h5>
-    <p>The FQDN Validation of Server Certificate Option applies the rules presented in RFC6125 when a client authenticates the server using an X.509 certificate in the context of Transport Layer Security (TLS).</p>
-    <p>A client, who is validating a server’s identity, shall validate that the reference identifier present in a subjectAltName entry of type DNS-ID matches the source domain of the server, per RFC6125 Section 6. Note that the rules described in RFC6125 Section 6 require the validation to be performed based on the input source and the DNS-ID fully-qualified domain name.</p>
-    <p>In an environment where clients have implemented this option, a server’s X.509 certificate shall contain a subjectAltName entry of type DNS-ID, per RFC6125 Section 4.</p>
-    <h4 id="3.19.6.2">3.19.6.2 All Connections carrying Protected Information (PI) using TLS</h4>
-    <p>
-      <a name="_Toc174248941">
-        <span>This section contains TLS requirements</span>
-        <span>.</span>
-      </a>
-    </p>
-    <h5 id="3.19.6.2.1">3.19.6.2.1 STX: TLS 1.0 Floor with AES Option</h5>
-    <p>
-      <span>An actor using the STX: TLS 1.0 Floor with AES Option shall support the TLS 1.0 protocol, and shall support at least the following cipher suite:</span>
-      <span style="font-weight:bold" />
-    </p>
-    <ul>
-      <li class="bullet-list1">TLS_RSA_WITH_AES_128_CBC_SHA</li>
-    </ul>
-    <p>Higher versions of TLS may be used, but the actor shall be able to negotiate TLS 1.0 protocol.</p>
-    <p>See RFC7525 “Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)” for recommendations on proper use of TLS and appropriate fallback rules.</p>
-    <h5 id="3.19.6.2.2">3.19.6.2.2 STX: TLS 1.0 Floor using BCP195 Option</h5>
-    <p>An actor using the STX: TLS 1.0 Floor using BCP195 Option:</p>
-    <ul>
-      <li class="bullet-list1">Shall be able to comply with BCP195. This implies that the implementation:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">Utilizes the framework and negotiation mechanism specified by the Transport Layer Security protocol.</li>
-      <li class="bullet-list2">Supports TLS version 1.0, version 1.1, version 1.2 or higher.</li>
-      <li class="bullet-list2">Should support the following cipher suites:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list3">TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</li>
-      <li class="bullet-list3">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</li>
-      <li class="bullet-list3">TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</li>
-      <li class="bullet-list3">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</li>
-    </ul>
-    <p>Additional cipher suites may be supported.</p>
-    <ul>
-      <li class="bullet-list1">Shall also be able to negotiate down to TLS version 1.1 [RFC4346] or TLS version 1.0 [RFC2246] following the BCP195 version negotiation criteria.</li>
-    </ul>
-    <h5 id="3.19.6.2.3">3.19.6.2.3 STX: TLS 1.2 floor using BCP195 Option</h5>
-    <p>An actor using the STX: TLS 1.2 floor using BCP195 Option:</p>
-    <ul>
-      <li class="bullet-list1">Shall be able to comply with BCP195. This implies that the implementation:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">Utilizes the framework and negotiation mechanism specified by the Transport Layer Security protocol.</li>
-      <li class="bullet-list2">Supports TLS version 1.2 or higher</li>
-    </ul>
-    <ul>
-      <li class="bullet-list1">Shall also be able to restrict to use TLS version 1.2 [RFC5246] or higher.</li>
-      <li class="bullet-list1">Shall also support the following cipher suites:</li>
-    </ul>
-    <ul>
-      <li class="bullet-list2">TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</li>
-      <li class="bullet-list2">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</li>
-      <li class="bullet-list2">TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</li>
-      <li class="bullet-list2">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</li>
-    </ul>
-    <p>Additional cipher suites of similar or greater cryptographic strength may be supported.</p>
-    <h4 id="3.19.6.3">3.19.6.3 This Header is empty to preserve header numbering</h4>
-    <h4 id="3.19.6.4">3.19.6.4 Web-Services carrying Protected Information (PI)</h4>
-    <p>A trusted association shall be established between the two nodes utilizing WS-I Basic Security Profile Version 1.1. This association will be used for all secure transactions between the IHE actors in the two nodes. Note that Section 3.19.6.2 “All Connections carrying Protected Information (PI)” and WS-I Basic Security Profile – Section 4 “Transport Layer Mechanisms” are identical and interoperable.</p>
-    <h4 id="3.19.6.5">3.19.6.5 SMTP communication</h4>
-    <p>When configured to use email on a network that is not physically secured, implementations shall use S/MIME (RFC3851):</p>
-    <ul>
-      <li class="bullet-list1">The message shall be signed using the signedData format (i.e., encapsulated signature rather than multipart/signed format for detached signature) making the signature verification easier for the remote node. The email shall be digitally signed by the sender, by a one level only detached signature. This digital signature shall be interpreted to mean that the sender is attesting to their authorization to disclose the information to the intended recipient(s). RSA/SHA-1 signature shall be supported by both the sender and the receiver.</li>
-      <li class="bullet-list1">All the certificates of the "trust chain" shall be contained within the signature when using a PKI or out of bound certificate.</li>
-    </ul>
-    <p>The following ciphersuites shall also be supported for encrypted email:</p>
-    <ul>
-      <li class="bullet-list1">S/MIME_RSA_WITH_AES_128_CBC_SHA (sender).</li>
-      <li class="bullet-list1">S/MIME_RSA_WITH_3DES_128_CBC_SHA (sender and receiver). Receivers must be able to receive older encryption methods, but for IHE Authenticate Node compliance the sender will use AES.</li>
-      <li class="bullet-list1">The email shall be digitally signed by the sender, by a one level only detached signature, applied BEFORE the encryption. This digital signature shall be interpreted to mean that the sender is attesting to their authorization to disclose the information to the intended recipient(s).</li>
-    </ul>
-    <p>As explained in S/MIME, the sender will generate a unique session key, encrypt the payload of the message using the symmetrical AES algorithm, encrypt the key using the RSA asymmetrical algorithm with each one of receiver(s) public key and attach the result to the message. Each one of the receiver(s) will decrypt this result using its private key, revealing the session key, and decrypt the payload of the message.</p>
-    <p>This profile does not specify how certificates and keys are obtained or exchanged.</p>
-    <h3 id="3.19.7">3.19.7 Intentionally Left Blank</h3>
-    <h3 id="3.19.8">3.19.8 STX: No Secure Transport</h3>
-    <p>ITI-19 requires no actions for this option.</p>
-    <br style="page-break-before:always; clear:both" />
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.19">3.19 Authenticate Node [ITI-19]</h2>
+      <p>This section corresponds to transaction [19] of the IHE ITI Technical Framework. Transaction [ITI-19] is used by the Secure Node Actors</p>
+      <h3 id="3.19.1">3.19.1 Scope</h3>
+      <p>In the Authenticate Node transaction, the local Secure Node presents its identity to a remote Secure Node, and authenticates the identity of the remote node. After this mutual authentication, other secure transactions may take place through this secure pipe between the two nodes.</p>
+      <p>In addition, the Secure Node authenticates the identity of the user who requests access to the node. This user authentication is a local operation that does not involve communication with a remote node.</p>
+      <h3 id="3.19.2">3.19.2 Use Case Roles</h3>
+      <img src="media/amdr0-jc4sx.034.png" width="402" height="228" alt="" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Secure Node</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Establish a protocol specific trust relationship between two nodes in a network. Establishes the identity of a user, and authorizes access to the patient data and applications at the node.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>User</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Someone who wants to have access to the data and applications available at the node.</span>
+      </p>
+      <h3 id="3.19.3">3.19.3 Referenced Standards</h3>
+      <p>
+        <span style="font-weight:bold">DICOM:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">PS3.15 Security Profiles. Annex B:  Secure Transport Connection Profiles</li>
+      </ul>
+      <p>
+        <span style="font-weight:bold">IETF:</span>
+        <span style="width:4pt;display:inline-block"> </span>
+      </p>
+      <ul>
+        <li class="bullet-list1">RFC2246 - Transport Layer Security (TLS) Protocol Version 1.0</li>
+        <li class="bullet-list1">RFC4346 - Transport Layer Security (TLS) Protocol Version 1.1</li>
+        <li class="bullet-list1">RFC5246 - Transport Layer Security (TLS) Protocol Version 1.2</li>
+        <li class="bullet-list1">RFC3851 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.1                        Message Specification</li>
+        <li class="bullet-list1">RFC6125 - Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)</li>
+        <li class="bullet-list1">BCP195 - Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS), MAY 2015</li>
+      </ul>
+      <p>
+        <span style="font-weight:bold">ITU-T:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">Recommendation X.509 (03/00). “Information technology - Open Systems Interconnection - The directory: Public-key and attribute certificate frameworks"</li>
+      </ul>
+      <p>
+        <span style="font-weight:bold">WS-I:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">
+          <span>Basic Security Profile 1.1 </span>
+          <a href="http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html">http://www.ws-i.org/Profiles/BasicSecurityProfile-1.1.html</a>
+        </li>
+      </ul>
+      <h3 id="3.19.4">3.19.4 Messages</h3>
+      <p class="note">Note: This diagram does not imply sequencing of Authentication Node and Local User Authentication.</p>
+      <img src="media/amdr0-jc4sx.035.png" width="472" height="289" alt="" />
+      <p style="font-size:11pt">
+        <a name="_Toc174248938">Figure 3.19.4-1: Interaction Diagram</a>
+      </p>
+      <h3 id="3.19.5">3.19.5 Trigger Events</h3>
+      <p>The Local Secure Node starts the authentication process with the Remote Secure Node when information exchange between the two nodes is requested. The first transaction shall be the Authenticate Node transaction, and all other PHI transactions performed by IHE actors shall be secure transactions. This authentication process is needed when a secure connection is established.</p>
+      <p>The Basic Secure Node shall always apply the Authenticate Node process to every DICOM, HTTP, or HL7 connection.</p>
+      <h3 id="3.19.6">3.19.6 Message Semantics</h3>
+      <p>The Authenticate node transaction involves the exchange of certificates representing the identities of the nodes. These identities are used to authenticate the nodes, to inform authorization, and audit logging.</p>
+      <p>The cipher suites specified here set a baseline to ensure that interoperability is possible. This baseline shall not prohibit more secure configurations from being used. The actual cipher suites used shall be the most secure configuration possible according to local policies.</p>
+      <h4 id="3.19.6.1">3.19.6.1 Certificate Validation</h4>
+      <p>The local organization (e.g., XDS Affinity Domain) will make the choice of what mixture of chain of trust and direct comparison is used to authenticate communications. This may be entirely based on chaining trust to selected CAs, entirely based upon provision of node certificates for direct comparison, or a mixture of both.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:13.75pt;text-indent:0pt;display:inline-block"> </span>
+        <span>The CAs used for ATNA chain of trust will be different than the default browser trusted list of CAs used for authenticating internet web servers. A worldwide CA, such as VeriSign, is not generally trusted to determine which individual nodes within an organization should and should not communicate patient identifiable information.</span>
+      </p>
+      <p>When Authenticating the Remote Secure Node, the Local Secure Node:</p>
+      <ul>
+        <li class="bullet-list1">Shall be able to perform certificate validation based on signature by a trusted CA (see Section 3.19.6.1.1) and</li>
+        <li class="bullet-list1">Shall be able to perform direct certificate validation to a set of trusted certificates (see Section 3.19.6.1.2)</li>
+      </ul>
+      <p>It may reject communications when the certificate validation fails, or may restrict communications to only that which is appropriate for an unidentified other party.</p>
+      <h5 id="3.19.6.1.1">3.19.6.1.1 Chain to a trusted certificate authority</h5>
+      <p>The Secure Node or Secure Application:</p>
+      <ul>
+        <li class="bullet-list1">Shall provide the means for configuring which CAs are trusted to authenticate node certificates for use in a chain of trust. These CAs shall be identified by means of the public signing certificate for the signing CA.</li>
+        <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
+        <li class="bullet-list1">Shall accept communications for which there is a certificate that is signed by a CA that is listed as a trusted signing authority.</li>
+      </ul>
+      <h5 id="3.19.6.1.2">3.19.6.1.2 Direct certificate validation</h5>
+      <p>The Secure Node or Secure Application:</p>
+      <ul>
+        <li class="bullet-list1">Shall provide means for installing of the required certificates, for example, via removable media or network interchange (where the set of trusted certificates can be a mixture of CA signed certificates and self-signed certificates).</li>
+        <li class="bullet-list1">Shall support digital certificates encoded using both Deterministic Encoding Rules (DER) and Basic Encoding Rules (BER).</li>
+        <li class="bullet-list1">Shall accept communications for which there is a certificate configured as acceptable for direct certificate validation.</li>
+      </ul>
+      <h5 id="3.19.6.1.3">3.19.6.1.3 Other Certificate requirements</h5>
+      <p>The Secure Node shall not require any specific certificate attribute contents, nor shall it reject certificates that contain unknown attributes or other parameters. Note that for node certificates the CN often is a hostname, attempting to use this hostname provides no additional security and will introduce a new failure mode (e.g., DNS failure).</p>
+      <p>The certificates used for mutual authentication shall be X.509 certificates based on either:</p>
+      <ul>
+        <li class="bullet-list1">RSA key with key length in the range of 1024-4096, where the key length chosen is based on local site policy, or</li>
+        <li class="bullet-list1">BCP195 certificate recommendations.</li>
+      </ul>
+      <p>Maximum expiration time acceptable for certificates should be defined in the applicable security policy. The IHE Technical Framework recommends a maximum expiration time of 2 years.</p>
+      <p>The method used to determine whether a node is authorized to perform transactions is not specified. This may be use of a set of trusted certificates, based on some attribute value contained in the certificates, access control lists, or some other method. Using a certificate chain back to an external trusted certificate authority to determine authorizations is strongly discouraged.</p>
+      <h5 id="3.19.6.1.4">3.19.6.1.4 FQDN Validation of Server Certificate Option</h5>
+      <p>The FQDN Validation of Server Certificate Option applies the rules presented in RFC6125 when a client authenticates the server using an X.509 certificate in the context of Transport Layer Security (TLS).</p>
+      <p>A client, who is validating a server’s identity, shall validate that the reference identifier present in a subjectAltName entry of type DNS-ID matches the source domain of the server, per RFC6125 Section 6. Note that the rules described in RFC6125 Section 6 require the validation to be performed based on the input source and the DNS-ID fully-qualified domain name.</p>
+      <p>In an environment where clients have implemented this option, a server’s X.509 certificate shall contain a subjectAltName entry of type DNS-ID, per RFC6125 Section 4.</p>
+      <h4 id="3.19.6.2">3.19.6.2 All Connections carrying Protected Information (PI) using TLS</h4>
+      <p>
+        <a name="_Toc174248941">
+          <span>This section contains TLS requirements</span>
+          <span>.</span>
+        </a>
+      </p>
+      <h5 id="3.19.6.2.1">3.19.6.2.1 STX: TLS 1.0 Floor with AES Option</h5>
+      <p>
+        <span>An actor using the STX: TLS 1.0 Floor with AES Option shall support the TLS 1.0 protocol, and shall support at least the following cipher suite:</span>
+        <span style="font-weight:bold" />
+      </p>
+      <ul>
+        <li class="bullet-list1">TLS_RSA_WITH_AES_128_CBC_SHA</li>
+      </ul>
+      <p>Higher versions of TLS may be used, but the actor shall be able to negotiate TLS 1.0 protocol.</p>
+      <p>See RFC7525 “Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)” for recommendations on proper use of TLS and appropriate fallback rules.</p>
+      <h5 id="3.19.6.2.2">3.19.6.2.2 STX: TLS 1.0 Floor using BCP195 Option</h5>
+      <p>An actor using the STX: TLS 1.0 Floor using BCP195 Option:</p>
+      <ul>
+        <li class="bullet-list1">Shall be able to comply with BCP195. This implies that the implementation:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">Utilizes the framework and negotiation mechanism specified by the Transport Layer Security protocol.</li>
+        <li class="bullet-list2">Supports TLS version 1.0, version 1.1, version 1.2 or higher.</li>
+        <li class="bullet-list2">Should support the following cipher suites:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list3">TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</li>
+        <li class="bullet-list3">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</li>
+        <li class="bullet-list3">TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</li>
+        <li class="bullet-list3">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</li>
+      </ul>
+      <p>Additional cipher suites may be supported.</p>
+      <ul>
+        <li class="bullet-list1">Shall also be able to negotiate down to TLS version 1.1 [RFC4346] or TLS version 1.0 [RFC2246] following the BCP195 version negotiation criteria.</li>
+      </ul>
+      <h5 id="3.19.6.2.3">3.19.6.2.3 STX: TLS 1.2 floor using BCP195 Option</h5>
+      <p>An actor using the STX: TLS 1.2 floor using BCP195 Option:</p>
+      <ul>
+        <li class="bullet-list1">Shall be able to comply with BCP195. This implies that the implementation:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">Utilizes the framework and negotiation mechanism specified by the Transport Layer Security protocol.</li>
+        <li class="bullet-list2">Supports TLS version 1.2 or higher</li>
+      </ul>
+      <ul>
+        <li class="bullet-list1">Shall also be able to restrict to use TLS version 1.2 [RFC5246] or higher.</li>
+        <li class="bullet-list1">Shall also support the following cipher suites:</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</li>
+        <li class="bullet-list2">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</li>
+        <li class="bullet-list2">TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</li>
+        <li class="bullet-list2">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</li>
+      </ul>
+      <p>Additional cipher suites of similar or greater cryptographic strength may be supported.</p>
+      <h4 id="3.19.6.3">3.19.6.3 This Header is empty to preserve header numbering</h4>
+      <h4 id="3.19.6.4">3.19.6.4 Web-Services carrying Protected Information (PI)</h4>
+      <p>A trusted association shall be established between the two nodes utilizing WS-I Basic Security Profile Version 1.1. This association will be used for all secure transactions between the IHE actors in the two nodes. Note that Section 3.19.6.2 “All Connections carrying Protected Information (PI)” and WS-I Basic Security Profile – Section 4 “Transport Layer Mechanisms” are identical and interoperable.</p>
+      <h4 id="3.19.6.5">3.19.6.5 SMTP communication</h4>
+      <p>When configured to use email on a network that is not physically secured, implementations shall use S/MIME (RFC3851):</p>
+      <ul>
+        <li class="bullet-list1">The message shall be signed using the signedData format (i.e., encapsulated signature rather than multipart/signed format for detached signature) making the signature verification easier for the remote node. The email shall be digitally signed by the sender, by a one level only detached signature. This digital signature shall be interpreted to mean that the sender is attesting to their authorization to disclose the information to the intended recipient(s). RSA/SHA-1 signature shall be supported by both the sender and the receiver.</li>
+        <li class="bullet-list1">All the certificates of the "trust chain" shall be contained within the signature when using a PKI or out of bound certificate.</li>
+      </ul>
+      <p>The following ciphersuites shall also be supported for encrypted email:</p>
+      <ul>
+        <li class="bullet-list1">S/MIME_RSA_WITH_AES_128_CBC_SHA (sender).</li>
+        <li class="bullet-list1">S/MIME_RSA_WITH_3DES_128_CBC_SHA (sender and receiver). Receivers must be able to receive older encryption methods, but for IHE Authenticate Node compliance the sender will use AES.</li>
+        <li class="bullet-list1">The email shall be digitally signed by the sender, by a one level only detached signature, applied BEFORE the encryption. This digital signature shall be interpreted to mean that the sender is attesting to their authorization to disclose the information to the intended recipient(s).</li>
+      </ul>
+      <p>As explained in S/MIME, the sender will generate a unique session key, encrypt the payload of the message using the symmetrical AES algorithm, encrypt the key using the RSA asymmetrical algorithm with each one of receiver(s) public key and attach the result to the message. Each one of the receiver(s) will decrypt this result using its private key, revealing the session key, and decrypt the payload of the message.</p>
+      <p>This profile does not specify how certificates and keys are obtained or exchanged.</p>
+      <h3 id="3.19.7">3.19.7 Intentionally Left Blank</h3>
+      <h3 id="3.19.8">3.19.8 STX: No Secure Transport</h3>
+      <p>ITI-19 requires no actions for this option.</p>
+      <br style="page-break-before:always; clear:both" />
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

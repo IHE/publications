@@ -5,811 +5,823 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.54">3.54 Document Metadata Publish [ITI-54]</h2>
-    <p>This section corresponds to transaction [ITI-54] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-54] is used by the Document Metadata Notification Broker and Document Metadata Publisher Actors.</p>
-    <h3 id="3.54.1">3.54.1 Scope</h3>
-    <p>This transaction delivers information from the Document Metadata Publisher to the Document Metadata Notification Broker about an event which may have a subscription. The WS Brokered Notification Publisher Registration requirements are out of scope for this transaction.</p>
-    <h3 id="3.54.2">3.54.2 Use Case Roles</h3>
-    <img src="media/ai8zh-w242m.060.png" width="441" height="200" alt="dsub_ucr3" />
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Document Metadata Notification Broker</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Receives and processes information about events for which there may be a subscription.</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Actor:</span>
-      <span>Document Metadata Publisher</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">Role:</span>
-      <span>Publishes information to the Document Metadata Notification Broker when applicable events occur for which a subscription may exist.</span>
-    </p>
-    <h3 id="3.54.3">3.54.3 Referenced Standards</h3>
-    <ul>
-      <li class="bullet-list1">
-        <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsn">OASIS Web Services Notification Family of Standards</a>
-        <span />
-      </li>
-      <li class="bullet-list1">
-        <a href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.pdf">WS-BaseNotification 1.3 OASIS Standard</a>
-        <span />
-      </li>
-      <li class="bullet-list1">
-        <a href="http://docs.oasis-open.org/wsn/wsn-ws_brokered_notification-1.3-spec-os.pdf">WS-BrokeredNotification 1.3 OASIS Standard</a>
-        <span />
-      </li>
-      <li class="bullet-list1">
-        <a href="http://docs.oasis-open.org/wsn/wsn-ws_topics-1.3-spec-os.pdf">WS-Topics 1.3 OASIS Standard</a>
-        <span />
-      </li>
-      <li class="bullet-list1"><a href="../Volume2b/ITI-43.html#3.43.4.2.2"><a href="../Volume2b/ITI-43.html#3.43.4.2.2">ITI TF-2b: 3.43.4.2.2</a></a></li>
-      <li class="bullet-list1"><a href="../Volume2x/ch-22.html#Appendix V"><a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a></a></li>
-    </ul>
-    <h3 id="3.54.4">3.54.4 Messages</h3>
-    <img src="media/ai8zh-w242m.061.png" width="377" height="252" alt="DPublish_ID" />
-    <p class="figureTitle">Figure 3.54.4-1: Document Metadata Publish Sequence</p>
-    <h4 id="3.54.4.1">3.54.4.1 Notify Message</h4>
-    <h5 id="3.54.4.1.1">3.54.4.1.1 Trigger</h5>
-    <p>When an event occurs for which a subscription may exist, the Document Metadata Publisher will trigger a Notification message to the Document Metadata Notification Broker. Events that could trigger a notification are publication of or update to a DocumentEntry or SubmissionSet.</p>
-    <h5 id="3.54.4.1.2">3.54.4.1.2 Message Semantics</h5>
-    <p>The Document Metadata Publisher shall use a Notify message to communicate published objects to the Document Metadata Notification Broker Actor.</p>
-    <p>
-      <span>This message shall have one</span>
-      <span style="font-style:italic">&lt;NotificationMessage&gt;</span>
-      <span>element.</span>
-    </p>
-    <p>This element SHALL have two child elements:</p>
-    <ul>
-      <li class="bullet-list1">
-        <span style="font-style:italic">&lt;ProducerReference&gt;</span>
-        <span>that identifies the source of the data published. This element conveys the value of the SubmissionSet.sourceId attribute. This attribute shall contain a URI, for example “urn:oid:1.2.3.4.5”.</span>
-      </li>
-      <li class="bullet-list1">
-        <span style="font-style:italic">&lt;Message&gt;</span>
-        <span>that identifies published objects. This element shall have a single child element</span>
-        <span style="font-style:italic">&lt;lcm:SubmitObjectsRequest&gt;</span>
-        <span>that has only one child element</span>
-        <span style="font-style:italic">&lt;rim:RegistryObjectList&gt;.</span>
-        <span>This element conveys a list of SubmissionSet, Folder, and DocumentEntry objects.</span>
-      </li>
-    </ul>
-    <p class="note">
-      <span>Note: SubmissionSet objects are constructed from</span>
-      <span style="font-style:italic">&lt;rim:RegistryObject&gt;</span>
-      <span>elements and must include the</span>
-      <span style="font-style:italic">&lt;rim:Classification&gt;</span>
-      <span>.</span>
-    </p>
-    <p>Note that there is no subscription information in the Notify message in the Publish transaction.</p>
-    <h5 id="3.54.4.1.3">3.54.4.1.3 Expected Actions</h5>
-    <p>The Notify message shall comply with the requirements in the WS-BaseNotification standard.</p>
-    <p>The Document Metadata Notification Broker shall evaluate the Publish transaction, and if there are matching subscriptions, it shall send the corresponding Notification transaction to the appropriate Document Metadata Notification Recipients.</p>
-    <h5 id="3.54.4.1.4">3.54.4.1.4 Example</h5>
-    <div style="border:0.75pt solid #000000; clear:both">
-      <p style="font-size:8pt">
-        <span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
       </p>
-      <p style="font-size:8pt">
-        <span>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
       </p>
-      <p style="font-size:8pt">
-        <span>    xmlns:a="http://www.w3.org/2005/08/addressing"</span>
+    </header>
+    <main>
+      <h2 id="3.54">3.54 Document Metadata Publish [ITI-54]</h2>
+      <p>This section corresponds to transaction [ITI-54] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-54] is used by the Document Metadata Notification Broker and Document Metadata Publisher Actors.</p>
+      <h3 id="3.54.1">3.54.1 Scope</h3>
+      <p>This transaction delivers information from the Document Metadata Publisher to the Document Metadata Notification Broker about an event which may have a subscription. The WS Brokered Notification Publisher Registration requirements are out of scope for this transaction.</p>
+      <h3 id="3.54.2">3.54.2 Use Case Roles</h3>
+      <img src="media/ai8zh-w242m.060.png" width="441" height="200" alt="dsub_ucr3" />
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Document Metadata Notification Broker</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Receives and processes information about events for which there may be a subscription.</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"</span>
+      <p>
+        <span style="font-weight:bold">Actor:</span>
+        <span>Document Metadata Publisher</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    xmlns:ihe="urn:ihe:iti:pub-sub:2008"</span>
+      <p>
+        <span style="font-weight:bold">Role:</span>
+        <span>Publishes information to the Document Metadata Notification Broker when applicable events occur for which a subscription may exist.</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+      <h3 id="3.54.3">3.54.3 Referenced Standards</h3>
+      <ul>
+        <li class="bullet-list1">
+          <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsn">OASIS Web Services Notification Family of Standards</a>
+          <span />
+        </li>
+        <li class="bullet-list1">
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.pdf">WS-BaseNotification 1.3 OASIS Standard</a>
+          <span />
+        </li>
+        <li class="bullet-list1">
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_brokered_notification-1.3-spec-os.pdf">WS-BrokeredNotification 1.3 OASIS Standard</a>
+          <span />
+        </li>
+        <li class="bullet-list1">
+          <a href="http://docs.oasis-open.org/wsn/wsn-ws_topics-1.3-spec-os.pdf">WS-Topics 1.3 OASIS Standard</a>
+          <span />
+        </li>
+        <li class="bullet-list1">
+          <a href="../Volume2b/ITI-43.html#3.43.4.2.2">ITI TF-2b: 3.43.4.2.2</a>
+        </li>
+        <li class="bullet-list1">
+          <a href="../Volume2x/ch-22.html#Appendix V">ITI TF-2x: Appendix V</a>
+        </li>
+      </ul>
+      <h3 id="3.54.4">3.54.4 Messages</h3>
+      <img src="media/ai8zh-w242m.061.png" width="377" height="252" alt="DPublish_ID" />
+      <p class="figureTitle">Figure 3.54.4-1: Document Metadata Publish Sequence</p>
+      <h4 id="3.54.4.1">3.54.4.1 Notify Message</h4>
+      <h5 id="3.54.4.1.1">3.54.4.1.1 Trigger</h5>
+      <p>When an event occurs for which a subscription may exist, the Document Metadata Publisher will trigger a Notification message to the Document Metadata Notification Broker. Events that could trigger a notification are publication of or update to a DocumentEntry or SubmissionSet.</p>
+      <h5 id="3.54.4.1.2">3.54.4.1.2 Message Semantics</h5>
+      <p>The Document Metadata Publisher shall use a Notify message to communicate published objects to the Document Metadata Notification Broker Actor.</p>
+      <p>
+        <span>This message shall have one</span>
+        <span style="font-style:italic">&lt;NotificationMessage&gt;</span>
+        <span>element.</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2005/08/addressing http://www.w3.org/2005/08/addressing/ws-addr.xsd http://docs.oasis-open.org/wsn/b-2 http://docs.oasis-open.org/wsn/b-2.xsd urn:ihe:iti:pub-sub:2008 ../schema/IHE/XDS.b_PublishSubscribe.xsd urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ../schema/ebRS/rim.xsd"&gt;</span>
+      <p>This element SHALL have two child elements:</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-style:italic">&lt;ProducerReference&gt;</span>
+          <span>that identifies the source of the data published. This element conveys the value of the SubmissionSet.sourceId attribute. This attribute shall contain a URI, for example “urn:oid:1.2.3.4.5”.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-style:italic">&lt;Message&gt;</span>
+          <span>that identifies published objects. This element shall have a single child element</span>
+          <span style="font-style:italic">&lt;lcm:SubmitObjectsRequest&gt;</span>
+          <span>that has only one child element</span>
+          <span style="font-style:italic">&lt;rim:RegistryObjectList&gt;.</span>
+          <span>This element conveys a list of SubmissionSet, Folder, and DocumentEntry objects.</span>
+        </li>
+      </ul>
+      <p class="note">
+        <span>Note: SubmissionSet objects are constructed from</span>
+        <span style="font-style:italic">&lt;rim:RegistryObject&gt;</span>
+        <span>elements and must include the</span>
+        <span style="font-style:italic">&lt;rim:Classification&gt;</span>
+        <span>.</span>
       </p>
-      <p style="font-size:8pt">
-        <span>    &lt;s:Header&gt;</span>
+      <p>Note that there is no subscription information in the Notify message in the Publish transaction.</p>
+      <h5 id="3.54.4.1.3">3.54.4.1.3 Expected Actions</h5>
+      <p>The Notify message shall comply with the requirements in the WS-BaseNotification standard.</p>
+      <p>The Document Metadata Notification Broker shall evaluate the Publish transaction, and if there are matching subscriptions, it shall send the corresponding Notification transaction to the appropriate Document Metadata Notification Recipients.</p>
+      <h5 id="3.54.4.1.4">3.54.4.1.4 Example</h5>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:8pt">
+          <span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xmlns:a="http://www.w3.org/2005/08/addressing"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xmlns:ihe="urn:ihe:iti:pub-sub:2008"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    xsi:schemaLocation="http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2003/05/soap-envelope http://www.w3.org/2005/08/addressing http://www.w3.org/2005/08/addressing/ws-addr.xsd http://docs.oasis-open.org/wsn/b-2 http://docs.oasis-open.org/wsn/b-2.xsd urn:ihe:iti:pub-sub:2008 ../schema/IHE/XDS.b_PublishSubscribe.xsd urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ../schema/ebRS/rim.xsd"&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    &lt;s:Header&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>        &lt;a:Action&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationConsumer/Notify&lt;/a:Action&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>        &lt;a:MessageID&gt;382dcdca-8e87-9fdf-8446-48fd83bca93b&lt;/a:MessageID&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>        &lt;a:To&gt;https://NotificationBroker/xdsBpublish&lt;/a:To&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    &lt;/s:Header&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    &lt;s:Body&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>        &lt;wsnt:Notify&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>            &lt;wsnt:NotificationMessage&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                &lt;wsnt:ProducerReference&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                    &lt;a:Address&gt;urn:oid:1.2.3.4.5&lt;/a:Address&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                &lt;/wsnt:ProducerReference&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                &lt;wsnt:Message&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                    &lt;lcm:SubmitObjectsRequest&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                        &lt;rim:RegistryObjectList&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                            &lt;!-- The list of extrinsic objects --&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                            &lt;rim:ExtrinsicObject id="Document01" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                                …</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                            &lt;/rim:ExtrinsicObject&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>&lt;!-- The list of RegistryPackage objects --&gt;</span>
+          <br />
+          <span>                            &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Submission01"&gt;</span>
+          <br />
+          <span>                                &lt;rim:Classification classificationNode="urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd" classifiedObject="Submission01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification01"/&gt;</span>
+          <br />
+          <span>                            &lt;/rim:RegistryPackage&gt;</span>
+          <br />
+          <span>                            &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Folder01"&gt;</span>
+          <br />
+          <span>                                &lt;rim:Classification classificationNode="urn:uuid:d9d542f3-6cc4-48b6-8870-ea235fbc94c2" classifiedObject="Folder01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification02"/&gt;</span>
+          <br />
+          <span>                            &lt;/rim:RegistryPackage&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                        &lt;/rim:RegistryObjectList&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                    &lt;/lcm:SubmitObjectsRequest&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>                &lt;/wsnt:Message&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>            &lt;/wsnt:NotificationMessage&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>        &lt;/wsnt:Notify&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>    &lt;/s:Body&gt;</span>
+        </p>
+        <p style="font-size:8pt">
+          <span>&lt;/s:Envelope&gt;</span>
+        </p>
+      </div>
+      <h3 id="3.54.5">3.54.5 Security Considerations</h3>
+      <p>
+        <span>The risk assessment for the Document Metadata Publish transaction is described in the risk assessment spreadsheet for the Document Metadata Subscription Profile, which is available from IHE at</span>
+        <a href="http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls">http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls</a>
+        <span>. The derived mitigations are as follows:</span>
       </p>
-      <p style="font-size:8pt">
-        <span>        &lt;a:Action&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationConsumer/Notify&lt;/a:Action&gt;</span>
+      <ul>
+        <li class="bullet-list1">The Document Metadata Publisher and the Document Metadata Notification Broker shall be grouped with a Secure Node or Secure Application in the Audit Trail and Node Authentication (ATNA) Profile.</li>
+        <li class="bullet-list1">The use of encrypted TLS is recommended when the transmission is not otherwise secured (e.g., transmission over a secure network)</li>
+      </ul>
+      <h4 id="3.54.5.1">3.54.5.1 Audit Record Considerations</h4>
+      <p>The Document Metadata Publish Transaction is an Export event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The actors involved in the transaction shall create audit data in conformance with DICOM Part 15 “Data Export”/”Data Import”, with the following exceptions.</p>
+      <h5 id="3.54.5.1.1">3.54.5.1.1 Document Metadata Publisher Audit Message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt">Field Name</td>
+          <td style="width:25.2pt">Opt</td>
+          <td style="width:233.1pt">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“R” (Read)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Document Metadata Publisher) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Metadata Notification Broker) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Metadata Publisher) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Patient (0..1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">DocumentEntry/SubmissionSet (1..n)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Human Requestor (if known)</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:66.6pt">
+            <p>Patient</p>
+            <p>(if-known)</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Person)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” (Patient)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:78.95pt">
+            <p>DocumentEntry</p>
+            <p>SubmissionSet</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:128.7pt">ParticipantObjectTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:211.75pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:211.75pt">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:211.75pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:211.75pt">
+            <p>The Document Metadata Publisher shall include one of the following values, depending on the specific object in the message:</p>
+            <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
+            <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
+            <p>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectSensitivity</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:211.75pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:211.75pt">The value of the object's EntryUUID attribute.</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:211.75pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectQuery</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:211.75pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectDetail</td>
+          <td style="width:20.7pt">C</td>
+          <td style="width:211.75pt">
+            <p>This element is required, if known:</p>
+            <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
+            <p>Value: value of the homeCommunityId</p>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <a name="_Toc363803082"> </a>
       </p>
-      <p style="font-size:8pt">
-        <span>        &lt;a:MessageID&gt;382dcdca-8e87-9fdf-8446-48fd83bca93b&lt;/a:MessageID&gt;</span>
+      <h5 id="3.54.5.1.2">3.54.5.1.2 Document Metadata Notification Broker audit message:</h5>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:62.1pt">
+            <div />
+          </td>
+          <td style="width:119.7pt">Field Name</td>
+          <td style="width:25.2pt">Opt</td>
+          <td style="width:233.1pt">Value Constraints</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="width:62.1pt">
+            <p>Event</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">EventIdentification</span>
+            </p>
+          </td>
+          <td style="width:119.7pt">EventID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventActionCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">“C” (Create)</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventDateTime</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventOutcomeIndicator</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:119.7pt">EventTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:233.1pt">EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Source (Document Metadata Publisher) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Destination (Document Metadata Notification Broker) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">Audit Source (Document Metadata Notification Broker) (1)</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="width:472.5pt">DocumentEntry/SubmissionSet (1..n)</td>
+        </tr>
+      </table>
+      <p>Where:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="7" style="width:66.6pt">
+            <p>Destination</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ActiveParticipant</span>
+            </p>
+          </td>
+          <td style="width:115.2pt">UserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">SOAP endpoint URI</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">AlternativeUserID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserName</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">UserIsRequestor</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">RoleIDCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
+        </tr>
+        <tr>
+          <td style="width:115.2pt">NetworkAccessPointID</td>
+          <td style="width:20.7pt">M</td>
+          <td style="width:237.6pt">The machine name or IP address</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="3" style="width:75.6pt">
+            <p>Audit Source</p>
+            <p>
+              <span style="font-weight:bold">AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">AuditSourceIdentification</span>
+            </p>
+          </td>
+          <td style="width:106.2pt">AuditSourceID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditEnterpriseSiteID</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:106.2pt">AuditSourceTypeCode</td>
+          <td style="width:20.7pt">U</td>
+          <td style="width:237.6pt">not specialized</td>
+        </tr>
+      </table>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="9" style="width:78.95pt">
+            <p>DocumentEntry</p>
+            <p>SubmissionSet</p>
+            <p>
+              <span style="font-weight:bold">(AuditMessage/</span>
+              <br />
+              <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+            </p>
+          </td>
+          <td style="width:128.7pt">ParticipantObjectTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:207.25pt">“2” (System)</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectTypeCodeRole</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:207.25pt">“3” (report)</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectDataLifeCycle</td>
+          <td style="width:25.2pt">U</td>
+          <td style="width:207.25pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectIDTypeCode</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:207.25pt">
+            <p>The Document Metadata Notification Broker shall include one of the following values, depending on the specific object in the message:</p>
+            <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
+            <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
+            <p>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectSensitivity</td>
+          <td style="width:25.2pt">U</td>
+          <td style="width:207.25pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectID</td>
+          <td style="width:25.2pt">M</td>
+          <td style="width:207.25pt">The value of the object's EntryUUID attribute.</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectName</td>
+          <td style="width:25.2pt">U</td>
+          <td style="width:207.25pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectQuery</td>
+          <td style="width:25.2pt">U</td>
+          <td style="width:207.25pt">not specialized</td>
+        </tr>
+        <tr>
+          <td style="width:128.7pt">ParticipantObjectDetail</td>
+          <td style="width:25.2pt">C</td>
+          <td style="width:207.25pt">
+            <p>This element is required, if known:</p>
+            <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
+            <p>Value: value of the homeCommunityId</p>
+          </td>
+        </tr>
+      </table>
+      <p> </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
       </p>
-      <p style="font-size:8pt">
-        <span>        &lt;a:To&gt;https://NotificationBroker/xdsBpublish&lt;/a:To&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>    &lt;/s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>    &lt;s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>        &lt;wsnt:Notify&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>            &lt;wsnt:NotificationMessage&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                &lt;wsnt:ProducerReference&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                    &lt;a:Address&gt;urn:oid:1.2.3.4.5&lt;/a:Address&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                &lt;/wsnt:ProducerReference&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                &lt;wsnt:Message&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                    &lt;lcm:SubmitObjectsRequest&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                        &lt;rim:RegistryObjectList&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                            &lt;!-- The list of extrinsic objects --&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                            &lt;rim:ExtrinsicObject id="Document01" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                                …</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                            &lt;/rim:ExtrinsicObject&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>&lt;!-- The list of RegistryPackage objects --&gt;</span>
-        <br />
-        <span>                            &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Submission01"&gt;</span>
-        <br />
-        <span>                                &lt;rim:Classification classificationNode="urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd" classifiedObject="Submission01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification01"/&gt;</span>
-        <br />
-        <span>                            &lt;/rim:RegistryPackage&gt;</span>
-        <br />
-        <span>                            &lt;rim:RegistryPackage objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage" id="Folder01"&gt;</span>
-        <br />
-        <span>                                &lt;rim:Classification classificationNode="urn:uuid:d9d542f3-6cc4-48b6-8870-ea235fbc94c2" classifiedObject="Folder01" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" id="classification02"/&gt;</span>
-        <br />
-        <span>                            &lt;/rim:RegistryPackage&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                        &lt;/rim:RegistryObjectList&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                    &lt;/lcm:SubmitObjectsRequest&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>                &lt;/wsnt:Message&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>            &lt;/wsnt:NotificationMessage&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>        &lt;/wsnt:Notify&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>    &lt;/s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span>&lt;/s:Envelope&gt;</span>
-      </p>
-    </div>
-    <h3 id="3.54.5">3.54.5 Security Considerations</h3>
-    <p>
-      <span>The risk assessment for the Document Metadata Publish transaction is described in the risk assessment spreadsheet for the Document Metadata Subscription Profile, which is available from IHE at</span>
-      <a href="http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls">http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls</a>
-      <span>. The derived mitigations are as follows:</span>
-    </p>
-    <ul>
-      <li class="bullet-list1">The Document Metadata Publisher and the Document Metadata Notification Broker shall be grouped with a Secure Node or Secure Application in the Audit Trail and Node Authentication (ATNA) Profile.</li>
-      <li class="bullet-list1">The use of encrypted TLS is recommended when the transmission is not otherwise secured (e.g., transmission over a secure network)</li>
-    </ul>
-    <h4 id="3.54.5.1">3.54.5.1 Audit Record Considerations</h4>
-    <p>The Document Metadata Publish Transaction is an Export event, as defined in ITI TF-2a: Table 3.20.4.1.1.1-1. The actors involved in the transaction shall create audit data in conformance with DICOM Part 15 “Data Export”/”Data Import”, with the following exceptions.</p>
-    <h5 id="3.54.5.1.1">3.54.5.1.1 Document Metadata Publisher Audit Message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt">Field Name</td>
-        <td style="width:25.2pt">Opt</td>
-        <td style="width:233.1pt">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110106, DCM, “Export”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“R” (Read)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Document Metadata Publisher) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Human Requestor (0..n)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Metadata Notification Broker) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Metadata Publisher) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Patient (0..1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">DocumentEntry/SubmissionSet (1..n)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Human Requestor (if known)</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">Identity of the human that initiated the transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">Access Control role(s) the user holds that allows this transaction.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:66.6pt">
-          <p>Patient</p>
-          <p>(if-known)</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Person)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” (Patient)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The patient ID in HL7 CX format.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:78.95pt">
-          <p>DocumentEntry</p>
-          <p>SubmissionSet</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:128.7pt">ParticipantObjectTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:211.75pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:211.75pt">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:211.75pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:211.75pt">
-          <p>The Document Metadata Publisher shall include one of the following values, depending on the specific object in the message:</p>
-          <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
-          <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
-          <p>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectSensitivity</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:211.75pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:211.75pt">The value of the object's EntryUUID attribute.</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:211.75pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectQuery</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:211.75pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectDetail</td>
-        <td style="width:20.7pt">C</td>
-        <td style="width:211.75pt">
-          <p>This element is required, if known:</p>
-          <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
-          <p>Value: value of the homeCommunityId</p>
-        </td>
-      </tr>
-    </table>
-    <p>
-      <a name="_Toc363803082"> </a>
-    </p>
-    <h5 id="3.54.5.1.2">3.54.5.1.2 Document Metadata Notification Broker audit message:</h5>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td style="width:62.1pt">
-          <div />
-        </td>
-        <td style="width:119.7pt">Field Name</td>
-        <td style="width:25.2pt">Opt</td>
-        <td style="width:233.1pt">Value Constraints</td>
-      </tr>
-      <tr>
-        <td rowspan="5" style="width:62.1pt">
-          <p>Event</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">EventIdentification</span>
-          </p>
-        </td>
-        <td style="width:119.7pt">EventID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(110107, DCM, “Import”)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventActionCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">“C” (Create)</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventDateTime</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventOutcomeIndicator</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:119.7pt">EventTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:233.1pt">EV(“ITI-54”, “IHE Transactions”, “Document Metadata Publish”)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Source (Document Metadata Publisher) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Destination (Document Metadata Notification Broker) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">Audit Source (Document Metadata Notification Broker) (1)</td>
-      </tr>
-      <tr>
-        <td colspan="4" style="width:472.5pt">DocumentEntry/SubmissionSet (1..n)</td>
-      </tr>
-    </table>
-    <p>Where:</p>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110153, DCM, “Source”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="7" style="width:66.6pt">
-          <p>Destination</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ActiveParticipant</span>
-          </p>
-        </td>
-        <td style="width:115.2pt">UserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">SOAP endpoint URI</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">AlternativeUserID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">the process ID as used within the local operating system in the local system logs.</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserName</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">UserIsRequestor</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">RoleIDCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">EV(110152, DCM, “Destination”)</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointTypeCode</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">“1” for machine (DNS) name, “2” for IP address</td>
-      </tr>
-      <tr>
-        <td style="width:115.2pt">NetworkAccessPointID</td>
-        <td style="width:20.7pt">M</td>
-        <td style="width:237.6pt">The machine name or IP address</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="3" style="width:75.6pt">
-          <p>Audit Source</p>
-          <p>
-            <span style="font-weight:bold">AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">AuditSourceIdentification</span>
-          </p>
-        </td>
-        <td style="width:106.2pt">AuditSourceID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditEnterpriseSiteID</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:106.2pt">AuditSourceTypeCode</td>
-        <td style="width:20.7pt">U</td>
-        <td style="width:237.6pt">not specialized</td>
-      </tr>
-    </table>
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="9" style="width:78.95pt">
-          <p>DocumentEntry</p>
-          <p>SubmissionSet</p>
-          <p>
-            <span style="font-weight:bold">(AuditMessage/</span>
-            <br />
-            <span style="font-weight:bold">ParticipantObjectIdentification)</span>
-          </p>
-        </td>
-        <td style="width:128.7pt">ParticipantObjectTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:207.25pt">“2” (System)</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectTypeCodeRole</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:207.25pt">“3” (report)</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectDataLifeCycle</td>
-        <td style="width:25.2pt">U</td>
-        <td style="width:207.25pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectIDTypeCode</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:207.25pt">
-          <p>The Document Metadata Notification Broker shall include one of the following values, depending on the specific object in the message:</p>
-          <p>EV("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1”, “IHE XDS Metadata”, “document entry object type”)</p>
-          <p>EV(“urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248”, “IHE XDS Metadata”, “on-demand document entry object type”)</p>
-          <p>EV(urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd”, “IHE XDS Metadata”, ”submission set classification node”)</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectSensitivity</td>
-        <td style="width:25.2pt">U</td>
-        <td style="width:207.25pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectID</td>
-        <td style="width:25.2pt">M</td>
-        <td style="width:207.25pt">The value of the object's EntryUUID attribute.</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectName</td>
-        <td style="width:25.2pt">U</td>
-        <td style="width:207.25pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectQuery</td>
-        <td style="width:25.2pt">U</td>
-        <td style="width:207.25pt">not specialized</td>
-      </tr>
-      <tr>
-        <td style="width:128.7pt">ParticipantObjectDetail</td>
-        <td style="width:25.2pt">C</td>
-        <td style="width:207.25pt">
-          <p>This element is required, if known:</p>
-          <p>Type: “urn:ihe:iti:xca:2010:homeCommunityId” (literal string)</p>
-          <p>Value: value of the homeCommunityId</p>
-        </td>
-      </tr>
-    </table>
-    <p> </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

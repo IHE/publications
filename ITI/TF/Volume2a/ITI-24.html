@@ -5,1256 +5,1264 @@
     <link xmlns="" rel="stylesheet" href="../css/styles.css" />
   </head>
   <body xmlns="">
-    <p>
-      <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
-    </p>
-    <p>IHE IT Infrastructure (ITI)</p>
-    <p>Technical Framework</p>
-    <p>Volume 2</p>
-    <p>Revision 17.0 – Final Text</p>
-    <p>
-      <hr />
-    </p>
-    <h2 id="3.24">3.24 Query Personnel White Pages [ITI-24]</h2>
-    <p>This section corresponds to transaction [ITI-24] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-24] is used by the Personnel White Pages Consumer and the Personnel White Pages Directory Actors.</p>
-    <h3 id="3.24.1">3.24.1 Scope</h3>
-    <p>This transaction is used to retrieve information from the Personnel White Pages directory.</p>
-    <p>The RFC3377 “Lightweight Directory Access Protocol (v3): Technical Specification” specifies a mechanism for making queries of a database corresponding to an LDAP schema. The LDAP client can compose requests in the LDAP query language, and the LDAP server will respond with the results for a single request.</p>
-    <h3 id="3.24.2">3.24.2 Use Case Roles</h3>
-    <img src="media/amdr0-jc4sx.043.png" width="365" height="125" alt="" />
-    <p>Actor: Personnel White Pages Consumer</p>
-    <p>Role: Requests information about a human workforce member(s)</p>
-    <p>Actor: Personnel White Pages Directory</p>
-    <p>Role: Provides information about one or more human workforce member</p>
-    <h3 id="3.24.3">3.24.3 Referenced Standard</h3>
-    <p>
-      <span style="font-weight:bold">IETF</span>
-      <span>:</span>
-      <span style="width:1.66pt;display:inline-block"> </span>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>RFC2181 - Clarifications to the DNS Specification</span>
-    </p>
-    <p>RFC1766 - Tags for the Identification of Languages</p>
-    <p>RFC2251 - Lightweight Directory Access Protocol (v3)</p>
-    <p>RFC2252 - Lightweight Directory Access Protocol (v3): Attribute Syntax Definitions</p>
-    <p>RFC2253 - Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names</p>
-    <p>RFC2256 - A Summary of the X.500(96) User Schema for use with LDAPv3</p>
-    <p>RFC2798 - Definition of the inetOrgPerson LDAP Object Class</p>
-    <p>RFC2829 - Authentication Methods for LDAP</p>
-    <p>RFC2830 - LDAPv3: Extension for Transport Layer Security</p>
-    <p>RFC3377 - Lightweight Directory Access Protocol (v3): Technical Specification</p>
-    <p>
-      <span style="font-weight:bold">ISO</span>
-      <span>:</span>
-      <span style="width:11.99pt;display:inline-block"> </span>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>ISO/TS 17090 directory standard for healthcare identity management</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">CRU</span>
-      <span>:</span>
-      <span style="width:42.67pt;text-indent:0pt;display:inline-block"> </span>
-      <span>Projet de schémas d’annuaires et de schémas de registres de resources numériques interopérables pour les administrations Document technique – v1, novembre 2002</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">ITU-T</span>
-      <span>:</span>
-      <span style="width:35.33pt;display:inline-block"> </span>
-      <span>E.123: Notation for national and international telephone numbers</span>
-    </p>
-    <p>
-      <span style="font-weight:bold">HL7</span>
-      <span>:</span>
-      <span style="width:9.33pt;display:inline-block"> </span>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>HL7 Version 2.5, Chapter 2 – Control</span>
-    </p>
-    <h3 id="3.24.4">3.24.4 Messages</h3>
-    <img src="media/amdr0-jc4sx.044.png" width="528" height="241" alt="" />
-    <p class="figureTitle">Figure 3.24.4-1: Interaction Diagram</p>
-    <h3 id="3.24.5">3.24.5 LDAP Query/Response</h3>
-    <p>The Personnel White Pages Consumer may make a wide variety of queries and cascaded queries using LDAP. The Personnel White Pages Consumer and Personnel White Pages Directory shall support the data model described here.</p>
-    <p>A commonly supported configuration type has multiple LDAP servers providing access to a common replicated LDAP database. This permits LDAP servers to be located where appropriate for best performance and fault tolerance. The replication rules chosen for the LDAP servers affect the visible data consistency. LDAP permits inconsistent views of the database during updates and replications. This inconsistency may result in a consumer receiving the person’s previous demographics or contact information. This should not be a problem for our use-cases as none of them are life critical.</p>
-    <h4 id="3.24.5.1">3.24.5.1 Trigger Events</h4>
-    <p>Personnel White Pages Consumer requires some Personnel White Pages information on one or more human workforce members.</p>
-    <h4 id="3.24.5.2">3.24.5.2 Message Semantics</h4>
-    <p>The transaction uses standard LDAP v3 query/response mechanisms.</p>
-    <h5 id="3.24.5.2.1">3.24.5.2.1 User Authentication</h5>
-    <p>Some of the attributes to be retrieved using this transaction may be considered sensitive to the healthcare personnel. It is the responsibility of the Personnel White Pages Directory to enforce these protections. To protect records and/or attributes, the Personnel White Pages Consumer may be called upon to provide user credentials.</p>
-    <p>Anonymous authentication shall be implemented on Personnel White Pages Directory and is optional for Personnel White Pages Consumer. Anonymous authentication shall be implemented as described in LDAP v3 Section 4.2 Bind Operation.</p>
-    <p>Simple Authentication shall be implemented on the Personnel White Pages Directory and is optional for the Personnel White Pages Consumer. Simple authentication shall be implemented as described in LDAP v3 Section 4.2 Bind Operation. This authentication type is not recommended for use over networks that are not otherwise secured as the username and password are transferred in the clear. The use of SSL-Simple Authentication is a better choice.</p>
-    <p>SSL-Simple Authentication shall be implemented on the Personnel White Pages Directory and is optional for the Personnel White Pages Consumer. SSL-Simple Authentication is not defined in any normative text, but is consistently implemented and often referred to as “ldaps”. The PWP Consumer shall connect to port 636 using SSL against the PWP Directory Certificate. The LDAP v3 conversation then continues with Simple Authentication as defined in LDAP v3 Section 4.2 Bind Operation.</p>
-    <p>PWP specifies read operations on personnel demographics. The use of bi-directional TLS authentication, such as that defined in ATNA Profile, is not necessary as this profile does not provide access to Protected Health Information (PHI). The use of SSL to cover the authentication and query process is sufficient in this Profile.</p>
-    <h5 id="3.24.5.2.2">3.24.5.2.2 Base DN Discovery</h5>
-    <p>The Personnel White Pages represents a branch within the “LDAP” directory. Branches in LDAP are defined by a “Base DN”. The list of Base DNs that are provided by a LDAP directory can be found by doing a LDAP Query with a NULL (i.e., “”) Base DN, and ObjectClass=”DN”. The Personnel White Pages Directory shall contain a person object with the cn=”IHE-ITI-PWP”. The Personnel White Pages Consumer may thus search through the list of Base DNs that the LDAP Directory contains for this cn object. The Personnel White Pages Directory identified in this way shall contain person/inetOrgPerson objects that conform to the Query Personnel White Pages Directory Transaction.</p>
-    <p>Note: The first LDAP server that yields a result on the search for IHE-ITI-PWP can be used. There is no need to search further.</p>
-    <h5 id="3.24.5.2.3">3.24.5.2.3 Query Encoding</h5>
-    <p>Note that the LDAP transactions utilize UTF-8 encoding unless otherwise noted. The schema shown here is the commonly used schema found in X.500 Schema for LDAP and inetOrgPerson. Extensions beyond this schema are not recommended. The base schema must be preserved to ensure interoperability. Schema extensions shall not introduce attributes that duplicate the meaning of any attribute specified in this Profile.</p>
-    <p>These attributes are multi-valued unless explicitly defined as single-valued. At this time there is no universally implemented method to distinguish the purpose for any of the instances in a multi-valued attribute. The IHE recommends that the first entry contain the preferred value, and that applications use the first entry whenever a single value must be selected.</p>
-    <p>The following table shows the attributes found in Person (OrganizationalPerson and ResidentialPerson) as defined in RFC2256 and inetOrgPerson as defined in RFC2798. The first three columns contain the definitions from the standards for reference. Within the table the fourth column is the IHE recommendation for use with further discussion found in the fifth column.</p>
-    <p>KEY for IHE REQ Column:</p>
-    <p>R – The Personnel White Pages Directory shall contain valid values for these attributes. These values are critical to Healthcare workflow.</p>
-    <p>R2 – The Personnel White Pages Directory shall contain valid values for these attributes if the value is available. These attributes are sufficiently useful that the provider should utilize it in the defined way. Personnel White Pages Consumers should expect that the information in these attributes are valid, but shall be robust to empty values.</p>
-    <p>O – The Personnel White Paged Directory may contain values for these optional attributes. The IHE has identified sufficiently useful purpose or defined an interoperable way to use the value. The IHE may profile these values in future profiles.</p>
-    <p>D – Although these attributes are defined in inetOrgPerson/Person, their use is discouraged. This is typically due to the attribute being obsolete, poorly implemented, or not available for query.</p>
-    <p style="font-size:11pt">
-      <br style="page-break-before:always; clear:both" />
-      <span style="font-weight:bold">Table 3.24.5-1: Attributes found in Person (OrganizationalPerson and ResidentialPerson)</span>
-    </p>
-    <table cellspacing="0" cellpadding="0">
-      <thead>
-        <tr>
-          <td style="width:98.95pt" class="tableHeader">Attribute Name</td>
-          <td style="width:47.7pt" class="tableHeader">Source</td>
-          <td style="width:175.7pt;background-color:#e6e6e6">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
-                <span style="font-weight:bold">Definition</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
-                <span style="font-weight:bold">Standard-defined Optionality</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
-                <span style="font-weight:bold">Description</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt" class="tableHeader">IHE REQ</td>
-          <td style="width:95.2pt" class="tableHeader">IHE Comment</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width:98.95pt">aliasedObjectName</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Alias Object Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The aliasedObjectName attribute is used by the directory service if the entry containing this attribute is an alias.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">audio</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Audio</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Not well defined</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">The audio format defined is obsolete.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">businessCategory</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Business Category</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>describes the kind of business performed by an organization</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">Not well defined.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">
-            <p>
-              <a name="_Hlk519762904">
-                <span>c</span>
-                <span>arLicense</span>
-              </a>
-            </p>
-          </td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Vehicle license or registration plate</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Used to record the values of the license or registration plate associated with an individual</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., 6ABC246)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">cn</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Common Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Required</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This is the X.500 commonName attribute, which contains a name of an object. If the user is a person, it is typically the person's full name.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Barbara Jensen)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R</td>
-          <td style="width:95.2pt">See Section 3.24.5.2.3.1 Use of language tag and HL7 Name Data Type.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">departmentNumber</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Department Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Identifies a department within an organization. This can be numeric or alphanumeric</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Radiology)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">description</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Description</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains a human-readable description of the object.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">destinationIndicator</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Destination Indicator</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute is used for the telegram service</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">Originally defined as part of telegram addressing.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">displayName</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Display Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Singular</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>When displaying a person’s name, especially within a one-line summary list, it is useful to be able to identify a name to be used. Since other attribute types such as 'cn' are multivalued, an additional attribute type is needed. Display name is defined for this purpose.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Babs Jensen)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">employeeNumber</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Employee Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Singular</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Numeric or alphanumeric identifier assigned to a person, typically based on order of hire or association with an organization.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., 42)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">employeeType</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Employee Type</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Used to identify the employer to employee relationship. Typical values used will be "Contractor", "Employee", "Intern", "Temp", "External", and "Unknown" but any value may be used.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., External)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">facsimileTelephoneNumber</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>FAX Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A value of this attribute is a telephone number for a facsimile terminal (and, optionally, its parameters).</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., +1 408 555 1992)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt">See Section 3.24.5.2.3.3 Phone Numbers.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">
-            <p>
-              <a name="_Hlk519762277">givenName</a>
-            </p>
-          </td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The givenName attribute is used to hold the part of a person's name which is not their surname nor middle name.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Barbara)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">homePhone</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Home Phone</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., +1 408 555 1862)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">homePostalAddress</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Home Postal Address</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains a home address used by a Postal Service to perform services for the object.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">initials</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Initials</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The initials attribute contains the initials of some or all of an individual’s names, but not the surname(s).</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., BJJ)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">internationaliSDNNumber</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>International ISDN Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">jpegPhoto</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>JPEG Photograph</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Used to store one or more images of a person using the JPEG File Interchange Format</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">l</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Locality Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This is the X.500 localityName attribute, which contains the name of a locality, such as a city, county or other geographic region.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">labeledURI</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>URI</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., http://www.ihe.net IHE Home)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">mail</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>E-Mail Address</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User’s e-mail address in RFC822 compliant form</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., bjensen@siroe.com)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">manager</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Manager</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Distinguished Name of the Manager</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt">In Healthcare the manager of an individual is not clear. The manager attribute does not include enough information to determine the type of manager indicated.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">mobile</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Mobile/cellular phone number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., +1 408 555 1941)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt">
-            <p>This attribute should contain only business use mobile phone numbers.</p>
-            <p>See Section 3.24.5.2.3.3 Phone Numbers.</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">o</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Organization</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Highest-level organization name, e.g., a company name, to which ou attribute entries belong.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Saint-ihe-hospital.local)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">objectClass</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Object Class</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Required</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The values of the objectClass attribute describe the kind of object which an entry represents. The objectClass attribute is present in every entry, with at least two values. One of the values is either "top" or "alias".</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., top, person, organizationalPerson, inetOrgPerson)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">ou</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Organizational Unit Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">This is the X.500 organizationalUnitName attribute, which contains the name of an organizational unit.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Radiologists)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">pager</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Pager phone number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt">
-            <p>This attribute should contain only business use mobile phone numbers.</p>
-            <p>See Section 3.24.5.2.3.3 Phone Numbers.</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">photo</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Photo</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Photo attribute values are encoded in G3 fax format with an ASN.1 wrapper.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">The format is too cumbersome. See jpegPhoto.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">physicalDeliveryOfficeName</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Post Office Name</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains the name that a Postal Service uses to identify a post office.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">postalAddress</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Postal Address</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains an address used by a Postal Service to perform services for the object.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">postalCode</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Postal Code</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains a code used by a Postal Service to identify a postal service zone, such as a US ZIP code</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">postOfficeBox</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Post Office Box</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains the number that a Postal Service uses when a customer arranges to receive mail at a box on premises of the Postal Service.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">preferredDeliveryMethod</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Delivery Method</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Singular</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
-                <span style="font-size:9pt">Coded value (delivery-value)</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., any, physical, telephone)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">preferredLanguage</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Preferred Language</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Singular</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Preferred written or spoken language for a person. Values for this attribute type MUST conform to the definition of the Accept-Language header field defined in [RFC2068] with one exception: the sequence "Accept-Language" ":" should be omitted.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The following example indicates that this person prefers French, prefers British English 80%, and general English 70%. (e.g., fr, en-gb;q=0.8, en;q=0.7)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">registeredAddress</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Registered Address</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A postal address suitable for reception of expedited documents, where it is necessary to have the recipient accept delivery.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">roomNumber</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Room Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">secretary</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Secretary</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Distinguished name of the secretary</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">seeAlso</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>See Also references</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Distinguished name of other interesting Objects</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">sn</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Surname</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Required</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This is the X.500 surname attribute, which contains the family name of a person</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., Jensen)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">st</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>State or Province</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This is the X.500 stateOrProvinceName attribute, which contains the full name of a state or province</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">street</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Street Address</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This is the X.500 streetAddress attribute, which contains the physical address of the object to which the entry corresponds, such as an address for package delivery.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">telephoneNumber</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Telephone number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt">See Section 3.24.5.2.3.3 Phone Numbers.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">teletexTerminalIdentifier</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Teletex Terminal Identifier</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">telexNumber</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Telex Number</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">title</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Title</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute contains the title, such as "Vice President", of a person in their organizational context. The "personalTitle" attribute would be used for a person's title independent of their job function.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., manager, product development)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">R2</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">uid</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User ID</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The user ID use for system login.</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>(e.g., bjensen)</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt">See Section 3.24.5.2.3.2 Use of uid.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">userCertificate</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User Identity Certificate</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>This attribute is to be stored and requested in the binary form, as 'userCertificate;binary'.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">The PKCS12 format includes the private key and shall not be publicly available.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">userPassword</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User password</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Passwords are stored using an Octet String syntax and are not encrypted. Transfer of cleartext passwords are strongly discouraged where the underlying transport service cannot guarantee confidentiality and may result in disclosure of the password to unauthorized parties.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">Generally Not Accessible.</td>
-        </tr>
-        <tr style="height:49.9pt">
-          <td style="width:98.95pt">userPKCS12</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User PKCS #12</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>PKCS #12 [PKCS12] provides a format for exchange of personal identity information. When such information is stored in a directory service, the userPKCS12 attribute should be used. This attribute is to be stored and requested in binary form, as 'userPKCS12;binary'. The attribute values are PFX PDUs stored as binary data.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt">The PKCS12 format includes the private key and shall not be publicly available.</td>
-        </tr>
-        <tr>
-          <td style="width:98.95pt">userSMIMECertificate</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>User S/MIME Certificate</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>A PKCS#7 [RFC2315] SignedData, where the content that is signed is ignored by consumers of userSMIMECertificate values. It is recommended that values have a `contentType' of data with an absent `content' field. Values of this attribute contain a person's entire certificate chain and an smimeCapabilities field [RFC2633] that at a minimum describes their SMIME algorithm capabilities. Values for this attribute are to be stored and requested in binary form, as 'userSMIMECertificate;binary'. If available, this attribute is preferred over the userCertificate attribute for S/MIME applications.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">x121Address</td>
-          <td style="width:47.7pt">RFC2256</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Address for X.121</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">D</td>
-          <td style="width:95.2pt" />
-        </tr>
-        <tr>
-          <td style="width:98.95pt">x500uniqueIdentifier</td>
-          <td style="width:47.7pt">RFC2798</td>
-          <td style="width:175.7pt">
-            <ul type="disc">
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Unique identifier</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>Optional</span>
-              </li>
-              <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
-                <span>The x500UniqueIdentifier attribute is used to distinguish between objects when a distinguished name has been reused. This is a different attribute type from both the "uid" and "uniqueIdentifier" types.</span>
-              </li>
-            </ul>
-          </td>
-          <td style="width:32.2pt">O</td>
-          <td style="width:95.2pt" />
-        </tr>
-      </tbody>
-    </table>
-    <h6 id="3.24.5.2.3.1">3.24.5.2.3.1 Use of language tag and HL7 Name Data Type (XCN)</h6>
-    <p>Many people have different variations of their name to be used depending on the context and language. This is easily supported in LDAP through the use of the language tag as documented in RFC1766. This language tag can be applied to any attribute but is most useful on names.</p>
-    <p>HL7 has a well-defined format for encoding names (HL7 XCN). LDAP ‘name’ attributes marked with a language tag of “lang-x-ihe” shall be encoded using the HL7 XCN Data Type. UTF-8 shall be used for any characters outside ASCII.</p>
-    <p>Example use of the language tag:</p>
-    <p>
-      <span style="font-size:10pt">objectclass: Top</span>
-      <br />
-      <span style="font-size:10pt">objectclass: person</span>
-      <br />
-      <span style="font-size:10pt">objectclass: organizationalPerson</span>
-      <br />
-      <span style="font-size:10pt">objectclass: inetOrgPerson</span>
-      <br />
-      <span style="font-size:10pt">dn: cn=Wang XiaoDong, ou=Radiologists, o=Saint-ihe-hospital.local</span>
-      <br />
-      <span style="font-size:10pt">cn: Wang XiaoDong</span>
-      <br />
-      <span style="font-size:10pt">cn: XiaoDong, Wang, Florida Department of Health:123456789</span>
-      <br />
-      <span style="font-size:10pt">cn;lang-cn: 王 小東</span>
-      <br />
-      <span style="font-size:10pt">cn;lang-x-ihe: ^Wang^XiaoDong^^^^^^^^^^^^A~^王^小東^^^^^^^^^^^^I</span>
-      <br />
-      <span style="font-size:10pt">sn: Wang</span>
-      <br />
-      <span style="font-size:10pt">givenname: XiaoDong</span>
-      <br />
-      <span style="font-size:10pt">givenname;lang-cn: 小東</span>
-      <br />
-      <span style="font-size:10pt">sn;lang-cn: 王</span>
-      <br />
-      <span style="font-size:10pt">ou: People</span>
-      <br />
-      <span style="font-size:10pt">uid: XiaoDong</span>
-      <br />
-      <span style="font-size:10pt">title: Sample HL7 person</span>
-      <br />
-      <span style="font-size:10pt">mail:</span>
-      <span>Wang.XiaoDong@foo.bar.com</span>
-      <br />
-      <span style="font-size:10pt">telephonenumber: 555-555-5678</span>
-    </p>
-    <h6 id="3.24.5.2.3.2">3.24.5.2.3.2 Use of uid</h6>
-    <p>The uid attribute is a multi-valued attribute that is intended to be used for User ID. It is likely that one of the values for uid will be the enterprise User ID. Enterprises that implement the PWP Profile shall implement the following values for the uid attribute:</p>
-    <ol>
-      <li class="numbered-list1">If an enterprise has implemented both IHE ITI EUA and PWP Profiles, one of the uid attributes shall contain the IHE ITI EUA user identity in &lt;user&gt;@&lt;realm&gt; format.</li>
-    </ol>
-    <ol start="2">
-      <li class="numbered-list1">If an enterprise has implemented a UPIN, one of the uid attributes shall contain the UPIN value in the format &lt;UPIN&gt;@UPIN. Where a UPIN is the Universal Physician Identification Number as assigned by the assigning authority in which the facility operates (e.g., CMS in the USA).</li>
-    </ol>
-    <h6 id="3.24.5.2.3.3">3.24.5.2.3.3 Phone Numbers</h6>
-    <p>Phone numbers shall be represented in the PWP Directory using E.123 notation. E.123 is a notation for national and international telephone numbers. Recommendation E.123 defines a standard way to write telephone numbers, e-mail addresses, and web addresses. It recommends the following formats (when dialing the area code is optional for local calling):</p>
-    <p>Telephone number:</p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>National notation</span>
-      <span style="width:24.35pt;display:inline-block"> </span>
-      <span>(042) 123 4567</span>
-    </p>
-    <p>
-      <span style="width:36pt;display:inline-block"> </span>
-      <span>International notation</span>
-      <span style="width:4.37pt;display:inline-block"> </span>
-      <span>+31 42 123 4567</span>
-    </p>
-    <p>E.123 also recommends that a hypen (-), space ( ), or period (.) be used to visually separate groups of numbers. The parentheses are used to indicate digits that are sometimes not dialed. A slash (/) is used to indicate alternate numbers. This information is important if you want to make sure people know how to dial a phone number in a specific country.</p>
-    <p>The use of National notation and International notation will be a local PWP Directory policy. PWP Consumers shall expect to receive both notations.</p>
-    <h5 id="3.24.5.2.4">3.24.5.2.4 Expected Actions</h5>
-    <p>The Personnel White Pages Directory shall provide the appropriate response to the indicated query given LDAP query rules, local access control policy, and the current information it the directory.</p>
-    <p>Note: Any attribute is valid to query on, the results of the query may be quick or may take a long time to complete. Each Personnel White Pages Directory will be optimized differently based on architecture and configuration. We expect that the following attributes will be query keys more often than others (cn, displayname, objectclass, sn, uid, givenName, initials, mail, o, ou, and employeeNumber).</p>
-    <p>Directory shall support Anonymous, Simple, and SSL-Simple Authentications.</p>
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h2 id="3.24">3.24 Query Personnel White Pages [ITI-24]</h2>
+      <p>This section corresponds to transaction [ITI-24] of the IHE IT Infrastructure Technical Framework. Transaction [ITI-24] is used by the Personnel White Pages Consumer and the Personnel White Pages Directory Actors.</p>
+      <h3 id="3.24.1">3.24.1 Scope</h3>
+      <p>This transaction is used to retrieve information from the Personnel White Pages directory.</p>
+      <p>The RFC3377 “Lightweight Directory Access Protocol (v3): Technical Specification” specifies a mechanism for making queries of a database corresponding to an LDAP schema. The LDAP client can compose requests in the LDAP query language, and the LDAP server will respond with the results for a single request.</p>
+      <h3 id="3.24.2">3.24.2 Use Case Roles</h3>
+      <img src="media/amdr0-jc4sx.043.png" width="365" height="125" alt="" />
+      <p>Actor: Personnel White Pages Consumer</p>
+      <p>Role: Requests information about a human workforce member(s)</p>
+      <p>Actor: Personnel White Pages Directory</p>
+      <p>Role: Provides information about one or more human workforce member</p>
+      <h3 id="3.24.3">3.24.3 Referenced Standard</h3>
+      <p>
+        <span style="font-weight:bold">IETF</span>
+        <span>:</span>
+        <span style="width:1.66pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>RFC2181 - Clarifications to the DNS Specification</span>
+      </p>
+      <p>RFC1766 - Tags for the Identification of Languages</p>
+      <p>RFC2251 - Lightweight Directory Access Protocol (v3)</p>
+      <p>RFC2252 - Lightweight Directory Access Protocol (v3): Attribute Syntax Definitions</p>
+      <p>RFC2253 - Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names</p>
+      <p>RFC2256 - A Summary of the X.500(96) User Schema for use with LDAPv3</p>
+      <p>RFC2798 - Definition of the inetOrgPerson LDAP Object Class</p>
+      <p>RFC2829 - Authentication Methods for LDAP</p>
+      <p>RFC2830 - LDAPv3: Extension for Transport Layer Security</p>
+      <p>RFC3377 - Lightweight Directory Access Protocol (v3): Technical Specification</p>
+      <p>
+        <span style="font-weight:bold">ISO</span>
+        <span>:</span>
+        <span style="width:11.99pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>ISO/TS 17090 directory standard for healthcare identity management</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">CRU</span>
+        <span>:</span>
+        <span style="width:42.67pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Projet de schémas d’annuaires et de schémas de registres de resources numériques interopérables pour les administrations Document technique – v1, novembre 2002</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">ITU-T</span>
+        <span>:</span>
+        <span style="width:35.33pt;display:inline-block"> </span>
+        <span>E.123: Notation for national and international telephone numbers</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">HL7</span>
+        <span>:</span>
+        <span style="width:9.33pt;display:inline-block"> </span>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>HL7 Version 2.5, Chapter 2 – Control</span>
+      </p>
+      <h3 id="3.24.4">3.24.4 Messages</h3>
+      <img src="media/amdr0-jc4sx.044.png" width="528" height="241" alt="" />
+      <p class="figureTitle">Figure 3.24.4-1: Interaction Diagram</p>
+      <h3 id="3.24.5">3.24.5 LDAP Query/Response</h3>
+      <p>The Personnel White Pages Consumer may make a wide variety of queries and cascaded queries using LDAP. The Personnel White Pages Consumer and Personnel White Pages Directory shall support the data model described here.</p>
+      <p>A commonly supported configuration type has multiple LDAP servers providing access to a common replicated LDAP database. This permits LDAP servers to be located where appropriate for best performance and fault tolerance. The replication rules chosen for the LDAP servers affect the visible data consistency. LDAP permits inconsistent views of the database during updates and replications. This inconsistency may result in a consumer receiving the person’s previous demographics or contact information. This should not be a problem for our use-cases as none of them are life critical.</p>
+      <h4 id="3.24.5.1">3.24.5.1 Trigger Events</h4>
+      <p>Personnel White Pages Consumer requires some Personnel White Pages information on one or more human workforce members.</p>
+      <h4 id="3.24.5.2">3.24.5.2 Message Semantics</h4>
+      <p>The transaction uses standard LDAP v3 query/response mechanisms.</p>
+      <h5 id="3.24.5.2.1">3.24.5.2.1 User Authentication</h5>
+      <p>Some of the attributes to be retrieved using this transaction may be considered sensitive to the healthcare personnel. It is the responsibility of the Personnel White Pages Directory to enforce these protections. To protect records and/or attributes, the Personnel White Pages Consumer may be called upon to provide user credentials.</p>
+      <p>Anonymous authentication shall be implemented on Personnel White Pages Directory and is optional for Personnel White Pages Consumer. Anonymous authentication shall be implemented as described in LDAP v3 Section 4.2 Bind Operation.</p>
+      <p>Simple Authentication shall be implemented on the Personnel White Pages Directory and is optional for the Personnel White Pages Consumer. Simple authentication shall be implemented as described in LDAP v3 Section 4.2 Bind Operation. This authentication type is not recommended for use over networks that are not otherwise secured as the username and password are transferred in the clear. The use of SSL-Simple Authentication is a better choice.</p>
+      <p>SSL-Simple Authentication shall be implemented on the Personnel White Pages Directory and is optional for the Personnel White Pages Consumer. SSL-Simple Authentication is not defined in any normative text, but is consistently implemented and often referred to as “ldaps”. The PWP Consumer shall connect to port 636 using SSL against the PWP Directory Certificate. The LDAP v3 conversation then continues with Simple Authentication as defined in LDAP v3 Section 4.2 Bind Operation.</p>
+      <p>PWP specifies read operations on personnel demographics. The use of bi-directional TLS authentication, such as that defined in ATNA Profile, is not necessary as this profile does not provide access to Protected Health Information (PHI). The use of SSL to cover the authentication and query process is sufficient in this Profile.</p>
+      <h5 id="3.24.5.2.2">3.24.5.2.2 Base DN Discovery</h5>
+      <p>The Personnel White Pages represents a branch within the “LDAP” directory. Branches in LDAP are defined by a “Base DN”. The list of Base DNs that are provided by a LDAP directory can be found by doing a LDAP Query with a NULL (i.e., “”) Base DN, and ObjectClass=”DN”. The Personnel White Pages Directory shall contain a person object with the cn=”IHE-ITI-PWP”. The Personnel White Pages Consumer may thus search through the list of Base DNs that the LDAP Directory contains for this cn object. The Personnel White Pages Directory identified in this way shall contain person/inetOrgPerson objects that conform to the Query Personnel White Pages Directory Transaction.</p>
+      <p>Note: The first LDAP server that yields a result on the search for IHE-ITI-PWP can be used. There is no need to search further.</p>
+      <h5 id="3.24.5.2.3">3.24.5.2.3 Query Encoding</h5>
+      <p>Note that the LDAP transactions utilize UTF-8 encoding unless otherwise noted. The schema shown here is the commonly used schema found in X.500 Schema for LDAP and inetOrgPerson. Extensions beyond this schema are not recommended. The base schema must be preserved to ensure interoperability. Schema extensions shall not introduce attributes that duplicate the meaning of any attribute specified in this Profile.</p>
+      <p>These attributes are multi-valued unless explicitly defined as single-valued. At this time there is no universally implemented method to distinguish the purpose for any of the instances in a multi-valued attribute. The IHE recommends that the first entry contain the preferred value, and that applications use the first entry whenever a single value must be selected.</p>
+      <p>The following table shows the attributes found in Person (OrganizationalPerson and ResidentialPerson) as defined in RFC2256 and inetOrgPerson as defined in RFC2798. The first three columns contain the definitions from the standards for reference. Within the table the fourth column is the IHE recommendation for use with further discussion found in the fifth column.</p>
+      <p>KEY for IHE REQ Column:</p>
+      <p>R – The Personnel White Pages Directory shall contain valid values for these attributes. These values are critical to Healthcare workflow.</p>
+      <p>R2 – The Personnel White Pages Directory shall contain valid values for these attributes if the value is available. These attributes are sufficiently useful that the provider should utilize it in the defined way. Personnel White Pages Consumers should expect that the information in these attributes are valid, but shall be robust to empty values.</p>
+      <p>O – The Personnel White Paged Directory may contain values for these optional attributes. The IHE has identified sufficiently useful purpose or defined an interoperable way to use the value. The IHE may profile these values in future profiles.</p>
+      <p>D – Although these attributes are defined in inetOrgPerson/Person, their use is discouraged. This is typically due to the attribute being obsolete, poorly implemented, or not available for query.</p>
+      <p style="font-size:11pt">
+        <br style="page-break-before:always; clear:both" />
+        <span style="font-weight:bold">Table 3.24.5-1: Attributes found in Person (OrganizationalPerson and ResidentialPerson)</span>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:98.95pt" class="tableHeader">Attribute Name</td>
+            <td style="width:47.7pt" class="tableHeader">Source</td>
+            <td style="width:175.7pt;background-color:#e6e6e6">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
+                  <span style="font-weight:bold">Definition</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
+                  <span style="font-weight:bold">Standard-defined Optionality</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 31.2pt;page-break-after:avoid;padding-left:8.4pt">
+                  <span style="font-weight:bold">Description</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt" class="tableHeader">IHE REQ</td>
+            <td style="width:95.2pt" class="tableHeader">IHE Comment</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:98.95pt">aliasedObjectName</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Alias Object Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The aliasedObjectName attribute is used by the directory service if the entry containing this attribute is an alias.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">audio</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Audio</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Not well defined</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">The audio format defined is obsolete.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">businessCategory</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Business Category</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>describes the kind of business performed by an organization</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">Not well defined.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">
+              <p>
+                <a name="_Hlk519762904">
+                  <span>c</span>
+                  <span>arLicense</span>
+                </a>
+              </p>
+            </td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Vehicle license or registration plate</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Used to record the values of the license or registration plate associated with an individual</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., 6ABC246)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">cn</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Common Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Required</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This is the X.500 commonName attribute, which contains a name of an object. If the user is a person, it is typically the person's full name.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Barbara Jensen)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R</td>
+            <td style="width:95.2pt">See Section 3.24.5.2.3.1 Use of language tag and HL7 Name Data Type.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">departmentNumber</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Department Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Identifies a department within an organization. This can be numeric or alphanumeric</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Radiology)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">description</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Description</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains a human-readable description of the object.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">destinationIndicator</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Destination Indicator</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute is used for the telegram service</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">Originally defined as part of telegram addressing.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">displayName</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Display Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Singular</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>When displaying a person’s name, especially within a one-line summary list, it is useful to be able to identify a name to be used. Since other attribute types such as 'cn' are multivalued, an additional attribute type is needed. Display name is defined for this purpose.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Babs Jensen)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">employeeNumber</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Employee Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Singular</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Numeric or alphanumeric identifier assigned to a person, typically based on order of hire or association with an organization.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., 42)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">employeeType</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Employee Type</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Used to identify the employer to employee relationship. Typical values used will be "Contractor", "Employee", "Intern", "Temp", "External", and "Unknown" but any value may be used.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., External)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">facsimileTelephoneNumber</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>FAX Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A value of this attribute is a telephone number for a facsimile terminal (and, optionally, its parameters).</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., +1 408 555 1992)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt">See Section 3.24.5.2.3.3 Phone Numbers.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">
+              <p>
+                <a name="_Hlk519762277">givenName</a>
+              </p>
+            </td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The givenName attribute is used to hold the part of a person's name which is not their surname nor middle name.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Barbara)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">homePhone</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Home Phone</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., +1 408 555 1862)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">homePostalAddress</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Home Postal Address</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains a home address used by a Postal Service to perform services for the object.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">initials</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Initials</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The initials attribute contains the initials of some or all of an individual’s names, but not the surname(s).</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., BJJ)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">internationaliSDNNumber</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>International ISDN Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">jpegPhoto</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>JPEG Photograph</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Used to store one or more images of a person using the JPEG File Interchange Format</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">l</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Locality Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This is the X.500 localityName attribute, which contains the name of a locality, such as a city, county or other geographic region.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">labeledURI</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>URI</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., http://www.ihe.net IHE Home)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">mail</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>E-Mail Address</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User’s e-mail address in RFC822 compliant form</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., bjensen@siroe.com)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">manager</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Manager</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Distinguished Name of the Manager</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt">In Healthcare the manager of an individual is not clear. The manager attribute does not include enough information to determine the type of manager indicated.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">mobile</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Mobile/cellular phone number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., +1 408 555 1941)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt">
+              <p>This attribute should contain only business use mobile phone numbers.</p>
+              <p>See Section 3.24.5.2.3.3 Phone Numbers.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">o</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Organization</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Highest-level organization name, e.g., a company name, to which ou attribute entries belong.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Saint-ihe-hospital.local)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">objectClass</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Object Class</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Required</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The values of the objectClass attribute describe the kind of object which an entry represents. The objectClass attribute is present in every entry, with at least two values. One of the values is either "top" or "alias".</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., top, person, organizationalPerson, inetOrgPerson)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">ou</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Organizational Unit Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">This is the X.500 organizationalUnitName attribute, which contains the name of an organizational unit.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Radiologists)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">pager</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Pager phone number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt">
+              <p>This attribute should contain only business use mobile phone numbers.</p>
+              <p>See Section 3.24.5.2.3.3 Phone Numbers.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">photo</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Photo</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Photo attribute values are encoded in G3 fax format with an ASN.1 wrapper.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">The format is too cumbersome. See jpegPhoto.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">physicalDeliveryOfficeName</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Post Office Name</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains the name that a Postal Service uses to identify a post office.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">postalAddress</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Postal Address</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains an address used by a Postal Service to perform services for the object.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">postalCode</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Postal Code</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains a code used by a Postal Service to identify a postal service zone, such as a US ZIP code</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">postOfficeBox</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Post Office Box</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains the number that a Postal Service uses when a customer arranges to receive mail at a box on premises of the Postal Service.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">preferredDeliveryMethod</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Delivery Method</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Singular</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 8.68pt;padding-left:9.32pt">
+                  <span style="font-size:9pt">Coded value (delivery-value)</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., any, physical, telephone)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">preferredLanguage</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Preferred Language</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Singular</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Preferred written or spoken language for a person. Values for this attribute type MUST conform to the definition of the Accept-Language header field defined in [RFC2068] with one exception: the sequence "Accept-Language" ":" should be omitted.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The following example indicates that this person prefers French, prefers British English 80%, and general English 70%. (e.g., fr, en-gb;q=0.8, en;q=0.7)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">registeredAddress</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Registered Address</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A postal address suitable for reception of expedited documents, where it is necessary to have the recipient accept delivery.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">roomNumber</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Room Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">secretary</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Secretary</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Distinguished name of the secretary</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">seeAlso</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>See Also references</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Distinguished name of other interesting Objects</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">sn</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Surname</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Required</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This is the X.500 surname attribute, which contains the family name of a person</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., Jensen)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">st</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>State or Province</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This is the X.500 stateOrProvinceName attribute, which contains the full name of a state or province</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">street</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Street Address</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This is the X.500 streetAddress attribute, which contains the physical address of the object to which the entry corresponds, such as an address for package delivery.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">telephoneNumber</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Telephone number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A value of this attribute is a telephone number complying with ITU Recommendation E.123.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt">See Section 3.24.5.2.3.3 Phone Numbers.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">teletexTerminalIdentifier</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Teletex Terminal Identifier</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">telexNumber</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Telex Number</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">title</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Title</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute contains the title, such as "Vice President", of a person in their organizational context. The "personalTitle" attribute would be used for a person's title independent of their job function.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., manager, product development)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">R2</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">uid</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User ID</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The user ID use for system login.</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>(e.g., bjensen)</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt">See Section 3.24.5.2.3.2 Use of uid.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">userCertificate</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User Identity Certificate</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>This attribute is to be stored and requested in the binary form, as 'userCertificate;binary'.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">The PKCS12 format includes the private key and shall not be publicly available.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">userPassword</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User password</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Passwords are stored using an Octet String syntax and are not encrypted. Transfer of cleartext passwords are strongly discouraged where the underlying transport service cannot guarantee confidentiality and may result in disclosure of the password to unauthorized parties.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">Generally Not Accessible.</td>
+          </tr>
+          <tr style="height:49.9pt">
+            <td style="width:98.95pt">userPKCS12</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User PKCS #12</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>PKCS #12 [PKCS12] provides a format for exchange of personal identity information. When such information is stored in a directory service, the userPKCS12 attribute should be used. This attribute is to be stored and requested in binary form, as 'userPKCS12;binary'. The attribute values are PFX PDUs stored as binary data.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt">The PKCS12 format includes the private key and shall not be publicly available.</td>
+          </tr>
+          <tr>
+            <td style="width:98.95pt">userSMIMECertificate</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>User S/MIME Certificate</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>A PKCS#7 [RFC2315] SignedData, where the content that is signed is ignored by consumers of userSMIMECertificate values. It is recommended that values have a `contentType' of data with an absent `content' field. Values of this attribute contain a person's entire certificate chain and an smimeCapabilities field [RFC2633] that at a minimum describes their SMIME algorithm capabilities. Values for this attribute are to be stored and requested in binary form, as 'userSMIMECertificate;binary'. If available, this attribute is preferred over the userCertificate attribute for S/MIME applications.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">x121Address</td>
+            <td style="width:47.7pt">RFC2256</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Address for X.121</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">D</td>
+            <td style="width:95.2pt" />
+          </tr>
+          <tr>
+            <td style="width:98.95pt">x500uniqueIdentifier</td>
+            <td style="width:47.7pt">RFC2798</td>
+            <td style="width:175.7pt">
+              <ul type="disc">
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Unique identifier</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>Optional</span>
+                </li>
+                <li style="margin:2pt 3.6pt 2pt 9.14pt;padding-left:8.86pt">
+                  <span>The x500UniqueIdentifier attribute is used to distinguish between objects when a distinguished name has been reused. This is a different attribute type from both the "uid" and "uniqueIdentifier" types.</span>
+                </li>
+              </ul>
+            </td>
+            <td style="width:32.2pt">O</td>
+            <td style="width:95.2pt" />
+          </tr>
+        </tbody>
+      </table>
+      <h6 id="3.24.5.2.3.1">3.24.5.2.3.1 Use of language tag and HL7 Name Data Type (XCN)</h6>
+      <p>Many people have different variations of their name to be used depending on the context and language. This is easily supported in LDAP through the use of the language tag as documented in RFC1766. This language tag can be applied to any attribute but is most useful on names.</p>
+      <p>HL7 has a well-defined format for encoding names (HL7 XCN). LDAP ‘name’ attributes marked with a language tag of “lang-x-ihe” shall be encoded using the HL7 XCN Data Type. UTF-8 shall be used for any characters outside ASCII.</p>
+      <p>Example use of the language tag:</p>
+      <p>
+        <span style="font-size:10pt">objectclass: Top</span>
+        <br />
+        <span style="font-size:10pt">objectclass: person</span>
+        <br />
+        <span style="font-size:10pt">objectclass: organizationalPerson</span>
+        <br />
+        <span style="font-size:10pt">objectclass: inetOrgPerson</span>
+        <br />
+        <span style="font-size:10pt">dn: cn=Wang XiaoDong, ou=Radiologists, o=Saint-ihe-hospital.local</span>
+        <br />
+        <span style="font-size:10pt">cn: Wang XiaoDong</span>
+        <br />
+        <span style="font-size:10pt">cn: XiaoDong, Wang, Florida Department of Health:123456789</span>
+        <br />
+        <span style="font-size:10pt">cn;lang-cn: 王 小東</span>
+        <br />
+        <span style="font-size:10pt">cn;lang-x-ihe: ^Wang^XiaoDong^^^^^^^^^^^^A~^王^小東^^^^^^^^^^^^I</span>
+        <br />
+        <span style="font-size:10pt">sn: Wang</span>
+        <br />
+        <span style="font-size:10pt">givenname: XiaoDong</span>
+        <br />
+        <span style="font-size:10pt">givenname;lang-cn: 小東</span>
+        <br />
+        <span style="font-size:10pt">sn;lang-cn: 王</span>
+        <br />
+        <span style="font-size:10pt">ou: People</span>
+        <br />
+        <span style="font-size:10pt">uid: XiaoDong</span>
+        <br />
+        <span style="font-size:10pt">title: Sample HL7 person</span>
+        <br />
+        <span style="font-size:10pt">mail:</span>
+        <span>Wang.XiaoDong@foo.bar.com</span>
+        <br />
+        <span style="font-size:10pt">telephonenumber: 555-555-5678</span>
+      </p>
+      <h6 id="3.24.5.2.3.2">3.24.5.2.3.2 Use of uid</h6>
+      <p>The uid attribute is a multi-valued attribute that is intended to be used for User ID. It is likely that one of the values for uid will be the enterprise User ID. Enterprises that implement the PWP Profile shall implement the following values for the uid attribute:</p>
+      <ol>
+        <li class="numbered-list1">If an enterprise has implemented both IHE ITI EUA and PWP Profiles, one of the uid attributes shall contain the IHE ITI EUA user identity in &lt;user&gt;@&lt;realm&gt; format.</li>
+      </ol>
+      <ol start="2">
+        <li class="numbered-list1">If an enterprise has implemented a UPIN, one of the uid attributes shall contain the UPIN value in the format &lt;UPIN&gt;@UPIN. Where a UPIN is the Universal Physician Identification Number as assigned by the assigning authority in which the facility operates (e.g., CMS in the USA).</li>
+      </ol>
+      <h6 id="3.24.5.2.3.3">3.24.5.2.3.3 Phone Numbers</h6>
+      <p>Phone numbers shall be represented in the PWP Directory using E.123 notation. E.123 is a notation for national and international telephone numbers. Recommendation E.123 defines a standard way to write telephone numbers, e-mail addresses, and web addresses. It recommends the following formats (when dialing the area code is optional for local calling):</p>
+      <p>Telephone number:</p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>National notation</span>
+        <span style="width:24.35pt;display:inline-block"> </span>
+        <span>(042) 123 4567</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span>International notation</span>
+        <span style="width:4.37pt;display:inline-block"> </span>
+        <span>+31 42 123 4567</span>
+      </p>
+      <p>E.123 also recommends that a hypen (-), space ( ), or period (.) be used to visually separate groups of numbers. The parentheses are used to indicate digits that are sometimes not dialed. A slash (/) is used to indicate alternate numbers. This information is important if you want to make sure people know how to dial a phone number in a specific country.</p>
+      <p>The use of National notation and International notation will be a local PWP Directory policy. PWP Consumers shall expect to receive both notations.</p>
+      <h5 id="3.24.5.2.4">3.24.5.2.4 Expected Actions</h5>
+      <p>The Personnel White Pages Directory shall provide the appropriate response to the indicated query given LDAP query rules, local access control policy, and the current information it the directory.</p>
+      <p>Note: Any attribute is valid to query on, the results of the query may be quick or may take a long time to complete. Each Personnel White Pages Directory will be optimized differently based on architecture and configuration. We expect that the following attributes will be query keys more often than others (cn, displayname, objectclass, sn, uid, givenName, initials, mail, o, ou, and employeeNumber).</p>
+      <p>Directory shall support Anonymous, Simple, and SSL-Simple Authentications.</p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
   </body>
 </html>

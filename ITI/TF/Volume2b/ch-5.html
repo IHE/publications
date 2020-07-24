@@ -1,0 +1,789 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
+  <head>
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF Rev17 Vol2b</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body xmlns="">
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1 id="Appendix E">Appendix E: Patient Identifiers in HL7-based IHE Profiles</h1>
+      <p>
+        <span>The Health Level Seven Standard (HL7) uses data type CX to express various identifiers, including the Patient ID in the third field of the PID segment. We discuss here how IHE IT Infrastructure expects the CX data type to be populated in the</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>fields of messages that it defines.</span>
+      </p>
+      <p>
+        <span>Requirements for populating the elements of</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>vary slightly, depending on what actor is originating the transaction in which the PID segment is sent. If the Patient Identifier Cross-reference Manager is the source of the PID segment, the requirements (specifically, with respect to populating the Assigning Authority subcomponents) are more rigorous than otherwise.</span>
+      </p>
+      <p>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>permits multiple occurrences of the CX data type. Data type CX contains 8 components as shown below. This structure allows expression of the value and context for each identifier that the system knows.</span>
+      </p>
+      <p class="tableTitle">Table E-1: Components of HL7 Data Type CX</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:29.45pt" class="tableHeader">Cmp</td>
+            <td style="width:25pt" class="tableHeader">Len</td>
+            <td style="width:20.55pt" class="tableHeader">DT</td>
+            <td style="width:24.45pt" class="tableHeader">Opt</td>
+            <td style="width:25.25pt" class="tableHeader">Tbl</td>
+            <td style="width:193.65pt" class="tableHeader">Name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:29.45pt">1</td>
+            <td style="width:25pt">15</td>
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">ID</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">2</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">Check digit</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">3</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0061</td>
+            <td style="width:193.65pt">Code identifying the check digit scheme employed</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25pt">227</td>
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">Assigning authority</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">5</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0203</td>
+            <td style="width:193.65pt">Identifier type code</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">Assigning facility</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">7</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">Effective date</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">8</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:193.65pt">Expiration date</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <span style="font-style:italic">Adapted from the HL7 Standard, Version 2.5</span>
+      </p>
+      <p>
+        <span>Each occurrence of</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>contains, at a minimum, an identifier value in Component 1 and an assigning authority in Component 4. The assigning authority unambiguously provides the context for the identifier. It is also common practice to provide an identifier type code in Component 5, but this is not required by IHE in the context of the PIX transactions [ITI-8], [ITI-9], and [ITI-10]. Other components are optional and will not be discussed here; implementers may refer to HL7 Version 2.5 for more information.</span>
+      </p>
+      <p>
+        <span>Component 1 of Data Type CX,</span>
+        <span style="font-weight:bold">ID</span>
+        <span>, is of data type ST. This data type allows a free text value of up to 15 characters.</span>
+        <a href="ch-24.html#footnote-2_4" class="footnoteRef">[4]</a>
+      </p>
+      <p>
+        <span>Component 4 of Data Type CX,</span>
+        <span style="font-weight:bold">Assigning Authority</span>
+        <span>, is of data type HD. This data type contains 3 components that, when implemented at the component level, become subcomponents of Component 4. The requirements for the subcomponents of Component 4 vary by actor.</span>
+      </p>
+      <h2 id="E.1">E.1 Patient Identifier Cross-reference Manager Actor Requirements</h2>
+      <p>
+        <span>The Patient Identifier Cross-reference Manager is expected to have access to complete internal and external identifier information for the Assigning Authority of the patient identifier. To facilitate interoperability, it is required that the Patient Identifier Cross-reference Manager populate</span>
+        <span style="text-decoration:underline">all</span>
+        <span>subcomponents of the Assigning Authority component. The usage of these subcomponents will be explained in the examples below.</span>
+      </p>
+      <p>This requirement applies to the response portion of the PIX Query [ITI-9] and PIX Update Notification [ITI-10] transactions.</p>
+      <p class="tableTitle">Table E-2: Usage of HL7 Data Type CX by the PIX Manager Actor</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:29.45pt" class="tableHeader">Cmp</td>
+            <td style="width:25.55pt" class="tableHeader">Sbc</td>
+            <td style="width:25pt" class="tableHeader">Len</td>
+            <td style="width:20.55pt" class="tableHeader">DT</td>
+            <td style="width:24.45pt" class="tableHeader">Opt</td>
+            <td style="width:25.25pt" class="tableHeader">Tbl</td>
+            <td style="width:97.2pt" class="tableHeader">Name</td>
+            <td style="width:148.45pt" class="tableHeader">Conditionality predicate</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:29.45pt">1</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt">15</td>
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">2</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Check digit</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">3</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0061</td>
+            <td style="width:97.2pt">Code identifying the check digit scheme employed</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt">227</td>
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Assigning authority</td>
+            <td style="width:148.45pt">Subcomponent 1 must refer to the same entity as Subcomponents 2 and 3.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">1</td>
+            <td style="width:25pt">20</td>
+            <td style="width:20.55pt">IS</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt">0363</td>
+            <td style="width:97.2pt">Namespace ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">2</td>
+            <td style="width:25pt">199</td>
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Universal ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">3</td>
+            <td style="width:25pt">6</td>
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt">0301</td>
+            <td style="width:97.2pt">Universal ID type</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">5</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0203</td>
+            <td style="width:97.2pt">Identifier type code</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Assigning facility</td>
+            <td style="width:148.45pt">If all three subcomponents are populated, they must refer to the same entity.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">1</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">IS</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0300</td>
+            <td style="width:97.2pt">Namespace ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">2</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Universal ID</td>
+            <td style="width:148.45pt">Populated if, and only if, Subcomponent 3 is populated.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">3</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt">0301</td>
+            <td style="width:97.2pt">Universal ID type</td>
+            <td style="width:148.45pt">Populated if, and only if, Subcomponent 2 is populated</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">7</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Effective date</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">8</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Expiration date</td>
+            <td style="width:148.45pt" />
+          </tr>
+        </tbody>
+      </table>
+      <p>IHE specifies that the Patient Identifier Cross-reference Manager must populate all 3 subcomponents of Component 4. The following rules apply:</p>
+      <p>
+        <span>Subcomponent 1 of Component 4,</span>
+        <span style="font-weight:bold">Namespace ID</span>
+        <span>, is of data type IS. HL7 specifies that when valued in the Patient ID field, the value in this subcomponent be a code taken from user-defined Table 0363,</span>
+        <span style="font-style:italic">Assigning Authority</span>
+        <span>. Version 2.5 of HL7 provides suggested values for assigning authorities in various local jurisdictions, such as</span>
+        <span style="font-weight:bold">USSSA</span>
+        <span>for U.S. Social Security Administration. Sites may add values to this table, but for interoperability must ensure that added values (and meanings) are agreed upon by all communicating systems.</span>
+      </p>
+      <p>
+        <span>Subcomponent 2 of Component 4,</span>
+        <span style="font-weight:bold">Universal ID</span>
+        <span>, is of data type ST. This subcomponent contains a value from either a known external domain or a specified internal domain. The domain is given in Subcomponent 3.</span>
+      </p>
+      <p>
+        <span>Subcomponent 3,</span>
+        <span style="font-weight:bold">Universal ID Type</span>
+        <span>, is of data type ID. This subcomponent contains a code taken from HL7 Table 0301,</span>
+        <span style="font-style:italic">Universal ID Type</span>
+        <span>. Table 0301 contains values for various known external identifier domains such as</span>
+        <span style="font-weight:bold">DNS</span>
+        <span>(Internet dotted name) and</span>
+        <span style="font-weight:bold">ISO</span>
+        <span>(International Standards Organization Object Identifier, or OID), as well as the values</span>
+        <span style="font-weight:bold">L, M,</span>
+        <span>and</span>
+        <span style="font-weight:bold">N</span>
+        <span>to permit the use of internal identifier domains.</span>
+      </p>
+      <p>Subcomponent 1 must refer to the same entity as Subcomponents 2 and 3.</p>
+      <h3 id="E.1.1">E.1.1 Other actor requirements</h3>
+      <p>The PID segment may also appear in messages generated by other IHE actors, including the Patient ID Cross-reference Consumer and the Information Source. These actors must also populate the Assigning Authority.</p>
+      <p>However, IHE specifies that they need not populate all three subcomponents of Assigning Authority. They must populate either Namespace ID (an entry from a user-defined table), or Universal ID and Universal ID Type (allowing the use of an externally defined identifier scheme).</p>
+      <p>This requirement applies to the Patient Identity Feed [ITI-8] transaction and to the query portion of PIX Query [ITI-9]. This requirement does not apply to the response portion of [ITI-9] nor to PIX Update Notification [ITI-10].</p>
+      <p class="tableTitle">Table E-3: Usage of HL7 Data Type CX by other IHE Actors</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:29.45pt" class="tableHeader">Cmp</td>
+            <td style="width:25.55pt" class="tableHeader">Sbc</td>
+            <td style="width:25pt" class="tableHeader">Len</td>
+            <td style="width:20.55pt" class="tableHeader">DT</td>
+            <td style="width:24.45pt" class="tableHeader">Opt</td>
+            <td style="width:25.25pt" class="tableHeader">Tbl</td>
+            <td style="width:97.2pt" class="tableHeader">Name</td>
+            <td style="width:148.45pt" class="tableHeader">Conditionality predicate</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:29.45pt">1</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt">15</td>
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">2</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Check digit</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">3</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0061</td>
+            <td style="width:97.2pt">Code identifying the check digit scheme employed</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt">227</td>
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">R</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Assigning authority</td>
+            <td style="width:148.45pt">If all three subcomponents are populated, they must refer to the same entity.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">1</td>
+            <td style="width:25pt">20</td>
+            <td style="width:20.55pt">IS</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt">0363</td>
+            <td style="width:97.2pt">Namespace ID</td>
+            <td style="width:148.45pt">Must be populated if Subcomponents 2 and 3 are not populated.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">2</td>
+            <td style="width:25pt">199</td>
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Universal ID</td>
+            <td style="width:148.45pt">
+              <p>Must be populated if Subcomponent 1 is not populated.</p>
+              <p>Populated if, and only if, Subcomponent 3 is populated.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">4</td>
+            <td style="width:25.55pt">3</td>
+            <td style="width:25pt">6</td>
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt">0301</td>
+            <td style="width:97.2pt">Universal ID type</td>
+            <td style="width:148.45pt">
+              <p>Must be populated if Subcomponent 1 is not populated.</p>
+              <p>Populated if, and only if, Subcomponent 2 is populated.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">5</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0203</td>
+            <td style="width:97.2pt">Identifier type code</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">HD</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Assigning facility</td>
+            <td style="width:148.45pt">If all three subcomponents are populated, they must refer to the same entity.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">1</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">IS</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt">0300</td>
+            <td style="width:97.2pt">Namespace ID</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">2</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ST</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Universal ID</td>
+            <td style="width:148.45pt">Populated if, and only if, Subcomponent 3 is populated.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">6</td>
+            <td style="width:25.55pt">3</td>
+            <td style="width:25pt" />
+            <td style="width:20.55pt">ID</td>
+            <td style="width:24.45pt">C</td>
+            <td style="width:25.25pt">0301</td>
+            <td style="width:97.2pt">Universal ID type</td>
+            <td style="width:148.45pt">Populated if, and only if, Subcomponent 2 is populated.</td>
+          </tr>
+          <tr>
+            <td style="width:29.45pt">7</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Effective date</td>
+            <td style="width:148.45pt" />
+          </tr>
+          <tr>
+            <td style="width:29.45pt">8</td>
+            <td style="width:25.55pt" />
+            <td style="width:25pt" />
+            <td style="width:20.55pt">DT</td>
+            <td style="width:24.45pt">O</td>
+            <td style="width:25.25pt" />
+            <td style="width:97.2pt">Expiration date</td>
+            <td style="width:148.45pt" />
+          </tr>
+        </tbody>
+      </table>
+      <p>The definitions of the subcomponents of Component 4 are as given above for the Patient Identifier Cross-reference Manager. If all three subcomponents are defined, Subcomponent 1 must refer to the same entity as Subcomponents 2 and 3.</p>
+      <h3 id="E.1.2">E.1.2 Examples of use</h3>
+      <p>
+        <span>Metropolitan Medical Center treats a patient, Jane Smith, for whom 3 identifiers are known. (For this example, assume that the HL7 V2 default delimiters are in use:</span>
+        <span style="font-weight:bold">|</span>
+        <span>for field separator,</span>
+        <span style="font-weight:bold">^</span>
+        <span>for component separator,</span>
+        <span style="font-weight:bold">~</span>
+        <span>for repetition separator and</span>
+        <span style="font-weight:bold">&amp;</span>
+        <span>for subcomponent separator.)</span>
+      </p>
+      <h3 id="E.1.3">E.1.3 Data sent by source systems</h3>
+      <p>The source systems provide data to the Patient Identifier Cross-reference Manager. These data are sent either in a Patient Identity Feed [ITI-8] transaction or in response to a PIX Query [ITI-9].</p>
+      <p>
+        <span>Patient Smith’s Social Security number is</span>
+        <span style="font-weight:bold">999-99-4452</span>
+        <span>. This number is assigned by the U.S. Social Security Administration.</span>
+      </p>
+      <p>
+        <span>The ADT system sends the Social Security number at registration, in an occurrence of</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>that looks like this:</span>
+      </p>
+      <p id="999-99-4452^^^USSSA">999-99-4452^^^USSSA</p>
+      <p>Note that only Subcomponent 1 of Assigning Authority is assigned here, while Subcomponents 2 and 3 are left empty.</p>
+      <p>
+        <span>Patient Smith’s medical record number is</span>
+        <span style="font-weight:bold">9990-99497</span>
+        <span>. This number is assigned by Metropolitan Medical Center, for which no external identifier is known. Metropolitan Medical Center incorporates the Namespace ID</span>
+        <span style="font-weight:bold">99MMC</span>
+        <span>for the medical record numbers it assigns.</span>
+      </p>
+      <p>
+        <span>The ADT system sends the medical record number at registration, in an occurrence of</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>that looks like this:</span>
+      </p>
+      <p id="999099497^^^99MMC">999099497^^^99MMC</p>
+      <p>Note again that only Subcomponent 1 of Assigning Authority is assigned here.</p>
+      <p>
+        <span>Patient Smith’s medical insurance number is</span>
+        <span style="font-weight:bold">99998410</span>
+        <span>. This number is assigned by MLH Life &amp; Casualty Company, whose Internet domain name is</span>
+        <span style="font-weight:bold">www.mlhlifecasualty.com</span>
+        <span>.</span>
+        <a href="ch-24.html#footnote-2_5" class="footnoteRef">[5]</a>
+      </p>
+      <p>
+        <span>The billing system sends the medical insurance number in an occurrence of</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>that looks like this:</span>
+      </p>
+      <p id="99998410^^^&amp;www.mlhlife.com&amp;DNS">99998410^^^&amp;www.mlhlife.com&amp;DNS</p>
+      <p>
+        <span>Note that only Subcomponents 2 and 3 of Assigning Authority are assigned here. Also note the value</span>
+        <span style="font-weight:bold">DNS</span>
+        <span>in the third subcomponent of Component 4 to indicate an Internet domain name.</span>
+      </p>
+      <h3 id="E.1.4">E.1.4 Data sent by the Patient Identifier Cross-reference Manager</h3>
+      <p>
+        <span>The Patient Identifier Cross-reference Manager implements HL7 Table 0363,</span>
+        <span style="font-style:italic">Assigning Authority</span>
+        <span>, by incorporating the values in HL7 Version 2.5 as well as the values</span>
+        <span style="font-weight:bold">99MMC</span>
+        <span>for Metropolitan Medical Center and</span>
+        <span style="font-weight:bold">99MLHLIFE</span>
+        <span>for MLH Life &amp; Casualty.</span>
+        <a href="ch-24.html#footnote-2_6" class="footnoteRef">[6]</a>
+        <span style="font-size:8pt;vertical-align:super" />
+        <span> It also includes a known ISO Object Identifier for the Social Security Administration,</span>
+        <span style="font-weight:bold">1.2.mm.nnnnn.555.6666</span>
+        <span>.</span>
+        <a href="ch-24.html#footnote-2_7" class="footnoteRef">[7]</a>
+      </p>
+      <p>
+        <span>To send the identifiers in</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>, the Patient Identifier Cross-reference Manager builds and concatenates them as follows.</span>
+      </p>
+      <p>
+        <span>In the first occurrence, the Social Security number is sent in the first component, as well as the known internal and external values for SSN assigning authority in the fourth component. Note the value</span>
+        <span style="font-weight:bold">ISO</span>
+        <span>in the third subcomponent of Component 4 to indicate an ISO Object Identifier.</span>
+      </p>
+      <p id="999-99-4452^^^USSSA&amp;1.2.mm.nnnnn.555.6666&amp;ISO">999-99-4452^^^USSSA&amp;1.2.mm.nnnnn.555.6666&amp;ISO</p>
+      <p>In the second occurrence, the medical insurance number is sent in the first component, as well as the known internal and external values for insurance number assigning authority in the fourth component.</p>
+      <p id="99998410^^^99MLHLIFE&amp;www.mlhlife.com&amp;DNS">99998410^^^99MLHLIFE&amp;www.mlhlife.com&amp;DNS</p>
+      <p>
+        <span>In the third occurrence, the medical record number is sent in the first component, as well as the known internal and external values for MRN assigning authority in the fourth component. Note that no external value is known for MRN assigning authority, so the HIS repeats the internal value as an external value and uses the value</span>
+        <span style="font-weight:bold">L</span>
+        <span>in the third subcomponent of Component 4 to indicate a locally assigned value.</span>
+      </p>
+      <p id="999099497^^^99MMC&amp;99MMC&amp;L">999099497^^^99MMC&amp;99MMC&amp;L</p>
+      <p>
+        <span>In sending all values in a PIX Update Notification [ITI-10] transaction, the Patient Identifier Cross-reference Manager concatenates the three</span>
+        <span style="font-style:italic">PID-3-Patient Identifier List</span>
+        <span>values using the repetition separator:</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">|999994452^^^USSSA&amp;1.2.mm.nnnnn.555.6666&amp;ISO~99998410^^^99ABCLIFE&amp;www.abclife.com&amp;DNS~999099497^^^99MMC&amp;99MMC&amp;|</span>
+      </p>
+      <h2 id="E.2">E.2 HL7 V3 II Data Type</h2>
+      <p>The Health Level Seven Standard Version 3 (HL7 V3) uses data type II to express an identifier that uniquely identifies a thing or object (see HL7 Version 3 Standard Data Types), including medical record number or other patient identifiers. We discuss here how IHE IT Infrastructure profiles the use of II data type to express patient identifiers in HL7 V3 messages and HL7 V3 CDA Document Templates defined or referenced in this Technical Framework. In the following text of this section, all requirements for the II data type are specified solely in the context of patient identifier expression.</p>
+      <p>Since IHE adds additional constraints to the II data type, requirements for populating its elements vary slightly, depending on what actor is originating a transaction (or create a CDA document), in which Patient ID is expressed. If the Patient Identifier Cross-reference Manager is the source of the Patient ID in a message, the requirements (specifically, with respect to populating the assigningAuthorityName elements) are more rigorous than otherwise.</p>
+      <p>The IHE IT Infrastructure Technical Framework adds constraints to the II data type for Patient ID expression in HL7 V3 messages or CDA documents, in order to maintain compatibility with the explicit relationship between a Patient ID Domain (assigning authority) and a Patient ID issued in the Domain present in the HL7 V2 CX data type. In HL7 V2 messages defined in the IHE IT Infrastructure Technical Framework, Patient ID is expressed in the form of an identifier value (CX.ID) issued in a domain (CX.AssigningAuthority) (see Section E.1). Even though HL7 V3 provides additional mechanisms for an explicit expression of the key concept of Patient ID Domain (via scoping organizations), the constraints added to the II data type in this section enable a seamless interoperability among HL7 V2 messages, HL7 V3 messages, as well as CDA documents, which may participate in the same IT Infrastructure Profile.</p>
+      <p>At the same time, it is also important to represent the RIM-based association between assigning authority and patient identifiers, which is expected by systems using the rich semantics of the RIM. In order to achieve that IHE imposes several constraints regarding patient IDs on the HL7 V3 models used in IHE transactions:</p>
+      <ol>
+        <li class="numbered-list1">Identifiers for the patient are class attributes of a specific role, and never of the Person class of the patient.</li>
+        <li class="numbered-list1">When the Patient role is scoped by a Provider organization, only patient IDs assigned by the provider organization are allowed in the Patient class, the root element of the patient IDs shall match the root element of the provider organization ID, and the provider organization ID shall have no extension element.</li>
+        <li class="numbered-list1">When any other role associated with the Person class of the patient is scoped by an organization, the root element of the role IDs shall match the root element of the scoping organization ID, and the scoping organization ID shall have no extension element.</li>
+        <li class="numbered-list1">A receiver of an HL7 v3 message shall consider the IDs in all roles associated with the Person class of the patient as valid patient IDs.</li>
+        <li class="numbered-list1">A receiver of an HL7 v3 message shall not be required to maintain the various roles associated with the Person class of the patient, as long as, when becoming a sender, it can appropriately send all relevant patient IDs according to the requirements of a particular transaction.</li>
+      </ol>
+      <h3 id="E.2.1">E.2.1 Patient Identifier Cross-reference Manager requirements</h3>
+      <p>The Patient Identifier Cross-reference Manager is expected to have access to complete information for a Patient ID value and its issuing Patient ID Domain (assigning authority). To facilitate interoperability, it is required that the Patient Identifier Cross-reference Manager provide all this information in an instance of II the data type to express Patient ID. Table E-2.1-1 specifies the requirements of the II data type to the Patient Identifier Cross-reference Manager.</p>
+      <p class="tableTitle">Table E.2.1-1: Usage of HL7 V3 II Data Type by the PIX Manager</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:97.7pt" class="tableHeader">Name</td>
+            <td style="width:30.55pt" class="tableHeader">Type</td>
+            <td style="width:20pt" class="tableHeader">Opt</td>
+            <td style="width:189.75pt" class="tableHeader">Name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:97.7pt">Root</td>
+            <td style="width:30.55pt">OID</td>
+            <td style="width:20pt">R</td>
+            <td style="width:189.75pt">An ISO OID of the Patient ID Domain (assigning authority) that guarantees the global uniqueness of the patient identifier.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">Extension</td>
+            <td style="width:30.55pt">ST</td>
+            <td style="width:20pt">R+</td>
+            <td style="width:189.75pt">A character string as a unique identifier within the scope of the Patient ID Domain (assigning authority) represented by the identifier root.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">assigningAuthorityName</td>
+            <td style="width:30.55pt">ST</td>
+            <td style="width:20pt">R+</td>
+            <td style="width:189.75pt">A human readable name or mnemonic for the assigning authority. The Assigning Authority Name has no computational value. The purpose of an Assigning Authority Name is to assist an unaided human interpreter of an II value to interpret the authority. Note: no automated processing must depend on the assigning authority name to be present in any form.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">Displayable</td>
+            <td style="width:30.55pt">BL</td>
+            <td style="width:20pt">O</td>
+            <td style="width:189.75pt">Specifies if the identifier is intended for human display and data entry (displayable = true) as opposed to pure machine interoperation (displayable = false).</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>IHE specifies that the Patient Identifier Cross-reference Manager must populate both elements root and extension for Patient ID Domain and Patient ID value, respectively, and element root must be an ISO OID. If the same patient identifier is populated in a HL7 V2 message, element root and extension shall correspond to CX.4.2 and CX.1, respectively, and CX.4.3 shall be ISO (see Section E.1).</p>
+      <p>In addition, IHE requires that the Patient Identifier Cross-reference Manager populates element assigningAuthorityName. Though there is no additional requirement for the data type of this element than a text string in a HL7 V3 message or CDA document, it shall be the same value as populated in CX.4.1, if the actor participates in transactions of both HL7 V3 and HL7 V2 messages. In this case, element assigningAuthorityName shall contain a value of HL7 V2 data type IS, a code taken from user-defined Table 0363, Assigning Authority, see Section E.1.</p>
+      <h3 id="E.2.2">E.2.2 Other actor requirements</h3>
+      <p>The patient identifier information may also appear in HL7 V3 messages or CDA documents generated by other IHE actors, including the Patient Identifier Cross-reference Consumer, the Patient Information Source, XDS Document Source. Table E.2.2-1 specifies requirements for these actors when populating a value of the II data type to express a patient identifier.</p>
+      <p class="tableTitle">Table E.2.2-1: Usage of HL7 Data Type CX by other IHE Actors</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td style="width:97.7pt" class="tableHeader">Name</td>
+            <td style="width:30.55pt" class="tableHeader">Type</td>
+            <td style="width:20pt" class="tableHeader">Opt</td>
+            <td style="width:189.75pt" class="tableHeader">Name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width:97.7pt">Root</td>
+            <td style="width:30.55pt">OID</td>
+            <td style="width:20pt">R</td>
+            <td style="width:189.75pt">An ISO OID of the Patient ID Domain (assigning authority) that guarantees the global uniqueness of the patient identifier.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">Extension</td>
+            <td style="width:30.55pt">ST</td>
+            <td style="width:20pt">R+</td>
+            <td style="width:189.75pt">A character string as a unique identifier within the scope of the Patient ID Domain (assigning authority) represented by the identifier root.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">assigningAuthorityName</td>
+            <td style="width:30.55pt">ST</td>
+            <td style="width:20pt">O</td>
+            <td style="width:189.75pt">A human readable name or mnemonic for the assigning authority. The Assigning Authority Name has no computational value. The purpose of an Assigning Authority Name is to assist an unaided human interpreter of an II value to interpret the authority. Note: no automated processing must depend on the assigning authority name to be present in any form.</td>
+          </tr>
+          <tr>
+            <td style="width:97.7pt">Displayable</td>
+            <td style="width:30.55pt">BL</td>
+            <td style="width:20pt">O</td>
+            <td style="width:189.75pt">Specifies if the identifier is intended for human display and data entry (displayable = true) as opposed to pure machine interoperation (displayable = false).</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>These actors are not required to provide a value for element assigningAuthorityName. However, if they choose to provide a value of this element and generate both HL7 V2 messages and HL7 V3 messages or CDA documents, the same requirement for the Patient Identifier Cross-reference Manager applies (see Section E.2.1).</p>
+      <h3 id="E.2.3">E.2.3 Examples of use</h3>
+      <p>The similar case of Metropolitan Medical Center in Section E.1.2 is used to provide HL7 V3 II data type for patient identifier expression in this section. Since element root of the II data type is always required and must be an ISO OID, the example case is adopted (compared to Section E.1.2).</p>
+      <h4 id="E.2.3.1">E.2.3.1 Data sent by source systems</h4>
+      <p>The source systems provide data to the Patient Identifier Cross-reference Manager. These data are sent in a Patient Identity Feed HL7 V3 [ITI-44] transaction.</p>
+      <ul>
+        <li class="bullet-list1">
+          <span>Patient Smith’s Social Security number is 999-99-4452. This number is assigned by the U.S. Social Security Administration, which uses a known ISO Object Identifier for issuing the Social Security Numbers, 2.16.840.1.113883.4.1.</span>
+          <a href="ch-24.html#footnote-2_8" class="footnoteRef">[8]</a>
+        </li>
+        <li class="bullet-list1">
+          <span>Patient Smith’s medical record number is 9990-99497. This number is assigned by Metropolitan Medical Center. The ISO OID of its medical record number domain is 1.2.xx.yyyyy.123.4567.</span>
+          <a href="ch-24.html#footnote-2_9" class="footnoteRef">[9]</a>
+        </li>
+        <li class="bullet-list1">
+          <span>Patient Smith’s medical insurance number is 99998410. This number is assigned by MLH Life &amp; Casualty Company, whose ISO OID for issuing insurance numbers is 1.2.xxx.yyyyy.987.6543.</span>
+          <a href="ch-24.html#footnote-2_10" class="footnoteRef">[10]</a>
+        </li>
+      </ul>
+      <p>The source system will include the patient identifier information of the II data type in a HL7 V3 message generated for the Patient Identity Feed transaction or Patient Identity Cross-Reference or Patient Demographics Query Request as shown in the following:</p>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span>&lt;identifiedPerson&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="2.16.840.1.113883.4.1"  extension="999-99-4452" /&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="1.2.xx.yyyyyy.123.4567"  extension="9990-99497" /&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="1.2.xx.yyyyy.987.6543"  extension="99998410" /&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>:</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>:</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>&lt;/identifiedPerson&gt;</span>
+        </p>
+      </div>
+      <p>
+        <a name="_Toc301358480"> </a>
+      </p>
+      <p>
+        <span style="font-weight:bold">E.2.3.2</span>
+        <span style="width:33.97pt;display:inline-block"> </span>
+        <span style="font-weight:bold">Data sent by the Patient Identifier Cross-reference Manager</span>
+      </p>
+      <p>The Patient Identifier Cross-reference Manager implements HL7 V2 Table 0363, Assigning Authority, which includes the names of identifier domains (assigning authorities) used in the example of Section E.2.3.1:</p>
+      <ul>
+        <li class="bullet-list1">US Social Security Administration: USSSA</li>
+        <li class="bullet-list1">Medical record number domain of Metropolitan Medical Center: 99MMC</li>
+        <li class="bullet-list1">Insurance number domain of MLH Life &amp; Casualty Company: 99MLHLIFE</li>
+      </ul>
+      <p>To send the patient identifiers, the Patient Identifier Cross-reference Manager builds a HL7 V3 message as follows:</p>
+      <div style="border:0.75pt solid #000000; clear:both">
+        <p style="font-size:10pt">
+          <span>&lt;identifiedPerson&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="2.16.840.1.113883.4.1"  extension="999-99-4452"</span>
+          <br />
+          <span style="width:36pt;display:inline-block">  </span>
+          <span>assigningAuthorityName=”USSSA”/&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="1.2.xx.yyyyyy.123.4567"  extension="9990-99497"</span>
+          <br />
+          <span style="width:36pt;display:inline-block">  </span>
+          <span>assigningAuthorityName=”99MMC”/&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block"> </span>
+          <span>&lt;id  root="1.2.xx.yyyyy.987.6543"  extension="99998410"</span>
+          <br />
+          <span style="width:36pt;display:inline-block">  </span>
+          <span>assigningAuthorityName=”99MLHLIFE”/&gt;</span>
+          <br />
+          <span style="width:36pt;display:inline-block">  </span>
+          <span>:</span>
+        </p>
+        <p style="font-size:10pt">
+          <span style="width:36pt;display:inline-block">  </span>
+          <span>:</span>
+        </p>
+        <p style="font-size:10pt">
+          <span>&lt;/identifiedPerson&gt;</span>
+        </p>
+      </div>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
+  </body>
+</html>
