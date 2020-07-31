@@ -1,0 +1,16 @@
+@startuml
+Participant "Any Actor grouped with\nSecure Node or \nSecure Application" as SecureNode
+Participant "Audit Record Repository \ngrouped with \nAudit Record Forwarder" as AuditForwarder
+Participant "Audit Record Repository" as AuditRepository
+activate SecureNode
+activate AuditForwarder
+SecureNode -> AuditForwarder: Record Audit Event [ITI-21]
+AuditForwarder -> AuditForwarder: decide to forward
+activate AuditForwarder
+AuditForwarder -> AuditRepository: Record Audit Event [ITI-20]
+deactivate AuditForwarder
+deactivate AuditForwarder
+deactivate SecureNode
+
+SecureNode -> AuditRepository: Record Audit Event [ITI-20]
+@enduml
