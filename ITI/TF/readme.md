@@ -51,7 +51,9 @@ The conversion is a multi step process consisting of the following steps:
 * Vol 1 Glossary does appear in the TOC and index file 
 * Vol 2 Glossar in vol 2x appears in the TOC and index file 
 * removed inline style of A HREF tags
-* made footnote references work  
+* made footnote references work 
+* fixed error in Vol2b and Vol2x
+* removed table width style 
 
 ## Open issues:  
 Footnotes do not appear on the same page they are referenced in. This cannot be easily solved by processing and must be edited manually. 	
