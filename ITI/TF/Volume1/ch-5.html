@@ -28,7 +28,7 @@
       </ul>
       <p>By specifying the above transactions among specific actors, this integration profile does not define any specific enterprise policies or cross-referencing algorithms. By encapsulating these behaviors in a single actor, this integration profile provides the necessary interoperability while maintaining the flexibility to be used with any cross-referencing policy and algorithm as deemed adequate by the enterprise.</p>
       <p>
-        <img src="media/au2nx-2e2p1.011.png" width="734" height="401" alt="" />
+        <img src="media/Figure_5-1.png" alt="" />
         <br />
         <span>The following diagram shows the intended scope of this profile (as described above).</span>
       </p>
@@ -68,7 +68,7 @@
       <p>For a discussion of the relationship between this Integration Profile and an enterprise master patient index (eMPI) see Section 5.4.</p>
       <h2 id="5.1">5.1 PIX Actors/Transactions</h2>
       <p>Figure 5.1-1 shows the actors directly involved in the Patient Identifier Cross-referencing Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in other related profiles are not shown.</p>
-      <img src="media/au2nx-2e2p1.012.png" width="604" height="203" alt="" />
+      <img src="media/Figure_5.1-1.png" alt="" />
       <p class="figureTitle">Figure 5.1-1: Patient Identifier Cross-referencing Actor Diagram</p>
       <p>Table 5.1-1 lists the transactions for each actor directly involved in the Patient Identifier Cross-referencing Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile and that implementations may choose to support is listed in the Section 5.2.</p>
       <p class="tableTitle">Table 5.1-1: Patient Identifier Cross-referencing Integration for MPI Profile - Actors and Transactions</p>
@@ -298,7 +298,7 @@
         <span style="text-decoration:underline">ADT Domain</span>
         <span>’, the Patient Identifier Cross-reference Manger returns this list to the lab system so that it may retrieve the lab report for the desired patient and return it to the Intensive Care system. Figure 5.3-1 illustrates this process flow.</span>
       </p>
-      <img src="media/au2nx-2e2p1.013.png" width="644" height="406" alt="" />
+      <img src="media/Figure_5.3-1.png" alt="" />
       <p class="figureTitle">Figure 5.3-1: Multiple ID Domains in a Single Facility Process Flow in PIX Profile</p>
       <p class="note">Note: Request and Response portions of the Retrieve Document for Display transaction are not part of this profile and included for illustration purposes only.</p>
       <h3 id="5.3.2">5.3.2 Use Case: Multiple ID Domains across Cooperating Enterprises</h3>
@@ -306,7 +306,7 @@
       <p>Hospitals A and B have been consolidated and have a single Patient Identifier Cross-reference Manager that maintains the ID links between the two hospitals. Each hospital has a different HIS that is responsible for registering patients, but they have consolidated their cardiology information systems. The cardiology system has been configured with a Patient Identifier Cross-reference Consumer to receive patient identity notifications when cross-referencing activity occurs.</p>
       <p>A patient is registered and then has some diagnostic stress tests done at hospital A. The cardiology information system queries the Patient Identifier Cross-reference Manager to get a list of possible ID aliases for the patient to see if any past cardiology reports may be available. No patient ID aliases are found. Sometime later the same patient goes to hospital B to have a second diagnostic stress test done. The patient is registered via the HIS in hospital B which then sends that identity information to the Patient Identifier Cross-reference Manager. The Patient Identifier Cross-reference Manager determines this is in fact the same patient as was registered previously at hospital A. The cardiology information system was previously configured with the Patient Identifier Cross-reference Manager to receive notifications; thus a notification is sent to the cardiology system to inform it of the patient identifier aliases. This notification is done to allow systems that are aware of multiple identifier domains to maintain synchronization with patient identifier changes that occur in any of the identifier domains that they are aware of.</p>
       <p>Figure 5.3-2 illustrates the process flow for this use case.</p>
-      <img src="media/au2nx-2e2p1.014.png" width="588" height="508" alt="" />
+      <img src="media/Figure_5.3-2.png" alt="" />
       <p class="figureTitle">Figure 5.3-2: Multiple ID Domains Across Cooperating Enterprises Process Flow in PIX Profile</p>
       <p class="note">Note: PIX Update Notifications are not sent for the first Patient Identity Feed for a patient, since no cross-referencing activity occurred after this first Patient Identity Feed Transaction.</p>
       <p>
@@ -327,7 +327,7 @@
       <p>The PIX Integration Profile achieves the integration of disparate Patient Identifier Domains by using a cross-referencing approach between Patient Identifiers associated with the same patient. This section discusses how this approach is compatible with environments that wish to establish master patient identifiers (MPI), or enterprise MPI (eMPI) systems. An eMPI may be considered a particular variation in implementation of the PIX Integration Profile.</p>
       <p>The concept of an MPI is a rather broad concept, yet it is most often associated with the creation of a master patient identifier domain. Such a master domain is considered more broadly applicable or more “enterprise-level” than the other patient identifier domains it includes. Such a hierarchical inclusion of patient identification domains into a “master patient identification domain” can be considered a particular case of patient cross-reference, where the patient identifiers in the various domains are cross-referenced to the patient identifiers of the master domain. Two possible configurations are depicted by Figure 5.4-1.</p>
       <p style="font-size:11pt">
-        <img src="media/au2nx-2e2p1.015.png" width="672" height="328" alt="" />
+        <img src="media/Figure_5.4-1.png" alt="" />
         <span style="font-weight:bold">Figure 5.4-1: PIX Profile Relationship to eMPI</span>
       </p>
       <p>Figure 5.4-1 above shows how the Master Patient Identifier Domain (Domain C), in a typical MPI approach, is simply another patient Identification Domain when considered in a Cross-referencing approach. The decision to place enterprise-wide systems such as Clinical Data Repositories into the so-called master domain is simply a configuration choice. In addition, such a configuration sometimes assumes that any system in Patient Domain A not only manages the patient Identifiers of Domain A but is also aware of those of Domain C. In the Patient Identifier Cross-reference Integration Profile, this is a configuration choice where certain systems have been designed and configured to operate across multiple domains. Thus the entity often called an MPI (shown by the oval) is actually the combination of a Patient Identity Source (ADT) along with a Patient Identifier Cross-reference Manager.</p>
