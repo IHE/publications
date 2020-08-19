@@ -1,4 +1,4 @@
-This folder holds each chapter of Volume 3 as independently addressable pages. There may be other content here to support such as images. 
+This folder holds each chapter of Volume 4 as independently addressable pages. There may be other content here to support such as images. 
 
 Thus each realm specific Profile will be represented here as <realm><profile acronym>.html, and a redirect for <realm><profile name>.html
 
