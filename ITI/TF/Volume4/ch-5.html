@@ -1,0 +1,846 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF Rev17 Vol4</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body xmlns="">
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 4</p>
+      <p>Revision 17.0 – Final Text</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1 id="5">5 National Extensions for IHE Germany</h1>
+      <p>The national extensions documented in this section shall be used in conjunction with the definitions of integration profiles, actors and transactions provided in Volumes 1-3 of the IHE Technical Framework. This section includes extensions and restrictions to effectively support the regional practice of healthcare in Germany.</p>
+      <p>This national extension was authored under the sponsorship and supervision of IHE Germany and the IT Infrastructure Technical Committee. Comments should be directed to:</p>
+      <p>
+        <a href="http://www.ihe.net/ITI_Public_Comments">http://www.ihe.net/ITI_Public_Comments</a>
+        <span>and</span>
+        <a href="mailto:ihe-d-pam-abgleich@googlegroups.com">ihe-d-pam-abgleich@googlegroups.com</a>
+      </p>
+      <h2 id="5.1">5.1 Referenced Standards</h2>
+      <p>
+        <span>German HL7 Edition 2.5, German HL7 Chapter (HL7-Benutzergruppe in Deutschland e. V.),</span>
+        <a href="http://www.hl7.de/">http://www.hl7.de/</a>
+      </p>
+      <p>German National Message Profiles 2003 (Rel.1) to 2004 (Rel.2.1), http://www.hl7.de/download/documents/Profile_2.1.zip</p>
+      <h2 id="5.2">5.2 HL7 v2 Conventions for Message Profiles</h2>
+      <p>Implementations of [ITI-30] and [ITI-31] profiles that also claim support of the German National Extension shall conform to the requirements in this section and the information provided by the links.</p>
+      <h3 id="5.2.1">5.2.1 HL7: Support for Character Sets</h3>
+      <p>All actors with HL7 transactions shall support the value “8859/1” and “8859/15” for the field H/18 in the MSH segment.</p>
+      <h3 id="5.2.2">5.2.2 Naming Conventions for Profiles</h3>
+      <p>The term “profile” is used as defined by IHE and references “integration profiles” as specified by the different IHE Technical Frameworks.</p>
+      <p>In case where IHE integration profiles leverage HL7 v2 messages, they consist of one or more “HL7 message profiles” that are a specialization of the officially published HL7 v2 standard. When necessary extensions are defined. This is for example the case with the ZBE segment.</p>
+      <p>The “HL7 Message Profile Component” concept is used to specify fragments of messages, which can be used with different base messages. Such fragments are tables, data types, segments and segment groups. This way, a tedious repetition of specification details is prevented and helps to simplify and reduce development efforts.</p>
+      <h2 id="5.3">5.3 [ITI-30] and [ITI-31]</h2>
+      <p>Implementations of PAM and other profiles that use [ITI-30] and [ITI-31] that also claim support of the German National Extension shall conform to the requirements in this section.</p>
+      <p>The names of the HL7 fields shall be as defined in the German HL7 Edition 2.5.</p>
+      <p>IHE Germany has undertaken a three year project to align the National Message Profiles published in 2003 (Rel.1) to 2004 (Rel.2.1) with the Patient Administration Management Profile.</p>
+      <p>The overall project details can be found here:</p>
+      <p>
+        <a href="http://wiki.hl7.de/index.php/PAM-Profil_Abgleich_(Projekt)">http://wiki.hl7.de/index.php/PAM-Profil_Abgleich_(Projekt)</a>
+      </p>
+      <p>The additional constraints can be roughly divided into the following categories:</p>
+      <ul>
+        <li class="bullet-list1">data type enhancements (XPN, XAD)</li>
+        <li class="bullet-list1">profile support with MSH-21</li>
+        <li class="bullet-list1">software release verification</li>
+        <li class="bullet-list1">provision of specific table values</li>
+        <li class="bullet-list1">diagnosis and procedure related information</li>
+      </ul>
+      <p>Some additional requirements have been crafted in the form of HL7 message profile components which can be combined with the HL7 base message profiles.</p>
+      <ul>
+        <li class="bullet-list1">insurance information (payor data with smartcards)</li>
+        <li class="bullet-list1">DRG-related data</li>
+        <li class="bullet-list1">contact persons</li>
+      </ul>
+      <h3 id="5.3.1">5.3.1 Extension Requirements: Notation and Location</h3>
+      <p>Most of the requirements are not documented directly in this document, but are instead included by reference in these tables below:</p>
+      <ul>
+        <li class="bullet-list1">Table 5.3.2-1 Introductory Documents for German Message Profiles</li>
+        <li class="bullet-list1">Table 5.3.2-2 Detailed German Message Profiles for PAM</li>
+        <li class="bullet-list1">Table 5.3.3-1 Additional German Profile Components PAM</li>
+        <li class="bullet-list1">Table 5.3.4-1 Additional German Segment Definitions</li>
+        <li class="bullet-list1">Table 5.3.5-1 Additional German Data Type Definitions</li>
+        <li class="bullet-list1">Table 5.3.6-1 Additional German Table Definitions</li>
+        <li class="bullet-list1">Table 5.3.7-1 Additional German Profiles</li>
+      </ul>
+      <p>Implementers are responsible for monitoring any changes to the linked tables hosted on the IHE/HL7 Germany wiki.</p>
+      <p>In the linked tables, the light blue highlights mark rows containing differences between the requirements in ITI TF-2b for [ITI-30] and [ITI-31] and German requirements.</p>
+      <p>The Verwendung (optionality) column shows the German requirements, and the requirements from ITI TF-2b have been preserved in parentheses, the Kard. (cardinality) column shows the German requirements, but the requirements form ITI TF-2b are not preserved.</p>
+      <p>All changes are SHALL-level implementation constraints for actors that want to comply with the German National Extensions.</p>
+      <p>For example:</p>
+      <img src="media/a2x1s-kdxll.003.png" width="621" height="228" alt="" />
+      <h4 id="5.3.1.1">5.3.1.1 German Message Profile Architecture</h4>
+      <p>Figure 5.3.1.1-1 demonstrates the overall structure and relationship of the German Message Profiles as a specialization of ITI PAM:</p>
+      <img src="media/a2x1s-kdxll.004.png" width="177" height="207" alt="" />
+      <p class="figureTitle">Figure 5.3.1.1-1: German Message Profiles as a National IHE Extension</p>
+      <p>The detailed architecture is depicted in Figure 5.3.1.1-2:</p>
+      <img src="media/a2x1s-kdxll.005.png" width="586" height="532" alt="" />
+      <p class="figureTitle">Figure 5.3.1.1-2: German Message Profile Architecture</p>
+      <h3 id="5.3.2">5.3.2 German HL7 Message Profiles for PAM</h3>
+      <p>The German HL7 Message Profiles were originally created in German but all relevant details have been translated into English and interleaved in the pages linked in this section.</p>
+      <p>Table 5.3.2-1 provides an overview of the details.</p>
+      <p class="tableTitle">Table 5.3.2-1: Introductory Documents for German HL7 Message Profiles</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">Link</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Document Overview</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Dokumente">http://wiki.hl7.de/index.php/HL7v2-Profile_Dokumente</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Communication Framework</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Rahmen">http://wiki.hl7.de/index.php/HL7v2-Profile_Rahmen</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Common Elements</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_gemeinsame_Elemente">http://wiki.hl7.de/index.php/HL7v2-Profile_gemeinsame_Elemente</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Correction of Identifiers</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Korrekturen_von_Identifikatoren">http://wiki.hl7.de/index.php/Korrekturen_von_Identifikatoren</a>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>To support German National Extensions, the PAM Patient Demographics Supplier, Patient Demographics Consumer, Patient Encounter Supplier, and Patient Encounter Consumer Actors shall support the messages listed in Table 5.3.2-2 and shall support the fields and associated behaviors described in the links in the Message Profile column. Note that some Events in the table are associated with options in the PAM Profile.</p>
+      <p class="tableTitle">Table 5.3.2-2: Detailed German HL7 Message Profiles for PAM</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Event</td>
+            <td class="tableHeader">German HL7 Message Profile</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A01</td>
+            <td>
+              <p>
+                <span>Admission:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Aufnahme">http://wiki.hl7.de/index.php/HL7v2-Profile_Aufnahme</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A02</td>
+            <td>
+              <p>
+                <span>Transfer:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Verlegung">http://wiki.hl7.de/index.php/HL7v2-Profile_Verlegung</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A03</td>
+            <td>
+              <p>
+                <span>Discharge:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Entlassung">http://wiki.hl7.de/index.php/HL7v2-Profile_Entlassung</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A04</td>
+            <td>
+              <p>
+                <span>Patient registration:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Besuchsmeldung">http://wiki.hl7.de/index.php/HL7v2-Profile_Besuchsmeldung</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A05</td>
+            <td>
+              <p>
+                <span>Preadmit patient:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Voraufnahme">http://wiki.hl7.de/index.php/HL7v2-Profile_Voraufnahme</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A06, A07</td>
+            <td>
+              <p>
+                <span>Switch in-/outpatient:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Fallartwechsel">http://wiki.hl7.de/index.php/HL7v2-Profile_Fallartwechsel</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A08</td>
+            <td>
+              <p>
+                <span>Update:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Patient">http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Patient</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A09, A10</td>
+            <td>
+              <p>
+                <span>Patient tracking:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Abwesenheiten_Einrichtung">http://wiki.hl7.de/index.php/HL7v2-Profile_Abwesenheiten_Einrichtung</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A11</td>
+            <td>
+              <p>
+                <span>Cancel Admission:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Aufnahme_Storno">http://wiki.hl7.de/index.php/HL7v2-Profile_Aufnahme_Storno</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A12</td>
+            <td>
+              <p>
+                <span>Cancel Transfer:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Verlegung_Storno">http://wiki.hl7.de/index.php/HL7v2-Profile_Verlegung_Storno</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A13</td>
+            <td>
+              <p>
+                <span>Cancel Discharge:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Entlassung_Storno">http://wiki.hl7.de/index.php/HL7v2-Profile_Entlassung_Storno</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A21, A22</td>
+            <td>
+              <p>
+                <span>Leave of absence:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Abwesenheiten_Urlaub">http://wiki.hl7.de/index.php/HL7v2-Profile_Abwesenheiten_Urlaub</a>
+              </p>
+            </td>
+          </tr>
+          <tr style="height:4.25pt">
+            <td>A31</td>
+            <td>
+              <p>
+                <span>Update Person:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Person">http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Person</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A24, A37</td>
+            <td>
+              <p>
+                <span>Link:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Verknüpfung">http://wiki.hl7.de/index.php/HL7v2-Profile_Verknüpfung</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>A40, A47</td>
+            <td>
+              <p>
+                <span>Update Patient ID:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Patienten-ID">http://wiki.hl7.de/index.php/HL7v2-Profile_Aenderung_Patienten-ID</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Z99</td>
+            <td>
+              <p>
+                <span>Historic Movement:</span>
+                <a href="http://wiki.hl7.de/index.php/HL7v2-Profile_historische_Bewegung">http://wiki.hl7.de/index.php/HL7v2-Profile_historische_Bewegung</a>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="5.3.3">5.3.3 Additional German HL7 Message Profile Components</h3>
+      <p>Implementations may choose to support any of the message components listed in Table 5.3.3-1 but if supported shall support the fields and associated behaviors described in the links in the HL7 Message Profile Component column.</p>
+      <p class="tableTitle">Table 5.3.3-1: Additional German HL7 Message Profile Components PAM</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">German HL7 Message Profile Component</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Insurance smartcard data</td>
+            <td>http://wiki.hl7.de/index.php?title=HL7v2-Profilkomponente_Kartendaten</td>
+          </tr>
+          <tr>
+            <td>Contact Persons</td>
+            <td>http://wiki.hl7.de/index.php?title=HL7v2-Profilkomponente_Kontaktpersonen</td>
+          </tr>
+          <tr>
+            <td>Insurance</td>
+            <td>http://wiki.hl7.de/index.php?title=HL7v2-Profilkomponente_Kostenträger</td>
+          </tr>
+          <tr>
+            <td>Transmission of DRG related data</td>
+            <td>http://wiki.hl7.de/index.php?title=HL7v2-Profilkomponente_DRG-Rohdaten</td>
+          </tr>
+          <tr>
+            <td>Patient Photo (informative)</td>
+            <td>http://wiki.hl7.de/index.php?title=HL7v2-Profilkomponente_Patient_Photo</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="5.3.4">5.3.4 Additional German Segment Definitions</h3>
+      <p>Implementations shall support all the segments listed in Table 5.3.4-1 and shall support the fields and associated behaviors described in the links in the HL7 Message Profile Component column.</p>
+      <p class="tableTitle">Table 5.3.4-1: Additional German Segment Definitions</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Segment</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">HL7 Message Profile Component</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DG1</td>
+            <td>Diagnosis</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_DG1">http://wiki.hl7.de/index.php/Segment_DG1</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ERR</td>
+            <td>Error</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_ERR">http://wiki.hl7.de/index.php/Segment_ERR</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>EVN</td>
+            <td>Event</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_EVN">http://wiki.hl7.de/index.php/Segment_EVN</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>FT1</td>
+            <td>Financial Transaction</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_FT1">http://wiki.hl7.de/index.php/Segment_FT1</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>MRG</td>
+            <td>Merge</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_MRG">http://wiki.hl7.de/index.php/Segment_MRG</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>MSA</td>
+            <td>Message Acknowledgement</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_MSA">http://wiki.hl7.de/index.php/Segment_MSA</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>MSH</td>
+            <td>Message Header</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_MSH">http://wiki.hl7.de/index.php/Segment_MSH</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>IN1</td>
+            <td>Insurance</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_IN1">http://wiki.hl7.de/index.php/Segment_IN1</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>IN2</td>
+            <td>Insurance (Part 2)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_IN2">http://wiki.hl7.de/index.php/Segment_IN2</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>IN3</td>
+            <td>Insurance (Part 3)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_IN3">http://wiki.hl7.de/index.php/Segment_IN3</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>NK1</td>
+            <td>Next of Kin</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_NK1">http://wiki.hl7.de/index.php/Segment_NK1</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>OBR</td>
+            <td>Observation Request</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_OBR">http://wiki.hl7.de/index.php/Segment_OBR</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>OBX</td>
+            <td>Observations</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_OBX">http://wiki.hl7.de/index.php/Segment_OBX</a>
+              </p>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_OBX_(Codes)">http://wiki.hl7.de/index.php/Segment_OBX_(Codes)</a>
+                <span style="text-decoration:underline" />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>PID</td>
+            <td>Patient Identification</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_PID">http://wiki.hl7.de/index.php/Segment_PID</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>PR1</td>
+            <td>Procedures</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_PR1">http://wiki.hl7.de/index.php/Segment_PR1</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>PV1</td>
+            <td>Patient Visit</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_PV1">http://wiki.hl7.de/index.php/Segment_PV1</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>PV2</td>
+            <td>
+              <p>Patient Visit</p>
+              <p>(Addt. Inform.)</p>
+            </td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_PV2">http://wiki.hl7.de/index.php/Segment_PV2</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ROL</td>
+            <td>Role</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_ROL">http://wiki.hl7.de/index.php/Segment_ROL</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>SFT</td>
+            <td>Software</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_SFT">http://wiki.hl7.de/index.php/Segment_SFT</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>TXA</td>
+            <td>Transcription Document Header</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_TXA">http://wiki.hl7.de/index.php/Segment_TXA</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ZBE</td>
+            <td>Movement</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_ZBE">http://wiki.hl7.de/index.php/Segment_ZBE</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ZGK</td>
+            <td>Card Data</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Segment_ZGK">http://wiki.hl7.de/index.php/Segment_ZGK</a>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="5.3.5">5.3.5 Additional German Data Type Definitions</h3>
+      <p>Implementations which send any of the data types listed in Table 5.3.5-1 shall support the fields and associated behaviors described in the links in the HL7 Message Profile Component column.</p>
+      <p class="tableTitle">Table 5.3.5-1: Additional German Data Type Definitions</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Data Type</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">HL7 Message Profile Component</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CE</td>
+            <td>Coded Elements</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:CE">http://wiki.hl7.de/index.php/V25dt:CE</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>CNE</td>
+            <td>Coded No Exceptions</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:CNE">http://wiki.hl7.de/index.php/V25dt:CNE</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>CWE</td>
+            <td>Coded With Exceptions</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:CWE">http://wiki.hl7.de/index.php/V25dt:CWE</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>CX</td>
+            <td>Extended Composite ID Numbers</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:CX">http://wiki.hl7.de/index.php/V25dt:CX</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>DT</td>
+            <td>Date/Time</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:DT">http://wiki.hl7.de/index.php/V25dt:DT</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>Encapsulated Data</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:ED">http://wiki.hl7.de/index.php/V25dt:ED</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>EI</td>
+            <td>Entity Identifier</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:EI">http://wiki.hl7.de/index.php/V25dt:EI</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>FN</td>
+            <td>Family Name (as part of XPN)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XPN">http://wiki.hl7.de/index.php/V25dt:XPN</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>HD</td>
+            <td>Hierarchic Designator</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:HD">http://wiki.hl7.de/index.php/V25dt:HD</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>PPN</td>
+            <td>Performing Person Time Stamp</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:PPN">http://wiki.hl7.de/index.php/V25dt:PPN</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>SAD</td>
+            <td>Street or Address (as part of XAD)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XAD">http://wiki.hl7.de/index.php/V25dt:XAD</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>SI</td>
+            <td>Sequence ID</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:SI">http://wiki.hl7.de/index.php/V25dt:SI</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ST</td>
+            <td>String</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:ST">http://wiki.hl7.de/index.php/V25dt:ST</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>TS</td>
+            <td>Timestamp</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:TS">http://wiki.hl7.de/index.php/V25dt:TS</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>XAD</td>
+            <td>Extended Address</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XAD">http://wiki.hl7.de/index.php/V25dt:XAD</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>XCN</td>
+            <td>Extended Composite ID Number and Name for Persons</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XCN">http://wiki.hl7.de/index.php/V25dt:XCN</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>XON</td>
+            <td>Extended Composite Name and Identification Number for Organization</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XON">http://wiki.hl7.de/index.php/V25dt:XON</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>XPN</td>
+            <td>Person Name</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XPN">http://wiki.hl7.de/index.php/V25dt:XPN</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>XTN</td>
+            <td>Contact</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/V25dt:XTN">http://wiki.hl7.de/index.php/V25dt:XTN</a>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Actors may choose to support any of the messages listed in Table 5.3.2-2 but if supported shall support the fields and associated behaviors described in the links in the HL7 Message Profile Component column.</p>
+      <h3 id="5.3.6">5.3.6 Additional German Table Value Definitions</h3>
+      <p>Table 5.3.6-1 provides an overview about nationally defined tables. Associated table values will be found at the end of the provided link.</p>
+      <p class="tableTitle">Table 5.3.6-1: Additional German Table Definitions</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Table</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">German Descr.</td>
+            <td class="tableHeader">HL7 Message Profile Component</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4902</td>
+            <td>Card Type</td>
+            <td>Kartentyp</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4902%20(Kartentyp)">http://wiki.hl7.de/index.php/Tabelle_4902 (Kartentyp)</a>
+                <span />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4903</td>
+            <td>WOP Indicator</td>
+            <td>WOP-Kennzeichen</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4903%20(WOP-Kennzeichen)">http://wiki.hl7.de/index.php/Tabelle_4903 (WOP-Kennzeichen)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4904</td>
+            <td>Sample Identification</td>
+            <td>Stichproben­zuordnung</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4904%20(Stichprobenzuordnung)">http://wiki.hl7.de/index.php/Tabelle_4904 (Stichprobenzuordnung)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4905</td>
+            <td>Location classification</td>
+            <td>Rechtskreis</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4905%20(Rechtskreis)">http://wiki.hl7.de/index.php/Tabelle_4905 (Rechtskreis)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4906</td>
+            <td>Inpatient Services</td>
+            <td>Stationäre Leistungen</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4906%20(stationäre_Leistungen)">http://wiki.hl7.de/index.php/Tabelle_4906 (stationäre_Leistungen)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4907</td>
+            <td>Indication for specific person groups</td>
+            <td>Kennzeichnung besondere Personen­gruppen</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4907%20(Kennzeichnung_besondere_Personengruppen)">http://wiki.hl7.de/index.php/Tabelle_4907 (Kennzeichnung besondere Personengruppen)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4908</td>
+            <td>Disease management program indicator (eGK)</td>
+            <td>DMP-Kennzeichen (eGK)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4908%20(DMP-Kennzeichnung_eGK)">http://wiki.hl7.de/index.php/Tabelle_4908 (DMP-Kennzeichnung_eGK)</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>4909</td>
+            <td>Disease management program indicator (KVK)</td>
+            <td>DMP-Kennzeichen (KVK)</td>
+            <td>
+              <p>
+                <a href="http://wiki.hl7.de/index.php/Tabelle_4909%20(DMP-Kennzeichnung_KVK)">http://wiki.hl7.de/index.php/Tabelle_4909 (DMP-Kennzeichnung_KVK)</a>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:22pt">
+        <a name="_Toc518908091">Appendices</a>
+      </p>
+      <p> </p>
+      <p>Intentionally left blank.</p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
+  </body>
+</html>

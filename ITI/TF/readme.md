@@ -36,7 +36,7 @@ The conversion is a multi step process consisting of the following steps:
 * replaced DIV with table content, if the DIV only contains the table
 * replaced P with image content, if the P only contains the IMG
 * removed all inline styling of images
-* simplified inline style of TD and TABLE elements 
+* simplified inline style of TD and TABLE elements
 * simplified all P elements which have only 1 SPAN element without style setting.
 * iterated all figure and table captions and add a class for them, to be styled in CSS file      
 * set class in TD elements with THEAD parents to allow global styling
@@ -44,16 +44,17 @@ The conversion is a multi step process consisting of the following steps:
 * level 7 and 8 subsections show up in the toc, index and references (html links)
 * removed inline style of lists and replaced by classes
 * removed "no-break space" characters from headings
-* removed inline style of <p> containing notes and replaced by classes 
+* removed inline style of <p> containing notes and replaced by classes
 * switched to ITI-TF Version 17.0 Final Text
 * solved bug with merge of SPAN elements, if the sequence contains a link
 * removed inline style of A HREF tags
-* Vol 1 Glossary does appear in the TOC and index file 
-* Vol 2 Glossar in vol 2x appears in the TOC and index file 
+* Vol 1 Glossary does appear in the TOC and index file
+* Vol 2 Glossar in vol 2x appears in the TOC and index file
 * removed inline style of A HREF tags
-* made footnote references work 
+* made footnote references work
 * fixed error in Vol2b and Vol2x
-* removed table width style 
+* removed table width style
+* added volume 4
 
 ## Open issues:  
 Footnotes do not appear on the same page they are referenced in. This cannot be easily solved by processing and must be edited manually. 	
@@ -71,11 +72,11 @@ The processing is done afterwards and contains of:
 ### Word issues:
 * some lists have unusual indent (see Vol1 10.2.9 for example)
 * XML Code Listing shall be harmonized: all listings shall have a frame like in 3.40.4.1.2.2.1
-* Volume 2 b, ITI-40 has and bold/underline text. 
+* Volume 2 b, ITI-40 has and bold/underline text.
 * Volume 1, Section 4, EUA has bold/italic text.
 * the HTML converted from word contains all images but in low resolution. These must be replaced by higher resolution images.
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
- 
+
 ### Styling
 - Not defined yet
 
