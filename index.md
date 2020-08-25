@@ -11,7 +11,7 @@
   * etc...
 * Trial Implementation Supplements
   * [Mobile Health Documents (MHD)](ITI/MHD/index.html)
-  * [Global IHE defined FormatCode Vocabulary](ITI/FormatCodes/index.html)
+  * [Global IHE defined FormatCode Vocabulary](fhir/ihe.formatcode.fhir/index.html)
 * White Papers and Handbooks
   * [Enabling Document Sharing Health Information Exchange Using IHE Profiles](https://ihe.github.io/HIE-Whitepaper/)
   * [Survey of Network Interfaces Form (SNIF)](https://ihe.github.io/SNIF/SNIF-Whitepaper.html)
