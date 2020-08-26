@@ -55,9 +55,9 @@ The conversion is a multi step process consisting of the following steps:
 * fixed error in Vol2b and Vol2x
 * removed table width style
 * added volume 4
+* Footnotes moved to inline notes
 
 ## Open issues:  
-Footnotes do not appear on the same page they are referenced in. This cannot be easily solved by processing and must be edited manually. 	
 
 ### Java processing code
 Initial conversion is done with online conversion tool:
