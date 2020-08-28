@@ -221,37 +221,16 @@
       <h5 id="26.4.2.1.2">26.4.2.1.2 Unexpected Notification Process Flow</h5>
       <img src="media/Figure_26.4.2.1.2-1.png"  alt="" />
       <p class="figureTitle">Figure 26.4.2.1.2-1: Interaction Diagram for Unexpected Notification Use Case</p>
-      <p class="note"><a href="media/Figure_26.4.2.1.2-1.pu' alt="">UML source</a></p>
-      <p class="figureTitle">Figure 26.4.2.1.2-2: Websequence diagrams code related to Figure 26.4.2.1.2-1</p>
+      <p class="note"><a href="media/Figure_26.4.2.1.2-1.pu" alt="">UML source for Figure 26.4.2.1.2-1</a></p>
       <h4 id="26.4.2.2">26.4.2.2 Use Case #2: Long-term Subscription</h4>
       <h5 id="26.4.2.2.1">26.4.2.2.1 Long-term Subscription Use Case Description</h5>
       <p>A patient visits his PCP after being discharged from a hospital that belongs to the same XDS Affinity Domain as the provider's organization. The provider sends a query to the XDS Document Registry, and retrieves the hospital discharge summary. The patient also has follow-up visits with a specialist at the hospital, and these visit summaries (including diagnostic test results) are registered in the XDS Document Registry. Currently, the PCP would have to periodically query the Document Registry for documents about the patient in order to retrieve the follow-up visit summaries. With a publish/subscribe infrastructure, the PCP would have a subscription for all his patients, so that notifications would have been received as the summaries were registered in the XDS Document Registry.</p>
       <h5 id="26.4.2.2.2">26.4.2.2.2 Long-term Subscription Process Flow</h5>
       <img src="media/Figure_26.4.2.2.2-1.png"  alt="" />
       <p class="figureTitle">Figure 26.4.2.2.2-1: Interaction Diagram for Long-term Subscription Use Case</p>
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <p>
-              <a name="_Toc237767180">participant "Document \n Metadata \n Publisher" as publisher</a>
-            </p>
-            <p>participant "Document \n Metadata \n Subscriber" as subscriber</p>
-            <p>participant "Document \n Metadata \n Notification \n Broker" as notificationbroker</p>
-            <p>participant "Document \n Metadata \n Notification \n Recipient" as recipient</p>
-            <p>subscriber-&gt;+notificationbroker:Subscribe</p>
-            <p>deactivate notificationbroker</p>
-            <p>publisher-&gt;+notificationbroker:Publish</p>
-            <p>notificationbroker-&gt;+recipient:Notify</p>
-            <p>deactivate notificationbroker</p>
-            <p>deactivate recipient</p>
-            <p>publisher-&gt;+notificationbroker:Publish</p>
-            <p>notificationbroker-&gt;+recipient:Notify</p>
-            <p>deactivate notificationbroker</p>
-            <p>deactivate recipient</p>
-          </td>
-        </tr>
-      </table>
-      <p class="figureTitle">Figure 26.4.2.2.2-2: Websequence diagram code related to Figure 26.4.2.2.2-1</p>
+      <p class="note"><a href="media/Figure_26.4.2.2.2-1.pu" alt="">UML source for Figure 26.4.2.2.2-1</a></p>
+  Figure 26.4.2.2.2-1 UML source
+      </p>
       <h4 id="26.4.2.3">26.4.2.3 Use Case #3: Antepartum Record Availability</h4>
       <h5 id="26.4.2.3.1">26.4.2.3.1 Long-term Subscription Use Case Description</h5>
       <p>From the set of Antepartum Record Profiles in the PCC domain:</p>
@@ -268,62 +247,7 @@
         <span />
       </p>
       <p class="figureTitle">Figure 26.4.2.3.2-1: Interaction diagram for Long-term Subscription Use Case</p>
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <p>participant "Document \n Consumer" as consumer</p>
-            <p>participant "Notification \n Recipient" as recipient</p>
-            <p>participant "Subscriber" as subscriber</p>
-            <p>participant "EHR" as ehr</p>
-            <p>participant "Integrated \n Publisher/ \n Notification \n Broker" as notificationbroker</p>
-            <p>participant "Document \n Registry" as registry</p>
-            <p>participant "Document \n Repository" as repository</p>
-            <p>participant "Document \n Source" as source</p>
-            <p>note over consumer, recipient, subscriber,ehr:</p>
-            <p>Hospital EHR - Dept. of</p>
-            <p>Labor and Delivery</p>
-            <p>end note</p>
-            <p>note over notificationbroker, registry, repository:</p>
-            <p>HIE</p>
-            <p>end note</p>
-            <p>note over source:</p>
-            <p>OBGYN Office</p>
-            <p>EHR</p>
-            <p>end note</p>
-            <p>source-&gt;+repository:Initial ObGyn visit summary \n Provide an Register \n [ITI-41]</p>
-            <p>repository-&gt;+registry:Register \n [ITI-42]</p>
-            <p>deactivate repository</p>
-            <p>deactivate registry</p>
-            <p>ehr-&gt;+ehr:Future mother entered in \n system for upcoming \n labor and delivery</p>
-            <p>deactivate ehr</p>
-            <p>subscriber-&gt;+notificationbroker:Subscribe for this patient ID \n Document Metadata Subscribe \n [ITI-52]</p>
-            <p>deactivate notificationbroker</p>
-            <p>consumer-&gt;+registry:Initial Stored Query for existing document about this patient [ITI-18]</p>
-            <p>deactivate registry</p>
-            <p>consumer-&gt;+repository:Retrieve Document Set as a result of Initial Stored Query [ITI-43]</p>
-            <p>deactivate repository</p>
-            <p>source-&gt;+repository:Subsequent ObGyn visit \n summary Provide and \n Register [ITI-41]</p>
-            <p>repository-&gt;+registry:Register [ITI-42]</p>
-            <p>registry--&gt;+notificationbroker:Internal \n interaction</p>
-            <p>notificationbroker-&gt;+recipient:Notification of new document(s) \n being available \n Document Metadata Notify [ITI-53]</p>
-            <p>recipient--&gt;+consumer:Internal \n interaction</p>
-            <p>consumer-&gt;repository:Retrieve Document Set as a result of the Notify [ITI-53] \n [ITI-43]</p>
-            <p>deactivate repository</p>
-            <p>deactivate registry</p>
-            <p>deactivate notificationbroker</p>
-            <p>deactivate recipient</p>
-            <p>deactivate consumer</p>
-            <p>note over consumer, recipient, subscriber, EHR, notificationbroker, registry, repository, source</p>
-            <p>Multiple new documents may become available, repeating these steps</p>
-            <p>end note</p>
-            <p>ehr-&gt;+ehr:Successful \n delivery</p>
-            <p>deactivate ehr</p>
-            <p>subscriber-&gt;+notificationbroker:Unsubscribe [ITI-52]</p>
-            <p>deactivate notificationbroker</p>
-          </td>
-        </tr>
-      </table>
-      <p class="figureTitle">Figure 26.4.2.3.2-2: Websequence diagram code related to Figure 26.4.2.3.2-1</p>
+      <p class="note"><a href="media/Figure_26.4.2.3.2-1.pu" alt="">UML source for Figure 26.4.2.3.2-1</a></p>
       <p>The above interaction diagram is showing a grouping of a Document Consumer, a Document Metadata Notification Recipient, and a Document Metadata Subscriber on one side, and a grouping of a Document Registry, a Document Repository and an Integrated Document Metadata Publisher/Notification Broker on the other side. The emphasized transactions are described in this profile, while the interactions with the grouped XDS actors are also shown. Note that the grouping presented here is not required.</p>
       <h4 id="26.4.2.4">26.4.2.4 Use Case #4: Targeted Document Publication</h4>
       <p>In this use case, a system desires to subscribe to a submissionSet with a specific intended recipient of clinical information. A source of clinical content can identify the intended target for a submissionSet using the XDSSubmissionSet.IntendedRecipient metadata attribute.</p>
@@ -334,45 +258,7 @@
       <h5 id="26.4.2.4.2">26.4.2.4.2 Targeted Document Publication Process Flow</h5>
       <img src="media/Figure_26.4.2.4.2-1.png"  alt="" />
       <p class="figureTitle">Figure 26.4.2.4.2-1: Interaction Diagram for IntendedRecipient subscription</p>
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <p>
-              <a name="_Toc228781996">participant "Document \n Metadata \n Subscriber" as subscriber</a>
-            </p>
-            <p>participant "Document \n Metadata \n Notification \n Recipient" as recipient</p>
-            <p>participant "Document \n Consumer" as consumer</p>
-            <p>participant "Document \n Source" as source</p>
-            <p>participant "Integrated \n Publisher/ \n Notification \n Broker" as notificationbroker</p>
-            <p>participant "XDS \n Document \n Registry" as registry</p>
-            <p>participant "XDS \n Document \n Repository" as repository</p>
-            <p>note over subscriber, recipient, consumer:</p>
-            <p>Clinician EMR</p>
-            <p>end note</p>
-            <p>note over source:</p>
-            <p>Laboratory \n Information \n System</p>
-            <p>end note</p>
-            <p>note over notificationbroker, registry, repository:</p>
-            <p>RHIO</p>
-            <p>end note</p>
-            <p>subscriber-&gt;+notificationbroker:Document Metadata Subscribe [ITI-52] \n Parameters: PatientID=Mr.White, intendedRecipient=Dr.Brown</p>
-            <p>deactivate notificationbroker</p>
-            <p>source-&gt;+repository:Provide and Register Document Set-b [ITI-41] \n metadata: submissionSet.intendedRecipient=Dr.Brown</p>
-            <p>repository-&gt;+registry:Register Document Set-b [ITI-42]</p>
-            <p>registry--&gt;+notificationbroker:Internal transaction</p>
-            <p>notificationbroker-&gt;+recipient:Document Metadata Notify [ITI-53]</p>
-            <p>recipient--&gt;+consumer:Internal transaction</p>
-            <p>consumer-&gt;registry:Registry Stored Query [ITI-18]</p>
-            <p>consumer-&gt;repository:Retrieve Document Set-b [ITI-43]</p>
-            <p>deactivate repository</p>
-            <p>deactivate registry</p>
-            <p>deactivate notificationbroker</p>
-            <p>deactivate recipient</p>
-            <p>deactivate consumer</p>
-          </td>
-        </tr>
-      </table>
-      <p class="figureTitle">Figure 26.4.2.4.2-2: Websequence diagram code related to Figure 26.4.2.4.2-1</p>
+      <p class="note"><a href="media/Figure_26.4.2.4.2-1.pu" alt="">UML source for Figure 26.4.2.4.2-1</a></p>
       <h4 id="26.4.2.5">26.4.2.5 Use Case #5: Workflow Id subscription</h4>
       <p>In this use case a clinician creates a subscription for a specific instance of workflow (e.g., eReferral Workflow) because he wants to be notified of any updates that occurred to the workflow. The workflow Id is stored in the metadata XDSDocumentEntry.ReferenceIdList.</p>
       <h5 id="26.4.2.5.1">26.4.2.5.1 Workflow Id subscription Use Case Description</h5>
@@ -386,56 +272,7 @@
       <h5 id="26.4.2.5.2">26.4.2.5.2 Workflow Id subscription Process Flow</h5>
       <img src="media/Figure_26.4.2.5.2-1.png"  alt="" />
       <p class="figureTitle">Figure 26.4.2.5.2-1: Interaction Diagram for Workflow Id subscription Use Case</p>
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <p>
-              <a name="_Toc488075136">participant "Document \n Metadata \n Subscriber \n ------------------ \n Document \n Metadata \n Notification \n Recipient" as subscriberrecipient</a>
-            </p>
-            <p>participant "Document \n Consumer \n ------------------ \n XDW Content \n Consumer" as consumerXDW</p>
-            <p>participant "Document \n Source \n (EHR)" as sourceEHR</p>
-            <p>participant "XDW Content \n Creator" as XDWcreator</p>
-            <p>participant "Document \n Consumer" as documentconsumer</p>
-            <p>participant "XDW Content \n Updater" as XDWupdater</p>
-            <p>participant "Document Source \n (HIS)" as sourceHIS</p>
-            <p>participant "Document \n Repository" as documentrepository</p>
-            <p>participant "Document \n Registry \n ---------------- \n Document \n Metadata \n Notification \n Broker" as registrynotificationbroker</p>
-            <p>note over subscriberrecipient, consumerXDW, sourceEHR, XDWcreator</p>
-            <p>Clinician EHR</p>
-            <p>end note</p>
-            <p>note over documentconsumer, XDWupdater, sourceHIS</p>
-            <p>HIS</p>
-            <p>end note</p>
-            <p>note over documentrepository, registrynotificationbroker</p>
-            <p>Regional EHR</p>
-            <p>end note</p>
-            <p>XDWcreator--&gt;+sourceEHR:Internal Transaction</p>
-            <p>sourceEHR-&gt;+documentrepository:[ITI-41] Provide and Register Document Set-b \n (WD, eReferral)</p>
-            <p>documentrepository-&gt;+registrynotificationbroker:[ITI-42] Register Document Set-b</p>
-            <p>subscriberrecipient-&gt;registrynotificationbroker:[ITI-52] Document Metadata Subscribe ($DocumentEntryReferenceIdList=workflow Id)</p>
-            <p>deactivate sourceEHR</p>
-            <p>deactivate documentrepository</p>
-            <p>deactivate registrynotificationbroker</p>
-            <p>XDWupdater--&gt;+sourceHIS:Internal Transaction</p>
-            <p>sourceHIS-&gt;+documentrepository:[ITI-41] Provide and Register \n Document Set-b \n (WD, Report)</p>
-            <p>documentrepository-&gt;+registrynotificationbroker:[ITI-42] Register Document Set-b</p>
-            <p>registrynotificationbroker-&gt;+subscriberrecipient:[ITI-53] Document Metadata Notify</p>
-            <p>deactivate sourceHIS</p>
-            <p>deactivate documentrepository</p>
-            <p>deactivate registrynotificationbroker</p>
-            <p>deactivate subscriberrecipient</p>
-            <p>consumerXDW-&gt;+registrynotificationbroker:[ITI-18] Registry Stored Query (FindDocumentsByReferenceId)</p>
-            <p>deactivate registrynotificationbroker</p>
-            <p>consumerXDW-&gt;+documentrepository:[ITI-43] Retrieve Document Set-b</p>
-            <p>deactivate documentrepository</p>
-            <p>consumerXDW-&gt;+registrynotificationbroker:[ITI-18] Registry Stored Query (GetDocuments)</p>
-            <p>deactivate registrynotificationbroker</p>
-            <p>consumerXDW-&gt;+documentrepository:[ITI-43] Retrieve Document Set-b</p>
-            <p>deactivate documentrepository</p>
-          </td>
-        </tr>
-      </table>
-      <p class="figureTitle">Figure 26.4.2.5.2-2: Websequence diagram code related to Figure 26.4.2.5.2-1</p>
+      <p class="note"><a href="media/Figure_26.4.2.5.2-1.pu" alt="">UML source for Figure 26.4.2.5.2-1</a></p>
       <h2 id="26.5">26.5 DSUB Security Considerations</h2>
       <p>
         <span>The risk analysis for this profile enumerates assets, threats, and mitigations. The risk assessment spreadsheet is stored and available from IHE at</span>
