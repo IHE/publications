@@ -1,0 +1,2070 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF General Introduction</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body xmlns="">
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, General Introduction</p>
+      <p>Revision 1.2 October 25, 2019</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1>Appendix E – Standards Profiling and Documentation Conventions</h1>
+      <h2 id="E.1">E.1 Introduction</h2>
+      <p>The sections in this appendix describe the documentation conventions used by IHE to profile various standards.</p>
+      <h2 id="E.2">E.2 Profiling DICOM</h2>
+      <p>The required behaviors for DICOM Type 2 attributes are sometimes misunderstood by implementers. IHE emphasizes that DICOM Type 2 attributes (for instance, Patient Name, Patient ID) shall be transmitted with zero length if the source system does not possess valid values for such attributes; in other words, the source system shall not assign default values to such attributes. The receiving system must be able to handle zero-length values for such attributes.</p>
+      <p>Matching keys are used to select instances for inclusion in the response by the query SCP to the SCU, whereas return keys only return specific data and are not used for matching. In some transactions, IHE explicitly strengthens requirements, e.g. by making an attribute required although it is optional in DICOM. IHE Transaction specifications (typically found in Volume 2 of a Technical Framework) use the notation shown below in Matching and Return Key Tables.</p>
+      <p>IHE requires the following behaviors for query services such as Query/Retrieve and Worklist Management:</p>
+      <ul>
+        <li class="bullet-list1">DICOM Query SCUs shall have the ability to offer each Required Matching Key to its user as selection criteria.</li>
+        <li class="bullet-list1">DICOM Query SCUs shall have the ability to display the values of Required Return Keys to the user.</li>
+        <li class="bullet-list1">DICOM Query SCPs shall process IHE-Required Return Keys that are Type 3 in the DICOM IOD as if they were Type 2.</li>
+      </ul>
+      <p>Query Key Requirement Tables in the framework use the following legend to specify requirements for SCUs and SCPs:</p>
+      <p>
+        <span>R</span>
+        <span style="width:28pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Required</span>
+      </p>
+      <p>
+        <span>O</span>
+        <span style="width:27.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Optional</span>
+      </p>
+      <p>The following modifiers are also used:</p>
+      <p>
+        <span>R+</span>
+        <span style="width:21.23pt;text-indent:0pt;display:inline-block"> </span>
+        <span>The Requirement is an IHE extension of the DICOM requirements</span>
+      </p>
+      <p>
+        <span>R*</span>
+        <span style="width:22pt;text-indent:0pt;display:inline-block"> </span>
+        <span>The attribute is required, but does not have to be displayed</span>
+      </p>
+      <p>Table E.2-1 provides an example table defining matching and return keys. Short notes on usage can be put in the Notes column of the table. Longer notes should be numbered, put under the table, and referenced from the Notes column.</p>
+      <p style="font-size:11pt">
+        <span style="font-weight:bold">Table E.2-1: Images Query Matching and Return Keys</span>
+        <span style="width:8.65pt;display:inline-block"> </span>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td rowspan="2" class="tableHeader">Attributes Name</td>
+          <td rowspan="2" class="tableHeader">Tag</td>
+          <td colspan="2" class="tableHeader">Query Keys Matching</td>
+          <td colspan="2" class="tableHeader">Query Keys Return</td>
+          <td rowspan="2" class="tableHeader">Notes</td>
+        </tr>
+        <tr>
+          <td style="background-color:#d8d8d8">SCU</td>
+          <td style="background-color:#d8d8d8">SCP</td>
+          <td style="background-color:#d8d8d8">SCU</td>
+          <td style="background-color:#d8d8d8">SCP</td>
+        </tr>
+        <tr>
+          <td>Scheduled Human Performers Sequence</td>
+          <td>(0040,4034)</td>
+          <td>R+</td>
+          <td>R</td>
+          <td>R+*</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;Human Performer Code Sequence</td>
+          <td>(0040,4009)</td>
+          <td>R+</td>
+          <td>R</td>
+          <td>R+*</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;&gt;Code Value</td>
+          <td>(0008,0100)</td>
+          <td>R+</td>
+          <td>R</td>
+          <td>R+*</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;&gt;Coding Scheme Designator</td>
+          <td>(0008,0102)</td>
+          <td>R+</td>
+          <td>R</td>
+          <td>R+*</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;&gt;Code Meaning</td>
+          <td>(0008,0104)</td>
+          <td>-</td>
+          <td>-</td>
+          <td>R+</td>
+          <td>R</td>
+          <td>Query Keys Matching SCU or SCP do not use the Code Meaning values (“-“).</td>
+        </tr>
+        <tr>
+          <td>&gt;Human Performer's Name</td>
+          <td>(0040,4037)</td>
+          <td>R+</td>
+          <td>R+</td>
+          <td>R+</td>
+          <td>R+</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;Human Performer's Organization</td>
+          <td>(0040,4036)</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>R+</td>
+          <td />
+        </tr>
+        <tr>
+          <td>Referenced Study Component Sequence</td>
+          <td>(0008,1111)</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;Referenced SOP Class UID</td>
+          <td>(0008,1150)</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>&gt;Referenced SOP Instance UID</td>
+          <td>(0008,1155)</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>R</td>
+          <td />
+        </tr>
+        <tr>
+          <td>Input Information Sequence</td>
+          <td>(0040,4021)</td>
+          <td>O</td>
+          <td>O</td>
+          <td>R+*</td>
+          <td>R</td>
+          <td />
+        </tr>
+      </table>
+      <p class="note">Note: This is a sample note for the purpose of illustration.</p>
+      <h2 id="E.3">E.3 Profiling HL7</h2>
+      <p>The HL7 tables included in IHE Technical Framework documents have been modified from the HL7 2.5 standard document (unless otherwise noted). Such a modification is called a profile. Refer to the HL7 2.5 standard for the meanings of specific columns in the table.</p>
+      <p>The profiling tables in Technical Framework documents leverage the ongoing HL7 profile definition. The conventions used in IHE Technical Frameworks extend or differ from HL7 profile definitions as follows:</p>
+      <ul>
+        <li class="bullet-list1">Do not indicate the cardinality of message segments in a message specification.</li>
+        <li class="bullet-list1">Do not indicate the size of individual components in fields composed of multiple components.</li>
+        <li class="bullet-list1">Do not indicate the number of times a repeating field can repeat.</li>
+        <li class="bullet-list1">Do not define the conditions that would require inclusion of conditional fields when they depend on functional characteristics of the system implementing the transaction and they do not affect data consistency.</li>
+      </ul>
+      <p>Where a table containing enumerated values is referenced from within a segment profile table, the enumerated values table is not always present.</p>
+      <p>The following terms refer to the OPT column, which has been profiled:</p>
+      <p>
+        <span>R</span>
+        <span style="width:28pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Required</span>
+      </p>
+      <p>
+        <span>R2</span>
+        <span style="width:22pt;text-indent:0pt;display:inline-block"> </span>
+        <span>This is an IHE extension. If the sending application has data for the field, it is required to populate the field. If the value is not known, the field may not be sent.</span>
+      </p>
+      <p>
+        <span>R+</span>
+        <span style="width:21.23pt;text-indent:0pt;display:inline-block"> </span>
+        <span>This is an IHE extension. This is a field that IHE requires that was listed as optional within the HL7 standard.</span>
+      </p>
+      <p>
+        <span>O</span>
+        <span style="width:27.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Optional</span>
+      </p>
+      <p>
+        <a name="OLE_LINK2">
+          <span>C</span>
+          <span style="width:28pt;text-indent:0pt;display:inline-block"> </span>
+        </a>
+        <span>Conditional</span>
+      </p>
+      <p>IHE requires that Z-segments be present in HL7 transactions only when explicitly provided for within the associated IHE message profile specification. According to the HL7 standard, if the value of a field is not present, the receiver shall not change corresponding data in its database. However, if sender includes explicit NULL value (i.e., two double-quotes “”), it shall cause removal of any values for that field in the receiver’s database.</p>
+      <p>Table E.3-1 provides a sample profile for an imaginary HL7 segment. Tables for real segments are copied from the HL7 2.5 standard with modifications made only to the OPT column.</p>
+      <p class="tableTitle">Table E.3-1: Sample HL7 Profile</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">SEQ</td>
+            <td class="tableHeader">LEN</td>
+            <td class="tableHeader">DT</td>
+            <td class="tableHeader">OPT</td>
+            <td class="tableHeader">TBL#</td>
+            <td class="tableHeader">ITEM #</td>
+            <td class="tableHeader">ELEMENT NAME</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>ST</td>
+            <td>R</td>
+            <td />
+            <td>xx001</td>
+            <td>Element 1</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>ST</td>
+            <td>O</td>
+            <td />
+            <td>xx002</td>
+            <td>Element 2</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R2</td>
+            <td />
+            <td>xx003</td>
+            <td>Element 3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>C</td>
+            <td />
+            <td>xx004</td>
+            <td>Element 4</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>O</td>
+            <td />
+            <td>xx005</td>
+            <td>Element 5</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R+</td>
+            <td />
+            <td>xx006</td>
+            <td>Element 6</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a name="_Toc301458231"> </a>
+      </p>
+      <h3 id="E.3.1">E.3.1 HL7 Message Profiling Convention</h3>
+      <p>The messages used by each transaction are described in this document using static definitions as described for HL7 constrainable message profiles; refer to HL7 Version 2.5, Chapter 2, Section 2.12.6. The static definition of each message is represented within tables. The message level table represents the IHE-constrained message structure with its list of usable segments. The segment level table represents the IHE-constrained content of one segment with its usable fields.</p>
+      <h4 id="E.3.1.1">E.3.1.1 Static definition – Message level</h4>
+      <p>The message table representing the static definition contains 5 columns:</p>
+      <p>
+        <span style="font-weight:bold">Segment</span>
+        <span>: gives the segment name, and places the segment within the hierarchy of the message structure designed by HL7, but hiding the traditional square brackets and braces that designate optionality and repeatability in HL7 standard message tables. The beginning and end lines of a segment group (see HL7 Version 2.5, Chapter 2, Section 2.5.2 for definition) are designated in this column by --- (3 dashes).</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Meaning</span>
+        <span>: Meaning of the segment as defined by HL7. The beginning of a segment group is designated by one line in this column giving the segment group name in all caps, prefixed by --- (3 dashes), and followed by the keyword “begin”. The end of a segment group is designated by one line in this column giving the segment group name in all caps, prefixed by --- (3 dashes), and followed by the keyword “end”.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Usage</span>
+        <span>: Coded usage of the segment, in the context of this IHE Integration Profile. The coded values used in this column are:</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">R</span>
+        <span>:</span>
+        <span style="width:24pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Required: A compliant sending application shall populate all "R" elements with a non-empty value. A compliant receiving application may ignore the information conveyed by required elements. A compliant receiving application shall not raise an error due to the presence of a required element but may raise an error due to the absence of a required element.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">RE</span>
+        <span>:</span>
+        <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Required but may be empty. The element may be missing from the message but shall be sent by the sending application if there is relevant data. A conformant sending application shall be capable of providing all "RE" elements. If the conformant sending application knows a value for the element, then it shall send that value. If the conformant sending application does not know a value, then that element may be omitted.</span>
+        <br />
+        <span>Receiving applications may ignore data contained in the element but shall be able to successfully process the message if the element is omitted (no error message should be generated if the element is missing).</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">O</span>
+        <span>:</span>
+        <span style="width:20.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Optional. The usage for this field within the message is not defined. The sending application may choose to populate the field; the receiving application may choose to ignore the field.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">C</span>
+        <span>:</span>
+        <span style="width:21pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Conditional. This usage has an associated condition predicate. (See HL7 Version 2.5, Chapter 2, Section 2.12.6.6, "Condition Predicate".)</span>
+        <br />
+        <span>If the predicate is satisfied: A compliant sending application shall populate the element. A compliant receiving application may ignore data in the element. It may raise an error if the element is not present.</span>
+        <br />
+        <span>If the predicate is NOT satisfied: A compliant sending application shall NOT populate the element. A compliant receiving application shall NOT raise an error if the condition predicate is false and the element is not present, though it may raise an error if the element IS present.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">CE</span>
+        <span>:</span>
+        <span style="width:16pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Conditional but may be empty. This usage has an associated condition predicate. (See HL7 Version 2.5, Chapter 2, Section 2.12.6.6, "Condition Predicate".)</span>
+        <br />
+        <span>If the predicate is satisfied: If the conforming sending application knows the required values for the element, then the application must populate the element. If the conforming sending application does not know the values required for this element, then the element shall be omitted. The conforming sending application must be capable of populating the element (when the predicate is true) for all ‘CE’ elements. If the element is present, the conformant receiving application may ignore the values of that element. If the element is not present, the conformant receiving application shall not raise an error due to the presence or absence of the element.</span>
+        <br />
+        <span>If the predicate is NOT satisfied: The conformant sending application shall not populate the element. The conformant receiving application may raise an application error if the element is present.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">X</span>
+        <span>:</span>
+        <span style="width:21pt;text-indent:0pt;display:inline-block"> </span>
+        <span>Not supported. For conformant sending applications, the element will not be sent. Conformant receiving applications may ignore the element if it is sent or may raise an application error.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">Cardinality</span>
+        <span>: Within square brackets, minimum and maximum number of occurrences authorized for this segment in the context of this Integration Profile.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">HL7 chapter</span>
+        <span>: Reference of the HL7 v2.5 chapter that describes this segment.</span>
+      </p>
+      <h4 id="E.3.1.2">E.3.1.2 Static definition – Segment level and Data Type level</h4>
+      <p>The Segment table and the Data Type table each contain 8 columns:</p>
+      <ol>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">SEQ</span>
+          <span>: Position (sequence) of the field within the segment.</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">LEN</span>
+          <span>: Maximum length of the field</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">DT</span>
+          <span>: Field Data Type</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">Usage</span>
+          <span>: Usage of the field within this IHE Integration Profile. Same coded values as in the message level: R, RE, C, CE, O, X.</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">Cardinality</span>
+          <span>: Minimum and maximum number of occurrences for the field in the context of this Integration Profile.</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">TBL#</span>
+          <span>: Table reference (for fields using a set of defined values)</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">ITEM#</span>
+          <span>: HL7 unique reference for this field</span>
+        </li>
+        <li class="numbered-list1">
+          <span style="font-weight:bold">Element Name</span>
+          <span>: Name of the field in a Segment table. / Component Name: Name of a subfield in a Data Type table.</span>
+        </li>
+      </ol>
+      <p class="tableTitle">Table E.3.1.2-1 Example: The MSH segment description</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">SEQ</td>
+            <td class="tableHeader">LEN</td>
+            <td class="tableHeader">DT</td>
+            <td class="tableHeader">Usage</td>
+            <td class="tableHeader">Card.</td>
+            <td class="tableHeader">TBL#</td>
+            <td class="tableHeader">ITEM#</td>
+            <td class="tableHeader">Element name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>ST</td>
+            <td>R</td>
+            <td>[1..1]</td>
+            <td />
+            <td>00001</td>
+            <td>Field Separator</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>ST</td>
+            <td>R</td>
+            <td>[1..1]</td>
+            <td />
+            <td>00002</td>
+            <td>Encoding characters</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>227</td>
+            <td>HD</td>
+            <td>R</td>
+            <td>[1..1]</td>
+            <td>0361</td>
+            <td>00003</td>
+            <td>Sending Application</td>
+          </tr>
+          <tr>
+            <td>…</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="E.3.2">E.3.2 HL7 Implementation Notes</h3>
+      <h4 id="E.3.2.1">E.3.2.1 Network Guidelines</h4>
+      <p>The HL7 2.5 standard does not define a network communications protocol. Beginning with HL7 2.2, the definitions of lower layer protocols were moved to the Implementation Guide but are not HL7 requirements. The IHE Framework makes these recommendations:</p>
+      <p>Applications shall use the Minimal Lower Layer Protocol defined in Appendix C of the HL7 Implementation Guide.</p>
+      <p>An initiating application that wants to send a message (initiate a transaction) will initiate a network connection to start the transaction. The receiver application will respond with an acknowledgement or response to query over the open connection. The initiating application can initiate a new transaction on the same connection. However, the initiating application must be able to handle cases where the connection has been closed due to possible timeout by the accepting application. For example, if the initiating application does not submit a request over the connection in a timely manner, the accepting application has the right to close the connection. When this condition is detected, the initiating application needs to open a new connection for subsequent requests.</p>
+      <h4 id="E.3.2.2">E.3.2.2 Message Control</h4>
+      <p>According to the HL7 standard, each message shall begin with the MSH (message header) segment. Table E.3.2.2-1 identifies all required fields in this message. This table shall be interpreted according to the HL7 Standard unless otherwise noted.</p>
+      <p class="tableTitle">Table E.3.2.2-1: IHE Profile - MSH segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">SEQ</td>
+            <td class="tableHeader">LEN</td>
+            <td class="tableHeader">DT</td>
+            <td class="tableHeader">OPT</td>
+            <td class="tableHeader">TBL#</td>
+            <td class="tableHeader">ITEM #</td>
+            <td class="tableHeader">Element Name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>ST</td>
+            <td>R</td>
+            <td />
+            <td>00001</td>
+            <td>Field Separator</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>ST</td>
+            <td>R</td>
+            <td />
+            <td>00002</td>
+            <td>Encoding Characters</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R+</td>
+            <td />
+            <td>00003</td>
+            <td>Sending Application</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R+</td>
+            <td />
+            <td>00004</td>
+            <td>Sending Facility</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R+</td>
+            <td />
+            <td>00005</td>
+            <td>Receiving Application</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>R+</td>
+            <td />
+            <td>00006</td>
+            <td>Receiving Facility</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>26</td>
+            <td>TS</td>
+            <td>R</td>
+            <td />
+            <td>00007</td>
+            <td>Date/Time Of Message</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>40</td>
+            <td>ST</td>
+            <td>O</td>
+            <td />
+            <td>00008</td>
+            <td>Security</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>13</td>
+            <td>CM</td>
+            <td>R</td>
+            <td>0076/ 0003</td>
+            <td>00009</td>
+            <td>Message Type</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>20</td>
+            <td>ST</td>
+            <td>R</td>
+            <td />
+            <td>00010</td>
+            <td>Message Control ID</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>3</td>
+            <td>PT</td>
+            <td>R</td>
+            <td />
+            <td>00011</td>
+            <td>Processing ID</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>60</td>
+            <td>VID</td>
+            <td>R</td>
+            <td>0104</td>
+            <td>00012</td>
+            <td>Version ID</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>15</td>
+            <td>NM</td>
+            <td>O</td>
+            <td />
+            <td>00013</td>
+            <td>Sequence Number</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>180</td>
+            <td>ST</td>
+            <td>O</td>
+            <td />
+            <td>00014</td>
+            <td>Continuation Pointer</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>2</td>
+            <td>ID</td>
+            <td>O</td>
+            <td>0155</td>
+            <td>00015</td>
+            <td>Accept Acknowledgment Type</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>2</td>
+            <td>ID</td>
+            <td>O</td>
+            <td>0155</td>
+            <td>00016</td>
+            <td>Application Acknowledgment Type</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>3</td>
+            <td>ID</td>
+            <td>O</td>
+            <td>0399</td>
+            <td>00017</td>
+            <td>Country Code</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>16</td>
+            <td>ID</td>
+            <td>C</td>
+            <td>0211</td>
+            <td>00692</td>
+            <td>Character Set</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>250</td>
+            <td>CE</td>
+            <td>O</td>
+            <td />
+            <td>00693</td>
+            <td>Principal Language Of Message</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>20</td>
+            <td>ID</td>
+            <td>O</td>
+            <td>0356</td>
+            <td>01317</td>
+            <td>Alternate Character Set Handling Scheme</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>427</td>
+            <td>E1</td>
+            <td>O</td>
+            <td />
+            <td>01598</td>
+            <td>Message Profile Identifier (See Note 1)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Adapted from the HL7 Standard, version 2.5 and version 2.3.1</p>
+      <p class="note">Note 1: This element is only applicable in HL7 version 2.5 and later and thus is only applicable for those transactions based on HL7 v2.5 and later.</p>
+      <p>
+        <span>The IHE IT Infrastructure Technical Framework requires that applications support HL7-recommended values for the fields</span>
+        <span style="font-style:italic">MSH-1-Field Separator</span>
+        <span>and</span>
+        <span style="font-style:italic">MSH-2-Encoding Characters</span>
+        <span>.</span>
+      </p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">MSH-18-Character Set</span>
+        <span>shall only be valued if the message utilizes character sets other than ISO IR-6, also known as ASCII.</span>
+      </p>
+      <p>
+        <span>Implementations supporting sequence number protocol (and using the field</span>
+        <span style="font-style:italic">MSH-13-Sequence Number)</span>
+        <span>shall be configurable to allow them to perform transactions without such protocol.</span>
+      </p>
+      <p>In messages conforming to an IHE Transaction using HL7 v2.5 and later, it is recommended that field MSH-21-Message Profile Identifier contain one field repetition with a value representing the IHE transaction identifier, in the form “&lt;domain&gt;-&lt;transaction number&gt;^IHE” (e.g., “ITI-10^IHE”). Other field repetitions may be present with global (HL7-registered), vendor specific, and/or realm specific message profile IDs.</p>
+      <h4 id="E.3.2.3">E.3.2.3 Acknowledgment Modes</h4>
+      <p>IHE supports both Acknowledgement Modes specified in HL7 standard v2.5 (see HL7 Standard, Section 2.9 “Message Processing Rules”): Original Acknowledgement Mode and Enhanced Acknowledgement Mode.</p>
+      <p>An IHE transaction which uses HL7 messages will explicitly include the requirement for enhanced mode if used. If no such statement is specified, the transaction shall use only original mode.</p>
+      <p>This section specifies the common structure of the Application Level Acknowledgement Message in the Original Mode (called Application ACK Message for short), and the Commit Acknowledgement Message in the Enhanced Mode (called Commit ACK Message for short).</p>
+      <p>The Application Level Acknowledgement Message in the Enhanced Mode contains the application-specific content and shall be explicitly specified in the corresponding transaction which requires it. A transaction can, however, refer to the Application ACK Message specified in this section as its Application Level Acknowledgement Message in the enhanced mode if it is suitable.</p>
+      <p class="tableTitle">Table E.3.2.3-1: Common ACK static definition:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tableHeader">Segment</td>
+          <td class="tableHeader">Meaning</td>
+          <td class="tableHeader">Usage</td>
+          <td class="tableHeader">Card.</td>
+          <td class="tableHeader">HL7 chapter</td>
+        </tr>
+        <tr>
+          <td>MSH</td>
+          <td>Message Header</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>MSA</td>
+          <td>Message Acknowledgement</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>ERR</td>
+          <td>Error</td>
+          <td>C</td>
+          <td>[0..*]</td>
+          <td>2</td>
+        </tr>
+      </table>
+      <p>In the original mode, the ACK message conveys application errors (if any) detailed by the receiving application.</p>
+      <p>The receiving application shall reject an incoming message, if it does not recognize either the message type (MSH-9.1) or the trigger event (MSH-9.2).</p>
+      <p>
+        <span>In the Application ACK message, this is an application-rejection, and field MSA-1 of the acknowledgement shall contain the value</span>
+        <span style="font-weight:bold">AR</span>
+        <span>.</span>
+      </p>
+      <p>In the Commit ACK message, this is a commit-rejection, and Field MSA-1 of the acknowledgement shall contain the value CR.</p>
+      <p>The components of Field ERR-2 of the acknowledgement shall be populated as follows:</p>
+      <p>
+        <span>ERR-2.1:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">MSH</span>
+      </p>
+      <p>
+        <span>ERR-2.2:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">1</span>
+      </p>
+      <p>
+        <span>ERR-2.3:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">9</span>
+      </p>
+      <p>
+        <span>ERR-2.4:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">1</span>
+      </p>
+      <p>
+        <span>ERR-2.5:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">1</span>
+        <span>if an unrecognized message type</span>
+      </p>
+      <p>
+        <span style="width:36pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="width:18pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">2</span>
+        <span>if an unrecognized trigger event</span>
+      </p>
+      <p>The components of Field ERR-3 of the acknowledgement shall be populated as follows.</p>
+      <p>
+        <span>ERR-3.1:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">200</span>
+        <span>if an unrecognized message type</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">201</span>
+        <span>if an unrecognized trigger event</span>
+      </p>
+      <p>
+        <span>ERR-3.2:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">Unsupported message type</span>
+        <span style="width:6.66pt;text-indent:0pt;display:inline-block"> </span>
+        <span>or</span>
+      </p>
+      <p>
+        <span style="width:36pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="width:18pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">Unsupported trigger event</span>
+        <span style="width:8.02pt;text-indent:0pt;display:inline-block"> </span>
+        <span>as appropriate</span>
+      </p>
+      <p>
+        <span>ERR-3.3:</span>
+        <span style="width:8.33pt;text-indent:0pt;display:inline-block"> </span>
+        <span style="font-weight:bold">HL70357</span>
+      </p>
+      <p>Details of field encoding of these segments are discussed in the following sections.</p>
+      <h5 id="E.3.2.3.1">E.3.2.3.1 MSA - Message Acknowledgement segment</h5>
+      <p>Standard Reference: HL7 Version 2.5, Chapter 2 (Section 2.15, “Message control”)</p>
+      <p>This segment contains information sent while acknowledging another message.</p>
+      <p class="tableTitle">Table E.3.2.3.1‑1: MSA - Message Acknowledgement</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tableHeader">SEQ</td>
+          <td class="tableHeader">LEN</td>
+          <td class="tableHeader">DT</td>
+          <td class="tableHeader">Usage</td>
+          <td class="tableHeader">Card.</td>
+          <td class="tableHeader">TBL#</td>
+          <td class="tableHeader">ITEM#</td>
+          <td class="tableHeader">Element name</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>ID</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td>0008</td>
+          <td>00018</td>
+          <td>Acknowledgement code</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>20</td>
+          <td>ST</td>
+          <td>R</td>
+          <td>[1..1]</td>
+          <td />
+          <td>00010</td>
+          <td>Message Control Id</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>80</td>
+          <td>ST</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00020</td>
+          <td>Text Message</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>15</td>
+          <td>NM</td>
+          <td>O</td>
+          <td>[0..1]</td>
+          <td />
+          <td>00021</td>
+          <td>Expected Sequence Number</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td />
+          <td />
+          <td>X</td>
+          <td>[0..0]</td>
+          <td />
+          <td>00022</td>
+          <td>Delayed Acknowledgment Type</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>250</td>
+          <td>CE</td>
+          <td>X</td>
+          <td>[0..0]</td>
+          <td>0357</td>
+          <td>00023</td>
+          <td>Error Condition</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight:bold">MSA-1 Acknowledgment Code (ID)</span>
+        <span>, required.</span>
+      </p>
+      <p>
+        <span>As is the case throughout IHE, original mode acknowledgement is in use. IHE ITI authorizes two value sets of the acknowledgement codes, both taken from</span>
+        <span style="font-style:italic">HL7 Table 0008 - Acknowledgement code</span>
+        <span>for the Application and Commit ACK messages, respectively.</span>
+      </p>
+      <p>In the original mode, the Application ACK message shall use one of the following three codes to populate Field MSA-1:</p>
+      <p class="tableTitle">Table E.3.2.3.1‑2: HL7 table 0008 - Acknowledgement codes in Application ACK message</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Value</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">Comment</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AA</td>
+            <td>Original mode: Application Accept</td>
+            <td>The message has been accepted and integrated by the receiving application</td>
+          </tr>
+          <tr>
+            <td>AE</td>
+            <td>Original mode: Application Error</td>
+            <td>The message contains errors. It SHALL not be sent again without correcting the error.</td>
+          </tr>
+          <tr>
+            <td>AR</td>
+            <td>Original mode: Application Reject</td>
+            <td>The message has been rejected by the receiving application. If the rejection is not related to an invalid value in the MSH segment, the sender may try again to send the message later.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>In the enhanced mode, the Commit ACK message shall use one of the following three codes to populate Field MSA-1:</p>
+      <p class="tableTitle">Table E.3.2.3.1‑3: HL7 table 0008 - Acknowledgement codes in Commit ACK message</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tableHeader">Value</td>
+          <td class="tableHeader">Description</td>
+          <td class="tableHeader">Comment</td>
+        </tr>
+        <tr>
+          <td>CA</td>
+          <td>Enhanced mode: Commit Accept</td>
+          <td>The message has been received and safe-kept in the receiving application for processing. No resend is required.</td>
+        </tr>
+        <tr>
+          <td>CE</td>
+          <td>Enhanced mode: Commit Error</td>
+          <td>The message contains errors. It SHALL not be sent again without correcting the error.</td>
+        </tr>
+        <tr>
+          <td>CR</td>
+          <td>Enhanced mode: Commit Reject</td>
+          <td>The message has been rejected by the receiving application. If the rejection is not related to an invalid value in the MSH segment, the sender may try again to send the message later.</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight:bold">MSA-2 Message Control ID (ST)</span>
+        <span>, required.</span>
+      </p>
+      <p>
+        <span>Definition: This field contains the message control ID from Field</span>
+        <span style="font-style:italic">MSH-10-Message Control ID</span>
+        <span>of the incoming message for which the acknowledgement is sent.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">MSA-3 Text Message (ST)</span>
+        <span>, not supported. See the ERR segment.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">MSA-6 Error Condition (CE)</span>
+        <span>, not supported. See the ERR segment.</span>
+      </p>
+      <h5 id="E.3.2.3.2">E.3.2.3.2 ERR - Error segment</h5>
+      <p>Standard Reference: HL7 Version 2.5, Chapter 2 (Section 2.15, “Message control”)</p>
+      <p>This segment is used to add error comments to acknowledgment messages.</p>
+      <p class="tableTitle">Table E.3.2.3.2-1: ERR – Error segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">SEQ</td>
+            <td class="tableHeader">LEN</td>
+            <td class="tableHeader">DT</td>
+            <td class="tableHeader">Usage</td>
+            <td class="tableHeader">Card.</td>
+            <td class="tableHeader">TBL#</td>
+            <td class="tableHeader">ITEM#</td>
+            <td class="tableHeader">Element name</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>493</td>
+            <td>ELD</td>
+            <td>X</td>
+            <td>[0..0]</td>
+            <td />
+            <td>00024</td>
+            <td>Error Code and Location</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>18</td>
+            <td>ERL</td>
+            <td>RE</td>
+            <td>[0..*]</td>
+            <td />
+            <td>01812</td>
+            <td>Error Location</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>705</td>
+            <td>CWE</td>
+            <td>R</td>
+            <td>[1..1]</td>
+            <td>0357</td>
+            <td>01813</td>
+            <td>HL7 Error Code</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>2</td>
+            <td>ID</td>
+            <td>R</td>
+            <td>[1..1]</td>
+            <td>0516</td>
+            <td>01814</td>
+            <td>Severity</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>705</td>
+            <td>CWE</td>
+            <td>O</td>
+            <td>[0..1]</td>
+            <td>0533</td>
+            <td>01815</td>
+            <td>Application Error Code</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>80</td>
+            <td>ST</td>
+            <td>O</td>
+            <td>[0..10]</td>
+            <td />
+            <td>01816</td>
+            <td>Application Error Parameter</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>2048</td>
+            <td>TX</td>
+            <td>O</td>
+            <td>[0..1]</td>
+            <td />
+            <td>01817</td>
+            <td>Diagnostic Information</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>250</td>
+            <td>TX</td>
+            <td>O</td>
+            <td>[0..1]</td>
+            <td />
+            <td>01818</td>
+            <td>User Message</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>20</td>
+            <td>IS</td>
+            <td>O</td>
+            <td>[0..*]</td>
+            <td>0517</td>
+            <td>01819</td>
+            <td>Inform Person Indicator</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>705</td>
+            <td>CWE</td>
+            <td>O</td>
+            <td>[0..1]</td>
+            <td>0518</td>
+            <td>01820</td>
+            <td>Override Type</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>705</td>
+            <td>CWE</td>
+            <td>O</td>
+            <td>[0..*]</td>
+            <td>0519</td>
+            <td>01821</td>
+            <td>Override Reason Code</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>652</td>
+            <td>XTN</td>
+            <td>O</td>
+            <td>[0..*]</td>
+            <td />
+            <td>01822</td>
+            <td>Help Desk Contact Point</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <span style="font-weight:bold">ERR-1</span>
+        <span>is deprecated in HL7 Version 2.5 (</span>
+        <span style="font-style:italic">i.e.</span>
+        <span>, retained for backward compatibility only) and therefore not supported by IHE.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">ERR-2</span>
+        <span>is populated except when the error is not within an HL7 field, component or subcomponent. For example, if the receiver returns an acknowledgement containing</span>
+        <span style="font-style:italic">MSA-2-acknowledgement code</span>
+        <span>value</span>
+        <span style="font-weight:bold">AR</span>
+        <span>or</span>
+        <span style="font-weight:bold">CR</span>
+        <span>to indicate that the receiving application was unavailable, ERR-2 is not populated.</span>
+      </p>
+      <p>
+        <span style="font-weight:bold">ERR-3 HL7 Error Code (CWE)</span>
+        <span>is required. It identifies the HL7 (communication) error code. Valid values are given by HL7 Table 0357:</span>
+      </p>
+      <p style="font-size:11pt">
+        <a name="HL70357">
+          <span style="font-weight:bold">Table E.3.2.3.2-2: HL7 Table 0357 - Message error condition codes</span>
+        </a>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Value</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">Comment</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>Message accepted</td>
+            <td>Success. Optional, as the AA conveys success. Used for systems that must always return a status code.</td>
+          </tr>
+          <tr>
+            <td>100</td>
+            <td>Segment sequence error</td>
+            <td>Error: The message segments were not in the proper order, or required segments are missing.</td>
+          </tr>
+          <tr>
+            <td>101</td>
+            <td>Required field missing</td>
+            <td>Error: A required field is missing from a segment</td>
+          </tr>
+          <tr>
+            <td>102</td>
+            <td>Data type error</td>
+            <td>Error: The field contained data of the wrong data type, e.g., an NM field contained "FOO".</td>
+          </tr>
+          <tr>
+            <td>103</td>
+            <td>Table value not found</td>
+            <td>Error: A field of data type ID or IS was compared against the corresponding table, and no match was found.</td>
+          </tr>
+          <tr>
+            <td>200</td>
+            <td>Unsupported message type</td>
+            <td>Rejection: The Message Type is not supported.</td>
+          </tr>
+          <tr>
+            <td>201</td>
+            <td>Unsupported event code</td>
+            <td>Rejection: The Event Code is not supported.</td>
+          </tr>
+          <tr>
+            <td>202</td>
+            <td>Unsupported processing id</td>
+            <td>Rejection: The Processing ID is not supported.</td>
+          </tr>
+          <tr>
+            <td>203</td>
+            <td>Unsupported version id</td>
+            <td>Rejection:  The Version ID is not supported.</td>
+          </tr>
+          <tr>
+            <td>204</td>
+            <td>Unknown key identifier</td>
+            <td>
+              <p>
+                <span>Rejection: The ID of the patient, order, etc., was not found. Used for transactions</span>
+                <span style="font-style:italic">other than</span>
+                <span>additions, e.g., transfer of a non-existent patient.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>205</td>
+            <td>Duplicate key identifier</td>
+            <td>Rejection: The ID of the patient, order, etc., already exists. Used in response to addition transactions (Admit, New Order, etc.).</td>
+          </tr>
+          <tr>
+            <td>206</td>
+            <td>Application record locked</td>
+            <td>Rejection: The transaction could not be performed at the application storage level, e.g., database locked.</td>
+          </tr>
+          <tr>
+            <td>207</td>
+            <td>Application internal error</td>
+            <td>Rejection: A catchall for internal errors not explicitly covered by other codes.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <span style="font-weight:bold">ERR-4 Severity (ID)</span>
+        <span>is required. It identifies the severity of an application error. Valid values are given by HL7 Table 0516:</span>
+      </p>
+      <p style="font-size:11pt">
+        <a name="HL70516">
+          <span style="font-weight:bold">Table E.3.2.3.2-3: HL7 Table 0516 – Error severity</span>
+        </a>
+      </p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Value</td>
+            <td class="tableHeader">Description</td>
+            <td class="tableHeader">Comment</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W</td>
+            <td>Warning</td>
+            <td>Transaction successful, but there may be issues</td>
+          </tr>
+          <tr>
+            <td>I</td>
+            <td>Information</td>
+            <td>Transaction was successful but includes information, e.g., inform patient</td>
+          </tr>
+          <tr>
+            <td>E</td>
+            <td>Error</td>
+            <td>Transaction was unsuccessful</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4 id="E.3.2.4">E.3.2.4 Common Segment Definitions</h4>
+      <p>The following table specifies the contents of the EVN segment that is common to several HL7-based transaction messages defined in ITI TF-2a and 2b.</p>
+      <p class="tableTitle">Table E.3.2.4-1 IHE Profile – EVN segment</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">SEQ</td>
+            <td class="tableHeader">LEN</td>
+            <td class="tableHeader">DT</td>
+            <td class="tableHeader">OPT</td>
+            <td class="tableHeader">TBL#</td>
+            <td class="tableHeader">ITEM#</td>
+            <td class="tableHeader">ELEMENT NAME</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>3</td>
+            <td>ID</td>
+            <td>O</td>
+            <td>0003</td>
+            <td>00099</td>
+            <td>Event Type Code</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>26</td>
+            <td>TS</td>
+            <td>R</td>
+            <td />
+            <td>00100</td>
+            <td>Recorded Date/Time</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>26</td>
+            <td>TS</td>
+            <td>O</td>
+            <td />
+            <td>00101</td>
+            <td>Date/Time Planned Event</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>3</td>
+            <td>IS</td>
+            <td>O</td>
+            <td>0062</td>
+            <td>00102</td>
+            <td>Event Reason Code</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>60</td>
+            <td>XCN</td>
+            <td>O</td>
+            <td>0188</td>
+            <td>00103</td>
+            <td>Operator ID</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>26</td>
+            <td>TS</td>
+            <td>R2</td>
+            <td />
+            <td>01278</td>
+            <td>Event Occurred</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>180</td>
+            <td>HD</td>
+            <td>O</td>
+            <td />
+            <td>01534</td>
+            <td>Event Facility (See Note 1)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Adapted from the HL7 Standard, version 2.5 and version 2.3.1</p>
+      <p class="note">Note 1: This element is only applicable in HL7 version 2.5 and thus is only applicable for those transactions based on HL7 v2.5</p>
+      <p>
+        <span>Field</span>
+        <span style="font-style:italic">EVN-1-Event Type Code</span>
+        <span>is optional; however, if present, its value shall be equal to the second component of the field</span>
+        <span style="font-style:italic">MSH-9-Message Type</span>
+        <span>.</span>
+      </p>
+      <h4 id="E.3.2.5">E.3.2.5 Message granularity</h4>
+      <p>The sending application shall send as many messages as there are events recorded. For instance, if at the same time there is a change both to the patient’s location (from emergency room to GI surgery ward) and to the patient’s attending doctor (from Dr. Eric Emergency to Dr. John Appendectomy), the sending application will transmit two movements using HL7 messages ADT^A02 (transfer) and ADT^A54 (change attending doctor). Both events will have the same effective date/time (EVN-6 – Event Occurred). If the Historic Movement option is in use, each of these movements will have a unique identifier.</p>
+      <p>The exceptions to this fine granularity are:</p>
+      <p>The Admit Inpatient (A01) and Register Outpatient (A04) events can also assign a location and an attending doctor to the patient, known when the event is recorded.</p>
+      <p>A change of patient class (A06 or A07) also assigns at the same time a new location to the patient.</p>
+      <p>The Cancel Discharge/End Visit event also includes at the same time the patient location after the cancelation has been processed.</p>
+      <h4 id="E.3.2.6">E.3.2.6 HL7 empty field convention</h4>
+      <p>According to the HL7 standard, if the value of a field is not present, the receiver shall not change corresponding data in its database. However, if the sender defines the field value to be the explicit NULL value (i.e., two double quotes ""), it shall cause removal of any values for that field in the receiver's database. This convention is fully applied by IHE profiles based on HL7 v2.x messages.</p>
+      <h2 id="E.4">E.4 HL7 Clinical Document Architecture (CDA) Profiling Conventions</h2>
+      <p>This section describes the standards profiling conventions for HL7 v3 Clinical Document Architecture documents. This includes the proper documentation of data element cardinality, optionality, and coded values.</p>
+      <p>IHE has defined two methodologies for documenting CDA requirements:  Tabular format and Discrete Conformance format. Although the format may differ, the cardinality, optionality, and other profiling conventions are the same unless otherwise noted.</p>
+      <h3 id="E.4.1">E.4.1 Structure of Content Modules</h3>
+      <p>For HL7 v3 CDA Release 2 the Content Modules are organized by document, section, entry, and header elements.</p>
+      <p>
+        <span style="height:0pt;margin-top:-6pt;display:block;position:absolute;z-index:0">
+          <img src="media/a03fp-78i5t.006.png" width="92" height="62" alt="" />
+        </span>
+        <span style="height:0pt;margin-top:-6pt;display:block;position:absolute;z-index:2">
+          <img src="media/a03fp-78i5t.005.png" width="89" height="62" alt="" />
+        </span>
+        <span style="height:0pt;margin-top:-6pt;display:block;position:absolute;z-index:1">
+          <img src="media/a03fp-78i5t.004.png" width="153" height="46" alt="" />
+        </span>
+        <span style="height:0pt;margin-top:-6pt;display:block;position:absolute;z-index:3">
+          <img src="media/a03fp-78i5t.003.png" width="133" height="115" alt="" />
+        </span>
+        <span style="height:0pt;margin-top:-6pt;display:block;position:absolute;z-index:4">
+          <img src="media/a03fp-78i5t.002.png" width="24" height="98" alt="" />
+        </span>
+        <img src="media/a03fp-78i5t.007.png" width="653" height="264" alt="L-POCD_RM000040" />
+      </p>
+      <p style="font-size:11pt">
+        <span style="font-weight:bold">Figure E.4.1-1: CDA R2 R-MIM with location of Document, Sections, and Entries</span>
+        <br />
+        <span style="font-weight:bold">(adapted from HL7 CDA POCD_RM000040)</span>
+      </p>
+      <p>Each content module is defined in terms of constraints that must be obeyed by instances of that content module, in effect a contract between the Content Creator and the Content Consumer. Each content module has a name, also known as its template identifier. The template identifiers are used to identify the contract implied by the content module.</p>
+      <p>Content modules may inherit features of other content modules of the same type (Document, Section, or Entry) by defining the parent content module that they inherit from. They may not inherit features from a different type. Although information in the CDA Header is in a different location than information in a CDA Entry, these two content modules are considered to be of the same type, and so may inherit from each other when necessary.</p>
+      <p>Each content module has a list of data elements that are defined by an “optionality constraint” (e.g., mandatory (M), required if known (R), optional (O), etc.). The presentation of this information varies with the type of content module. Additional data elements may be provided by the sender that are not defined by a specific content module, but the receiver is not required to interpret them. Thus, it is not an error to include more than is asked for, but it is an error to reject a content module because it contains more than is defined by the template. This allows values to be added to the content modules delivered in this framework, through extensions to it that are not defined or profiled by IHE. It further allows content modules to be defined later by IHE that are refinements or extensions over previous content modules.</p>
+      <p>In order to retain this capability, constraints that apply to any content module will always apply to any content modules that inherit from it. Thus, the "contracts" are always valid down the inheritance hierarchy. Second, data elements of a content module will rarely be deprecated. This will usually occur only in the cases where they have been deprecated by the base standard. While any specific content module has a limited scope and set of use cases, deprecating the data element prevents any future content module from taking advantage of what has already been defined when a particular data element has been deprecated simply because it was not necessary in the original use case.</p>
+      <h3 id="E.4.2">E.4.2 Conformance Concepts and Conventions</h3>
+      <h4 id="E.4.2.1">E.4.2.1 Cardinality Constraints</h4>
+      <p>The following conventions are used to describe data element cardinality constraints for IHE profiles. These cardinality constraints are intended to match the Consolidated CDA (C-CDA) definitions.</p>
+      <p>The cardinality expresses the number of times an attribute or association may appear in a CDA document instance that conforms to the IHE specifications. Cardinality is expressed as a minimum and a maximum value separated by ‘..’, and enclosed in '[ ]', e.g., ‘[0..1]’.</p>
+      <p>Minimum cardinality is expressed as an integer that is equal to or greater than zero. If the minimum cardinality is zero, the element need only appear in message instances when the sending application has data with which to value the element. Mandatory elements must have a minimum cardinality greater than zero.</p>
+      <p>The maximum cardinality is expressed either as a positive integer (greater than zero and greater than or equal to the minimum cardinality) or as unlimited using an asterisk ("*").</p>
+      <p>In summary, the cardinality indicators are interpreted as follows:</p>
+      <ul>
+        <li class="bullet-list1">[0..1] - zero or one</li>
+        <li class="bullet-list1">[1..1] - exactly one</li>
+        <li class="bullet-list1">[1..*] - at least one</li>
+        <li class="bullet-list1">[0..*] - zero or more</li>
+        <li class="bullet-list1">[1..n] - at least one and not more than n</li>
+      </ul>
+      <p>Cardinality constraints are defined in a consistent manner in the HL7 v3 Consolidated CDA (C-CDA) Guide:  HL7 Implementation Guide for CDA® Release 2: IHE Health Story Consolidation, R1.1 DSTU, section 1.8.4 Cardinality.</p>
+      <h4 id="E.4.2.2">E.4.2.2 Data Element Optionality Constraints</h4>
+      <p>There are minor differences in the definition of Optionality Constraints between the two IHE documentation formats. Specifically, a “Conditional” value is allowed in the Tabular format whereas it is not allowed in the Discrete Conformance format.</p>
+      <h5 id="E.4.2.2.1">E.4.2.2.1 Optionality Constraints - Tabular Format</h5>
+      <p>Within the IHE Tabular format, the following conventions are used to describe data element optionality constraints. Where applicable, the "interaction" between cardinality constraints and optionality constraints are also described below.</p>
+      <p class="tableTitle">Table E.4.2.2.1-1: Data Element Optionality Constraints</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Optionality</td>
+            <td class="tableHeader">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M</td>
+            <td>A Mandatory section, entry or data element is one that SHALL always be provided. If there is information available, the element must be present and non-null. If there is no information available, or it cannot be transmitted, the data element must contain a value indicating the reason for omission of the data. Note that any element declared Mandatory must also be Required and have a minimum cardinality of one.</td>
+          </tr>
+          <tr>
+            <td>R</td>
+            <td>
+              <p>A Required section, entry or element SHALL be included in the document if its minimum cardinality is one. If the data exists, the sending application SHALL send it as a non-null value or a non-empty element. If the data does not exist and if the minimum cardinality is greater than zero, then the sending application SHALL send an appropriate null value. Only if data does not exist for a Required element and that element has a minimum cardinality of 0 MAY the Required element be omitted in a document.</p>
+              <p>In all cases, if a Required element is present in a document received by an actor claiming support for the Profile, then it SHALL be correctly processed by the receiving actor. A receiving actor SHALL NOT raise an error due to the absence of a Required element with a cardinality of 0, although it MAY issue a warning that Required information is missing.</p>
+              <p>For Required elements, conforming applications must demonstrate their ability to provide and communicate not null values. Receiving applications must demonstrate their ability to receive and process (e.g., store, or display to users) not null values for Required elements.</p>
+              <p>This is equivalent to a SHOULD requirement.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>O</td>
+            <td>An Optional data element is one that MAY be provided, whether the information is available or not. If the implementation elects to support this Optional element, then its support shall meet the requirements set forth for Required elements.</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>A Conditional data element is one that is Mandatory, Required, or Optional, depending upon whether a specified condition evaluates as true. The element will have further description of the condition, and whether the data element is treated as M, R, or O when the condition is met.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:4.4pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>The definitions of M, R, and O are consistent with HL7 v3 Conformance profiles, but differ slightly from the 2010 and earlier versions of IHE Patient Care Coordination Content or Workflow profiles. It is expected that all IHE Technical Framework documents will converge to these HL7-based definitions.</span>
+      </p>
+      <h5 id="E.4.2.2.2">E.4.2.2.2 Optionality Constraints - Discrete Conformance Format</h5>
+      <p>
+        <span>The Optionality Constraints for the Discrete Conformance format are taken directly from the HL7 v3 Consolidated CDA (C-CDA) Guide:  HL7 Implementation Guide for CDA</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <span>Release 2: IHE Health Story Consolidation, R1.1 DSTU, December 2011, Section 1.8.3 Conformance Verbs (Keywords).</span>
+      </p>
+      <h4 id="E.4.2.3">E.4.2.3 Flavors of Null</h4>
+      <p>Null values are encoded in CDA document component classes using the nullFlavor attribute, defined in the HL7 v3 RIM InfrastructureRoot class. For a Required or Optional section, entry or element whose value is unknown, use one of the following null flavor values:</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td>NI</td>
+          <td>No information. This is the most general and default null flavor.</td>
+        </tr>
+        <tr>
+          <td>NA</td>
+          <td>Not applicable. Known to have no proper value (e.g., last menstrual period for a male).</td>
+        </tr>
+        <tr>
+          <td>UNK</td>
+          <td>Unknown. A proper value is applicable but is not known.</td>
+        </tr>
+        <tr>
+          <td>ASKU</td>
+          <td>Asked, but not known. Information was sought but not found (e.g., the patient was asked but did not know).</td>
+        </tr>
+        <tr>
+          <td>NAV</td>
+          <td>Temporarily unavailable. The information is not available but is expected to be available later.</td>
+        </tr>
+        <tr>
+          <td>NASK</td>
+          <td>Not asked. The patient was not asked.</td>
+        </tr>
+        <tr>
+          <td>MSK</td>
+          <td>There is information on this item available but it has not been provided by the sender due to security, privacy, or other reasons. There may be an alternate mechanism for gaining access to this information.</td>
+        </tr>
+      </table>
+      <p>This list contains those null values that are commonly used in clinical documents. For the full list and descriptions, see the nullFlavor vocabulary code system in the CDA Normative Edition.</p>
+      <p>Null flavors SHALL NOT be used for Mandatory content components.</p>
+      <p>Null flavors are defined in a consistent manner in the HL7 v3 Consolidated CDA (C-CDA) Guide:  HL7 Implementation Guide for CDA® Release 2: IHE Health Story Consolidation, R1.1 DSTU, 1.8.8 Null Flavor.</p>
+      <h4 id="E.4.2.4">E.4.2.4 Coded Terminology Values</h4>
+      <p>Coded terminology values are used extensively and are encoded in CDA documents using the CD (Concept Descriptor) data type. Generally, these values are specified in Profile requirements using a triplet of the code value (encoded in XML attribute code), the coding scheme (encoded in XML attribute codeSystemName), and the code meaning (encoded in XML attribute displayName). When necessary to disambiguate such a triplet from the rest of the specification text, it may be enclosed in curly braces, e.g., {160245001, SNOMED CT, “No current problems or disability”}.</p>
+      <p>Representation of a coded terminology value in the CD data type requires encoding of the coding scheme OID in XML attribute codeSystem. For readability, these OIDs are not elaborated in the specification text. Content Creators must use the appropriate OIDs from Section 5 in encoding CD data type values.</p>
+      <p>Unless otherwise specified, value sets are specified with STATIC stability and have CWE (Coded With Extensibility) coding strength, as defined in the HL7 Core Principles and Properties of v3 Models. That is, the version of the value set as of the date of publication of the Profile is binding, and an implementation may use coded concepts not present in the value set.</p>
+      <h4 id="E.4.2.5">E.4.2.5 Value Sets</h4>
+      <p>Value sets, which are potentially reusable in a variety of contexts, are described separately from the content modules. Each value set is identified by name and OID, and its constituent concept values are listed in a table.</p>
+      <p>Value sets concepts may be drawn from multiple coding systems and some concepts may be represented in more than one coding system. When there is a choice of coding system, the content module that invokes the value set may establish constraints on when to use a particular system (e.g., based on local policy or national regulation). The content module that invokes the value set may also establish constraints on whether concepts not in the defined value set can be used (e.g., using the HL7 CWE [coded with exceptions] and CNE [coded no exceptions] domain qualifiers); unless otherwise specified, the value set is extensible (CWE). The HL7 v3 CD data type allows the representation of a concept by a code together with a translation code in a different coding system; when multiple codes are provided for a concept, use of such translation codes is recommended.</p>
+      <h3 id="E.4.3">E.4.3 IHE Recommended Formatting of Key CDA Data Types</h3>
+      <p>Although XML allows different types of encoding for certain data types, the following encoding should be used in all IHE profiles.</p>
+      <h4 id="E.4.3.1">E.4.3.1 Dates and Times</h4>
+      <p>
+        <span style="font-style:italic">&lt;effectiveTime value="20050329224411-0500"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic"> &lt;effectiveTime&gt;</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="font-style:italic">&lt;low value=”20050329224411-0500”/&gt;</span>
+      </p>
+      <p>
+        <span style="width:36pt;display:inline-block"> </span>
+        <span style="font-style:italic">&lt;low value=”20050329234411-0500”/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/effectiveTime&gt;</span>
+      </p>
+      <p>HL7 Date Time values: CCYYMMDDHHMMSS.ss([+|-HHMM) for Century, Year, Month, Day, Hour, Minute, Seconds and thousands, Time Zone</p>
+      <p>IHE: Use &lt;low&gt;/&lt;high&gt; format for intervals.</p>
+      <h4 id="E.4.3.2">E.4.3.2 Identifiers</h4>
+      <p>
+        <span style="font-style:italic">&lt;id extension="1234" root="1.3.6.4.1.4.1.2835"/&gt;</span>
+      </p>
+      <p>root – Identifies the namespace.</p>
+      <p>extension – Provides the identifier.</p>
+      <p>Roots are typically ISO Object Identifiers, otherwise known as OIDs, but may also be a GUID.</p>
+      <p>An OID is an assigned value. Someone has to give you a root OID. Then you can make your own or give OIDs to others.</p>
+      <p>If your root OID is X, then you can assign X.1 through X.somereallybignumber to yourself or others.</p>
+      <p>IHE: Use an OID only for template identifiers and an OID for document identifiers.</p>
+      <h4 id="E.4.3.3">E.4.3.3 Codes</h4>
+      <p>
+        <span style="font-style:italic">&lt;codecode="59058001"</span>
+      </p>
+      <p>
+        <span style="font-style:italic">displayName="General Physician"</span>
+      </p>
+      <p>
+        <span style="font-style:italic">codeSystem="2.16.840.1.113883.6.96"</span>
+      </p>
+      <p>
+        <span style="font-style:italic">codeSystemName="SNOMED CT"</span>
+      </p>
+      <p>
+        <span style="font-style:italic">/&gt;</span>
+      </p>
+      <p>code – Provides the code value.</p>
+      <p>displayName – A human readable name.</p>
+      <p>codeSystem – Identifies the coding system used.</p>
+      <p>codeSystemName - As above, but for humans.</p>
+      <p>Not all coded values require the specification of codeSystem, especially when it is already known.</p>
+      <p>Values used for human readability are optional.</p>
+      <p>IHE: Use LOINC for Document, Section and Lab Codes and typically SNOMED for other Vocabularies</p>
+      <h4 id="E.4.3.4">E.4.3.4 Physical Quantity</h4>
+      <p>
+        <span style="font-style:italic">&lt;value xsi:type="PQ" value="1.5" unit="mg"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;value xsi:type="IVL_PQ"&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;low value="1.0" unit="mg"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;high value="1.5" unit="mg"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/value&gt;</span>
+        <span />
+      </p>
+      <p>xsi:type – Indicates the Data Type</p>
+      <p>value – A real number indicating the measure</p>
+      <p>unit – The unit of measure using UCUM</p>
+      <h4 id="E.4.3.5">E.4.3.5 Names</h4>
+      <p>Organizational Names</p>
+      <p>
+        <span style="font-style:italic">&lt;name&gt;Good Health Clinic&lt;/name&gt;</span>
+      </p>
+      <p>Personal Names</p>
+      <p>
+        <span style="font-style:italic">&lt;name&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;prefix&gt;Mr.&lt;/prefix&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;given&gt;John&lt;/given&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;given&gt;Q.&lt;/given&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;family&gt;Adams&lt;/family&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;suffix&gt;Sr.&lt;/suffix&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/name&gt;</span>
+      </p>
+      <p>IHE: Always split the name into parts</p>
+      <h4 id="E.4.3.6">E.4.3.6 Addresses</h4>
+      <p>
+        <span style="font-style:italic">&lt;addr&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;streetAddressLine&gt;21 North Ave&lt;/streetAddressLine&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;streetAddressLine&gt;Suite #142&lt;/streetAddressLine&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;city&gt;Burlington&lt;/city&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;state&gt;MA&lt;/state&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;postalCode&gt;01803&lt;/postalCode&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;country&gt;USA&lt;/country&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/addr&gt;</span>
+      </p>
+      <p>Repeat streetAddressLine if needed.</p>
+      <p>IHE: Always split the address into parts</p>
+      <h4 id="E.4.3.7">E.4.3.7 Phone Numbers</h4>
+      <p>
+        <span style="font-style:italic">&lt;telecom value='tel:+1(999)555-1212;ext=0099'</span>
+      </p>
+      <p>
+        <span style="font-style:italic">use="DIR"/&gt;</span>
+      </p>
+      <p>value - The telephone number, as a URL See RFC-3966, RFC-2806</p>
+      <p>use - One of a restricted set of values:</p>
+      <p>H – Home</p>
+      <p>HP – Home Phone</p>
+      <p>HV – Vacation</p>
+      <p>WP – Work Phone</p>
+      <p>DIR – Direct Line</p>
+      <p>PUB – Public Line</p>
+      <p>AS – Answering Service</p>
+      <p>EC – Emergency Contact</p>
+      <p>PG – Pager</p>
+      <p>MC – Mobile</p>
+      <p>IHE: Use +1 (international) format</p>
+      <h4 id="E.4.3.8">E.4.3.8 People</h4>
+      <p>
+        <span style="font-style:italic">&lt;person&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;name&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;prefix&gt;Mr.&lt;/prefix&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;given&gt;Keith&lt;/given&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;given&gt;W.&lt;/given&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;family&gt;Boone&lt;/family&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;suffix&gt;Sr.&lt;/suffix&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/name&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/person&gt;</span>
+      </p>
+      <p>Used with</p>
+      <p>
+        <span style="font-style:italic">&lt;assignedPerson&gt; &lt;subjectPerson&gt; &lt;relatedPerson&gt; …</span>
+      </p>
+      <h4 id="E.4.3.9">E.4.3.9 Organizations</h4>
+      <p>
+        <span style="font-style:italic">&lt;organization&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;id extension="1" root="1.3.6.4.1.4.1.2835.3"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;name&gt;Good Health Clinic&lt;/name&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;telecom value="tel:+1(999)555 1212" use="WP"/&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;addr&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;streetAddressLine&gt;21 North Ave&lt;/streetAddressLine&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;city&gt;Burlington&lt;/city&gt; &lt;state&gt;MA&lt;/state&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;postalCode&gt;01803&lt;/postalCode&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;country&gt;USA&lt;/country&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/addr&gt;</span>
+      </p>
+      <p>
+        <span style="font-style:italic">&lt;/organization&gt;</span>
+      </p>
+      <p>Used with</p>
+      <p>
+        <span style="font-style:italic">&lt;custodianOrganization&gt; &lt;providerOrganization&gt; &lt;representedOrganization&gt; &lt;responsibleOrganization&gt; …</span>
+      </p>
+      <p>IHE: Include contact info (telecom, addr)</p>
+      <h3 id="E.4.4">E.4.4 About IHE Documentation Formatting Options</h3>
+      <p>IHE supports two distinct CDA documentation methods, the Tabular format (see the IHE Cardiology Cardiac Imaging Report Content (CIRC) profile as an example) and the Discrete Conformance format (see the IHE Cardiology Cath Report Content (CRC) profile as an example). There are pros and cons to each of these methodologies. Although the hope is to converge on a single format in the future, it was deemed a better alternative to support only these two well defined formats rather than leaving any CDA format completely open ended and undefined until any and all issues were resolved.</p>
+      <h4 id="E.4.4.1">E.4.4.1 Tabular Format</h4>
+      <p>This section describes the IHE Tabular format in detail.</p>
+      <h5 id="E.4.4.1.1">E.4.4.1.1 Document Content Modules</h5>
+      <p>
+        <span>Each</span>
+        <span style="font-weight:bold">document</span>
+        <span>content module will define the appropriate codes used to classify the document and will also describe the specific section and header data elements that are included. The code used to classify it is specified using an external vocabulary, typically LOINC in the case of CDA Release 2 documents. The set of data elements that make up the document are defined, including whether these data elements must, should or may be included in the document. Each data element is mapped to a lower level content module via a template identifier, and the document content module will further indicate whether these data elements are mandatory, required if known or optional. Thus, a document content module contains as constraints:</span>
+      </p>
+      <ul>
+        <li class="bullet-list1">The template identifier of the parent content module when there is one.</li>
+        <li class="bullet-list1">The LOINC code or codes that are used to classify the document.</li>
+        <li class="bullet-list1">A possibly empty set of mandatory, required if known, and optional header content modules, and their template identifiers.</li>
+        <li class="bullet-list1">A possibly empty set of mandatory, required if known, and optional section content modules, and their template identifiers.</li>
+        <li class="bullet-list1">Other constraints as necessary.</li>
+      </ul>
+      <p>
+        <a name="Schematron">The order of section content modules is not specified; sections may appear in any order, and may be nested, in accordance with local implementation style specifications.</a>
+      </p>
+      <h6 id="E.4.4.1.1.1">E.4.4.1.1.1 Document Content Module Table</h6>
+      <p>The Document Content Module is specified using the following table.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="tableHeader">Template ID</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Parent Template</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">General Description</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Document Code</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td style="background-color:#e6e6e6">Opt</td>
+          <td colspan="2" style="background-color:#e6e6e6">Data Element or Section Name</td>
+          <td style="background-color:#e6e6e6">Template ID</td>
+          <td style="background-color:#e6e6e6">Specification Document</td>
+          <td style="background-color:#e6e6e6">
+            <p>Vocabulary</p>
+            <p>Constraint</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6">Header Elements</td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="2" />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <td colspan="6">Sections</td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="2" />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr style="height:0pt">
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </table>
+      <p>This table implies the following conformance statements:</p>
+      <ol>
+        <li class="numbered-list0">The document SHALL include the specified Template ID in the &lt;templateID&gt; element of the &lt;clinicalDocument&gt; act element (the CDA root act).</li>
+      </ol>
+      <p>The document SHALL conform to all the requirements of the specified Parent Template(s).</p>
+      <p>The document SHALL include the specified Document Code in the &lt;code&gt; element of the &lt;clinicalDocument&gt; act element, except if the specified Document Code includes the keyword “SHOULD or “MAY”; in the latter case, this requirement is relaxed to the requirement strength of those keywords.</p>
+      <p>The document SHALL include the specified Header Elements in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</p>
+      <p>The document SHALL include the specified Sections in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</p>
+      <p class="note">Note: The further constraints are typically specific value sets to be applied to code elements in the template.</p>
+      <p>The Document Content Module table may be supplemented with additional specific conformance requirements.</p>
+      <h5 id="E.4.4.1.2">E.4.4.1.2 Section Content Modules</h5>
+      <p>
+        <span style="font-weight:bold">Section</span>
+        <span>content modules will define the content of a section of a clinical document. Sections will usually contain narrative text, and so this definition will often describe the information present in the narrative, although sections may be wholly comprised of subsections.</span>
+      </p>
+      <p>Sections may contain various subsections, and these may be mandatory, required if known or optional. Sections may also contain various entries, and again, these may be mandatory, required if known, or optional. A section may not contain just entries; it must have at least some narrative text or subsections to be considered valid content.</p>
+      <p>Sections can inherit constraints from another parent section content module. Sections are classified using an external vocabulary (again typically this would be LOINC, although in some cases DICOM), and so the list of possible section codes is also specified. Sections that inherit from another section module will specify the same section code(s) as its parent, unless it further restricts the type of section to smaller set of codes.</p>
+      <p>Thus, a section content module will contain as constraints:</p>
+      <p>The template identifier of the parent content module when there is one.</p>
+      <p>The code or codes that shall be used to classify the section.</p>
+      <p>A possibly empty set of mandatory, required if known, and optional section content modules, and their template identifiers for the subsections of this section.</p>
+      <p>A possibly empty set of mandatory, required if known, and optional entry content modules, and their template identifiers.</p>
+      <p>Other constraints as necessary.</p>
+      <h6 id="E.4.4.1.2.1">E.4.4.1.2.1 Section Content Module Table</h6>
+      <p>The Section Content Module is specified using the following table.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="tableHeader">Template ID</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Parent Template</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">General Description</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Section Code</td>
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td style="background-color:#e6e6e6">Opt</td>
+          <td colspan="2" style="background-color:#e6e6e6">Data Element or Section Name</td>
+          <td style="background-color:#e4e4e4">Template ID</td>
+          <td style="background-color:#e4e4e4">Specification Document</td>
+          <td style="background-color:#e4e4e4">Vocabulary Constraint</td>
+        </tr>
+        <tr>
+          <td colspan="6">Subsections</td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="2" />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr>
+          <td colspan="6">Entries</td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="2" />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr style="height:0pt">
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </table>
+      <p>
+        <a name="Entry_and_Header_Content_Modules_Constra">This table implies the following conformance statements:</a>
+      </p>
+      <ol>
+        <li class="numbered-list1">The section SHALL include the specified Template ID in the &lt;templateID&gt; element of the &lt;section&gt; act element.</li>
+      </ol>
+      <ol start="2">
+        <li class="numbered-list1">The section SHALL conform to all the requirements of the specified Parent Template.</li>
+        <li class="numbered-list1">The section SHALL include the specified Section Code in the &lt;code&gt; element of the &lt;section&gt; act element, except if the specified Section Code includes the keyword “SHOULD or “MAY”; in the latter case, this requirement is relaxed to the requirement strength of those keywords.</li>
+        <li class="numbered-list1">The section SHALL include the specified Subsections in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</li>
+        <li class="numbered-list1">The section SHALL include the specified Entries in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</li>
+      </ol>
+      <p>The Section Content Module table may be supplemented with additional specific conformance requirements.</p>
+      <h6 id="E.4.4.1.2.2">E.4.4.1.2.2 Observation Entry Constraint Table</h6>
+      <p>Constraints on Entries may be further specified using the following table. The template for the entry (typically the IHE PCC Simple Observation template) is specified by the invoking Section Content Module table, for which this table provides additional constraint specifications. Multiple rows may be present in the table to specify constraints on multiple entries based on a template invoked with cardinality greater than 1.</p>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <td class="tableHeader">Opt</td>
+            <td class="tableHeader">Condition</td>
+            <td class="tableHeader">observation/code</td>
+            <td class="tableHeader">Data Type</td>
+            <td class="tableHeader">Unit of Measure</td>
+            <td class="tableHeader">Value Set</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </table>
+      <p>This table implies the following conformance statements:</p>
+      <ol>
+        <li class="numbered-list1">There SHALL be entries in accordance with each row in the table in accordance with the specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1).</li>
+        <li class="numbered-list1">Conditional (C) entries SHALL be present in accordance with the specified condition optionality (M, R, or O) when the specified condition predicate evaluates as true.</li>
+      </ol>
+      <p class="note">Note: An instance of this table may specify a general predicate clause for the condition (e.g., the table may be specified to test the value of the exam type as specified in the CDA Header in the documentationOf / serviceEvent / code element).</p>
+      <p>The entry SHALL include the specified observation / code element value</p>
+      <p>If the observation/code cell in the table row includes a “+”, the entry SHALL include the specified targetSiteCode and/or methodCode elements.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:6.65pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>The codes may be specified as a value to be selected from an identified Value Set, or a more complex requirement may be specified by reference to a section of the Technical Framework.</span>
+      </p>
+      <p>The entry SHALL include a value of the specified Data Type.</p>
+      <p>If Data Type is PQ, the entry value SHALL use the specified Unit of Measure.</p>
+      <p>If Data Type is CD, the entry value SHALL be selected from the specified Value Set.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:6.65pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>The code may be specified as a single value, rather than as a selection from a Value Set. An implicit Value Set may also be specified by a bulleted list of two or three individual codes.</span>
+      </p>
+      <p>If the Value Set cell in the table row includes a “+”, the entry SHALL conform to the requirement in the specified reference to a section of the Technical Framework.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:6.65pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>The additional requirements may identify further CDA elements, e.g., an optional or required subsidiary observation for specification of severity as defined in the Simple Observation template.</span>
+      </p>
+      <h5 id="E.4.4.1.3">E.4.4.1.3 Entry and Header Content Modules</h5>
+      <p>
+        <span style="font-weight:bold">Entry</span>
+        <span>and</span>
+        <span style="font-weight:bold">Header</span>
+        <span>content modules are the lowest level of content for which content modules are defined. These content modules are associated with classes from the HL7 Reference Information Model (RIM). These RIM content modules will constrain a single RIM class. Entry content modules typically constrain an "Act" class or one of its subtypes, while header content modules will normally constrain "Participation", "Role" or "Entity" classes, but may also constrain an "Act" class.</span>
+      </p>
+      <p>Entry and Header content modules describe the mandatory, required if known, and optional XML elements and attributes that are present in the CDA Release 2 instance. Header and Entry content modules may also be built up using other Header and Entry content modules. An entry or header content module may also specify constraints on the vocabularies used for codes found in the entry, or data types for the values found in the entry. Thus, an entry or header content module will contain as constraints:</p>
+      <p>The template identifier of the parent content module when there is one.</p>
+      <p>A description of the XML elements and attributes used in the entry, along with explanations of their meaning.</p>
+      <p>An indication of those XML elements or attributes that are mandatory, required if known, or optional.</p>
+      <p>Vocabulary domains to use when coding the entry.</p>
+      <p>Data types used to specify the value of the entry.</p>
+      <p>Other constraints as necessary.</p>
+      <h6 id="E.4.4.1.3.1">E.4.4.1.3.1 Header Content Module Table</h6>
+      <p>A Header Content Module is specified using the following table.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="tableHeader">Template ID</td>
+          <td colspan="5" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Parent Template</td>
+          <td colspan="5" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">General Description</td>
+          <td colspan="5" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Header Element</td>
+          <td colspan="5" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Code</td>
+          <td colspan="5" />
+        </tr>
+        <tr>
+          <td style="background-color:#e6e6e6">Opt</td>
+          <td style="background-color:#e6e6e6">Participation</td>
+          <td style="background-color:#e6e6e6">Description</td>
+          <td style="background-color:#e6e6e6">Template</td>
+          <td style="background-color:#e6e6e6">Spec Document</td>
+          <td style="background-color:#e4e4e4">Vocab-ulary Con-straint</td>
+          <td />
+        </tr>
+        <tr>
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr style="height:0pt">
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </table>
+      <p>This table implies the following conformance statements:</p>
+      <ol>
+        <li class="numbered-list1">The specified Header Element SHALL be present in the CDA header.</li>
+      </ol>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:6.65pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>This is limited by the Cardinality and Optionality of the header data element as specified in the Document Content Module template that invokes this Content Module.</span>
+      </p>
+      <p>The header data element SHALL include the specified Template ID in the &lt;templateID&gt; element of the relevant act or role element.</p>
+      <p>The header data element SHALL conform to all the requirements of the specified Parent Template.</p>
+      <p>The header data element SHALL include the specified Code in the &lt;code&gt; element, except if the specified Code includes the keyword “SHOULD or “MAY”; in the latter case, this requirement is relaxed to the requirement strength of those keywords.</p>
+      <p>The header data element SHALL include the specified subsidiary Participation data elements in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), using the specified Participation &lt;typeCode&gt; element, and in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</p>
+      <p>The Header Content Module table may be supplemented with additional specific conformance requirements.</p>
+      <h6 id="E.4.4.1.3.2">E.4.4.1.3.2 Entry Content Module Table</h6>
+      <p>An Entry Content Module is specified using the following table.</p>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="tableHeader">Template ID</td>
+          <td colspan="6" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">Parent Template</td>
+          <td colspan="6" />
+        </tr>
+        <tr>
+          <td colspan="2" style="background-color:#e6e6e6">General Description</td>
+          <td colspan="6" />
+        </tr>
+        <tr>
+          <td style="background-color:#e6e6e6">Class/Mood</td>
+          <td colspan="2" style="background-color:#e6e6e6">Code</td>
+          <td style="background-color:#e6e6e6">Data Type</td>
+          <td colspan="4" style="background-color:#e6e6e6">Value</td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="2" />
+          <td />
+          <td colspan="4" />
+        </tr>
+        <tr>
+          <td style="background-color:#e6e6e6">Opt</td>
+          <td style="background-color:#e6e6e6">entryRelationship</td>
+          <td style="background-color:#e6e6e6">Description</td>
+          <td colspan="2" style="background-color:#e6e6e6">Template</td>
+          <td style="background-color:#e6e6e6">Spec Document</td>
+          <td style="background-color:#e4e4e4">Vocabulary Constraint</td>
+          <td />
+        </tr>
+        <tr>
+          <td />
+          <td />
+          <td />
+          <td colspan="2" />
+          <td />
+          <td />
+          <td />
+        </tr>
+        <tr style="height:0pt">
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+          <td />
+        </tr>
+      </table>
+      <p>This table implies the following conformance statements:</p>
+      <ol>
+        <li class="numbered-list1">The entry SHALL include the specified Template ID in the &lt;templateID&gt; element of the clinical statement act element.</li>
+      </ol>
+      <p>The entry SHALL conform to all the requirements of the specified Parent Template.</p>
+      <p>The entry SHALL include the specified classCode and moodCode values and be conformant to the HL7 v3 requirements of that Act Class and Mood.</p>
+      <p>The entry SHALL include the specified entry Code in the &lt;code&gt; element of the clinical statement act element, except if the specified Section Code includes the keyword “SHOULD or “MAY”; in the latter case, this requirement is relaxed to the requirement strength of those keywords.</p>
+      <p>If of Class/Mood OBS/EVN, the entry SHALL include a value of the specified Data Type.</p>
+      <p>If Data Type is CD, the entry value SHALL be the specified Value.</p>
+      <p class="note">
+        <span>Note:</span>
+        <span style="width:6.65pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:36pt"> </span>
+        <span>The code may be specified as a value selected from an identified Value Set.</span>
+        <span style="width:15.61pt;text-indent:0pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:324pt"> </span>
+      </p>
+      <p>The entry SHALL include the specified subsidiary Entries in accordance with their specified Cardinality and Optionality (Opt column value, as described in Section 6.1.1), using the specified entryRelationship &lt;typeCode&gt; element, using the specified inversionInd element if present in the table, and in accordance with the specified Template ID and further constraints specified in the identified Technical Framework section.</p>
+      <p>
+        <span>The Entry Content Module table may be supplemented with additional specific conformance requirements, including</span>
+        <a name="OLE_LINK32">Observation Entry Constraint Tables</a>
+        <span>(see Section 6.1.2.2.2).</span>
+      </p>
+      <h4 id="E.4.4.2">E.4.4.2 Discrete Conformation Format</h4>
+      <p>
+        <span>The Discrete Conformance format corresponds directly to the HL7 v3 Consolidated CDA (C-CDA) Guide:  HL7 Implementation Guide for CDA</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <span>Release 2: IHE Health Story Consolidation, R1.1 DSTU, Section 1.8.1 Templates and Conformance Statements.</span>
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
+  </body>
+</html>

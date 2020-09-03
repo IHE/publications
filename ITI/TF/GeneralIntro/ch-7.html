@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta xmlns="" charset="utf-8" />
+    <title xmlns="">IHE ITI TF General Introduction</title>
+    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body xmlns="">
+    <header>
+      <p>
+        <img src="media/image1.jpeg" class="IHE logo" alt="IHE_LOGO_for_tf-docs" />
+      </p>
+      <p>IHE IT Infrastructure (ITI) Technical Framework, General Introduction</p>
+      <p>Revision 1.2 October 25, 2019</p>
+      <p>
+        <hr />
+      </p>
+    </header>
+    <main>
+      <h1 id="7">7 Technical Framework Document Conventions</h1>
+      <p>The IHE Technical Frameworks have adopted the following conventions for representing the framework concepts and specifying how the standards upon which they are based should be applied.</p>
+      <h2 id="7.1">7.1 Diagrams and Tables of IHE Actors and Transactions</h2>
+      <p>Each integration profile models a real-world capability in terms of actors that interact through transactions.</p>
+      <p>
+        <span>The</span>
+        <span style="font-style:italic">Actors and Transactions</span>
+        <span>table in each profile in Volume 1 specifies which transactions each actor is required to support in that profile.</span>
+      </p>
+      <p>
+        <span>The</span>
+        <span style="font-style:italic">Required Actor Groupings</span>
+        <span>table in each profile in Volume 1 specifies actors the implementer is required to implement together. Such requirements combine capabilities necessary for the system to function properly and achieve the profile integration goals. For example, the Client Authentication Agent of the ITI Enterprise User Authentication (EUA) Profile is required to be grouped with the Time Client of the ITI Consistent Time (CT) Profile.</span>
+      </p>
+      <p class="note">Note: In previous versions of technical framework documents, additional Grouping requirements were specified in a "Profile Dependencies" section that required actors in one profile to also implement the same actor in another profile on which the first depended. These are now folded into the Required Actor Groupings table.</p>
+      <p>
+        <span>The</span>
+        <span style="font-style:italic">Actors and Options</span>
+        <span>table in each profile in Volume 1 specifies Named Options for each actor. Implementers that choose to claim support for a named option are required to implement the specification sections referenced in the table.</span>
+      </p>
+      <p>
+        <span>The</span>
+        <span style="font-style:italic">Actor Diagram</span>
+        <span>in each profile in Volume 1 provides an overview of the actors in the profile and the transactions between them. Grouped actors will be shown as boxes that share a side. Rarely, actors from other profiles may be shown for context as dashed line boxes.</span>
+      </p>
+      <h2 id="7.2">7.2 Process Flow Diagrams</h2>
+      <p>Integration profiles often include process flow diagrams that illustrate how the profile functions as a sequence of transactions between relevant actors.</p>
+      <p>
+        <span>These diagrams are intended to provide an overview so the transactions can be seen in the context of an institution’s workflow. Certain transactions and activities not defined in detail by IHE are shown in these diagrams in</span>
+        <span style="font-style:italic">italics</span>
+        <span>to provide additional context on where the relevant IHE transactions fit into the broader scheme of healthcare information systems.</span>
+      </p>
+      <p>These diagrams are not intended to present the only possible scenario. Often, other actor groupings are possible and transactions from other profiles may be interspersed.</p>
+      <p>In some cases, the sequence of transactions may be flexible. Where this is the case there will generally be a note pointing out the possibility of variations. Transactions are shown as arrows oriented according to the flow of the primary information handled by the transaction and not necessarily away from the initiator.</p>
+      <h2 id="7.3">7.3 Security Implications</h2>
+      <p>IHE transactions often contain information that must be protected in conformance with privacy laws, regulations and best practices. This protection is documented in a Security Considerations section of each profile, which communicates security and privacy concerns that the implementers need to be aware of, assumptions made about security and privacy pre-conditions and, where appropriate, key elements of a risk mitigation strategy to be applied.</p>
+      <p>IHE includes several security and privacy-focused profiles. Other IHE profiles generally do not have specific privacy protections, but rather require a grouping of actors in one or more of the security profiles. It should be understood that institutions must implement policy and workflow steps to satisfy enterprise needs and to comply with regulatory requirements.</p>
+      <h2 id="7.4">7.4 Content Modules</h2>
+      <p>There is often a very clear distinction between the transactions in a messaging framework used to package and transmit information and the information content actually transmitted in those messages. In these cases, the same transactions may be used to support a wide variety of use cases in healthcare, such that the content needs to be profiled separately from the transaction itself. To this end, IHE has developed the concept of a Content Module.</p>
+      <p>
+        <span>Content Modules may be defined in a number of different standards, the two most prevalent being HL7 Clinical Document Architecture (CDA</span>
+        <span style="font-size:8pt;vertical-align:super">®</span>
+        <a href="#footnote-0_1" class="footnoteRef">[1]</a>
+        <span>) and DICOM Information Object Definitions (IODs).</span>
+      </p>
+      <p>Content profiles are typically defined with two actors, a Content Creator and a Content Consumer, which exchange the well-defined content module information.</p>
+      <p>For Content Creators and Content Consumers to function in the real world; however, those actors must be grouped with actors from a workflow or transport profile. For example, the Cardiology Imaging Report Content (CIRC) Profile defines the discrete content of a cardiology report. Typically, some of the data for the report is created and accessible from another machine such as a modality or other electronic health record. In this case, the Content Creator would be grouped with the Image Enabled Office (IEO) Report Creator. Once an instance of a content module is created, it is typically intended to be sent to another location or person. In this case, a Content Consumer could be grouped with an ITI Cross Enterprise Document Sharing (XDS.b) Document Consumer or a Cardiology Displayable Reports (DRPT) Report Manager. These potential actor groupings are defined in Volume 1 of a content module profile.</p>
+      <p>In addition to groupings, Content Consumers also have the following common set of options defined by the Patient Care Coordination (PCC) domain: </p>
+      <ul>
+        <li class="bullet-list1">View Option</li>
+        <li class="bullet-list1">Discrete Data Import Option</li>
+        <li class="bullet-list1">Document Import Option</li>
+        <li class="bullet-list1">Section Import Option</li>
+      </ul>
+      <p>These options are defined in PCC TF-2: 3 and should be reviewed in detail.</p>
+      <p>Finally, when an actor that supports a content module is grouped with an actor that supports a transaction, some of the data from the content module must be carefully mapped into the metadata of the transaction used by the transport actor. This data mapping of a content module to a transaction is called “data binding”. For example, the XDS Document attribute “authorPerson” is explicitly defined to be the concatenation of several CDA attributes beginning with “ClinicalDocument/author/assignedPerson/name/family”, etc. The data bindings of CDA content modules to Cross Enterprise Document Sharing (XDS.b) Profiles is defined in the PCC domain. PCC TF-2: 4 should be reviewed in detail.</p>
+      <p>Appendix E of the General Introduction (this document) defines important content module conventions such as cardinality constraints and optionality constraints for DICOM, HL7 v2 messages, and HL7 CDA documents.</p>
+      <h2 id="7.5">7.5 Technical Framework Cross-references</h2>
+      <p>When references are made to another section within a Technical Framework volume, a section number is used by itself. When references are made to other volumes or to a Technical Framework in another domain, the following format is used:</p>
+      <ul>
+        <li class="bullet-list1">&lt;domain acronym&gt; TF-&lt;volume number&gt;: &lt;section number&gt;, where</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">&lt;domain acronym&gt; is the short designator for the IHE domain (e.g., ITI = IT Infrastructure, RAD = Radiology)</li>
+        <li class="bullet-list2">&lt;volume number&gt; is the applicable volume within the given Technical Framework (e.g., 1, 2a, 2b, 2x, 3), and</li>
+        <li class="bullet-list2">&lt;section number&gt; is the applicable section number.</li>
+      </ul>
+      <p>For example:</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-style:italic">PCC TF-1: 3.1</span>
+          <span>refers to Section 3.1 in Volume 1 of the IHE Patient Care Coordination Technical Framework.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-style:italic">RAD TF-3: 4.33</span>
+          <span>refers to Section 4.33 in Volume 3 of the IHE Radiology Technical Framework.</span>
+        </li>
+        <li class="bullet-list1">
+          <span style="font-style:italic">ITI TF-2x: Appendix B</span>
+          <span>refers to Appendix B in Volume 2x of the IHE IT Infrastructure Technical Framework.</span>
+        </li>
+      </ul>
+      <p>When references are made to transaction numbers in the Technical Framework, the following format is used:</p>
+      <ul>
+        <li class="bullet-list1">[&lt;domain designator&gt;-&lt;transaction number&gt;], where</li>
+      </ul>
+      <ul>
+        <li class="bullet-list2">&lt;transaction number&gt; is the transaction number within the specified domain.</li>
+      </ul>
+      <p>For example:</p>
+      <ul>
+        <li class="bullet-list1">
+          <span style="font-style:italic">[ITI-1]</span>
+          <span>refers to Transaction 1 from the IHE IT Infrastructure Technical Framework.</span>
+        </li>
+      </ul>
+      <p>
+        <br style="page-break-before:always; clear:both" />
+      </p>
+    </main>
+    <footer>
+      <p>
+        <hr />
+      </p>
+      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+    </footer>
+  </body>
+</html>
