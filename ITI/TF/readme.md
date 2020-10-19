@@ -52,7 +52,7 @@ The conversion is a multi step process consisting of the following steps:
 * Vol 2 Glossar in vol 2x appears in the TOC and index file
 * removed inline style of A HREF tags
 * made footnote references work
-* fixed error in Vol2b and Vol2x
+* fixed error in Vol2 and Vol2
 * removed table width style
 * added volume 4
 * Footnotes moved to inline notes
