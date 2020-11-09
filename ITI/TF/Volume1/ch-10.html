@@ -964,7 +964,7 @@ The term “folder” comes from the medical community which commonly places pat
       <ol>
         <li class="numbered-list1">The Patient Identifier Domain managed by the Patient Identity Source in the XDS Affinity Domain is the source of patient identifiers (and merge operations) used by the XDS Document Registry to link Documents to a specific Patient. This Patient Identifier Domain is called the XDS Affinity Domain Patient Identification Domain (XAD-PID Domain).</li>
         <li class="numbered-list1">Submission Requests for Documents related to Patients with IDs not registered in the XDS Affinity Domain Patient Identifier Domain shall be rejected by the XDS Document Registry.</li>
-        <li class="numbered-list1">The XDS Document Registry will contain certain patient information (e.g., source patient ID, Surname, Given Name, Sex, Birthdate) for the purpose of audits and potential verification by Document Consumers. As this XDS Profile does not make any assumptions about the referential integrity and update of this information, these fields shall not be used as query matching keys.</li>
+        <li class="numbered-list1">The XDS Document Registry will contain certain patient information (e.g., source patient ID, Surname, Given Name, Sex, Birthdate) for the purpose of audits and potential verification by Document Consumers. As this XDS Profile does not make any assumptions about the referential integrity and update of this information, these fields shall not be used as query matching keys. (See Note.)</li>
         <li class="numbered-list1">As XDS Document Sources and Consumers may belong to different Patient Identification Domains, these systems need to cross-reference their own local Patient ID to the corresponding patient ID in the XAD-PID Domain of the Registry. Preferably, these systems may choose to use the IHE Patient Identifier Cross-referencing (PIX) Profile (see ITI TF-1: Appendix E.3) for this purpose.</li>
         <li class="numbered-list1">The XDS Document Registry is responsible for validating Document metadata in accordance with the XDS Affinity Domain’s policies. The Document Registry should reject submissions Requests that do not conform to these policies.</li>
       </ol>
@@ -972,7 +972,7 @@ The term “folder” comes from the medical community which commonly places pat
 	  Note: It is possible to submit a new document to replace a previously submitted one, with a new document entry created in the registry to correct for errors in the submitted document in the original submission request. However this is not a mechanism that updates only the metadata, as the replaced document is only deprecated and remains pointed by the original metadata.
 	  </p>
       <p>For additional requirements on handing of merged patients in XDS, see ITI TF-2a: 3.18.4.1.2.3.9 “Merge Patient ID”.</p>
-      <p>The figure below depicts an example of an XDS Affinity Domain with its Patient Identifier Domain (called XAD) and two EHR-CRs where the cross-referencing is performed internally to the Document Source and the Document Consumer Domains (Domain C and Domain D2 respectively).</p>
+      <p>Figure 10.4.9-1 depicts an example of an XDS Affinity Domain with its Patient Identifier Domain (called XAD) and two EHR-CRs where the cross-referencing is performed internally to the Document Source and the Document Consumer Domains (Domain C and Domain D2 respectively).</p>
       <p class="figureTitle">
           <img src="media/Figure_10.4.9-1.png" alt="" />
           Figure 10.4.9-1: XDS Affinity Domain with patient ID cross-referencing internal to the EHR-CRs
@@ -999,20 +999,20 @@ The term “folder” comes from the medical community which commonly places pat
         for a detailed discussion of the concepts of XDS Document life cycle.
       </p>
       <h4 id="10.4.10.2">10.4.10.2 Document Relationships</h4>
-      <p>XDS Documents may be related to predecessor documents by one of three methods:</p>
+      <p>XDS Documents may be related to predecessor documents by one of these methods:</p>
       <ul>
-        <li class="bullet-list1">Replacement,</li>
+        <li class="bullet-list1">Replacement</li>
         <li class="bullet-list1">Addendum</li>
         <li class="bullet-list1">Transformation</li>
         <li class="bullet-list1">Transformation-Replacement</li>
       </ul>
       <p>These relationships between XDS Documents are tracked in the XDS Document Registry. The parent relationship attribute contained in the metadata of such Documents is a coded value that describes the type of relationship. An original Document has no parent and consequently its parent Id and parent relationship are absent. XDS Document Registry shall reject submissions that contain relationships to documents that are not registered or have been “deprecated”. Document stubs are supported by XDS to allow for a valid relationship to a known but not registered Document.</p>
-      <p>A replacement document is a new version of an existing document. The replacement document has a new document Id; its parent Id attribute contains the document Id of the Document Entry associated with the previous version of the XDS Document, and parent relationship contains the code “RPLC”. The Document Entry for the previous version shall have its Availability Status changed to “deprecated”.
+<p>A <u>replacement</u> document is a new version of an existing document. The replacement document has a new document Id; its parent Id attribute contains the document Id of the Document Entry associated with the previous version of the XDS Document, and parent relationship contains the code “RPLC”. The Document Entry for the previous version shall have its Availability Status changed to “deprecated”.
       </p>
       <p>Replacement of On-Demand Document Entries works exactly the same as replacing Stable Document Entries in that the new entry is marked Approved and the replaced entry is marked Deprecated. But an On-Demand Document Entry which has been replaced cannot be expected to provide content that is current, so the On-Demand Document Source may return an error if a Retrieve Document Set request is received with a uniqueID for a deprecated entry.</p>
-      <p>An addendum is a separate XDS Document that references a prior document, and may extend or alter the observations in the prior document. It modifies the parent document, but the parent document remains a valid component of the patient record and shall remain in the state “approved” or available for care. The addendum XDS Document metadata contains the identifier of the previous XDS Document version in parent Id, and its parent relationship contains the code “APND”.
+<p>An <u>addendum</u> is a separate XDS Document that references a prior document, and may extend or alter the observations in the prior document. It modifies the parent document, but the parent document remains a valid component of the patient record and shall remain in the state “approved” or available for care. The addendum XDS Document metadata contains the identifier of the previous XDS Document version in parent Id, and its parent relationship contains the code “APND”.
       </p>
-      <p>A transformed document is derived by a machine translation from some other format. Examples of transformed documents could be CDA documents converted from DICOM Structured Reporting (SR) reports, or a rendering of a report into a presentation format such as PDF. The transform XDS Document contains the document Id of the previous version in parentId, and its parent relationship contains the code “XFRM”. XDS Affinity Domains may define rules that determine whether or not a transformed XDS Document replaces the source, but typically this would not be the case. If it is, an additional parent relationship of type “RPLC” is to be used.
+<p>A <u>transformed</u> document is derived by a machine translation from some other format. Examples of transformed documents could be CDA documents converted from DICOM Structured Reporting (SR) reports, or a rendering of a report into a presentation format such as PDF. The transform XDS Document contains the document Id of the previous version in parentId, and its parent relationship contains the code “XFRM”. XDS Affinity Domains may define rules that determine whether or not a transformed XDS Document replaces the source, but typically this would not be the case. If it is, an additional parent relationship of type “RPLC” is to be used.
       </p>
       <h3 id="10.4.11">10.4.11 Document Query</h3>
       <p>Query return info shall be either:</p>
@@ -1091,11 +1091,11 @@ The term “folder” comes from the medical community which commonly places pat
       <p>Any other Document Consumer may query the Document Registry to find out about documents related to all phases of care for the patient [3]. It may choose to retrieve some of these documents from any Document Repository Actor [4].</p>
       <p class="figureTitle">
           <img src="media/Figure_10.5-2.png" alt="" />
-		  Figure 10.5-2: Implementation Strategy with 3<sup>rd</sup> party repository
+	  Figure 10.5-2: Implementation Strategy with 3<sup>rd</sup> party repository
       </p>
       <p class="figureTitle">
           <img src="media/Figure_10.5-3.png" alt="" />
-		  Figure 10.5-3: Implementation Strategy with 3<sup>rd</sup> party central repository and registry
+	  Figure 10.5-3: Implementation Strategy with 3<sup>rd</sup> party central repository and registry
       </p>
       <p>
         <span class="emphasis">Strategy 3: Direct Patient Transfer-Referral</span>
