@@ -1,382 +1,430 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
-  <head>
-    <meta xmlns="" charset="utf-8" />
-    <title xmlns="">IHE ITI TF Rev17 Vol1</title>
-    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
-  </head>
-  <body xmlns="">
-    <header>
-      <p>
-        <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo" alt="IHE logo" />
-      </p>
-      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 1</p>
-      <p>Revision 17.0, November 2020 – Final Text</p>
-      <p>
-        <hr />
-      </p>
-    </header>
-    <main>
-      <h1 id="30">30 Cross-Enterprise Document Workflow Content Profile (XDW)</h1>
-      <p>The Cross-Enterprise Document Workflow (XDW) Profile enables participants in a multi-organizational environment to manage and track the tasks related to patient-centric workflows as the systems hosting workflow management applications coordinate their activities for the health professionals and patients they support. XDW builds upon the sharing of health documents provided by other IHE profiles such as XDS, adding the means to associate documents conveying clinical facts to a patient-specific workflow. XDW provides a common interoperability infrastructure upon which a wide range of specific workflow definitions may be supported. It is designed to support the complexity of health services delivery with flexibility to adapt as workflows evolve.</p>
-      <p>This profile defines an instrument, called a “Workflow Document”, to manage and track a shared workflow. It records the creation of tasks and maintains a historical record of tasks as they move through the associated workflow. The Workflow Document also maintains the references to health information input and output associated with each task. Such shared workflow status information allows the various participating systems to coordinate by:</p>
-      <ul>
-        <li class="bullet-list1">being aware of the history of a workflow for a patient;</li>
-        <li class="bullet-list1">obtaining and reading the workflow’s incomplete tasks;</li>
-        <li class="bullet-list1">updating this shared document as the workflow tasks are performed according to a referenced workflow definition.</li>
-      </ul>
-      <p>XDW provides to offer a common, workflow-independent interoperability infrastructure that:</p>
-      <ul>
-        <li class="bullet-list1">provides a platform upon which a wide range of specific workflows can be defined with minimal specification and applications implementation efforts on the workflow definition (e.g., Medical Referrals Workflow, Prescriptions Workflow, Home Care Workflow);</li>
-        <li class="bullet-list1">benefits many clinical and non-clinical domains by avoiding different competing approaches to workflow management;</li>
-        <li class="bullet-list1">increases the consistency of workflow interoperability, and enables the development of interoperable workflow management applications where workflow-specific customization is minimized;</li>
-        <li class="bullet-list1">facilitates the integration of multi-organizational workflows with the variety of existing workflow management systems used within the participating organizations;</li>
-        <li class="bullet-list1">offers the necessary flexibility to support a large variety of different healthcare workflows by not being overly constrained.</li>
-      </ul>
-      <p>More specifically XDW supports workflows that are:</p>
-      <ul>
-        <li class="bullet-list1">patient-centric;</li>
-        <li class="bullet-list1">based on business/clinical needs which are defined externally to the XDW Profile. Such workflow definitions have to be known only by the applications within the participating systems, not by the infrastructure systems;</li>
-        <li class="bullet-list1">executed in loosely connected, distributed environments, where centralized workflow management systems are not desired, or in many instances, possible.</li>
-      </ul>
-      <p>The XDW Workflow Architecture illustration (Figure 30-1) shows how the sharing of XDW Documents between “edge” applications using Document Sharing infrastructure supports the management of Workflow according to Workflow Definitions established between participating applications.</p>
-      <img src="media/Figure_30-1.png" alt="XDW Workflow Architecture" />
-      <p class="figureTitle">Figure 30-1: XDW Workflow Architecture</p>
-	  <p class="trialImplementation">This Profile has been updated by the <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XDW_for_XCA_and_XCDR.pdf">Cross-Enterprise Document Workflow Extension for Cross-Community Envifonments (XDW for XCA and XCDR)</a> Supplement.</p>
 
-      <h2 id="30.1">30.1 XDW Actors, Transactions, and Content Modules</h2>
-      <p>The XDW Content Profile is based on three actors, the Content Creator, the Content Consumer and the Content Updater. Content is created by a Content Creator or a Content Updater and is to be consumed by a Content Consumer or a Content Updater. The sharing or transmission of content or updates from one actor to the other is addressed by the use of IHE integration profiles such as XDS, XDM or XDR (see PCC TF-1: 2.1 for a detailed explanation of the use of “Content Profiles” with “Integration Profiles”).</p>
-      <p>Figure 30.1-1 shows the actors directly involved in the XDW Profile and the direction that the content is exchanged.</p>
-      <p>A product implementation using this profile must group actors from this profile with actors from a workflow or transport profile to be functional. See Section 30.3 “XDW Actor Groupings and Profile Interactions”.</p>
-      <img src="media/Figure_30.1-1.png" alt="XDW Actor Diagram" />
-      <p class="figureTitle">Figure 30.1-1: XDW Actor Diagram</p>
-      <p>Table 30.1-1 lists the content module(s) defined in the XDW Profile. To claim support of this profile, an actor shall support all required content modules (labeled “R”) and may support optional content modules (labeled “O”).</p>
-      <p class="tableTitle">Table 30.1-1: XDW Profile - Actors and Content Modules</p>
-      <table cellspacing="0" cellpadding="0">
+<head>
+  <meta xmlns="" charset="utf-8" />
+  <title xmlns="">IHE ITI TF Rev17 Vol1</title>
+  <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body xmlns="">
+  <header>
+    <p>
+      <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo" alt="IHE logo" />
+    </p>
+    <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 1</p>
+    <p>Revision 17.0, November 2020 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+  </header>
+  <main>
+    <h1 id="30">30 Cross-Enterprise Document Workflow Content Profile (XDW)</h1>
+    <p>The Cross-Enterprise Document Workflow (XDW) Profile enables participants in a multi-organizational environment to manage and track the tasks related to patient-centric workflows as the systems hosting workflow management applications
+      coordinate their activities for the health professionals and patients they support. XDW builds upon the sharing of health documents provided by other IHE profiles such as XDS, adding the means to associate documents conveying clinical facts to
+      a patient-specific workflow. XDW provides a common interoperability infrastructure upon which a wide range of specific workflow definitions may be supported. It is designed to support the complexity of health services delivery with flexibility
+      to adapt as workflows evolve.</p>
+    <p>This profile defines an instrument, called a “Workflow Document”, to manage and track a shared workflow. It records the creation of tasks and maintains a historical record of tasks as they move through the associated workflow. The Workflow
+      Document also maintains the references to health information input and output associated with each task. Such shared workflow status information allows the various participating systems to coordinate by:</p>
+    <ul>
+      <li class="bullet-list1">being aware of the history of a workflow for a patient;</li>
+      <li class="bullet-list1">obtaining and reading the workflow’s incomplete tasks;</li>
+      <li class="bullet-list1">updating this shared document as the workflow tasks are performed according to a referenced workflow definition.</li>
+    </ul>
+    <p>XDW provides to offer a common, workflow-independent interoperability infrastructure that:</p>
+    <ul>
+      <li class="bullet-list1">provides a platform upon which a wide range of specific workflows can be defined with minimal specification and applications implementation efforts on the workflow definition (e.g., Medical Referrals Workflow,
+        Prescriptions Workflow, Home Care Workflow);</li>
+      <li class="bullet-list1">benefits many clinical and non-clinical domains by avoiding different competing approaches to workflow management;</li>
+      <li class="bullet-list1">increases the consistency of workflow interoperability, and enables the development of interoperable workflow management applications where workflow-specific customization is minimized;</li>
+      <li class="bullet-list1">facilitates the integration of multi-organizational workflows with the variety of existing workflow management systems used within the participating organizations;</li>
+      <li class="bullet-list1">offers the necessary flexibility to support a large variety of different healthcare workflows by not being overly constrained.</li>
+    </ul>
+    <p>More specifically XDW supports workflows that are:</p>
+    <ul>
+      <li class="bullet-list1">patient-centric;</li>
+      <li class="bullet-list1">based on business/clinical needs which are defined externally to the XDW Profile. Such workflow definitions have to be known only by the applications within the participating systems, not by the infrastructure systems;</li>
+      <li class="bullet-list1">executed in loosely connected, distributed environments, where centralized workflow management systems are not desired, or in many instances, possible.</li>
+    </ul>
+    <p>The XDW Workflow Architecture illustration (Figure 30-1) shows how the sharing of XDW Documents between “edge” applications using Document Sharing infrastructure supports the management of Workflow according to Workflow Definitions
+      established between participating applications.</p>
+    <img src="media/Figure_30-1.png" alt="XDW Workflow Architecture" />
+    <p class="figureTitle">Figure 30-1: XDW Workflow Architecture</p>
+    <p class="trialImplementation">This Profile has been updated by the <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XDW_for_XCA_and_XCDR.pdf">Cross-Enterprise Document Workflow Extension for Cross-Community Environments
+        (XDW for XCA and XCDR)</a> Supplement.</p>
+    <h2 id="30.1">30.1 XDW Actors, Transactions, and Content Modules</h2>
+    <p>The XDW Content Profile is based on three actors, the Content Creator, the Content Consumer and the Content Updater. Content is created by a Content Creator or a Content Updater and is to be consumed by a Content Consumer or a Content
+      Updater. The sharing or transmission of content or updates from one actor to the other is addressed by the use of IHE integration profiles such as XDS, XDM or XDR (see PCC TF-1: 2.1 for a detailed explanation of the use of “Content Profiles”
+      with “Integration Profiles”).</p>
+    <p>Figure 30.1-1 shows the actors directly involved in the XDW Profile and the direction that the content is exchanged.</p>
+    <p>A product implementation using this profile must group actors from this profile with actors from a workflow or transport profile to be functional. See Section 30.3 “XDW Actor Groupings and Profile Interactions”.</p>
+    <img src="media/Figure_30.1-1.png" alt="XDW Actor Diagram" />
+    <p class="figureTitle">Figure 30.1-1: XDW Actor Diagram</p>
+    <p>Table 30.1-1 lists the content module(s) defined in the XDW Profile. To claim support of this profile, an actor shall support all required content modules (labeled “R”) and may support optional content modules (labeled “O”).</p>
+    <p class="tableTitle">Table 30.1-1: XDW Profile - Actors and Content Modules</p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tableHeader">Actors</td>
+        <td class="tableHeader">Content Modules</td>
+        <td class="tableHeader">Optionality</td>
+        <td class="tableHeader">Reference</td>
+      </tr>
+      <tr>
+        <td>Content Creator</td>
+        <td>XDW Workflow Content Module (see Note 1)</td>
+        <td>R</td>
+        <td>
+          <a href="../Volume3/ch-5.4.html#5.4">ITI TF-3: 5.4</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Content Consumer</td>
+        <td>XDW Workflow Content Module (see Note 1)</td>
+        <td>R</td>
+        <td>
+          <a href="../Volume3/ch-5.4.html#5.4">ITI TF-3: 5.4</a>
+        </td>
+      </tr>
+      <tr style="height:24.6pt">
+        <td>Content Updater</td>
+        <td>XDW Workflow Content Module (see Note 1)</td>
+        <td>R</td>
+        <td>
+          <a href="../Volume3/ch-5.4.html#5.4">ITI TF-3: 5.4</a>
+        </td>
+      </tr>
+    </table>
+    <p class="note">Note 1: The XDW Workflow Content Module defines how to create an agnostic unstructured Workflow Document. Implementations may also choose to support Content Modules for specific workflows defined by IHE in workflow definition
+      profiles (e.g., profiles in the PCC domain: Cross-Enterprise eReferral Workflow Definition (XBeR-WD), Cross-Enterprise TeleHomeMonitoring Workflow Definition (XTHM-WD), Cross-Enterprise Tumor Board Workflow Definition (XTB-WD), and others.)</p>
+    <h3 id="30.1.1">30.1.1 XDW Content Creator</h3>
+    <p>
+      The Content Creator is responsible for creating content that will be shared or exchanged between other IHE actors. It is required to be grouped with other actors that perform the actual sharing or exchanging of information (see Section 30.3).
+      The XDW Content Creator shall be able to create new workflows by creating a new XDW Workflow Document as defined in
+      <a href="../Volume3/ch-5.4.html#5.4">ITI TF-3: 5.4</a>
+      . This actor is workflow agnostic and it is responsible only for the creation of the first version of the XDW Workflow Document.
+    </p>
+    <h3 id="30.1.2">30.1.2 XDW Content Consumer</h3>
+    <p>The Content Consumer is responsible for accessing XDW Workflow Documents that have been shared or exchanged between other IHE actors. It is required to be grouped with other actors that perform the actual sharing or exchanging of information
+      (see Section 30.3). The XDW Content Consumer may only obtain and read the last version of a specific XDW Workflow Document. The XDW Workflow Document consumed can belong to any kind of clinical workflow.</p>
+    <h3 id="30.1.3">30.1.3 XDW Content Updater</h3>
+    <p>
+      A Content Updater shall be able to contribute to existing workflows by consuming an existing XDW Workflow Document and replacing it with an updated Workflow Document. It is required to be grouped with other actors that perform the actual
+      sharing or exchanging of information (see Section 30.3). This actor shall be able to consume and read the most recent version of a specific XDW Workflow Document. The XDW Content Updater shall be able to update the XDW Workflow Document,
+      acting on the content in many different ways (tracking a new task initiated or performed, changing the status of tasks, adding documents reference in some tasks, changing the status of the whole workflow, etc.). After the update, the XDW
+      Content Updater shall be able to replace the previous version of the XDW Workflow Document with the new one. This actor shall be able to solve “race condition” events (see
+      <a href="../Volume3/ch-5.4.html#5.4.5.1">ITI TF-3: 5.4.5.1</a>
+      ).
+    </p>
+    <h2 id="30.2">30.2 XDW Actor Options</h2>
+    <p>Options that may be selected for this Profile are listed in the Table 30.2-1 along with the actors to which they apply.</p>
+    <p class="tableTitle">Table 30.2-1: XDW - Actors and Options</p>
+    <table cellspacing="0" cellpadding="0">
+      <thead>
         <tr>
-          <td class="tableHeader">Actors</td>
-          <td class="tableHeader">Content Modules</td>
-          <td class="tableHeader">Optionality</td>
-          <td class="tableHeader">Reference</td>
+          <td class="tableHeader">Actor</td>
+          <td class="tableHeader">Options</td>
+          <td class="tableHeader">Vol. &amp; Section</td>
         </tr>
-        <tr>
+      </thead>
+      <tbody>
+        <tr style="height:16.6pt">
           <td>Content Creator</td>
-          <td>XDW Workflow Content Module (see Note 1)</td>
-          <td>R</td>
+          <td>No options defined</td>
+          <td>- -</td>
+        </tr>
+        <tr style="height:11.65pt">
+          <td rowspan="2">Content Consumer (Note 1)</td>
+          <td>View Option</td>
           <td>
-            <a href="../Volume3/ch-2.4.html#5.4">ITI TF-3: 5.4</a>
+            <a href="../Volume1/ch-30.html#30.2.1">ITI TF-1: 30.2.1</a>
           </td>
         </tr>
-        <tr>
-          <td>Content Consumer</td>
-          <td>XDW Workflow Content Module (see Note 1)</td>
-          <td>R</td>
+        <tr style="height:17.05pt">
+          <td>Document Import Option</td>
           <td>
-            <a href="../Volume3/ch-2.4.html#5.4">ITI TF-3: 5.4</a>
+            <a href="../Volume1/ch-30.html#30.2.2">ITI TF-1: 30.2.2</a>
           </td>
         </tr>
-        <tr style="height:24.6pt">
-          <td>Content Updater</td>
-          <td>XDW Workflow Content Module (see Note 1)</td>
-          <td>R</td>
+        <tr style="height:11.65pt">
+          <td rowspan="2">Content Updater (Note 1)</td>
+          <td>View Option</td>
           <td>
-            <a href="../Volume3/ch-2.4.html#5.4">ITI TF-3: 5.4</a>
+            <a href="../Volume1/ch-30.html#30.2.1">ITI TF-1: 30.2.1</a>
           </td>
         </tr>
-      </table>
-      <p class="note">Note 1: The XDW Workflow Content Module defines how to create an agnostic unstructured Workflow Document. Implementations may also choose to support Content Modules for specific workflows defined by IHE in workflow definition profiles (e.g., profiles in the PCC domain: Cross-Enterprise eReferral Workflow Definition (XBeR-WD), Cross-Enterprise TeleHomeMonitoring Workflow Definition (XTHM-WD), Cross-Enterprise Tumor Board Workflow Definition (XTB-WD), and others.)</p>
-      <h3 id="30.1.1">30.1.1 XDW Content Creator</h3>
-      <p>
-        The Content Creator is responsible for creating content that will be shared or exchanged between other IHE actors. It is required to be grouped with other actors that perform the actual sharing or exchanging of information (see Section 30.3). The XDW Content Creator shall be able to create new workflows by creating a new XDW Workflow Document as defined in
-        <a href="../Volume3/ch-2.4.html#5.4">ITI TF-3: 5.4</a>
-        . This actor is workflow agnostic and it is responsible only for the creation of the first version of the XDW Workflow Document.
-      </p>
-      <h3 id="30.1.2">30.1.2 XDW Content Consumer</h3>
-      <p>The Content Consumer is responsible for accessing XDW Workflow Documents that have been shared or exchanged between other IHE actors. It is required to be grouped with other actors that perform the actual sharing or exchanging of information (see Section 30.3). The XDW Content Consumer may only obtain and read the last version of a specific XDW Workflow Document. The XDW Workflow Document consumed can belong to any kind of clinical workflow.</p>
-      <h3 id="30.1.3">30.1.3 XDW Content Updater</h3>
-      <p>
-        A Content Updater shall be able to contribute to existing workflows by consuming an existing XDW Workflow Document and replacing it with an updated Workflow Document. It is required to be grouped with other actors that perform the actual sharing or exchanging of information (see Section 30.3). This actor shall be able to consume and read the most recent version of a specific XDW Workflow Document. The XDW Content Updater shall be able to update the XDW Workflow Document, acting on the content in many different ways (tracking a new task initiated or performed, changing the status of tasks, adding documents reference in some tasks, changing the status of the whole workflow, etc.). After the update, the XDW Content Updater shall be able to replace the previous version of the XDW Workflow Document with the new one. This actor shall be able to solve “race condition” events (see
-        <a href="../Volume3/ch-2.4.html#5.4.5.1">ITI TF-3: 5.4.5.1</a>
-        ).
-      </p>
-      <h2 id="30.2">30.2 XDW Actor Options</h2>
-      <p>Options that may be selected for this Profile are listed in the Table 30.2-1 along with the actors to which they apply.</p>
-      <p class="tableTitle">Table 30.2-1: XDW - Actors and Options</p>
-      <table cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <td class="tableHeader">Actor</td>
-            <td class="tableHeader">Options</td>
-            <td class="tableHeader">Vol. &amp; Section</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="height:16.6pt">
-            <td>Content Creator</td>
-            <td>No options defined</td>
-            <td>- -</td>
-          </tr>
-          <tr style="height:11.65pt">
-            <td rowspan="2">Content Consumer (Note 1)</td>
-            <td>View Option</td>
-            <td>
-              <a href="../Volume1/ch-30.html#30.2.1">ITI TF-1: 30.2.1</a>
-            </td>
-          </tr>
-          <tr style="height:17.05pt">
-            <td>Document Import Option</td>
-            <td>
-              <a href="../Volume1/ch-30.html#30.2.2">ITI TF-1: 30.2.2</a>
-            </td>
-          </tr>
-          <tr style="height:11.65pt">
-            <td rowspan="2">Content Updater (Note 1)</td>
-            <td>View Option</td>
-            <td>
-              <a href="../Volume1/ch-30.html#30.2.1">ITI TF-1: 30.2.1</a>
-            </td>
-          </tr>
-          <tr style="height:17.05pt">
-            <td>Document Import Option</td>
-            <td>
-              <a href="../Volume1/ch-30.html#30.2.2">ITI TF-1: 30.2.2</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="note">Note 1: The actor shall support at least one of these options</p>
-      <h3 id="30.2.1">30.2.1 View Option</h3>
-      <p>A Content Consumer or a Content Updater that supports the View Option shall be able to:</p>
-      <ul>
-        <li class="bullet-list1">use the appropriate XD* transactions to obtain the Workflow Document along with associated necessary metadata;</li>
-        <li class="bullet-list1">interpret the content of the Workflow Document and display its required content elements in a way which shows the tasks that are not complete and the completed task in a chronological way. The required elements to display are identified in the “View” column in ITI TF-3: Table 5.4.3-8 and Table 5.4.3-9.</li>
-        <li class="bullet-list1">For each task, it shall list the documents referenced inside the Workflow Document and may optionally support the retrieve and the rendering of the documents referenced inside the Workflow Document.</li>
-        <li class="bullet-list1">Any additional display capabilities that are specific to the referenced Workflow Definition profile may be provided.</li>
-      </ul>
-      <h3 id="30.2.2">30.2.2 Document Import Option</h3>
-      <p>A Content Consumer or a Content Updater that supports the Document Import Option shall support the storage of the entire Workflow Document (as provided by the XD* sharing framework) along with applicable metadata to ensure its later processing. Documents referenced in the Workflow Document may also be stored. This Option requires the proper tracking of the relation between the Documents referenced and the content of the Workflow Document origin. Once a document has been imported, the Content Consumer or the Content Updater shall offer a means to use the document without the need to retrieve it again from the XD* sharing framework. When viewed after it was imported, a Content Consumer and/or a Content Updater may choose to access the XD* sharing framework to find out if the related Document viewed has been deprecated or replaced.</p>
-      <p class="note">Note: For example, when using XDS, a Content Consumer may choose to query the Document Registry about a document previously imported in order to find out if this previously imported document may have been replaced</p>
-      <h2 id="30.3">30.3 XDW Actor Grouping and Profile Interactions</h2>
-      <p>
-        An XDW Content Creator, Content Updater and Content Consumer shall be grouped with appropriate actors from the XDS, XDM and XDR Profile to exchange XDW Workflow Documents. The metadata used for document entries in document sharing or interchange has specific relationships or dependencies (which we call bindings, see
-        <a href="../Volume3/ch-2.4.html#5.4.6">ITI TF-3: 5.4.6</a>
-        ) to the content of the clinical document – a XDW Workflow Document.
-      </p>
-      <p>When XDW is used in conjunction with XDS:</p>
-      <ul>
-        <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDS Document Source;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDS Document Source with the Document Replacement Option;</li>
-        <li class="bullet-list2">an XDS Document Consumer;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDS Document Consumer.</li>
-      </ul>
-      <p>When XDW is used in conjunction with XDR:</p>
-      <ul>
-        <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDR Document Source;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDR Document Source;</li>
-        <li class="bullet-list2">an XDR Document Recipient;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDR Document Recipient.</li>
-      </ul>
-      <p>When XDW is used in conjunction with XDM:</p>
-      <ul>
-        <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDM Portable Media Creator;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDM Portable Media Creator;</li>
-        <li class="bullet-list2">an XDM Portable Media Importer;</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">an XDM Portable Media Importer.</li>
-      </ul>
-      <p class="note">Note: The support of Workflow spanning XDS, XDR and XDM environments is not explicitly addressed.</p>
-      <h2 id="30.4">30.4 XDW Process Flow</h2>
-      <h3 id="30.4.1">30.4.1 XDW Approach to Workflow</h3>
-      <p>XDW is a core component of a common, workflow-independent interoperability infrastructure that provides a platform upon which a wide range of specific workflows can be defined by “content specialization” with minimal specification and implementation efforts (e.g., Medical Referrals, Prescriptions, Home Care).</p>
-      <p>This section first describes the overall architecture within which the XDW Profile operates. Next, the structure of the XDW workflow document, the primary data structure that is shared among the workflow participants, is described.</p>
-      <h4 id="30.4.1.1">30.4.1.1 XDW Workflow Architecture</h4>
-      <p>
-        <span>A</span>
-        <span style="font-weight:bold">Workflow Definition</span>
-        <span>is structured as a set of logical or clinical tasks definitions and rules. Each task definition describes an activity or a group of activities that needs to be accomplished by the owner of the task. The rules in the workflow definition ensure that the different participants in a workflow operate jointly to advance within process and to move from one task to another in a consistent way.</span>
-      </p>
-      <p>Figure 30.4.1.1-1 presents an overview of the Workflow Architecture built around the XDW Profile.</p>
-      <img src="media/Figure_30.4.1.1-1.png" alt="XDW Architecture Overview" />
-      <p class="figureTitle">Figure 30.4.1.1-1: XDW Architecture Overview</p>
-      <p>In this workflow architecture:</p>
-      <ul>
-        <li class="bullet-list1">The first layer supports the sharing or exchange of documents. This interoperability foundation is enabled by a set of existing IHE document sharing profiles such as XDS, XDR and XDM along with document content profiles and security/privacy profiles such as ATNA and (optionally) BPPC.</li>
-        <li class="bullet-list1">The second layer defines a generic data structure called a Workflow Document which is shared among the workflow participants by using the first layer of this architecture. Likewise, the clinical and administrative documents that are used as input and produced as output by the tasks of workflows managed by the XDW Profile are shared using the same first layer of this architecture.</li>
-        <li class="bullet-list1">The third layer introduces the semantic definition of the workflows that can be understood and executed among the participating systems/applications. The orchestration of specific workflows allows the workflow participants to share a common understanding of the specific tasks, the dependencies between these tasks, and a number of rules that control the workflow execution. Execution details are conveyed through the XDW Workflow Document defined by the second layer of the architecture. The specification of Workflow Definitions at this third layer is not part of the XDW Profile and is currently best handled with a natural language expression (See example of Basic Unstructured Workflow Definition Profile, ITI TF-2x: Appendix X).</li>
-        <li class="bullet-list1">The fourth layer of this architecture contains the applications executed by the participating systems. Such applications bridge between XDW managed workflow and the locally managed workflow. Much of the details of the local workflows managed by each application will be hidden and encapsulated in “higher” granularity tasks exposed through XDW; as such details would not need to be externally exposed. The workflow definitions conveyed by the third layer should only contain higher granularity tasks that require workflow coordination across organizational boundaries.</li>
-      </ul>
-      <h4 id="30.4.1.2">30.4.1.2 XDW Document Structure</h4>
-      <p>The XDW Profile uses the XDW Workflow Document to manage workflows.</p>
-      <p>The XDW Workflow Document enables participants in a multi-organization environment to manage and track the execution of patient-centric workflows. The structure of WorkflowDocument is organized into Tasks and TaskEvents.</p>
-      <p>
-        <span>A</span>
-        <span style="font-weight:bold">Task</span>
-        <span>describes an activity, or a group of activities, that need to be accomplished or have been accomplished. A Task</span>
-        <span style="font-weight:bold" />
-        <span>is characterized by several attributes:</span>
-      </p>
-      <ul>
-        <li class="bullet-list1">the type of task,</li>
-        <li class="bullet-list1">the owner of the task,</li>
-        <li class="bullet-list1">the current status of this task (one of the status values that are valid for this task),</li>
-        <li class="bullet-list1">the references to documents used for input or produced as output</li>
-        <li class="bullet-list1">
-          <span>the history of past</span>
-          <span style="font-weight:bold">Task Events</span>
-          <span>for this task, that document the progress of the task up to the present state</span>
-        </li>
-      </ul>
-      <p>
-        When a person or organization has been assigned as owner of a task, the task is placed under execution. (It moves from a “CREATED” or “READY” status to an “IN_PROGRESS” status). When the expected activity(ies) is completed successfully the task moves to the “COMPLETED” status, otherwise to the “FAILED” status (for the state diagram see
-        <a href="../Volume3/ch-2.4.html#5.4.2.4">ITI TF-3: 5.4.2.4</a>
-        ).
-      </p>
-      <p>
-        <span style="font-weight:bold">Task Event</span>
-        <span>is a record of a change (status and/or other attribute) of a task; a Task Event history is the list of Task Events for a specific task.</span>
-      </p>
-      <p>As shown in the Figure 30.4.1.2-1, the XDW Workflow Document is structured into two parts:</p>
-      <ul>
-        <li class="bullet-list1">a first part with general workflow information about the document, </li>
-        <li class="bullet-list1">a second part that collects the different Tasks that are completed or not yet completed in the workflow, as well as for each task, the related Task Events that tracks its progress. Task and Task Event specification leverages a proper subset of the task model and specification from the OASIS Human Task, a standard closely related to well-known workflow standards such as BPEL and BPMN.</li>
-      </ul>
-      <img src="media/Figure_30.4.1.2-1.png" alt="Workflow Document Structure" />
-      <p class="figureTitle">Figure 30.4.1.2-1: Workflow Document Structure</p>
-      <p>The Task and Task Events include references to clinical or administrative input/output documents to the Task or Task Event:</p>
-      <ul>
-        <li class="bullet-list1">
-          <span>The</span>
-          <span style="font-weight:bold">Input attribute</span>
-          <span>contains references to documents that are relevant for workflow participants in performing the Task. For example, for a performed examination, this could contain a reference to a referral request. It may also contain references to "parent" workflows to which this workflow is a "child".</span>
-        </li>
-        <li class="bullet-list1">
-          <span>The</span>
-          <span style="font-weight:bold">Output attribute</span>
-          <span>contains references to documents that were produced as a result of performing this Task. For example, this could contain a reference to a report written by a specialist. It may also contain references to "child" workflows initiated by this workflow as a parent.</span>
-        </li>
-      </ul>
-      <p>
-        At any time, if a participant chooses to update the workflow for a specific patient, it shall either create one (or more) new task or update an existing task and record a past taskEvent. Each update to the Workflow document results in a new instance of the Workflow Document which is published as a replacement. The prior version being replaced is then placed in the status “deprecated” (DocumentEntry availabilityStatus) so that only the newest Workflow Document is active. The technical description of the updating process of the Workflow Document is specified in
-        <a href="../Volume3/ch-2.4.html#5.4.5.4">ITI TF-3: 5.4.5.4</a>
-        .
-      </p>
-      <p>When a new Workflow Document is created, the Content Creator assigns it a workflow identifier in the DocumentEntry.referenceIdList metadata attribute and in the workflow document. This workflow identifier does not change during the evolution of the workflow itself, and allows the grouping of all the XDW Workflow Documents that belong to the same instance of workflow.</p>
-      <p>All subsequent replacement workflow documents also carry the same workflow identifier so that this identifier provides a stable reference to an instance of a workflow, while the Workflow Document DocumentEntry.uniqueId is different for each version of the workflow document.</p>
-      <h3 id="30.4.2">30.4.2 XDW Use-Cases and Process Flow in an XDS Affinity Domain</h3>
-      <p>A broad range of use cases may be supported by the XDW Content Profile.</p>
-      <p>The purpose of this section is to describe a typical use of XDW with no intent to present the breadth and flexibility of XDW. The use case described in this section provides the necessary background to the reader in understanding the basic capabilities of XDW.</p>
-      <p>
-        <span>This use case is not intended as a Workflow Definition Profile specification. Such Profiles are being developed by clinical IHE Domains in order to support their specific workflows.</span>
-        <a name="_Toc400706692">Referral Workflow Use Case</a>
-      </p>
-      <p>This workflow is a three-step process:</p>
-      <ol>
-        <li class="numbered-list1">a physician refers a patient to another healthcare provider for a specialist’s consultation;</li>
-      </ol>
-      <ol start="2">
-        <li class="numbered-list1">the specialist starts the consultation which may span one or more visits</li>
-        <li class="numbered-list1">the specialist completes the consultation and produces a report.</li>
-      </ol>
-      <p>Each step will be described both from a clinical and a technical point of view.</p>
-      <p>The description will rely on two figures:</p>
-      <ul>
-        <li class="bullet-list1">Figure 30.4.2.1.1-1 represents the evolution of the Workflow Document during this Referral workflow. Each one of the three steps A, B, C is depicted in a column.</li>
-        <li class="bullet-list1">Figure 30.4.2.1.1-2 is a sequence diagram of the transactions between “system actors” in the sharing of the Workflow Document as it is updated, using an infrastructure based on the XDS Profile (although not shown here, this use case could be transposed on the XDR or XDM Profiles).</li>
-      </ul>
-      <h4 id="30.4.2.2">30.4.2.2 Referral Workflow Use Case - Step by Step</h4>
-      <p>We present below the detailed chronological sequence of steps:</p>
-      <ol>
-        <li class="numbered-list0">A physician refers a patient to another healthcare provider for a specialist’s consultation</li>
-      </ol>
-      <p>In this task, the GP examines the patient and reviews the patient’s most recent laboratory report. The GP refers the patient to a specialist, creating an eReferral Document and referencing the laboratory report.</p>
-      <p>The GP’s software, as Content Creator, produces the e-Referral Document and one Workflow Document to track the clinical workflow of the eReferral. As shown in column A of Figure 30.4.2.2-1, at this moment the Workflow Document created has only one task (“Referral Requested”) characterized by:</p>
-      <ul>
-        <li class="bullet-list1">a task status “COMPLETED”</li>
-        <li class="bullet-list1">as inputs of the task the references to the laboratory report analyzed by the GP</li>
-        <li class="bullet-list1">as outputs of the task the reference to the eReferral document produced.</li>
-      </ul>
-      <p>In order to share the documents that are produced during the task, the GP’s Software (as a grouped Content Creator and XDS Document Source) submits the eReferral Document and the Workflow Document to the XDS Document Repository as shown in box A of Figure 30.4.2.2-2.</p>
-      <img src="media/Figure_30.4.2.2-1.png" alt="Management of the Workflow Document" />
-      <p class="figureTitle">Figure 30.4.2.2-1: Management of the Workflow Document</p>
-      <ol start="2">
-        <li class="numbered-list0">The specialist starts the consultation which may span one or more visits</li>
-      </ol>
-      <p>In this task, the patient goes to the specialist of his choice (or suggested by his GP).</p>
-      <p>The specialist consults the eReferral document and the associated Workflow Document to understand the task that needs to be performed.</p>
-      <p>The specialist accesses the document by using his software, which is a grouping of a Content Updater and an XDS Document Consumer, to query and retrieve the Workflow Document and the eReferral document, as shown in box B of Figure 30.4.2.2-2.</p>
-      <p>If consistent with the Workflow Definition referenced in the Workflow Document, the specialist accepts the patient and updates the Workflow Document so that no other specialist may perform the consultation.</p>
-      <p>As shown in column B of Figure 30.4.2.2-1, at this step of the workflow, the Workflow Document is updated with a new version in which a new task “Referral Referred” is added to the content of the previous version of the Workflow Document. The task “Referral Referred” is characterized by:</p>
-      <ul>
-        <li class="bullet-list1">a task status “IN_PROGRESS”</li>
-        <li class="bullet-list1">as inputs of the task the references to the eReferral document produced by the GP</li>
-      </ul>
-      <p>The Specialist’s software, as a Content Updater and an XDS Document Source, provides the updated version of Workflow Document to the XDS Document Repository/Registry through a Replace of the previous version of the Workflow Document (see box B in Figure 30.4.2.2-2).</p>
-      <ol start="3">
-        <li class="numbered-list0">The specialist completes the consultation and produces a report</li>
-      </ol>
-      <p>The specialist ends the consultation, and he produces a report of the consultation.</p>
-      <p>In this task, the software of the specialist, as a Content Updater, updates the Workflow Document changing the status of the “referred” task.</p>
-      <p>As shown in column C of the Figure 30.4.2.2-1 the Workflow Document, the “Referral Referred” task is characterized by:</p>
-      <ul>
-        <li class="bullet-list1">a task status “COMPLETED”</li>
-        <li class="bullet-list1">as inputs of the task the references to the eReferral document produced by the GP (the laboratory report was not used by the specialist)</li>
-        <li class="bullet-list1">as output of the task the references to the report of the consultation</li>
-      </ul>
-      <p>The history of the changes of the statuses of the task is tracked inside the task as a list called taskEventHistory.</p>
-      <p>The Specialist’s software, as a Content Updater and Document Source, provides the updated version of Workflow Document to the Document Repository through a replace of the previous version of the Workflow Document (see box C in Figure 30.4.2.2-2).</p>
-      <p>At any time, the GP may review the Workflow Document and the new documents produced related to this workflow. This is accomplished through a query and retrieve by the GP’s software of the active Workflow Document from the XDS Document Registry and the XDS Document Repository.</p>
-      <img src="media/Figure_30.4.2.2-2.png" alt="Basic Process Flow in XDW Profile, Simple Referral use case" />
-      <p class="figureTitle">Figure 30.4.2.2-2: Basic Process Flow in XDW Profile, Simple Referral use case</p>
-      <p>Although not shown in this use case, it would also be possible to manage a system of subscription and notification to communicate the progress between the different steps through the use of the Document Metadata Subscription (DSUB) Profile.</p>
-      <h2 id="30.5">30.5 XDW Security Considerations</h2>
-      <p>The XDW Content Profile relies on the security controls in the underlining transport (e.g., XDS). The XDW content is an administrative document that should not include clinical information but administrative information can be just as sensitive as clinical information.</p>
-      <p>The XDW Workflow Document will be authored by different organizations. As the document is updated the active version will be replaced with a newer version as the workflow progresses. However, with clinical documents it is not expected that organizations will replace documents authored by other organizations, as typically a clinical document comes from only one organization or individual. Therefore, in order to adhere to the principle of least privilege, organizations want to prevent clinical documents from being replaced by other organizations, while allowing XDW Workflow Documents to be replaced. It is recommended that organizations retain general restrictions on XDS documents, but make an exception for XDW Workflow Documents, based on classCode.</p>
-      <p>When a Workflow Description Profile is created a risk assessment following the Security Cookbook may result in additional security considerations beyond those for the usual clinical report.</p>
-      <h2 id="30.6">30.6 Cross-Profile Considerations</h2>
-      <p>The XDW Profile and actors rely on an XDS document sharing infrastructure. The need for a fixed reference to the whole workflow (workflow identifier) requires that XDW actors operate in an XDS affinity domain where the XDS Document Registry supports the Reference ID Option. For more details about this option, see Section 10.2.6.</p>
-    </main>
-    <footer>
-      <p>
-        <hr />
-      </p>
-      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
-    </footer>
-  </body>
+        <tr style="height:17.05pt">
+          <td>Document Import Option</td>
+          <td>
+            <a href="../Volume1/ch-30.html#30.2.2">ITI TF-1: 30.2.2</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">Note 1: The actor shall support at least one of these options</p>
+    <h3 id="30.2.1">30.2.1 View Option</h3>
+    <p>A Content Consumer or a Content Updater that supports the View Option shall be able to:</p>
+    <ul>
+      <li class="bullet-list1">use the appropriate XD* transactions to obtain the Workflow Document along with associated necessary metadata;</li>
+      <li class="bullet-list1">interpret the content of the Workflow Document and display its required content elements in a way which shows the tasks that are not complete and the completed task in a chronological way. The required elements to
+        display are identified in the “View” column in <a href="../Volume3/ch-5.4.html#5.4.3">ITI TF-3</a>: Table 5.4.3-8 and Table 5.4.3-9.</li>
+      <li class="bullet-list1">For each task, it shall list the documents referenced inside the Workflow Document and may optionally support the retrieve and the rendering of the documents referenced inside the Workflow Document.</li>
+      <li class="bullet-list1">Any additional display capabilities that are specific to the referenced Workflow Definition profile may be provided.</li>
+    </ul>
+    <h3 id="30.2.2">30.2.2 Document Import Option</h3>
+    <p>A Content Consumer or a Content Updater that supports the Document Import Option shall support the storage of the entire Workflow Document (as provided by the XD* sharing framework) along with applicable metadata to ensure its later
+      processing. Documents referenced in the Workflow Document may also be stored. This Option requires the proper tracking of the relation between the Documents referenced and the content of the Workflow Document origin. Once a document has been
+      imported, the Content Consumer or the Content Updater shall offer a means to use the document without the need to retrieve it again from the XD* sharing framework. When viewed after it was imported, a Content Consumer and/or a Content Updater
+      may choose to access the XD* sharing framework to find out if the related Document viewed has been deprecated or replaced.</p>
+    <p class="note">Note: For example, when using XDS, a Content Consumer may choose to query the Document Registry about a document previously imported in order to find out if this previously imported document may have been replaced</p>
+    <h2 id="30.3">30.3 XDW Actor Grouping and Profile Interactions</h2>
+    <p>
+      An XDW Content Creator, Content Updater and Content Consumer shall be grouped with appropriate actors from the XDS, XDM and XDR Profile to exchange XDW Workflow Documents. The metadata used for document entries in document sharing or
+      interchange has specific relationships or dependencies (which we call bindings, see
+      <a href="../Volume3/ch-5.4.html#5.4.6">ITI TF-3: 5.4.6</a>
+      ) to the content of the clinical document – a XDW Workflow Document.
+    </p>
+    <p>When XDW is used in conjunction with XDS:</p>
+    <ul>
+      <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDS Document Source;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDS Document Source with the Document Replacement Option;</li>
+      <li class="bullet-list2">an XDS Document Consumer;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDS Document Consumer.</li>
+    </ul>
+    <p>When XDW is used in conjunction with XDR:</p>
+    <ul>
+      <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDR Document Source;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDR Document Source;</li>
+      <li class="bullet-list2">an XDR Document Recipient;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDR Document Recipient.</li>
+    </ul>
+    <p>When XDW is used in conjunction with XDM:</p>
+    <ul>
+      <li class="bullet-list1">an XDW Content Creator shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDM Portable Media Creator;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Updater shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDM Portable Media Creator;</li>
+      <li class="bullet-list2">an XDM Portable Media Importer;</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">an XDW Content Consumer shall be grouped with</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">an XDM Portable Media Importer.</li>
+    </ul>
+    <p class="note">Note: The support of Workflow spanning XDS, XDR and XDM environments is not explicitly addressed.</p>
+    <h2 id="30.4">30.4 XDW Process Flow</h2>
+    <h3 id="30.4.1">30.4.1 XDW Approach to Workflow</h3>
+    <p>XDW is a core component of a common, workflow-independent interoperability infrastructure that provides a platform upon which a wide range of specific workflows can be defined by “content specialization” with minimal specification and
+      implementation efforts (e.g., Medical Referrals, Prescriptions, Home Care).</p>
+    <p>This section first describes the overall architecture within which the XDW Profile operates. Next, the structure of the XDW workflow document, the primary data structure that is shared among the workflow participants, is described.</p>
+    <h4 id="30.4.1.1">30.4.1.1 XDW Workflow Architecture</h4>
+    <p>
+      <span>A</span>
+      <span style="font-weight:bold">Workflow Definition</span>
+      <span>is structured as a set of logical or clinical tasks definitions and rules. Each task definition describes an activity or a group of activities that needs to be accomplished by the owner of the task. The rules in the workflow definition
+        ensure that the different participants in a workflow operate jointly to advance within process and to move from one task to another in a consistent way.</span>
+    </p>
+    <p>Figure 30.4.1.1-1 presents an overview of the Workflow Architecture built around the XDW Profile.</p>
+    <img src="media/Figure_30.4.1.1-1.png" alt="XDW Architecture Overview" />
+    <p class="figureTitle">Figure 30.4.1.1-1: XDW Architecture Overview</p>
+    <p>In this workflow architecture:</p>
+    <ul>
+      <li class="bullet-list1">The first layer supports the sharing or exchange of documents. This interoperability foundation is enabled by a set of existing IHE document sharing profiles such as XDS, XDR and XDM along with document content
+        profiles and security/privacy profiles such as ATNA and (optionally) BPPC.</li>
+      <li class="bullet-list1">The second layer defines a generic data structure called a Workflow Document which is shared among the workflow participants by using the first layer of this architecture. Likewise, the clinical and administrative
+        documents that are used as input and produced as output by the tasks of workflows managed by the XDW Profile are shared using the same first layer of this architecture.</li>
+      <li class="bullet-list1">The third layer introduces the semantic definition of the workflows that can be understood and executed among the participating systems/applications. The orchestration of specific workflows allows the workflow
+        participants to share a common understanding of the specific tasks, the dependencies between these tasks, and a number of rules that control the workflow execution. Execution details are conveyed through the XDW Workflow Document defined by
+        the second layer of the architecture. The specification of Workflow Definitions at this third layer is not part of the XDW Profile and is currently best handled with a natural language expression (See example of Basic Unstructured Workflow
+        Definition Profile, ITI TF-2x: Appendix X).</li>
+      <li class="bullet-list1">The fourth layer of this architecture contains the applications executed by the participating systems. Such applications bridge between XDW managed workflow and the locally managed workflow. Much of the details of the
+        local workflows managed by each application will be hidden and encapsulated in “higher” granularity tasks exposed through XDW; as such details would not need to be externally exposed. The workflow definitions conveyed by the third layer
+        should only contain higher granularity tasks that require workflow coordination across organizational boundaries.</li>
+    </ul>
+    <h4 id="30.4.1.2">30.4.1.2 XDW Document Structure</h4>
+    <p>The XDW Profile uses the XDW Workflow Document to manage workflows.</p>
+    <p>The XDW Workflow Document enables participants in a multi-organization environment to manage and track the execution of patient-centric workflows. The structure of WorkflowDocument is organized into Tasks and TaskEvents.</p>
+    <p>
+      A <b>Task</b> describes an activity, or a group of activities, that need to be accomplished or have been accomplished. A Task is characterized by several attributes:
+    </p>
+    <ul>
+      <li class="bullet-list1">the type of task,</li>
+      <li class="bullet-list1">the owner of the task,</li>
+      <li class="bullet-list1">the current status of this task (one of the status values that are valid for this task),</li>
+      <li class="bullet-list1">the references to documents used for input or produced as output</li>
+      <li class="bullet-list1">
+        <span>the history of past</span>
+        <span style="font-weight:bold">Task Events</span>
+        <span>for this task, that document the progress of the task up to the present state</span>
+      </li>
+    </ul>
+    <p>
+      When a person or organization has been assigned as owner of a task, the task is placed under execution. (It moves from a “CREATED” or “READY” status to an “IN_PROGRESS” status). When the expected activity(ies) is completed successfully the
+      task moves to the “COMPLETED” status, otherwise to the “FAILED” status (for the state diagram see
+      <a href="../Volume3/ch-5.4.html#5.4.2.4">ITI TF-3: 5.4.2.4</a>
+      ).
+    </p>
+    <p>
+      <span style="font-weight:bold">Task Event</span>
+      <span>is a record of a change (status and/or other attribute) of a task; a Task Event history is the list of Task Events for a specific task.</span>
+    </p>
+    <p>As shown in the Figure 30.4.1.2-1, the XDW Workflow Document is structured into two parts:</p>
+    <ul>
+      <li class="bullet-list1">a first part with general workflow information about the document, </li>
+      <li class="bullet-list1">a second part that collects the different Tasks that are completed or not yet completed in the workflow, as well as for each task, the related Task Events that tracks its progress. Task and Task Event specification
+        leverages a proper subset of the task model and specification from the OASIS Human Task, a standard closely related to well-known workflow standards such as BPEL and BPMN.</li>
+    </ul>
+    <img src="media/Figure_30.4.1.2-1.png" alt="Workflow Document Structure" />
+    <p class="figureTitle">Figure 30.4.1.2-1: Workflow Document Structure</p>
+    <p>The Task and Task Events include references to clinical or administrative input/output documents to the Task or Task Event:</p>
+    <ul>
+      <li class="bullet-list1">
+        <span>The</span>
+        <span style="font-weight:bold">Input attribute</span>
+        <span>contains references to documents that are relevant for workflow participants in performing the Task. For example, for a performed examination, this could contain a reference to a referral request. It may also contain references to
+          "parent" workflows to which this workflow is a "child".</span>
+      </li>
+      <li class="bullet-list1">
+        <span>The</span>
+        <span style="font-weight:bold">Output attribute</span>
+        <span>contains references to documents that were produced as a result of performing this Task. For example, this could contain a reference to a report written by a specialist. It may also contain references to "child" workflows initiated by
+          this workflow as a parent.</span>
+      </li>
+    </ul>
+    <p>
+      At any time, if a participant chooses to update the workflow for a specific patient, it shall either create one (or more) new task or update an existing task and record a past taskEvent. Each update to the Workflow document results in a new
+      instance of the Workflow Document which is published as a replacement. The prior version being replaced is then placed in the status “deprecated” (DocumentEntry availabilityStatus) so that only the newest Workflow Document is active. The
+      technical description of the updating process of the Workflow Document is specified in
+      <a href="../Volume3/ch-5.4.html#5.4.5.4">ITI TF-3: 5.4.5.4</a>
+      .
+    </p>
+    <p>When a new Workflow Document is created, the Content Creator assigns it a workflow identifier in the DocumentEntry.referenceIdList metadata attribute and in the workflow document. This workflow identifier does not change during the evolution
+      of the workflow itself, and allows the grouping of all the XDW Workflow Documents that belong to the same instance of workflow.</p>
+    <p>All subsequent replacement workflow documents also carry the same workflow identifier so that this identifier provides a stable reference to an instance of a workflow, while the Workflow Document DocumentEntry.uniqueId is different for each
+      version of the workflow document.</p>
+    <h3 id="30.4.2">30.4.2 XDW Use-Cases and Process Flow in an XDS Affinity Domain</h3>
+    <p>A broad range of use cases may be supported by the XDW Content Profile.</p>
+    <p>The purpose of this section is to describe a typical use of XDW with no intent to present the breadth and flexibility of XDW. The use case described in this section provides the necessary background to the reader in understanding the basic
+      capabilities of XDW.</p>
+    <p>
+      <span>This use case is not intended as a Workflow Definition Profile specification. Such Profiles are being developed by clinical IHE Domains in order to support their specific workflows.</span>
+      <a name="_Toc400706692">Referral Workflow Use Case</a>
+    </p>
+    <p>This workflow is a three-step process:</p>
+    <ol>
+      <li class="numbered-list1">a physician refers a patient to another healthcare provider for a specialist’s consultation;</li>
+    </ol>
+    <ol start="2">
+      <li class="numbered-list1">the specialist starts the consultation which may span one or more visits</li>
+      <li class="numbered-list1">the specialist completes the consultation and produces a report.</li>
+    </ol>
+    <p>Each step will be described both from a clinical and a technical point of view.</p>
+    <p>The description will rely on two figures:</p>
+    <ul>
+      <li class="bullet-list1">Figure 30.4.2.1.1-1 represents the evolution of the Workflow Document during this Referral workflow. Each one of the three steps A, B, C is depicted in a column.</li>
+      <li class="bullet-list1">Figure 30.4.2.1.1-2 is a sequence diagram of the transactions between “system actors” in the sharing of the Workflow Document as it is updated, using an infrastructure based on the XDS Profile (although not shown here,
+        this use case could be transposed on the XDR or XDM Profiles).</li>
+    </ul>
+    <h4 id="30.4.2.2">30.4.2.2 Referral Workflow Use Case - Step by Step</h4>
+    <p>We present below the detailed chronological sequence of steps:</p>
+    <ol>
+      <li class="alpha-list1">A physician refers a patient to another healthcare provider for a specialist’s consultation</li>
+    </ol>
+    <p>In this task, the GP examines the patient and reviews the patient’s most recent laboratory report. The GP refers the patient to a specialist, creating an eReferral Document and referencing the laboratory report.</p>
+    <p>The GP’s software, as Content Creator, produces the e-Referral Document and one Workflow Document to track the clinical workflow of the eReferral. As shown in column A of Figure 30.4.2.2-1, at this moment the Workflow Document created has
+      only one task (“Referral Requested”) characterized by:</p>
+    <ul>
+      <li class="bullet-list1">a task status “COMPLETED”</li>
+      <li class="bullet-list1">as inputs of the task the references to the laboratory report analyzed by the GP</li>
+      <li class="bullet-list1">as outputs of the task the reference to the eReferral document produced.</li>
+    </ul>
+    <p>In order to share the documents that are produced during the task, the GP’s Software (as a grouped Content Creator and XDS Document Source) submits the eReferral Document and the Workflow Document to the XDS Document Repository as shown in
+      box A of Figure 30.4.2.2-2.</p>
+    <img src="media/Figure_30.4.2.2-1.png" alt="Management of the Workflow Document" />
+    <p class="figureTitle">Figure 30.4.2.2-1: Management of the Workflow Document</p>
+    <ol start="2">
+      <li class="alpha-list1">The specialist starts the consultation which may span one or more visits</li>
+    </ol>
+    <p>In this task, the patient goes to the specialist of his choice (or suggested by his GP).</p>
+    <p>The specialist consults the eReferral document and the associated Workflow Document to understand the task that needs to be performed.</p>
+    <p>The specialist accesses the document by using his software, which is a grouping of a Content Updater and an XDS Document Consumer, to query and retrieve the Workflow Document and the eReferral document, as shown in box B of Figure 30.4.2.2-2.</p>
+    <p>If consistent with the Workflow Definition referenced in the Workflow Document, the specialist accepts the patient and updates the Workflow Document so that no other specialist may perform the consultation.</p>
+    <p>As shown in column B of Figure 30.4.2.2-1, at this step of the workflow, the Workflow Document is updated with a new version in which a new task “Referral Referred” is added to the content of the previous version of the Workflow Document. The
+      task “Referral Referred” is characterized by:</p>
+    <ul>
+      <li class="bullet-list1">a task status “IN_PROGRESS”</li>
+      <li class="bullet-list1">as inputs of the task the references to the eReferral document produced by the GP</li>
+    </ul>
+    <p>The Specialist’s software, as a Content Updater and an XDS Document Source, provides the updated version of Workflow Document to the XDS Document Repository/Registry through a Replace of the previous version of the Workflow Document (see box
+      B in Figure 30.4.2.2-2).</p>
+    <ol start="3">
+      <li class="alpha-list1">The specialist completes the consultation and produces a report</li>
+    </ol>
+    <p>The specialist ends the consultation, and he produces a report of the consultation.</p>
+    <p>In this task, the software of the specialist, as a Content Updater, updates the Workflow Document changing the status of the “referred” task.</p>
+    <p>As shown in column C of the Figure 30.4.2.2-1 the Workflow Document, the “Referral Referred” task is characterized by:</p>
+    <ul>
+      <li class="bullet-list1">a task status “COMPLETED”</li>
+      <li class="bullet-list1">as inputs of the task the references to the eReferral document produced by the GP (the laboratory report was not used by the specialist)</li>
+      <li class="bullet-list1">as output of the task the references to the report of the consultation</li>
+    </ul>
+    <p>The history of the changes of the statuses of the task is tracked inside the task as a list called taskEventHistory.</p>
+    <p>The Specialist’s software, as a Content Updater and Document Source, provides the updated version of Workflow Document to the Document Repository through a replace of the previous version of the Workflow Document (see box C in Figure
+      30.4.2.2-2).</p>
+    <p>At any time, the GP may review the Workflow Document and the new documents produced related to this workflow. This is accomplished through a query and retrieve by the GP’s software of the active Workflow Document from the XDS Document
+      Registry and the XDS Document Repository.</p>
+    <img src="media/Figure_30.4.2.2-2.png" alt="Basic Process Flow in XDW Profile, Simple Referral use case" />
+    <p class="figureTitle">Figure 30.4.2.2-2: Basic Process Flow in XDW Profile, Simple Referral use case</p>
+    <p>Although not shown in this use case, it would also be possible to manage a system of subscription and notification to communicate the progress between the different steps through the use of the Document Metadata Subscription (DSUB) Profile.</p>
+    <h2 id="30.5">30.5 XDW Security Considerations</h2>
+    <p>The XDW Content Profile relies on the security controls in the underlining transport (e.g., XDS). The XDW content is an administrative document that should not include clinical information but administrative information can be just as
+      sensitive as clinical information.</p>
+    <p>The XDW Workflow Document will be authored by different organizations. As the document is updated the active version will be replaced with a newer version as the workflow progresses. However, with clinical documents it is not expected that
+      organizations will replace documents authored by other organizations, as typically a clinical document comes from only one organization or individual. Therefore, in order to adhere to the principle of least privilege, organizations want to
+      prevent clinical documents from being replaced by other organizations, while allowing XDW Workflow Documents to be replaced. It is recommended that organizations retain general restrictions on XDS documents, but make an exception for XDW
+      Workflow Documents, based on classCode.</p>
+    <p>When a Workflow Description Profile is created a risk assessment following the Security Cookbook may result in additional security considerations beyond those for the usual clinical report.</p>
+    <h2 id="30.6">30.6 Cross-Profile Considerations</h2>
+    <p>The XDW Profile and actors rely on an XDS document sharing infrastructure. The need for a fixed reference to the whole workflow (workflow identifier) requires that XDW actors operate in an XDS affinity domain where the XDS Document Registry
+      supports the Reference ID Option. For more details about this option, see Section 10.2.6.</p>
+  </main>
+  <footer>
+    <p>
+      <hr />
+    </p>
+    <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+  </footer>
+</body>
+
 </html>
