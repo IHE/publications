@@ -1,5 +1,4 @@
-
-## Overview
+# Overview
 
 This folder holds the working copy of the ITI Technical Framework Revision 16.0 – Final Text converted to HTML pages generated from the initial word files.
 
@@ -78,7 +77,7 @@ The processing is done afterwards and contains of:
 * some word drawings are not converted properly (see Figure 27.3.2.1-1)
 
 ### Styling
-- Not defined yet
+- Initial styling applied using [Foundation 6](https://get.foundation/sites/docs/). Work in progress.
 
 ## Future
 - Not defined yet
