@@ -1,548 +1,617 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US">
-  <head>
-    <meta xmlns="" charset="utf-8" />
-    <title xmlns="">IHE ITI TF Rev17 Vol2</title>
-    <link xmlns="" rel="stylesheet" href="../css/styles.css" />
-  </head>
-  <body xmlns="">
-    <header>
-      <p>
-        <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo" alt="IHE logo" />
-      </p>
-      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
-      <p>Revision 17.0, November 2020 – Final Text</p>
-      <p>
-        <hr />
-      </p>
-    </header>
-    <main>
-      <h2 id="3.38">3.38 Cross Gateway Query [ITI-38]</h2>
-      <p>This section corresponds to transaction [ITI-38] of the IHE ITI Technical Framework. Transaction [ITI-38] is used by cooperating Initiating Gateway and Responding Gateway Actors.</p>
-      <h3 id="3.38.1">3.38.1 Scope</h3>
-      <p>The scope of the Cross Gateway Query transaction is based on the Registry Stored Query [ITI-18] transaction. The same set of stored queries is required to be supported and the options controlling what kind of data is returned are the same. Differences from the Registry Stored Query transactions are:</p>
-      <ul>
-        <li class="bullet-list1">The Cross Gateway Query is between an Initiating Gateway and Responding Gateway.</li>
-        <li class="bullet-list1">Initiating Gateway shall specify the homeCommunityId attribute in all Cross-Community Queries which do not contain a patient identifier.</li>
-        <li class="bullet-list1">The homeCommunityID attribute shall be returned within all appropriate elements.</li>
-        <li class="bullet-list1">Responding Gateways shall support the Asynchronous Web Services Exchange Option on the Cross Gateway Query. Support for this function is required in order to enable use of Asynchronous Web Services Exchange in any cross-community interaction. Without this support an Initiating Gateway would require unique configuration, per Responding Gateway, to know if Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services Exchange will be desired by the majority of communities.</li>
-        <li class="bullet-list1">
-          Asynchronous Web Services Exchange is an option on the Initiating Gateway, see
-          <a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a>
-          .
-        </li>
-        <li class="bullet-list1">For stored queries that rely on concepts that a community may not support, namely associations, folders and submission sets, a Responding Gateway is allowed to respond with zero entries.</li>
-      </ul>
-      <p>There shall be an agreed upon common coding/vocabulary scheme used for the Cross Gateway Query. For example, a common set of privacy consent vocabularies shall be used.</p>
-      <h3 id="3.38.2">3.38.2 Use Case Roles</h3>
-      <p>
-        <span style="font-weight:bold">Actor:</span>
-        <span>Initiating Gateway</span>
-      </p>
-      <p>
-        <span style="font-weight:bold">Role:</span>
-        <span>To formulate a Cross Gateway Query on behalf of a user.</span>
-      </p>
-      <p>
-        <span style="font-weight:bold">Actor:</span>
-        <span>Responding Gateway</span>
-      </p>
-      <p>
-        <span style="font-weight:bold">Role:</span>
-        <span>To respond to a Cross Gateway Query based on the internal configuration of the community.</span>
-      </p>
-      <h3 id="3.38.3">3.38.3 Referenced Standard</h3>
-      <p>
-        Implementers of this transaction shall comply with all requirements described in
-        <a href="../Volume2/ch-V.html#Appendix V">ITI TF-2x: Appendix V</a>
-        Web Services for IHE Transactions.
-      </p>
-      <p>
-        <span>ebRIM</span>
-        <span style="width:2pt;display:inline-block"> </span>
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>OASIS/ebXML Registry Information Model v3.0</span>
-      </p>
-      <p>
-        <span>ebRS</span>
-        <span style="width:10pt;display:inline-block"> </span>
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>OASIS/ebXML Registry Services Specifications v3.0</span>
-      </p>
-      <p>
-        <span>ITI TF-3:4</span>
-        <span style="width:20.34pt;display:inline-block"> </span>
-        <span>Metadata used in Document Sharing profiles</span>
-      </p>
-      <h3 id="3.38.4">3.38.4 Messages</h3>
-      <img src="media/Figure_3.38.4-1.png"  alt="" />
-      <p class="figureTitle">Figure 3.38.4-1: Interaction Diagram</p>
-      <h4 id="3.38.4.1">3.38.4.1 Cross Gateway Query</h4>
-      <p>This is a query request between an Initiating Gateway and a Responding Gateway. The query request contains:</p>
-      <ul>
-        <li class="bullet-list1">A reference to a pre-defined query defined by the Registry Stored Query [ITI-18]. transaction</li>
-        <li class="bullet-list1">Parameters to the query. The query parameters are defined by the Registry Stored Query transaction. The homeCommunityId attribute is required for every Registry Stored Query which does not specify a patient identity.</li>
-      </ul>
-      <h5 id="3.38.4.1.1">3.38.4.1.1 Trigger Events</h5>
-      <p>This message is initiated when the Initiating Gateway has determined that it must interact with the Responding Gateway to satisfy a Registry Stored Query [ITI-18] request received from an XDS.b Document Consumer or a query request from other internal non-IHE actor. When initiating this message to satisfy a Registry Stored Query [ITI-18] request the Initiating Gateway shall pass all parameters, either known or unknown, into the Cross Gateway Query.</p>
-      <h5 id="3.38.4.1.2">3.38.4.1.2 Message Semantics</h5>
-      <p>
-        The message semantics are based on the Registry Stored Query. See
-        <a href="../Volume2/ITI-18.html#3.18.4.1.2">ITI TF-2a: 3.18.4.1.2</a>
+
+<head>
+  <meta xmlns="" charset="utf-8" />
+  <title xmlns="">IHE ITI TF Rev17 Vol2</title>
+  <link xmlns="" rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body xmlns="">
+  <header>
+    <p>
+      <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo" alt="IHE logo" />
+    </p>
+    <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
+    <p>Revision 17.0, November 2020 – Final Text</p>
+    <p>
+      <hr />
+    </p>
+  </header>
+  <main>
+    <h2 id="3.38">3.38 Cross Gateway Query [ITI-38]</h2>
+    <p>This section corresponds to transaction [ITI-38] of the IHE ITI Technical Framework. Transaction
+      [ITI-38] is used by cooperating Initiating Gateway and Responding Gateway Actors.</p>
+    <h3 id="3.38.1">3.38.1 Scope</h3>
+    <p>The scope of the Cross Gateway Query transaction is based on the Registry Stored Query [ITI-18]
+      transaction. The same set of stored queries is required to be supported and the options
+      controlling what kind of data is returned are the same. Differences from the Registry Stored
+      Query transactions are:</p>
+    <ul>
+      <li class="bullet-list1">The Cross Gateway Query is between an Initiating Gateway and Responding
+        Gateway.</li>
+      <li class="bullet-list1">Initiating Gateway shall specify the homeCommunityId attribute in all
+        Cross-Community Queries which do not contain a patient identifier.</li>
+      <li class="bullet-list1">The homeCommunityID attribute shall be returned within all appropriate
+        elements.</li>
+      <li class="bullet-list1">Responding Gateways shall support the Asynchronous Web Services Exchange
+        Option on the Cross Gateway Query. Support for this function is required in order to enable use
+        of Asynchronous Web Services Exchange in any cross-community interaction. Without this support
+        an Initiating Gateway would require unique configuration, per Responding Gateway, to know if
+        Asynchronous Web Services Exchange was supported. It is expected that Asynchronous Web Services
+        Exchange will be desired by the majority of communities.</li>
+      <li class="bullet-list1">
+        Asynchronous Web Services Exchange is an option on the Initiating Gateway, see
+        <a href="../Volume1/ch-18.html#18.2.2">ITI TF-1: 18.2.2</a>
         .
-      </p>
-      <p>Initiating Gateways which support the On-Demand Documents Option shall be capable of querying for an On-Demand Document Entry either through internal mechanisms or, when the XDS Affinity Domain Option is also declared, through interaction with an XDS Document Consumer which supports the On-Demand Documents Option.</p>
-      <p>Responding Gateways which support the On-Demand Documents Option shall be able to respond to a query of an On-Demand Document Entry, either through internal mechanisms or, when grouped with a Document Consumer, through interaction with appropriate XDS actors which support On-Demand Documents. Of special note are the use of homeCommunityId, specifying the patient identifier and special handling of some stored queries. These are explained below.</p>
-      <h6 id="3.38.4.1.2.1">3.38.4.1.2.1 homeCommunityId</h6>
-      <p>The homeCommunityId is a globally unique identifier for a community and is used to obtain the Web Services endpoint of services that provide access to data in that community. homeCommunityId is structured as an OID limited to 64 characters and specified in URI syntax, for example the homeCommunityId of 1.2.3 would be formatted as urn:oid:1.2.3.</p>
-      <p>Its use is as follows:</p>
-      <ul>
-        <li class="bullet-list1">It is returned within the response to Cross Gateway Query and Registry Stored Query transactions to indicate the association of a response element with a community. It is specified as the ebRIM 'home' attribute within the relevant response elements. Document Consumers process the value as an opaque unique identifier.</li>
-        <li class="bullet-list1">It is an optional parameter to Registry Stored Query requests, not requiring a patient id parameter, and Retrieve Document Set requests to indicate which community to direct the request.</li>
-      </ul>
-      <p>
-        <span>The Initiating Gateway shall specify the homeCommunityId parameter within all queries which do not include a patient identifier parameter. These would be queries which specify an entryUUID or uniqueID. The homeCommunityId shall contain the value that identifies the community associated with the Responding Gateway. The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in:</span>
-        <br />
-        <span>&lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;</span>
-      </p>
-      <p>Each Cross Gateway Query request can have at most one homeCommunityId value. If multiple entryUUID or uniqueID values are specified they must all be associated with the same homeCommunityId value. Multiple individual query requests can be used to retrieve data associated with different homeCommunityIds.</p>
-      <h6 id="3.38.4.1.2.2">3.38.4.1.2.2 Specifying patient identifier</h6>
-      <p>The Initiating Gateway shall specify in relevant queries a patient identifier known to the Responding Gateway. The mechanism used by the Initiating Gateway to determine the correct patient identifier to use is outside the intended scope of this transaction. The Responding Gateway can expect to be able to resolve the patient identifier. If the patient identifier is unknown by the Responding Gateway’s community, the Responding Gateway shall return either a successful response with no elements or an error with errorCode XDSUnknownPatientId, depending on local policy.</p>
-      <h6 id="3.38.4.1.2.3">3.38.4.1.2.3 Special handling of some stored queries</h6>
-      <p>Some stored queries rely on the support of concepts which may not be used within a community. It is also possible that a Responding Gateway community may have policies which restrict the sharing of information related to those concepts. The concepts of concern are submission sets, folders and associations. In either case a Responding Gateway shall respond to the appropriate stored queries by returning zero results. Table 3.38.4.1.2.3-1 lists all the stored queries which rely on specialized concepts.</p>
-      <p class="tableTitle">Table 3.38.4.1.2.3-1: Stored Queries</p>
-      <table cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <td class="tableHeader">Query Name</td>
-            <td class="tableHeader">Concepts</td>
-            <td class="tableHeader">Requirement</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>FindDocuments</td>
-            <td>None</td>
-            <td>Required by all</td>
-          </tr>
-          <tr>
-            <td>FindSubmissionSets</td>
-            <td>Submission Set</td>
-            <td>Zero elements when no submission set concept in community</td>
-          </tr>
-          <tr>
-            <td>FindFolders</td>
-            <td>Folder</td>
-            <td>Zero elements when no folder concept in community</td>
-          </tr>
-          <tr>
-            <td>GetAll</td>
-            <td>Submission Set, Folder, Association</td>
-            <td>Return all appropriate document entries and other entries depending on which of the other concepts the community supports</td>
-          </tr>
-          <tr>
-            <td>GetDocuments</td>
-            <td>None</td>
-            <td>Required by all</td>
-          </tr>
-          <tr>
-            <td>GetFolders</td>
-            <td>Folder</td>
-            <td>Zero elements when no folder concept in community</td>
-          </tr>
-          <tr>
-            <td>
-              <p>
-                <a name="_Hlk228676171">GetAssociations</a>
-              </p>
-            </td>
-            <td>Association</td>
-            <td>Zero elements when no association concept in community</td>
-          </tr>
-          <tr>
-            <td>GetDocumentsAndAssociations</td>
-            <td>Association</td>
-            <td>Return only document entries if no association concept</td>
-          </tr>
-          <tr>
-            <td>GetSubmissionSets</td>
-            <td>Submission Set</td>
-            <td>Zero elements when no submission set concept in community</td>
-          </tr>
-          <tr>
-            <td>GetSubmissionSetAndContents</td>
-            <td>Submission Set</td>
-            <td>Zero elements when no submission set concept in community</td>
-          </tr>
-          <tr>
-            <td>GetFolderAndContents</td>
-            <td>Folder</td>
-            <td>Zero elements when no folder concept in community</td>
-          </tr>
-          <tr>
-            <td>GetFoldersForDocument</td>
-            <td>Folder</td>
-            <td>Zero elements when no folder concept in community</td>
-          </tr>
-          <tr>
-            <td>GetRelatedDocuments</td>
-            <td>Association</td>
-            <td>Zero elements when no association concept in community</td>
-          </tr>
-        </tbody>
-      </table>
-      <h5 id="3.38.4.1.3">3.38.4.1.3 Expected Actions</h5>
-      <p>
-        Actors supporting this transaction shall support the Expected Actions described in
-        <a href="../Volume2/ITI-18.html#3.18.4.1.3">ITI TF-2a: 3.18.4.1.3</a>
+      </li>
+      <li class="bullet-list1">For stored queries that rely on concepts that a community may not
+        support, namely associations, folders and submission sets, a Responding Gateway is allowed to
+        respond with zero entries.</li>
+    </ul>
+    <p>There shall be an agreed upon common coding/vocabulary scheme used for the Cross Gateway Query.
+      For example, a common set of privacy consent vocabularies shall be used.</p>
+    <h3 id="3.38.2">3.38.2 Use Case Roles</h3>
+    <p>
+      <span style="font-weight:bold">Actor:</span>
+      <span>Initiating Gateway</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Role:</span>
+      <span>To formulate a Cross Gateway Query on behalf of a user.</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Actor:</span>
+      <span>Responding Gateway</span>
+    </p>
+    <p>
+      <span style="font-weight:bold">Role:</span>
+      <span>To respond to a Cross Gateway Query based on the internal configuration of the community.</span>
+    </p>
+    <h3 id="3.38.3">3.38.3 Referenced Standard</h3>
+    <p>
+      Implementers of this transaction shall comply with all requirements described in
+      <a href="../Volume2/ch-V.html#Appendix V">ITI TF-2x: Appendix V</a>
+      Web Services for IHE Transactions.
+    </p>
+
+    <table>
+      <tr>
+        <td style="border-style: none">ebRIM</td>
+        <td style="border-style: none">OASIS/ebXML Registry Information Model v3.0</td>
+      </tr>
+      <tr>
+        <td style="border-style: none">ebRS</td>
+        <td style="border-style: none">OASIS/ebXML Registry Services Specifications v3.0</td>
+      </tr>
+      <tr>
+        <td style="border-style: none">ITI TF-3:4</td>
+        <td style="border-style: none">Metadata used in Document Sharing profiles</td>
+      </tr>
+    </table>
+    <h3 id="3.38.4">3.38.4 Messages</h3>
+    <img src="media/Figure_3.38.4-1.png" alt="" />
+    <p class="figureTitle">Figure 3.38.4-1: Interaction Diagram</p>
+    <h4 id="3.38.4.1">3.38.4.1 Cross Gateway Query</h4>
+    <p>This is a query request between an Initiating Gateway and a Responding Gateway. The query
+      request contains:</p>
+    <ul>
+      <li class="bullet-list1">A reference to a pre-defined query defined by the Registry Stored Query
+        [ITI-18]. transaction</li>
+      <li class="bullet-list1">Parameters to the query. The query parameters are defined by the
+        Registry Stored Query transaction. The homeCommunityId attribute is required for every Registry
+        Stored Query which does not specify a patient identity.</li>
+    </ul>
+    <h5 id="3.38.4.1.1">3.38.4.1.1 Trigger Events</h5>
+    <p>This message is initiated when the Initiating Gateway has determined that it must interact with
+      the Responding Gateway to satisfy a Registry Stored Query [ITI-18] request received from an XDS.b
+      Document Consumer or a query request from other internal non-IHE actor. When initiating this
+      message to satisfy a Registry Stored Query [ITI-18] request the Initiating Gateway shall pass all
+      parameters, either known or unknown, into the Cross Gateway Query.</p>
+    <h5 id="3.38.4.1.2">3.38.4.1.2 Message Semantics</h5>
+    <p>
+      The message semantics are based on the Registry Stored Query. See
+      <a href="../Volume2/ITI-18.html#3.18.4.1.2">ITI TF-2a: 3.18.4.1.2</a>
+      .
+    </p>
+    <p>Initiating Gateways which support the On-Demand Documents Option shall be capable of querying
+      for an On-Demand Document Entry either through internal mechanisms or, when the XDS Affinity
+      Domain Option is also declared, through interaction with an XDS Document Consumer which supports
+      the On-Demand Documents Option.</p>
+    <p>Responding Gateways which support the On-Demand Documents Option shall be able to respond to a
+      query of an On-Demand Document Entry, either through internal mechanisms or, when grouped with a
+      Document Consumer, through interaction with appropriate XDS actors which support On-Demand
+      Documents. Of special note are the use of homeCommunityId, specifying the patient identifier and
+      special handling of some stored queries. These are explained below.</p>
+    <h6 id="3.38.4.1.2.1">3.38.4.1.2.1 homeCommunityId</h6>
+    <p>The homeCommunityId is a globally unique identifier for a community and is used to obtain the
+      Web Services endpoint of services that provide access to data in that community. homeCommunityId
+      is structured as an OID limited to 64 characters and specified in URI syntax, for example the
+      homeCommunityId of 1.2.3 would be formatted as urn:oid:1.2.3.</p>
+    <p>Its use is as follows:</p>
+    <ul>
+      <li class="bullet-list1">It is returned within the response to Cross Gateway Query and Registry
+        Stored Query transactions to indicate the association of a response element with a community.
+        It is specified as the ebRIM 'home' attribute within the relevant response elements. Document
+        Consumers process the value as an opaque unique identifier.</li>
+      <li class="bullet-list1">It is an optional parameter to Registry Stored Query requests, not
+        requiring a patient id parameter, and Retrieve Document Set requests to indicate which
+        community to direct the request.</li>
+    </ul>
+    <p>
+      The Initiating Gateway shall specify the homeCommunityId parameter within all queries which
+      do not include a patient identifier parameter. These would be queries which specify an
+      entryUUID or uniqueID. The homeCommunityId shall contain the value that identifies the
+      community associated with the Responding Gateway. The homeCommunityId value is specified as the
+      home attribute on the AdhocQuery element of the query request, as in:
+    </p>
+    <p>
+      &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt; </p>
+    </p>
+    <p>Each Cross Gateway Query request
+      can have at most one homeCommunityId value. If multiple
+      entryUUID or uniqueID values are specified they must all be associated with the same
+      homeCommunityId value. Multiple individual query requests can be used to retrieve data associated
+      with different homeCommunityIds.</p>
+    <h6 id="3.38.4.1.2.2">3.38.4.1.2.2 Specifying patient identifier</h6>
+    <p>The Initiating Gateway shall specify in relevant queries a patient identifier known to the
+      Responding Gateway. The mechanism used by the Initiating Gateway to determine the correct
+      patient
+      identifier to use is outside the intended scope of this transaction. The Responding Gateway can
+      expect to be able to resolve the patient identifier. If the patient identifier is unknown by
+      the
+      Responding Gateway’s community, the Responding Gateway shall return either a successful
+      response
+      with no elements or an error with errorCode XDSUnknownPatientId, depending on local policy.</p>
+    <h6 id="3.38.4.1.2.3">3.38.4.1.2.3 Special handling of some stored queries</h6>
+    <p>Some stored queries rely on the support of concepts which may not be used within a community.
+      It
+      is also possible that a Responding Gateway community may have policies which restrict the
+      sharing
+      of information related to those concepts. The concepts of concern are submission sets, folders
+      and associations. In either case a Responding Gateway shall respond to the appropriate stored
+      queries by returning zero results. Table 3.38.4.1.2.3-1 lists all the stored queries which rely
+      on specialized concepts.</p>
+    <p class="tableTitle">Table 3.38.4.1.2.3-1: Stored Queries</p>
+    <table cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <td class="tableHeader">Query Name</td>
+          <td class="tableHeader">Concepts</td>
+          <td class="tableHeader">Requirement</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>FindDocuments</td>
+          <td>None</td>
+          <td>Required by all</td>
+        </tr>
+        <tr>
+          <td>FindSubmissionSets</td>
+          <td>Submission Set</td>
+          <td>Zero elements when no submission set concept in community</td>
+        </tr>
+        <tr>
+          <td>FindFolders</td>
+          <td>Folder</td>
+          <td>Zero elements when no folder concept in community</td>
+        </tr>
+        <tr>
+          <td>GetAll</td>
+          <td>Submission Set, Folder, Association</td>
+          <td>Return all appropriate document entries and other entries depending on which of the
+            other
+            concepts the community supports</td>
+        </tr>
+        <tr>
+          <td>GetDocuments</td>
+          <td>None</td>
+          <td>Required by all</td>
+        </tr>
+        <tr>
+          <td>GetFolders</td>
+          <td>Folder</td>
+          <td>Zero elements when no folder concept in community</td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+              <a name="_Hlk228676171">GetAssociations</a>
+            </p>
+          </td>
+          <td>Association</td>
+          <td>Zero elements when no association concept in community</td>
+        </tr>
+        <tr>
+          <td>GetDocumentsAndAssociations</td>
+          <td>Association</td>
+          <td>Return only document entries if no association concept</td>
+        </tr>
+        <tr>
+          <td>GetSubmissionSets</td>
+          <td>Submission Set</td>
+          <td>Zero elements when no submission set concept in community</td>
+        </tr>
+        <tr>
+          <td>GetSubmissionSetAndContents</td>
+          <td>Submission Set</td>
+          <td>Zero elements when no submission set concept in community</td>
+        </tr>
+        <tr>
+          <td>GetFolderAndContents</td>
+          <td>Folder</td>
+          <td>Zero elements when no folder concept in community</td>
+        </tr>
+        <tr>
+          <td>GetFoldersForDocument</td>
+          <td>Folder</td>
+          <td>Zero elements when no folder concept in community</td>
+        </tr>
+        <tr>
+          <td>GetRelatedDocuments</td>
+          <td>Association</td>
+          <td>Zero elements when no association concept in community</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 id="3.38.4.1.3">3.38.4.1.3 Expected Actions</h5>
+    <p>
+      Actors supporting this transaction shall support the Expected Actions described in
+      <a href="../Volume2/ITI-18.html#3.18.4.1.3">ITI TF-2a: 3.18.4.1.3</a>
+      .
+    </p>
+    <p>In addition, the Responding Gateway shall:</p>
+    <ul>
+      <li class="bullet-list1">Return an XDSUnknownCommunity error code if the value of
+        homeCommunityId
+        is specified and is not known by the Responding Gateway.</li>
+      <li class="bullet-list1">Verify the homeCommunityId is specified on relevant queries and return
+        an XDSMissingHomeCommunityId error code if missing.</li>
+      <li class="bullet-list1">Route the query to the local XDS Document Registry or perform
+        equivalent
+        action to form a query response. When routing to a local XDS Document Registry, the
+        Responding
+        Gateway shall pass all parameters into the Registry Stored Query [ITI-18] transaction.</li>
+      <li class="bullet-list1">When routing a response from a local XDS Document Registry, the
+        Responding Gateway shall pass all entities received in the Registry Stored Query response
+        into
+        the response to the Cross Gateway Query.</li>
+      <li class="bullet-list1">Ensure that the response contains a value identifying one of the
+        Responding Gateway’s communities for the homeCommunityId attribute in every appropriate
+        element. The elements that shall include the ebRIM home attribute are:</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">If returntype=”LeafClass” the ExtrinsicObject and RegistryPackage
+        elements shall contain the home attribute.</li>
+      <li class="bullet-list2">If returnType=”ObjectRef” the ObjectRef element shall contain the home
+        attribute.</li>
+      <li class="bullet-list2">Ensure that every RegistryError element returned in the response shall
+        have the location attribute set to one of the homeCommunityIds of the Responding Gateway.</li>
+    </ul>
+    <p>The Initiating Gateway shall:</p>
+    <ul>
+      <li class="bullet-list1">On receiving the response from the Responding Gateway, verify the
+        homeCommunityId is present where appropriate. If homeCommunityId is not present in any of the
+        ExtrinsicObject, RegistryPackage or ObjectRef elements the Initiating Gateway shall reflect
+        an
+        XDSMissingHomeCommunityId to the initiator of the transaction – either the Document Consumer
+        or
+        the internal actor. All XDSMissingHomeCommunityId errors generated by the Initiating Gateway
+        shall include, in the context of the message, identification of the Responding Gateway that
+        returned the invalid response and the element or elements that were in error.</li>
+      <li class="bullet-list1">If the XDS Affinity Domain Option is supported and if needed,
+        consolidate results from multiple Responding Gateways. This includes reflecting in the
+        consolidated results returned in response to the originating Registry Stored Query [ITI-18]
+        all
+        successes and failures received from Responding Gateways. If both successes and failures are
+        received from Responding Gateways, the Initiating Gateway shall return both
+        RegistryObjectList
+        and RegistryErrorList in one response and specify PartialSuccess status. If an
+        XDSUnknownPatientId error is returned from a Responding Gateway then the Initiating Gateway
+        shall not include this error in the consolidated results sent to the Document Consumer. The
+        removal of the XDSUnknownPatientId is done to maintain compatibility with the XDS Profile’s
+        use
+        of Registry Stored Query since Document Consumers are not expecting to receive this error.
+        Other than removal of the XDSUnknownPatientId, the Initiating Gateway shall pass all entities
+        received in the Cross Gateway Query response into the response to the Registry Stored Query
+        [ITI-18].</li>
+    </ul>
+    <h6 id="3.38.4.1.3.1">3.38.4.1.3.1 Compatibility of Options</h6>
+    <p>
+      The presence or absence of the optional $XDSDocumentEntryType parameter triggers the behaviors
+      on
+      the Responding Gateway. If this value is specified, and the Responding Gateway (or XDS
+      community
+      supported by the Responding Gateway) does not support it, it shall be ignored. If it is
+      specified, and the Responding Gateway (or underlying XDS community) does support it, the proper
+      information is returned. See
+      <a href="../Volume2/ITI-18.html#3.18.4.1.2.5">ITI TF-2a: 3.18.4.1.2.5</a>
+      for more details regarding compatibility of the Registry Stored Query transaction.
+    </p>
+    <h6 id="3.38.4.1.3.2">3.38.4.1.3.2 Assigning homeCommunityID to Responding Gateway</h6>
+    <p>
+      As described in
+      <a href="../Volume2/ITI-18.html#3.18.4.1.2.3.8">ITI TF-2a: 3.18.4.1.2.3.8</a>
+      , the homeCommunityId is used to identify a community. Initiating Gateways and Responding
+      Gateways use this value to route requests, normally through lookup in a directory. As an
+      identifier of a community, the homeCommunityId is a larger concept than a single Responding
+      Gateway, which may represent one or more communities. In fact, a community may be represented
+      by
+      several Responding Gateways and a Responding Gateway may represent many communities. Thus, the
+      relationship between Responding Gateways and homeCommunityIds is a multiple to multiple
+      relationship. But the following rules do apply:
+    </p>
+    <ul>
+      <li class="bullet-list1">An Initiating Gateway may route query and retrieve requests either by
+        looking up the homeCommunityId in a directory or by sending the request to the Responding
+        Gateway from which it received the homeCommunityId. If the Initiating Gateway looks up the
+        homeCommunityId in a directory, the Responding Gateway that it finds may not be the
+        Responding
+        Gateway that returned the value.</li>
+      <li class="bullet-list1">The Responding Gateway shall accept and properly route all query and
+        retrieve requests containing any homeCommunityId that it returned in a prior query response.</li>
+      <li class="bullet-list1">If the deployment requires that the Initiating Gateway and Responding
+        Gateway use a common directory, then all homeCommunityIds returned by a Responding Gateway
+        should be available for lookup in the common directory. If a community is represented by more
+        than one Responding Gateway, the directory may map the homeCommunityId to one or more of the
+        associated Responding Gateways.</li>
+    </ul>
+    <h5 id="3.38.4.1.4">3.38.4.1.4 Security Considerations</h5>
+    <p>Both the Initiating Gateway and Responding Gateway shall audit the Cross Gateway Query. The
+      audit entries shall be equivalent to the entries required for the Registry Stored Query.</p>
+    <p>The Initiating Gateway:</p>
+    <ul>
+      <li class="bullet-list1">
+        If receiving a Registry Stored Query transaction from a Document Consumer, shall audit as if
+        it
+        were a Document Registry. See
+        <a href="../Volume2/ITI-18.html#3.18.5.1.2">ITI TF-2a: 3.18.5.1.2</a>
         .
-      </p>
-      <p>In addition, the Responding Gateway shall:</p>
-      <ul>
-        <li class="bullet-list1">Return an XDSUnknownCommunity error code if the value of homeCommunityId is specified and is not known by the Responding Gateway.</li>
-        <li class="bullet-list1">Verify the homeCommunityId is specified on relevant queries and return an XDSMissingHomeCommunityId error code if missing.</li>
-        <li class="bullet-list1">Route the query to the local XDS Document Registry or perform equivalent action to form a query response. When routing to a local XDS Document Registry, the Responding Gateway shall pass all parameters into the Registry Stored Query [ITI-18] transaction.</li>
-        <li class="bullet-list1">When routing a response from a local XDS Document Registry, the Responding Gateway shall pass all entities received in the Registry Stored Query response into the response to the Cross Gateway Query.</li>
-        <li class="bullet-list1">Ensure that the response contains a value identifying one of the Responding Gateway’s communities for the homeCommunityId attribute in every appropriate element. The elements that shall include the ebRIM home attribute are:</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">If returntype=”LeafClass” the ExtrinsicObject and RegistryPackage elements shall contain the home attribute.</li>
-        <li class="bullet-list2">If returnType=”ObjectRef” the ObjectRef element shall contain the home attribute.</li>
-        <li class="bullet-list2">Ensure that every RegistryError element returned in the response shall have the location attribute set to one of the homeCommunityIds of the Responding Gateway.</li>
-      </ul>
-      <p>The Initiating Gateway shall:</p>
-      <ul>
-        <li class="bullet-list1">On receiving the response from the Responding Gateway, verify the homeCommunityId is present where appropriate. If homeCommunityId is not present in any of the ExtrinsicObject, RegistryPackage or ObjectRef elements the Initiating Gateway shall reflect an XDSMissingHomeCommunityId to the initiator of the transaction – either the Document Consumer or the internal actor. All XDSMissingHomeCommunityId errors generated by the Initiating Gateway shall include, in the context of the message, identification of the Responding Gateway that returned the invalid response and the element or elements that were in error.</li>
-        <li class="bullet-list1">If the XDS Affinity Domain Option is supported and if needed, consolidate results from multiple Responding Gateways. This includes reflecting in the consolidated results returned in response to the originating Registry Stored Query [ITI-18] all successes and failures received from Responding Gateways. If both successes and failures are received from Responding Gateways, the Initiating Gateway shall return both RegistryObjectList and RegistryErrorList in one response and specify PartialSuccess status. If an XDSUnknownPatientId error is returned from a Responding Gateway then the Initiating Gateway shall not include this error in the consolidated results sent to the Document Consumer. The removal of the XDSUnknownPatientId is done to maintain compatibility with the XDS Profile’s use of Registry Stored Query since Document Consumers are not expecting to receive this error. Other than removal of the XDSUnknownPatientId, the Initiating Gateway shall pass all entities received in the Cross Gateway Query response into the response to the Registry Stored Query [ITI-18].</li>
-      </ul>
-      <h6 id="3.38.4.1.3.1">3.38.4.1.3.1 Compatibility of Options</h6>
-      <p>
-        The presence or absence of the optional $XDSDocumentEntryType parameter triggers the behaviors on the Responding Gateway. If this value is specified, and the Responding Gateway (or XDS community supported by the Responding Gateway) does not support it, it shall be ignored. If it is specified, and the Responding Gateway (or underlying XDS community) does support it, the proper information is returned. See
-        <a href="../Volume2/ITI-18.html#3.18.4.1.2.5">ITI TF-2a: 3.18.4.1.2.5</a>
-        for more details regarding compatibility of the Registry Stored Query transaction.
-      </p>
-      <h6 id="3.38.4.1.3.2">3.38.4.1.3.2 Assigning homeCommunityID to Responding Gateway</h6>
-      <p>
-        As described in
-        <a href="../Volume2/ITI-18.html#3.18.4.1.2.3.8">ITI TF-2a: 3.18.4.1.2.3.8</a>
-        , the homeCommunityId is used to identify a community. Initiating Gateways and Responding Gateways use this value to route requests, normally through lookup in a directory. As an identifier of a community, the homeCommunityId is a larger concept than a single Responding Gateway, which may represent one or more communities. In fact, a community may be represented by several Responding Gateways and a Responding Gateway may represent many communities. Thus, the relationship between Responding Gateways and homeCommunityIds is a multiple to multiple relationship. But the following rules do apply:
-      </p>
-      <ul>
-        <li class="bullet-list1">An Initiating Gateway may route query and retrieve requests either by looking up the homeCommunityId in a directory or by sending the request to the Responding Gateway from which it received the homeCommunityId. If the Initiating Gateway looks up the homeCommunityId in a directory, the Responding Gateway that it finds may not be the Responding Gateway that returned the value.</li>
-        <li class="bullet-list1">The Responding Gateway shall accept and properly route all query and retrieve requests containing any homeCommunityId that it returned in a prior query response.</li>
-        <li class="bullet-list1">If the deployment requires that the Initiating Gateway and Responding Gateway use a common directory, then all homeCommunityIds returned by a Responding Gateway should be available for lookup in the common directory. If a community is represented by more than one Responding Gateway, the directory may map the homeCommunityId to one or more of the associated Responding Gateways.</li>
-      </ul>
-      <h5 id="3.38.4.1.4">3.38.4.1.4 Security Considerations</h5>
-      <p>Both the Initiating Gateway and Responding Gateway shall audit the Cross Gateway Query. The audit entries shall be equivalent to the entries required for the Registry Stored Query.</p>
-      <p>The Initiating Gateway:</p>
-      <ul>
-        <li class="bullet-list1">
-          If receiving a Registry Stored Query transaction from a Document Consumer, shall audit as if it were a Document Registry. See
-          <a href="../Volume2/ITI-18.html#3.18.5.1.2">ITI TF-2a: 3.18.5.1.2</a>
-          .
-        </li>
-        <li class="bullet-list1">
-          In addition, shall audit the Cross Gateway Query as if it were a Document Consumer except that for EventTypeCode the Initiating Gateway shall specify EV(“ITI-38”, “IHE Transactions”, and “Cross Gateway Query”) (see
-          <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
-          ).
-        </li>
-        <li class="bullet-list1">
-          In addition, if interacting with a local Document Registry, shall audit as if it were a Document Consumer (see
-          <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
-          ).
-        </li>
-      </ul>
-      <p>The Responding Gateway:</p>
-      <ul>
-        <li class="bullet-list1">
-          Shall audit the Cross Gateway Query as if it were a Document Registry except that for EventTypeCode the Responding Gateway shall specify EV(“ITI-38”, “IHE Transactions”, “Cross Gateway Query”). See
-          <a href="../Volume2/ITI-18.html#3.18.5.1.2">ITI TF-2a: 3.18.5.1.2</a>
-          .
-        </li>
-        <li class="bullet-list1">
-          In addition, if interacting with a local Document Registry, shall audit as if it were a Document Consumer. See
-          <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
-          .
-        </li>
-      </ul>
-      <h3 id="3.38.5">3.38.5 Protocol Requirements</h3>
-      <p>The Cross Gateway Query request and response will be transmitted using Synchronous or WS-Addressing based Asynchronous Web Services Exchange, according to the requirements specified in ITI TF-2x: Appendix V.3. The protocol requirements are identical to the Registry Stored Query except as noted below.</p>
-      <p>
-        XML namespace prefixes are for informational purposes only and are documented in
-        <a href="../Volume2/ch-V.html#Appendix V">ITI TF-2x: Appendix V</a>
-        , Table V.2.4-1.
-      </p>
-      <p>
-        <span style="font-weight:bold">Responding Gateway:</span>
-        <span>These are the requirements for the Cross Gateway Query transaction presented in the order in which they would appear in the Responding Gateway WSDL definition:</span>
-      </p>
-      <ul>
-        <li class="bullet-list1">The following types shall be imported (xsd:import) in the /definitions/types section:</li>
-      </ul>
-      <ul>
-        <li class="bullet-list2">namespace=" urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", schemaLocation="query.xsd"</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Cross Gateway Query Request message shall be defined as “query:AdhocQueryRequest”</li>
-      </ul>
-      <ul>
-        <li class="bullet-list1">The /definitions/message/part/@element attribute of the Cross Gateway Query Response message shall be defined as “query:AdhocQueryResponse”</li>
-        <li class="bullet-list1">Refer to Table 3.38.5-2 below for additional attribute requirements</li>
-      </ul>
-      <p class="tableTitle">Table 3.38.5-2: Additional Attribute Requirements</p>
-      <table cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Value</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>/definitions/portType/operation@name</td>
-            <td>RespondingGateway_CrossGatewayQuery</td>
-          </tr>
-          <tr>
-            <td>/definitions/portType/operation/input/@wsaw:Action</td>
-            <td>urn:ihe:iti:2007:CrossGatewayQuery</td>
-          </tr>
-          <tr>
-            <td>/definitions/portType/operation/output/@wsaw:Action</td>
-            <td>urn:ihe:iti:2007:CrossGatewayQueryResponse</td>
-          </tr>
-          <tr>
-            <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
-            <td>false</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        <span>These are the requirements that affect the wire format of the SOAP message. The other WSDL properties are only used within the WSDL definition and do not affect interoperability. Full sample request and response messages are in Section</span>
-        <a href="#_Ref177981702">3.38.5.1 Sample SOAP Messages</a>
-        <span>.</span>
-      </p>
-      <p>
-        For informative WSDL for the Responding Gateway see
-        <a href="../Volume2/ch-W.html#Appendix W">ITI TF-2x: Appendix W</a>
+      </li>
+      <li class="bullet-list1">
+        In addition, shall audit the Cross Gateway Query as if it were a Document Consumer except
+        that
+        for EventTypeCode the Initiating Gateway shall specify EV(“ITI-38”, “IHE Transactions”, and
+        “Cross Gateway Query”) (see
+        <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
+        ).
+      </li>
+      <li class="bullet-list1">
+        In addition, if interacting with a local Document Registry, shall audit as if it were a
+        Document Consumer (see
+        <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
+        ).
+      </li>
+    </ul>
+    <p>The Responding Gateway:</p>
+    <ul>
+      <li class="bullet-list1">
+        Shall audit the Cross Gateway Query as if it were a Document Registry except that for
+        EventTypeCode the Responding Gateway shall specify EV(“ITI-38”, “IHE Transactions”, “Cross
+        Gateway Query”). See
+        <a href="../Volume2/ITI-18.html#3.18.5.1.2">ITI TF-2a: 3.18.5.1.2</a>
         .
-      </p>
-      <h4 id="3.38.5.1">3.38.5.1 Sample SOAP Messages</h4>
-      <p>The samples in the following two sections show a typical SOAP request and its relative SOAP response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;, &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to the W3C WS-Addressing standard. The body of the SOAP message is omitted for brevity; in a real scenario the empty element will be populated with the appropriate metadata.</p>
-      <p>
-        Samples presented in this section are also available online:  see
-        <a href="../Volume2/ch-W.html#Appendix W">ITI TF-2x: Appendix W</a>
+      </li>
+      <li class="bullet-list1">
+        In addition, if interacting with a local Document Registry, shall audit as if it were a
+        Document Consumer. See
+        <a href="../Volume2/ITI-18.html#3.18.5.1.1">ITI TF-2a: 3.18.5.1.1</a>
         .
-      </p>
-      <h5 id="3.38.5.1.1">3.38.5.1.1 Sample Cross Gateway Query SOAP Request</h5>
-      <h6 id="3.38.5.1.1.1">3.38.5.1.1.1 Synchronous Web Services Exchange</h6>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQuery&lt;/a:Action&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="width:8.6pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:25.9pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost/service/IHEXCARespondingGateway.svc&lt;/a:To&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-      </p>
-      <h6 id="3.38.5.1.1.2">3.38.5.1.1.2 Asynchronous Web Services Exchange</h6>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQuery&lt;/a:Action&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;a:Address&gt;http://192.168.2.4:9080/XcaService/</span>
-        <span>InitiatingGatewayReceiver.svc</span>
-        <span style="background-color:#ffffff">&lt;/a:Address&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost/XcaService/RespondingGatewayReceiver.svc&lt;/a:To&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-      </p>
-      <h5 id="3.38.5.1.2">3.38.5.1.2 Sample Cross Gateway Query SOAP Response</h5>
-      <h6 id="3.38.5.1.2.1">3.38.5.1.2.1 Synchronous Web Services Exchange</h6>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQueryResponse&lt;/a:Action&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;query:AdhocQueryResponse xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-      </p>
-      <h6 id="3.38.5.1.2.2">3.38.5.1.2.2 Asynchronous Web Services Exchange</h6>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQueryResponse&lt;/a:Action&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">    &lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/</span>
-        <span>a</span>
-        <span style="background-color:#ffffff">:MessageID&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">    &lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/InitiatingGatewayReceiver.svc</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">    &lt;/a:To&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:17.3pt"> </span>
-        <span style="background-color:#ffffff">&lt;query:AdhocQueryResponse xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="width:8.65pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:8.65pt"> </span>
-        <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-      </p>
-      <p style="font-size:8pt">
-        <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-      </p>
-    </main>
-    <footer>
-      <p>
-        <hr />
-      </p>
-      <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
-    </footer>
-  </body>
+      </li>
+    </ul>
+    <h3 id="3.38.5">3.38.5 Protocol Requirements</h3>
+    <p>The Cross Gateway Query request and response will be transmitted using Synchronous or
+      WS-Addressing based Asynchronous Web Services Exchange, according to the requirements specified
+      in ITI TF-2x: Appendix V.3. The protocol requirements are identical to the Registry Stored
+      Query
+      except as noted below.</p>
+    <p>
+      XML namespace prefixes are for informational purposes only and are documented in
+      <a href="../Volume2/ch-V.html#Appendix V">ITI TF-2x: Appendix V</a>
+      , Table V.2.4-1.
+    </p>
+    <p>
+      <span style="font-weight:bold">Responding Gateway:</span>
+      <span>These are the requirements for the Cross Gateway Query transaction presented in the order
+        in which they would appear in the Responding Gateway WSDL definition:</span>
+    </p>
+    <ul>
+      <li class="bullet-list1">The following types shall be imported (xsd:import) in the
+        /definitions/types section:</li>
+    </ul>
+    <ul>
+      <li class="bullet-list2">namespace=" urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+        schemaLocation="query.xsd"</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Cross Gateway
+        Query Request message shall be defined as “query:AdhocQueryRequest”</li>
+    </ul>
+    <ul>
+      <li class="bullet-list1">The /definitions/message/part/@element attribute of the Cross Gateway
+        Query Response message shall be defined as “query:AdhocQueryResponse”</li>
+      <li class="bullet-list1">Refer to Table 3.38.5-2 below for additional attribute requirements</li>
+    </ul>
+    <p class="tableTitle">Table 3.38.5-2: Additional Attribute Requirements</p>
+    <table cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <td class="tableHeader">Attribute</td>
+          <td class="tableHeader">Value</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/definitions/portType/operation@name</td>
+          <td>RespondingGateway_CrossGatewayQuery</td>
+        </tr>
+        <tr>
+          <td>/definitions/portType/operation/input/@wsaw:Action</td>
+          <td>urn:ihe:iti:2007:CrossGatewayQuery</td>
+        </tr>
+        <tr>
+          <td>/definitions/portType/operation/output/@wsaw:Action</td>
+          <td>urn:ihe:iti:2007:CrossGatewayQueryResponse</td>
+        </tr>
+        <tr>
+          <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
+          <td>false</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <span>These are the requirements that affect the wire format of the SOAP message. The other
+        WSDL
+        properties are only used within the WSDL definition and do not affect interoperability. Full
+        sample request and response messages are in Section</span>
+      <a href="#_Ref177981702">3.38.5.1 Sample SOAP Messages</a>
+      <span>.</span>
+    </p>
+    <p>
+      For informative WSDL for the Responding Gateway see
+      <a href="../Volume2/ch-W.html#Appendix W">ITI TF-2x: Appendix W</a>
+      .
+    </p>
+    <h4 id="3.38.5.1">3.38.5.1 Sample SOAP Messages</h4>
+    <p>The samples in the following two sections show a typical SOAP request and its relative SOAP
+      response. The sample messages also show the WS-Addressing headers &lt;Action/&gt;,
+      &lt;MessageID/&gt;, &lt;ReplyTo/&gt;…; these WS-Addressing headers are populated according to
+      the
+      W3C WS-Addressing standard. The body of the SOAP message is omitted for brevity; in a real
+      scenario the empty element will be populated with the appropriate metadata.</p>
+    <p>
+      Samples presented in this section are also available online: see
+      <a href="../Volume2/ch-W.html#Appendix W">ITI TF-2x: Appendix W</a>
+      .
+    </p>
+    <h5 id="3.38.5.1.1">3.38.5.1.1 Sample Cross Gateway Query SOAP Request</h5>
+    <h6 id="3.38.5.1.1.1">3.38.5.1.1.1 Synchronous Web Services Exchange</h6>
+
+    <p class="codeBox">
+      &lt;s:Envelope
+      xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+      xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+      <br>
+      &lt;s:Header&gt;
+      <br>
+      &lt;a:Actions:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQuery&lt;/a:Action&gt;
+      <br>
+      &lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;
+      <br>
+      &lt;a:ReplyTo&gt;
+      <br>
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+      <br>
+      &lt;/a:ReplyTo&gt;
+      <br>
+      &lt;a:To
+      s:mustUnderstand="1"&gt;http://localhost/service/IHEXCARespondingGateway.svc&lt;/a:To&gt;
+      <br>
+      &lt;/s:Header&gt;
+      <br>
+      &lt;s:Body&gt;
+      <br>
+      &lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;
+      <br>
+      &lt;/s:Body&gt;
+      <br>
+      &lt;/s:Envelope&gt;
+    </p>
+
+    <h6 id="3.38.5.1.1.2">3.38.5.1.1.2 Asynchronous Web Services Exchange</h6>
+    <p class="codeBox">
+      &lt;s:Envelope
+      xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+      xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+      <br>
+      &lt;s:Header&gt;
+      <br>
+      &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQuery&lt;/a:Action&gt;
+      <br>
+      &lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;
+      <br>
+      &lt;a:ReplyTo&gt;
+      <br>
+      &lt;a:Address&gt;http://192.168.2.4:9080/XcaService/InitiatingGatewayReceiver.svc&lt;/a:Address&gt;
+      <br>
+      &lt;/a:ReplyTo&gt;
+      <br>
+      &lt;a:To
+      s:mustUnderstand="1"&gt;http://localhost/XcaService/RespondingGatewayReceiver.svc&lt;/a:To&gt;
+      <br>
+      &lt;/s:Header&gt;
+      <br>
+      &lt;s:Body&gt;
+      <br>
+      &lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;
+      <br>
+      &lt;/s:Body&gt;
+      <br>
+      &lt;/s:Envelope&gt;
+    </p>
+
+    <h5 id="3.38.5.1.2">3.38.5.1.2 Sample Cross Gateway Query SOAP Response</h5>
+    <h6 id="3.38.5.1.2.1">3.38.5.1.2.1 Synchronous Web Services Exchange</h6>
+    <p class="codeBox">
+      &lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+      xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+      <br>
+      &lt;s:Header&gt;
+      <br>
+      &lt;a:Action
+      s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQueryResponse&lt;/a:Action&gt;
+      <br>
+      &lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;
+      <br>
+      &lt;/s:Header&gt;</span>
+      <br>
+      &lt;s:Body&gt;</span>
+      <br>
+      &lt;query:AdhocQueryResponse
+      xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
+      <br>
+      &lt;/s:Body&gt;</span>
+      <br>
+      &lt;/s:Envelope&gt;</span>
+    </p>
+
+
+    <h6 id="3.38.5.1.2.2">3.38.5.1.2.2 Asynchronous Web Services Exchange</h6>
+
+    <p class="codeBox">
+      &lt;s:Envelope
+        xmlns:s="http://www.w3.org/2003/05/soap-envelope"
+        xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+    <br>
+      &lt;s:Header&gt;</span>
+    <br>
+      &lt;a:Action
+        s:mustUnderstand="1"&gt;urn:ihe:iti:2007:CrossGatewayQueryResponse&lt;/a:Action&gt;
+    <br>
+        &lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/a:MessageID&gt;
+    <br>
+      &lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;
+    <br>
+      &lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XcaService/InitiatingGatewayReceiver.svc&lt;/a:To&gt;</span>
+    <br>
+      &lt;/s:Header&gt;</span>
+    <br>
+      &lt;s:Body&gt;</span>
+    <br>
+      &lt;query:AdhocQueryResponse
+        xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
+    <br>
+      &lt;/s:Body&gt;</span>
+    <br>
+      &lt;/s:Envelope&gt;</span>
+    <br>
+  </main>
+  <footer>
+    <p>
+      <hr />
+    </p>
+    <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
+  </footer>
+</body>
+
 </html>
