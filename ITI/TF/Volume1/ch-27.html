@@ -17,8 +17,17 @@
     </header>
     <main>
       <h1 id="27">27 Cross-Community Patient Discovery (XCPD)</h1>
-      <p>The Cross-Community Patient Discovery (XCPD) Profile supports the means to locate communities that hold patient relevant health data and the translation of patient identifiers across communities holding the same patient’s data. A community is defined as a group of facilities/enterprises that have agreed to work together using a common set of policies for the purpose of sharing health information within the community via an established mechanism. Facilities/enterprises may host any type of healthcare application such as EHR, PHR, etc. A community is identifiable by a globally unique id called the homeCommunityId. Membership of a facility/enterprise in one community does not preclude it from being a member in another community. Such communities may be XDS Affinity Domains which define document sharing using the XDS Profile or any other communities, no matter what their internal sharing structure.</p>
-  	  <p class="trialImplementation">This Profile has been updated by the <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XCPD_HDL_Revoke_Option.pdf">XCPD Health Data Locater Query and Revoke Option</a>, and <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_AsyncAS4Option.pdf">Asynchronous AS4 Option</a> Supplement.</p>
+      <p>The Cross-Community Patient Discovery (XCPD) Profile supports the means to locate communities that 
+	      hold patient relevant health data and the translation of patient identifiers across communities 
+	      holding the same patient’s data. A community is defined as a group of facilities/enterprises that 
+	      have agreed to work together using a common set of policies for the purpose of sharing health information 
+	      within the community via an established mechanism. Facilities/enterprises may host any type of healthcare 
+	      application such as EHR, PHR, etc. A community is identifiable by a globally unique id called the homeCommunityId. 
+	      Membership of a facility/enterprise in one community does not preclude it from being a member in another community. 
+	      Such communities may be XDS Affinity Domains which define document sharing using the XDS Profile or any other communities, 
+	      no matter what their internal sharing structure.</p>
+  	  <p class="trialImplementation">This Profile has been updated by the 
+		  <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XCPD_HDL_Revoke_Option.pdf">XCPD Health Data Locator and Revoke Option</a>, and <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_AsyncAS4Option.pdf">Asynchronous AS4 Option</a> Supplements.</p>
       <h2 id="27.1">27.1 XCPD Actors/Transactions</h2>
       <p>Figure 27.1-1 shows the actors directly involved in the XCPD Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in XCA, XDS, PIX, PDQ, etc. are not necessarily shown.</p>
       <img src="media/Figure_27.1-1.png"  alt="" />
@@ -213,22 +222,32 @@
       <h3 id="27.3.2">27.3.2 Detailed Interactions (Informative)</h3>
       <p>This section details some of the likely interactions when using XDS, XCA and XCPD to share health data across communities.</p>
       <p>Due to the peer-to-peer nature of XCPD interactions the Initiating Gateway must determine which communities to contact. XCPD does not address this question directly. Some possible approaches are:</p>
-      <p>The patient carries an identification card which points to a Patient Medical Home. The Initiating Gateway uses the identification of the Patient Medical Home to determine the correct Responding Gateway to contact.</p>
-      <p>A nation supports a registry of communities which can be searched using keys like homeCommunityId, regions within the nation, states, cities or other mechanisms to narrow a set of communities. When seeing a patient with a known home address a community may search the registry for communities near that home address and contact those first.</p>
-      <p>A nation would have a set of recognized communities that is accessible either through the registry or via configuration.</p>
+      <ul>
+	      <li>The patient carries an identification card which points to a Patient Medical Home. The Initiating Gateway uses the identification of the Patient Medical Home to determine the correct Responding Gateway to contact.</li>
+              <li>A nation supports a registry of communities which can be searched using keys like homeCommunityId, regions within the nation, states, cities or other mechanisms to narrow a set of communities. When seeing a patient with a known home address a community may search the registry for communities near that home address and contact those first.</li>
+              <li>A nation would have a set of recognized communities that is accessible either through the registry or via configuration.</li>
+      </ul>
       <p>Prior to any point-to-point sharing of protected health data the initiating and responding communities will need to agree to policies regarding the use of the data being shared. Those agreements may be:</p>
-      <p>Peer-to-Peer – each community negotiates with each other community in a one-to-one method.</p>
-      <p>Regional – a regional government or regional organization creates an agreement that all within the region may agree to and by doing so join sharing within that region.</p>
-      <p>Across Region – A super regional (e.g., national) brings together sharing across regional sets of communities.</p>
-      <p>Across Nation – At some point in the future nations may develop agreements for sharing across national boundaries, and as such will enable regions to share at a much larger scale.</p>
+      <ul>
+	      <li>Peer-to-Peer – each community negotiates with each other community in a one-to-one method.</li>
+              <li>Regional – a regional government or regional organization creates an agreement that all within the region may agree to and by doing so join sharing within that region.</li>
+              <li>Across Region – A super regional (e.g., national) brings together sharing across regional sets of communities.</li>
+              <li>Across Nation – At some point in the future nations may develop agreements for sharing across national boundaries, and as such will enable regions to share at a much larger scale.</li>
+      </ul>
       <h4 id="27.3.2.1">27.3.2.1 Illustration of use of Transactions (Informative)</h4>
-      <p>The following sections illustrate scenarios for use of XCPD transactions. The illustrations assume grouping of XCPD Initiating and Responding Gateways and XCA Initiating and Responding Gateways for simplicity of the diagram and that each community is an XDS Affinity Domain. The interactions depicted in the diagrams are examples of use of the transactions, not requirements. The XCPD transactions are designed to enable a variety of behaviors. Implementers are free to choose some or none of the behaviors described.
+      <p>The following sections illustrate scenarios for use of XCPD transactions. The illustrations assume grouping of 
+	      XCPD Initiating and Responding Gateways and XCA Initiating and Responding Gateways for simplicity of the 
+	      diagram and that each community is an XDS Affinity Domain. The interactions depicted in the diagrams are 
+	      examples of use of the transactions, not requirements. The XCPD transactions are designed to enable a 
+	      variety of behaviors. Implementers are free to choose some or none of the behaviors described.
       </p>
-	  <p class="note">IHE defines an actor in the context of a profile, so an XCA Initiating Gateway does not have to be grouped with an XCPD Initiating Gateway and likewise for an XCA Responding Gateway and XCPD Responding Gateway. In practice these actors may customarily be grouped but it is not a requirement of IHE.</p>
+      <p class="note">Note: IHE defines an actor in the context of a profile, so an XCA Initiating Gateway does not have to be grouped with an XCPD Initiating Gateway and likewise for an XCA Responding Gateway and XCPD Responding Gateway. In practice these actors may customarily be grouped but it is not a requirement of IHE.</p>
       <p>
         <span class="emphasis">Scenario # 1: Peer-to-peer</span>
       </p>
-      <p>Figure 27.3.2.1-1 shows the transactions involved in sharing healthcare data for one patient among three communities. Details on each interaction follow the diagram. “I&amp;R Gateway” indicates the grouping of Initiating and Responding Gateways.</p>
+      <p>Figure 27.3.2.1-1 shows the transactions involved in sharing healthcare data for one patient among 
+	      three communities. Details on each interaction follow the diagram. “I&amp;R Gateway” indicates the 
+	      grouping of Initiating and Responding Gateways.</p>
       <img src="media/Figure_27.3.2.1-1.png" alt="" />
       <p class="figureTitle">Figure 27.3.2.1-1: Detailed Interactions Peer-to-peer (Informative)</p>
       <ul>
