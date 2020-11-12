@@ -6,16 +6,43 @@
   </head>
   <body xmlns="">
     <header>
-      <p>
-        <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo" alt="IHE logo" />
-      </p>
-      <p>IHE IT Infrastructure (ITI) Technical Framework, Volume 2</p>
-      <p>Revision 17.0, November 2020 – Final Text</p>
-      <p>
-        <hr />
-      </p>
-    </header>
+        <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+          <div class="title-bar-title">IHE ITI Technical Framework</div>
+        </div>
+        <div class="top-bar" id="responsive-menu">
+          <div class="top-bar-left">
+            <img src="../../../IHE_INTERNATIONAL.png" class="IHE logo hide-for-small-only" alt="IHE logo" />
+            <ul id="tf-small-menu" class="menu vertical show-for-small-only" data-dropdown-menu>
+              <li class="menu-text">Sections</li>
+            </ul>
+          </div>
+          <div class="top-bar-right hide-for-small-only">
+            <ul class="menu">
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 17.0, November 2020 – Final Text</li>
+            </ul>
+          </div>
+        </div>
+         </header>
+    <div class="navigation">
+      <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+        </ul>
+      </nav>
+    </div>
+    <div class="scroll-top-wrapper">
+      <span class="scroll-top-inner">
+        <i class="size-icon-lg fi-arrow-up"></i>
+      </span>
+    </div>
     <main>
+      <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x align-center">
+          <div class="hide-for-small-only cell medium-2 large-2" data-sticky-container>
+            <div id="section-menu" class="sticky" data-sticky data-anchor="main-top">
+            </div>
+          </div>
+          <div id="main-top" class="cell medium-10 large-10">
       <h1 id="Appendix D">Appendix D: Cross-Profile Interactions of PIX and PSA</h1>
       <p>When the Context Manager in a Patient Synchronized Application Integration Profile is grouped with a Patient Identifier Cross-reference Consumer in a Patient Identifier Cross-referencing Integration Profile, patient identifiers must be accessible to both actors in a consistent manner. This Appendix provides the necessary mapping rules.</p>
       <p>The Patient Identifier Cross-Referencing (PIX) Integration Profile defines a general-purpose mapping of a Patient ID within a Patient Identification Domain to aliases in other Patient Identification Domains. This mapping is intended to be used across all IHE systems that require patient identification in transactions crossing Patient Identification Domains. The PIX Integration Profile relies on HL7 V2 transactions.</p>
@@ -197,6 +224,9 @@
       <p>CCOW participant applications are permitted to populate as many patient identifiers as they have available to them. This means that when a user selects a patient in one of these applications the context is populated with multiple identifiers for the selected patient. When the CCOW Patient Mapping Agent (PMA) accepts multiple patient identifiers as input, the PMA has the responsibility of invalidating patient mapping and causing the context change transaction to be cancelled if it determines that the multiple identifiers supplied as part of the transaction identify more than one patient.</p>
       <p>The QPD segment as defined in the IHE PIX Query Transaction specifies a single identifier uniquely identifying one patient within a given Patient Identification Domain. In the case where multiple identifiers are populated, the context manager may have to process the response to the initial PIX Query Transaction to evaluate if the other identifiers in context are included. If so, no further processing is required. Otherwise, an additional PIX Query will need to be issued and the results processed. Should a non-null result be returned, indicating the identifier uniquely identifies a different patient for the given domain, the context manager shall assume “invalid” in the decision field and “multiple patients identified” in the reason field.</p>
       <p>In order to mitigate this condition, IHE specifies that all context participants supporting the Patient Synchronized Applications Profile shall only set one identifier for the patient when a Patient Identifier Cross-referencing Profile is used by the context manager. This means that the context participant for those applications that manage multiple patient identifiers will need to be configurable as to which identifier item is passed in the Change Context Transaction.</p>
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
       <p>
@@ -204,5 +234,10 @@
       </p>
       <p class="copyright">Copyright © 2020: IHE International, Inc.</p>
     </footer>
+    <script src="../js/vendor/jquery.min.js"></script>
+    <script src="../js/vendor/motion-ui.min.js"></script>
+    <script src="../js/vendor/what-input.js"></script>
+    <script src="../js/vendor/foundation.min.js"></script>
+    <script src="../js/app.js"></script>
   </body>
 </html>
