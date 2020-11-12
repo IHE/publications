@@ -46,9 +46,7 @@
       <h2 id="3.42">3.42Register Document Set-b [ITI-42]</h2>
       <p>
         <a name="_Toc80454073">
-          <span>This section corresponds to</span>
-          <span>t</span>
-          <span>ransaction [ITI-42] of the IHE IT Infrastructure Technical Framework. Register Document Set-b is used to register a set of document-associated metadata.</span>
+          <span>This section corresponds ton transaction [ITI-42] of the IHE IT Infrastructure Technical Framework. Register Document Set-b is used to register a set of document-associated metadata.</span>
         </a>
       </p>
       <h3 id="3.42.1">3.42.1 Scope</h3>
@@ -62,7 +60,7 @@
       <p class="tableTitle">Table 3.42.2-1: Actor Roles</p>
       <table cellspacing="0" cellpadding="0">
         <tr>
-          <td>Role:</td>
+          <td><b>Role:</b></td>
           <td>
             <p>
               <span style="font-weight:bold">Content Sender</span>
@@ -71,7 +69,7 @@
           </td>
         </tr>
         <tr>
-          <td>Actor(s):</td>
+          <td><b>Actor(s):</b></td>
           <td>
             <p>
               <span>The following actors may play the role of Content Sender:</span>
@@ -81,7 +79,7 @@
           </td>
         </tr>
         <tr>
-          <td>Role:</td>
+          <td><b>Role:</b></td>
           <td>
             <p>
               <span style="font-weight:bold">Content Receiver</span>
@@ -90,7 +88,7 @@
           </td>
         </tr>
         <tr>
-          <td>Actor(s):</td>
+          <td><b>Actor(s):</b></td>
           <td>
             <p>
               <span>The following actors may play the role of Content Receiver:</span>
@@ -326,7 +324,7 @@
       <ul>
         <li class="bullet-list1">
           <span>Both DocumentEntry objects have the same patient identifier (XDSDocumentEntry.patientId attribute); otherwise it shall return the error</span>
-          <span style="font-size:10pt">XDSPatientIdDoesNotMatch</span>
+          <span style="XMLname">XDSPatientIdDoesNotMatch</span>
           <span>
             . This comparison shall take into consideration patient identity merges as described in
             <a href="../Volume2/ITI-8.html#3.8.4.2.4">ITI TF-2a: 3.8.4.2.4</a>
@@ -335,7 +333,7 @@
         </li>
         <li class="bullet-list1">
           <span>The sourceObject references a DocumentEntry in the submission; otherwise it shall return the error</span>
-          <span style="font-size:10pt">UnresolvedReferenceException</span>
+          <span style="XMLname">UnresolvedReferenceException</span>
           <span>.</span>
         </li>
       </ul>
@@ -346,14 +344,14 @@
       </ul>
       <p>
         <span>If this verification on targetObject fails, the Document Registry shall return the error</span>
-        <span style="font-size:10pt">UnresolvedReferenceException</span>
+        <span style="XMLname">UnresolvedReferenceException</span>
         <span>.</span>
       </p>
       <p>When the targetObject references a DocumentEntry in the Document Registry, the Document Registry shall verify that:</p>
       <ul>
         <li class="bullet-list1">
           <span>The targetObject DocumentEntry has an availabilityStatus of Approved; otherwise, it shall return the error</span>
-          <span style="font-size:10pt">XDSRegistryDeprecatedDocumentError</span>
+          <span style="XMLname">XDSRegistryDeprecatedDocumentError</span>
           <span>. This ensures that only the most recent version of a document can be replaced, etc.</span>
         </li>
       </ul>
@@ -366,25 +364,17 @@
         <li class="bullet-list1">If the DocumentEntry being replaced is a member of one or more approved Folders, the Document Registry shall also:</li>
       </ul>
       <p>
-        <span>1)</span>
-        <span style="font:7pt 'Times New Roman'">    </span>
-        <span>
-          Verify the replacement DocumentEntry and approved Folders have the same patient identifier (XDSDocumentEntry.patientId and XDSFolder.patientId attributes); otherwise it shall return the error XDSPatientIdDoesNotMatch. This comparison shall take into consideration patient identity merges as described in
+        <span style="p.indent">1) Verify the replacement DocumentEntry and approved Folders have the same patient identifier (XDSDocumentEntry.patientId and XDSFolder.patientId attributes); otherwise it shall return the error XDSPatientIdDoesNotMatch. This comparison shall take into consideration patient identity merges as described in
           <a href="../Volume2/ITI-8.html#3.8.4.2.4">ITI TF-2a: 3.8.4.2.4</a>
           .
         </span>
       </p>
       <p>
-        <span>2)</span>
-        <span style="font:7pt 'Times New Roman'">    </span>
-        <span>Create a new FD-DE HasMember Association connecting the replacement DocumentEntry to each approved Folder that held the original DocumentEntry as a member.</span>
+        <span style="p.indent">2) Create a new FD-DE HasMember Association connecting the replacement DocumentEntry to each approved Folder that held the original DocumentEntry as a member.</span>
       </p>
       <p>
-        <span>3)</span>
-        <span style="font:7pt 'Times New Roman'">    </span>
-        <span>For each FD-DE HasMember Association created, create a new SS-HM HasMember Association connecting the new FD-DE HasMember Association to the replacement DocumentEntry's Submission Set.</span>
+        <span style="p.indent">3) For each FD-DE HasMember Association created, create a new SS-HM HasMember Association connecting the new FD-DE HasMember Association to the replacement DocumentEntry's Submission Set.</span>
         <br />
-        <span> </span>
       </p>
       <p class="note">Note: For "RPLC" and "XFRM_RPLC" relationships, earlier versions of the Technical Framework referenced the error XDSReplaceFailed when verification fails. That error has been deprecated.</p>
       <p>When the Association type is "IsSnapshotOf", the Document Registry shall also:</p>
