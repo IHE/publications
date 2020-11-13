@@ -87,7 +87,7 @@ function buildSections() {
     var subsections = element.find(children);
     subsections.each(function() {
         menuItems.append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
-        $('#tf-small-menu').append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
+        $('#tf-small-menu-list').append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
     });
     $('#section-menu').append(menuItems);
     //smallMenu.append(smallMenuList);
@@ -107,16 +107,25 @@ function findTopHeader(element) {
 }
 
 function buildBreadcrumbs() {
-    var pathParts = window.location.pathname.split("/");
+    var path = window.location.pathname;
+    console.log("The path is ",path);
+    var pathParts = getPathParts(path);
+    if (pathParts.length == 0) {
+        return;
+    }
+    
+    var pathURLs = getURLs(pathParts);
     var crumbs = [];
+
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
     crumbs.unshift('<li><span  class="show-for-sr">Current: </span> '+currText.substr(currText.indexOf(' ')+1) + "</li>");
-    if (pathParts[pathParts.length-1].startsWith("ITI-")) {
+    if ((pathParts[0] !== "GeneralIntro") && (pathParts[pathParts.length-1].startsWith(pathParts[0] + "-"))) {
+        //Domain-specific chapter 3 trasactions in individual pages
         console.log(pathParts[pathParts.length-1]);
         crumbs.unshift('<li class="disabled">Chapter 3</li>');
     }
-    if (pathParts[pathParts.length-3].toLowerCase() === "tf") {
+    if ((pathParts.length > 3) && (pathParts[pathParts.length-3].toLowerCase() === "tf")) {
         if (pathParts[pathParts.length-2].toLowerCase() === "volume1") {
             crumbs.unshift('<li><a href="./index.html">Volume 1</a></li>');
             $('#volumeNo').text("1");
@@ -130,7 +139,70 @@ function buildBreadcrumbs() {
             crumbs.unshift('<li><a href="./index.html">Volume 4</a></li>');
             $('#volumeNo').text("4");
         }
-        crumbs.unshift('<li><a href="../index.html">' + pathParts[pathParts.length-4] + ' Technical Framework</a></li>');   
+        crumbs.unshift('<li><a href="../index.html">Technical Framework</a></li>');   
     }
+
+    
+
+    if (pathURLs.domain !== "") {
+        var domainName = "";
+        if (pathParts[0] === "GeneralIntro") {
+            domainName = "General Introduction";
+        }
+        else {
+            domainName = pathParts[0];
+        }
+        crumbs.unshift('<li><a href="' + pathURLs.domain +'">' + domainName + '</a></li>');
+    }
+    crumbs.unshift('<li><a href="' + pathURLs.home +'">Home</a></li>');
+
     crumbs.forEach(element => $('.breadcrumbs').append(element));
+}
+
+function getPathParts(path) {
+    var result=path.split("/");
+    console.log("Number of parts: " + result.length);
+    result.shift(); //empty string
+    if (result[0] === "publications")
+    {
+        //we are at github.io, remove first segment of path
+        result.shift();
+    }
+    console.log("Number of parts: " + result.length);
+    if (result.length == 1) {
+        if ((result[0] === "") || (result[0] === "index.html"))
+        {
+            //root element, not breadcrumbs
+            return [];
+        }
+    }
+    console.log("Number of parts: " + result.length);
+    return result;
+}
+
+function getURLs(pathParts)
+{
+    var url = {};
+    if (pathParts.length == 1) {
+        url.home = "./index.html";
+        url.domain = "";
+        return url;
+    }
+    var stepsBack = pathParts.length - 2;
+    var prefix = "";
+
+    for (i=0; i<stepsBack; i++) {
+        prefix=prefix + "../";
+    }
+
+    if (prefix === "") {
+        url.domain = "./index.html";
+    }
+    else {
+        url.domain = prefix + "index.html";
+    }
+
+    url.home = prefix + "../" + "index.html";
+
+    return url;
 }
