@@ -110,6 +110,20 @@ function buildBreadcrumbs() {
     var path = window.location.pathname;
     console.log("The path is ",path);
     var pathParts = path.split("/");
+    pathParts.shift(); //empty string
+    if (pathParts[0] === "publications")
+    {
+        //we are at github.io, remove first segment of path
+        pathParts.shift();
+    }
+    if (pathParts.length == 1) {
+        if ((pathParts[2] === "") || (pathParts[2] === "index.html"))
+        {
+            //root element, not breadcrumbs, no small menu
+            $('#small-menu-header').remove();
+            return;
+        }
+    }
     var crumbs = [];
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
