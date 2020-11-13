@@ -141,6 +141,9 @@ function buildBreadcrumbs() {
         }
         crumbs.unshift('<li><a href="../index.html">Technical Framework</a></li>');   
     }
+    else if ((pathParts.length == 3) && (pathParts[pathParts.length-2].toLowerCase() === "tf")) {
+        crumbs.unshift('<li><a href="./index.html">Technical Framework</a></li>')
+    }
 
     
 
