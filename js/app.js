@@ -107,7 +107,9 @@ function findTopHeader(element) {
 }
 
 function buildBreadcrumbs() {
-    var pathParts = window.location.pathname.split("/");
+    var path = window.location.pathname;
+    console.log("The path is ",path);
+    var pathParts = path.split("/");
     var crumbs = [];
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
