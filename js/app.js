@@ -120,7 +120,8 @@ function buildBreadcrumbs() {
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
     crumbs.unshift('<li><span  class="show-for-sr">Current: </span> '+currText.substr(currText.indexOf(' ')+1) + "</li>");
-    if (pathParts[pathParts.length-1].startsWith("ITI-")) {
+    if ((pathParts[0] !== "GeneralIntro") && (pathParts[pathParts.length-1].startsWith(pathParts[0] + "-"))) {
+        //Domain-specific chapter 3 trasactions in individual pages
         console.log(pathParts[pathParts.length-1]);
         crumbs.unshift('<li class="disabled">Chapter 3</li>');
     }
@@ -144,7 +145,14 @@ function buildBreadcrumbs() {
     
 
     if (pathURLs.domain !== "") {
-        crumbs.unshift('<li><a href="' + pathURLs.domain +'">' + pathParts[0] + '</a></li>');
+        var domainName = "";
+        if (pathParts[0] === "GeneralIntro") {
+            domainName = "General Introduction";
+        }
+        else {
+            domainName = pathParts[0];
+        }
+        crumbs.unshift('<li><a href="' + pathURLs.domain +'">' + domainName + '</a></li>');
     }
     crumbs.unshift('<li><a href="' + pathURLs.home +'">Home</a></li>');
 
