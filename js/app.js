@@ -155,7 +155,7 @@ function getPathParts(path) {
     var result=path.split("/");
     console.log("Number of parts: " + result.length);
     result.shift(); //empty string
-    if (pathParts[0] === "publications")
+    if (result[0] === "publications")
     {
         //we are at github.io, remove first segment of path
         result.shift();
