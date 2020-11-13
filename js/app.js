@@ -117,7 +117,7 @@ function buildBreadcrumbs() {
         pathParts.shift();
     }
     if (pathParts.length == 1) {
-        if ((pathParts[2] === "") || (pathParts[2] === "index.html"))
+        if ((pathParts[0] === "") || (pathParts[0] === "index.html"))
         {
             //root element, not breadcrumbs, no small menu
             $('#small-menu-header').remove();
