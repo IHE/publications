@@ -110,12 +110,14 @@ function buildBreadcrumbs() {
     var path = window.location.pathname;
     console.log("The path is ",path);
     var pathParts = path.split("/");
+    console.log("Number of parts: " + pathParts.length);
     pathParts.shift(); //empty string
     if (pathParts[0] === "publications")
     {
         //we are at github.io, remove first segment of path
         pathParts.shift();
     }
+    console.log("Number of parts: " + pathParts.length);
     if (pathParts.length == 1) {
         if ((pathParts[0] === "") || (pathParts[0] === "index.html"))
         {
@@ -124,6 +126,7 @@ function buildBreadcrumbs() {
             return;
         }
     }
+    console.log("Number of parts: " + pathParts.length);
     var crumbs = [];
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
