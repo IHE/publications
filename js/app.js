@@ -87,7 +87,7 @@ function buildSections() {
     var subsections = element.find(children);
     subsections.each(function() {
         menuItems.append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
-        $('#tf-small-menu').append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
+        $('#tf-small-menu-list').append("<li><a href='#" + $(this).attr('id') + "'>" + $(this).text() + "</a></li>\n");
     });
     $('#section-menu').append(menuItems);
     //smallMenu.append(smallMenuList);
@@ -121,8 +121,7 @@ function buildBreadcrumbs() {
     if (pathParts.length == 1) {
         if ((pathParts[0] === "") || (pathParts[0] === "index.html"))
         {
-            //root element, not breadcrumbs, no small menu
-            $('#small-menu-header').remove();
+            //root element, not breadcrumbs
             return;
         }
     }
