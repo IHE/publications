@@ -125,7 +125,7 @@ function buildBreadcrumbs() {
         console.log(pathParts[pathParts.length-1]);
         crumbs.unshift('<li class="disabled">Chapter 3</li>');
     }
-    if (pathParts[pathParts.length-3].toLowerCase() === "tf") {
+    if ((pathParts.length > 3) && (pathParts[pathParts.length-3].toLowerCase() === "tf")) {
         if (pathParts[pathParts.length-2].toLowerCase() === "volume1") {
             crumbs.unshift('<li><a href="./index.html">Volume 1</a></li>');
             $('#volumeNo').text("1");
