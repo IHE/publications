@@ -119,7 +119,10 @@ function buildBreadcrumbs() {
 
     var headers = findTopHeader($("main"));
     var currText = headers.top.text();
-    crumbs.unshift('<li><span  class="show-for-sr">Current: </span> '+currText.substr(currText.indexOf(' ')+1) + "</li>");
+    if (/^[0-9]$/.test(currText[0])) {
+        currText = currText.substr(currText.indexOf(' ')+1)
+    }
+    crumbs.unshift('<li><span  class="show-for-sr">Current: </span> '+ currText + "</li>");
     if ((pathParts[0] !== "GeneralIntro") && (pathParts[pathParts.length-1].startsWith(pathParts[0] + "-"))) {
         //Domain-specific chapter 3 trasactions in individual pages
         console.log(pathParts[pathParts.length-1]);
