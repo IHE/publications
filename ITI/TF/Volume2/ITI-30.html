@@ -518,6 +518,7 @@
       <p>This segment is used to provide generic properties of the trigger event.</p>
       <p class="tableTitle">Table 3.30‑2: EVN – Event Type segment</p>
       <table cellspacing="0" cellpadding="0">
+        <thead>
         <tr>
           <td class="tableHeader">SEQ</td>
           <td class="tableHeader">LEN</td>
@@ -528,6 +529,7 @@
           <td class="tableHeader">ITEM#</td>
           <td class="tableHeader">Element name</td>
         </tr>
+        </thead>
         <tr>
           <td>1</td>
           <td>3</td>
@@ -1178,11 +1180,13 @@
         <span style="font-weight:bold">User-defined Table 0001: Administrative Sex</span>
       </p>
       <table cellspacing="0" cellpadding="0">
+        <thead>
         <tr>
           <td class="tableHeader">Value</td>
           <td class="tableHeader">Description</td>
           <td class="tableHeader">Comment</td>
         </tr>
+        </thead>
         <tr>
           <td>F</td>
           <td>Female</td>
@@ -1295,11 +1299,13 @@
         <span style="font-weight:bold">User-defined Table 0445: Identity Reliability Code</span>
       </p>
       <table cellspacing="0" cellpadding="0">
-        <tr>
+        <thead>
+          <tr>
           <td class="tableHeader">Value</td>
           <td class="tableHeader">Description</td>
           <td class="tableHeader">Comment (added by IHE for this profile)</td>
         </tr>
+        </thead>
         <tr>
           <td>AL</td>
           <td>Patient/Person Name is an Alias</td>
@@ -2275,9 +2281,7 @@
         <span style="font-style:italic">User-defined Table 0443</span>
         <span>:</span>
       </p>
-      <p style="font-size:11pt">
-        <span style="font-weight:bold">User-defined Table 0443: Provider role</span>
-      </p>
+      <p class="tableTitle">User-defined Table 0443: Provider role</p>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -2331,9 +2335,7 @@
       <h4 id="3.30.5.7">3.30.5.7 OBX – Observation/Result segment</h4>
       <p>Standard Reference: HL7 Version 2.5, Chapter 7 (Section 7.4.2)</p>
       <p>In transactions [ITI-30] and [ITI-31], the OBX segment is primarily used to convey patient height and patient weight. For this reason, this segment is described in this section, although it always appears as optional in transactions [ITI-30] and [ITI-31].</p>
-      <p style="font-size:11pt">
-        <a name="_Ref51130724">Table 3.30-7: OBX Segment</a>
-      </p>
+      <p class="tableTitle">Table 3.30-7: OBX Segment  </p>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -2900,7 +2902,7 @@
       <p>The ROL segment following the PV1/PV2 segments is not supported here, for the same reason.</p>
       <p>One or more OBX segments may be present to carry “permanent observations” such as the patient weight or height.</p>
       <p>The ROL segment following the IN1/IN2/IN3 segments serves to communicate providers related to a specific insurance carrier.</p>
-      <h5 id="3.30.6.2.4">3.30.6.2.4 Expected actions</h5>
+      <h5 id="3.30.6.2.4">3.30.6.2.4 Expected Actions</h5>
       <p>The receiver shall add this new patient to its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
       <h4 id="3.30.6.3">3.30.6.3 Update patient information - ADT^A31^ADT_A05</h4>
       <h5 id="3.30.6.3.1">3.30.6.3.1 Trigger Event</h5>
@@ -3256,13 +3258,15 @@
       <h5 id="3.30.6.5.2">3.30.6.5.2 Message Static Definition</h5>
       <p class="tableTitle">Table 3.30-12: Static definition of ADT^A47^ADT_A30</p>
       <table cellspacing="0" cellpadding="0">
-        <tr>
+        <thead>
+          <tr>
           <td class="tableHeader">Segment</td>
           <td class="tableHeader">Meaning</td>
           <td class="tableHeader">Usage</td>
           <td class="tableHeader">Card.</td>
           <td class="tableHeader">HL7 chapter</td>
         </tr>
+        </thead>
         <tr>
           <td>MSH</td>
           <td>Message Header</td>
@@ -3328,7 +3332,7 @@
         <span style="font-style:italic">PID-3–Patient Identifier List</span>
         <span>).</span>
       </p>
-      <h5 id="3.30.6.5.4">3.30.6.5.4 Expected actions</h5>
+      <h5 id="3.30.6.5.4">3.30.6.5.4 Expected Actions</h5>
       <p>The receiver shall correct the identifier in its database, and shall report the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
       <p>If the receiver already associates the target patient identifiers with another patient in its database, this is an error condition: A merge (A40) should have been sent instead of a change.</p>
       <p>If the receiver does not recognize the supplier patient identifiers to be merged, no further action is required and no error condition exists.</p>
@@ -3443,7 +3447,7 @@
         <span>).</span>
       </p>
       <p>Transaction [ITI-30] restricts the use of this message to only the purpose of linking two patient identifier lists. This is why segments PD1, PV1 and DB1 are not supported in this message.</p>
-      <h5 id="3.30.6.6.4">3.30.6.6.4 Expected actions</h5>
+      <h5 id="3.30.6.6.4">3.30.6.6.4 Expected Actions</h5>
       <p>The receiver links the identifier lists in its database, and reports the result of this operation (success / error) in an acknowledgment message returned to the sender. In case of success, each patient record persists with all its associated information (encounter, clinical, care, insurance, next of kin, etc.).</p>
       <p>In case the receiver did not recognize one or both of the patient identifier lists, the linking is still performed (the receiver will record the link without creating any missing patient record) and no error condition exists.</p>
       <p>If the receiver does not support the Link/Unlink Option of this transaction, it shall application-reject the message (see ITI TF-2x: C.2.3).</p>
@@ -3554,7 +3558,7 @@
         <span>) are to be unlinked.</span>
       </p>
       <p>Transaction [ITI-30] restricts the use of this message to only the purpose of unlinking two patient identifier lists. This is why segments PD1, PV1 and DB1 are not supported in this message.</p>
-      <h5 id="3.30.6.7.4">3.30.6.7.4 Expected actions</h5>
+      <h5 id="3.30.6.7.4">3.30.6.7.4 Expected Actions</h5>
       <p>The receiver unlinks the identifier lists in its database, and reports the result of this operation (success / error) in an acknowledgment message returned to the sender.</p>
       <p>In case of success the two patient records are unlinked, each of them keeping its own related information (encounter, clinical, next of kin, insurance…).</p>
       <p>In case the receiver did not recognize the link between these two patient identifier lists, no action is performed and no error condition exists.</p>
