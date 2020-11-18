@@ -226,77 +226,29 @@
       </p>
       <p>And/or semantics for the coding of parameters shall be available only on parameters for multi-valued metadata elements (such as $XDSDocumentEntryEventCodeList). Multi-valued parameters shall be coded in two ways with different interpretations.</p>
       <p>A parameter specified as a Slot with multiple values shall be interpreted as disjunction (OR semantics). For example:</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>     &lt;rim:Value&gt;('b')&lt;/rim:Value&gt; </span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-      </div>
+      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
+     &lt;rim:Value&gt;('b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code>
       <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing either 'a' or 'b'. The following coding of the parameter shall yield the same results:</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>     &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-      </div>
+      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+     &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code>
       <p>A parameter specified as multiple Slots shall be interpreted as conjunction (AND semantics). For example:</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt; </span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>             &lt;rim:Value&gt;('b')&lt;/rim:Value&gt; </span>
-        </p>
-        <p style="font-size:8pt">
-          <span>  &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-      </div>
+      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;
+&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+     &lt;rim:Value&gt;('b')&lt;/rim:Value&gt; 
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code>
       <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing both 'a' and 'b'.</p>
       <p>Furthermore, the following specification of the $XDSDocumentEntryEventCodeList parameter:</p>
       <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
@@ -312,14 +264,18 @@
       <p>shall be interpreted as matching a document having eventCode (a OR b) AND c.</p>
       <p class="heading7" id="3.18.4.1.2.3.6">3.18.4.1.2.3.6 Valid Document Status Values</p>
       <p>The Registry Object status values, in ebRIM v 3.0 format, used by XDS are:</p>
-      <p class="XMLname">urn:oasis:names:tc:ebxml-regrep:StatusType:Approved</p>
-      <p class="XMLname">urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated</p>
+      <p class="indent">
+        <code>urn:oasis:names:tc:ebxml-regrep:StatusType:Approved</code><br />
+        <code>urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated</code>
+      </p>
       <p>If the Document Registry receives in a Registry Stored Query transaction a value for the $XDSDocumentEntryStatus parameter that it does not understand then the Document Registry shall ignore the value and process the Registry Stored Query transaction as if the not understood value were not specified. This means that if the only value present is one that is not understood an error will be generated because the $XDSDocumentEntryStatus parameter is required.</p>
       <p class="heading8" id="3.18.4.1.2.3.6.1">3.18.4.1.2.3.6.1 Valid AdhocQueryResponse Status Values</p>
       <p>The status attribute of AdhocQueryResponse shall contain one of the following values:</p>
-      <p class="XMLname">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success</p>
-      <p class="XMLname">urn:ihe:iti:2007:ResponseStatusType:PartialSuccess</p>
-      <p class="XMLname">urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure</p>
+      <p class="indent">
+        <code>urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success</code><br />
+        <code>urn:ihe:iti:2007:ResponseStatusType:PartialSuccess</code><br />
+        <code>urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure</code>
+      </p>
       <p>
         See
         <a href="../Volume3/ch-1.2.html#4.2.4">ITI TF-3: 4.2.4</a>
@@ -329,11 +285,13 @@
       <p>The objectType attribute on an ExtrinsicObject (DocumentEntry) is used to distinguish Stable DocumentEntries from On-Demand DocumentEntries.</p>
       <p>The following objectType values are used:</p>
       <ul>
-        <li class="bullet-list0">urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1 – Stable</li>
-        <li class="bullet-list0">urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248 – On-Demand</li>
-        <li class="bullet-list0">The valid DocumentEntryType parameter values used in the Registry Stored Query are:</li>
-        <li class="bullet-list0">urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1 – requests Stable Document Entries be included in the response. This is the default value.</li>
-        <li class="bullet-list0">urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248 – requests On-Demand Document Entries be included in the response. Used only by Document Consumers which support the On-Demand Documents Option.</li>
+        <li class="bullet-list0"><code>urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1</code> – Stable</li>
+        <li class="bullet-list0"><code>urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248</code> – On-Demand</li>
+      </ul>
+      <p>The valid DocumentEntryType parameter values used in the Registry Stored Query are:</p>
+      <ul>
+        <li class="bullet-list0"><code>urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1</code> – requests Stable Document Entries be included in the response. This is the default value.</li>
+        <li class="bullet-list0"><code>urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248</code> – requests On-Demand Document Entries be included in the response. Used only by Document Consumers which support the On-Demand Documents Option.</li>
       </ul>
       <p>If no value is specified for DocumentEntryType, the value requesting only Stable Document Entries shall be assumed. To get all Document Entry types, the query shall contain both of the valid values in the request.</p>
       <p class="heading7" id="3.18.4.1.2.3.7">3.18.4.1.2.3.7 Parameters for Required Queries</p>
@@ -346,13 +304,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSDocumentEntry objects matching the query parameters</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -553,13 +511,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSSubmissionSet objects matching the query parameters</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -631,13 +589,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSFolder objects matching the query parameters</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -701,13 +659,13 @@
         <li class="bullet-list2"> <p class="note">a SubmissionSet is linked to a DocumentEntry with a different Patient ID, i.e., for a mother and child.</p></li>
       </ul>
       <p class="note">        Document Consumers should be prepared to handle these situations.</p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -793,13 +751,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSDocumentEntry objects requested</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -871,13 +829,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSFolder objects requested.</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -944,13 +902,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>Association objects</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -986,13 +944,13 @@
         <li class="bullet-list1">XDSDocumentEntry objects</li>
         <li class="bullet-list1">Association objects whose sourceObject or targetObject attribute matches one of the above objects</li>
       </ul>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
-          <tr style="height:4.5pt">
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+          <tr>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1071,13 +1029,13 @@
         <li class="bullet-list1">XDSSubmissionSet objects described above</li>
         <li class="bullet-list1">Association objects described in the Selection section above</li>
       </ul>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1136,13 +1094,13 @@
         <li class="bullet-list1">The HasMember Associations identified in the previous rule</li>
       </ul>
       <p>In the above rules, Associations are only returned if both of the objects they connect are part of the return set.</p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1269,13 +1227,13 @@
       </ul>
  
       <p>In the above rules, Associations are only returned if both of the objects they connect are part of the return set.</p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1392,13 +1350,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSFolder objects that contain specified XDSDocumentEntry object. More specifically, for each Association object of type HasMember that has a targetObject attribute referencing the target XDSDocumentEntry object, return the object referenced by its sourceObject if it is of type XDSFolder.</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1474,13 +1432,13 @@
         <span style="font-weight:bold">Given:</span>
         <span>An XDSDocumentEntry object and a collection of association types.</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1563,13 +1521,13 @@
         <span style="font-weight:bold">Returns:</span>
         <span>XDSDocumentEntry objects matching the query parameters</span>
       </p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Parameter Name</td>
-            <td class="tableHeader">Attribute</td>
-            <td class="tableHeader">Opt</td>
-            <td class="tableHeader">Mult</td>
+            <td>Parameter Name</td>
+            <td>Attribute</td>
+            <td>Opt</td>
+            <td>Mult</td>
           </tr>
         </thead>
         <tbody>
@@ -1848,11 +1806,11 @@
       <h6 id="3.18.4.1.2.4">3.18.4.1.2.4 Stored Query IDs</h6>
       <p>The standard XDS queries are assigned the following Query IDs. These IDs are used in the AdhocQueryRequest to reference queries stored on the Document Registry Actor. Query IDs are in UUID format (RFC4122). An error shall be returned when an unsupported stored query ID is received.</p>
       <p class="note">Note: This query mechanism can be extended by adding a query by allocating a Query ID, defining query parameters, and implementing the query in the Document Registry.</p>
-      <table cellspacing="0" cellpadding="0">
+      <table class="hover">
         <thead>
           <tr>
-            <td class="tableHeader">Query Name</td>
-            <td class="tableHeader">Query ID</td>
+            <td>Query Name</td>
+            <td>Query ID</td>
           </tr>
         </thead>
         <tbody>
@@ -1994,27 +1952,31 @@
         <li class="bullet-list1">To support the Asynchronous Web Services Exchange Option on the Document Consumer, the Document Registry shall support the use of a non-anonymous response EPR in the WS-Addressing replyTo header.</li>
       </ul>
       <p class="tableTitle">Table 3.18.4.1.2.7-1: Additional Attribute Requirements</p>
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td class="tableHeader">Attribute</td>
-          <td class="tableHeader">Value</td>
-        </tr>
-        <tr>
-          <td>/definitions/portType/operation@name</td>
-          <td>DocumentRegistry_RegistryStoredQuery</td>
-        </tr>
-        <tr>
-          <td>/definitions/portType/operation/input/@wsaw:Action</td>
-          <td>urn:ihe:iti:2007:RegistryStoredQuery</td>
-        </tr>
-        <tr>
-          <td>/definitions/portType/operation/output/@wsaw:Action</td>
-          <td>urn:ihe:iti:2007:RegistryStoredQuery Response</td>
-        </tr>
-        <tr>
-          <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
-          <td>false</td>
-        </tr>
+      <table class="hover">
+        <thead>
+          <tr>
+            <td>Attribute</td>
+            <td>Value</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/definitions/portType/operation@name</td>
+            <td>DocumentRegistry_RegistryStoredQuery</td>
+          </tr>
+          <tr>
+            <td>/definitions/portType/operation/input/@wsaw:Action</td>
+            <td>urn:ihe:iti:2007:RegistryStoredQuery</td>
+          </tr>
+          <tr>
+            <td>/definitions/portType/operation/output/@wsaw:Action</td>
+            <td>urn:ihe:iti:2007:RegistryStoredQuery Response</td>
+          </tr>
+          <tr>
+            <td>/definitions/binding/operation/wsoap12:operation/@soapActionRequired</td>
+            <td>false</td>
+          </tr>
+        </tbody>
       </table>
       <p>The following WSDL fragment shows an example of Registry Stored Query transaction definition:</p>
       <div style="border:0.75pt solid #000000; clear:both">
