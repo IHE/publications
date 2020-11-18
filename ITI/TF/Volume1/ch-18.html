@@ -315,42 +315,42 @@
     <ul>
       <li class="bullet-list1">
         <b>Document Consumer</b>
-        <it>initiates a Registry Stored Query request by patient id</it>
+        <i>initiates a Registry Stored Query request by patient id</i>
         – the Document Consumer initiates the initial transaction by formatting a Registry Stored Query request by patient identifier. The consumer uses PDQ, PIX or some other means to identify the XDS Affinity Domain patient id, formats that
         information plus any other query parameters into a Registry Stored Query request and sends this request to an Initiating Gateway.
       </li>
       <li class="bullet-list1">
         <b>Initiating Gateway</b>
-        <it>processes Registry Stored Query by patient id request</it>
+        <i>processes Registry Stored Query by patient id request</i>
         – The Initiating Gateway receives a Registry Stored Query by patient id and must determine a) which Responding Gateways this request should be sent to b) what patient id to use in the Cross Gateway Queries. Detailed specification of these
         steps is not in the intended scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ), future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.10
-        <it>XCA and Patient Identification Management</it>
+        <i>XCA and Patient Identification Management</i>
         for possible use of existing profiles PIX and PDQ. For each Responding Gateway identified, the Initiating Gateway shall update the query with the correct patient identifier corresponding to the Responding Gateway’s community and initiates a
         Cross Gateway Query transaction to the Responding Gateway. If the Initiating Gateway is grouped with a Document Consumer it shall also initiate a Registry Stored Query to the local Document Registry.
       </li>
       <li class="bullet-list1">
         <b>Responding Gateway</b>
-        <it>processes Cross Gateway Query by patient id</it>
+        <i>processes Cross Gateway Query by patient id</i>
         – The Responding Gateway within an XDS Affinity Domain processes the Cross Gateway Query by using grouping as a Document Consumer and initiates a Registry Stored Query to the local Document Registry. The Responding Gateway shall update the
         response from the Document Registry to ensure that the homeCommunityId is specified on every applicable element. This updated response is sent as the response to the Cross Gateway Query.
       </li>
       <li class="bullet-list1">
         <b>Initiating Gateway</b>
-        <it>processes Cross Gateway Query by patient id responses</it>
+        <i>processes Cross Gateway Query by patient id responses</i>
         – The Initiating Gateway collects the responses from all Responding Gateways it contacted. For each response it shall verify homeCommunityId is present in each appropriate element. If the Initiating Gateway initiated a Registry Stored
           Query to the local Document Registry it shall update the response to that transaction to contain the homeCommunityId value associated with the local community. Once all responses are received the Initiating Gateway consolidates all updated
           response data into one response to the Document Consumer. The Initiating Gateway shall return to the Document Consumer the same homeCommunityId attribute values that it received from Responding Gateways.
       </li>
       <li class="bullet-list1">
         <b>Document Consumer</b>
-        <it>receives Registry Stored Query by patient id response</it>
+        <i>receives Registry Stored Query by patient id response</i>
         – The Document Consumer receives the results of the query from the Initiating Gateway and must account for two unique aspects of the response; namely that a) the homeCommunityId attribute will be specified and b) the Document Consumer may
         not be able to map the repository id value directly to the Document Repository. There shall be a common coding/vocabulary scheme used across all communities. For example, all communities shall have common privacy consent vocabularies. The
         Document Consumer shall retain the values of the homeCommunityId attribute for future interaction with the Initiating Gateway.
       </li>
       <li class="bullet-list1">
         <b>Document Consumer</b>
-        <it>initiates a Registry Stored Query by UUID</it>
+        <i>initiates a Registry Stored Query by UUID</i>
         – Many Registry Stored Queries do not include patient id as a parameter, but instead require one of the entryUUID or uniqueID parameters, generically referred to as UUID. Both of these values are returned as part of the metadata from a query
         by patient id. The Document Consumer may do a patient id query to the Initiating Gateway prior to a query by UUID or shall have access to the correct homeCommunityId through some other means. In either case the consumer has the
         homeCommunityId attribute and shall specify it as a parameter of the query. The Document Consumer puts the homeCommunityId and UUID values plus any other query parameters into a Registry Stored Query request and sends this request to an
@@ -358,44 +358,44 @@
       </li>
       <li class="bullet-list1">
         <b>Initiating Gateway</b>
-        <it>processes Registry Stored Query by UUID request</it>
+        <i>processes Registry Stored Query by UUID request</i>
         – The Initiating Gateway receives a Registry Stored Query by UUID and determines which Responding Gateway to contact by using the homeCommunityId to obtain the Web Services endpoint of the Responding Gateway. The process of obtaining
           the Web Services endpoint is not further specified in this profile. If the homeCommunityId represents the local community the Initiating Gateway will initiate a Registry Stored Query to the local Document Registry. The Initiating Gateway
           shall specify the homeCommunityId in the Cross Gateway Query by UUID which is associated with the Responding Gateway.
       </li>
       <li class="bullet-list1">
         <b>Responding Gateway</b>
-        <it>processes Cross Gateway Query by UUID</it>
+        <i>processes Cross Gateway Query by UUID</i>
         – The Responding Gateway within an XDS Affinity Domain processes the Cross Gateway Query by grouping as a Document Consumer and initiating a Registry Stored Query to the local Document Registry. The response to the Cross Gateway query
           shall contain the homeCommunityId of the responding community. This processing is identical to processing of the Cross Gateway Query by patient id.
       </li>
       <li class="bullet-list1">
         <b>Initiating Gateway</b>
-        <it>receives Cross Gateway Query by UUID response</it>
+        <i>receives Cross Gateway Query by UUID response</i>
         – The processing of a Cross Gateway Query by UUID response is identical to the processing of a Cross Gateway Query by patient id response, except there is only one response, so consolidation of responses is not needed.
       </li>
       <li class="bullet-list1">
         <b>Document Consumer</b>
-        <it>receives Registry Stored Query by UUID response</it>
+        <i>receives Registry Stored Query by UUID response</i>
         – The processing of a Registry Stored Query by UUID response is identical to the processing of a Registry Stored Query by patient id response.
       </li>
       <li class="bullet-list1">
         <b>Document Consumer</b>
-        <it>initiates a Retrieve Document Set</it>
+        <i>initiates a Retrieve Document Set</i>
         – Prior to issuing a Retrieve Document Set the Document Consumer may issue a Registry Stored Query by patient id to the Initiating Gateway. The response to the Registry Stored Query by patient id or subsequent Registry Stored Query by
           UUID includes a) the document unique ID b) the repository unique ID c) the homeCommunityId attribute. If the Document Consumer did not issue a Registry Stored Query which returned this information then it shall have acquired the
           information through some other means. The Document Consumer shall specify these three parameters in its Retrieve Document Set transaction to the Initiating Gateway.
       </li>
       <li class="bullet-list1">
         <b>Initiating Gateway</b>
-        <it>processes Retrieve Document Set</it>
+        <i>processes Retrieve Document Set</i>
         – The Initiating Gateway determines which Responding Gateways to contact by using the homeCommunityId to obtain the Web Services endpoint of the Responding Gateway. If the homeCommunityId represents the local community the Initiating
           Gateway will initiate a Retrieve Document Set to a local Document Repository. The Retrieve Document Set may contain more than one unique homeCommunityId so the Initiating Gateway shall be capable of initiating requests to more than one
           Responding Gateway and consolidating the results. The Initiating Gateway shall specify the homeCommunityId in the Cross Gateway Retrieve which identifies the community associated with the Responding Gateway.
       </li>
       <li class="bullet-list1">
         <b>Responding Gateway</b>
-        <it>processes Cross Gateway Retrieve</it>
+        <i>processes Cross Gateway Retrieve</i>
         – The Responding Gateway within an XDS Affinity Domain processes the Cross Gateway Retrieve by grouping as a Document Consumer and initiating a Retrieve Document Set transaction to the Document Repository identified by the repository
           unique ID within the request. If the Cross Gateway Retrieve requests multiple documents with different repository unique IDs, the Responding Gateway shall contact multiple Document Repositories and consolidate the responses.
       </li>
