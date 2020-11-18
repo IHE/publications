@@ -77,12 +77,21 @@ function buildSections() {
     var top = headers.top;
     var children = headers.children;
 
-    console.log('Top is ' + top.attr('id'));
-
+    if (top.multiple !== undefined) {
+        console.log('Mutliple top-level headers');
+    }
+    else {
+        console.log('Top is ' + top.attr('id'));
+    }
     menuItems = $(document.createElement("ul"));
     menuItems.addClass("vertical menu");
 
-    $('#section-menu').append("<a href='#" + top.attr('id') + "'>"+ top.text() + "</a>\n");
+    if (top.multiple !== undefined) {
+        $('#section-menu').append(top.link);
+    }
+    else {
+        $('#section-menu').append("<a href='#" + top.attr('id') + "'>"+ top.text() + "</a>\n");
+    }
 
     var subsections = element.find(children);
     subsections.each(function() {
@@ -98,15 +107,36 @@ function buildSections() {
 function findTopHeader(element) {
     var retValue = {};
     retValue.top = element.find("h1");
-    retValue.children = "h2";
-    if (retValue.top['length'] == 0) {
+    console.log("How many h1? " +retValue.top.length)
+    if (retValue.top.length == 1) {
+        retValue.children = "h2";
+    }
+    else if (retValue.top.length > 1) {
+        retValue.children = "h1";
+        retValue.top = {"multiple":true};
+    }
+    else if (retValue.top['length'] == 0) {
         retValue.top = element.find("h2");
-        retValue.children = "h3";
+        console.log("How many h2? " +retValue.top.length)
+        if (retValue.top.length == 1) { 
+          retValue.children = "h3";
+        }
+        else if (retValue.top.length > 1) {
+            retValue.children="h2";
+            retValue.top = {"multiple":true};
+        }
+    }
+    if ((retValue.top.multiple !== undefined) && (retValue.top.multiple))
+    {
+        retValue.top.link = "<a href='#'>"+ "Headings" + "</a>\n";
     }
     return retValue;
 }
 
 function buildBreadcrumbs() {
+    if ($('.breadcrumbs').length < 1) {
+        return;
+    }
     var path = window.location.pathname;
     console.log("The path is ",path);
     var pathParts = getPathParts(path);
@@ -147,8 +177,6 @@ function buildBreadcrumbs() {
     else if ((pathParts.length == 3) && (pathParts[pathParts.length-2].toLowerCase() === "tf")) {
         crumbs.unshift('<li><a href="./index.html">Technical Framework</a></li>')
     }
-
-    
 
     if (pathURLs.domain !== "") {
         var domainName = "";
