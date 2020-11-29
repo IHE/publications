@@ -128,7 +128,7 @@ function findTopHeader(element) {
     }
     if ((retValue.top.multiple !== undefined) && (retValue.top.multiple))
     {
-        retValue.top.link = "<a href='#'>"+ "Headings" + "</a>\n";
+        retValue.top.link = "<a href='#'>"+ "Sections" + "</a>\n";
     }
     return retValue;
 }
@@ -148,7 +148,11 @@ function buildBreadcrumbs() {
     var crumbs = [];
 
     var headers = findTopHeader($("main"));
-    var currText = headers.top.text();
+    var currText = "";
+    if (headers.top.multiple === undefined) {
+        currText=headers.top.text();
+    }
+
     if (/^[0-9]$/.test(currText[0])) {
         currText = currText.substr(currText.indexOf(' ')+1)
     }

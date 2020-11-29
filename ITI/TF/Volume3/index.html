@@ -51,15 +51,911 @@
           </div>
         </div>
         <div id="main-top" class="cell medium-10 large-10">
+          <h1 id="4">4 Metadata used in Document Sharing profiles</h1>
           <p>
-            <a href="ch-4.html">4.0 Metadata used in Document Sharing profiles</a>
+            <span>This section describes the metadata that is used in IHE profiles designed for sharing documents
+              (Document Sharing profiles). The Document Sharing profiles are implementing the Document Sharing concept
+              outlined in the ITI whitepaper entitled</span>
+            <span style="font-style:italic">Health Information Exchange: Enabling Document Sharing Using IHE
+              Profiles</span>
+            <span>available on the IHE website (</span>
+            <a href="https://profiles.ihe.net/ITI/">https://profiles.ihe.net/ITI/</a>
+            <span>). This section assumes understanding of the concepts presented in the white paper.</span>
           </p>
+          <p>ITI Document Sharing profiles which use this metadata include:</p>
+          <ul>
+            <li class="bullet-list1">Cross-Enterprise Document Sharing (XDS.b)</li>
+            <li class="bullet-list1">Cross-Enterprise Document Reliable Interchange (XDR)</li>
+            <li class="bullet-list1">Cross-Enterprise Document Media Interchange (XDM)</li>
+            <li class="bullet-list1">Multi-Patient Queries (MPQ)</li>
+            <li class="bullet-list1">Cross-Community Access (XCA)</li>
+          </ul>
+          <p>It is likely that future ITI profiles will also use Document Sharing metadata. Profiles from IHE domains
+            other than ITI that use or constrain this metadata are not listed here. Those profiles will document their
+            use of this metadata.</p>
+          <p>Document Sharing profiles manage two aspects of the documents being shared, the metadata about the document
+            and the contents of the document.</p>
+          <p>Metadata encodes the properties of Documents, the environments they come from, circumstances of their
+            submission, terms to reference in queries, and grouping with other Documents. If you think of a document as
+            a book in a library, the index card in the library’s card catalog is the document metadata.</p>
+          <p>A Document is a byte sequence managed by actors in one or more IHE Document Sharing profiles. There is no
+            concept of equivalent Documents. If the byte sequence is different, then the Documents are different.</p>
+          <p>Note that this definition of a Document is stricter than document definitions in
+            DICOM<sup>®</sup>, HL7, HL7 CDA<sup>®</sup>, XML, and elsewhere. Those standards have concepts like
+            "insignificant whitespace". Documents with different byte sequences, that those standards consider
+            equivalent, will be treated as different Documents by IHE Document Sharing.</span>
+          </p>
+          <p>This stricter definition of a Document enables the Document Sharing actors to manage any document format,
+            without the need to include a parser that understands the details of all the different document formats. It
+            also enables most document indexing, registration, etc. to be done using metadata alone, without examining
+            the document contents.</p>
+          <p>Section 4 first explains the metadata at a conceptual level (<a href="ch-4.1.html">Section 4.1</a>), then
+            at an implementation level
+            (<a href="ch-4.2.html">Section 4.2</a>) and then provides some profile- and transaction-specific metadata
+            constraints and
+            considerations (<a href="ch-4.3.html">Section 4.3</a>).</p>
+          <p>Content Profiles may impose restrictions on metadata attributes. See <a href="#5">Section 5</a> for the
+            restrictions imposed by ITI Content Profiles.</p>
+          <div class="callout">
+            <div class="grid-x grid-margin-x medium-up-2 align-left">
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-4.1.html#4.1">4.1 Abstract Metadata Model</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-4.1.html#4.1.1">4.1.1 Metadata Object Types</a>
+                      </li>
+                      <li>
+                        <a href="ch-4.1.html#4.1.2">4.1.2 Association Types</a>
+                      </li>
+                      <li>
+                        <a href="ch-4.1.html#4.1.3">4.1.3 Metadata Attributes</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.1.html#4.1.3.1">4.1.3.1 The Purpose of Metadata Attributes (Informative)</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.1.html#4.1.3.2">4.1.3.2 DocumentEntry Metadata Attributes</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.1.html#4.1.3.3">4.1.3.3 SubmissionSet Metadata Attributes</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.1.html#4.1.3.4">4.1.3.4 Folder Metadata Attributes</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-4.1.html#4.1.4">4.1.4 Submission Request</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-4.2.html#4.2">4.2 ebRIM Representation</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-4.2.html#4.2.1">4.2.1 Metadata Object Types</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.2.html#4.2.1.1">4.2.1.1 DocumentEntry</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.1.1.1">4.2.1.1.1 DocumentEntry types</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.1.2">4.2.1.2 SubmissionSet</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.1.2.1">4.2.1.2.1 Creating a SubmissionSet object from a
+                                  RegistryPackage
+                                  element</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.1.3">4.2.1.3 Folder</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.1.3.1">4.2.1.3.1 Creating a Folder object from a
+                                  RegistryPackage
+                                  element</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.1.4">4.2.1.4 Registry Object List</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.1.5">4.2.1.5 Submission Request</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-4.2.html#4.2.2">4.2.2 Association Types</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.2.html#4.2.2.1">4.2.2.1 HasMember</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.1.1">4.2.2.1.1 SS-DE HasMember</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.1.2">4.2.2.1.2 SS-FD HasMember</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.1.3">4.2.2.1.3 FD-DE HasMember</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.1.4">4.2.2.1.4 SS-HM HasMember</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.1.5">4.2.2.1.5 Adding DocumentEntries to Folders</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.2.2">4.2.2.2 Document Relationship</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.1">4.2.2.2.1 APND</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.2">4.2.2.2.2 XFRM</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.3">4.2.2.2.3 RPLC</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.4">4.2.2.2.4 XFRM_RPLC</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.5">4.2.2.2.5 Signs</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.2.2.6">4.2.2.2.6 IsSnapshotOf</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-4.2.html#4.2.3">4.2.3 Metadata Attributes</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.2.html#4.2.3.1">4.2.3.1 General Information about Metadata Attributes</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.1">4.2.3.1.1 Attribute Value Length</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.2">4.2.3.1.2 Creating Coded Attributes</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.3">4.2.3.1.3 Creating External Identifiers</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.4">4.2.3.1.4 Creating Author Attributes</a>
+                                <ul class="menu vertical nested">
+                                  <li>
+                                    <a href="ch-4.2.html#4.2.3.1.4.1">4.2.3.1.4.1 authorInstitution</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-4.2.html#4.2.3.1.4.2">4.2.3.1.4.2 authorPerson</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-4.2.html#4.2.3.1.4.3">4.2.3.1.4.3 authorRole</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-4.2.html#4.2.3.1.4.4">4.2.3.1.4.4 authorSpecialty</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-4.2.html#4.2.3.1.4.5">4.2.3.1.4.5 authorTelecommunication</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.5">4.2.3.1.5 UUIDs</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.6">4.2.3.1.6 Extra Metadata Attributes</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.7">4.2.3.1.7 Metadata Attribute Data types</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.8">4.2.3.1.8 General format of DocumentEntry, Folder and
+                                  SubmissionSet
+                                  attribute tables</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.9">4.2.3.1.9 Metadata Attribute Cardinality</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.1.10">4.2.3.1.10 classificationScheme vs.
+                                  classificationNode</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.3.2">4.2.3.2 DocumentEntry Attributes</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.1">4.2.3.2.1 DocumentEntry.author</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.2">4.2.3.2.2 DocumentEntry.availabilityStatus</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.3">4.2.3.2.3 DocumentEntry.classCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.4">4.2.3.2.4 DocumentEntry.comments</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.5">4.2.3.2.5 DocumentEntry.confidentialityCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.6">4.2.3.2.6 DocumentEntry.creationTime</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.7">4.2.3.2.7 DocumentEntry.entryUUID</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.8">4.2.3.2.8 DocumentEntry.eventCodeList</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.9">4.2.3.2.9 DocumentEntry.formatCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.10">4.2.3.2.10 DocumentEntry.hash</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.11">4.2.3.2.11 DocumentEntry.healthcareFacilityTypeCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.12">4.2.3.2.12 DocumentEntry.homeCommunityId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.13">4.2.3.2.13 DocumentEntry.languageCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.14">4.2.3.2.14 DocumentEntry.legalAuthenticator</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.15">4.2.3.2.15 DocumentEntry.mimeType</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.16">4.2.3.2.16 DocumentEntry.patientId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.17">4.2.3.2.17 DocumentEntry.practiceSettingCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.18">4.2.3.2.18 DocumentEntry.repositoryUniqueId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.19">4.2.3.2.19 DocumentEntry.serviceStartTime</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.20">4.2.3.2.20 DocumentEntry.serviceStopTime</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.21">4.2.3.2.21 DocumentEntry.size</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.22">4.2.3.2.22 DocumentEntry.sourcePatientId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.23">4.2.3.2.23 DocumentEntry.sourcePatientInfo</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.24">4.2.3.2.24 DocumentEntry.title</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.25">4.2.3.2.25 DocumentEntry.typeCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.26">4.2.3.2.26 DocumentEntry.uniqueId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.27">4.2.3.2.27 DocumentEntry.URI</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.28">4.2.3.2.28 DocumentEntry.referenceIdList</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.29">4.2.3.2.29 DocumentEntry.limitedMetadata</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.2.30">4.2.3.2.30 DocumentEntry.objectType</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.3.3">4.2.3.3 SubmissionSet Attributes</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.1">4.2.3.3.1 SubmissionSet.author</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.2">4.2.3.3.2 SubmissionSet.availabilityStatus</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.3">4.2.3.3.3 SubmissionSet.comments</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.4">4.2.3.3.4 SubmissionSet.contentTypeCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.5">4.2.3.3.5 SubmissionSet.entryUUID</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.6">4.2.3.3.6 SubmissionSet.homeCommunityId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.7">4.2.3.3.7 SubmissionSet.intendedRecipient</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.8">4.2.3.3.8 SubmissionSet.patientId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.9">4.2.3.3.9 SubmissionSet.sourceId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.10">4.2.3.3.10 SubmissionSet.submissionTime</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.11">4.2.3.3.11 SubmissionSet.title</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.12">4.2.3.3.12 SubmissionSet.uniqueId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.3.13">4.2.3.3.13 SubmissionSet.limitedMetadata</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.3.4">4.2.3.4 Folder Attributes</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.1">4.2.3.4.1 Folder.availabilityStatus</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.2">4.2.3.4.2 Folder.codeList</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.3">4.2.3.4.3 Folder.comments</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.4">4.2.3.4.4 Folder.entryUUID</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.5">4.2.3.4.5 Folder.homeCommunityId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.6">4.2.3.4.6 Folder.lastUpdateTime</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.7">4.2.3.4.7 Folder.patientId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.8">4.2.3.4.8 Folder.title</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.9">4.2.3.4.9 Folder.uniqueId</a>
+                              </li>
+                              <li>
+                                <a href="ch-4.2.html#4.2.3.4.10">4.2.3.4.10 Folder.limitedMetadata</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-4.2.html#4.2.4">4.2.4 Success and Error Reporting</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.2.html#4.2.4.1">4.2.4.1 RegistryError Element</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.4.2">4.2.4.2 Error responses</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-4.2.html#4.2.5">4.2.5 Metadata Vocabulary</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.2.html#4.2.5.1">4.2.5.1 Submission Set Object UUIDs</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.5.2">4.2.5.2 Document Entry Object</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.5.3">4.2.5.3 Folder Object</a>
+                          </li>
+                          <li>
+                            <a href="ch-4.2.html#4.2.5.4">4.2.5.4 Association Object</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-4.3.html#4.3">4.3 Additional Document Sharing Requirements</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-4.3.html#4.3.1">4.3.1 Submission Metadata Attribute Optionality</a>
+                      </li>
+                      <li>
+                        <a href="ch-4.3.html#4.3.2">4.3.2 Requirements on Query Type Transactions</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-4.3.html#4.3.2.1">4.3.2.1 Query Type Metadata Attribute Optionality</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-4.4.html#4.4" class="disabled">4.4 Intentionally Left Blank</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-4.5.html#4.5" class="disabled">4.5 Intentionally Left Blank</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h1 id="5">5 IHE Content Specifications</h1>
           <p>
-            <a href="ch-5.html">5.0 IHE Content Specifications</a>
+            This section follows the documentation pattern found in the IHE PCC Technical Framework. The reader should
+            be familiar with the IHE PCC Technical Framework.
           </p>
-          <p>
-            <a href="ch-6.html">6 IHE Namespaces, Concept Domains, and Vocabularies</a>
-          </p>
+          <div class="callout">
+            <div class="grid-x grid-margin-x medium-up-2 align-left">
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.1.html#5.1">5.1 Basic Patient Privacy Consents Module</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-5.1.html#5.1.1">5.1.1 References</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.1.html#5.1.2">5.1.2 Patient Privacy Consent Acknowledgment Document Specification
+                          1.3.6.1.4.1.19376.1.5.3.1.1.7 – With no Scanned Document Part</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.1.html#5.1.2.1">5.1.2.1 XDS Metadata</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.1.1">5.1.2.1.1 XDS DocumentEntry Metadata</a>
+                                <ul class="menu vertical nested">
+                                  <li>
+                                    <a href="ch-5.1.html#5.1.2.1.1.1">5.1.2.1.1.1 XDSDocumentEntry.classCode</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-5.1.html#5.1.2.1.1.2">5.1.2.1.1.2 XDSDocumentEntry.eventCodeList</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-5.1.html#5.1.2.1.1.3">5.1.2.1.1.3 XDSDocumentEntry.formatCode</a>
+                                  </li>
+                                  <li>
+                                    <a href="ch-5.1.html#5.1.2.1.1.4">5.1.2.1.1.4 XDSDocumentEntry.uniqueId</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.1.2">5.1.2.1.2 XDS SubmissionSet Metadata</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.1.3">5.1.2.1.3 XDS Folder Metadata</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-5.1.html#5.1.2.2">5.1.2.2 Specification</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.1">5.1.2.2.1 Patient Privacy Acknowledgement Service Events
+                                  1.3.6.1.4.1.19376.1.5.3.1.2.6</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.2">5.1.2.2.2 &lt;documentationOf typeCode='DOC'&gt;</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.3">5.1.2.2.3 &lt;serviceEvent classCode='ACT'
+                                  moodCode='EVN'&gt;</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.4">5.1.2.2.4 &lt;templateId
+                                  root='1.3.6.1.4.1.19376.1.5.3.1.2.6'/&gt;</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.5">5.1.2.2.5 &lt;id root=' ' /&gt;</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.6">5.1.2.2.6 &lt;code code=' ' displayName=' ' codeSystem='
+                                  ' codeSystemName=' '/&gt;</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.2.2.7">5.1.2.2.7 &lt;effectiveTime&gt;&lt;low value='
+                                  '/&gt;&lt;high value=' '/&gt;&lt;/effectiveTime&gt;</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.1.html#5.1.3">5.1.3 Patient Privacy Consent Acknowledgment Document Specification
+                          1.3.6.1.4.1.19376.1.5.3.1.1.7.1 – With Scanned Document</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.1.html#5.1.3.1">5.1.3.1 XDS Metadata</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-5.1.html#5.1.3.1.1">5.1.3.1.1 XDS DocumentEntry Metadata</a>
+                                <ul class="menu vertical nested">
+                                  <li>
+                                    <a href="ch-5.1.html#5.1.3.1.1.1">5.1.3.1.1.1 XDSDocumentEntry.formatCode</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.3.1.2">5.1.3.1.2 XDS SubmissionSet Metadata</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.1.html#5.1.3.1.3">5.1.3.1.3 XDS Folder Metadata</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-5.1.html#5.1.3.2">5.1.3.2 Specification</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.1.html#5.1.3.3">5.1.3.3 Conformance</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.2.html#5.2">5.2 Scanned Documents Content Module</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-5.2.html#5.2.1">5.2.1 Referenced Standards</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.2.html#5.2.1.1">5.2.1.1 Discussion of Content Standards</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.2.html#5.2.2">5.2.2 XDS Metadata</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.2.html#5.2.2.1">5.2.2.1 XDS DocumentEntry Metadata</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-5.2.html#5.2.2.1.1">5.2.2.1.1 XDSDocumentEntry.formatCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.2.html#5.2.2.1.2">5.2.2.1.2 XDSDocumentEntry.uniqueId</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.2.html#5.2.2.1.3">5.2.2.1.3 Relating instances of XDS-SD documents</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.2.2">5.2.2.2 XDS SubmissionSet Metadata</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.2.3">5.2.2.3 XDS Folder Metadata</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.2.html#5.2.3">5.2.3 Specification</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.2.html#5.2.3.1">5.2.3.1 ClinicalDocument child-less elements</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.2">5.2.3.2 ClinicalDocument/recordTarget</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.3">5.2.3.3 ClinicalDocument/author (original)</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.4">5.2.3.4 ClinicalDocument/author (scanner)</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.5">5.2.3.5 ClinicalDocument/dataEnterer</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.6">5.2.3.6 ClinicalDocument/custodian</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.7">5.2.3.7 ClinicalDocument/legalAuthenticator</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.8">5.2.3.8 ClinicalDocument/documentationOf</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.2.html#5.2.3.9">5.2.3.9 ClinicalDocument/component/nonXMLBody</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.2.html#5.2.4">5.2.4 Complete Example (Wrapped PDF)</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.3.html#5.3" class="disabled">5.3 Intentionally Left Blank</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.4.html#5.4">5.4 XDW Workflow Content Module</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-5.4.html#5.4.1">5.4.1 Referenced Standards</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.4.html#5.4.2">5.4.2 Discussion of Content Standards</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.4.html#5.4.2.1">5.4.2.1 XDW Workflow Document Elements from HL7 CDA
+                              Standard</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.2.2">5.4.2.2 XDW Workflow Document Elements defined by IHE XDW
+                              Profile</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.2.3">5.4.2.3 XDW Workflow Document Elements from the OASIS Human
+                              Task</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.2.4">5.4.2.4 Relationship between Task and &lt;taskEvent&gt;</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.4.html#5.4.3">5.4.3 Content Specification</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.4.html#5.4.4">5.4.4Complete Example</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.4.html#5.4.5">5.4.5 Workflow Document Management</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.1">5.4.5.1 Workflow Document Lifecycle Management</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.2">5.4.5.2 Associations Types</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.3">5.4.5.3 Create workflow</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.4">5.4.5.4 Update Workflow Document</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.5">5.4.5.5 Association of a clinical document to a task and
+                              &lt;taskEvent&gt;</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.6">5.4.5.6 Get the Workflow Document and a clinical document
+                              associated to the workflow</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.7">5.4.5.7 Use of the eventCodeList to manage the status of a
+                              Workflow Document</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.5.8">5.4.5.8 Parameters for Required Queries</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.4.html#5.4.6">5.4.6 XDS Metadata</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.4.html#5.4.6.1">5.4.6.1 Document Metadata</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.6.2">5.4.6.2 XDS SubmissionSet Metadata</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.4.html#5.4.6.3">5.4.6.3 XDS Folder Metadata</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.5.html#5.5">5.5 Document Digital Signature (DSG) Document Content</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-5.5.html#5.5.1">5.5.1 References</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.5.html#5.5.1.1">5.5.1.1 Normative References</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.5.html#5.5.1.2">5.5.1.2 Informative References</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.2">5.5.2 Signature Specification</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.3">5.5.3 Detached Signature</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.5.html#5.5.3.1">5.5.3.1 SubmissionSet Signature</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.4">5.5.4 Enveloping Signature</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.5">5.5.5 Signature Verification</a>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.6">5.5.6 Document Sharing Metadata</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.5.html#5.5.6.1">5.5.6.1 Document Sharing – DocumentEntry Metadata</a>
+                            <ul class="menu vertical nested">
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.1">5.5.6.1.1 XDSDocumentEntry.formatCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.2">5.5.6.1.2 XDSDocumentEntry.classCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.3">5.5.6.1.3 XDSDocumentEntry.typeCode</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.4">5.5.6.1.4 XDSDocumentEntry.author</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.5">5.5.6.1.5 XDSDocumentEntry.eventCodeList</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.6">5.5.6.1.6 XDSDocumentEntry.mimeType</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.7">5.5.6.1.7 XDSDocumentEntry.title</a>
+                              </li>
+                              <li>
+                                <a href="ch-5.5.html#5.5.6.1.8">5.5.6.1.8 XDSDocumentEntry.language</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="ch-5.5.html#5.5.6.2">5.5.6.2 Document Sharing – SubmissionSet Metadata</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.5.html#5.5.6.3">5.5.6.3 Document Sharing - Folder Metadata</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.5.html#5.5.6.4">5.5.6.4 Document Associations</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="ch-5.5.html#5.5.7">5.5.7 Security Considerations</a>
+                        <ul class="menu vertical nested">
+                          <li>
+                            <a href="ch-5.5.html#5.5.7.1">5.5.7.1 Content Creator</a>
+                          </li>
+                          <li>
+                            <a href="ch-5.5.html#5.5.7.2">5.5.7.2 Content Consumer</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-5.6.html#5.6" class="disabled">5.6 Intentionally Left Blank</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h1 id="6">6 IHE Namespaces, Concept Domains, and Vocabularies</h1>
+          <p>This section references the namespaces, concept domains, and identifiers defined or referenced by the IHE
+            ITI Technical Framework, and the vocabularies defined or referenced herein.</p>
+          <div class="callout">
+            <div class="grid-x grid-margin-x medium-up-2 align-left">
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-6.1.html#6.1">6.1 IHE ITI Namespaces</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-6.2.html#6.2">6.2 IHE ITI Concept Domains</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="cell">
+                <ul class="menu accordion-menu" data-accordion-menu data-submenu-toggle="true">
+                  <li>
+                    <a href="ch-6.3.html#6.3">6.3 IHE ITI Format Codes and Vocabularies</a>
+                    <ul class="menu vertical nested">
+                      <li>
+                        <a href="ch-6.3.html#6.3.1">6.3.1 IHE Format Codes</a>
+                      </li>
+                      <li>
+                        <a href="ch-6.3.html#6.3.2">6.3.2 IHEActCode Vocabulary</a>
+                      </li>
+                      <li>
+                        <a href="ch-6.3.html#6.3.3">6.3.3 IHERoleCode Vocabulary</a>
+                      </li>
+                      <li>
+                        <a href="ch-6.3.html#6.3.4">6.3.4 Other ITI Identifiers</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
