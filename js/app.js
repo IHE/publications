@@ -47,6 +47,10 @@ $('.iframe-toggle').click(function( event ){
     hr_functions[i]();
 }*/
 
+var currYear = new Date().getFullYear();
+$("#current-year").text(currYear);
+
+
 $("#ihe-search-button").click(function() {
     var searchValue = $("#ihe-search-field").val();
     if (searchValue.length >0) {
