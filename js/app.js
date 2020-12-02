@@ -50,12 +50,19 @@ $('.iframe-toggle').click(function( event ){
 var currYear = new Date().getFullYear();
 $("#current-year").text(currYear);
 
-
+//Handle search
 $("#ihe-search-button").click(function() {
     var searchValue = $("#ihe-search-field").val();
     if (searchValue.length >0) {
         var query = escape("site:https://profiles.ihe.net " + searchValue);
         window.location.href = "https://google.com/search?q=" + query;
+    }
+});
+
+$('#ihe-search-field').keypress(function(e) {
+    if(e.which == 13) {
+        $(this).blur();
+        $('#ihe-search-button').focus().click();
     }
 });
 
