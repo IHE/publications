@@ -47,6 +47,13 @@ $('.iframe-toggle').click(function( event ){
     hr_functions[i]();
 }*/
 
+$("#ihe-search-button").click(function() {
+    var searchValue = $("#ihe-search-field").val();
+    if (searchValue.length >0) {
+        var query = escape("site:https://profiles.ihe.net " + searchValue);
+        window.location.href = "https://google.com/search?q=" + query;
+    }
+});
 
 //Back to top
 $(function() {
@@ -243,4 +250,12 @@ function getURLs(pathParts)
     url.home = prefix + "../" + "index.html";
 
     return url;
+}
+
+function googSearch() {
+    var searchField = $("#ihe-search-field");
+    if (searchField && searchField.value) {
+        var query = escape("site:https://profiles.ihe.net " + searchField.value);
+        window.location.href = "https://google.com/search?q=" + query;
+    }
 }
