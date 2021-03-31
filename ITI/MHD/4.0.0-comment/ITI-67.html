@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <title>IHE.MHD.FHIR\Find Document References [ITI-67] - FHIR v4.0.1</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="http://hl7.org/fhir"/>
+
+    <link href="fhir.css" rel="stylesheet"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/bootstrap-fhir.css" rel="stylesheet"/>
+
+    <!-- Project extras -->
+    <link href="assets/css/project.css" rel="stylesheet"/>
+    <link href="assets/css/pygments-manni.css" rel="stylesheet"/>
+    <link href="assets/css/jquery-ui.css" rel="stylesheet"/>
+  	<link href="assets/css/prism.css" rel="stylesheet" />
+    <!-- Placeholder for child template CSS declarations -->
+<link href="assets/css/ihe.css" rel="stylesheet"/>
+
+    <script type="text/javascript" src="fhir-table-scripts.js"> </script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
+    <link rel="shortcut icon" href="assets/ico/favicon.png"/>
+  </head>
+  <body onload="document.body.style.opacity='1'">
+
+	  <script src="assets/js/prism.js"></script>
+
+    <style type="text/css">h2{--heading-prefix:"13"}
+    h3,h4,h5,h6{--heading-prefix:"13"}</style>
+    <div id="segment-header" class="segment">  <!-- segment-header -->
+      <div class="container">  <!-- container -->
+        <!-- Placeholder for child template header declarations -->
+
+<div id="project-nav">
+  <a id="ihe-logo" no-external="true" href="http://ihe.net">
+    <img height="71" alt="Visit the IHE website" src="assets/images/ihe-international.png"/>
+  </a>
+</div>
+<div id="family-nav">
+  <a id="fhir-logo" no-external="true" href="http://hl7.org/fhir"><img height="50" style="margin-top: 15px;" alt="Visit the IHE website" src="assets/images/ihe-logo.png"/> </a>
+</div>
+<!--
+<div id="hl7-search">
+  <a id="hl7-search-lnk" no-external="true" href="http://hl7.org/fhir/search.cfm"><img alt="Search FHIR" src="assets/images/search.png"/></a>
+</div>
+-->
+
+        <div id="ig-status">
+          <p><span style="font-size:12pt;font-weight:bold"></span><br/>4.0.0-comment - ballot</p>
+        </div>
+      </div> <!-- /container -->
+    </div>  <!-- /segment-header -->
+
+    <div id="segment-navbar" class="segment">  <!-- segment-navbar -->
+      <div id="stripe"> </div>
+      <div class="container">  <!-- container -->
+        <!-- HEADER CONTENT -->
+
+        <nav class="navbar navbar-inverse">
+          <!--status-bar-->
+          <div class="container">
+            <button data-target=".navbar-inverse-collapse" class="navbar-toggle" data-toggle="collapse" type="button">
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+            </button>
+            <a class="navbar-brand hidden" href="http://hl7.org/fhir/R4/index.html">FHIR</a>
+            <div class="nav-collapse collapse navbar-inverse-collapse">
+              <ul xmlns="http://www.w3.org/1999/xhtml" class="nav navbar-nav">
+  <li><a href="index.html">MHD Home</a></li>
+  <li><a href="toc.html">Table of Contents</a></li>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Overview<b class="caret">
+      </b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="1_overview.html">Overview</a>
+      </li>
+      <li>
+        <a href="2_actors_and_transactions.html">Actors and Transactions</a>
+      </li>
+      <li>
+        <a href="3_security_considerations.html">Security Considerations</a>
+      </li>
+      <li>
+        <a href="4_grouping.html">Cross Profile Considerations</a>
+      </li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Transactions<b class="caret">
+      </b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="ITI-65.html">Provide Document Bundle [ITI-65]</a>
+      </li>
+      <li>
+        <a href="ITI-66.html">Find Document Lists [ITI-66]</a>
+      </li>
+      <li>
+        <a href="ITI-67.html">Find Document References [ITI-67]</a>
+      </li>
+      <li>
+        <a href="ITI-68.html">Retrieve Document [ITI-68]</a>
+      </li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Other<b class="caret">
+      </b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="metadata_maps.html">FHIR Representation of Document Sharing Metadata</a>
+      </li>
+      <li>
+        <a href="appendix_e.html">E: FHIR Identifier Type for CX</a>
+      </li>
+      <li>
+        <a href="appendix_z.html">Z: FHIR Common IHE Constraints</a>
+      </li>
+      <li>
+        <a href="testplan.html">Test Plan</a>
+      </li>
+    </ul>
+  </li>
+  <li><a href="artifacts.html">Artifact Index</a></li>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Support<b class="caret">
+      </b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a target="_blank" href="http://hl7.org/fhir/R4/index.html">FHIR Spec <img src="external.png" style="text-align: baseline"/></a>
+      </li>
+
+    </ul>
+  </li>
+</ul>      
+
+            </div>  <!-- /.nav-collapse -->
+          </div>  <!-- /.container -->
+        </nav>  <!-- /.navbar -->
+      <!-- /HEADER CONTENT -->
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-navbar -->
+    <!--status-bar-->
+    <div id="segment-breadcrumb" class="segment">  <!-- segment-breadcrumb -->
+      <div class="container">  <!-- container -->
+        <ul class="breadcrumb">
+          <li><a href='toc.html'><b>Table of Contents</b></a></li><li><b>Find Document References [ITI-67]</b></li>
+        </ul>
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-breadcrumb -->
+
+    <div id="segment-content">  <!-- segment-content -->
+      <div class="container">  <!-- container -->
+        <div class="row">
+          <div class="inner-wrapper">
+
+<style type="text/css">
+h2:before{color:silver;counter-increment:section;content:var(--heading-prefix) " ";}
+h3:before{color:silver;counter-increment:sub-section;content:var(--heading-prefix) "." counter(sub-section) " ";}
+h4:before{color:silver;counter-increment:composite;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) " ";}
+h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";}
+h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
+</style>
+<div class="col-12">
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.0.0-comment: Public Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version in it's permanent home (it will always be available at this URL).  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <h2>Find Document References [ITI-67]</h2>
+  
+
+
+
+
+
+
+
+
+
+    <p><!-- white space is critical inside of capture --></p>
+<div class="markdown-toc">
+<ul id="markdown-toc">
+  <li><a href="#scope" id="markdown-toc-scope">Scope</a></li>
+  <li><a href="#actors-roles" id="markdown-toc-actors-roles">Actors Roles</a></li>
+  <li><a href="#referenced-standards" id="markdown-toc-referenced-standards">Referenced Standards</a></li>
+  <li><a href="#interactions" id="markdown-toc-interactions">Interactions</a></li>
+  <li><a href="#security-considerations" id="markdown-toc-security-considerations">Security Considerations</a></li>
+</ul>
+
+</div>
+<p>This section corresponds to transaction [ITI-67] of the IHE Technical Framework. Transaction [ITI-67] is used by the Document Consumer and Document Responder Actors.</p>
+
+<h3 id="scope">Scope</h3>
+
+<p>The Find Document References transaction is used to find DocumentReference Resources that satisfy a set of parameters. It is equivalent to the FindDocuments and FindDocumentsByReferenceId queries from the Registry Stored Query [ITI-18] transaction. The result of the query is a FHIR Bundle containing DocumentReference Resources that match the query parameters.</p>
+
+<h3 id="actors-roles">Actors Roles</h3>
+
+<p><strong>Table: Actor Roles</strong></p>
+
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Actor</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="2_actors_and_transactions.html#document-consumer">Document Consumer</a></td>
+      <td>Requests a list of DocumentReference Resources, matching the supplied set of criteria, from the Document Responder</td>
+    </tr>
+    <tr>
+      <td><a href="2_actors_and_transactions.html#document-responder">Document Responder</a></td>
+      <td>Returns DocumentReference Resources that match the search criteria provided by the Document Consumer</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="referenced-standards">Referenced Standards</h3>
+
+<p><strong>FHIR-R4</strong> <a href="http://www.hl7.org/FHIR/R4">HL7 FHIR Release 4.0</a></p>
+
+<h3 id="interactions">Interactions</h3>
+
+<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="112px" preserveAspectRatio="none" style="width:417px;height:112px;" version="1.1" viewBox="0 0 417 112" width="417px" zoomAndPan="magnify"><defs><filter height="300%" id="f1lys9s6xqstqc" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0" /><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" /><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" /><feBlend in="SourceGraphic" in2="blurOut3" mode="normal" /></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1lys9s6xqstqc)" height="36.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="75.5" y="51.6094" /><rect fill="#FFFFFF" filter="url(#f1lys9s6xqstqc)" height="36.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="324.5" y="51.6094" /><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="80" x2="80" y1="41.6094" y2="105.9609" /><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="329.5" x2="329.5" y1="41.6094" y2="105.9609" /><rect fill="#FEFECE" filter="url(#f1lys9s6xqstqc)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="147" x="5" y="5" /><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133" x="12" y="26.5332">Document Consumer</text><rect fill="#FEFECE" filter="url(#f1lys9s6xqstqc)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="152" x="251.5" y="5" /><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138" x="258.5" y="26.5332">Document Responder</text><rect fill="#FFFFFF" filter="url(#f1lys9s6xqstqc)" height="36.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="75.5" y="51.6094" /><rect fill="#FFFFFF" filter="url(#f1lys9s6xqstqc)" height="36.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="324.5" y="51.6094" /><polygon fill="#A80036" points="312.5,69.9609,322.5,73.9609,312.5,77.9609,316.5,73.9609" style="stroke:#A80036;stroke-width:1.0;" /><line style="stroke:#A80036;stroke-width:1.0;" x1="85.5" x2="318.5" y1="73.9609" y2="73.9609" /><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="215" x="92.5" y="69.1045">1. Find Document References [ITI-67]</text><polygon fill="#A80036" points="91.5,83.9609,81.5,87.9609,91.5,91.9609,87.5,87.9609" style="stroke:#A80036;stroke-width:1.0;" /><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="85.5" x2="328.5" y1="87.9609" y2="87.9609" /></g></svg>
+</div>
+
+<div style="clear: left" />
+
+<p><strong>Figure: Find Document References Interactions</strong></p>
+
+<h4 id="find-document-references-request-message">Find Document References Request message</h4>
+
+<p>This message uses the HTTP GET method parameterized query to obtain DocumentReference Resources from the Document Responder.</p>
+
+<h5 id="trigger-events">Trigger Events</h5>
+
+<p>When the Document Consumer needs to discover DocumentReference Resources matching various metadata parameters, it issues a Find Document References message.</p>
+
+<h5 id="message-semantics">Message Semantics</h5>
+
+<p>The Document Consumer executes an HTTP GET against the Document Responders DocumentReference URL. The search target follows the FHIR HTTP specification, addressing the DocumentReference Resource <a href="http://hl7.org/fhir/R4/http.html">http://hl7.org/fhir/R4/http.html</a>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[base]/DocumentReference?&lt;query&gt;
+</code></pre></div></div>
+<p>This URL is configurable by the Document Responder and is subject to the following constraints:</p>
+
+<p>The <query> represents a series of encoded name-value pairs representing the filter for the query, as specified in Section [Query Search Parameters](#query-search-parameters), as well as control parameters to modify the behavior of the Document Responder such as response format, or pagination.</query></p>
+
+<h6 id="query-search-parameters">Query Search Parameters</h6>
+
+<p>The Document Consumer may supply, and the Document Responder shall be capable of processing, all query parameters listed below. All query parameter values shall be appropriately encoded per RFC3986 “percent” encoding rules. Note that percent encoding does restrict the character set to a subset of ASCII characters which is used for encoding all other characters used in the URL.</p>
+
+<p>The Document Consumer shall include search parameter <em>patient</em> or <em>patient.identifier</em>, and <em>status</em>. The other parameters described below are optional. The Document Responder must implement the parameters described below. The Document Responder may choose to support additional query parameters beyond the subset listed below. Any additional query parameters supported shall be supported according to the core FHIR specification. Such additional parameters are considered out of scope for this transaction. Any additional parameters not supported should be ignored. See <a href="http://hl7.org/fhir/R4/search.html#errors">http://hl7.org/fhir/R4/search.html#errors</a>.</p>
+
+<p><strong>author.given</strong> and <strong>author.family</strong> 
+:These parameters, of type string, specify the name parts of the author person, which is associated with the DocumentReference Resource, or in Document Sharing nomenclature, the author of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for use of the string data type.</p>
+
+<p><strong>category</strong> 
+:This parameter, of type token, specifies the general classification of the DocumentReference Resource, or in Document Sharing nomenclature, the classCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>date</strong>
+:This parameter, of type date, specifies the time when the document was created. Note: The DocumentReference Resource does not yet have a query parameter for creationTime of the document; it has only a date element which is the creation date/time of the DocumentReference. For FHIR R4 we align these two elements so that query will function. See FHIR <a href="http://hl7.org/fhir/R4/search.html#date">http://hl7.org/fhir/R4/search.html#date</a> for use of the date search type.</p>
+
+<p><strong>event</strong><br />
+:This parameter, of type token, specifies the main clinical acts documented by the DocumentReference Resource, or in Document Sharing nomenclature, the eventCodeList of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>facility</strong> 
+:This parameter, of type token, specifies the kind of facility found in DocumentReference.context.facilityType, or in Document Sharing nomenclature, the healthcareFacilityTypeCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>format</strong> 
+:This parameter, of type token, specifies the format of the DocumentReference Resource, or in Document Sharing nomenclature, the formatCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>identifier</strong> 
+:This parameter, of type token, specifies an identifier for this DocumentReference and/or the contained document. The search results represent the results of a search on DocumentReference.masterIdentifier and DocumentReference.identifier. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>patient</strong> 
+:This parameter is of type Reference(Patient). The Document Consumer may get this reference using the <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-38.html">PDQm</a> or <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-41.html">PIXm</a> Profile. When the patient parameter is used, the Patient reference would need to be accessible to both the Document Consumer and the Document Responder.</p>
+
+<p><strong>patient.identifier</strong> 
+:This parameter, of type token, specifies an identifier associated with the patient to which the DocumentReference Resource is assigned.  See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>period</strong> 
+:This parameter, of type date, represents the time of service that is being documented by the DocumentReference. The period search parameter specifies an interval which the time of service overlaps. In Document Sharing nomenclature, this query parameter represents from/to parameters for the serviceStartTime and serviceStopTime of the Document Entry. See FHIR <a href="http://hl7.org/fhir/R4/search.html#date">http://hl7.org/fhir/R4/search.html#date</a> for use of the date search type.</p>
+
+<p><strong>related</strong>
+:This parameter, of type reference, represents other identifiers associated with the DocumentReference Resource, or in Document Sharing nomenclature, the referenceIdList of the Document Entry.</p>
+
+<p><strong>security-label</strong> 
+:This parameter, of type token, specifies the security labels of the document referenced by DocumentReference Resource, or in Document Sharing nomenclature, the confidentialityCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>setting</strong> 
+:This parameter, of type token, specifies the specific practice setting of the DocumentReference Resource, or in Document Sharing nomenclature, the practiceSettingCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<p><strong>status</strong> 
+:This parameter, of type token, specifies the status of the DocumentReference Resource, or in Document Sharing nomenclature, the availabilityStatus of the Document Entry. The Document Consumer shall populate the identifier portion of the token using one of the short codes in Table 3.67.4.1.2.1-1. The system portion of the token shall not be populated.</p>
+
+<p><strong>type</strong> 
+:This parameter, of type token, specifies the specific type of the DocumentReference resource or in Document Sharing nomenclature, the typeCode of the Document Entry. See <a href="appendix_z.html#query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<h6 id="populating-expected-response-format">Populating Expected Response Format</h6>
+
+<p>The FHIR standard provides encodings for responses as either XML or JSON. The Document Responder shall support both message encodings, whilst the Document Consumer shall support one and may support both.</p>
+
+<p>See <a href="appendix_z.html#populating-the-expected-response-format">ITI TF-2x: Appendix Z.6</a> for details.</p>
+
+<h5 id="expected-actions">Expected Actions</h5>
+
+<p>The Document Responder shall process the query to discover the DocumentReference entries that match the search parameters given.</p>
+
+<h6 id="xds-on-fhir-option">XDS on FHIR Option</h6>
+
+<p>The Document Responder is grouped with an XDS Document Consumer when it supports the <a href="2_actors_and_transactions.html#xds-on-fhir-option">XDS on FHIR</a> Option. The Document Responder shall map the query parameters as listed in Table 3.67.4.1.3-1 and shall execute a Registry Stored Query [ITI-18] for FindDocuments or FindDocumentsByReferenceIdList (see ITI TF-2a: 3.18.4.1.2.3.7.1 and 3.18.4.1.2.3.7.14). All of the query parameters in Table 3.67.4.1.3-1 shall be supported by the Document Responder. No additional query parameters as defined in FHIR are required of the Document Responder, but they may be offered.</p>
+
+<p><strong>Table 3.67.4.1.3-1: ITI-18 FindDocuments Query Parameter Mapping</strong></p>
+
+<table class="grid">
+  <thead>
+    <tr>
+      <th>ITI-67 Parameter Name</th>
+      <th>ITI-18 Parameter Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>patient or patient.identifier</td>
+      <td>$XDSDocumentEntryPatientId</td>
+    </tr>
+    <tr>
+      <td>date Note 1 Note 5</td>
+      <td>$XDSDocumentEntryCreationTimeFrom</td>
+    </tr>
+    <tr>
+      <td>date Note 2 Note 5</td>
+      <td>$XDSDocumentEntryCreationTimeTo</td>
+    </tr>
+    <tr>
+      <td>author.given / author.family</td>
+      <td>$XDSDocumentEntryAuthorPerson</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>$XDSDocumentEntryStatus</td>
+    </tr>
+    <tr>
+      <td>(Not supported) Note 3</td>
+      <td>$XDSDocumentEntryType</td>
+    </tr>
+    <tr>
+      <td>category</td>
+      <td>$XDSDocumentEntryClassCode</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>$XDSDocumentEntryTypeCode</td>
+    </tr>
+    <tr>
+      <td>setting</td>
+      <td>$XDSDocumentEntryPracticeSettingCode</td>
+    </tr>
+    <tr>
+      <td>period Note 1</td>
+      <td>$XDSDocumentEntryServiceStartTimeFrom</td>
+    </tr>
+    <tr>
+      <td>period Note 2</td>
+      <td>$XDSDocumentEntryServiceStartTimeTo</td>
+    </tr>
+    <tr>
+      <td>period Note 1</td>
+      <td>$XDSDocumentEntryServiceStopTimeFrom</td>
+    </tr>
+    <tr>
+      <td>period Note 2</td>
+      <td>$XDSDocumentEntryServiceStopTimeTo</td>
+    </tr>
+    <tr>
+      <td>facility</td>
+      <td>$XDSDocumentEntryHealthcareFacilityTypeCode</td>
+    </tr>
+    <tr>
+      <td>event</td>
+      <td>$XDSDocumentEntryEventCodeList</td>
+    </tr>
+    <tr>
+      <td>security-label</td>
+      <td>$XDSDocumentEntryConfidentialityCode</td>
+    </tr>
+    <tr>
+      <td>format</td>
+      <td>$XDSDocumentEntryFormatCode</td>
+    </tr>
+    <tr>
+      <td>related Note 4</td>
+      <td>$XDSDocumentEntryReferenceIdList</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note 1: This FindDocuments parameter is used when the greater than parameter modifier is used on the indexed parameter.</p>
+
+<p>Note 2: This FindDocuments parameter is used when the less than parameter modifier is used on the indexed parameter.</p>
+
+<p>Note 3: The $XDSDocumentEntryType is not a supported query parameter in HL7 FHIR.</p>
+
+<p>Note 4: The $XDSDocumentEntryReferenceIdList can only be mapped when using the XDS FindDocumentsByReferenceId query.</p>
+
+<p>Note 5: The FHIR DocumentReference does not yet have a query parameter for creationTime of the document, it has only a date element which is the creation date/time of the DocumentReference. For FHIR R4 we align these two elements so that query will function.</p>
+
+<p><strong>Table 3.67.4.1.2.1-1: Values for code for status of DocumentReference</strong></p>
+
+<table class="grid">
+  <thead>
+    <tr>
+      <th>FHIR Code</th>
+      <th>ebRIM Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>current</td>
+      <td>urn:oasis:names:tc:ebxml-regrep:StatusType:Approved</td>
+    </tr>
+    <tr>
+      <td>superseded</td>
+      <td>urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="find-document-references-response-message">Find Document References Response message</h4>
+
+<p>The Document Responder returns a HTTP Status code appropriate to the processing as well as a Bundle of the matching DocumentReference Resources.</p>
+
+<h5 id="trigger-events-1">Trigger Events</h5>
+
+<p>The Document Responder completed processing of the Find Document Reference Request message.</p>
+
+<h5 id="message-semantics-1">Message Semantics</h5>
+
+<p>Based on the query results, the Document Responder will either return an error or success. Guidance on handling Access Denied related to use of 200, 403 and 404 can be found in <a href="appendix_z.html#FHIRsecurity">ITI TF-2x: Appendix Z.7</a>.</p>
+
+<p>When the Document Responder needs to report an error, it shall use HTTP error response codes and should include a FHIR OperationOutcome with more details on the failure. See FHIR <a href="http://hl7.org/fhir/R4/http.html">http://hl7.org/fhir/R4/http.html</a> and <a href="http://hl7.org/fhir/R4/operationoutcome.html">http://hl7.org/fhir/R4/operationoutcome.html</a>.</p>
+
+<p>If the Find Document References message is processed successfully, whether or not any DocumentReference Resources are found, the HTTP status code shall be 200. The Find Document References Response message shall be a Bundle Resource containing zero or more DocumentReference Resources. If the Document Responder is sending warnings, the Bundle Resource shall also contain an OperationOutcome Resource that contains those warnings.</p>
+
+<p>The response shall adhere to the FHIR Bundle constraints specified in <a href="appendix_z.html">ITI TF-2x: Appendix Z.1</a>.</p>
+
+<h6 id="documentreference-resource-contents">DocumentReference Resource Contents</h6>
+
+<p>The DocumentReference Resources returned shall be compliant with the FHIR specification <a href="http://hl7.org/fhir/R4/documentreference.html">http://hl7.org/fhir/R4/documentreference.html</a></p>
+
+<p>The DocumentReference Resources returned will be compliant with the <a href="metadata_maps.html">MHD metadata</a> for the IHE restrictions on DocumentReference Resource and for a <a href="metadata_maps.html#documentEntry">mapping to DocumentEntry</a> from IHE Document Sharing profiles (e.g., XDS) to FHIR. Document Consumers should be robust to receiving DocumentReference Resources that are not IHE compliant.</p>
+
+<h6 id="resource-bundling">Resource Bundling</h6>
+
+<p>Resource Bundling shall comply with the guidelines in <a href="appendix_z.html">ITI TF-2x: Appendix Z.1</a>.</p>
+
+<p><strong>Document location</strong></p>
+
+<p>The Document Responder shall place into the DocumentReference.content.attachment.url element a full URL that can be used by the Document Consumer to retrieve the document using the Retrieve Document <a href="ITI-68.html">ITI-68</a> transaction. IHE does not specify the format of the URL. There are many ways to encode this URL that allow for easy processing on a <a href="ITI-68.html">Retrieve Document</a> transaction. Some examples are to encode homeCommunityId, repositoryUniqueId, uniqueId, and patientId into the URL. This could be done in many ways including using character separators or directory separators. In this way, the Document Responder can support many communities, and/or many repositories.</p>
+
+<p>An informative StructureDefinition is outlined for <a href="StructureDefinition-IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage.html">MHD Find Document References Comprehensive Response Message</a>, with an <a href="StructureDefinition-IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage-examples.html">example</a>.</p>
+
+<h5 id="expected-actions-1">Expected Actions</h5>
+
+<p>If the Document Responder returns an HTTP redirect response (HTTP status codes 301, 302, 303, or 307), the Document Consumer shall follow the redirect, but may stop processing if it detects a loop. See RFC7231 Section 6.4 Redirection 3xx.</p>
+
+<p>The Document Consumer shall process the results according to application-defined rules. The Document Consumer should be robust as the response may contain DocumentReference Resources that match the query parameters but are not compliant with the DocumentReference constraints defined here.</p>
+
+<h4 id="capabilitystatement-resource">CapabilityStatement Resource</h4>
+
+<p>Document Responders implementing this transaction shall provide a CapabilityStatement Resource as described in <a href="appendix_z.html#capability">ITI TF-2x: Appendix Z.3</a> indicating the transaction has been implemented.</p>
+<ul>
+  <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentConsumer.html">Document Consumer</a></li>
+  <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentResponder.html">Document Responder</a></li>
+</ul>
+
+<h3 id="security-considerations">Security Considerations</h3>
+
+<p>See <a href="3_security_considerations.html">MHD Security Considerations</a></p>
+
+<p>This transaction should not return information that the Document Consumer is not authorized to access. Where authorization here is inclusive of system, app, and user according to local policy, patient consents, and security layering. However, the transaction may return DocumentReference resources that have Reference elements that the Document Consumer may not have access to. This is to say that the authorization need only be to the content returned in the Bundle. There may be references (URLs) for which the content is not authorized. This is considered proper as the Document Consumer would need to retrieve the content pointed to by those references, and at that time the proper authorization decision would be made on that context and content. In this way it is possible for a Document Consumer to get DocumentManifest resources that are pointing at data that the Document Consumer is not authorized to retrieve. Thus, the URLs used must be carefully crafted so as to not expose sensitive data in the URL value.</p>
+
+<p>Given that the Document Responder is responsible for the URL placed into DocumentReference.content.attachment.url, care must be taken to assure that manipulation of this URL prior to a Retrieve Document transaction does not expose resources the Document Consumer should not have access to.</p>
+
+<h4 id="security-audit-considerations">Security Audit Considerations</h4>
+
+<p>The security audit criteria are similar to those for the Registry Stored Query <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-18.html#3.18.5">ITI-18</a> transaction. Grouping a Document Consumer or Document Responder with an <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html">ATNA</a> Secure Node or Secure Application is recommended, but not mandated.</p>
+
+<h5 id="document-consumer-audit">Document Consumer Audit</h5>
+
+<p>The Document Consumer when grouped with ATNA Secure Node or Secure Application actor shall be able to record a <a href="StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Consumer.html">Find Document References Consumer Audit Event Log</a>. <a href="AuditEvent-ex-auditFindDocumentReferences-consumer.html">Audit Example for a Find Document References transaction from consumer perspective</a></p>
+
+<h5 id="document-responder-audit">Document Responder Audit</h5>
+
+<p>The Document Responder when grouped with ATNA Secure Node or Secure Application actor shall be able to record a <a href="StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Responder.html">Find Document References Responder Audit Event Log</a>. <a href="AuditEvent-ex-auditFindDocumentReferences-responder.html">Audit Example for a Find Document Lists Transaction from responder perspective</a></p>
+
+<p><strong><a href="ITI-66.html">Previous</a> / <a href="ITI-68.html">Next</a></strong></p>
+
+
+
+
+</div>
+        </div>  <!-- /inner-wrapper -->
+      </div>  <!-- /row -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-content -->
+
+  <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
+  <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      if(window.location.hash != "") {
+          $('a[href="' + window.location.hash + '"]').click()
+      }
+    });
+  </script>
+  <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
+    <div class="container">  <!-- container -->
+      <div class="inner-wrapper">
+        <p>
+          IG &#169; 2021+ <a style="color: #81BEF7" href="http://ihe.net">Integrating the Healthcare Enterprise (IHE)</a>.  Package ihe.mhd.fhir#4.0.0-comment based on <a style="color: #81BEF7" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Mar 31, 2021 11:47-0500">2021-03-31</span>
+          <br/>
+          <span style="color: #FFFF77">
+                      Links: <a style="color: #81BEF7" href="toc.html">Table of Contents</a> |
+                 <a style="color: #81BEF7" href="qa.html">QA Report</a>
+                 
+                
+                 <a style="color: #81BEF7" target="_blank" href="http://profiles.ihe.net/ITI/MHD/history.html">Version History</a></a> |
+                 <a style="color: #81BEF7" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <!--<a style="color: #81BEF7" href="todo.html">Search</a> | --> 
+                 <a style="color: #81BEF7" target="_blank" href="https://wiki.ihe.net/index.php/Category:CPs">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
+
+          </span>
+        </p>
+      </div>  <!-- /inner-wrapper -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-footer -->
+  
+  <div id="segment-post-footer" class="segment hidden">  <!-- segment-post-footer -->
+    <div class="container">  <!-- container -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-post-footer -->
+  
+  <!-- JS and analytics only. -->
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"> </script>
+  <script type="text/javascript" src="assets/js/respond.min.js"> </script>
+  <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
+  <script>anchors.options.visible = 'hover'
+anchors.add()</script>
+  
+<!-- feedback form - Google forms -->
+<!-- v0.1, 2021-01-09 -->
+
+
+
+<!-- / feedback form  -->
+
+  <!-- Analytics Below
+  ================================================== -->
+  </body>
+</html>

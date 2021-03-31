@@ -1,0 +1,236 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix loinc: <http://loinc.org/rdf#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/xds> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "xds"];
+  fhir:Resource.meta [
+     fhir:Meta.lastUpdated [ fhir:value "2013-07-01T13:11:33Z"^^xsd:dateTime ];
+     fhir:Meta.profile [
+       fhir:value "http://ihe.net/fhir/tag/iti-65";
+       fhir:index 0;
+       fhir:link <http://ihe.net/fhir/tag/iti-65>
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "transaction"];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://localhost:9556/svc/fhir/DocumentReference/45" ];
+     fhir:Bundle.entry.resource <http://localhost:9556/svc/fhir/DocumentReference/45>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:3fdc72f4-a11d-4a9d-9260-a9f745779e1e" ];
+     fhir:Bundle.entry.resource <urn:uuid:3fdc72f4-a11d-4a9d-9260-a9f745779e1e>
+  ], [
+     fhir:index 2;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://localhost:9556/svc/fhir/Binary/1e404af3-077f-4bee-b7a6-a9be97e1ce32" ];
+     fhir:Bundle.entry.resource <http://localhost:9556/svc/fhir/Binary/1e404af3-077f-4bee-b7a6-a9be97e1ce32>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ]
+     ]
+  ] .
+
+<http://localhost:9556/svc/fhir/DocumentReference/45> a fhir:DocumentReference;
+  fhir:DomainResource.contained [
+     a fhir:Patient;
+     fhir:index 0;
+     fhir:Resource.id [ fhir:value "a2" ];
+     fhir:DomainResource.text [
+       fhir:Narrative.status [ fhir:value "generated" ];
+       fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">Person DOE, John, M, dob: 27/05/1956</div>"
+     ];
+     fhir:Patient.identifier [
+       fhir:index 0;
+       fhir:Identifier.type [
+         fhir:CodeableConcept.coding [
+           fhir:index 0;
+           fhir:Coding.system [ fhir:value "urn:ietf:rfc:3986" ];
+           fhir:Coding.code [ fhir:value "urn:ihe:iti:xds:2013:accession" ]
+         ]
+       ];
+       fhir:Identifier.use [ fhir:value "usual" ];
+       fhir:Identifier.value [ fhir:value "MRN" ];
+       fhir:Identifier.system [ fhir:value "urn:oid:1.2.3.4.5.6" ]
+     ];
+     fhir:Patient.name [
+       fhir:index 0;
+       fhir:HumanName.use [ fhir:value "usual" ];
+       fhir:HumanName.text [ fhir:value "DOE, John" ];
+       fhir:HumanName.family [ fhir:value "Doe" ];
+       fhir:HumanName.given [
+         fhir:value "John";
+         fhir:index 0
+       ]
+     ];
+     fhir:Patient.birthDate [ fhir:value "1956-05-27"^^xsd:date ]
+  ];
+  fhir:Resource.meta [
+     fhir:Meta.lastUpdated [ fhir:value "2013-07-01T13:11:33Z"^^xsd:dateTime ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n\n                        <a href=\"http://localhost:9556/svc/fhir/Binary/1e404af3-077f-4bee-b7a6-a9be97e1ce32\">Document: urn:oid:129.6.58.92.88336</a> undefined, created 24/12/2005\n                    </div>"
+  ];
+  fhir:DocumentReference.masterIdentifier [
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.129.6.58.92.88336" ]
+  ];
+  fhir:DocumentReference.status [ fhir:value "current"];
+  fhir:DocumentReference.type [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:34133-9;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "34133-9" ];
+       fhir:Coding.display [ fhir:value "Summary of Episode Note" ]
+     ]
+  ];
+  fhir:DocumentReference.subject [
+     fhir:link <http://localhost:8080/fhir/Patient/a2>;
+     fhir:Reference.reference [ fhir:value "http://localhost:8080/fhir/Patient/a2" ]
+  ];
+  fhir:DocumentReference.author [
+     fhir:index 0;
+     fhir:Reference.reference [ fhir:value "#a3" ]
+  ], [
+     fhir:index 1;
+     fhir:Reference.reference [ fhir:value "#a4" ]
+  ];
+  fhir:DocumentReference.description [ fhir:value "Physical"];
+  fhir:DocumentReference.securityLabel [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-Confidentiality" ];
+       fhir:Coding.code [ fhir:value "N" ];
+       fhir:Coding.display [ fhir:value "normal" ]
+     ]
+  ];
+  fhir:DocumentReference.content [
+     fhir:index 0;
+     fhir:DocumentReference.content.attachment [
+       fhir:Attachment.contentType [ fhir:value "text/plain" ];
+       fhir:Attachment.language [ fhir:value "en-us" ]
+     ];
+     fhir:DocumentReference.content.format [
+       fhir:Coding.system [ fhir:value "http://ihe.net/fhir/ValueSet/IHE.FormatCode.codsystem" ];
+       fhir:Coding.code [ fhir:value "urn:ihe:iti:appc:2016:consent" ]
+     ]
+  ];
+  fhir:DocumentReference.context [
+     fhir:DocumentReference.context.sourcePatientInfo [
+       fhir:Reference.reference [ fhir:value "#a2" ]
+     ];
+     fhir:DocumentReference.context.period [
+       fhir:Period.start [ fhir:value "2004-12-23T08:00:00+10:00"^^xsd:dateTime ];
+       fhir:Period.end [ fhir:value "2004-12-23T08:01:00+10:00"^^xsd:dateTime ]
+     ];
+     fhir:DocumentReference.context.practiceSetting [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://connectathon.ihe" ];
+         fhir:Coding.code [ fhir:value "Practice-E" ];
+         fhir:Coding.display [ fhir:value "Ophthalmology" ]
+       ]
+     ];
+     fhir:DocumentReference.context.facilityType [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:35971002;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "35971002" ];
+         fhir:Coding.display [ fhir:value "Ambulatory care site" ]
+       ]
+     ]
+  ] .
+
+<urn:uuid:3fdc72f4-a11d-4a9d-9260-a9f745779e1e> a fhir:DocumentManifest;
+  fhir:Resource.id [ fhir:value "SubmissionSet"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">Text</div>"
+  ];
+  fhir:DomainResource.contained [
+     a fhir:Practitioner;
+     fhir:index 0;
+     fhir:Resource.id [ fhir:value "a1" ];
+     fhir:Practitioner.name [
+       fhir:index 0;
+       fhir:HumanName.family [ fhir:value "Dopplemeyer" ];
+       fhir:HumanName.given [
+         fhir:value "Sherry";
+         fhir:index 0
+       ]
+     ];
+     fhir:Practitioner.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "john.doe@healthcare.example.org" ]
+     ]
+  ];
+  fhir:DocumentManifest.masterIdentifier [
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.129.6.58.92.88337" ]
+  ];
+  fhir:DocumentManifest.status [ fhir:value "current"];
+  fhir:DocumentManifest.type [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a sct:419955002;
+       fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+       fhir:Coding.code [ fhir:value "419955002" ];
+       fhir:Coding.display [ fhir:value "Residential institution" ]
+     ];
+     fhir:CodeableConcept.text [ fhir:value "Hospital" ]
+  ];
+  fhir:DocumentManifest.subject [
+     fhir:link <http://localhost:8080/fhir/Patient/a2>;
+     fhir:Reference.reference [ fhir:value "http://localhost:8080/fhir/Patient/a2" ]
+  ];
+  fhir:DocumentManifest.created [ fhir:value "2004-12-25T23:50:50-05:00"^^xsd:dateTime];
+  fhir:DocumentManifest.author [
+     fhir:index 0;
+     fhir:Reference.reference [ fhir:value "#a1" ]
+  ];
+  fhir:DocumentManifest.recipient [
+     fhir:index 0;
+     fhir:Reference.reference [ fhir:value "#a1" ]
+  ];
+  fhir:DocumentManifest.source [ fhir:value "urn:oid:1.3.6.1.4.1.21367.2009.1.2.1"];
+  fhir:DocumentManifest.description [ fhir:value "Physical"];
+  fhir:DocumentManifest.content [ fhir:index 0];
+  fhir:DocumentManifest.related [
+     fhir:index 0;
+     fhir:DocumentManifest.related.identifier [
+       fhir:Identifier.system [ fhir:value "http://example.org/documents" ];
+       fhir:Identifier.value [ fhir:value "23425234234-9999" ]
+     ];
+     fhir:DocumentManifest.related.ref [
+       fhir:link <http://profiles.ihe.net/ITI/MHD/DocumentReference/example>;
+       fhir:Reference.reference [ fhir:value "DocumentReference/example" ]
+     ]
+  ] .
+
+<http://localhost:9556/svc/fhir/Binary/1e404af3-077f-4bee-b7a6-a9be97e1ce32> a fhir:Binary;
+  fhir:Resource.id [ fhir:value "1e404af3-077f-4bee-b7a6-a9be97e1ce32"];
+  fhir:Resource.meta [
+     fhir:Meta.lastUpdated [ fhir:value "2013-07-01T13:11:33Z"^^xsd:dateTime ]
+  ];
+  fhir:Binary.contentType [ fhir:value "text/plain"] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/xds.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
