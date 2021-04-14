@@ -1,18 +1,14 @@
+Welcome to the publications wiki!
 
 # publications
-This repository is an experimental project by ITI to work toward publication of Final Text Technical Framework using HTML.
+This repository is an staging repository for http://profiles.ihe.net web site. 
 
-browser ready version can be seen using the "pages site" feature of github at http://ihe.github.io/publications
+Browser ready version for stagign review can be seen using the "pages site" feature of github at http://ihe.github.io/publications
 
-## Scope
-
-Publish the ITI Final Text Technical Framework in an html way that is equivilant to better than current PDF.
-
-The scope does not today, but will eventually, address 
-* how Profiles that are published using the IG Publisher are represented as standalone (Trial Implementation), and integrated (Final Text)
-* how supplements are displayed (PDF or otherwise)
-* include all domains publications. for now PCC is prototyped into this repo
-
-## Status
-* [Summer 2020 Status](https://github.com/IHE/publications/wiki/Summer-2020-Status-Report)
-* publication layout [Publications Web Site Layout](https://github.com/IHE/publications/wiki/publication-layout)
+# Guidance Articles
+* [Publication layout](https://github.com/IHE/publications/wiki/publication-layout)
+* [Authoring UML diagrams](https://github.com/IHE/publications/wiki/UML-(webSequence---PlantUML))
+* [Authoring long-form Supplements and Whitepapers](https://github.com/IHE/publications/wiki/Authoring-long-form-Supplements-and-Whitepapers)
+* [Authoring IG Published IHE-Profiles](https://github.com/IHE/publications/wiki/Authoring-IG-Publisher-IHE-Profiles)
+* [Public Comment phase](https://github.com/IHE/publications/wiki/Public-Comment-phase)
+* [Revision Management](https://github.com/IHE/publications/wiki/Revision-Management)
