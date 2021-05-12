@@ -76,8 +76,10 @@
       <p>The approach used in this profile is based on link change notifications being sent from the PIX Manager to the Document Registry, which will then perform an update to possibly many objects within its database. The changes reflect the new link between a local patient identifier and the corresponding XAD-PID. These updates follow the same technical requirements and behaviors defined in the Update Document Set [ITI-57] transaction with the change resulting in a new version of all affected objects. After all changes have been performed, one or more associations for the updated objects may no longer be valid. For example, a document may no longer have the same patientID as the folder it belonged to previously. The Document Registry will have to detect these occurrences and provide the necessary documentation and alerting actions.</p>
       <h2 id="31.1">31.1 XPID Actors/ Transactions</h2>
       <p>Figure 31.1-1 shows the two actors directly involved in the XAD-PID Change Management Profile and the relevant transaction between them. Other actors that may be indirectly involved due to their participation in XDS or PIX are not shown.</p>
-      <img src="media/Figure_31.1-1.png"  alt="XAD-PID Change Management Profile Actor Diagram" />
-      <p id="f31.1-1" class="figureTitle">Figure 31.1-1: XAD-PID Change Management Profile Actor Diagram</p>
+      <div id="f31.1-1">
+        <img src="media/Figure_31.1-1.png" alt="XAD-PID Change Management Profile Actor Diagram" />
+        <p class="figureTitle">Figure 31.1-1: XAD-PID Change Management Profile Actor Diagram</p>
+      </div>
       <p>Table 31.1-1 lists the transactions for each actor directly involved in the XAD-PID Change Management Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile and that implementations may choose to support is listed in Section 31.2.</p>
       <p style="font-size:11pt">
         <br style="page-break-before:always; clear:both" />
@@ -221,28 +223,33 @@
       </table>
       <h2 id="31.4">31.4 XPID Overview</h2>
       <h3 id="31.4.1">31.4.1 Process Flow</h3>
-      <img src="media/Figure_31.4.1-1.png" alt="Basic Process Flow in XAD-PID Change Management (XPID) Profile" />
-      <p id="f31.4.1-1" class="figureTitle">Figure 31.4.1-1: Basic Process Flow in XAD-PID Change Management (XPID) Profile</p>
+      <div id="f31.4.1-1">
+        <img src="media/Figure_31.4.1-1.png" alt="Basic Process Flow in XAD-PID Change Management (XPID) Profile" />
+        <p class="figureTitle">Figure 31.4.1-1: Basic Process Flow in XAD-PID Change Management (XPID) Profile</p>
+      </div>
       <h3 id="31.4.2">31.4.2 Use Cases</h3>
       <h4 id="31.4.2.1">31.4.2.1 XAD-PID Link Change Use Case</h4>
       <p>This section illustrates the XAD-PID Link change use case.</p>
       <p>In this scenario a patient presents to a service location in a given XDS Affinity Domain for the first time and a set of shareable clinical documents are created for that encounter.</p>
       <p>That service location is assumed to be a Patient Identity Source to the XDS Affinity Domain Patient Identity Cross-Reference Manager. The local ID for that patient (MRN 22222) is mapped (i.e., linked) by the Patient Identity Cross-Reference manager to an existing XAD-PID (XAD-PID 33333) (see Figure 31.4.2.1-1).</p>
-      <img src="media/Figure_31.4.2.1-1.png" alt="Local Patient Added to the Patient Identity Cross-Reference Manager" />
-      <p id="f31.4.2.1-1" class="figureTitle">Figure 31.4.2.1-1: Local Patient Added to the Patient Identity Cross-Reference Manager</p>
+      <div id="f31.4.2.1-1">
+        <img src="media/Figure_31.4.2.1-1.png" alt="Local Patient Added to the Patient Identity Cross-Reference Manager" />
+        <p class="figureTitle">Figure 31.4.2.1-1: Local Patient Added to the Patient Identity Cross-Reference Manager</p>
+      </div>
       <p>A document (ID #34245) is created from this encounter and published to the XDS Document Repository and XDS Document Registry using that XAD-PID (see Figure 31.4.2.1-2).</p>
-      <p>
+      <div id="f31.4.2.1-2">
         <img src="media/Figure_31.4.2.1-2.png" alt="Document Published to Document Registry" />
-      </p>
-      <p id="f31.4.2.1-2" class="figureTitle">Figure 31.4.2.1-2: Document Published to Document Registry</p>
+        <p class="figureTitle">Figure 31.4.2.1-2: Document Published to Document Registry</p>
+      </div>
       <p>However, at some later time, it is discovered that the local patient ID in this use case should not have been linked to XAD-PID #33333 in the first place and that in fact, it should have been linked to another identifier (XAD-PID #11111) as shown below in Figure 31.4.2.1-3.</p>
       <img src="media/Figure_31.4.2.1-3.png"  alt="Local Patient is Assigned New XAD-PID in Patient Identity Cross-Reference Manager" />
-      <p class="figureTitle">31.4.2.1-3: Local Patient is Assigned New XAD-PID in Patient Identity Cross-Reference Manager
-      </p>
+      <p class="figureTitle">31.4.2.1-3: Local Patient is Assigned New XAD-PID in Patient Identity Cross-Reference Manager</p>
       <p>In this case, we see that the correct XAD-PID is 11111 and the change occurs normally within the Patient Identity Cross-Reference Manager from the Patient Identity Feed. However, the previously published document (DOC 34245) needs to be corrected and reflect this change.</p>
       <p>Given that the original Document Source may not be aware that the link change event has occurred, it cannot be expected to deprecate and re-publish the document itself. Also, unless some type of notification is sent to the Document Registry, it also cannot process the event (see Figure 31.4.2.1-4).</p>
-      <img src="media/Figure_31.4.2.1-4.png" alt="Document Registry Needs to Reflect XAD-PID change" />
-      <p id="f31.4.2.1-4" class="figureTitle">Figure 31.4.2.1-4: Document Registry Needs to Reflect XAD-PID change</p>
+      <div id="f31.4.2.1-4">
+        <img src="media/Figure_31.4.2.1-4.png" alt="Document Registry Needs to Reflect XAD-PID change" />
+        <p class="figureTitle">Figure 31.4.2.1-4: Document Registry Needs to Reflect XAD-PID change</p>
+      </div>
       <p>Once the XAD-PID link change event is processed by the Document Registry:</p>
       <ul>
         <li class="bullet-list1">All documents that were published through an XDS Provide and Register transaction with the local patient identifier (MRN 22222) are now joined with documents belonging to its new common identifier (XAD-PID 11111).</li>
@@ -254,26 +261,38 @@
         <span style="font-weight:bold;font-style:italic">Use Case 1: Local patient identifier merge with two different XAD-PID</span>
       </p>
       <p>In this scenario two local identifiers, mapped to two different XAD-PID, are merged due to a change in demographics. Figure 31.4.2.2-1 shows the initial state, where Lid22 is linked to adPid222, Lid33 is linked to adPid333 and there is a DocumentEntry in the Document Registry for each of these local identifiers.</p>
-      <img src="media/Figure_31.4.2.2-1.png"  alt="Original State" />
-      <p id="f31.4.2.2-1" class="figureTitle">Figure 31.4.2.2-1: Original State</p>
+      <div id="f31.4.2.2-1">
+        <img src="media/Figure_31.4.2.2-1.png" alt="Original State" />
+        <p class="figureTitle">Figure 31.4.2.2-1: Original State</p>
+      </div>
       <p>After these documents have been registered in the Document Registry, the Patient Identity Cross-Reference Manager determines, through a demographics change, that Lid22 and Lid33 refer to the same person and need to be merged. It chooses to merge Lid22 into Lid33, resulting in an updated Patient ID mapping which does not include Lid22 as shown in Figure 31.4.2.2-2.</p>
-      <img src="media/Figure_31.4.2.2-2.png" alt="Local Patient ID merge" />
-      <p id="f31.4.2.2-2" class="figureTitle">Figure 31.4.2.2-2: Local Patient ID merge</p>
+      <div id="f31.4.2.2-2">
+        <img src="media/Figure_31.4.2.2-2.png" alt="Local Patient ID merge" />
+        <p class="figureTitle">Figure 31.4.2.2-2: Local Patient ID merge</p>
+      </div>
       <p>In order to properly update the Document Registry with this change the Patient Identify Cross-Reference Manager must send a XAD-PID link change event, updating the XAD-PID associated with Lid22 to the new XAD-PID and showing the merge of Lid22 into Lid33 as reflected in Figure 31.4.2.2-3.</p>
-      <img src="media/Figure_31.4.2.2-3.png" alt="Sent Notify XAD-PID Link Change" />
-      <p id="f31.4.2.2-3" class="figureTitle">Figure 31.4.2.2-3: Sent Notify XAD-PID Link Change</p>
+      <div id="f31.4.2.2-3">
+        <img src="media/Figure_31.4.2.2-3.png" alt="Sent Notify XAD-PID Link Change" />
+        <p class="figureTitle">Figure 31.4.2.2-3: Sent Notify XAD-PID Link Change</p>
+      </div>
       <p>
         <span style="font-weight:bold;font-style:italic">Use Case 2: Local patient identifier merge mapped to same XAD-PID</span>
       </p>
       <p>The next scenario differs in that the merged local identifiers are already mapped to the same XAD-PID (see Figure 31.4.2.2-4).</p>
-      <img src="media/Figure_31.4.2.2-4.png"  alt="Original State same XAD-PID" />
-      <p id="f31.4.2.2-4" class="figureTitle">Figure 31.4.2.2-4: Original State same XAD-PID</p>
+      <div id="f31.4.2.2-4">
+        <img src="media/Figure_31.4.2.2-4.png" alt="Original State same XAD-PID" />
+        <p class="figureTitle">Figure 31.4.2.2-4: Original State same XAD-PID</p>
+      </div>
       <p>After the Patient Identity Cross-Reference Manager merges Lid22 into Lid33, the updated Patient ID Mapping does not include Lid22. Figure 31.4.2.2-5 shows the updated state of the PIX Manager but the Document Registry update has not yet occurred.</p>
-      <img src="media/Figure_31.4.2.2-5.png"  alt="Local Patient ID merge" />
-      <p id="f31.4.2.2-5" class="figureTitle">Figure 31.4.2.2-5: Local Patient ID merge</p>
+      <div id="f31.4.2.2-5">
+        <img src="media/Figure_31.4.2.2-5.png" alt="Local Patient ID merge" />
+        <p class="figureTitle">Figure 31.4.2.2-5: Local Patient ID merge</p>
+      </div>
       <p>To update the Document Registry with this change, the Patient Identify Cross-Reference Manager must send a XAD-PID link change event showing the merge of Lid22 into Lid33 as reflected in Figure 31.4.2.2-6.</p>
-      <img src="media/Figure_31.4.2.2-6.png" alt="Sent Notify XAD-PID Link Change" />
-      <p id="f31.4.2.2-6" class="figureTitle">Figure 31.4.2.2-6: Sent Notify XAD-PID Link Change</p>
+      <div id="f31.4.2.2-6">
+        <img src="media/Figure_31.4.2.2-6.png" alt="Sent Notify XAD-PID Link Change" />
+        <p class="figureTitle">Figure 31.4.2.2-6: Sent Notify XAD-PID Link Change</p>
+      </div>
       <h2 id="31.5">31.5 Security Considerations</h2>
       <p>The risk analysis for this profile enumerates assets, threats, and mitigations. The complete risk data is stored and maintained in a central location. The complete risk data is stored and may be found in the IHE Google Drive at:
         <a href="https://drive.google.com/open?id=17ZETf-X3pcqG96hdM5qyIpWdBW3w2Ha1">XCPD_Risk_assessment_and_mitigation_table.xls</a>.

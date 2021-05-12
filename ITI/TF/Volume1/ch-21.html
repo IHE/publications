@@ -72,8 +72,10 @@
       <p>Both transactions provide access to centrally managed value sets that have been assigned metadata, including group identification. The ability to identify groups of value sets is essential to achieving semantic interoperability and development of modular structures of electronic health records (EHR). Group identification can be used to identify, for example, all the value sets needed for a given purpose like filling in a particular kind of report.</p>
       <h2 id="21.1">21.1 SVS Actors/Transactions</h2>
       <p>Figure 21.1-1 shows the actors directly involved in the SVS Integration Profile and the relevant transactions between them. Other actors that may be indirectly involved due to their participation in other related profiles are not necessarily shown. As well, the method for creating a Value Set is not covered by this profile (this subject will be addressed once the basic infrastructure is in place).</p>
-      <img src="media/Figure_21.1-1.png"  alt="" />
-      <p id="f21.1-1" class="figureTitle">Figure 21.1-1: Actors and Transactions</p>
+      <div id="f21.1-1">
+        <img src="media/Figure_21.1-1.png" alt="" >
+        <p class="figureTitle">Figure 21.1-1: Actors and Transactions</p>
+      </div>
       <p>Table 21.1-1 SVS Integration Profile - Actors and Transactions lists the transactions for each actor directly involved in the SVS Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile is listed in Table 21.2-1.</p>
       <p class="tableTitle">Table 21.1-1: SVS Integration Profile - Actors and Transactions</p>
       <table cellspacing="0" cellpadding="0">
@@ -234,8 +236,10 @@
         <li class="numbered-list1">By unique identification of the Expanded Value Set itself, and no reference to the definition that produced it. Such an Expanded Value Set carries its own unique identifier (i.e., an OID and Version).</li>
         <li class="numbered-list1">By reference to the Value Set definition (OID and Version) from which the Expanded Value Set was derived. In this case specific Expanded Value sets (derived from the same Value Set definition) are only distinguished by their expansion date and time.</li>
       </ol>
-      <img src="media/Figure_21.1.3-1.png"  alt="" />
-      <p id="f21.1.3-1" class="figureTitle">Figure 21.1.3-1: The two approaches for identifying Value Sets</p>
+      <div id="f21.1.3-1">
+        <img src="media/Figure_21.1.3-1.png" alt="" >
+        <p class="figureTitle">Figure 21.1.3-1: The two approaches for identifying Value Sets</p>
+      </div>
       <h3 id="21.1.4">21.1.4 The relationship between ITI SVS and CTS</h3>
       <p>
         <span>The Value Set Repository can be supported by a system that implements a</span>
@@ -293,8 +297,10 @@
       <p>The developers of value sets may choose to work with one or more of these types, but the final consumers of value sets need to work with expanded value sets. There are efforts underway to develop standard methods for exchanging explicit definition of intensional and extensional value sets, but these are outside the scope of the SVS Profile. SVS provides only a way to distribute value sets that have been expanded.</p>
       <p>The SVS Profile also restricts the complexity of the expanded value sets. At present, it only supports unstructured value sets that are a list of codes from coded terminologies. Other internal structures such as hierarchy are not defined. This meets the needs of most, but not all, value sets.</p>
       <p>The process and rules associated with a value set expansion is not specified nor constrained by this profile. It is the responsibility of the value set developer or of the system supporting the SVS Repository to perform the appropriate expansions. If the value set developer defines their standard distribution format as the expanded form of the value set, they have the appropriate procedures for this expansion. Value set developers that do not have a procedure defined for distributing the expanded form will need to establish one in order to use the SVS Profile.</p>
-      <img src="media/Figure_21.1.4.1-1.png"  alt="" />
-      <p id="f21.1.4.1-1" class="figureTitle">Figure 21.1.4.1-1: Development Flow for Value Sets</p>
+      <div id="f21.1.4.1-1">
+        <img src="media/Figure_21.1.4.1-1.png" alt="" >
+        <p class="figureTitle">Figure 21.1.4.1-1: Development Flow for Value Sets</p>
+      </div>
       <p>A value set developer that defines and publishes expanded value sets should also establish the proper identification that identifies either this expanded value set or the definition that resulted in this expanded value set. They also define metadata that describes the value set. (Value set group descriptions will be discussed later.) The metadata is listed below, and includes descriptive information, links to further explanatory material, effective dates, etc. The SVS Profile provides two transactions for retrieving an expanded value set:</p>
       <ol>
         <li class="numbered-list1">Retrieve Value Set [ITI-48] – This is appropriate for rapid retrieval of expanded value sets. It retrieves the expanded value set based on having the OID for the value set pre-configured into the system requesting the value set. This transaction does not retrieve the expanded value set metadata nor the value set definition metadata. It only retrieves the list of codes for that expanded value set.</li>
@@ -307,14 +313,18 @@
       </ol>
       <p>A value set user that receives an intensional or extensional value set must be aware that the expansion is only for representational uses. The other metadata, such as effective dates and the descriptive material, must be consulted to determine the proper use of the expanded form. In practice, value sets change slowly and there is usually time for human review and decision making about the use of the expanded form.</p>
       <p>The SVS Profile does not specify how or when this expansion should take place. That is the responsibility of the value set developers and server maintainers. In many cases, the value set developer will provide an expanded form together with effective dates so that the organizations involved can manage change easily.</p>
-      <img src="media/Figure_21.1.4.1-2.png"  alt="" />
-      <p id="f21.1.4.1-2" class="figureTitle">Figure 21.1.4.1-2: SVS Retrieve Transactions </p>
+      <div id="f21.1.4.1-2">
+        <img src="media/Figure_21.1.4.1-2.png" alt="" >
+        <p class="figureTitle">Figure 21.1.4.1-2: SVS Retrieve Transactions </p>
+      </div>
       <h4 id="21.1.4.2">21.1.4.2 Value Set Groups</h4>
       <p>Value sets are also described by various grouping and tagging mechanisms. These groupings may be defined in parallel by many different organizations. It is expected that each organization is creating groups for their own purpose. One organization may assign groups like “value sets associated with H1N1”, while another group may assign groups like “value sets associated with clinical trial xyz reports”, and a third may assign groups like “formulary for treatment of H1N1 influenza”. Each of these organizations may assign key words so that retrieval requests can find the relevant groups, and they may assign OIDs for these groups.</p>
       <p>To simplify maintenance, SVS defines a list of group descriptions to be associated with each value set, rather than combining all the keywords and groups from different organizations into a single list. The retrieval transaction searches all of these descriptions when doing a retrieval based on group keyword or group OID.</p>
       <p>An organization that is creating new groups can define a list of keywords and an OID for that group purpose. This group description can then be attached to each value set that should be a member of that group. If a value set needs to be removed from the group, then the attached description can be removed. This avoids accidental removal of keywords when multiple organizations have used the same keyword</p>
-      <img src="media/Figure_21.1.4.2-1.png"  alt="" />
-      <p id="f21.1.4.2-1" class="figureTitle">Figure 21.1.4.2-1: Group Descriptions for a Value Set</p>
+      <div id="f21.1.4.2-1">
+        <img src="media/Figure_21.1.4.2-1.png" alt="" >
+        <p class="figureTitle">Figure 21.1.4.2-1: Group Descriptions for a Value Set</p>
+      </div>
       <h4 id="21.1.4.3">21.1.4.3 Value Set Descriptive Metadata</h4>
       <p>
         A value set is described by metadata that includes the fields in Table 21.1.4.3-1. For details on the metadata encoding, see
@@ -516,16 +526,18 @@
       <p>Value Set Consumers that support the Retrieve Multiple Value Sets Option shall support the Retrieve Multiple Value Sets [ITI-60] transaction.</p>
       <h2 id="21.3">21.3 SVS Process Flow</h2>
       <p>This section describes the process and information flow when a Value Set Consumer retrieves a Value Set from a Value Set Repository. There is no required order between the two transactions. The Value Set Consumer chooses whichever transactions and order are appropriate. The Value Set Consumer can use Retrieve Value Set [ITI-48] to retrieve a single value set based upon a known value set OID. The Retrieve Multiple Value Sets [ITI-60] transaction can be used to retrieve all of the value sets that match a selection specification. The selection criteria for [ITI-60] need not include a known value set OID.</p>
-      <img src="media/Figure_21.3-1.png"  alt="" />
-      <p id="f21.3-1" class="figureTitle">Figure 21.3-1: Basic Process Flow in SVS Profile</p>
+      <div id="f21.3-1">
+        <img src="media/Figure_21.3-1.png" alt="" >
+        <p class="figureTitle">Figure 21.3-1: Basic Process Flow in SVS Profile</p>
+      </div>
       <h3 id="21.3.1">21.3.1 Overview of the entire process flow</h3>
       <p>This profile describes functionality in the context of the larger system of anticipated actors involved in the creation and management of Value Sets.</p>
       <p>The creation of a Value Set is out of scope of this profile. It will be addressed in a later cycle, once the basic infrastructure of this profile is in place. For definition purposes, creating a Value Set means the creation of a Value Set out of a Code System(s), or having the user proposing values that s/he uses in their own system.</p>
       <p>The complete process can be seen in Figure 21.3.1-1, Overview of process flows below, included for clarity’s sake:</p>
-      <p>
-        <img src="media/Figure_21.3.1-1.png"  alt="" />
-      </p>
-      <p id="f21.3.1-1" class="figureTitle">Figure 21.3.1-1: Overview of the process flow</p>
+      <div id="f21.3.1-1">
+        <img src="media/Figure_21.3.1-1.png" alt="" >
+        <p class="figureTitle">Figure 21.3.1-1: Overview of the process flow</p>
+      </div>
       <p>Figure 21.3.1-1 shows the Retrieve Value Set transaction in the context of the larger system of anticipated actors involved with the creation and management of Value Sets. This profile only addresses the actors and transactions outlined by the thick solid line.</p>
       <p>The SVS Profile addresses partly the semantic interoperability issue and assumes that a structure is already in place to provide the necessary context for the use of the Value Set.</p>
       <p>While the representation of structure is out of scope of this profile, it must be recognized that it plays an important role in achieving semantic interoperability. The focus of the profile is to distribute a generalized and uniform nomenclature in order to populate the information model with the appropriate semantic content.</p>
@@ -900,8 +912,10 @@
       <p>At the top of this diagram, the value set consumers retrieve values sets from a master value set repository that they need for particular purposes. This could be done with the [ITI-48] transaction when the consumer is configured with specific OID values for specific purposes. Often, there is a need to retrieve a group of value sets that share a common purpose, such as all of the value sets needed to populate a particular kind of report. These retrievals are performed using the [ITI-60] retrieve multiple value sets transaction.</p>
       <p>This master value set repository is subject to review and governance. The individual consumers have delegated responsibility for administering and maintaining the master value set repository to a coordinating organization. These organizations may be local, state, regional, or national organizations. They are typically not the developers of standard terminologies. The master repository organization serves an administrative and coordinating purpose to ensure that the releases of standard terminologies from SDOs do not interfere with daily operations of the value set consumers. They may also coordinate requests from value set consumers for new terminologies and value sets. There is a governance committee to coordinate these activities in both directions. These activities are important to the maintenance of the master value set repository. They are not described further as part of this profile.</p>
       <p>The terminology developers typically release new terminologies and value sets on a regular schedule or at times matching their process. These notifications may be via bulletins, electronic notification, and other processes. They are not covered as part of this profile. The governance committee may choose to use [ITI-60] as their method of retrieving copies of the SDO value sets, if the SDO has established a value set repository as part of their distribution process.</p>
-      <img src="media/Figure_21.3.2.5-1.png"  alt="" />
-      <p id="f21.3.2.5-1" class="figureTitle">Figure 21.3.2.5-1: Relationship between Users and Developers of Value Sets</p>
+      <div id="f21.3.2.5-1">
+        <img src="media/Figure_21.3.2.5-1.png" alt="" >
+        <p class="figureTitle">Figure 21.3.2.5-1: Relationship between Users and Developers of Value Sets</p>
+      </div>
       <h4 id="21.3.2.6">21.3.2.6 Obtaining value sets based upon metadata</h4>
       <p>There are often situations where notifications such as emails, bulletins, etc. contain descriptive information rather than a specific OID. Also, there are situations where potentially useful value sets must be found based upon only a description. An example of this kind of use is:</p>
       <ol>
