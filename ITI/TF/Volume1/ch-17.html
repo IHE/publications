@@ -136,10 +136,12 @@
       <p>As data managers review the data (through manual and/or system-supported validation processes), they identify missing, incomplete, or potentially discrepant data (e.g., a site reports a patient was prescribed penicillin for a headache). Data queries are generated through the sponsor system and prepared to the site for clarification/ correction/ verification by the research coordinator. The EHR study coordinator accesses and reviews each data query through the EHR system referencing the EHR data in order to respond to the query. On occasions, the site may need to contact the patient if the EHR data is incomplete (e.g., a stop date on a medication). The coordinator documents clarifications to the data in the EHR system if needed and submits a query response as well as any data updates to the sponsor system and to the investigator site archive. The query response includes a reason for any changes made which is included as part of the audit trail in the EHR system, sponsor system, and the investigator’s site archive. The data manager of the sponsor can then review the response and the updates in the sponsor system and close the query if no further information is required.</p>
       <h2 id="17.2">17.2 RFD Actors/Transactions</h2>
       <p>Figure 17.2-1 shows the actors directly involved in the Retrieve Form for Data Capture Integration Profile and the relevant transactions between them. Actors that may be indirectly involved due to their participation in other profiles are not shown.</p>
-      <img src="media/Figure_17.2-1.png"  alt="" />
-      <p class="figureTitle">Figure 17.2-1: Retrieve Form for Data Capture Actor Diagram</p>
+      <div id="f17.2-1">
+        <img src="media/Figure_17.2-1.png" alt="" >
+        <p class="figureTitle">Figure 17.2-1: Retrieve Form for Data Capture Actor Diagram</p>
+      </div>
       <p>Table 17.2-1 lists the transactions for each actor directly involved in the Retrieve Form for Data Capture Profile. In order to claim support of this Integration Profile, an implementation must perform the required transactions (labeled “R”). Transactions labeled “O” are optional. A complete list of options defined by this Integration Profile that the implementations may choose to support is listed in Section 17.3.</p>
-      <p class="tableTitle">Table 17.2-1: Retrieve Form for Data Capture Integration Profile - Actors and Transactions</p>
+      <p id="t17.2-1" class="tableTitle">Table 17.2-1: Retrieve Form for Data Capture Integration Profile - Actors and Transactions</p>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -264,7 +266,7 @@
         <span style="font-weight:bold;font-style:italic;text-decoration:underline">all</span>
         <span>of the requirements for the grouped actor (Column 2).</span>
       </p>
-      <p class="tableTitle">Table 17.2.3-1: XDM - Required Actor Groupings</p>
+      <p id="t17.2.3-1" class="tableTitle">Table 17.2.3-1: XDM - Required Actor Groupings</p>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -303,7 +305,7 @@
       </table>
       <h2 id="17.3">17.3 RFD Options</h2>
       <p>Options that may be selected for this Integration Profile are listed in Table 17.3-1 along with the Actors to which they apply. Dependencies between options when applicable are specified in notes.</p>
-      <p class="tableTitle">Table 17.3-1: Actors and Options</p>
+      <p id="t17.3-1" class="tableTitle">Table 17.3-1: Actors and Options</p>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -382,8 +384,12 @@
         <li class="bullet-list1">A Form Processor exists. Figure 17.4-1b.  <br><br>The Form Filler makes a Retrieve Form request to a Form Manager or a Form Processor. The Form Manager or Form Processor either returns the requested form, or an error indicating no form is available. When a form is returned, the Form Filler will subsequently submit the form instance data to a Form Receiver or back to the Form Processor using the Submit Form transaction. When a Form Manager and Form Receiver are grouped, there may be communications between the Form Receiver and the Form Manager, as would be necessary to support partially completed forms, but these communications are internal and are not IHE transactions.</li>
       </ul>
    
-      <img src="media/Figure_17.4-1.png"  alt="" />
-      <p class="figureTitle">Figure 17.4-1: Case 1: Retrieve Form and Submit Form; Form Manager grouped with Form Receiver</p>
+      <div id="f17.4-1">
+   
+        <img src="media/Figure_17.4-1.png" alt="" >
+        <p class="figureTitle">Figure 17.4-1: Case 1: Retrieve Form and Submit Form; Form Manager grouped with Form Receiver</p>
+   
+      </div>
       <img src="media/Figure_17.4-1b.png"  alt="" />
       <p class="figureTitle">Figure 17.4-1b: Case 1: Retrieve Form and Submit Form; Form Processor</p>
       <p>
@@ -393,22 +399,28 @@
       <p>In this illustration there are two Form Receivers: 1) the intermediate Form Receiver, is grouped with the Form Filler; 2) the final, ungrouped Form Receiver.</p>
       <p>The identifier of a form, the formID, is known to the Form Filler; there is a grouped Form Manager and Form Receiver on one system supporting intermediate form storage, and a separate Form Receiver on a different system for final storage of form data.</p>
       <p>The Form Filler makes a Retrieve Form request to a Form Manager. The Form Manager either returns the requested form or an error indicating no form is available. When a form is returned, the Form Filler submits partially complete forms to the intermediate Form Receiver. This partially completed form can be retrieved with another Retrieve Form request to the Form Manager, and final completed form data can be submitted to the final storage, standalone, Form Receiver, such as a national data registry. The action upon submit is controlled by the form, hence the Form Manager is responsible for defining the post-submit action by selection of, or generation of, the desired action during the Retrieve Form transaction processing.</p>
-      <img src="media/Figure_17.4-2.png"  alt="" />
-      <p class="figureTitle">Figure 17.4-2: Case 2: Retrieve Form, Submit Form; Form Manager separate from Form Receiver</p>
+      <div id="f17.4-2">
+        <img src="media/Figure_17.4-2.png" alt="" >
+        <p class="figureTitle">Figure 17.4-2: Case 2: Retrieve Form, Submit Form; Form Manager separate from Form Receiver</p>
+      </div>
       <p>
         <span style="font-weight:bold">Case 3</span>
         <span>: In this case the Form Filler uses the Archive Option.</span>
       </p>
       <p>The Form Filler makes a Retrieve Form request to a Form Manager, specifying that archival is necessary to a specific Form Archiver. The Form Manager either returns the requested form or an error indicating no form is available. The Form Manager constructs the form to perform an archive transaction to the Form Archiver specified in the Form Filler’s Retrieve Form request. When the form is returned and subsequently submitted, form instance data is submitted to the Form Receiver and also to the Form Archiver.</p>
-      <img src="media/Figure_17.4-3.png"  alt="" />
-      <p class="figureTitle">Figure 17.4-3: Case 3: Retrieve Form, Submit Form, Archive Form</p>
+      <div id="f17.4-3">
+        <img src="media/Figure_17.4-3.png" alt="" >
+        <p class="figureTitle">Figure 17.4-3: Case 3: Retrieve Form, Submit Form, Archive Form</p>
+      </div>
       <p>
         <span style="font-weight:bold">Case 4</span>
         <span>: This case illustrates one way to use Form design to solve the issue where a formID is not known in advance. The identifier of a form, the formID, is not known to the Form Filler, but a set of context value (name, value) pairs is known. A context form where these values could be entered would have a formID. Information collected by the instance of a context form would be used by the Form Manager to determine the appropriate data capture form to return to the Form Filler.</span>
       </p>
       <p>The Form Filler has enough information to request a context form that collects information that can help the Form Manager determine the actual data capture form. The Form Filler completes the context form, submits this to the Form Receiver which returns either new instance data, or a new form.</p>
-      <img src="media/Figure_17.4-4.png"  alt="" />
-      <p class="figureTitle">Figure 17.4-4: Case 4: Retrieve Form; Submit Form</p>
+      <div id="f17.4-4">
+        <img src="media/Figure_17.4-4.png" alt="" >
+        <p class="figureTitle">Figure 17.4-4: Case 4: Retrieve Form; Submit Form</p>
+      </div>
       <p>
         <span style="font-weight:bold">Case 5</span>
         <span>: In this case the Form Filler supports the Data Clarifications Option.</span>
@@ -416,14 +428,14 @@
       <p>The Form Filler makes a Retrieve Clarifications request to a Form Manager. The interactions of Form Receiver and Form Manager are outside of the scope of this profile. An example of a solution for providing clarification information to a Form Manager is to group the Form Manager with the Form Receiver, as shown in Figures 17.4-5 and 17.4-6. The request made by the Form Filler contains an organization identifier allowing the Form Manager to return only the set of clarifications relevant to the organization making the request. The Form Manager returns a form containing the necessary information to allow the site or organization making the request to amend the data as required. These Retrieve Clarifications requests must be periodically executed by the Form Filler. The frequency of request is likely based upon some duration as defined or agreed upon by the Form Manager / Form Receiver.</p>
       <p>The Form Manager can return either a form containing the data to be modified or a form containing a list of references to other forms. In the second case, the references are used to obtain the individual forms using the Retrieve Form transaction. In both cases the data are then modified and submitted to the Form Receiver using the Submit Form transaction. Submitted data may then be evaluated by the data manager of the sponsor for proper handling.</p>
       <p>The profile does not distinguish between the two responses, the content returned within the form allows the user of the Form Filler to process the form returned in the appropriate manner.</p>
-      
-	    <img src="media/Figure_17.4-5.png"  alt="" />
-        <p class="figureTitle">Figure 17.4-5: Case 5: Form Filler supporting Data Clarifications Option
-	  </p>
-      
-        <img src="media/Figure_17.4-6.png"  alt="" />
-        <p class="figureTitle">Figure 17.4-6: Case 5: Form Filler supporting Data Clarifications Option
-      </p>
+	    <div id="f17.4-5">
+	      <img src="media/Figure_17.4-5.png" alt="" >
+        <p class="figureTitle">Figure 17.4-5: Case 5: Form Filler supporting Data Clarifications Option</p>
+	    </div>
+      <div id="f17.4-6">
+          <img src="media/Figure_17.4-6.png" alt="" >
+          <p class="figureTitle">Figure 17.4-6: Case 5: Form Filler supporting Data Clarifications Option</p>
+      </div>
       <h2 id="17.5">17.5 Security Considerations</h2>
       <h3 id="17.5.1">17.5.1 RFD Risk Analysis Risk Assessment</h3>
       <p>The risk analysis for RFD enumerates assets, threats, and mitigations. The complete risk data is stored and may be found in the IHE Google Drive at
