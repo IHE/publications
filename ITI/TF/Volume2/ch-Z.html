@@ -25,7 +25,7 @@
           </div>
           <div class="top-bar-right hide-for-small-only">
             <ul class="menu">
-              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 17.0, December 2, 2020 – Final Text</li>
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />, Appendix Z, Rev 2.3, May 31, 2021 Trial Implementation</li>
             </ul>
               <ul class="menu align-right">
                     <li><input id="ihe-search-field" type="search" placeholder="Search"></li>
@@ -62,12 +62,471 @@
             </div>
           </div>
           <div id="main-top" class="cell medium-10 large-10">
-      <h1 id="Y">Z – FHIR Implementation Material</h1>
+      <h1 id="Y">Appendix Z – FHIR Implementation Material (Trial Implementation)</h1>
       <p class="trialImplementation">
-        <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_Appx-Z.pdf">Appendix Z on HL7 FHIR Implementation</a>
-         Supplement.
+
+
+<p>There is a <a href="https://wiki.ihe.net/index.php/Category:FHIR">set of IHE Profiles using the HL7 FHIR standard</a>. These IHE Profiles define a lightweight RESTful interface using technologies readily available to mobile applications and lightweight browser-based applications. This appendix contains  explanation and profiling common to these Profiles.</p>
+
+<p>The HL7 FHIR standard has several overarching concepts which should be profiled consistently throughout any mobile/lightweight IHE transactions using FHIR. <a href="https://profiles.ihe.net/GeneralIntro/ch-3.html">IHE profiles FHIR</a>, like any other standard, in ways that narrow the standard for specific use-cases. IHE profiles are intended to be proper subsets of the standard and are not intended to be incompatible.</p>
+
+<p>All systems and deployments should consider the impact of "Clinical Safety" on interoperability using FHIR and system architecture. For guidance and checklist see the FHIR Clinical Safety page <a href="http://hl7.org/fhir/R4/safety.html">http://hl7.org/fhir/R4/safety.html</a>.</p>
+<p>We discuss here how IHE profiles the FHIR standard such as Resources, Datatypes, Valuesets, Extensions, Transactions, Query Parameters, CapabilityStatement, etc.</p>
+<p><strong>References</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>HL7 FHIR</th>
+<th>HL7 FHIR standard R4 <a href="http://hl7.org/fhir/R4/index.html">http://hl7.org/fhir/R4/index.html</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RFC2616</td>
+<td>Hypertext Transfer Protocol – HTTP/1.1</td>
+</tr>
+<tr class="even">
+<td>RFC7540</td>
+<td>Hypertext Transfer Protocol – HTTP/2</td>
+</tr>
+<tr class="odd">
+<td>RFC3986</td>
+<td>Uniform Resource Identifier (URI): Generic Syntax</td>
+</tr>
+<tr class="even">
+<td>RFC4627</td>
+<td>The application/json Media Type for JavaScript Object Notation (JSON)</td>
+</tr>
+<tr class="odd">
+<td>RFC6585</td>
+<td>Additional HTTP Status Codes</td>
+</tr>
+</tbody>
+</table>
+<h2 class="list-paragraph" id="z.1-resource-bundles">Z.1 Resource Bundles</h2>
+<p>Any operation that results in, or requires submission of, a collection of resources is done via a Resource Bundle mechanism. A FHIR Bundle Resource is a collection of resources that are related, for example, the result of a search operation, or a collection of historical versions of a resource.</p>
+<p>Bundles are described at FHIR <a href="http://hl7.org/fhir/R4/bundle.html">http://hl7.org/fhir/R4/bundle.html</a>.</p>
+<p>This section has no specific constraints.</p>
+<h2 class="list-paragraph" id="z.2-query-parameters">Z.2 Query Parameters</h2>
+<p>FHIR <a href="http://hl7.org/fhir/R4/search.html">http://hl7.org/fhir/R4/search.html</a> specifies a series of query parameter types which may be used when querying for a resource on a server. The representation of these query parameters within the HTTP request URL are intended to support a broad set of use cases and in some cases the behavior is unclear.</p>
+<p>In this section, we discuss query parameters in the context of RESTful HTTP queries represented in the request URL within IHE profiles.</p>
+<p>Query parameters not mentioned here are not constrained by this appendix.</p>
+<h3 class="list-paragraph" id="z.2.1-query-parameter-modifiers">Z.2.1 Query Parameter Modifiers</h3>
+<p>This section has no specific constraints.</p>
+<h3 class="list-paragraph" id="z.2.2-token-parameters">Z.2.2 Token Parameters</h3>
+<p>A token type is a parameter that provides an exact match search, either on a string of characters, potentially scoped by a URI. It is mostly used against a code or identifier data type where the value may have a URI that scopes its meaning, where the search is performed against the pair from a Coding or an Identifier. Tokens are also used against other fields where exact matches are required. (See FHIR <a href="http://hl7.org/fhir/R4/search.html#token">http://hl7.org/fhir/R4/search.html#token</a>.)</p>
+<p>This section has no specific constraints.</p>
+<h3 class="list-paragraph" id="z.2.3-string-parameters">Z.2.3 String Parameters</h3>
+<p>For a simple string search, a string parameter serves as the input for a case- and accent-insensitive search against sequences of characters. By default, a field matches a string query if the value of the field equals or starts with the supplied parameter value, after both have been normalized by case and accent. (See FHIR <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.)</p>
+<p>IHE Profiles may choose to require support for the string search modifiers.</p>
+<p>This section has no specific constraints.</p>
+<h2 class="list-paragraph" id="z.3-capabilitystatement-resource">Z.3 CapabilityStatement Resource </h2>
+<p>HL7 FHIR defines how a service can declare a CapabilityStatement Resource describing the resources, transport, formats, and operations that can be performed on a series of resources for the service instance. The CapabilityStatement Resource is described in FHIR <a href="http://hl7.org/fhir/R4/CapabilityStatement.html">http://hl7.org/fhir/R4/CapabilityStatement.html</a>.</p>
+<p>Actors providing http server functionality shall publish a CapabilityStatement on the metadata endpoint as described in FHIR <a href="http://hl7.org/fhir/R4/http.html#capabilities">http://hl7.org/fhir/R4/http.html#capabilities</a>.</p>
+<h2 class="list-paragraph" id="z.4-structuredefinition-resource">Z.4 StructureDefinition Resource </h2>
+<p>HL7 FHIR allows service implementers to publish a StructureDefinition Resource describing the constraints, terminology bindings, extensions and search parameters supported for a resource type. This StructureDefinition Resource allows consumers to determine the capabilities and data requirements of a particular FHIR-based service. The StructureDefinition Resource is described in FHIR <a href="http://hl7.org/fhir/R4/structuredefinition.html">http://hl7.org/fhir/R4/structuredefinition.html</a>.</p>
+<p>This section has no specific constraints.</p>
+<h2 class="list-paragraph" id="z.5-resource-reference-uris-in-fhir">Z.5 Resource Reference URIs in FHIR</h2>
+<p>Many of the defined elements in a resource are references to other resources. Using these references, the resources combine to build relationships between information. Resource References are described in FHIR <a href="http://hl7.org/fhir/R4/references.html">http://hl7.org/fhir/R4/references.html</a>.</p>
+<p>This section has no specific constraints.</p>
+<h2 class="list-paragraph" id="z.6-populating-the-expected-response-format">Z.6 Populating the Expected Response Format</h2>
+<p>The FHIR standard provides for response message content encoded as either XML or JSON. The server actor shall support both message encodings, whilst the client actors shall support one and may optionally support both.</p>
+<p>There are two methods for the client to indicate preference for encoding:</p>
+<ul>
+<li><p>the use of HTTP content negotiation and</p></li>
+<li><p>the _format query parameter</p></li>
+</ul>
+<p>This is described in FHIR <a href="http://hl7.org/fhir/R4/http.html#mime-type">http://hl7.org/fhir/R4/http.html#mime-type</a>. The server actor shall support both methods. Note that the value of the _format parameter must be a subset of the HTTP content negotiation.</p>
+<p>A client actor shall indicate preference for response format, using at least one method, with at least one of the following values. A server actor may support other encodings. To enable simpler query encoding, the value of _format may be the short “json” or “xml”.</p>
+<p>Table Z.6-1: Desired response encoding</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Desired Encoding</td>
+<td>mime-type Value</td>
+</tr>
+<tr class="even">
+<td>json</td>
+<td>application/fhir+json</td>
+</tr>
+<tr class="odd">
+<td>xml</td>
+<td>application/fhir+xml</td>
+</tr>
+</tbody>
+</table>
+<h2 class="list-paragraph" id="z.7-guidance-on-access-denied-results">Z.7 Guidance on Access Denied Results</h2>
+<p>The server must choose the response carefully when an Access Denied condition exists. Returning too much information may expose details that should not be communicated. The Access Denied condition might be because of missing required Authentication, because the user is not authorized to access the endpoint, because the user is not authorized to access specific data, or because of other policy reasons.</p>
+<p>To balance usability of the response against appropriate disclosure, the actual result method used needs to be controlled by policy and context.</p>
+<p>Typical methods used are:</p>
+<ul>
+<li><p><strong>Return a Success with Bundle containing zero results</strong> – This result is indistinguishable from the case where no data is known. When consistently returned on Access Denied, this approach will not expose which patients exist, or what data might be blinded. This method is also consistent with cases where some results are authorized while other results are excluded from the results. This can only be used when returning a Bundle is a valid result.</p></li>
+<li><p><strong>Return a 404 “Not Found”</strong> – This approach also protects from data leakage, as it is indistinguishable from a query against a resource that does not exist. It does however leak that the user is authenticated.</p></li>
+<li><p><strong>Return a 403 “Forbidden”</strong> – This approach communicates that the reason for the failure is an Authorization failure. It should only be used when the client and/or user is trusted to be given this information. Thus, this method is used mostly when the user is allowed to know that access is forbidden. It does not explain how the user might change things to become authorized. This approach may leak that content exists.</p></li>
+<li><p><strong>Return a 401 “Unauthorized”</strong> – This communicates that user authentication was attempted and failed to be authenticated. This approach may leak that content exists.</p></li>
+</ul>
+<p>When the server needs to report an error, it shall use HTTP error response codes and should include a FHIR OperationOutcome with more details on the failure. See FHIR <a href="http://hl7.org/fhir/R4/security.html#AccessDenied">http://hl7.org/fhir/R4/security.html#AccessDenied</a> and <a href="http://hl7.org/fhir/R4/operationoutcome.html">http://hl7.org/fhir/R4/operationoutcome.html</a>.</p>
+<h2 class="list-paragraph" id="z.8-mobile-security-considerations">Z.8 Mobile Security Considerations</h2>
+<p>There are many security and privacy concerns with mobile devices, including lack of physical control. Many common information technologies use of HTTP, including REST, access far less sensitive information than health information. These factors present an especially difficult challenge for the security model. Application developers should perform a Risk Assessment during design of their applications, and organizations responsible for the operational environment should perform Risk Assessments on the design and deployment of the operational environment. See FHIR Security and Privacy Module <a href="http://hl7.org/fhir/R4/secpriv-module.html">http://hl7.org/fhir/R4/secpriv-module.html</a>.</p>
+<p>Actors should not communicate any patient information unless proper authentication, authorization, and communications security have been performed.</p>
+<p>There are many reasonable methods of securing interoperability transactions. These security models can be layered in without modifying the characteristics of the transaction. The use of TLS is encouraged, specifically the use of the Audit Trail and Node Authentication (ATNA) Profile. User authentication on mobile devices is encouraged using the Internet User Authorization (IUA) Profile. The IUA Profile is a profile of the OAuth protocol. IUA enables external Authorization providers, which can leverage pluggable authentication providers, such as OpenID Connect. The network communication security and user authentication are layered in at the HTTP transport layer and do not modify the interoperability characteristics defined in the transaction.</p>
+<p>Security audit logging (e.g., ATNA) is recommended. Support for ATNA-based audit logging on the mobile health device may be beyond the ability of the client-constrained environment. For example, the client actor may only support HTTP interactions using JSON encoding, while the Record Audit Event [ITI-20] transaction requires the SYSLOG protocol and XML encoding. For this reason, the use of ATNA Audit Logging is not mandated. This means that the organization responsible for the operational environment must choose how to mitigate the risk of relying only on the service side audit logging.</p>
+<p>Many transactions using HTTP REST will include query parameters that would be identifiers, quasi-identifiers, or sensitive health topics. For example, it is common for patient identifier to be a query parameter. With this URL pattern, the query parameters are typically visible in the server audit log or browser history. The risk from this visibility should be mitigated in system or operational design, by protecting the logs as sensitive data, or by designing other measures into the system to prevent inappropriate exposure.</p>
+<h3 class="list-paragraph" id="z.8.1-auditing-considerations">Z.8.1 Auditing Considerations</h3>
+<h4 class="list-paragraph" id="z.8.1.1-authorization-activity">Z.8.1.1 Authorization Activity</h4>
+<p>IHE actors using FHIR will often use the OAuth 2 to authorize access to patient data. When an actor performs a transaction that includes an OAuth 2 authorization step and is grouped with an ATNA Secure Node or Secure Application Actor, it shall generate Audit events as specified in the IUA Profile in ITI TF-2b: 3.71.5.1 Security Audit Considerations.</p>
+<h4 class="list-paragraph" id="z.8.1.2-auditing-application-launch-activity-start-and-stop">Z.8.1.2 Auditing Application Launch Activity (Start and Stop)</h4>
+<p>An application will often launch other applications (e.g., such as in the SMART on FHIR EHR Launch or Standalone Launch flows).</p>
+<p>An application that is grouped with the ATNA Secure Node or Secure Application Actor shall generate audit events as specified in the following sections:</p>
+<ul>
+<li><p>Section Z.8.1.2.1 - When an actor launches an application.</p></li>
+<li><p>Section Z.8.1.2.2 - When the application itself has detected it is being launched.</p></li>
+<li><p>Section Z.8.1.2.3 - When an actor detects that an application has stopped.</p></li>
+<li><p>Section Z.8.1.2.4 - When the application itself has detected it is going to stop.</p></li>
+</ul>
+<h5 class="list-paragraph" id="z.8.1.2.1-audit-requirements-for-an-actor-launching-an-application">Z.8.1.2.1 Audit requirements for an actor launching an application</h5>
+<p>When an actor launches an application, it shall generate an “Application Start” audit event that complies with the following pattern:</p>
+<ul>
+<li><p>Event</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>EventID = EV(110100, Application Activity, “Audit event: Application Activity has taken place.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventTypeCode = EV(110120, Application Start, “Audit event: Application Entity has started.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventActionCode = “X” (Execute)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application Launcher (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = The launching actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110151, DCM, “Application Launcher”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Patient (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The identity of the affected patient (when relevant).</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Human Requestor (0..n)  one for each known User</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = Identity of the human that initiated the transaction.</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = Access Control role(s) the user holds that allows this transaction</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The launched actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110150, DCM, “Application”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Audit Source (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>not specialized</p>
+</blockquote></li>
+</ul>
+<h5 class="list-paragraph" id="z.8.1.2.2-audit-requirements-for-an-application-being-launched">Z.8.1.2.2 Audit Requirements for an application being launched</h5>
+<p>When an application itself has detected that it is being launched, it shall generate an “Application Start” audit event that complies with the following pattern:</p>
+<ul>
+<li><p>Event</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>EventID = EV(110100, Application Activity, “Audit event: Application Activity has taken place.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventTypeCode = EV(110120, Application Start, “Audit event: Application Entity has started.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventActionCode = “X” (Execute)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application Launcher (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = The launching actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110151, DCM, “Application Launcher”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Patient (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The identity of the affected patient (when relevant).</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Human Requestor (0..n)  one for each known User</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = Identity of the human that initiated the transaction.</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = Access Control role(s) the user holds that allows this transaction</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The launched actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110150, DCM, “Application”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Audit Source (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>not specialized</p>
+</blockquote></li>
+</ul>
+<h5 class="list-paragraph" id="z.8.1.2.3-audit-requirements-for-an-actor-that-detects-application-stop">Z.8.1.2.3 Audit Requirements for an actor that detects application stop</h5>
+<p>When an actor detects that a launched application has stopped, it shall generate an “Application Stop” audit event that complies with the following pattern:</p>
+<ul>
+<li><p>Event</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>EventID = EV(110100, Application Activity, “Audit event: Application Activity has taken place.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventTypeCode = EV(110121, Application Stop, “Audit event: Application Entity has stopped.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventActionCode = “X” (Execute)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application Launcher (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = The launching application’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110151, DCM, “Application Launcher”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Patient (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The identity of the patient affected (when relevant).</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Human Requestor (0..n)  one for each known User</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = Identity of the human that initiated the transaction.</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = Access Control role(s) the user holds that allows this transaction</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The launched actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110150, DCM, “Application”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Audit Source (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>not specialized</p>
+</blockquote></li>
+</ul>
+<h5 class="list-paragraph" id="z.8.1.2.4-audit-requirements-for-an-application-that-is-going-to-stop">Z.8.1.2.4 Audit requirements for an application that is going to stop</h5>
+<p>When the launched application itself has detected it is going to stop has finished, it shall generate an “Application Stop” audit event that complies with the following pattern:</p>
+<ul>
+<li><p>Event</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>EventID = EV(110100, Application Activity, “Audit event: Application Activity has taken place.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventTypeCode = EV(110121, Application Stop, “Audit event: Application Entity has stopped.”)</p>
+</blockquote></li>
+<li><blockquote>
+<p>EventActionCode = “X” (Execute)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application Launcher (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = The launching application’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110151, DCM, “Application Launcher”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Patient (0..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The identity of the patient affected (when relevant).</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Human Requestor (0..n)  one for each known User</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>UserID = Identity of the human that initiated the transaction.</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = Access Control role(s) the user holds that allows this transaction</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Application (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>The launched actor’s system identity</p>
+</blockquote></li>
+<li><blockquote>
+<p>RoleIDCode = EV(110150, DCM, “Application”)</p>
+</blockquote></li>
+</ul>
+<ul>
+<li><p>Audit Source (1..1)</p></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>not specialized</p>
+</blockquote></li>
+</ul>
+<h2 class="list-paragraph" id="z.9-fhir-data-types">Z.9 FHIR Data Types</h2>
+<p>This section includes specific guidance and constraints that are common to use of FHIR Data types.</p>
+<h3 class="list-paragraph" id="z.9.1-identifier-type">Z.9.1 Identifier Type</h3>
+<p>The HL7 FHIR standard uses the data type Identifier to express a business identifier that uniquely identifies a thing or object (see FHIR <a href="http://hl7.org/fhir/R4/datatypes.html#identifier">http://hl7.org/fhir/R4/datatypes.html#identifier</a>) including document uniqueIds, medical record numbers or patient identifiers. This concept is different than the resource identifier, known as “logical id” or “id” in FHIR, which identifies a particular resource. (A resource identifier may also be represented as an Identifier instance however.)</p>
+<p>The FHIR Identifier type introduces a new mechanism for conveying the originating system of a particular identifier. Whereas HL7 Version 2 and Version 3 messages identify an assigning organization as an HD (Hierarchical Descriptor) or an OID in the “root” attribute respectively, HL7 FHIR requires the use of a URI. This may necessitate some configuration on the part of actors in IHE profiles to correctly map between a URI and an OID or HD to maintain consistency with other actors which are not implementing the FHIR specification.</p>
+<p>Both the value and system shall be populated.</p>
+<p>When the value is a globally unique value, the system value shall be “urn:ietf:rfc:3986”.</p>
+<p>A value that is an OID shall be represented as a URI with scheme “urn:oid:”, for example:</p>
+<blockquote>
+<p>{</p>
+<p>"system": "urn:ietf:rfc:3986",</p>
+<p>"value": "urn:oid:1.2.826.0.1.3680043.2.1611.1.2.32884.10619.27943.27629.41504"</p>
+<p>}</p>
+</blockquote>
+<p>A value that is a UUID shall be represented as a URI with a scheme “urn:uuid:”, for example:</p>
+<blockquote>
+<p>{</p>
+<p>"system": "urn:ietf:rfc:3986",</p>
+<p>"value": "urn:uuid:13cc6fc6-55ef-4dbc-a426-e0e82dffbe42"</p>
+<p>}</p>
+</blockquote>
+<h4 class="list-paragraph" id="z.9.1.1-identifier-and-hl7-version-3-root-plus-extension">Z.9.1.1 Identifier and HL7 version 3 "root plus extension"</h4>
+<p>In HL7 version 3, uniqueId can be expressed as a <em>root</em>, or as a <em>root</em> plus <em>extension</em>.</p>
+<p>When converting an HL7 version 3 uniqueId to FHIR, if no <em>extension</em> is provided, the <em>root</em> shall be placed into the Identifier.value, and the Identifier.system shall be set to “urn:ietf:rfc:3986”. For example, the HL7 version 3 value</p>
+<blockquote>
+<p>&lt;identifier root="1.2.826.0.1.3680043.2.1611.1.2.32884.10619.27943.27629.41504" /&gt;</p>
+</blockquote>
+<p>would be expressed in FHIR as</p>
+<blockquote>
+<p>{</p>
+<p>"system": "urn:ietf:rfc:3986",</p>
+<p>"value": "urn:oid:1.2.826.0.1.3680043.2.1611.1.2.32884.10619.27943.27629.41504"</p>
+<p>}</p>
+</blockquote>
+<p>When an <em>extension</em> is provided, the <em>extension</em> shall be placed into the Identifier.value, and the Identifier.system shall be set to the <em>root.</em> For example, the HL7 version 3 value</p>
+<blockquote>
+<p>&lt;identifier root="1.2.826.0.1.3680043.2.1611.1.2.32884.10619.27943.27629.41504" extension="84566" /&gt;</p>
+</blockquote>
+<p>would be expressed in FHIR as</p>
+<blockquote>
+<p>{</p>
+<p>"system": "urn:oid:1.2.826.0.1.3680043.2.1611.1.2.32884.10619.27943.27629.41504"</p>
+<p>“value”:”84566”</p>
+<p>}</p>
+</blockquote>
+<h4 class="list-paragraph" id="z.9.1.2-xds-cxi-mapped-to-fhir-identifier-type">Z.9.1.2 XDS CXi mapped to FHIR Identifier Type</h4>
+<p>In XDS, a subset of CX is defined as CXi.</p>
+<p>The following mapping shall be used unless otherwise specified:</p>
+<p>CXi.1 (id) = Identifier.value</p>
+<p>CXi.4 (assigning authority) = Identifier.system</p>
+<p>CXi.5 (identifier type code) = Identifier.type</p>
+<p>CXi.6 (homeCommunityId) = &lt;not mapped&gt;</p>
+<p>Thus, a CXi value such as</p>
+<blockquote>
+<p>2013001^^^&amp;1.2.3.4.5.6&amp;ISO^urn:ihe:iti:xds:2013:accession</p>
+</blockquote>
+<p>would be expressed in FHIR as:</p>
+<blockquote>
+<p>&lt;identifier&gt;</p>
+<p>&lt;type&gt;</p>
+<p>&lt;coding&gt;</p>
+<p>&lt;system value="urn:ietf:rfc:3986"/&gt;</p>
+<p>&lt;code value="urn:ihe:iti:xds:2013:accession"/&gt;</p>
+<p>&lt;/coding&gt;</p>
+<p>&lt;/type&gt;</p>
+<p>&lt;system value="urn:oid:1.2.3.4.5.6"/&gt;</p>
+<p>&lt;value value="2013001"/&gt;</p>
+<p>&lt;/identifier&gt;</p>
+</blockquote>
+<h2 class="list-paragraph" id="z.10-profiling-conventions-for-constraints-on-fhir">Z.10 Profiling conventions for constraints on FHIR</h2>
+<p>The following terms refer to the values used in the OPT column of tables in ITI Technical Framework Volumes 2, 3, and 4 that define constraints being profiled:</p>
+<p>R Required. This element is required by FHIR. A sending application shall populate the element with a non-empty value. A receiving application may ignore the information conveyed by the element. A receiving application shall not raise an error solely due to the presence of the element but may raise an error due to the absence of the element.</p>
+<p>R+ Required. This element is required by IHE profiling but is not a required element by FHIR. This element shall be treated as "R", above.</p>
+<p>R2 Required if known. If the sending application has data for the element, it is required to populate the element with a non-empty value. If the value is not known, the element may be omitted. A receiving application may ignore the information conveyed by the element. A receiving application shall not raise an error solely due to the presence or absence of the element.</p>
+<p>O Optional. At its discretion, a sending application may populate the element with a non-empty value. A receiving application may ignore the information conveyed by the element. A receiving application shall not raise an error solely due to the presence or absence of the element.</p>
+<p>C Conditional. There is a stated <em>condition</em> associated with the element. When the condition is true, a sending application shall send the element.</p>
+<p>X Not supported. A sending application shall not populate the element. A receiving application may, if the element is received, ignore the information conveyed by the element, or may raise an error due to the presence of the element.</p>
+
       </p>
-          </div>
+
+
+
+</div>
         </div>
       </main>
     </div>
