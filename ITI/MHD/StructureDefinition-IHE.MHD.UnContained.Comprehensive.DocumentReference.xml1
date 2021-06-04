@@ -27,27 +27,32 @@
     <valueCode value="not-classified"/>
   </extension>
   <url value="http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"/>
-  <version value="4.0.0"/>
+  <version value="4.0.1"/>
   <name value="UnContainedComprehensiveDocumentReference"/>
-  <title value="MHD DocumentReference Comprehensive UnContained"/>
+  <title value="MHD DocumentReference Comprehensive UnContained References Option"/>
   <status value="active"/>
-  <date value="2021-03-31T11:10:11-05:00"/>
+  <date value="2021-06-04T16:04:45-05:00"/>
   <publisher value="Integrating the Healthcare Enterprise (IHE)"/>
   <contact>
-    <name value="IHE"/>
+    <name value="Integrating the Healthcare Enterprise (IHE)"/>
     <telecom>
       <system value="url"/>
       <value value="http://ihe.net"/>
     </telecom>
-  </contact>
-  <contact>
-    <name value="IHE Secretary"/>
     <telecom>
       <system value="email"/>
       <value value="secretary@ihe.net"/>
     </telecom>
   </contact>
-  <description value="A profile on the DocumentReference resource for MHD with Comprehensive metadata but without a requirement for contained author, authenticator, or sourcePatientInfo. &#xD;&#xA;* MHD is based on the [IHE Document Sharing](https://profiles.ihe.net/ITI/HIE-Whitepaper/index.html) model, &#xD;&#xA;* the [3:4.1 Abstract Metadata Model](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.1.html#4.1), and &#xD;&#xA;* the use defined here is FHIR DocumentReference implementation of the &#xD;&#xA;* ebRIM implementation at [3:4.2.3.2 Document Entry](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2).&#xD;&#xA;* with use-cases and constraints found in [3:4.3 Additional Document Sharing Requirements](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.3.html#4.3) &#xD;&#xA;"/>
+  <contact>
+    <name value="John Moehrke"/>
+    <telecom>
+      <system value="email"/>
+      <value value="JohnMoehrke@gmail.com"/>
+      <use value="work"/>
+    </telecom>
+  </contact>
+  <description value="A profile on the DocumentReference resource for MHD with Comprehensive Metadata Option but without a requirement for contained author, authenticator, or sourcePatientInfo. &#xD;&#xA;- MHD is based on the [IHE Document Sharing](https://profiles.ihe.net/ITI/HIE-Whitepaper/index.html) model, &#xD;&#xA;- the [3:4.1 Abstract Metadata Model](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.1.html#4.1), and &#xD;&#xA;- the use defined here is FHIR DocumentReference implementation of the &#xD;&#xA;- ebRIM implementation at [3:4.2.3.2 Document Entry](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2).&#xD;&#xA;- with use-cases and constraints found in [3:4.3 Additional Document Sharing Requirements](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.3.html#4.3)"/>
   <jurisdiction>
     <coding>
       <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
@@ -655,14 +660,10 @@
     </element>
     <element id="DocumentReference.modifierExtension">
       <path value="DocumentReference.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
       <base>
         <path value="DomainResource.modifierExtension"/>
         <min value="0"/>
@@ -690,10 +691,6 @@
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
       <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="DocumentReference.masterIdentifier">
       <path value="DocumentReference.masterIdentifier"/>
@@ -2275,8 +2272,12 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="DocumentFormat"/>
+        </extension>
         <strength value="preferred"/>
-        <valueSet value="http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode"/>
+        <description value="Document Format Codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/formatcodes"/>
       </binding>
       <mapping>
         <identity value="fhircomposition"/>

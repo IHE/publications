@@ -1,0 +1,441 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix loinc: <http://loinc.org/rdf#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-comprehensiveProvideDocumentBundleComplete> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-comprehensiveProvideDocumentBundleComplete"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "transaction"];
+  fhir:Bundle.timestamp [ fhir:value "2004-10-05T11:50:50-05:00"^^xsd:dateTime];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500001" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500001>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "List" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500002" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500002>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "DocumentReference" ]
+     ]
+  ], [
+     fhir:index 2;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500003" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500003>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "Binary" ]
+     ]
+  ], [
+     fhir:index 3;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500004" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500004>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "List" ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500001> a fhir:List;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00555500001"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "extensions" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">SubmissionSet with Patient</div>"
+  ];
+  fhir:DomainResource.contained [
+     a fhir:Practitioner;
+     fhir:index 0;
+     fhir:Resource.id [ fhir:value "in-practitionerRecipient" ];
+     fhir:Practitioner.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "JohnMoehrke@gmail.com" ]
+     ]
+  ], [
+     a fhir:Practitioner;
+     fhir:index 1;
+     fhir:Resource.id [ fhir:value "in-practitionerAuthor" ];
+     fhir:Practitioner.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "iti@ihe.net" ]
+     ]
+  ], [
+     a fhir:Organization;
+     fhir:index 2;
+     fhir:Resource.id [ fhir:value "in-organizationAuthor" ];
+     fhir:Organization.name [ fhir:value "my Hospital" ]
+  ];
+  fhir:DomainResource.extension [
+     fhir:index 0;
+     fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType" ];
+     fhir:Extension.valueCodeableConcept [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:225728007;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "225728007" ]
+       ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-sourceId" ];
+     fhir:Extension.valueIdentifier [
+       fhir:Identifier.value [ fhir:value "urn:oid:1.2.3.4" ]
+     ]
+  ], [
+     fhir:index 2;
+     fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-intendedRecipient" ];
+     fhir:Extension.valueReference [
+       fhir:Reference.reference [ fhir:value "#in-practitionerRecipient" ]
+     ]
+  ];
+  fhir:List.identifier [
+     fhir:index 0;
+     fhir:Identifier.use [ fhir:value "official" ];
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.129.6.58.92.88337.1" ]
+  ], [
+     fhir:index 1;
+     fhir:Identifier.use [ fhir:value "usual" ];
+     fhir:Identifier.system [ fhir:value "http://example.org/documents" ];
+     fhir:Identifier.value [ fhir:value "23425234-23470-1" ]
+  ];
+  fhir:List.status [ fhir:value "current"];
+  fhir:List.mode [ fhir:value "working"];
+  fhir:List.title [ fhir:value "Hello World SubmissionSet"];
+  fhir:List.code [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes" ];
+       fhir:Coding.code [ fhir:value "submissionset" ]
+     ]
+  ];
+  fhir:List.subject [
+     fhir:link <http://profiles.ihe.net/ITI/MHD/Patient/ex-patient>;
+     fhir:Reference.reference [ fhir:value "Patient/ex-patient" ]
+  ];
+  fhir:List.date [ fhir:value "2004-10-25T23:50:50-05:00"^^xsd:dateTime];
+  fhir:List.source [
+     fhir:Element.extension [
+       fhir:index 0;
+       fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-authorOrg" ];
+       fhir:Extension.valueReference [
+         fhir:Reference.reference [ fhir:value "#in-organizationAuthor" ]
+       ]
+     ];
+     fhir:Reference.reference [ fhir:value "#in-practitionerAuthor" ]
+  ];
+  fhir:List.note [
+     fhir:index 0;
+     fhir:Annotation.text [ fhir:value "Comments about Hello World SubmissionSet" ]
+  ];
+  fhir:List.entry [
+     fhir:index 0;
+     fhir:List.entry.item [
+       fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500002" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:List.entry.item [
+       fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500004" ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500002> a fhir:DocumentReference;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00555500002"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p><b>masterIdentifier</b>: id: urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012</p><p><b>identifier</b>: id: urn:uuid:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d</p><p><b>status</b>: current</p><p><b>type</b>: <span title=\"Codes: {http://loinc.org 60591-5}\">Patient summary Document</span></p><p><b>category</b>: <span title=\"Codes: {http://loinc.org 11369-6}\">History of Immunization Narrative</span></p><p><b>subject</b>: <a href=\"Patient-ex-patient.html\">Generated Summary: John Schmidt , John Jacob Jingle Heimer Schnidt (OLD), John Jacob Jingleheimer Schmidt (OFFICIAL), Jack Schmidt (NICKNAME); gender: other; birthDate: 1923-07-25</a></p><p><b>date</b>: Feb 1, 2020 10:50:50 PM</p><p><b>author</b>: </p><ul><li><a name=\"in-organizationAuthor\"> </a></li><li><a name=\"in-practitionerAuthor\"> </a></li></ul><blockquote><p><b>name</b>: my Hospital</p></blockquote><blockquote><p><b>telecom</b>: <a href=\"mailto:iti@ihe.net\">iti@ihe.net</a></p></blockquote><p><b>authenticator</b>: <a name=\"in-organizationAuthor\"> </a></p><blockquote><p><b>name</b>: my Hospital</p></blockquote><h3>RelatesTos</h3><table class=\"grid\"><tr><td>-</td><td><b>Code</b></td><td><b>Target</b></td></tr><tr><td>*</td><td>appends</td><td><a href=\"DocumentReference-ex-DocumentReferenceComprehensive.html\">Generated Summary: id: urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340; id: urn:uuid:0c287d32-01e3-4d87-9953-9fcc9404eb21; status: current; <span title=\"Codes: {http://loinc.org 55107-7}\">Addendum Document</span>; <span title=\"Codes: {http://loinc.org 11369-6}\">History of Immunization Narrative</span>; date: Dec 31, 2020 10:50:50 PM; description: Example of a Comprehensive DocumentReference resource. This is fully filled for all mandatory elements and all optional elements.; <span title=\"Codes: {http://terminology.hl7.org/CodeSystem/v3-Confidentiality N}\">normal</span></a></td></tr></table><p><b>description</b>: a complete comprehensive metadata document reference</p><p><b>securityLabel</b>: <span title=\"Codes: {http://terminology.hl7.org/CodeSystem/v3-Confidentiality R}\">restricted</span></p><blockquote><p><b>content</b></p><h3>Attachments</h3><table class=\"grid\"><tr><td>-</td></tr><tr><td>*</td></tr></table><p><b>format</b>: <span title=\"{http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode urn:ihe:iti:xds-sd:text:2008}\">urn:ihe:iti:xds-sd:text:2008</span></p></blockquote><h3>Contexts</h3><table class=\"grid\"><tr><td>-</td><td><b>Event</b></td><td><b>Period</b></td><td><b>FacilityType</b></td><td><b>PracticeSetting</b></td><td><b>SourcePatientInfo</b></td><td><b>Related</b></td></tr><tr><td>*</td><td><span title=\"Codes: {http://terminology.hl7.org/CodeSystem/v3-ActCode PATDOC}\">patient documentation task</span></td><td>Feb 1, 1990 10:50:50 PM --&gt; Feb 1, 2020 10:50:50 PM</td><td><span title=\"Codes: {http://snomed.info/sct 82242000}\">Children's hospital</span></td><td><span title=\"Codes: {http://snomed.info/sct 408467006}\">Adult mental illness - specialty (qualifier value)</span></td><td><a name=\"in-patient5\"> </a><blockquote><p><b>identifier</b>: id: mrn-1234</p><p><b>name</b>: Dee Schmidt </p></blockquote></td><td><span></span></td></tr></table></div>"
+  ];
+  fhir:DomainResource.contained [
+     a fhir:Patient;
+     fhir:index 0;
+     fhir:Resource.id [ fhir:value "in-patient5" ];
+     fhir:Patient.identifier [
+       fhir:index 0;
+       fhir:Identifier.system [ fhir:value "http://example.org/patients" ];
+       fhir:Identifier.value [ fhir:value "mrn-1234" ]
+     ];
+     fhir:Patient.name [
+       fhir:index 0;
+       fhir:HumanName.family [ fhir:value "Schmidt" ];
+       fhir:HumanName.given [
+         fhir:value "Dee";
+         fhir:index 0
+       ]
+     ]
+  ], [
+     a fhir:Organization;
+     fhir:index 1;
+     fhir:Resource.id [ fhir:value "in-organizationAuthor" ];
+     fhir:Organization.name [ fhir:value "my Hospital" ]
+  ], [
+     a fhir:Practitioner;
+     fhir:index 2;
+     fhir:Resource.id [ fhir:value "in-practitionerAuthor" ];
+     fhir:Practitioner.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "iti@ihe.net" ]
+     ]
+  ];
+  fhir:DocumentReference.masterIdentifier [
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012" ]
+  ];
+  fhir:DocumentReference.identifier [
+     fhir:index 0;
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:uuid:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d" ]
+  ];
+  fhir:DocumentReference.status [ fhir:value "current"];
+  fhir:DocumentReference.type [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:60591-5;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "60591-5" ]
+     ]
+  ];
+  fhir:DocumentReference.category [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:11369-6;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "11369-6" ]
+     ]
+  ];
+  fhir:DocumentReference.subject [
+     fhir:link <http://profiles.ihe.net/ITI/MHD/Patient/ex-patient>;
+     fhir:Reference.reference [ fhir:value "Patient/ex-patient" ]
+  ];
+  fhir:DocumentReference.date [ fhir:value "2020-02-01T23:50:50-05:00"^^xsd:dateTime];
+  fhir:DocumentReference.author [
+     fhir:index 0;
+     fhir:Reference.reference [ fhir:value "#in-organizationAuthor" ]
+  ], [
+     fhir:index 1;
+     fhir:Reference.reference [ fhir:value "#in-practitionerAuthor" ]
+  ];
+  fhir:DocumentReference.authenticator [
+     fhir:Reference.reference [ fhir:value "#in-organizationAuthor" ]
+  ];
+  fhir:DocumentReference.relatesTo [
+     fhir:index 0;
+     fhir:DocumentReference.relatesTo.code [ fhir:value "appends" ];
+     fhir:DocumentReference.relatesTo.target [
+       fhir:link <http://profiles.ihe.net/ITI/MHD/DocumentReference/ex-DocumentReferenceComprehensive>;
+       fhir:Reference.reference [ fhir:value "DocumentReference/ex-DocumentReferenceComprehensive" ]
+     ]
+  ];
+  fhir:DocumentReference.description [ fhir:value "a complete comprehensive metadata document reference"];
+  fhir:DocumentReference.securityLabel [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-Confidentiality" ];
+       fhir:Coding.code [ fhir:value "R" ]
+     ]
+  ];
+  fhir:DocumentReference.content [
+     fhir:index 0;
+     fhir:DocumentReference.content.attachment [
+       fhir:Attachment.contentType [ fhir:value "text/plain" ];
+       fhir:Attachment.language [ fhir:value "en" ];
+       fhir:Attachment.url [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500003" ];
+       fhir:Attachment.size [ fhir:value "11"^^xsd:nonNegativeInteger ];
+       fhir:Attachment.hash [ fhir:value "MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA=="^^xsd:base64Binary ];
+       fhir:Attachment.title [ fhir:value "Hello World" ];
+       fhir:Attachment.creation [ fhir:value "2020-02-01T23:50:50-05:00"^^xsd:dateTime ]
+     ];
+     fhir:DocumentReference.content.format [
+       fhir:Coding.system [ fhir:value "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode" ];
+       fhir:Coding.code [ fhir:value "urn:ihe:iti:xds-sd:text:2008" ]
+     ]
+  ];
+  fhir:DocumentReference.context [
+     fhir:DocumentReference.context.event [
+       fhir:index 0;
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActCode" ];
+         fhir:Coding.code [ fhir:value "PATDOC" ]
+       ]
+     ];
+     fhir:DocumentReference.context.period [
+       fhir:Period.start [ fhir:value "1990-02-01T23:50:50-05:00"^^xsd:dateTime ];
+       fhir:Period.end [ fhir:value "2020-02-01T23:50:50-05:00"^^xsd:dateTime ]
+     ];
+     fhir:DocumentReference.context.facilityType [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:82242000;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "82242000" ]
+       ]
+     ];
+     fhir:DocumentReference.context.practiceSetting [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:408467006;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "408467006" ]
+       ]
+     ];
+     fhir:DocumentReference.context.sourcePatientInfo [
+       fhir:Reference.reference [ fhir:value "#in-patient5" ]
+     ];
+     fhir:DocumentReference.context.related [
+       fhir:index 0;
+       fhir:Reference.identifier [
+         fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+         fhir:Identifier.value [ fhir:value "urn:uuid:7d5bb8ac-68ee-4926-85e7-baaaaaaaaaad" ]
+       ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500003> a fhir:Binary;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00555500003"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Binary.contentType [ fhir:value "text/plain"];
+  fhir:Binary.data [ fhir:value "SGVsbG8gV29ybGQ="^^xsd:base64Binary] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500004> a fhir:List;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00555500004"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "extensions" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">Folder with Patient</div>"
+  ];
+  fhir:DomainResource.extension [
+     fhir:index 0;
+     fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType" ];
+     fhir:Extension.valueCodeableConcept [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:225728007;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "225728007" ]
+       ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Extension.url [ fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType" ];
+     fhir:Extension.valueCodeableConcept [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         a sct:284548004;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "284548004" ]
+       ]
+     ]
+  ];
+  fhir:List.identifier [
+     fhir:index 0;
+     fhir:Identifier.use [ fhir:value "official" ];
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.129.6.58.92.88337.5" ]
+  ], [
+     fhir:index 1;
+     fhir:Identifier.use [ fhir:value "usual" ];
+     fhir:Identifier.system [ fhir:value "http://example.org/documents" ];
+     fhir:Identifier.value [ fhir:value "23425234-23475" ]
+  ];
+  fhir:List.status [ fhir:value "current"];
+  fhir:List.mode [ fhir:value "working"];
+  fhir:List.title [ fhir:value "Example Folder with comprehensive metadata"];
+  fhir:List.code [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes" ];
+       fhir:Coding.code [ fhir:value "folder" ]
+     ]
+  ];
+  fhir:List.subject [
+     fhir:link <http://profiles.ihe.net/ITI/MHD/Patient/ex-patient>;
+     fhir:Reference.reference [ fhir:value "Patient/ex-patient" ]
+  ];
+  fhir:List.date [ fhir:value "2004-12-25T23:50:50-05:00"^^xsd:dateTime];
+  fhir:List.note [
+     fhir:index 0;
+     fhir:Annotation.text [ fhir:value "Folder for submission" ]
+  ];
+  fhir:List.entry [
+     fhir:index 0;
+     fhir:List.entry.item [
+       fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00555500002" ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-comprehensiveProvideDocumentBundleComplete.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

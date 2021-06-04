@@ -1,0 +1,89 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-findDocumentListsResponse> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-findDocumentListsResponse"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentListsResponseMessage";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentListsResponseMessage>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "searchset"];
+  fhir:Bundle.timestamp [ fhir:value "2021-04-16T11:32:24Z"^^xsd:dateTime];
+  fhir:Bundle.total [ fhir:value "1"^^xsd:nonNegativeInteger];
+  fhir:Bundle.link [
+     fhir:index 0;
+     fhir:Bundle.link.relation [ fhir:value "self" ];
+     fhir:Bundle.link.url [ fhir:value "test.fhir.net/R4/fhir/List?patient=9876&code=folder&status=current&designationType=http://snomed.info/sct#225728007" ]
+  ];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://example.org/List/in-minimalFolder" ];
+     fhir:Bundle.entry.resource <http://example.org/List/in-minimalFolder>
+  ] .
+
+<http://example.org/List/in-minimalFolder> a fhir:List;
+  fhir:Resource.id [ fhir:value "in-minimalFolder"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder";
+       fhir:index 0;
+       fhir:link <http://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p><b>identifier</b>: id: urn:oid:1.2.129.6.58.92.88337.6 (OFFICIAL), id: 23425234-23476 (USUAL)</p><p><b>status</b>: current</p><p><b>mode</b>: working</p><p><b>code</b>: <span title=\"Codes: {http://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes folder}\">Folder as a FHIR List</span></p><h3>Entries</h3><table class=\"grid\"><tr><td>-</td><td><b>Item</b></td></tr><tr><td>*</td><td><a href=\"DocumentReference-ex-documentreference.html\">Generated Summary: status: current</a></td></tr></table></div>"
+  ];
+  fhir:List.identifier [
+     fhir:index 0;
+     fhir:Identifier.use [ fhir:value "official" ];
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.129.6.58.92.88337.6" ]
+  ], [
+     fhir:index 1;
+     fhir:Identifier.use [ fhir:value "usual" ];
+     fhir:Identifier.system [ fhir:value "http://example.org/documents" ];
+     fhir:Identifier.value [ fhir:value "23425234-23476" ]
+  ];
+  fhir:List.status [ fhir:value "current"];
+  fhir:List.mode [ fhir:value "working"];
+  fhir:List.code [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes" ];
+       fhir:Coding.code [ fhir:value "folder" ]
+     ]
+  ];
+  fhir:List.entry [
+     fhir:index 0;
+     fhir:List.entry.item [
+       fhir:link <http://profiles.ihe.net/ITI/MHD/DocumentReference/ex-documentreference>;
+       fhir:Reference.reference [ fhir:value "DocumentReference/ex-documentreference" ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-findDocumentListsResponse.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
