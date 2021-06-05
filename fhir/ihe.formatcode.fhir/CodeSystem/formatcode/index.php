@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.json2');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.json1');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.json');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.xml2');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.xml1');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.html');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.html');
 else 
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/0.2.4/CodeSystem-formatcode.xml');
+  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.0.0/CodeSystem-formatcode.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.
