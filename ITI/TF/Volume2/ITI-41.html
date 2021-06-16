@@ -299,6 +299,8 @@
         <a href="../Volume1/ch-10.html#10.2.9">ITI TF-1: 10.2.9</a>
         for support of the Basic Patient Privacy Enforcement Option.
       </p>
+      <h6 id="3.41.4.1.2.2">3.41.4.1.2.2 XDR Document Source (informative)</h6>
+      <p>There are multiple methods, e.g. XCPD, for an XDR Document Source to obtain a patient ID that is known by the Document Recipient.  If possible, the Document Source should provide such a patient ID.  In cases where it cannot, the Document Source shall submit objects using the requirements of an XDR Metadata Limited Document Source, which allows the submission to not contain a value for patientId.</p>
       <h5 id="3.41.4.1.3">3.41.4.1.3 Expected Actions</h5>
       <p>Upon receipt of a Provide and Register Document Set-b request, the Content Receiver shall process the request.</p>
       <p>
@@ -321,6 +323,7 @@
       <p>In addition to the Expected Actions of all Content Receivers (described in the beginning of Section 3.41.4.1.3), a Document Recipient shall meet the following requirements.</p>
       <p>A Document Recipient shall be able to interpret a submission without any context, such as knowledge of a prior submission.</p>
       <p>The Document Recipient may validate the presence of metadata attributes. If the Document Recipient declares the Accepts Limited Metadata Option and the limitedMetadata attribute is present, such validation shall not exceed the requirements in the column labeled “XDR MS” (XDR Metadata-Limited Document Source) of ITI TF-3: Table 4.3.1-3. Otherwise, such validation shall not exceed the requirements in the column labeled “XDR DS” (XDR Document Source) of ITI TF-3: Table 4.3.1-3.</p>
+      <p>The Document Recipient may validate the patientId attribute in DocumentEntry, SubmissionSet, or Folder, if it is included.  The Document Recipient may attempt to determine the the identity of the patient through other means.  The Document Recipient may return an XDSUnknownPatientId error when it cannot identify the patient.  </p>
       <p>The following shall not cause rejection of a submission:</p>
       <ul>
         <li class="bullet-list1">The submitted metadata includes Folders, and the Document Recipient cannot process the Folder-specific content. The response shall contain a PartialFolderContentNotProcessed warning and a textual description that Folder Content was not processed.</li>
