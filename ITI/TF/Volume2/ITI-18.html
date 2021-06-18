@@ -1788,7 +1788,7 @@
       </ul>
       <p>The following assertions shall be met by a Document Registry when returning metadata in a Registry Stored Query transaction. The terms 'subsumed patient identifier' and 'surviving patient identifier' refer to the contents of any previously received merge message.</p>
       <ul>
-        <li class="bullet-list1">If the query includes a patient identifier parameter and that patient identity matches the subsumed patient identifier of a merge message then the query shall return no results. This is not an error condition and the Registry Stored Query transaction shall not return an error status.</li>
+        <li class="bullet-list1">If the query includes a patient identifier parameter and that patient identity matches the subsumed patient identifier of a merge message then the query shall return no results or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.</li>
         <li class="bullet-list1">If the query includes a patient identifier and that patient identifier matches the surviving patient identifier of a previous merge message then the query shall return the composite of:</li>
         <li class="bullet-list1">Metadata registered against the surviving patient identifier</li>
         <li class="bullet-list1">Metadata registered against the subsumed patient identifier</li>
@@ -2818,7 +2818,7 @@
       <ul>
         <li class="bullet-list1">
           <span style="font-weight:bold">For Document Registry Actors:</span>
-          <span>Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in Section 3.18.4.1.2.3.7 Parameters for Required Queries and execute the query. The Document Registry shall accept the homeCommunityId value if it is specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry it shall return a successful response with no elements.</span>
+          <span>Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in Section 3.18.4.1.2.3.7 Parameters for Required Queries and execute the query. The Document Registry shall accept the homeCommunityId value if it is specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry it shall return a successful response with no elements, or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.</span>
         </li>
         <li class="bullet-list1">
 		<span style="font-weight:bold">For Initiating Gateway Actors:</span></li>
