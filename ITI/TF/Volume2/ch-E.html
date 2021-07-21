@@ -62,6 +62,7 @@
             </div>
           </div>
           <div id="main-top" class="cell medium-10 large-10">
+		  	  <p class="trialImplementation">This Appendix has been updated by Trial-Implementation text that is included below in section E.3.</p>
       <h1 id="Appendix E">Appendix E: Patient Identifiers in HL7-based IHE Profiles</h1>
       <p>
         <span>The Health Level Seven Standard (HL7) uses data type CX to express various identifiers, including the Patient ID in the third field of the PID segment. We discuss here how IHE IT Infrastructure expects the CX data type to be populated in the</span>
@@ -828,8 +829,30 @@
           <span>&lt;/identifiedPerson&gt;</span>
         </p>
       </div>
-          </div>
+
+		<div class="trialImplementationContent">
+      <h2 id="E.2">E.3 FHIR Identifier Type</h2>
+	  <p>
+The HL7 FHIR standard uses the data type Identifier to express a business identifier that uniquely identifies a thing or object (see FHIR <a href="http://hl7.org/fhir/R4/datatypes.html#identifier">http://hl7.org/fhir/R4/datatypes.html#identifier</a>) including medical record numbers or patient identifiers. See Appendix <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.9-fhir-data-types">Z.9.1</a> for general guidance on FHIR Identifier datatype. This concept is different than the resource identifier, known as “logical id” or “id” in FHIR, which identifies a resource. (A resource identifier may also be represented as an Identifier instance however.) 
+</p><p>
+This section specifies how IHE profiles use the Identifier data type in FHIR resources. 
+</p><p>
+IHE adds constraints to the Identifier data type; requirements for populating its elements vary slightly depending on what actor is originating a transaction. 
+</p><p>
+The FHIR Identifier type introduces a different mechanism for conveying the originating system of a particular identifier. Whereas HL7 Version 2 and Version 3 messages identify an assigning organization as an HD (Hierarchical Descriptor) or an OID in the “root” attribute, respectively, HL7 FHIR requires the use of a URI. This may necessitate some configuration on the part of actors in IHE profiles to correctly map between a URI and an OID, or HD to maintain consistency with other actors which are not implementing the FHIR specification. 
+</p><p>
+IHE imposes the following restrictions on the FHIR Identifier datatype for a Patient:
+</p>
+      <ul>
+        <li class="bullet-list1">Both the value and system shall be populated. See Appendix <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.9-fhir-data-types">Z.9.1</a> Identifier Type.</li>
+		<li class="bullet-list1">The assigner attribute may be populated (the name of the organization which assigned the identifier). When the assigning authority name is provided, the actor shall also populate the display attribute.</li>
+	  </ul>
+
+
+
+		</div>
         </div>
+		</div>
       </main>
     </div>
    <footer class="ihe-footer">
