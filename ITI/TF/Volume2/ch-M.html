@@ -121,6 +121,267 @@
       <p>In Approach 2, note that the PDQ Patient Demographics Supplier is grouped with the PIX Patient Identifier Cross-reference Consumer. This combined actor will use a PIX query to satisfy the request of the client from additional patient identifiers and return them in PID-3.</p>
           </div>
         </div>
+        
+        <h3 id="m-4-patient-demographics-query-implementation-guidance">M.4 Patient Demographics Query Implementation Guidance</h3>
+<p>|<em>Add the following section to the end of <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-M.html">Volume 2 Appendix M</a>:</em>|
+{: .grid}</p>
+<p>This section describes the data elements that are used in IHE profiles designed for the querying of patient demographics (Patient Demographics Query Profiles) including PDQ, PDQv3, and PDQm.</p>
+<p>While the semantic representation of the data elements differs across the transaction in the PDQ Profiles, the common set of elements and query parameters can be described using abstract terminology. This section explains the data elements and query parameters used in PDQ Profiles from an abstract definition standpoint, and then it provides a map between the three profiles’ implementation specific concept.</p>
+<p>Note: More data elements may be known by the Patient Demographics Supplier and may be returned. Elements beyond those profiled are encouraged but not required of the profile. Patient Demographics Consumer Actors should be robust to receiving more data than is profiled.</p>
+<h4 id="m-4-1-patient-demographics-query-data-fields">M.4.1 Patient Demographics Query Data Fields</h4>
+<p>Table M.4.1-1 outlines the abstract demographics fields which are common to all Patient Demographics Query Profiles.</p>
+<p><strong>Table M.4.1-1: Patient Demographics Data Elements (abstract)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identifier List</td>
+<td>Provides one or more identifiers that can be used to uniquely identify the patient within a medical system.</td>
+</tr>
+<tr>
+<td>Name(s)</td>
+<td>Identifies the patient’s preferred, legal, or alias names.</td>
+</tr>
+<tr>
+<td>Date/Time of Birth</td>
+<td>Identifies the date on which the patient was born.</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>Identifies the patient’s gender used for administrative purposes.</td>
+</tr>
+<tr>
+<td>Address(es)</td>
+<td>Identifies the patient’s associated addresses (home, work, etc.)</td>
+</tr>
+<tr>
+<td>Telecommunications Address(es)</td>
+<td>Identifies the patient’s phone number, fax number, email addresses and other means of telecommunicating with the patient.</td>
+</tr>
+<tr>
+<td>Language(s) of communication</td>
+<td>Identifies languages which can be used when communicating with the patient.</td>
+</tr>
+<tr>
+<td>Marital Status</td>
+<td>Identifies the patient’s marital status at time of last update (married, divorced, etc.)</td>
+</tr>
+<tr>
+<td>Non-Medical Identifiers</td>
+<td>Identifies additional identifiers associated with the patient which are not used for medical purposes (ex: driver’s license, social insurance number, etc.)</td>
+</tr>
+<tr>
+<td>Death Date/Time</td>
+<td>Identifies the time at which the patient died.</td>
+</tr>
+</tbody>
+</table>
+<p>{:.grid}</p>
+<p>Table M.4.1-2 provides a mapping between these abstract data elements and their transaction specific fields.</p>
+<p><strong>Table M.4.1-2: Patient Demographics Data Elements (concrete)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Abstract Field</th>
+<th>PDQ</th>
+<th>PDQ HL7v3</th>
+<th>PDQm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identifier List</td>
+<td>PID.3 and PID.18</td>
+<td>id</td>
+<td>identifier</td>
+</tr>
+<tr>
+<td>Name(s)</td>
+<td>PID.5 and PID.9</td>
+<td>name</td>
+<td>name</td>
+</tr>
+<tr>
+<td>Date / Time of Birth</td>
+<td>PID.7</td>
+<td>birthTime</td>
+<td>birthdate</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>PID.8</td>
+<td>administrativeGenderCode</td>
+<td>gender</td>
+</tr>
+<tr>
+<td>Address(es)</td>
+<td>PID.11</td>
+<td>addr</td>
+<td>address</td>
+</tr>
+<tr>
+<td>Telecommunications Address(es)</td>
+<td>PID.13 and PID.14</td>
+<td>telecom</td>
+<td>telecom</td>
+</tr>
+<tr>
+<td>Language(s) of communication</td>
+<td>PID.15</td>
+<td>languageCommunication</td>
+<td>communication.language</td>
+</tr>
+<tr>
+<td>Marital Status</td>
+<td>PID.16</td>
+<td>maritalStatusCode</td>
+<td>maritalStatus</td>
+</tr>
+<tr>
+<td>Non-Medical Identifiers</td>
+<td>PID.19 and PID.20</td>
+<td>asOtherIds</td>
+<td>identifier</td>
+</tr>
+<tr>
+<td>Death Date/Time</td>
+<td>PID.29</td>
+<td>deceasedTime</td>
+<td>deceasedDateTime</td>
+</tr>
+<tr>
+<td>Mother’s Maiden Name</td>
+<td>PID.6</td>
+<td>personalRelationship.name</td>
+<td><a href="ITI-78.html#mmn">See ITI TF-2:3.78.4.2.2.2</a></td>
+</tr>
+<tr>
+<td>Patient Birth Order</td>
+<td>PID.25</td>
+<td>multipleBirthOrderNumber</td>
+<td>multipleBirthInteger</td>
+</tr>
+</tbody>
+</table>
+<p>{:.grid}</p>
+<h4 id="m-4-2-patient-demographics-query-parameters">M.4.2 Patient Demographics Query Parameters</h4>
+<p>Table M.4.2-1 outlines the demographics query parameters which are common to all Patient Demographics Query Profiles.</p>
+<p><strong>Table M.4.2-1: Patient Demographics Query Parameters (abstract)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identifier List</td>
+<td>Filters the result set to a list of patients whose identifiers match the provided identifiers.</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Filters the result set to a list of patients whose name (legal, maiden, alias, etc.) matches the provided value. The mechanisms for match are not specified but can include exact match, pattern match, phonetic match, variant match, etc.</td>
+</tr>
+<tr>
+<td>Date / Time of Birth</td>
+<td>Filters the result set to patients whose date/time of birth match the provided value. <br />Note: Birth time is not applicable in PDQm</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>Filters the result set to patients whose administrative gender matches the provided value.</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>Filters the result set to patients whose address (home, business, etc.) matches the provided value.</td>
+</tr>
+<tr>
+<td>Domains to be Returned</td>
+<td>Filters the result set to include only identifiers which have been assigned by the specified domains.</td>
+</tr>
+<tr>
+<td>Mother’s Maiden Name</td>
+<td>Filters the result set to include only those patients which whose mother’s maiden name matches the specified name.</td>
+</tr>
+<tr>
+<td>Patient Telecommunications Addresses</td>
+<td>Filters the result set to include only those which have the specified telecommunications addresses.</td>
+</tr>
+</tbody>
+</table>
+<p>{:.grid}</p>
+<p>Table M.4.2-2 provides a mapping between these abstract query parameters and their transaction specific implementation.</p>
+<p><strong>Table M.4.2-2: Patient Demographics Query Parameters (concrete)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Abstract Parameter</th>
+<th>PDQ</th>
+<th>PDQ HL7v3</th>
+<th>PDQm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identifier List</td>
+<td>@PID.3 and @PID.18</td>
+<td>livingSubjectId</td>
+<td>identifier</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>@PID.5</td>
+<td>livingSubjectName</td>
+<td>given and family</td>
+</tr>
+<tr>
+<td>Date / Time of Birth</td>
+<td>@PID.7</td>
+<td>livingSubjectBirthTime</td>
+<td>birthdate <br />Note: Birth time is not applicable in PDQm</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>@PID.8</td>
+<td>livingSubjectAdministrativeGender</td>
+<td>gender</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>@PID.11</td>
+<td>patientAddress</td>
+<td>address</td>
+</tr>
+<tr>
+<td>Domains to be Returned</td>
+<td>QPD-8</td>
+<td>otherIDsScopingOrganization</td>
+<td>See <a href="ITI-78.html#domainpop">ITI TF-2:3.78.4.1.2.4</a></td>
+</tr>
+<tr>
+<td>Mother’s Maiden Name</td>
+<td>@PID.6</td>
+<td>mothersMaidenName</td>
+<td>mothersMaidenName</td>
+</tr>
+<tr>
+<td>Patient Telecommunications Addresses</td>
+<td>@PID.13</td>
+<td>patientTelecom</td>
+<td>telecom</td>
+</tr>
+</tbody>
+</table>
+<p>{:.grid}</p>
+
+        
+        
+        
       </main>
     </div>
    <footer class="ihe-footer">
