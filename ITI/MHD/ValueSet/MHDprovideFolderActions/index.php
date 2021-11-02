@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.json2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.json1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.json');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.xml2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.xml1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.html');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.html');
 else 
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/ValueSet-MHDprovideFolderActions.xml');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/ValueSet-MHDprovideFolderActions.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

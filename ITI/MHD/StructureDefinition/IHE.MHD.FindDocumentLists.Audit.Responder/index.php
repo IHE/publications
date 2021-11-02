@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.html');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.html');
 else 
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

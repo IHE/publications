@@ -20,6 +20,7 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -47,21 +48,26 @@
         <!-- Placeholder for child template header declarations -->
 
 <div id="project-nav">
-  <a id="ihe-logo" no-external="true" href="http://ihe.net">
+  <a id="ihe-logo" no-external="true" href="http://profiles.ihe.net">
     <img height="71" alt="Visit the IHE website" src="assets/images/ihe-international.png"/>
   </a>
 </div>
 <div id="family-nav">
-  <a id="fhir-logo" no-external="true" href="http://hl7.org/fhir"><img height="50" style="margin-top: 15px;" alt="Visit the IHE website" src="assets/images/ihe-logo.png"/> </a>
+  <a id="family-logo" no-external="true" href="http://hl7.org/fhir"><img height="30" alt="Visit the FHIR website" src="assets/images/fhir-logo.png"/> </a>
 </div>
 <!--
 <div id="hl7-search">
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
+        <div id="project-nav">
+          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
+        </div>
+
+
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">Patient Identity Cross-Reference for mobile (PIXm)</span><br/>2.2.0 - public-comment</p>
+          <p><span style="font-size:12pt;font-weight:bold">Patient Identifier Cross-referencing for mobile (PIXm)</span><br/>2.2.1 - Trial-Implementation</p>
         </div>
       </div> <!-- /container -->
     </div>  <!-- /segment-header -->
@@ -124,7 +130,7 @@
         <a href="ITI-83.html">Patient Identity Cross-reference Query [ITI-83]</a>
       </li>
       <li>
-        <a href="ITI-104.html">Mobile Patient Identifier Cross-reference Feed [ITI-104]</a>
+        <a href="ITI-104.html">Patient Identity Feed FHIR [ITI-104]</a>
       </li>
     </ul>
   </li>
@@ -133,6 +139,9 @@
   </li>
   <li>
     <a href="artifacts.html">Artifact Index</a>
+  </li>
+  <li>
+    <a href="other.html">Other</a>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -176,7 +185,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identity Cross-Reference for mobile (v2.2.0: Public Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identifier Cross-referencing for mobile (v2.2.1: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>1:41. PIXm Home</h2>
   
 
@@ -189,20 +198,17 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 
     <p><!-- white space is critical inside of capture --></p>
-<div>
-<!-- do not remove - needed to prevent Jekyll from adding a p tag to any non block level element in the markdown.-->
+<div class="markdown-toc">
+<ul id="markdown-toc">
+  <li><a href="#organization-of-this-guide" id="markdown-toc-organization-of-this-guide">Organization of This Guide</a></li>
+  <li><a href="#conformance-expectations" id="markdown-toc-conformance-expectations">Conformance Expectations</a></li>
+</ul>
+
 </div>
 
-<!-- ## Patient Identifier Cross-reference for Mobile Profile (PIXm) -->
+<!-- ## Patient Identifier Cross-referencing for mobile Profile (PIXm)  -->
 
-<p>The <strong><em>Patient Identifier Cross-reference for</em> Mobile</strong> <strong><em>Integration Profile</em></strong> provides RESTful transactions for mobile and lightweight browser-based applications to create, update and delete Patient Ressources in a Patient Identifier Cross-reference Manager and to query the Patient Identifier Cross-reference Manager for a list of patient’s cross-domain
-identifiers assigned to the same patient person by the Patient Identifier Cross-reference Manager.</p>
-
-<p>The <strong><em>Patient Identifier Cross-reference for</em> Mobile</strong> <strong><em>Integration Profile</em></strong> requires the Patient Identifier Cross-reference Manager to implement rules and algorithm to link patient records from different domains to provide the cross-domain identifiers assigned to the same patient person.</p>
-
-<p>This profile provides lightweight alternative to the transactions defined in the <strong>PIX</strong> and <strong>PIXV3</strong> profiles, using HTTP RESTful transactions.</p>
-
-<p>This profile does not assume the Patient Identifier Cross-reference Manager to have the ability to act as a full-fledged HL7<sup>®</sup> FHIR<sup>®</sup> server, other than for the profiled transaction. PIXm can be used to provide a RESTful interface to a PIX or PIXV3 Patient Identifier Cross-reference Manager without providing other FHIR services.</p>
+<p>The <strong><em>Patient Identifier Cross-reference for Mobile (PIXm) Profile</em></strong> provides RESTful transactions for mobile and lightweight browser-based applications to create, update and delete patient records in a Patient Identifier Cross-reference Manager and to query the Patient Identifier Cross-reference Manager for a patient’s cross-domain identifiers.</p>
 
 <div class="stu-note">
 
@@ -230,23 +236,25 @@ identifiers assigned to the same patient person by the Patient Identifier Cross-
       <li><a href="volume-1.html#1414-pixm-overview">41.4 PIXm Overview</a></li>
       <li><a href="volume-1.html#1415-pixm-security-considerations">41.5 PIXm Security Considerations</a></li>
       <li><a href="volume-1.html#1416-pixm-cross-profile-considerations">41.6 PIXm Cross Profile Considerations</a></li>
-      <li><a href="5_testplan.html">Test Plan</a></li>
     </ol>
   </li>
   <li>Volume 2: Transaction Detail
     <ol>
       <li><a href="ITI-83.html">3.83 Patient Identifier Cross-reference Query [ITI-83]</a></li>
-      <li><a href="ITI-104.html">3.104 Mobile Patient Identifier Cross-reference Feed [ITI-104]</a></li>
+      <li><a href="ITI-104.html">3.104 Patient Identity Feed FHIR [ITI-104]</a></li>
     </ol>
   </li>
+  <li><a href="5_testplan.html">Test Plan</a></li>
+  <li><a href="other.html">Changes to other Profiles</a></li>
 </ol>
 
-<p>Click on any of the links above, head on over the <a href="toc.html">table of contents</a>, or
-if you are looking for a specific artifact, check out the <a href="artifacts.html">index</a>.</p>
+<p>See also the <a href="toc.html">table of contents</a> and the index of <a href="artifacts.html">artifacts</a> defined as part of this implementation guide.</p>
 
-<h4 id="must-support">Must Support`</h4>
+<h3 id="conformance-expectations">Conformance Expectations</h3>
 
-<p>PIXm uses <code class="highlighter-rouge">Must Support</code> in StructureDefinitions with the definition found in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir">Appendix Z</a>. This is equivalent to IHE use of <strong>R2</strong>.</p>
+<p>IHE uses the normative words: Shall, Should, and May according to <a href="https://profiles.ihe.net/GeneralIntro/ch-E.html">standards conventions</a>.</p>
+
+<p>PIXm uses <code class="highlighter-rouge">Must Support</code> in StructureDefinitions with the definition found in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir">Appendix Z</a>. This is equivalent to the IHE use of <strong>R2</strong> as defined in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir">Appendix Z</a>.</p>
 
 <h4 id="download">Download</h4>
 
@@ -307,17 +315,17 @@ if you are looking for a specific artifact, check out the <a href="artifacts.htm
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, Jul 29, 2021 08:24-0500">2021-07-29</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Nov 1, 2021 16:43-0500">2021-11-01</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
-                 
+                  | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues">Issues</a>
                 
-                 <a style="color: #81BEF7" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
-                 <a style="color: #81BEF7" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
-                 <!--<a style="color: #81BEF7" href="todo.html">Search</a> | --> 
-                 <a style="color: #81BEF7" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 
           </span>
         </p>
@@ -342,6 +350,16 @@ anchors.add()</script>
   
 <!-- feedback form - Google forms -->
 <!-- v0.1, 2021-01-09 -->
+
+
+  
+    
+  
+
+
+  
+    
+  
 
 
 

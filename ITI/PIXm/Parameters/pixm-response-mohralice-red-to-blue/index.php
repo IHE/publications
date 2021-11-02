@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.json2');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.json1');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.json');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.xml2');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.xml1');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.html');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.html');
 else 
-  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.0/Parameters-pixm-response-mohralice-red-to-blue.xml');
+  Redirect('http://profiles.ihe.net/ITI/PIXm/2.2.1/Parameters-pixm-response-mohralice-red-to-blue.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

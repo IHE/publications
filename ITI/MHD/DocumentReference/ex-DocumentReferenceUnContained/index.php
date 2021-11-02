@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.json2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.json1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.json');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.xml2');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.xml1');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.html');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.html');
 else 
-  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.1/DocumentReference-ex-DocumentReferenceUnContained.xml');
+  Redirect('http://profiles.ihe.net/ITI/MHD/4.0.2/DocumentReference-ex-DocumentReferenceUnContained.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

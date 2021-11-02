@@ -20,6 +20,7 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -47,21 +48,26 @@
         <!-- Placeholder for child template header declarations -->
 
 <div id="project-nav">
-  <a id="ihe-logo" no-external="true" href="http://ihe.net">
+  <a id="ihe-logo" no-external="true" href="http://profiles.ihe.net">
     <img height="71" alt="Visit the IHE website" src="assets/images/ihe-international.png"/>
   </a>
 </div>
 <div id="family-nav">
-  <a id="fhir-logo" no-external="true" href="http://hl7.org/fhir"><img height="50" style="margin-top: 15px;" alt="Visit the IHE website" src="assets/images/ihe-logo.png"/> </a>
+  <a id="family-logo" no-external="true" href="http://hl7.org/fhir"><img height="30" alt="Visit the FHIR website" src="assets/images/fhir-logo.png"/> </a>
 </div>
 <!--
 <div id="hl7-search">
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
+        <div id="project-nav">
+          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
+        </div>
+
+
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">Patient Identity Cross-Reference for mobile (PIXm)</span><br/>2.2.0 - public-comment</p>
+          <p><span style="font-size:12pt;font-weight:bold">Patient Identifier Cross-referencing for mobile (PIXm)</span><br/>2.2.1 - Trial-Implementation</p>
         </div>
       </div> <!-- /container -->
     </div>  <!-- /segment-header -->
@@ -124,7 +130,7 @@
         <a href="ITI-83.html">Patient Identity Cross-reference Query [ITI-83]</a>
       </li>
       <li>
-        <a href="ITI-104.html">Mobile Patient Identifier Cross-reference Feed [ITI-104]</a>
+        <a href="ITI-104.html">Patient Identity Feed FHIR [ITI-104]</a>
       </li>
     </ul>
   </li>
@@ -133,6 +139,9 @@
   </li>
   <li>
     <a href="artifacts.html">Artifact Index</a>
+  </li>
+  <li>
+    <a href="other.html">Other</a>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -176,7 +185,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identity Cross-Reference for mobile (v2.2.0: Public Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identifier Cross-referencing for mobile (v2.2.1: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>2:3.83 Patient Identity Cross-reference Query [ITI-83]</h2>
   
 
@@ -229,11 +238,11 @@ be played by the actors shown here:</p>
   <tbody>
     <tr>
       <td>Patient Identifier Cross-reference Consumer</td>
-      <td>Requests, from the Patient Identifier Cross-reference Manager, a list of patient identifiers matching the supplied Patient Identifier.</td>
+      <td>Queries the Patient Identifier Cross-reference Manager for a list of corresponding patient identifiers, if any</td>
     </tr>
     <tr>
       <td>Patient Identifier Cross-reference Manager</td>
-      <td>Returns Cross-referenced Patient Identifiers for the patient that cross-matches the Patient Identifier criteria provided by the Patient Identifier Cross-reference Consumer.</td>
+      <td>Manages the cross-referencing of patient identifiers across Patient Identification Domains. Upon request it returns a list of corresponding patient identifiers, if any.</td>
     </tr>
   </tbody>
 </table>
@@ -266,8 +275,10 @@ determine the existence of, alternate patient identifiers.</p>
 <h5 id="2383412-message-semantics">2:3.83.4.1.2 Message Semantics</h5>
 
 <p>The Get Corresponding Identifiers message is a FHIR operation request as
-defined in FHIR (<a href="http://hl7.org/fhir/operations.html">http://hl7.org/fhir/operations.html</a>) with the input
-parameters shown in Table 2:3.83.4.1.2-1. Given that the parameters are
+defined in FHIR (<a href="http://hl7.org/fhir/operations.html">http://hl7.org/fhir/operations.html</a>) with the <a href="OperationDefinition-IHE.PIXm.pix.html">$ihe-pix operation definition</a>
+and the input parameters shown in Table 2:3.83.4.1.2-1.</p>
+
+<p>Given that the parameters are
 not complex types, the HTTP GET operation shall be used as defined in
 FHIR (<a href="http://hl7.org/fhir/operations.html#request">http://hl7.org/fhir/operations.html#request</a>).</p>
 
@@ -317,7 +328,7 @@ command shown below:</p>
       <td>_format</td>
       <td>[0..1]</td>
       <td>token</td>
-      <td>The requested format of the response from the mime-type value set. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2x: Appendix Z.6</a></td>
+      <td>The requested format of the response from the mime-type value set. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Appendix Z.6</a></td>
     </tr>
   </tbody>
 </table>
@@ -330,7 +341,7 @@ being queried (i.e., a business identifier such as a local identifier or account
 value shall include both the Patient Identifier Domain (i.e., Assigning
 Authority) and the identifier value, separated by a “|”.</p>
 
-<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.2-query-parameters">ITI TF-2x: Appendix Z.2.2</a> for use of the <code class="highlighter-rouge">token</code> search parameter type for patient identifiers.</p>
+<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.2-query-parameters">ITI TF-2: Appendix Z.2.2</a> for use of the <code class="highlighter-rouge">token</code> search parameter type for patient identifiers.</p>
 
 <p>The Patient Identifier Cross-reference Consumer shall provide exactly one (1) instance of this parameter in the query.</p>
 
@@ -367,11 +378,11 @@ targetSystem=http://fhir.mydomain.com
 
 <h5 id="2383413-expected-actions">2:3.83.4.1.3 Expected Actions</h5>
 
-<p>The Patient Identifier Cross-reference Manager shall use the <code class="highlighter-rouge">sourceIdentifier</code> and the <code class="highlighter-rouge">targetSystem</code> to determine the Patient Identities that match, where Patient Identities include business identifier(s) and the Logical id(s) of FHIR Patient Resource(s).</p>
+<p>The Patient Identifier Cross-reference Manager shall use the <code class="highlighter-rouge">sourceIdentifier</code> and the <code class="highlighter-rouge">targetSystem</code> to determine the Patient Identifiers that match, where Patient Identifiers include business identifier(s) and the Logical id(s) of FHIR Patient Resource(s).</p>
 
 <p>Response returned encoding and semantics is defined in Section 2:3.83.4.2:</p>
 
-<p>The Patient Identities returned may be a subset based on policies that might restrict access to some Patient Identities. For guidance on handling Access Denied, see <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.7-guidance-on-access-denied-results">ITI TF-2x: Appendix Z.7</a>.</p>
+<p>The Patient Identifiers returned may be a subset based on policies that might restrict access to some Patient Identifiers. For guidance on handling Access Denied, see <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.7-guidance-on-access-denied-results">ITI TF-2: Appendix Z.7</a>.</p>
 
 <h4 id="238342-response-message">2:3.83.4.2 Response message</h4>
 
@@ -381,7 +392,7 @@ targetSystem=http://fhir.mydomain.com
 
 <h5 id="2383422-message-semantics">2:3.83.4.2.2 Message Semantics</h5>
 
-<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2x: Appendix Z.6</a> for more details on response format handling.</p>
+<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Appendix Z.6</a> for more details on response format handling.</p>
 
 <p>The response message is a FHIR operation response
 (<a href="http://hl7.org/fhir/operations.html#response">http://hl7.org/fhir/operations.html#response</a>)</p>
@@ -422,7 +433,7 @@ query shall not be included in the returned Response.</p>
       <td>targetIdentifier</td>
       <td>[0..*]</td>
       <td>Identifier</td>
-      <td>The business identifier found. Shall include the assigning authority as specified in <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_Appx-Z.pdf#page=16">ITI TF-2x: Appendix E.3</a></td>
+      <td>The business identifier found. Shall include the assigning authority as specified in <a href="https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_Appx-Z.pdf#page=16">ITI TF-2: Appendix E.3</a></td>
     </tr>
     <tr>
       <td>targetId</td>
@@ -554,7 +565,7 @@ Assigning Authority domain is not recognized in an <code class="highlighter-roug
 <h6 id="23834224-target-domain-not-recognized">2:3.83.4.2.2.4 Target Domain not recognized</h6>
 
 <p>When the Patient Identifier Cross-reference Manager does not recognize
-the Patient Identifier Domain in the <code class="highlighter-rouge">targetSystem</code>, then the following
+one or more of the Patient Identifier Domains in the <code class="highlighter-rouge">targetSystem</code>, then the following
 failure shall be returned:</p>
 
 <p><strong>HTTP 403</strong> (Forbidden) is returned as the HTTP status code.</p>
@@ -603,6 +614,17 @@ information.</p>
 
 <p>The Patient Identifier Cross-reference Manager when grouped with ATNA Secure Node or Secure Application actor shall be able to record a <a href="/StructureDefinition-IHE.PIXm.Query.Audit.Manager.html">PIXm Query Manager Audit Event Log</a>. <a href="AuditEvent-ex-auditPixmQuery-manager.html">Audit Example for a PIXm Query transaction from manager perspective</a>.</p>
 
+<h4 id="238352-use-with-the-internet-user-authorization-iua-profile">2:3.83.5.2 Use with the Internet User Authorization (IUA) Profile</h4>
+<p>The <a href="https://profiles.ihe.net/ITI/IUA/index.html">Internet User Authorization (IUA)</a> Profile provides support for user authentication, app authentication, and authorization decisions. When PIXm actors are grouped with IUA actors there are additional security and privacy functionality enabled by this grouping. There are additional requirements and functionality enabled through scope definitions that are transaction-specific.</p>
+
+<p>A Patient Identifier Cross-reference Consumer, when grouped with an <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> Authorization Client, shall use <a href="https://profiles.ihe.net/ITI/IUA/index.html#volume-2----transactions">Get Access Token [ITI-71]</a> to request the following scope from the IUA Authorization Server. This enables the Patient Identifier Cross-reference Consumer to get corresponding identifiers with the Mobile Patient Identifier Cross-reference Query [ITI-83] transaction with the authorizing token in the combined transaction <a href="https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72">Incorporate Access Token [ITI-72]</a>.</p>
+
+<p>The Patient Identifier Cross-reference Manager, when grouped with an <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> Resource Server, shall require <a href="https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72">Incorporate Access Token [ITI-72]</a> in all Mobile Patient Identifier Cross-reference Query [ITI-83] transactions, shall enforce the authorization decision in the token, and may further enforce policies beyond those made by the Authorization Server such as consent or business rules.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scope: ITI-83
+</code></pre></div></div>
+
+<p>This scope request authorizes the full [ITI-83] transaction. This scope implicitly requests patient-specific queries for getting corresponding identifiers. Further scope refinement is allowed in realm or project-specific situations; these scopes would be in addition to the scope defined here.</p>
 
 
 
@@ -650,17 +672,17 @@ information.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, Jul 29, 2021 08:24-0500">2021-07-29</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Nov 1, 2021 16:43-0500">2021-11-01</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
-                 
+                  | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues">Issues</a>
                 
-                 <a style="color: #81BEF7" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
-                 <a style="color: #81BEF7" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
-                 <!--<a style="color: #81BEF7" href="todo.html">Search</a> | --> 
-                 <a style="color: #81BEF7" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 
           </span>
         </p>
@@ -685,6 +707,16 @@ anchors.add()</script>
   
 <!-- feedback form - Google forms -->
 <!-- v0.1, 2021-01-09 -->
+
+
+  
+    
+  
+
+
+  
+    
+  
 
 
 

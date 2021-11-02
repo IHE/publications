@@ -20,6 +20,7 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -47,21 +48,26 @@
         <!-- Placeholder for child template header declarations -->
 
 <div id="project-nav">
-  <a id="ihe-logo" no-external="true" href="http://ihe.net">
+  <a id="ihe-logo" no-external="true" href="http://profiles.ihe.net">
     <img height="71" alt="Visit the IHE website" src="assets/images/ihe-international.png"/>
   </a>
 </div>
 <div id="family-nav">
-  <a id="fhir-logo" no-external="true" href="http://hl7.org/fhir"><img height="50" style="margin-top: 15px;" alt="Visit the IHE website" src="assets/images/ihe-logo.png"/> </a>
+  <a id="family-logo" no-external="true" href="http://hl7.org/fhir"><img height="30" alt="Visit the FHIR website" src="assets/images/fhir-logo.png"/> </a>
 </div>
 <!--
 <div id="hl7-search">
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
+        <div id="project-nav">
+          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
+        </div>
+
+
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">Patient Identity Cross-Reference for mobile (PIXm)</span><br/>2.2.0 - public-comment</p>
+          <p><span style="font-size:12pt;font-weight:bold">Patient Identifier Cross-referencing for mobile (PIXm)</span><br/>2.2.1 - Trial-Implementation</p>
         </div>
       </div> <!-- /container -->
     </div>  <!-- /segment-header -->
@@ -124,7 +130,7 @@
         <a href="ITI-83.html">Patient Identity Cross-reference Query [ITI-83]</a>
       </li>
       <li>
-        <a href="ITI-104.html">Mobile Patient Identifier Cross-reference Feed [ITI-104]</a>
+        <a href="ITI-104.html">Patient Identity Feed FHIR [ITI-104]</a>
       </li>
     </ul>
   </li>
@@ -133,6 +139,9 @@
   </li>
   <li>
     <a href="artifacts.html">Artifact Index</a>
+  </li>
+  <li>
+    <a href="other.html">Other</a>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -176,7 +185,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identity Cross-Reference for mobile (v2.2.0: Public Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Identifier Cross-referencing for mobile (v2.2.1: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/PIXm/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Test Plan</h2>
   
 
@@ -193,8 +202,8 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <ul id="markdown-toc">
   <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
   <li><a href="#high-level-test-scope" id="markdown-toc-high-level-test-scope">High-level Test Scope</a>    <ul>
-      <li><a href="#iti-83-patient-identifiers-cross-reference-query-for-mobile" id="markdown-toc-iti-83-patient-identifiers-cross-reference-query-for-mobile">ITI-83 Patient Identifiers Cross-reference Query for Mobile</a></li>
-      <li><a href="#iti-104-mobile-patient-identifier-cross-reference-feed" id="markdown-toc-iti-104-mobile-patient-identifier-cross-reference-feed">ITI-104 Mobile Patient Identifier Cross-reference Feed</a></li>
+      <li><a href="#patient-identifiers-cross-reference-query-for-mobile--iti-83" id="markdown-toc-patient-identifiers-cross-reference-query-for-mobile--iti-83">Patient Identifiers Cross-reference Query for Mobile  ITI-83</a></li>
+      <li><a href="#patient-identity-feed-fhir-iti-104" id="markdown-toc-patient-identity-feed-fhir-iti-104">Patient Identity Feed FHIR ITI-104</a></li>
       <li><a href="#options" id="markdown-toc-options">Options</a></li>
     </ul>
   </li>
@@ -213,34 +222,34 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h2 id="introduction">Introduction</h2>
 
-<p>PIXm specifies two transactions:  A patient identity feed transaction between PIX Source and PIX Manager, and a query transaction between a PIX Consumer and the PIX Managers.  Each transaction specifies semantics of the request and response messages exchanged between actors.  The PIXm test plan focuses on these semantics and on the expected actions on the server-side actor.</p>
+<p>PIXm specifies two transactions:  A patient identity feed transaction between PIX Source and PIX Manager, and a query transaction between a PIX Consumer and a PIX Manager.  Each transaction specifies semantics of the request and response messages exchanged between actors.  The PIXm test plan focuses on these semantics and on the expected actions on the server-side actor.</p>
 
 <h2 id="high-level-test-scope">High-level Test Scope</h2>
 
-<h3 id="iti-83-patient-identifiers-cross-reference-query-for-mobile">ITI-83 Patient Identifiers Cross-reference Query for Mobile</h3>
+<h3 id="patient-identifiers-cross-reference-query-for-mobile--iti-83">Patient Identifiers Cross-reference Query for Mobile  <a href="ITI-83.html">ITI-83</a></h3>
 
 <ul>
   <li>PIX Consumer initiates ITI-83 queries for cross-referenced patients</li>
   <li>PIX Manager responds to queries, as appropriate</li>
 </ul>
 
-<h3 id="iti-104-mobile-patient-identifier-cross-reference-feed">ITI-104 Mobile Patient Identifier Cross-reference Feed</h3>
+<h3 id="patient-identity-feed-fhir-iti-104">Patient Identity Feed FHIR <a href="ITI-104.html">ITI-104</a></h3>
 
 <ul>
-  <li>PIX Source initiates ITI-104 feed for:
+  <li>PIX Source initiates ITI-104 feed for the four messages in the transaction:
     <ul>
       <li>Add patient</li>
       <li>Revise patient</li>
       <li>Resolve patient duplicates</li>
-      <li>Remove patient</li>
+      <li>Remove patient (if the Source supports the Remove Patient Option)</li>
     </ul>
   </li>
-  <li>PIX Manager responds according to expected actions in ITI-104 for
+  <li>PIX Manager responds according to expected actions in ITI-104 for:
     <ul>
       <li>Add patient</li>
       <li>Revise patient</li>
       <li>Resolve patient duplicates</li>
-      <li>Remove patient (if supported)</li>
+      <li>Remove patient (if the Manager supports the Remove Patient Option)</li>
     </ul>
   </li>
 </ul>
@@ -248,7 +257,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <h3 id="options">Options</h3>
 
 <ul>
-  <li>none</li>
+  <li>Remove Patient</li>
 </ul>
 
 <h2 id="unit-test-procedure-conformance-testing">Unit Test Procedure (Conformance Testing)</h2>
@@ -260,16 +269,16 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <h4 id="gazelle-patientmanager---simulator">Gazelle PatientManager - Simulator</h4>
 
 <ul>
-  <li>Provider: INRIA (Rennes, France), KEREVAL (https://www.kereval.com/)</li>
-  <li>Gazelle Patient Manager online: https://gazelle.ihe.net/PatientManager/home.seam</li>
-  <li>User Manual:  https://gazelle.ihe.net/gazelle-documentation/Patient-Manager/user.html</li>
-  <li>Tool support: https://gazelle.ihe.net/jira/projects/PAM</li>
-  <li>Actors (options) tested:
+  <li>Provider: INRIA (Rennes, France), <a href="https://www.kereval.com/">KEREVAL</a></li>
+  <li>Gazelle Patient Manager <a href="https://gazelle.ihe.net/PatientManager/home.seam">online</a></li>
+  <li><a href="https://gazelle.ihe.net/gazelle-documentation/Patient-Manager/user.html">User Manual</a></li>
+  <li><a href="https://gazelle.ihe.net/jira/projects/PAM">Tool support</a></li>
+  <li>Actors tested:
     <ul>
       <li>PIX Consumer, PIX Manager for ITI-83:
         <ul>
-          <li>PIX Consumer test definition: PM_PIX_Query-Patient_Identity_Consumer https://gazelle.ihe.net/content/pmpixquery-patientidentityconsumer</li>
-          <li>PIX Manager test definition: PM_PIX_Query-PIX_Manager https://gazelle.ihe.net/content/pmpixquery-pixmanager</li>
+          <li>PIX Consumer test definition: <a href="https://gazelle.ihe.net/content/pmpixquery-patientidentityconsumer">PM_PIX_Query-Patient_Identity_Consumer</a></li>
+          <li>PIX Manager test definition: <a href="https://gazelle.ihe.net/content/pmpixquery-pixmanager">PM_PIX_Query-PIX_Manager</a></li>
         </ul>
       </li>
       <li>(future) PIX Source, PIX Manager for ITI-104</li>
@@ -280,29 +289,38 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <h4 id="gazelle-external-validation-service-aka-evs-client---validator">Gazelle External Validation Service (aka “EVS Client”) - Validator</h4>
 
 <ul>
-  <li>Provider:  INRIA (Rennes, France), KEREVAL (https://www.kereval.com/), and Mallinckrodt Institute of Radiology (Saint Louis, USA)</li>
-  <li>Tool location: https://gazelle.ihe.net/EVSClient/home.seam</li>
-  <li>Documentation: https://gazelle.ihe.net/content/evsfhirvalidation</li>
+  <li>Provider:  INRIA (Rennes, France), <a href="https://www.kereval.com/">KEREVAL</a>, and Mallinckrodt Institute of Radiology (Saint Louis, USA)</li>
+  <li>Gazelle EVSClient online: https://gazelle.ihe.net/EVSClient/home.seam</li>
+  <li><a href="https://gazelle.ihe.net/gazelle-documentation/EVS-Client/user.html">User Manual</a></li>
+  <li><a href="https://gazelle.ihe.net/jira/browse/EVSCLT">Tool support</a></li>
   <li>Scope of testing: validation using StructureDefinitions for PIXm</li>
-  <li>Other notes: StructureDefinitions and other conformance resources are provided within this Implementation Guide as an <a href="package.tgz">npm package</a>.</li>
+  <li>Test documentation: (https://gazelle.ihe.net/content/evsfhirvalidation</li>
+  <li>Other notes: StructureDefinitions and other conformance resources are provided in this Implementation Guide on the <a href="artifacts.html">Artifacts</a> page.</li>
 </ul>
 
 <h2 id="integration-test-procedure-interoperability-testing">Integration Test Procedure (Interoperability Testing)</h2>
 
 <p>Integration Testing in this context is where two SUT of paired actors test against each other.  Integration testing is often limited by the capability of client-side actors, which may support only a subset of the semantics required to be supported by a server.  Full message semantics and failure-modes are generally more thoroughly exercised with unit (conformance) tests.</p>
 
-<p>The tests listed below are defined in Gazelle Master Model (https://gazelle.ihe.net/GMM) and are performed by systems testing PIXm at IHE Connectathons.</p>
+<p>The tests listed below are defined in <a href="https://gazelle.ihe.net/GMM">Gazelle Master Model</a> and are performed by systems testing PIXm at IHE Connectathons.</p>
 
 <p>Interoperability Tests:</p>
 
 <ul>
-  <li>ITI-83_(PIXm)_Search_Read
+  <li>ITI-83_PIXm_Search_Read
     <ul>
-      <li>Assumes a pre-defined set of patients (with demographics expected to be cross-referenced PIX Manager actor</li>
+      <li>Assumes a pre-defined set of patients (with demographics expected to be cross-referenced PIX Manager actor)</li>
+    </ul>
+  </li>
+  <li>(future) PIXm_Remove_Patient
+    <ul>
+      <li>Applies to Source and Manager actors that support the Remove Patient Option</li>
+      <li>Covers the remove patient message in ITI-83</li>
     </ul>
   </li>
   <li>(future) PIXm_PatientMgmt_and_Discovery
     <ul>
+      <li>Covers the add, revise, and resolve duplicates messages in ITI-104, with follow-up ITI-83 queries</li>
       <li>Intent is to model this on a similar, existing test for PMIR, to exercise a workflow with ITI-104 and ITI-83</li>
     </ul>
   </li>
@@ -355,17 +373,17 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, Jul 29, 2021 08:24-0500">2021-07-29</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package IHE.ITI.PIXm#2.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Nov 1, 2021 16:43-0500">2021-11-01</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
-                 
+                  | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.PIXm/issues">Issues</a>
                 
-                 <a style="color: #81BEF7" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
-                 <a style="color: #81BEF7" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
-                 <!--<a style="color: #81BEF7" href="todo.html">Search</a> | --> 
-                 <a style="color: #81BEF7" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="http://profiles.ihe.net/ITI/PIXm/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 
           </span>
         </p>
@@ -390,6 +408,16 @@ anchors.add()</script>
   
 <!-- feedback form - Google forms -->
 <!-- v0.1, 2021-01-09 -->
+
+
+  
+    
+  
+
+
+  
+    
+  
 
 
 
