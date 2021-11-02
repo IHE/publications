@@ -1,0 +1,103 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix loinc: <http://loinc.org/rdf#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-dummyBundleDocAndBinary> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-dummyBundleDocAndBinary"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "transaction"];
+  fhir:Bundle.timestamp [ fhir:value "2020-11-24T23:50:50-05:00"^^xsd:dateTime];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:cccccccc-2222-0000-0000-000000000001" ];
+     fhir:Bundle.entry.resource <urn:uuid:cccccccc-2222-0000-0000-000000000001>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "DocumentReference" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:cccccccc-2222-0000-0000-000000000002" ];
+     fhir:Bundle.entry.resource <urn:uuid:cccccccc-2222-0000-0000-000000000002>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "Binary" ]
+     ]
+  ] .
+
+<urn:uuid:cccccccc-2222-0000-0000-000000000001> a fhir:DocumentReference;
+  fhir:Resource.id [ fhir:value "cccccccc-2222-0000-0000-000000000001"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p><b>status</b>: current</p><p><b>type</b>: <span title=\"Codes: {http://loinc.org 60591-5}\">Patient summary Document</span></p><p><b>category</b>: <span title=\"Codes: {http://loinc.org 11369-6}\">History of Immunization Narrative</span></p><p><b>date</b>: Feb 1, 2020 10:50:50 PM</p><blockquote><p><b>content</b></p><p><b>format</b>: <span title=\"{urn:oid:1.3.6.1.4.1.19376.1.2.3 urn:ihe:iti:xds-sd:text:2008}\">urn:ihe:iti:xds-sd:text:2008</span></p></blockquote></div>"
+  ];
+  fhir:DocumentReference.status [ fhir:value "current"];
+  fhir:DocumentReference.type [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:60591-5;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "60591-5" ]
+     ]
+  ];
+  fhir:DocumentReference.category [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:11369-6;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "11369-6" ]
+     ]
+  ];
+  fhir:DocumentReference.date [ fhir:value "2020-02-01T23:50:50-05:00"^^xsd:dateTime];
+  fhir:DocumentReference.content [
+     fhir:index 0;
+     fhir:DocumentReference.content.attachment [
+       fhir:Attachment.contentType [ fhir:value "text/plain" ];
+       fhir:Attachment.url [ fhir:value "urn:uuid:cccccccc-2222-0000-0000-000000000002" ];
+       fhir:Attachment.size [ fhir:value "11"^^xsd:nonNegativeInteger ];
+       fhir:Attachment.hash [ fhir:value "MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA=="^^xsd:base64Binary ]
+     ];
+     fhir:DocumentReference.content.format [
+       fhir:Coding.system [ fhir:value "urn:oid:1.3.6.1.4.1.19376.1.2.3" ];
+       fhir:Coding.code [ fhir:value "urn:ihe:iti:xds-sd:text:2008" ]
+     ]
+  ] .
+
+<urn:uuid:cccccccc-2222-0000-0000-000000000002> a fhir:Binary;
+  fhir:Resource.id [ fhir:value "cccccccc-2222-0000-0000-000000000002"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Binary.contentType [ fhir:value "text/plain"];
+  fhir:Binary.data [ fhir:value "SGVsbG8gV29ybGQ="^^xsd:base64Binary] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://profiles.ihe.net/ITI/MHD/Bundle/ex-dummyBundleDocAndBinary.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
