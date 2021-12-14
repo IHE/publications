@@ -1,3 +1,4 @@
+getHeaders();
 buildBreadcrumbs();
 buildSections();
 $(document).foundation();
@@ -266,7 +267,40 @@ function getURLs(pathParts)
 function googSearch() {
     var searchField = $("#ihe-search-field");
     if (searchField && searchField.value) {
-        var query = escape("site:https://profiles.ihe.net " + searchField.value);
+        var query = encodeURIComponent("site:https://profiles.ihe.net " + searchField.value);
         window.location.href = "https://google.com/search?q=" + query;
     }
 }
+
+function getHeaders() {
+    var headers = $("h1, h2, h3, h4, h5, h6, .heading7, .heading8");
+    var anchor;
+    var link;
+    console.log("how many? " + headers.length);
+    for (i=0; i<headers.length; i++) {
+        headers[i].append(" ");
+        anchor = document.createElement("a");
+        anchor.setAttribute("class","heading-link");
+        anchor.setAttribute("href", headers[i].baseURI.split("#")[0] + "#" + headers[i].id);
+        anchor.setAttribute("title","Click to copy link");
+        link = document.createElement("i");
+        link.setAttribute("class","fi fi-link");
+
+        anchor.appendChild(link);
+
+        headers[i].append(anchor);
+    }
+}
+
+//copy anchor link to clipboard on click
+$('.heading-link').click(function (e) {
+    //e.preventDefault();
+    var copyText = $(this).attr("href")
+    document.addEventListener('copy', function(e) {
+       e.clipboardData.setData('text/plain', copyText);
+       e.preventDefault();
+    }, true);
+ 
+    document.execCommand('copy');  
+    //console.log('copied text : ', copyText); 
+  });
