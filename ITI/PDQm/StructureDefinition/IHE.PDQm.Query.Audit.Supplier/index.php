@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json2');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json1');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml2');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml1');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.html');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/StructureDefinition-IHE.PDQm.Query.Audit.Supplier.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

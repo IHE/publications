@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.json2');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.json1');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.json');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.xml2');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.xml1');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.html');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/PDQm/2.3.0/CapabilityStatement-IHE.PDQm.client.xml');
+  Redirect('https://profiles.ihe.net/ITI/PDQm/2.4.0/CapabilityStatement-IHE.PDQm.client.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.
