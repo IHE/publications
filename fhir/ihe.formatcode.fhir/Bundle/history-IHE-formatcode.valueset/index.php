@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json2');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json1');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml2');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml1');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.html');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.html');
 else 
-  Redirect('http://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml');
+  Redirect('https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.1.0/Bundle-history-IHE-formatcode.valueset.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.
