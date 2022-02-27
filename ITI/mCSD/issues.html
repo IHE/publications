@@ -20,6 +20,8 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
+
 <link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
@@ -67,7 +69,17 @@
 
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span><br/>3.4.0 - public-comment</p>
+          <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
+            <br/>
+            <span style="display:inline-block;">3.5.0 - Trial-Implementation
+
+
+
+  <img alt="International flag" src="assets/images/001.svg" height="16" title="International"/>
+
+
+            </span>
+          </p>
         </div>
       </div> <!-- /container -->
     </div>  <!-- /segment-header -->
@@ -188,9 +200,12 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.4.0: Public-Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="http://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">Publication Build: This will be filled in by the publication tooling</p><!--EndReleaseHeader-->
   <h2>mCSD Open and Closed issues</h2>
   
+
+
+
 
 
 
@@ -225,6 +240,20 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <li>Changed structuredefinitions for Facility and Jurisdiction to use an invariant for the type requirement instead of slicing.</li>
     <li>Added in text to show that searches can use GET or POST <a href="ITI-90.html#2390412-message-semantics">ITI-90 Message Semantics</a>.</li>
     <li>Added in retrieve (GET RESOURCE/ID) message section starting at <a href="ITI-90.html#239043-retrieve-care-services-resource-message">ITI-90</a></li>
+    <li>Removed tables:
+      <ul>
+        <li>Table 2:3.90.4.2.2.1-1 to <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.1-2 to <a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization for Facilities Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.1-3 to <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization for Jurisdictions Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.2-1 to <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.2-2 to <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.2-3 to <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location for Jurisdictions Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.2-4 to <a href="StructureDefinition-IHE.mCSD.LocationDistance.html">Location with Distance Option Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.3-1 to <a href="StructureDefinition-IHE.mCSD.Practitioner.html">Practitioner Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.4-1 to <a href="StructureDefinition-IHE.mCSD.PractitionerRole.html">PractitionerRole Profile for mCSD</a></li>
+        <li>Table 2:3.90.4.2.2.5-1 to <a href="StructureDefinition-IHE.mCSD.HealthcareService.html">HealthcareService Profile for mCSD</a></li>
+      </ul>
+    </li>
   </ul>
 
   <h2 id="issues">Issues</h2>
@@ -250,6 +279,20 @@ we also require any reverse chaining (_has) options for the search?
 Should we require any reverse includes (_revinclude)? These would add
 complexity to the server and most will have similar options through
 include and normal chaining.</p>
+
+  <p>mCSD_10. Section 1:46.8 mCSD Endpoint Usage Considerations, describes
+how to populate and use an endpoint directory. Given that this IG is more
+about how to deploy and use directories than what to put in them, would this
+content be better as a white paper instead?</p>
+
+  <p>mCSD_11. Should we assume federation of (i.e. connectivity to) child
+organizations when related by .partOf? Currently the IG does
+(see section 1:46.8.2), and we believe this is what is done in practice.
+The downside is that there is no way to represent a hierarchical relationship that does not imply routing.</p>
+
+  <p>mCSD_12. Should we specify details of addressing to federated recipients, at least for some
+profiles (see section 1:46.8.2)? For example, with MHD ITI-65 we could pass the Organization.identifier
+in the intendedRecipient field. There is already an IG for passing a Direct address in an XDR ITI-41.</p>
 
   <h3 id="closed-issues">Closed Issues</h3>
   <p>These issues have been decided and documented in the publication.</p>
@@ -376,6 +419,7 @@ this step necessary?</em></p>
 
 
 
+
 </div>
         </div>  <!-- /inner-wrapper -->
       </div>  <!-- /row -->
@@ -420,17 +464,23 @@ this step necessary?</em></p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.4.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Jan 10, 2022 15:12-0600">2022-01-10</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Sun, Feb 27, 2022 08:35-0600">2022-02-27</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues">Issues</a>
                 
-                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="http://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
                  <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HLBNC861DJ');
+</script>
 
           </span>
         </p>
@@ -450,6 +500,8 @@ this step necessary?</em></p>
   <script type="text/javascript" src="assets/js/bootstrap.min.js"> </script>
   <script type="text/javascript" src="assets/js/respond.min.js"> </script>
   <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
   <script>anchors.options.visible = 'hover'
 anchors.add()</script>
   
