@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ImplementationGuide xmlns="http://hl7.org/fhir">
-  <id value="IHE.ITI.PDQm"/>
+  <id value="ihe.iti.pdqm"/>
   <text>
-    <status value="extensions"/><div xmlns="http://www.w3.org/1999/xhtml"><h2>IHE_PDQm</h2><p>The official URL for this implementation guide is: </p><pre>http://profiles.ihe.net/ITI/PDQm/ImplementationGuide/IHE.ITI.PDQm</pre><div><p>The Patient Demographics Query for Mobile (PDQm) Profile defines a lightweight RESTful interface to a patient demographics supplier leveraging technologies readily available to mobile applications and lightweight browser based applications.</p>
+    <status value="extensions"/><div xmlns="http://www.w3.org/1999/xhtml"><h2>IHE_PDQm</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/PDQm/ImplementationGuide/ihe.iti.pdqm</pre><div><p>The Patient Demographics Query for Mobile (PDQm) Profile defines a lightweight RESTful interface to a patient demographics supplier leveraging technologies readily available to mobile applications and lightweight browser based applications.</p>
 </div></div>
   </text>
-  <url value="http://profiles.ihe.net/ITI/PDQm/ImplementationGuide/IHE.ITI.PDQm"/>
-  <version value="2.2.1"/>
+  <url value="https://profiles.ihe.net/ITI/PDQm/ImplementationGuide/ihe.iti.pdqm"/>
+  <version value="2.4.0"/>
   <name value="IHE_PDQm"/>
   <title value="Patient Demographics Query for mobile (PDQm)"/>
   <status value="active"/>
-  <date value="2021-07-29T08:30:31-05:00"/>
+  <date value="2022-03-01"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -40,7 +40,7 @@
     </coding>
   </jurisdiction>
   <copyright value="IHE http://www.ihe.net/Governance/#Intellectual_Property"/>
-  <packageId value="IHE.ITI.PDQm"/>
+  <packageId value="ihe.iti.pdqm"/>
   <license value="CC-BY-SA-4.0"/>
   <fhirVersion value="4.0.1"/>
   <definition>
@@ -57,7 +57,7 @@
         <valueString value="releaselabel"/>
       </extension>
       <extension url="value">
-        <valueString value="public-comment"/>
+        <valueString value="Trial-Implementation"/>
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
@@ -201,7 +201,7 @@
         <valueString value="path-history"/>
       </extension>
       <extension url="value">
-        <valueString value="http://profiles.ihe.net/ITI/PDQm/history.html"/>
+        <valueString value="https://profiles.ihe.net/ITI/PDQm/history.html"/>
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
@@ -244,6 +244,22 @@
         <valueString value="true"/>
       </extension>
     </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
+        <valueString value="fmm-definition"/>
+      </extension>
+      <extension url="value">
+        <valueString value="http://hl7.org/fhir/versions.html#maturity"/>
+      </extension>
+    </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
+        <valueString value="propagate-status"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
         <valueString value="StructureDefinition:resource"/>
@@ -252,7 +268,7 @@
         <reference value="StructureDefinition/IHE.PDQm.Query.Audit.Consumer"/>
       </reference>
       <name value="Audit Event for PDQm Query at Consumer"/>
-      <description value="Defines constraints on the AuditEvent Resource to record when a Patient Demographics Query using ITI-78 as recorded at the Consumer.&#xD;&#xA;&#x9;EventTypeCode = EV(&#x201C;ITI-78&#x201D;, &#x201C;IHE Transactions&#x201D;, &#x201C;Mobile Patient Demographics Query&#x201D;)&#xD;&#xA;&#x9;Query Parameters &#xD;&#xA;&#x9;ParticipantObjectIdTypeCode = EV(&#x201C;ITI-78&#x201D;, &#x201C;IHE Transactions&#x201D;, &#x201C;Mobile Patient Demographics Query&#x201D;)&#xD;&#xA;&#x9;ParticipantObjectQuery = Requested URL including query parameters&#xD;&#xA;&#x9;ParticipantObjectDetail = HTTP Request Headers contained in the query (e.g., Accept header)"/>
+      <description value="Defines constraints on the AuditEvent (AuditMessage) Resource for a Patient Demographics Consumer to record when it performs a Patient Demographics Query [ITI-78](./ITI-78.html).&#xA;- type (EventTypeCode) = EV(`110112`, `DCM`, `Query`)&#xA;- action (EventActionCode) = `E`&#xA;- subtype (EventTypeCode) = EV(`ITI-78`, `urn:ihe:event-type-code`, `Mobile Patient Demographics Query`)&#xA;- agent (ActiveParticipant)&#xA;  - supplier as the Destination&#xA;  - consumer as the Source&#xA;    - this agent is the source of the auditEvent&#xA;  - other agents are allowed including identity of the application or infrastructure&#xA;- entity (ParticipantObjectIdentification) &#xA;  - query parameters&#xA;  - no patient, because the consumer does not know the patient they are looking for or they wouldn&#39;t be using this transaction."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -263,7 +279,7 @@
         <reference value="StructureDefinition/IHE.PDQm.Query.Audit.Supplier"/>
       </reference>
       <name value="Audit Event for PDQm Query at Supplier"/>
-      <description value="Defines constraints on the AuditEvent Resource to record when a Patient Demographics Query using ITI-78 as recorded at the Supplier.&#xD;&#xA;&#x9;EventTypeCode = EV(&#x201C;ITI-78&#x201D;, &#x201C;IHE Transactions&#x201D;, &#x201C;Mobile Patient Demographics Query&#x201D;)&#xD;&#xA;&#x9;Query Parameters &#xD;&#xA;&#x9;ParticipantObjectIdTypeCode = EV(&#x201C;ITI-78&#x201D;, &#x201C;IHE Transactions&#x201D;, &#x201C;Mobile Patient Demographics Query&#x201D;)&#xD;&#xA;&#x9;ParticipantObjectQuery = Requested URL including query parameters&#xD;&#xA;&#x9;ParticipantObjectDetail = HTTP Request Headers contained in the query (e.g., Accept header)"/>
+      <description value="Defines constraints on the AuditEvent (AuditMessage) Resource when a Patient Demographics Supplier responds to a Patient Demographics Query [ITI-78](./ITI-78.html).&#xA;- type (EventTypeCode) = EV(`110112`, `DCM`, `Query`)&#xA;- action (EventActionCode) = `E`&#xA;- subtype (EventTypeCode) = EV(`ITI-78`, `urn:ihe:event-type-code`, `Mobile Patient Demographics Query`)&#xA;- agent (ActiveParticipant)&#xA;  - supplier as the Destination&#xA;    - this agent is the source of the auditEvent&#xA;  - consumer as the Source&#xA;  - other agents are allowed including identity of the application or infrastructure&#xA;- entity (ParticipantObjectIdentification) &#xA;  - query parameters&#xA;  - other entity are allowed including one to identify a patient when explicitly identified in the query parameters"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -273,8 +289,8 @@
       <reference>
         <reference value="StructureDefinition/IHE.PDQm.Patient"/>
       </reference>
-      <name value="Patient Profile for PDQm"/>
-      <description value="The PDQm Profile forbids modifier extensions, this FHIR profile enforces it."/>
+      <name value="PDQm Patient Profile"/>
+      <description value="The PDQm Patient Profile &#xA;- when any element in FHIR Core Patient are known, and when authorized to return the element, then all elements that are core to FHIR Patient should be returned&#xA;- forbids modifier extensions - so that all uses do not need to be concerned with changes to the meaning of the core elements of the Patient resource&#xA;- adds the patient-mothersMaidenName extension as an extension available to hold the mothers maiden name"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -284,8 +300,8 @@
       <reference>
         <reference value="CapabilityStatement/IHE.PDQm.client"/>
       </reference>
-      <name value="IHE.PDQm.client"/>
-      <description value="CapabilityStatement for Client Actor in the IHE IT Infrastructure Technical Framework Supplement IHE PDQm. See https://profiles.ihe.net/ITI/TF/Volume1/ch-38.html. The IHE Profile text is Normative, this conformance resource is Informative."/>
+      <name value="PDQm Client requirements CapabilityStatement"/>
+      <description value="The PDQm Patient Demographics Consumer Actor requirements CapabililtyStatement expresses the requirements that can be utilized while being compliant.&#xA;&#xA;- Query against the FHIR endpoint to the Patient Resource endpoint&#xA;- Using FHIR R4&#xA;- may request json or xml encoding&#xA;- should use a security framework. Recommend [IHE-IUA](https://profiles.ihe.net/ITI/IUA/index.html) or [SMART-on-FHIR](http://www.hl7.org/fhir/smart-app-launch/)&#xA;- [Search Parameters that may be used](https://profiles.ihe.net/ITI/PDQm/ITI-78.html#23784121-query-search-parameters)&#xA;  - _id&#xA;  - active&#xA;  - family&#xA;  - given&#xA;  - identifier&#xA;  - telecom&#xA;  - birthdate&#xA;  - address&#xA;  - gender&#xA;  - mothersMaidenName"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -296,7 +312,7 @@
         <reference value="CapabilityStatement/IHE.PDQm.server"/>
       </reference>
       <name value="IHE.PDQm.server"/>
-      <description value="CapabilityStatement for Server Actor in the IHE IT Infrastructure Technical Framework Supplement IHE PDQm. See https://profiles.ihe.net/ITI/TF/Volume1/ch-38.html. The IHE Profile text is Normative, this conformance resource is Informative."/>
+      <description value="The PDQm Patient Demographics Supplier Actor requirements CapabililtyStatement expresses the requirements that shall be provided.&#xA;&#xA;- Query against the FHIR endpoint to the Patient Resource endpoint&#xA;- Using FHIR R4&#xA;- shall support both json or xml encoding&#xA;- should use a security framework. Recommend [IHE-IUA](https://profiles.ihe.net/ITI/IUA/index.html) or [SMART-on-FHIR](http://www.hl7.org/fhir/smart-app-launch/)&#xA;- [Search Parameters that shall be supported](https://profiles.ihe.net/ITI/PDQm/ITI-78.html#23784121-query-search-parameters)&#xA;  - _id&#xA;  - active&#xA;  - family&#xA;  - given&#xA;  - identifier&#xA;  - telecom&#xA;  - birthdate&#xA;  - address&#xA;  - gender&#xA;  - mothersMaidenName"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -307,8 +323,8 @@
         <reference value="AuditEvent/ex-auditPdqmQuery-consumer"/>
       </reference>
       <name value="Audit Example of ITI-78 at Consumer"/>
-      <description value="Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Consumer&#xA;&#xA;where the Query was executed with a GET as follows&#xA;GET https://server.example.com/fhir/Patient?family=MOHR&amp;given=ALICE&amp;active=true&amp;gender=female&#xA;Accept: application/fhir+json; fhirVersion=4.0"/>
-      <exampleCanonical value="http://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Query.Audit.Consumer"/>
+      <description value="Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Consumer&#xA;&#xA;where the Query was executed with a GET as follows:&#xA;&#xA;```&#xA;GET https://server.example.com/fhir/Patient?family=MOHR&amp;given=ALICE&amp;active=true&amp;gender=female&#xA;Accept: application/fhir+json; fhirVersion=4.0&#xA;```"/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Query.Audit.Consumer"/>
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
@@ -318,8 +334,8 @@
         <reference value="AuditEvent/ex-auditPdqmQuery-supplier"/>
       </reference>
       <name value="Audit Example of ITI-78 at Supplier"/>
-      <description value="Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Supplier&#xA;&#xA;where the Query was executed with a GET as follows&#xA;GET https://server.example.com/fhir/Patient?family=MOHR&amp;given=ALICE&amp;active=true&amp;gender=female&#xA;Accept: application/fhir+json; fhirVersion=4.0&#xA;&#xA;Note the Supplier may choose to record patient identities found, but is not required to.&#xA;&#xA;Given the Supplier chooses to record a patient in the AuditEvent &#xA;When the search finds multiple Patients, &#xA;Then the Supplier would create an AuditEvent for each of those Patients. &#xA;&#xA;This example shows where Patient-MohrAlice-Blue is returned. This single result does not affect the response returned on the ITI-78 that would include all results."/>
-      <exampleCanonical value="http://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Query.Audit.Supplier"/>
+      <description value="Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Supplier&#xA;&#xA;where the Query was executed with a GET as follows:&#xA;&#xA;```&#xA;GET https://server.example.com/fhir/Patient?family=MOHR&amp;given=ALICE&amp;active=true&amp;gender=female&#xA;Accept: application/fhir+json; fhirVersion=4.0&#xA;```&#xA;&#xA;Note the Supplier may choose to record patient identities found, but is not required to.&#xA;&#xA;Given the Supplier chooses to record a patient in the AuditEvent &#xA;When the search finds multiple Patients, &#xA;Then the Supplier would create an AuditEvent for each of those Patients. &#xA;&#xA;This example shows where ex-patient is returned. This single result does not affect the response returned on the ITI-78 that would include all results."/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Query.Audit.Supplier"/>
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
@@ -337,66 +353,11 @@
         <valueString value="Patient"/>
       </extension>
       <reference>
-        <reference value="Patient/Patient-MaidenAlice-Red"/>
+        <reference value="Patient/ex-patient"/>
       </reference>
-      <name value="Patient Maiden Alice (Red)"/>
-      <description value="Patient Maiden Alice in IHE Red Domain"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Patient"/>
-      </extension>
-      <reference>
-        <reference value="Patient/Patient-MohrAlice-Blue"/>
-      </reference>
-      <name value="Patient Alice Mohr (Blue)"/>
-      <description value="Patient Mohr Alice in IHE Blue Domain"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Patient"/>
-      </extension>
-      <reference>
-        <reference value="Patient/Patient-MohrAlice-Green"/>
-      </reference>
-      <name value="Patient Alice Mohr (Green)"/>
-      <description value="Patient Mohr Alice in IHE Green Domain"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Patient"/>
-      </extension>
-      <reference>
-        <reference value="Patient/Patient-MohrAlice-Red"/>
-      </reference>
-      <name value="Patient Alice Mohr (Red)"/>
-      <description value="Patient Mohr Alice in IHE Red Domain"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Patient"/>
-      </extension>
-      <reference>
-        <reference value="Patient/Patient-MohrAlice"/>
-      </reference>
-      <name value="Patient Alice Mohr"/>
-      <description value="Patient Mohr Alice with all IHE Domain identifiers, note: this is just a consolidated identifier example will all identifiers from all the IHE domains equivalent to a golden patient, however a golden patient is not the scope of PIXm, see the IHE PMIR profile"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Patient"/>
-      </extension>
-      <reference>
-        <reference value="Patient/Patient-MohrAlissa-Red"/>
-      </reference>
-      <name value="Patient Alissa Mohr (Red)"/>
-      <description value="Patient Mohr Alisa in IHE Red Domain"/>
-      <exampleBoolean value="true"/>
+      <name value="Dummy Patient example"/>
+      <description value="Dummy patient example for completeness sake. No actual use of this resource other than an example target"/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient"/>
     </resource>
     <page>
       <nameUrl value="toc.html"/>
@@ -404,37 +365,12 @@
       <generation value="html"/>
       <page>
         <nameUrl value="index.html"/>
-        <title value="1:38. Patient Demographics Query for Mobile"/>
+        <title value="Patient Demographics Query for Mobile"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="actors_and_transactions.html"/>
-        <title value="1:38.1 Actors and Transactions"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <nameUrl value="actor_options.html"/>
-        <title value="1:38.2 Actor Options"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <nameUrl value="required_groupings.html"/>
-        <title value="1:38.3 Required Groupings"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <nameUrl value="overview.html"/>
-        <title value="1:38.4 Overview"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <nameUrl value="security_considerations.html"/>
-        <title value="1:38.5 Security Considerations"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <nameUrl value="grouping.html"/>
-        <title value="1:38.6 Cross-Profile Considerations"/>
+        <nameUrl value="volume-1.html"/>
+        <title value="1:38 Patient Demographics Query for Mobile (PDQm)"/>
         <generation value="markdown"/>
       </page>
       <page>
@@ -444,12 +380,17 @@
       </page>
       <page>
         <nameUrl value="testplan.html"/>
-        <title value="Test Plan"/>
+        <title value="PDQm Test Plan"/>
         <generation value="markdown"/>
       </page>
       <page>
         <nameUrl value="issues.html"/>
-        <title value="Open and Closed issues"/>
+        <title value="PDQm Open and Closed issues"/>
+        <generation value="markdown"/>
+      </page>
+      <page>
+        <nameUrl value="other.html"/>
+        <title value="Changes to other Profiles"/>
         <generation value="markdown"/>
       </page>
     </page>
@@ -464,14 +405,6 @@
     <parameter>
       <code value="path-resource"/>
       <value value="input/examples"/>
-    </parameter>
-    <parameter>
-      <code value="path-pages"/>
-      <value value="input/pagecontent"/>
-    </parameter>
-    <parameter>
-      <code value="path-pages"/>
-      <value value="fsh-generated/includes"/>
     </parameter>
     <parameter>
       <code value="path-resource"/>
