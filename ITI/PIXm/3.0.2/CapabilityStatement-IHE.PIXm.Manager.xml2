@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CapabilityStatement xmlns="http://hl7.org/fhir">
+  <id value="IHE.PIXm.Manager"/>
+  <text>
+    <status value="additional"/><div xmlns="http://www.w3.org/1999/xhtml"> 
+		CapabilityStatement for Manager Actor in the IHE IT Infrastructure Technical Framework Supplement 
+		Patient Identifier Cross-referencing for mobile (PIXm). 
+	</div>
+  </text>
+  <url value="https://profiles.ihe.net/ITI/PIXm/CapabilityStatement/IHE.PIXm.Manager"/>
+  <version value="3.0.2"/>
+  <name value="IHE_PIXm_Manager"/>
+  <title value="IHE ITI Patient Identifier Cross-referencing for mobile (PIXm) - Manager (server)"/>
+  <status value="draft"/>
+  <experimental value="false"/>
+  <date value="2019-07-05"/>
+  <publisher value="IHE IT Infrastructure Technical Committee"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <contact>
+    <name value="IHE IT Infrastructure Technical Committee"/>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <description value="The Patient Identifier Cross-reference Manager CapabililtyStatement expresses the requirements that shall be provided. - using FHIR R4 - using json and xml encoding - support the $ihe-pix operation - support conditional update for [ITI-104] - support conditional delete for [ITI-104] if Remove Patient Option is supported - should use a security framework. Recommend IHE-IUA or SMART-on-FHIR"/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <copyright value="IHE http://www.ihe.net/Governance/#Intellectual_Property"/>
+  <kind value="requirements"/>
+  <fhirVersion value="4.0.1"/>
+  <format value="application/fhir+xml"/>
+  <format value="application/fhir+json"/>
+  <rest>
+    <mode value="server"/>
+    <documentation value="PIXm server provides capability to query for Patient Identity Cross-reference matching a query parameters"/>
+    <security>
+      <cors value="false"/>
+      <description value="Recommend IUA or SMART"/>
+    </security>
+    <resource>
+      <type value="Patient"/>
+      <supportedProfile value="https://profiles.ihe.net/ITI/PIXm/StructureDefinition/IHE.PIXm.Patient"/>
+      <interaction>
+        <code value="update"/>
+        <documentation value="conditional update for [ITI-104]"/>
+      </interaction>
+      <interaction>
+        <code value="delete"/>
+        <documentation value="conditional delete for [ITI-104] for Remove Patient Option"/>
+      </interaction>
+      <conditionalCreate value="true"/>
+      <conditionalUpdate value="true"/>
+      <conditionalDelete value="single"/>
+      <operation>
+        <name value="$ihe-pix"/>
+        <definition value="https://profiles.ihe.net/ITI/PIXm/OperationDefinition/IHE_PIXm_pix"/>
+      </operation>
+    </resource>
+  </rest>
+</CapabilityStatement>
