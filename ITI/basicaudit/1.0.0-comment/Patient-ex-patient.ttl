@@ -1,0 +1,90 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/basicaudit/Patient/ex-patient> a fhir:Patient;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-patient"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>John Schmidt </b> (no stated gender) 1923-07-25</p></div>"
+  ];
+  fhir:Patient.name [
+     fhir:index 0;
+     fhir:HumanName.use [ fhir:value "usual" ];
+     fhir:HumanName.family [ fhir:value "Schmidt" ];
+     fhir:HumanName.given [
+       fhir:value "John";
+       fhir:index 0
+     ]
+  ], [
+     fhir:index 1;
+     fhir:HumanName.use [ fhir:value "old" ];
+     fhir:HumanName.family [ fhir:value "Schnidt" ];
+     fhir:HumanName.given [
+       fhir:value "John";
+       fhir:index 0
+     ], [
+       fhir:value "Jacob";
+       fhir:index 1
+     ], [
+       fhir:value "Jingle";
+       fhir:index 2
+     ], [
+       fhir:value "Heimer";
+       fhir:index 3
+     ];
+     fhir:HumanName.period [
+       fhir:Period.end [ fhir:value "1960"^^xsd:gYear ]
+     ]
+  ], [
+     fhir:index 2;
+     fhir:HumanName.use [ fhir:value "official" ];
+     fhir:HumanName.family [ fhir:value "Schmidt" ];
+     fhir:HumanName.given [
+       fhir:value "John";
+       fhir:index 0
+     ], [
+       fhir:value "Jacob";
+       fhir:index 1
+     ], [
+       fhir:value "Jingleheimer";
+       fhir:index 2
+     ];
+     fhir:HumanName.period [
+       fhir:Period.start [ fhir:value "1960-01-01"^^xsd:date ]
+     ]
+  ], [
+     fhir:index 3;
+     fhir:HumanName.use [ fhir:value "nickname" ];
+     fhir:HumanName.family [ fhir:value "Schmidt" ];
+     fhir:HumanName.given [
+       fhir:value "Jack";
+       fhir:index 0
+     ]
+  ];
+  fhir:Patient.gender [ fhir:value "other"];
+  fhir:Patient.birthDate [ fhir:value "1923-07-25"^^xsd:date];
+  fhir:Patient.address [
+     fhir:index 0;
+     fhir:Address.state [ fhir:value "WI" ];
+     fhir:Address.country [ fhir:value "USA" ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/basicaudit/Patient/ex-patient.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
