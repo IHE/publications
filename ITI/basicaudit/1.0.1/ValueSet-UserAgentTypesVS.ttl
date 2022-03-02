@@ -1,0 +1,76 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/basicaudit/ValueSet/UserAgentTypesVS> a fhir:ValueSet;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "UserAgentTypesVS"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>This value set includes codes based on the following rules:</p><ul><li>Include all codes defined in <a href=\"CodeSystem-UserAgentTypes.html\"><code>https://profiles.ihe.net/ITI/basicaudit/CodeSystem/UserAgentTypes</code></a></li><li>Include these codes as defined in <a href=\"CodeSystem-UserAgentHomeCommunity.html\"><code>urn:ihe:iti:xca:2010</code></a><table class=\"none\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td><a href=\"CodeSystem-UserAgentHomeCommunity.html#UserAgentHomeCommunity-homeCommunityId\">homeCommunityId</a></td><td>IHE homeCommunityId</td></tr></table></li></ul></div>"
+  ];
+  fhir:ValueSet.url [ fhir:value "https://profiles.ihe.net/ITI/basicaudit/ValueSet/UserAgentTypesVS"];
+  fhir:ValueSet.version [ fhir:value "1.0.1"];
+  fhir:ValueSet.name [ fhir:value "UserAgentTypesVS"];
+  fhir:ValueSet.title [ fhir:value "Agent types holding User-Agent"];
+  fhir:ValueSet.status [ fhir:value "active"];
+  fhir:ValueSet.date [ fhir:value "2022-03-02T07:55:57-06:00"^^xsd:dateTime];
+  fhir:ValueSet.publisher [ fhir:value "IHE IT Infrastructure Technical Committee"];
+  fhir:ValueSet.contact [
+     fhir:index 0;
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "url" ];
+       fhir:ContactPoint.value [ fhir:value "https://www.ihe.net/ihe_domains/it_infrastructure/" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "iti@ihe.net" ]
+     ]
+  ], [
+     fhir:index 2;
+     fhir:ContactDetail.name [ fhir:value "IHE IT Infrastructure Technical Committee" ];
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "iti@ihe.net" ]
+     ]
+  ];
+  fhir:ValueSet.description [ fhir:value "AuditEvent.agent.type values holding OAuth/SAML identified user. Note that user is not just users, but representes the higest agent responsible for triggering the activity being recorded in the AuditEvent.\n\nOften this agent also has a type coding that is more specific to the transaction and the direction of the transaction.\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#IRCP // use for query/retrieve\n- http://terminology.hl7.org/CodeSystem/v3-RoleClass#AGNT // use for push/create/update\n- http://terminology.hl7.org/CodeSystem/v3-RoleClass#PAT  // use when the user is the patient\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#AUT \"Author\" // used with create/update\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#INF \"Informant\" // used with export\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#CST \"Custodian\" // used with export"];
+  fhir:ValueSet.jurisdiction [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://unstats.un.org/unsd/methods/m49/m49.htm" ];
+       fhir:Coding.code [ fhir:value "001" ]
+     ]
+  ];
+  fhir:ValueSet.copyright [ fhir:value "IHE http://www.ihe.net/Governance/#Intellectual_Property"];
+  fhir:ValueSet.compose [
+     fhir:ValueSet.compose.include [
+       fhir:index 0;
+       fhir:ValueSet.compose.include.system [ fhir:value "https://profiles.ihe.net/ITI/basicaudit/CodeSystem/UserAgentTypes" ]
+     ], [
+       fhir:index 1;
+       fhir:ValueSet.compose.include.system [ fhir:value "urn:ihe:iti:xca:2010" ];
+       fhir:ValueSet.compose.include.concept [
+         fhir:index 0;
+         fhir:ValueSet.compose.include.concept.code [ fhir:value "homeCommunityId" ];
+         fhir:ValueSet.compose.include.concept.display [ fhir:value "IHE homeCommunityId" ]
+       ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/basicaudit/ValueSet/UserAgentTypesVS.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
