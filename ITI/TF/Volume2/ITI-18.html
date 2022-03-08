@@ -171,15 +171,14 @@
       <p>The ‘LeafClass’ returnType is meant for returning a small amount of fully specified ebXML objects (such as a list of ExtrinsicObject (XDSDocumentEntry) elements with full contents: slots, external identifiers, classifications etc.). This type of query result is self-contained, everything known about the object(s) is returned. The specific query documented in this section describes which object types will be included. ObjectRef elements are also returned. These represent objects not included in the returned object list that are referenced by objects in the returned object list. These ObjectRefs are optional by the registry standard version 3.0.</p>
       <p>The 'ObjectRef' returnType returns references to the registry objects that match the query. This type query is recommended when the returned object list could be large. An initial query returning ObjectRefs for all objects of interest followed by secondary queries requesting full metadata (query type LeafClass) is an efficient way to query for large bodies of metadata. This strategy is particularly easy to use when querying for a single object type (XDSDocumentEntry or XDSSubmissionSet are examples) since only a single object type is involved.</p>
       <p>An ObjectRef looks like:</p>
-      <p>
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>&lt;ObjectRef id=”urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427”/&gt;</span>
+      <p class="indent">
+        <code class="xml">&lt;ObjectRef id="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"/&gt;</code>
       </p>
       <p class="heading7" id="3.18.4.1.2.3.2">3.18.4.1.2.3.2 Parameter Query ID</p>
       <p>This parameter holds the UUID assigned to the query to be invoked. UUIDs are assigned by this profile (see Section 3.18.4.1.2.4) to each of the queries defined in Section 3.18.4.1.2.3.7.</p>
       <p class="heading7" id="3.18.4.1.2.3.3">3.18.4.1.2.3.3 Date/Time Coding</p>
       <p>All Date/time values are to be inclusive, interpreted as:</p>
-      <p> $XDSDocumentEntryCreationTimeFrom &lt;= XDSDocumentEntry.creationTime &lt; $XDSDocumentEntryCreationTimeTo</p>
+      <p>$XDSDocumentEntryCreationTimeFrom &lt;= XDSDocumentEntry.creationTime &lt; $XDSDocumentEntryCreationTimeTo</p>
       <p>for example.</p>
       <p>The ‘From’ time or the ‘To’ time may be omitted.</p>
       <p class="heading8" id="3.18.4.1.2.3.3.1">3.18.4.1.2.3.3.1 Comparing serviceStartTime and serviceStopTime</p>
@@ -216,26 +215,26 @@
       </ul>
       <p>Format for multiple values is</p>
       <ul>
-        <li class="bullet-list1">(value,value,value,…)</li>
+        <li class="bullet-list1"><code>(value,value,value,…)</code></li>
       </ul>
       <p>OR</p>
       <ul>
-        <li class="bullet-list1">(value) if only one value is to be specified.</li>
+        <li class="bullet-list1"><code>(value)</code> if only one value is to be specified.</li>
       </ul>
       <p>where each value is coded as described above for single values.</p>
       <p>When coding multiple values there is a potential conflict between needing to code a long list of values and the length restriction imposed by Schema on the size of the value of the &lt;Value/&gt; element. Slot values shall never exceed the Schema-enforced limit. Therefore, the use of multiple Value elements within the Slot shall be acceptable. Splits may occur only between values, where each Value element is surrounded by parentheses. The following example shows multiple values, split across multiple Value elements:</p>
-      <code class="code-block">&lt;Slot name="$uuid"&gt;
-    &lt;ValueList&gt;
-        &lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66')&lt;/Value&gt;
-        &lt;Value&gt;('urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;
-    &lt;/ValueList&gt;
-&lt;/Slot&gt;</code>
+      <pre><code class="code-block">&lt;Slot name="$uuid"&gt;
+  &lt;ValueList&gt;
+    &lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66')&lt;/Value&gt;
+    &lt;Value&gt;('urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;
+  &lt;/ValueList&gt;
+&lt;/Slot&gt;</code></pre>
       <p>This example shall be treated as equivalent to:</p>
-      <code class="code-block">&lt;Slot name="$uuid"&gt;
-    &lt;ValueList&gt;
-        &lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66','urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;
-    &lt;/ValueList&gt;
-&lt;/Slot&gt;</code>
+      <pre><code class="code-block">&lt;Slot name="$uuid"&gt;
+  &lt;ValueList&gt;
+    &lt;Value&gt;('urn:uuid:a96d7361-6617-488a-891c-ee3f37d1f218','urn:uuid: 5655a680-1b6a-11dd-bd0b-0800200c9a66','urn:uuid:ae315e81-2056-4829-a5b4-cf9531941f96')&lt;/Value&gt;
+  &lt;/ValueList&gt;
+&lt;/Slot&gt;</code></pre>
       <p>
         Character comparisons shall be performed in accordance with the rules in
         <a href="../Volume2/ch-F.html#Appendix F">ITI TF-2: Appendix F</a>
@@ -243,41 +242,41 @@
       </p>
       <p>And/or semantics for the coding of parameters shall be available only on parameters for multi-valued metadata elements (such as $XDSDocumentEntryEventCodeList). Multi-valued parameters shall be coded in two ways with different interpretations.</p>
       <p>A parameter specified as a Slot with multiple values shall be interpreted as disjunction (OR semantics). For example:</p>
-      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
-     &lt;rim:Value&gt;('b')&lt;/rim:Value&gt;
-  &lt;/rim:ValueList&gt;
-&lt;/rim:Slot&gt;</code>
+      <pre><code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
+    &lt;rim:Value&gt;('b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code></pre>
       <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing either 'a' or 'b'. The following coding of the parameter shall yield the same results:</p>
-      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;
-  &lt;/rim:ValueList&gt;
-&lt;/rim:Slot&gt;</code>
+      <pre><code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code></pre>
       <p>A parameter specified as multiple Slots shall be interpreted as conjunction (AND semantics). For example:</p>
-      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
-  &lt;/rim:ValueList&gt;
+      <pre><code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('a')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
 &lt;/rim:Slot&gt;
 &lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('b')&lt;/rim:Value&gt; 
-  &lt;/rim:ValueList&gt;
-&lt;/rim:Slot&gt;</code>
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code></pre>
       <p>shall match an XDSDocumentEntry object with an eventCodeList attribute containing both 'a' and 'b'.</p>
       <p>Furthermore, the following specification of the $XDSDocumentEntryEventCodeList parameter:</p>
-      <code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;
-  &lt;/rim:ValueList&gt;
+      <pre><code class="code-block">&lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;</span>
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('a','b')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
 &lt;/rim:Slot&gt;
 &lt;rim:Slot name="$XDSDocumentEntryEventCodeList"&gt;
-  &lt;rim:ValueList&gt;
-     &lt;rim:Value&gt;('c')&lt;/rim:Value&gt;
-  &lt;/rim:ValueList&gt;
-&lt;/rim:Slot&gt;</code>
+  &lt;rim:ValueList&gt;
+    &lt;rim:Value&gt;('c')&lt;/rim:Value&gt;
+  &lt;/rim:ValueList&gt;
+&lt;/rim:Slot&gt;</code></pre>
       <p>shall be interpreted as matching a document having eventCode (a OR b) AND c.</p>
       <p class="heading7" id="3.18.4.1.2.3.6">3.18.4.1.2.3.6 Valid Document Status Values</p>
       <p>The Registry Object status values, in ebRIM v 3.0 format, used by XDS are:</p>
@@ -829,7 +828,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p class="note">
         Note: A query for a single XDSDocumentEntry.uniqueId can return multiple results. See
@@ -907,7 +906,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">3</span>
@@ -950,7 +949,7 @@
       </table>
       <p>
         <span style="font-size:8pt;vertical-align:super">1</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;.  Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>.  Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p class="heading8" id="3.18.4.1.2.3.7.8">3.18.4.1.2.3.7.8 GetDocumentsAndAssociations</p>
       <p>Retrieve a collection of XDSDocumentEntry objects and the Association objects surrounding them. XDSDocumentEntry objects are selected either by their entryUUID or uniqueId attribute. This is the GetDocuments query and GetAssociations query combined into a single query.</p>
@@ -1022,7 +1021,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">3</span>
@@ -1085,7 +1084,7 @@
       </table>
       <p>
         <span style="font-size:8pt;vertical-align:super">1</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code><code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code></code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
@@ -1214,7 +1213,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">3</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <span class="XMLname">&lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;</span>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">4</span>
@@ -1347,7 +1346,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">3</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">4</span>
@@ -1418,7 +1417,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p class="note">
         Note: A query for a single XDSDocumentEntry.uniqueId can return multiple results. See
@@ -1517,7 +1516,7 @@
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">2</span>
-        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
+        <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in: <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>. Document Consumer Actors shall specify the homeCommunityId value if they received a value for this attribute as part of the previous Registry Stored Query response entry which contained the specified EntryUUID or UniqueID. See Section 3.18.4.1.2.3.8 for more details.</span>
       </p>
       <p>
         <span style="font-size:8pt;vertical-align:super">3</span>
@@ -1757,7 +1756,7 @@
         <li class="bullet-list1">
           <span>The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the query request, as in:</span>
           <br />
-          <span>&lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt;</span>
+          <code>&lt;AdhocQuery id="…" home="urn:oid:1.2.3" … &gt;</code>
         </li>
         <li class="bullet-list1">Each query request can have at most one homeCommunityId value. If the Document Consumer specifies multiple entryUUID or uniqueID values they must all be associated with the same homeCommunityId value. Multiple individual query requests can be used to retrieve data associated with different homeCommunityIds.</li>
       </ul>
@@ -1918,36 +1917,13 @@
         <span style="font-weight:bold">IHE-WSP201) The attribute /wsdl:definitions/@name shall be “DocumentRegistry”.</span>
       </p>
       <p>The following WSDL naming conventions shall apply:</p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>wsdl:definitions/@name=</span>
-        <span style="font-weight:bold">"</span>
-        <span>DocumentRegistry":</span>
-      </p>
-      <p class="XMLname">
-	      <span style="width:36pt;display:inline-block"> </span>
-	      <span>query message    -&gt; "RegistryStoredQuery_Message"</span>
-      </p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>query response   -&gt; "RegistryStoredQueryResponse_Message"</span>
-      </p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>portType         -&gt; "DocumentRegistry_PortType"</span>
-      </p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>operation        -&gt; "RegistryStoredQuery"</span>
-      </p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"</span>
-      </p>
-      <p class="XMLname">
-        <span style="width:36pt;display:inline-block"> </span>
-        <span>SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</span>
-      </p>
+      <pre class="XMLname">wsdl:definitions/@name="DocumentRegistry":
+query message    -&gt; "RegistryStoredQuery_Message"
+query response   -&gt; "RegistryStoredQueryResponse_Message"
+portType         -&gt; "DocumentRegistry_PortType"
+operation        -&gt; "RegistryStoredQuery"
+SOAP 1.2 binding -&gt; "DocumentRegistry_Binding_Soap12"
+SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
       <p>
         <span style="font-weight:bold">IHE-WSP202) The targetNamespace of the WSDL shall be “urn:ihe:iti:xds-b:2007”</span>
       </p>
@@ -1992,154 +1968,33 @@
         </tbody>
       </table>
       <p>The following WSDL fragment shows an example of Registry Stored Query transaction definition:</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;definitions ...&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">...</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;types&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:ihe:iti:xds-b:2007"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;xsd:import</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">schemaLocation="schema\query.xsd"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">...</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/xsd:schema&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/types&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;message name="RegistryStoredQuery_Message"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;documentation&gt;Registry Stored Query&lt;/documentation&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;part name="body" element="query:AdhocQueryRequest"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/message&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;message name="RegistryStoredQueryResponse_Message"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;documentation&gt;Registry Stored Query Response&lt;/documentation&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;part name="body" element="query:AdhocQueryResponse"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/message&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">...</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;portType name="DocumentRegistry_PortType"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;operation name="DocumentRegistry_RegistryStoredQuery"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;input message="ihe:RegistryStoredQuery_Message"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">wsaw:Action="urn:ihe:iti:2007:RegistryStoredQuery"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;output message="ihe:RegistryStoredQueryResponse_Message"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">wsaw:Action="urn:ihe:iti:2007:RegistryStoredQueryResponse"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/operation&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">...</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/portType&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">...</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/definitions&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;definitions …&gt;
+  …
+  &lt;types&gt;
+    &lt;xsd:schema elementFormDefault="qualified" targetNamespace="urn:ihe:iti:xds-b:2007"&gt;
+      &lt;xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" schemaLocation="schema\query.xsd"/&gt;
+      …
+    &lt;/xsd:schema&gt;
+  &lt;/types&gt;
+  &lt;message name="RegistryStoredQuery_Message"&gt;
+    &lt;documentation&gt;Registry Stored Query&lt;/documentation&gt;
+    &lt;part name="body" element="query:AdhocQueryRequest"/&gt;
+  &lt;/message&gt;
+  &lt;message name="RegistryStoredQueryResponse_Message"&gt;
+    &lt;documentation&gt;Registry Stored Query Response&lt;/documentation&gt;
+    &lt;part name="body" element="query:AdhocQueryResponse"/&gt;
+  &lt;/message&gt;
+  …
+  &lt;portType name="DocumentRegistry_PortType"&gt;
+    &lt;operation name="DocumentRegistry_RegistryStoredQuery"&gt;
+      &lt;input message="ihe:RegistryStoredQuery_Message" wsaw:Action="urn:ihe:iti:2007:RegistryStoredQuery"/&gt;
+      &lt;output message="ihe:RegistryStoredQueryResponse_Message" wsaw:Action="urn:ihe:iti:2007:RegistryStoredQueryResponse"/&gt;
+    &lt;/operation&gt;
+    …
+  &lt;/portType&gt;
+  …
+&lt;/definitions&gt;</code></pre>
       <p>
         A full WSDL for the Document Repository and Document Registry Actors is found online:  see
         <a href="../Volume2/ch-W.html#Appendix W">ITI TF-2: Appendix W</a>
@@ -2158,637 +2013,116 @@
       </p>
       <p class="heading8" id="3.18.4.1.2.7.1.1">3.18.4.1.2.7.1.1 Sample Registry Stored Query SOAP Request</p>
       <h9 id="3.18.4.1.2.7.1.1">3.18.4.1.2.7.1.1.1 Synchronous Web Services Exchange</h9>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:ReplyTo s:mustUnderstand="1"&gt;&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:To&gt;http://localhost/service/IHEXDSRegistry.svc&lt;/a:To&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;query:AdhocQueryRequest</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:AdhocQuery id=" urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d "&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;’st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO’&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;(</span>
-          <span>'35971002^^2.16.840.1.113883.6.96'</span>
-          <span style="background-color:#ffffff">)&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:AdhocQuery&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/query:AdhocQueryRequest&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;s:Envelope xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo s:mustUnderstand="1"&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To&gt;http://localhost/service/IHEXDSRegistry.svc&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;
+      &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;
+      &lt;rim:AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d"&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;'st3498702^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO'&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;('35971002^^2.16.840.1.113883.6.96')&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+      &lt;/rim:AdhocQuery&gt;
+    &lt;/query:AdhocQueryRequest&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</code></pre>
       <h9 id="3.18.4.1.2.7.1.1.2">3.18.4.1.2.7.1.1.2 Asynchronous Web Services Exchange</h9>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;s:Envelope</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:MessageID&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:ReplyTo&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Address&gt; http://192.168.2.4:9080/XDS/</span>
-          <span>DocumentConsumerReceiver</span>
-          <span style="background-color:#ffffff">.svc &lt;/a:Address&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/a:ReplyTo&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentRegistryReceiver.svc&lt;/a:To&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;query:AdhocQueryRequest</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;rim:AdhocQuery id=" urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d "&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span style="background-color:#ffffff">&lt;rim:Value&gt;(‘Emergency Department’)&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span style="background-color:#ffffff">&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/rim:AdhocQuery&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/query:AdhocQueryRequest&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;s:Envelope xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQuery&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://192.168.2.4:9080/XDS/DocumentConsumerReceiver.svc&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentRegistryReceiver.svc&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;query:AdhocQueryRequest xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;
+      &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;
+      &lt;rim:AdhocQuery id=" urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d "&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;st3498702^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Approved')&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;('Emergency Department')&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+      &lt;/rim:AdhocQuery&gt;
+    &lt;/query:AdhocQueryRequest&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</code></pre>
       <p class="heading8" id="3.18.4.1.2.7.1.2">3.18.4.1.2.7.1.2 Sample Registry Stored Query SOAP Response</p>
       <h9 id="3.18.4.1.2.7.1.2.1">3.18.4.1.2.7.1.2.1 Synchronous Web Services Exchange</h9>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;query:AdhocQueryResponse xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;s:Envelope xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;
+    &lt;a:RelatesTo&gt;urn:uuid:def119ad-dc13-49c1-a3c7-e3742531f9b3&lt;/a:RelatesTo&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;query:AdhocQueryResponse xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"/&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</code></pre>
       <h9 id="3.18.4.1.2.7.1.2.2">3.18.4.1.2.7.1.2.2 Asynchronous Web Services Exchange</h9>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">xmlns:a="http://www.w3.org/2005/08/addressing"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/</span>
-          <span>a</span>
-          <span style="background-color:#ffffff">:MessageID&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:RelatesTo&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:RelatesTo&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentConsumerReceiver.svc&lt;/a:To&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/s:Header&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;query:AdhocQueryResponse status="Success"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span style="background-color:#ffffff">xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;!—Rest of AdhocQueryResponse message goes here --&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="background-color:#ffffff">&lt;/query:AdhocQueryResponse&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="background-color:#ffffff">&lt;/s:Body&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="background-color:#ffffff">&lt;/s:Envelope&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;s:Envelope xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;urn:ihe:iti:2007:RegistryStoredQueryResponse&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:D6C21225-8E7B-454E-9750-821622C099DB&lt;/a:MessageID&gt;
+    &lt;a:RelatesTo&gt;urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055&lt;/a:RelatesTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://localhost:2647/XdsService/DocumentConsumerReceiver.svc&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;query:AdhocQueryResponse status="Success" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"&gt;
+    &lt;!— Rest of AdhocQueryResponse message goes here --&gt;
+    &lt;/query:AdhocQueryResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</code></pre>
       <h5 id="3.18.4.1.3">3.18.4.1.3 Expected Actions</h5>
       <p>The Document Registry shall:</p>
       <ol>
@@ -2863,236 +2197,47 @@
         <li class="bullet-list1">Healthcare Facility Type Code of Emergency Department</li>
       </ul>
       <p>Note that ebRS 3.0 specifies the use of Slot to specify name/value(s) pairs as parameters to a Stored Query.</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;query:AdhocQueryRequest</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span> </span>
-          <span style="width:4.55pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span> </span>
-          <span style="width:4.55pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span> </span>
-          <span style="width:4.55pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span>&lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span>&lt;rim:AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Value&gt;’st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO’&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="$XDSDocumentEntryStatus"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Value&gt;(‘Emergency Department’)&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span>&lt;/rim:AdhocQuery&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/query:AdhocQueryRequest&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;query:AdhocQueryRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"&gt;
+  &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;
+  &lt;rim:AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d"&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryPatientId"&gt;
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;'st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO'&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryStatus"
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryCreationTimeFrom"&gt;
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;200412252300&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryCreationTimeTo"&gt;
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;200501010800&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryHealthcareFacilityTypeCode"&gt;
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;('Emergency Department')&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+  &lt;/rim:AdhocQuery&gt;
+&lt;/query:AdhocQueryRequest&gt;</code></pre>
       <p>The following example shows a get documents query for XDSDocumentEntry objects for a specified list of entryUUIDs (urn:uuid:aff99222-18e3-4812-bc71-c410b2860e18, urn:uuid:aff99222-18e3-4812-bc71-c410b2860e19, urn:uuid:aff99222-18e3-4812-bc71-c410b2860e20) and corresponding homeCommunityId value (urn:oid:1.2.3):</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;query:AdhocQueryRequest … &gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>    &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>    &lt;rim:AdhocQuery id="urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4" home=”urn:oid:1.2.3</span>
-          <span style="font-weight:bold">”</span>
-          <span>&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>        &lt;rim:Slot name="$XDSDocumentEntryEntryUUID"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>            &lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>              &lt;rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>             (“urn:uuid:aff99222-18e3-4812-bc71-c410b2860e18”,</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>                            “urn:uuid:aff99222-18e3-4812-bc71-c410b2860e19”,</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>              “urn:uuid:aff99222-18e3-4812-bc71-c410b2860e20”)</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>              &lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>            &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>        &lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>    &lt;/rim:AdhocQuery&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/query:AdhocQueryRequest&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;query:AdhocQueryRequest … &gt;
+  &lt;query:ResponseOption returnComposedObjects="true" returnType="LeafClass"/&gt;
+  &lt;rim:AdhocQuery id="urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4" home="urn:oid:1.2.3"&gt;
+    &lt;rim:Slot name="$XDSDocumentEntryEntryUUID"&gt;
+      &lt;rim:ValueList&gt;
+        &lt;rim:Value&gt;("urn:uuid:aff99222-18e3-4812-bc71-c410b2860e18","urn:uuid:aff99222-18e3-4812-bc71-c410b2860e19","urn:uuid:aff99222-18e3-4812-bc71-c410b2860e20")&lt;/rim:Value&gt;
+      &lt;/rim:ValueList&gt;
+    &lt;/rim:Slot&gt;
+  &lt;/rim:AdhocQuery&gt;
+&lt;/query:AdhocQueryRequest&gt;</code></pre>
       <h6 id="3.18.4.1.3.2">3.18.4.1.3.2 Intentionally Left Blank</h6>
       <h6 id="3.18.4.1.3.3">3.18.4.1.3.3 Sample Query Response</h6>
       <p>
@@ -3100,1295 +2245,172 @@
         <a href="http://wiki.ihe.net/index.php?title=ITI_Implementation_Guide">http://wiki.ihe.net/index.php?title=ITI_Implementation_Guide</a>
         <span>contains such supplemental material.</span>
       </p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;AdhocQueryResponse</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>file:/Users/bill/RegSchema/V3.0/query.xsd"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span>&lt;rim:RegistryObjectList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ExtrinsicObject</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>isOpaque="false"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>mimeType="text/xml"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="URI"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;http://localhost:8080/XDS/Repository/08a15a6f-5b4a-42de-8f95-89474f83abdf.xml&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="authorInstitution"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;Some Hospital^^^^^^^^^1.2.3.4.5.6.7.8.9.1789.45&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>       &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span> </span>
-          <span style="width:4.55pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="creationTime"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;200412261119&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>       &lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="hash"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;4cf4f82d78b5e2aac35c31bca8cb79fe6bd6a41e&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="languageCode"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;en-us&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="serviceStartTime"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;200412230800&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="serviceStopTime"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;200412230801&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="size"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;54449&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="sourcePatientId"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;jd12323^^^wsh&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Slot name="sourcePatientInfo"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span> </span>
-          <span style="width:4.55pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;PID-3|pid1^^^domain&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;PID-5|Doe^John^^^&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;PID-7|19560527&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;PID-8|M&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:Value&gt;PID-11|100 Main St^^Metropolis^Il^44130^USA&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="Sample document 1" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:ac872fc0-1c6e-439f-84d1-f76770a0ccdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="Education"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;Connect-a-thon classCodes&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="Education" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:f1a8c8e4-3593-4777-b7e0-8b0773378705"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="C"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;Connect-a-thon confidentialityCodes&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="Celebrity" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:b6e49c73-96c8-4058-8c95-914d83bd262a"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="CDAR2/IHE 1.0"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;Connect-a-thon formatCodes&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="CDAR2/IHE 1.0" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:61e2b376-d74a-4984-ac21-dcd0b8890f9d"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="Emergency Department"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;Connect-a-thon healthcareFacilityTypeCodes&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="Assisted Living" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:fb7677c5-c42f-485d-9010-dce0f3cd4ad5"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="Cardiology"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;Connect-a-thon practiceSettingCodes&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString charset="UTF-8" value="Cardiology" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:Classification</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classificationScheme="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:0a8a8ed9-8be5-4a63-9b68-a511adee8ed5"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>nodeRepresentation="34098-4"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Slot name="codingScheme"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">    </span>
-          <span>&lt;rim:Value&gt;LOINC&lt;/rim:Value&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;/rim:ValueList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Slot&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>charset="UTF-8"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>value="Conference Evaluation Note" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:Classification&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ExternalIdentifier</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:db9f4438-ffff-435f-9d34-d76190728637"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="ExternalIdentifier"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>value="st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>charset="UTF-8"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>value="XDSDocumentEntry.patientId"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ExternalIdentifier&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;rim:ExternalIdentifier</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>objectType="ExternalIdentifier"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">   </span>
-          <span>&lt;rim:LocalizedString</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>charset="UTF-8"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>value="XDSDocumentEntry.uniqueId"</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">     </span>
-          <span>xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block">  </span>
-          <span>&lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span style="width:36pt;display:inline-block"> </span>
-          <span>&lt;/rim:ExternalIdentifier&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;/rim:ExtrinsicObject&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span style="width:26.65pt;display:inline-block"> </span>
-          <span>&lt;rim:ObjectRef xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" id="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span style="width:9.35pt;display:inline-block;-aw-tabstop-align:left;-aw-tabstop-pos:9.35pt"> </span>
-          <span>&lt;/rim:RegistryObjectList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;/AdhocQueryResponse&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;AdhocQueryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success" xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 file:/Users/bill/RegSchema/V3.0/query.xsd"&gt;
+  &lt;rim:RegistryObjectList&gt;
+    &lt;rim:ExtrinsicObject id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" isOpaque="false" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"&gt;
+      &lt;rim:Slot name="URI"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;http://localhost:8080/XDS/Repository/08a15a6f-5b4a-42de-8f95-89474f83abdf.xml&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="authorInstitution"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;Some Hospital^^^^^^^^^1.2.3.4.5.6.7.8.9.1789.45&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="creationTime"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;200412261119&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="hash"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;4cf4f82d78b5e2aac35c31bca8cb79fe6bd6a41e&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="languageCode"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;en-us&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="serviceStartTime"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;200412230800&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="serviceStopTime"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;200412230801&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="size"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;54449&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="sourcePatientId"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;jd12323^^^wsh&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Slot name="sourcePatientInfo"&gt;
+        &lt;rim:ValueList&gt;
+          &lt;rim:Value&gt;PID-3|pid1^^^domain&lt;/rim:Value&gt;
+          &lt;rim:Value&gt;PID-5|Doe^John^^^&lt;/rim:Value&gt;
+          &lt;rim:Value&gt;PID-7|19560527&lt;/rim:Value&gt;
+          &lt;rim:Value&gt;PID-8|M&lt;/rim:Value&gt;
+          &lt;rim:Value&gt;PID-11|100 Main St^^Metropolis^Il^44130^USA&lt;/rim:Value&gt;
+        &lt;/rim:ValueList&gt;
+      &lt;/rim:Slot&gt;
+      &lt;rim:Name&gt;
+        &lt;rim:LocalizedString charset="UTF-8" value="Sample document 1" xml:lang="en-us"/&gt;
+      &lt;/rim:Name&gt;
+      &lt;rim:Description/&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:ac872fc0-1c6e-439f-84d1-f76770a0ccdf" nodeRepresentation="Education" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;Connect-a-thon classCodes&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="Education" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:f1a8c8e4-3593-4777-b7e0-8b0773378705" nodeRepresentation="C" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;Connect-a-thon confidentialityCodes&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="Celebrity" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:b6e49c73-96c8-4058-8c95-914d83bd262a" nodeRepresentation="CDAR2/IHE 1.0" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;Connect-a-thon formatCodes&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="CDAR2/IHE 1.0" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:61e2b376-d74a-4984-ac21-dcd0b8890f9d" nodeRepresentation="Emergency Department" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;Connect-a-thon healthcareFacilityTypeCodes&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="Assisted Living" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:fb7677c5-c42f-485d-9010-dce0f3cd4ad5" nodeRepresentation="Cardiology" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;Connect-a-thon practiceSettingCodes&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="Cardiology" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:Classification classificationScheme="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983" classifiedObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" id="urn:uuid:0a8a8ed9-8be5-4a63-9b68-a511adee8ed5" nodeRepresentation="34098-4" objectType="Urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification"&gt;
+        &lt;rim:Slot name="codingScheme"&gt;
+          &lt;rim:ValueList&gt;
+            &lt;rim:Value&gt;LOINC&lt;/rim:Value&gt;
+          &lt;/rim:ValueList&gt;
+        &lt;/rim:Slot&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="Conference Evaluation Note" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:Classification&gt;
+      &lt;rim:ExternalIdentifier id="urn:uuid:db9f4438-ffff-435f-9d34-d76190728637" identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427" objectType="ExternalIdentifier" registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" value="st3498702^^^&amp;amp;1.3.6.1.4.1.21367.2005.3.7&amp;amp;ISO"&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="XDSDocumentEntry.patientId" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:ExternalIdentifier&gt;
+      &lt;rim:ExternalIdentifier id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5" identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" objectType="ExternalIdentifier" registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="XDSDocumentEntry.uniqueId" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:ExternalIdentifier&gt;
+    &lt;/rim:ExtrinsicObject&gt;
+    &lt;rim:ObjectRef id="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+    &lt;rim:ObjectRef id="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" xmlns:q="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"/&gt;
+  &lt;/rim:RegistryObjectList&gt;
+&lt;/AdhocQueryResponse&gt;</code></pre>
       <p>The following query response is the same as above (repeated sections replaced with …) with the <code>homeCommunityId</code> attribute specified. Subsequent requests specifying entryUUID of <code>urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf</code> or uniqueID of <code>1.3.6.1.4.1.21367.2005.3.99.1.1010</code> shall include the homeCommunityId value of urn:oid:1.2.3 in the query.</p>
-      <div style="border:0.75pt solid #000000; clear:both">
-        <p style="font-size:8pt">
-          <span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>&lt;AdhocQueryResponse ... status="Success"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>      &lt;rim:RegistryObjectList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>         &lt;rim:ExtrinsicObject … id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" isOpaque="false"  mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" home=”urn:oid:1.2.3</span>
-          <span style="font-weight:bold">”</span>
-          <span>&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>…</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>           &lt;rim:ExternalIdentifier id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5" registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" objectType="ExternalIdentifier" value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>               &lt;rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>                  &lt;rim:LocalizedString charset="UTF-8" value="XDSDocumentEntry.uniqueId" xml:lang="en-us"/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>               &lt;/rim:Name&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>               &lt;rim:Description/&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>            &lt;/rim:ExternalIdentifier&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>         &lt;/rim:ExtrinsicObject&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>      &lt;/rim:RegistryObjectList&gt;</span>
-        </p>
-        <p style="font-size:8pt">
-          <span>   &lt;/AdhocQueryResponse&gt;</span>
-        </p>
-      </div>
+      <pre><code class="code-block xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;AdhocQueryResponse … status="Success"&gt;
+  &lt;rim:RegistryObjectList&gt;
+    &lt;rim:ExtrinsicObject … id="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" isOpaque="false" mimeType="text/xml" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" home="urn:oid:1.2.3"&gt;
+      …
+      &lt;rim:ExternalIdentifier id="urn:uuid:c3fcbf0e-9765-4f5b-abaa-b37ac8ff05a5" registryObject="urn:uuid:08a15a6f-5b4a-42de-8f95-89474f83abdf" identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" objectType="ExternalIdentifier" value="1.3.6.1.4.1.21367.2005.3.99.1.1010"&gt;
+        &lt;rim:Name&gt;
+          &lt;rim:LocalizedString charset="UTF-8" value="XDSDocumentEntry.uniqueId" xml:lang="en-us"/&gt;
+        &lt;/rim:Name&gt;
+        &lt;rim:Description/&gt;
+      &lt;/rim:ExternalIdentifier&gt;
+    &lt;/rim:ExtrinsicObject&gt;
+  &lt;/rim:RegistryObjectList&gt;
+&lt;/AdhocQueryResponse&gt;</code></pre>
       <h6 id="3.18.4.1.3.4">3.18.4.1.3.4 Intentionally Left Blank</h6>
       <h6 id="3.18.4.1.3.5">3.18.4.1.3.5 Basic Patient Privacy Enforcement Option</h6>
       <p>If the Basic Patient Privacy Enforcement Option is implemented:</p>
