@@ -1,0 +1,78 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix loinc: <http://loinc.org/rdf#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/RAD/IMR/ImagingStudy/ex-ImagingStudy-Comparison> a fhir:ImagingStudy;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-ImagingStudy-Comparison"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy>
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource \"ex-ImagingStudy-Comparison\" </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-imr-imagingstudy.html\">IMR ImagingStudy</a></p></div><p><b>identifier</b>: Study Instance UID: 5.6.7.8.9</p><p><b>status</b>: available</p><p><b>modality</b>: Computed Tomography (Details: DICOM code CT = 'Computed Tomography', stated as 'Computed Tomography')</p><p><b>subject</b>: <a href=\"Patient-ex-Patient.html\">Patient/ex-Patient</a></p><p><b>started</b>: 2020-01-01 11:30:50-0500</p><p><b>endpoint</b>: <a href=\"Endpoint-ex-IMRStudyEndpoint-Study.html\">Endpoint/ex-IMRStudyEndpoint-Study</a></p><p><b>procedureCode</b>: CT Chest WO Contrast <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://loinc.org/\">LOINC</a>#29252-4)</span></p><h3>Series</h3><table class=\"grid\"><tr><td>-</td><td><b>Uid</b></td><td><b>Modality</b></td></tr><tr><td>*</td><td>5.6.7.8.9.1</td><td>Computed Tomography (Details: DICOM code CT = 'Computed Tomography', stated as 'Computed Tomography')</td></tr></table></div>"
+  ];
+  fhir:ImagingStudy.identifier [
+     fhir:index 0;
+     fhir:Identifier.type [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://dicom.nema.org/resources/ontology/DCM" ];
+         fhir:Coding.code [ fhir:value "110180" ];
+         fhir:Coding.display [ fhir:value "Study Instance UID" ]
+       ]
+     ];
+     fhir:Identifier.value [ fhir:value "5.6.7.8.9" ]
+  ];
+  fhir:ImagingStudy.status [ fhir:value "available"];
+  fhir:ImagingStudy.modality [
+     fhir:index 0;
+     fhir:Coding.system [ fhir:value "http://dicom.nema.org/resources/ontology/DCM" ];
+     fhir:Coding.code [ fhir:value "CT" ];
+     fhir:Coding.display [ fhir:value "Computed Tomography" ]
+  ];
+  fhir:ImagingStudy.subject [
+     fhir:link <https://profiles.ihe.net/RAD/IMR/Patient/ex-Patient>;
+     fhir:Reference.reference [ fhir:value "Patient/ex-Patient" ]
+  ];
+  fhir:ImagingStudy.started [ fhir:value "2020-01-01T23:30:50-05:00"^^xsd:dateTime];
+  fhir:ImagingStudy.endpoint [
+     fhir:index 0;
+     fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-IMRStudyEndpoint-Study>;
+     fhir:Reference.reference [ fhir:value "Endpoint/ex-IMRStudyEndpoint-Study" ]
+  ];
+  fhir:ImagingStudy.procedureCode [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a loinc:29252-4;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "29252-4" ];
+       fhir:Coding.display [ fhir:value "CT Chest WO Contrast" ]
+     ]
+  ];
+  fhir:ImagingStudy.series [
+     fhir:index 0;
+     fhir:ImagingStudy.series.uid [ fhir:value "5.6.7.8.9.1" ];
+     fhir:ImagingStudy.series.modality [
+       fhir:Coding.system [ fhir:value "http://dicom.nema.org/resources/ontology/DCM" ];
+       fhir:Coding.code [ fhir:value "CT" ];
+       fhir:Coding.display [ fhir:value "Computed Tomography" ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://profiles.ihe.net/RAD/IMR/ImagingStudy/ex-ImagingStudy-Comparison.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
