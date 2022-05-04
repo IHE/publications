@@ -15,12 +15,12 @@
       "valueCode": "not-classified"
     }
   ],
-  "url": "https://profiles.ihe.net/ITI/basicaudit/StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive",
-  "version": "1.0.1",
+  "url": "https://profiles.ihe.net/ITI/BALP/StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive",
+  "version": "1.1.0",
   "name": "OAUTHaccessTokenUseComprehensive",
   "title": "Basic AuditEvent pattern for oAuth Comprehensive",
   "status": "active",
-  "date": "2022-03-02T08:01:30-06:00",
+  "date": "2022-05-04T10:16:52-05:00",
   "publisher": "IHE IT Infrastructure Technical Committee",
   "contact": [
     {
@@ -60,7 +60,6 @@
       ]
     }
   ],
-  "copyright": "IHE http://www.ihe.net/Governance/#Intellectual_Property",
   "fhirVersion": "4.0.1",
   "mapping": [
     {
@@ -97,7 +96,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "AuditEvent",
-  "baseDefinition": "https://profiles.ihe.net/ITI/basicaudit/StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Minimal",
+  "baseDefinition": "https://profiles.ihe.net/ITI/BALP/StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Minimal",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -2284,7 +2283,7 @@
         "comment": "Should be roles relevant to the event. Should  not be an exhaustive list of roles.",
         "requirements": "This value ties an audited event to a user's role(s). It is an optional value that might be used to group events for analysis by user functional role categories.",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "AuditEvent.agent.role",
           "min": 0,
@@ -2417,7 +2416,7 @@
         "definition": "Alternative agent Identifier. For a human, this should be a user identifier text string from authentication system. This identifier would be one known to a common authentication system (e.g. single sign-on), if available.",
         "requirements": "In some situations, a human user may authenticate with one identity but, to access a specific application system, may use a synonymous identify. For example, some \"single sign on\" implementations will do this. The alternative identifier would then be the original identify  used for authentication, and the User ID is the one known to and used by the application.",
         "min": 0,
-        "max": "0",
+        "max": "1",
         "base": {
           "path": "AuditEvent.agent.altId",
           "min": 0,
@@ -2466,7 +2465,7 @@
         "definition": "Human-meaningful name for the agent.",
         "requirements": "The User ID and Authorization User ID may be internal or otherwise obscure values. This field assists the auditor in identifying the actual user.",
         "min": 0,
-        "max": "0",
+        "max": "1",
         "base": {
           "path": "AuditEvent.agent.name",
           "min": 0,
@@ -2560,7 +2559,7 @@
         "short": "Where",
         "definition": "Where the event occurred.",
         "min": 0,
-        "max": "0",
+        "max": "1",
         "base": {
           "path": "AuditEvent.agent.location",
           "min": 0,
@@ -2617,7 +2616,7 @@
         "comment": "For example: Where an OAuth token authorizes, the unique identifier from the OAuth token is placed into the policy element Where a policy engine (e.g. XACML) holds policy logic, the unique policy identifier is placed into the policy element.",
         "requirements": "This value is used retrospectively to determine the authorization policies.",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "AuditEvent.agent.policy",
           "min": 0,
@@ -3005,7 +3004,7 @@
         "definition": "The reason (purpose of use), specific to this agent, that was used during the event being recorded.",
         "comment": "Use AuditEvent.agent.purposeOfUse when you know that is specific to the agent, otherwise use AuditEvent.purposeOfEvent. For example, during a machine-to-machine transfer it might not be obvious to the audit system who caused the event, but it does know why.",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "AuditEvent.agent.purposeOfUse",
           "min": 0,
@@ -3272,7 +3271,7 @@
         "patternCodeableConcept": {
           "coding": [
             {
-              "system": "https://profiles.ihe.net/ITI/basicaudit/CodeSystem/UserAgentTypes",
+              "system": "https://profiles.ihe.net/ITI/BALP/CodeSystem/UserAgentTypes",
               "code": "UserOauthAgent"
             }
           ]
@@ -3469,7 +3468,7 @@
         "definition": "Alternative agent Identifier. For a human, this should be a user identifier text string from authentication system. This identifier would be one known to a common authentication system (e.g. single sign-on), if available.",
         "requirements": "In some situations, a human user may authenticate with one identity but, to access a specific application system, may use a synonymous identify. For example, some \"single sign on\" implementations will do this. The alternative identifier would then be the original identify  used for authentication, and the User ID is the one known to and used by the application.",
         "min": 0,
-        "max": "0",
+        "max": "1",
         "base": {
           "path": "AuditEvent.agent.altId",
           "min": 0,
@@ -3614,7 +3613,7 @@
         "short": "Where",
         "definition": "Where the event occurred.",
         "min": 0,
-        "max": "0",
+        "max": "1",
         "base": {
           "path": "AuditEvent.agent.location",
           "min": 0,
@@ -4483,7 +4482,8 @@
             "severity": "error",
             "human": "Either a name or a query (NOT both)",
             "expression": "name.empty() or query.empty()",
-            "xpath": "not(exists(f:name)) or not(exists(f:query))"
+            "xpath": "not(exists(f:name)) or not(exists(f:query))",
+            "source": "http://hl7.org/fhir/StructureDefinition/AuditEvent"
           }
         ],
         "isModifier": false,

@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>IHE.ITI.BASICAUDIT\BasicAudit Open and Closed issues - FHIR v4.0.1</title>
+    <title>IHE.ITI.BALP\BasicAudit Open and Closed issues - FHIR v4.0.1</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -64,16 +64,16 @@
 </div>
 -->
         <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
+          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
         </div>
 
 
 
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">IHE ITI Basic AuditEvent Implementation Guide</span>
+          <p><span style="font-size:12pt;font-weight:bold">Basic Audit Log Patterns (BALP)</span>
             <br/>
-            <span style="display:inline-block;">1.0.1 - ballot
+            <span style="display:inline-block;">1.1.0 - Trial-Implementation
 
 
 
@@ -166,8 +166,18 @@
   <li>
     <a href="artifacts.html">Artifacts</a>
   </li>
-  <li>
-    <a href="other.html">Other</a>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Other
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="other.html">Changes to Other Specifications</a>
+      </li>
+      <li>
+        <a href="appendix.html">AuditEvent use in Other Profiles</a>
+      </li>
+    </ul>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -211,7 +221,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic AuditEvent Implementation Guide (v1.0.1: Public-Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/basicaudit/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>BasicAudit Open and Closed issues</h2>
   
 
@@ -230,45 +240,23 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <div>
 <!-- do not remove - needed to prevent Jekyll from adding a p tag to any non block level element in the markdown.-->
 </div>
-<p>Comments and questions are welcome as github issues, FHIR chat <a href="https://chat.fhir.org/#narrow/stream/179247-Security-and.20Privacy/topic/AuditEvent.20for.20Patient">stream for the topic AuditEvent for Patient</a> ,</p>
+<p>Comments and questions are welcome as github issues, FHIR chat <a href="https://chat.fhir.org/#narrow/stream/179247-Security-and.20Privacy/topic/AuditEvent.20for.20Patient">stream for the topic AuditEvent for Patient</a>,</p>
 
 <h1 id="open-issues">Open Issues</h1>
 
-<ol>
-  <li>This IG is more an abstract pattern setting than it is an implementable and conformance. Not clear how conformance to this IG will be declared in a way that is understandable at the IHE Integration Statement. Do we need named options for each defined pattern? Are the current “ANY Secure Client” and “ANY Secure Server” sufficient?</li>
-  <li>Is the oAuth AuditEvent patterns appropriate, especially the opaque one. With Opaque is the last 32 characters biggenough yet not too big?</li>
-  <li>The R4 version of AuditEvent uses extensible binding often, this has limited the ways that the AuditEvent can be constrained. R5 has relaxed these to either example or preferred binding, so some further can be done in this IG once R5 is released.</li>
-  <li>The audit examples are brought in from MHD, PIXm, and PDQm; and “adjusted” to fit the RESTful pattern. This adjustment is not necessary, but follows with the proposal that these RESTful patterns are used as patterns in other Implementation Guides. Thus, these need to be evaluated as to if the adjustment is useful, or not. There should be no reason to update MHD, PIXm, or PDQm if there is not benefit, but there should also be no problem updating them. The adjustment here was more as an exercise in determining if the pattern concept could work, and not an excercise in forcing a change.
-    <ul>
-      <li>The adjustment was to the .type and .subtype, and one profile was changed from import/create to read.</li>
-    </ul>
-  </li>
-  <li>RESTful profiles start with a non-patient specific one, then a derived one with the patient slice. Is this the cleanest?</li>
-  <li>This IG covers only basic RESTful http. Not covered are FHIR Operations, or advanced http activities like Patch, conditional create, conditional update, etc? What others are needed, for them please provide an example transaction that can be used in a profiled example.</li>
-  <li>X-Request-Id header – I explained this only inside of the RESTful section, but it is applicable anywhere that X-Request-Id is used. X-Reqeust-Id is profiled differently than the example given in the FHIR core specification. Specifically there is a entity type defined here to enable slicing, where the example in FHIR core uses both type (job) and role (stream) which is harder to slice. I did not make this a standalone section because it is simply too small.
+<ul>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/41">BasicAudit/2</a>. Is the oAuth AuditEvent patterns appropriate, especially the opaque one. With Opaque is the last 32 characters big enough yet not too big? Note there are no examples given due to this need for Trial Implementation feedback and experience (5 warnings).</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/42">BasicAudit/3</a>. The R4 version of AuditEvent uses extensible binding often, this has limited the ways that the AuditEvent can be constrained. R5 has relaxed these to either example or preferred binding, so some further can be done in this IG once R5 is released.</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/45">BasicAudit/6</a>. This IG covers only basic RESTful http. Not covered are FHIR Operations, or advanced http activities like Patch, conditional create, conditional update, etc? What others are needed, for them please provide an example transaction that can be used in a profiled example.</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/46">BasicAudit/7</a>. X-Request-Id header – I explained this only inside of the RESTful section, but it is applicable anywhere that X-Request-Id is used. X-Reqeust-Id is profiled differently than the example given in the FHIR core specification. Specifically there is a entity type defined here to enable slicing, where the example in FHIR core uses both type (job) and role (stream) which is harder to slice. I did not make this a standalone section because it is simply too small.
     <ul>
       <li>X-Request-Id vs TraceId – I added X-Request-Id profiling. I did not add TraceId, as I am not as aware of what this is. It seems very similar, unclear if it is different or the same thing. The modeling of TraceId that is in the FHIR Core is a bit different than I modeled X-Request-Id here. TraceId example in core is a .entity.type #21 “Job”, with a .entity.what.identifier.type #TraceId. Where as for X-Request-Id I followed the example that Grahame indicted his server supports today for X-Request-Id. I welcome comment, as I am not an expert TraceId nor X-Reqeust-Id.</li>
     </ul>
   </li>
-  <li>who.identifier and what.identifer, rather than the .reference, are used because it is expected that as audit logging is happening these values are directly available, and the resource reference is not known. However it is possible that the resource reference is known, should we add a MS on who.reference and what.reference to encourage recording of these “when they are known”?</li>
-  <li>put homeCommunityId in as an Agent. Given that the definition in XUA is standalone, and is independent of organization or user.</li>
-  <li>SAML profiling is focused on when a SAML token is used. There is no profiling of obtaining (access control decision). This is because <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-13.html">XUA</a> only profiled the use.</li>
-  <li>Some SNOMED codes are used in the Disclosure profile and example. Should we get these approved, or define our own codes? Are there other available codes to use?</li>
-  <li>Welcome comments about other patterns that would be needed and defined.</li>
-  <li>For RESTful Search/Query, the cleaned search parameters can be put into entity.description. Is this useful?</li>
-  <li>cardionality is set to 0..0 for those elements that have no defined use. However in real-world there should be no failure to record an auditEvent that has something in these elements. It is expected that this behaviour, of saving anything that comes in, will happen. The profiles provided here are “best-case”.</li>
-  <li>There is a start at a test plan using Gherkin/Cucumber.</li>
-  <li>In an AuditEvent that is describing a network interaction, should response time be recorded in the .period element? Who would be responsible for recording this response time? This seems too undefinable in abstract actor terms. Thus should it be given as guidance without constraints or requirements?</li>
-  <li>Should a minimally populated or maximum populated AuditEvent have a defined .meta.security code so as to be more able to be access controlled at the Audit Consumer API?</li>
-  <li>Is the use of AssuranceLevel proper? Should the extension element be defined more specific to NIST-800-63 assurance levels, and not allow to be carrying historical vocabulary that is not specifically assurance-level but rather the method of authentication used (e.g. urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport)?</li>
-  <li>Note: Support for <a href="http://hl7.org/fhir/us/udap-security/history.html">HL7 Security for Scalable Registration, Authentication, and Authorization (aka UDAP) </a> when it gets published</li>
-  <li>The profiles can provide more specific to that profile element short descriptions, definitions, and comments. please provide comments where specific profiled elements would be needed or useful.</li>
-</ol>
-
-<h1 id="known-builder-bugs">known builder bugs</h1>
-
-<ul>
-  <li>IG builder / validation issue with the slicing I need to use in AuditEvent. Discussion can be found https://chat.fhir.org/#narrow/stream/215610-shorthand/topic/slicing.20with.20complex.20.24this and https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/slicing.20sliced.20extension</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/55">BasicAudit/18</a>. Is the use of AssuranceLevel proper? Should the extension element be defined more specific to NIST-800-63 assurance levels, and not allow to be carrying historical vocabulary that is not specifically assurance-level but rather the method of authentication used (e.g. urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport)?</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/56">BasicAudit/19</a>. Note: Support for <a href="http://hl7.org/fhir/us/udap-security/history.html">HL7 Security for Scalable Registration, Authentication, and Authorization (aka UDAP) </a> when it gets published</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/37">BasicAudit/21</a>. IG builder / validation issue with the slicing I need to use in AuditEvent (12 validation errors). Discussion can be found https://chat.fhir.org/#narrow/stream/215610-shorthand/topic/slicing.20with.20complex.20.24this and https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/slicing.20sliced.20extension</li>
+  <li><a href="https://github.com/IHE/ITI.BasicAudit/issues/60">BasicAudit/22</a>. There are no named options. It might be useful to have named options to enable minimal vs comprehensive; or to allow claims of compliance to only disclosure auditEvent.</li>
 </ul>
 
 
@@ -318,15 +306,15 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.basicaudit#1.0.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Mar 2, 2022 08:01-0600">2022-03-02</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, May 4, 2022 10:16-0500">2022-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues">Issues</a>
                 
-                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/basicaudit/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/BALP/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>

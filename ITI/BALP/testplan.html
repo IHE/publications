@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>IHE.ITI.BASICAUDIT\BasicAudit Test Plan - FHIR v4.0.1</title>
+    <title>IHE.ITI.BALP\BasicAudit Test Plan - FHIR v4.0.1</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -64,16 +64,16 @@
 </div>
 -->
         <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
+          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
         </div>
 
 
 
 
         <div id="ig-status">
-          <p><span style="font-size:12pt;font-weight:bold">IHE ITI Basic AuditEvent Implementation Guide</span>
+          <p><span style="font-size:12pt;font-weight:bold">Basic Audit Log Patterns (BALP)</span>
             <br/>
-            <span style="display:inline-block;">1.0.1 - ballot
+            <span style="display:inline-block;">1.1.0 - Trial-Implementation
 
 
 
@@ -166,8 +166,18 @@
   <li>
     <a href="artifacts.html">Artifacts</a>
   </li>
-  <li>
-    <a href="other.html">Other</a>
+  <li class="dropdown">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">Other
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="other.html">Changes to Other Specifications</a>
+      </li>
+      <li>
+        <a href="appendix.html">AuditEvent use in Other Profiles</a>
+      </li>
+    </ul>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -211,7 +221,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic AuditEvent Implementation Guide (v1.0.1: Public-Comment Ballot 1) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/basicaudit/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>BasicAudit Test Plan</h2>
   
 
@@ -227,28 +237,8 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 
     <p><!-- white space is critical inside of capture --></p>
-<div class="markdown-toc">
-<ul id="markdown-toc">
-  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a>    <ul>
-      <li><a href="#cucumber-actions" id="markdown-toc-cucumber-actions">Cucumber Actions</a></li>
-    </ul>
-  </li>
-  <li><a href="#auditevent-use-documentation-in-products" id="markdown-toc-auditevent-use-documentation-in-products">AuditEvent use documentation in products</a>    <ul>
-      <li><a href="#firely" id="markdown-toc-firely">Fire.Ly</a></li>
-      <li><a href="#grahames-server" id="markdown-toc-grahames-server">Grahame’s Server</a></li>
-    </ul>
-  </li>
-  <li><a href="#high-level-test-scope" id="markdown-toc-high-level-test-scope">High-level Test Scope</a>    <ul>
-      <li><a href="#options" id="markdown-toc-options">Options</a></li>
-    </ul>
-  </li>
-  <li><a href="#unit-test-procedure-conformance-testing" id="markdown-toc-unit-test-procedure-conformance-testing">Unit Test Procedure (Conformance Testing)</a>    <ul>
-      <li><a href="#available-tools-for-atna-unit-testing" id="markdown-toc-available-tools-for-atna-unit-testing">Available tools for ATNA unit testing</a></li>
-    </ul>
-  </li>
-  <li><a href="#integration-test-procedure-interoperability-testing" id="markdown-toc-integration-test-procedure-interoperability-testing">Integration Test Procedure (Interoperability Testing)</a></li>
-</ul>
-
+<div>
+<!-- do not remove - needed to prevent Jekyll from adding a p tag to any non block level element in the markdown.-->
 </div>
 <div class="stu-note">
 
@@ -257,77 +247,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h2 id="introduction">Introduction</h2>
 
-<p>Overall test plan leverages the Profiles, and Examples shown on the <a href="artifacts.html">Artifacts Summary</a>. The <a href="artifacts.html#structures-resource-profiles">Profiles</a> listed are describing the constraints that would be adhered to by Actors claiming conformance to this implementation guide. Thus any Resources that are known to have been published by an app MUST be conformant to these profiles.</p>
+<p>Overall test plan leverages the Profiles, and Examples shown on the <a href="artifacts.html">Artifacts Summary</a>. The <a href="artifacts.html#structures-resource-profiles">Profiles</a> listed are describing the constraints that would be adhered to by Actors claiming conformance to this implementation guide. Thus any applicable AuditEvent Resources that are known to have been published by an app or server MUST be conformant to these profiles as appropriate.</p>
 
 <p>The Examples listed in <a href="artifacts.html#example-example-instances">Example Instances</a> are example instances. Some are conformant to the profiles. Other examples that either assist with the structure of the examples (e.g. Patient and Encounter) or are examples that  should be able to handle in various ways.</p>
 
-<p>See the Test Plan for each Profile to understand the specific expectations for each good, odd, and bad example.</p>
-
-<h3 id="cucumber-actions">Cucumber Actions</h3>
-<p>The following Actions are defined for use in the Cucumber scripts</p>
-
-<p>TODO….</p>
-
-<h4 id="initialized">Initialized</h4>
-
-<p><strong>Preconditions</strong></p>
-
-<p>Service is operational and has no known defects that would affect the test.</p>
-
-<p>Test-Patient is created or known to have no data that would affect the test.</p>
-
-<h4 id="load-x-into-server">Load X into Server</h4>
-
-<p>This action is used to initialize a test, it is not expected to fail. So a failure is a fundamental failure, not an indication of the system-under-test.</p>
-
-<p>GIVEN FHIR Resource X from this Implementation Guide</p>
-
-<p>ACTION:</p>
-
-<ol>
-  <li>load X into the test tool</li>
-  <li>update the patient to the Test-Patient id under test</li>
-  <li>update the effectiveDateTime to <strong>now</strong></li>
-  <li>POST the resource into the Server</li>
-  <li>continue if successful, if error then break out of test plan</li>
-</ol>
-
-<h2 id="auditevent-use-documentation-in-products">AuditEvent use documentation in products</h2>
-
-<h3 id="firely">Fire.Ly</h3>
-
-<p>https://docs.fire.ly/firelyserver/features/auditing.html</p>
-
-<p><a href="https://server.fire.ly/r4/AuditEvent">Fire.Ly Sandbox with audit logging on</a></p>
-
-<h3 id="grahames-server">Grahame’s Server</h3>
-
-<p>http://test.fhir.org/r4/AuditEvent</p>
-
-<h2 id="high-level-test-scope">High-level Test Scope</h2>
-
-<p>todo</p>
-
-<h3 id="options">Options</h3>
-
-<p>todo</p>
-
-<h2 id="unit-test-procedure-conformance-testing">Unit Test Procedure (Conformance Testing)</h2>
-
-<p>todo</p>
-<h3 id="available-tools-for-atna-unit-testing">Available tools for ATNA unit testing</h3>
-
-<h4 id="gazelle-audit-repository---simulator">Gazelle Audit Repository - Simulator</h4>
-
-<p>todo</p>
-
-<h4 id="gazelle-external-validation-service-aka-evs-client---validator">Gazelle External Validation Service (aka “EVS Client”) - Validator</h4>
-
-<p>todo</p>
-
-<h2 id="integration-test-procedure-interoperability-testing">Integration Test Procedure (Interoperability Testing)</h2>
-
-<p>todo</p>
+<p>This section will be filled in as the IHE-Connectathon need drives the creation of the test plans, test procedures, test tools, and reporting.</p>
 
 
 
@@ -376,15 +300,15 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.basicaudit#1.0.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Mar 2, 2022 08:01-0600">2022-03-02</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, May 4, 2022 10:16-0500">2022-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues">Issues</a>
                 
-                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/basicaudit/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/BALP/history.html">Version History</a></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>
