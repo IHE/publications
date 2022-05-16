@@ -896,9 +896,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <li><p><em>grant_type</em> (required): The value shall be "authorization_code".</p></li>
             <li><p><em>code</em> (required): The authorization code received from the Authorization Server in the authorization response.</p></li>
             <li><p><em>redirect_uri</em> (required): The redirect URI of the Authorization Client callback. The value shall match the redirect URI the Authorization Client is registered at the Authorization Server and the value of the <em>redirect_uri</em>, if presented in the authorization request.</p></li>
-            <li><p><em>client_id</em> (required): The client identifier the Authorization Client is registered with at the Authorization Server, if no other authentication scheme is used for client authentication.</p></li>
+            <li><p><em>client_id</em> (conditional): The client identifier the Authorization Client is registered with at the Authorization Server. The <em>client_id</em> may be omitted in the request entity-body when the <em>client_id</em> can be derived from the client authentication (e.g. from the HTTP Authorization header).</p></li>
             <li><p><em>code_verifier</em>: The original code verifier string. Required, if the "code_challenge" parameter was used in the authorization request. Shall not be used otherwise.</p></li>
             </ul>
+	    <p> These parameters are specified in OAuth 2.1, Section 4.1.3. Please refer there for additional behavioral requirements.</p>
             <p>Figure 3.71.4.1.2.2-3 shows a non-normative example of the access token request with client authentication using the <em>client_id</em> and <em>client_secret</em> in the HTTP Authorization header:</p>
             <pre class="http"><code>POST /token HTTP/1.1
             Host: server.example.com
