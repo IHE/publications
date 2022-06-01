@@ -1,0 +1,61 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/PMIR/Bundle/ex-bundle-history-merge> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-bundle-history-merge"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/ITI/PMIR/StructureDefinition/IHE.PMIR.Bundle.History";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/ITI/PMIR/StructureDefinition/IHE.PMIR.Bundle.History>
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "history"];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://example.com/fhir/Patient/123" ];
+     fhir:Bundle.entry.resource <http://example.com/fhir/Patient/123>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "PUT" ];
+       fhir:Bundle.entry.request.url [ fhir:value "Patient/ex-patient-merge" ]
+     ];
+     fhir:Bundle.entry.response [
+       fhir:Bundle.entry.response.status [ fhir:value "200" ]
+     ]
+  ] .
+
+<http://example.com/fhir/Patient/123> a fhir:Patient;
+  fhir:Resource.id [ fhir:value "ex-patient-merge"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/ITI/PMIR/StructureDefinition/IHE.PMIR.Patient.Merge";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/ITI/PMIR/StructureDefinition/IHE.PMIR.Patient.Merge>
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource \"ex-patient-merge\" </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.PMIR.Patient.Merge.html\">IHE Patient Master Identity Registry Merged Patient</a></p></div><p><b>active</b>: false</p><h3>Links</h3><table class=\"grid\"><tr><td>-</td><td><b>Other</b></td><td><b>Type</b></td></tr><tr><td>*</td><td><a href=\"Patient-ex-patient-merged.html\">Patient/ex-patient-merged</a></td><td>replaced-by</td></tr></table></div>"
+  ];
+  fhir:Patient.active [ fhir:value "false"^^xsd:boolean];
+  fhir:Patient.link [
+     fhir:index 0;
+     fhir:Patient.link.other [
+       fhir:link <https://profiles.ihe.net/ITI/PMIR/Patient/ex-patient-merged>;
+       fhir:Reference.reference [ fhir:value "Patient/ex-patient-merged" ]
+     ];
+     fhir:Patient.link.type [ fhir:value "replaced-by" ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/PMIR/Bundle/ex-bundle-history-merge.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

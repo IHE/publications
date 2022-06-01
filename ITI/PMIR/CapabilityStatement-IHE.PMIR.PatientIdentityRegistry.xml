@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CapabilityStatement xmlns="http://hl7.org/fhir">
+  <id value="IHE.PMIR.PatientIdentityRegistry"/>
+  <text>
+    <status value="additional"/><div xmlns="http://www.w3.org/1999/xhtml">CapabilityStatement for Patient Identity Registry Actor in the IHE IT Infrastructure Technical Framework Supplement <a href="https://profiles.ihe.net/ITI/PMIR/index.html">PMIR</a></div>
+  </text>
+  <url value="https://profiles.ihe.net/ITI/PMIR/CapabilityStatement/IHE.PMIR.PatientIdentityRegistry"/>
+  <version value="1.4.0"/>
+  <name value="IHE_PMIR_PatientIdentityRegistry"/>
+  <title value="IHE PMIR Patient Identity Registry"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2022-03-31"/>
+  <publisher value="IHE IT Infrastructure Technical Committee"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <contact>
+    <name value="IHE IT Infrastructure Technical Committee"/>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <description value="CapabilityStatement for the Patient Identity Registry Actor in the IHE IT Infrastructure Technical Framework Supplement [IHE PMIR](index.html)."/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <copyright value="IHE http://www.ihe.net/Governance/#Intellectual_Property"/>
+  <kind value="requirements"/>
+  <fhirVersion value="4.0.1"/>
+  <format value="application/fhir+xml"/>
+  <format value="application/fhir+json"/>
+  <rest>
+    <mode value="server"/>
+    <documentation value="PMIR Patient Identity Registry provides capability to manage Master Patient Identity."/>
+    <security>
+      <cors value="false"/>
+      <description value="None mandated by IHE, encouraged IHE-IUA or SMART-on-FHIR"/>
+    </security>
+    <resource>
+      <type value="Subscription"/>
+      <supportedProfile value="https://profiles.ihe.net/ITI/PMIR/StructureDefinition/IHE.PMIR.Subscription.Request"/>
+      <documentation value="For Subscribe to Patient Updates [ITI-94]"/>
+      <interaction>
+        <code value="create"/>
+      </interaction>
+      <interaction>
+        <code value="read"/>
+      </interaction>
+      <interaction>
+        <code value="update"/>
+      </interaction>
+      <interaction>
+        <code value="delete"/>
+      </interaction>
+    </resource>
+    <resource>
+      <type value="Patient"/>
+      <documentation value="For Mobile Patient Identifier Cross-reference Query [ITI-83]&#xA;and Mobile Patient Demographics Query [ITI-78]"/>
+      <interaction>
+        <code value="read"/>
+      </interaction>
+      <interaction>
+        <code value="search-type"/>
+      </interaction>
+      <searchParam>
+        <name value="_id"/>
+        <type value="token"/>
+        <documentation value="Logical id of this artifact"/>
+      </searchParam>
+      <searchParam>
+        <name value="active"/>
+        <type value="token"/>
+        <documentation value="Whether the patient record is active"/>
+      </searchParam>
+      <searchParam>
+        <name value="address-city"/>
+        <type value="string"/>
+        <documentation value="A city specified in an address"/>
+      </searchParam>
+      <searchParam>
+        <name value="address-country"/>
+        <type value="string"/>
+        <documentation value="A country specified in an address"/>
+      </searchParam>
+      <searchParam>
+        <name value="address-postalcode"/>
+        <type value="string"/>
+        <documentation value="A postalCode specified in an address"/>
+      </searchParam>
+      <searchParam>
+        <name value="address-state"/>
+        <type value="string"/>
+        <documentation value="A state specified in an address"/>
+      </searchParam>
+      <searchParam>
+        <name value="birthdate"/>
+        <type value="date"/>
+        <documentation value="The patient's date of birth"/>
+      </searchParam>
+      <searchParam>
+        <name value="family"/>
+        <type value="string"/>
+        <documentation value="A portion of the family name of the patient"/>
+      </searchParam>
+      <searchParam>
+        <name value="gender"/>
+        <type value="token"/>
+        <documentation value="Gender of the patient"/>
+      </searchParam>
+      <searchParam>
+        <name value="given"/>
+        <type value="string"/>
+        <documentation value="A portion of the given name of the patient"/>
+      </searchParam>
+      <searchParam>
+        <name value="identifier"/>
+        <type value="token"/>
+        <documentation value="A patient identifier"/>
+      </searchParam>
+      <searchParam>
+        <name value="telecom"/>
+        <type value="token"/>
+        <documentation value="The value in any kind of telecom details of the patient"/>
+      </searchParam>
+      <searchParam>
+        <name value="_lastUpdated"/>
+        <type value="date"/>
+        <documentation value="When the resource version last changed"/>
+      </searchParam>
+      <searchParam>
+        <name value="mothersMaidenName"/>
+        <definition value="http://hl7.org/fhir/SearchParameter/patient-extensions-Patient-mothersMaidenName"/>
+        <type value="string"/>
+        <documentation value="Mother's maiden (unmarried) name, commonly collected to help verify patient identity."/>
+      </searchParam>
+      <operation>
+        <name value="$ihe-pix"/>
+        <definition value="https://profiles.ihe.net/ITI/PIXm/OperationDefinition/IHE_PIXm_pix"/>
+      </operation>
+    </resource>
+    <interaction>
+      <code value="search-system"/>
+    </interaction>
+  </rest>
+  <messaging>
+    <documentation value="For Mobile Patient Identity Feed [ITI-93]"/>
+    <supportedMessage>
+      <mode value="sender"/>
+      <definition value="https://profiles.ihe.net/ITI/PMIR/StructureDefintion/IHE.PMIR.MessageDefinition"/>
+    </supportedMessage>
+  </messaging>
+  <messaging>
+    <documentation value="For Mobile Patient Identity Feed [ITI-93]"/>
+    <supportedMessage>
+      <mode value="receiver"/>
+      <definition value="https://profiles.ihe.net/ITI/PMIR/StructureDefintion/IHE.PMIR.MessageDefinition"/>
+    </supportedMessage>
+  </messaging>
+</CapabilityStatement>
