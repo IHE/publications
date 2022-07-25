@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.json2');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.json1');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.json');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.xml2');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.xml1');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.html');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.html');
 else 
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/CapabilityStatement-IHE.IMR.RenderedReportReader.xml');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/CapabilityStatement-IHE.IMR.RenderedReportReader.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

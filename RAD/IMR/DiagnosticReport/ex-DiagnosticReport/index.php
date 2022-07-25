@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.json2');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.json1');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.json');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.xml2');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.xml1');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.html');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.html');
 else 
-  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0-comment/DiagnosticReport-ex-DiagnosticReport.xml');
+  Redirect('https://profiles.ihe.net/RAD/IMR/1.0.0/DiagnosticReport-ex-DiagnosticReport.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

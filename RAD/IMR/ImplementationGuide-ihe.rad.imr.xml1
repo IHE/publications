@@ -7,11 +7,11 @@
 </div></div>
   </text>
   <url value="https://profiles.ihe.net/RAD/IMR/ImplementationGuide/ihe.rad.imr"/>
-  <version value="1.0.0-comment"/>
+  <version value="1.0.0"/>
   <name value="IHE_RAD_IMR"/>
   <title value="Interactive Multimedia Report (IMR)"/>
   <status value="active"/>
-  <date value="2022-03-18"/>
+  <date value="2022-07-25"/>
   <publisher value="IHE Radiology Technical Committee"/>
   <contact>
     <telecom>
@@ -39,10 +39,14 @@
       <code value="001"/>
     </coding>
   </jurisdiction>
-  <copyright value="IHE http://www.ihe.net/Governance/#Intellectual_Property"/>
   <packageId value="ihe.rad.imr"/>
-  <license value="CC-BY-SA-4.0"/>
+  <license value="CC-BY-4.0"/>
   <fhirVersion value="4.0.1"/>
+  <dependsOn id="hl7tx">
+    <uri value="http://terminology.hl7.org/ImplementationGuide/hl7.terminology"/>
+    <packageId value="hl7.terminology.r4"/>
+    <version value="3.1.0"/>
+  </dependsOn>
   <definition>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
@@ -57,7 +61,7 @@
         <valueString value="releaselabel"/>
       </extension>
       <extension url="value">
-        <valueString value="ballot"/>
+        <valueString value="Trial-Implementation"/>
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
@@ -252,6 +256,14 @@
         <valueString value="true"/>
       </extension>
     </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
+        <valueString value="excludelogbinaryformat"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
         <valueString value="StructureDefinition:resource"/>
@@ -260,7 +272,7 @@
         <reference value="StructureDefinition/imr-diagnosticreport"/>
       </reference>
       <name value="IMR DiagnosticReport"/>
-      <description value="IHE Interactive Multimedia Report (IMR) profile on DiagnosticRpoert"/>
+      <description value="IHE Interactive Multimedia Report (IMR) profile on DiagnosticReport"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -292,8 +304,8 @@
       <reference>
         <reference value="StructureDefinition/imr-observation"/>
       </reference>
-      <name value="IMR Observation"/>
-      <description value="IHE Interactive Multimedia Report (IMR) profile on Observation"/>
+      <name value="(Experimental) Imaging Observation"/>
+      <description value="Experimental profile on Observation for Imaging"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -304,7 +316,7 @@
         <reference value="StructureDefinition/imr-servicerequest"/>
       </reference>
       <name value="IMR ServiceRequest"/>
-      <description value="IHE Interactive Multimedia Report (IMR) profile on ServiceRequest"/>
+      <description value="IHE Interactive Multimedia Report (IMR) profile on ServiceRequest&#xA;&#xA;An IMR ServiceRequest captures the service request (a.k.a. order) for an imaging procedure.&#xA;An IMR ServiceRequest is usually created before an imaging study is acquired (e.g. in radiology)&#xA;while some other departments (e.g. cardiology) may not create an order at all."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -326,7 +338,7 @@
         <reference value="StructureDefinition/imr-store-multimedia-report-bundle-response"/>
       </reference>
       <name value="IMR Store Multimedia Report Bundle Response"/>
-      <description value="A profile on the Bundle transaction-response for [RAD-Y1] Store Multimedia Report Response.&#xA;&#xA;- shall be a transaction response&#xA;- shall have at least 1 entry for each entry in the request, in the same order as received in the request&#xA;  - entry response location must be indicated"/>
+      <description value="A profile on the Bundle transaction-response for [RAD-141] Store Multimedia Report Response.&#xA;&#xA;- shall be a transaction response&#xA;- shall have at least 1 entry for each entry in the request, in the same order as received in the request&#xA;  - entry response location must be indicated"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -334,10 +346,10 @@
         <valueString value="StructureDefinition:resource"/>
       </extension>
       <reference>
-        <reference value="StructureDefinition/imr-study-endpoint"/>
+        <reference value="StructureDefinition/imaging-study-endpoint"/>
       </reference>
-      <name value="IMR Study Endpoint"/>
-      <description value="IHE Interactive Multimedia Report (IMR) profile on Endpoint for Study"/>
+      <name value="Imaging Study Endpoint"/>
+      <description value="IHE Radiology profile on Endpoint for Study"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -345,65 +357,10 @@
         <valueString value="StructureDefinition:extension"/>
       </extension>
       <reference>
-        <reference value="StructureDefinition/comparisonStudy"/>
+        <reference value="StructureDefinition/associatedStudy"/>
       </reference>
-      <name value="IMR DiagnosticReport Comparison Study"/>
-      <description value="Comparison study used in part of diagnostic reporting"/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="StructureDefinition:extension"/>
-      </extension>
-      <reference>
-        <reference value="StructureDefinition/indication"/>
-      </reference>
-      <name value="IMR DiagnosticReport Indication"/>
-      <description value="Indication that provides contextual information used during the reporting"/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="ValueSet"/>
-      </extension>
-      <reference>
-        <reference value="ValueSet/imr-diagnosticreport-status-vs"/>
-      </reference>
-      <name value="IMR DiagnosticReport Status Value Set"/>
-      <description value="Status codes that are applicable to imaging diagnostic report lifecycle."/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="ValueSet"/>
-      </extension>
-      <reference>
-        <reference value="ValueSet/imr-observation-code-vs"/>
-      </reference>
-      <name value="IMR Study Endpoint PayloadType Value Set"/>
-      <description value="Codes representing the different kinds of findings in radiology report."/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="ValueSet"/>
-      </extension>
-      <reference>
-        <reference value="ValueSet/imr-provide-readwriteupdate-vs"/>
-      </reference>
-      <name value="IMR Read Write Update Types ValueSet"/>
-      <description value="A ValueSet that allows read, write or update actions. Where the resource would typically be indicated as a GET (read), but might be created or updated depending on policy."/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="ValueSet"/>
-      </extension>
-      <reference>
-        <reference value="ValueSet/imr-provide-readwrite-vs"/>
-      </reference>
-      <name value="IMR Read Write Types ValueSet"/>
-      <description value="A ValueSet that allows read or write actions. Where the resource would typically be indicated as a POST (write), but might be created or updated depending on policy."/>
+      <name value="IMR DiagnosticReport Associated Study"/>
+      <description value="Associated studies used in part of diagnostic reporting"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -422,9 +379,9 @@
         <valueString value="ValueSet"/>
       </extension>
       <reference>
-        <reference value="ValueSet/imr-study-endpoint-connectiontype-vs"/>
+        <reference value="ValueSet/imaging-study-endpoint-connectiontype-vs"/>
       </reference>
-      <name value="IMR Study Endpoint ConnectionType Value Set"/>
+      <name value="Imaging Study Endpoint ConnectionType Value Set"/>
       <description value="Codes representing the applicable endpoint connectionType to retrieve a study."/>
       <exampleBoolean value="false"/>
     </resource>
@@ -433,10 +390,21 @@
         <valueString value="ValueSet"/>
       </extension>
       <reference>
-        <reference value="ValueSet/imr-study-endpoint-payloadtype-vs"/>
+        <reference value="ValueSet/imaging-study-endpoint-payloadtype-vs"/>
       </reference>
-      <name value="IMR Study Endpoint PayloadType Value Set"/>
+      <name value="Imaging Study Endpoint PayloadType Value Set"/>
       <description value="Codes representing the applicable endpoint payloadType to retrieve a study."/>
+      <exampleBoolean value="false"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="SearchParameter"/>
+      </extension>
+      <reference>
+        <reference value="SearchParameter/DiagnosticReport-ImagingStudy"/>
+      </reference>
+      <name value="Search on the imagingStudy attribute in IMR DiagnosticReport"/>
+      <description value="This SearchParameter enables finding DiagnosticReports by ImagingStudy."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -447,7 +415,18 @@
         <reference value="DiagnosticReport/ex-DiagnosticReport"/>
       </reference>
       <name value="IMR DiagnosticReport example"/>
-      <description value="Simple IMR DiagnosticReport"/>
+      <description value="This example uses IMR DiagnosticReport to capture the following real world radiology diagnostic report.&#xA;&#xA;--- SAMPLE REPORT ---&#xA;&#xA;Patient Name: John Smith &#xA;&#xA;MRN: 1234567&#xA;&#xA;Accession Number: 12345&#xA;&#xA;Study Date: December 31, 2020&#xA;&#xA;Study Type: CT CHEST W/O CONTRAST&#xA;&#xA;------------------------------------------------------------ &#xA;&#xA;FULL REPORT&#xA;&#xA;EXAMINATION: CT CHEST W/O CONTRAST&#xA;&#xA;INDICATION: History: 24M with stent placement in the left main bronchus presents with right sided chest pain since 9am &#xA;&#xA;TECHNIQUE: Volumetric, multidetector CT of the chest was performed without intravenous or oral contrast administration. Images are presented for display in the axial plane at 5 mm and 1.25 mm collimation. A series of multiplanar reformation images are also submitted for review. &#xA;&#xA;DLP: 373 mGy-cm. &#xA;&#xA;COMPARISON: CT of the chest dated January 1, 2020. &#xA;&#xA;FINDINGS:  &#xA;&#xA;The imaged portion of a thyroid gland is unremarkable. Prominent or mildly enlarged mediastinal and bilateral hilar lymph nodes measure up to 1.2 x 0.8 cm in the right paratracheal station (2:12) , 2.3 x 1.4 cm in the subcarinal station (2:18), and 1.4 x 0.9 cm in the right hilar stations (2:16). No significant axillary lymphadenopathy is detected. The esophagus is unremarkable. The thoracic aorta is normal in caliber with a typical 3 vessel takeoff from the arch. The pulmonary arterial trunk is normal in caliber. The heart is normal in size without pericardial effusion. &#xA;&#xA;There is focal narrowing of the proximal portion of the bronchial stent in the left mainstem bronchus (601b:56), which is nearly collapsed and appears new from the prior chest radiograph. Trace fluid or debris is seen in the distal lumen of the stent (4:71). A tracheostomy tube is unchanged in position without evidence of complications. There is circumferential thickening of the tracheal and bronchial walls, which is unchanged, in keeping with the patient's known diagnosis of polychondritis. The remainder of the tracheobronchial tree is patent to the subsegmental levels. The airways are normal in caliber. &#xA;&#xA;Within the pulmonary parenchyma, there is diffuse peribronchovascular nodular and ground-glass opacities becoming confluent in the right middle (601:52) and left upper (601:65) and lower lobes (601:72) consistent with multifocal pneumonia. There is a small left and trace right pleural effusion. No pneumothorax is present. There are no suspicious masses or pleural abnormalities. &#xA;&#xA;The patient is status post median sternotomy with intact sternal wires. No blastic or lytic lesion suspicious for malignancy is present. &#xA;&#xA;Although this study is not tailored for the evaluation of subdiaphragmatic contents, the imaged upper abdomen demonstrates diffuse hypoattenuation of the liver consistent with hepatic steatosis. &#xA;&#xA;&#xA;IMPRESSION:  &#xA;&#xA;1. Multifocal pneumonia involving the right middle, left upper and left lower lobes with small left and trace right pleural effusions. &#xA;&#xA;2. Central medianstinal lymphadenopathy is likely reactive. &#xA;&#xA;3. Focal stenosis of the proximal portion of the left main stem bronchial stent, which appears new from the prior chest radiograph. There is trace fluid or debris within the distal lumen of the stent. &#xA;&#xA;4. Unchanged circumferential thickening of the tracheal and bronchial walls, in keeping with the patient's known diagnosis of polychondritis. &#xA;&#xA;5. Hepatic steatosis."/>
+      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="DiagnosticReport"/>
+      </extension>
+      <reference>
+        <reference value="DiagnosticReport/ex-DiagnosticReport-Using-Observation"/>
+      </reference>
+      <name value="(Experimental) IMR DiagnosticReport example with experimental IMR Observation"/>
+      <description value="This example uses IMR DiagnosticReport to capture the same real world radiology diagnostic report,&#xA;with the addition of using the experimental IMR Observation to capture findings and impressions."/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport"/>
     </resource>
     <resource>
@@ -457,8 +436,8 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Finding"/>
       </reference>
-      <name value="IMR Observation of all findings and technique"/>
-      <description value="Example of encoding a complex clinical findings that include multiple components"/>
+      <name value="(Experimental) IMR Observation of all findings and technique"/>
+      <description value="Experimental example of encoding a complex clinical findings that include multiple components"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
     </resource>
     <resource>
@@ -468,8 +447,8 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Impression-1"/>
       </reference>
-      <name value="IMR Observation of Impression 1"/>
-      <description value="Example of encoding an impression as text"/>
+      <name value="(Experimental) IMR Observation of Impression 1"/>
+      <description value="Experimental example of encoding an impression as text"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
     </resource>
     <resource>
@@ -479,8 +458,8 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Impression-2"/>
       </reference>
-      <name value="IMR Observation of Impression 2"/>
-      <description value="Example of encoding an impression as text"/>
+      <name value="(Experimental) IMR Observation of Impression 2"/>
+      <description value="Experimental example of encoding an impression as text"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
     </resource>
     <resource>
@@ -490,8 +469,8 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Impression-3"/>
       </reference>
-      <name value="IMR Observation of Impression 3"/>
-      <description value="Example of encoding an impression as text"/>
+      <name value="(Experimental) IMR Observation of Impression 3"/>
+      <description value="Experimental example of encoding an impression as text"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
     </resource>
     <resource>
@@ -501,8 +480,8 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Impression-4"/>
       </reference>
-      <name value="IMR Observation of Impression 4"/>
-      <description value="Example of encoding an impression as text"/>
+      <name value="(Experimental) IMR Observation of Impression 4"/>
+      <description value="Experimental example of encoding an impression as text"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
     </resource>
     <resource>
@@ -512,42 +491,9 @@
       <reference>
         <reference value="Observation/ex-IMRObservation-Impression-5"/>
       </reference>
-      <name value="IMR Observation of Impression 5"/>
-      <description value="Example of encoding an impression as text"/>
+      <name value="(Experimental) IMR Observation of Impression 5"/>
+      <description value="Experimental example of encoding an impression as text"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Endpoint"/>
-      </extension>
-      <reference>
-        <reference value="Endpoint/ex-IMRStudyEndpoint-Series"/>
-      </reference>
-      <name value="IMR Endpoint for Series example"/>
-      <description value="Simple IMR Series Endpoint"/>
-      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Endpoint"/>
-      </extension>
-      <reference>
-        <reference value="Endpoint/ex-IMRStudyEndpoint-Study"/>
-      </reference>
-      <name value="IMR Endpoint for Study example"/>
-      <description value="Simple IMR Study Endpoint"/>
-      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Endpoint"/>
-      </extension>
-      <reference>
-        <reference value="Endpoint/ex-IMRStudyEndpoint-Study-Comparison"/>
-      </reference>
-      <name value="IMR Endpoint for Study example"/>
-      <description value="Simple IMR Study Endpoint fpr the comparison study"/>
-      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"/>
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
@@ -557,7 +503,7 @@
         <reference value="ImagingStudy/ex-ImagingStudy"/>
       </reference>
       <name value="IMR ImagingStudy example"/>
-      <description value="Simple IMR ImagingStudy to be used in DiagnosticReport and Observation"/>
+      <description value="Simple IMR ImagingStudy to be used in DiagnosticReport"/>
       <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy"/>
     </resource>
     <resource>
@@ -573,13 +519,46 @@
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="Endpoint"/>
+      </extension>
+      <reference>
+        <reference value="Endpoint/ex-ImagingStudyEndpoint-Series"/>
+      </reference>
+      <name value="Imaging Endpoint for Series example"/>
+      <description value="Simple Imaging Series Endpoint"/>
+      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="Endpoint"/>
+      </extension>
+      <reference>
+        <reference value="Endpoint/ex-ImagingStudyEndpoint-Study"/>
+      </reference>
+      <name value="Imagin Endpoint for Study example"/>
+      <description value="Simple Imagin Study Endpoint"/>
+      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="Endpoint"/>
+      </extension>
+      <reference>
+        <reference value="Endpoint/ex-ImagingStudyEndpoint-Study-Comparison"/>
+      </reference>
+      <name value="Imaging Endpoint for Study example"/>
+      <description value="Simple Imaging Study Endpoint fpr the comparison study"/>
+      <exampleCanonical value="https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
         <valueString value="Organization"/>
       </extension>
       <reference>
         <reference value="Organization/ex-Organization"/>
       </reference>
       <name value="Organization example"/>
-      <description value="Simple Organization to be used in iagnosticReport"/>
+      <description value="Simple Organization to be used in DiagnosticReport"/>
       <exampleBoolean value="true"/>
     </resource>
     <resource>
@@ -601,7 +580,7 @@
         <reference value="Practitioner/ex-Practitioner"/>
       </reference>
       <name value="Practitioner example"/>
-      <description value="Simple Practitioner to be used in iagnosticReport"/>
+      <description value="Simple Practitioner to be used in DiagnosticReport"/>
       <exampleBoolean value="true"/>
     </resource>
     <resource>
@@ -698,45 +677,46 @@
       <generation value="html"/>
       <page>
         <nameUrl value="index.html"/>
-        <title value="1:XX. Profile Home"/>
+        <title value="1:52. IMR Home"/>
         <generation value="markdown"/>
       </page>
       <page>
         <nameUrl value="volume-1.html"/>
-        <title value="1:XX Interactive Multimedia Report (IMR)"/>
+        <title value="1:52 Interactive Multimedia Report (IMR)"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="RAD-Y1.html"/>
-        <title value="2:4.Y1 Store Multimedia Report [RAD-Y1]"/>
+        <nameUrl value="RAD-141.html"/>
+        <title value="2:4.141 Store Multimedia Report [RAD-141]"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="RAD-Y2.html"/>
-        <title value="2:4.Y2 Display Multimedia Report [RAD-Y2]"/>
+        <nameUrl value="RAD-142.html"/>
+        <title value="2:4.142 Display Multimedia Report [RAD-142]"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="RAD-Y3.html"/>
-        <title value="2:4.Y3 Find Multimedia Report [RAD-Y3]"/>
+        <nameUrl value="RAD-143.html"/>
+        <title value="2:4.143 Find Multimedia Report [RAD-143]"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="RAD-Y4.html"/>
-        <title value="2:4.Y4 Retrieve Rendered Multimedia Report [RAD-Y4]"/>
+        <nameUrl value="RAD-144.html"/>
+        <title value="2:4.144 Retrieve Rendered Multimedia Report [RAD-144]"/>
         <generation value="markdown"/>
       </page>
       <page>
-        <nameUrl value="RAD-Y5.html"/>
-        <title value="2:4.Y5 Display Images [RAD-Y5]"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+          <valueCode value="informative"/>
+        </extension>
         <nameUrl value="testplan.html"/>
         <title value="Test Plan"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+          <valueCode value="informative"/>
+        </extension>
         <nameUrl value="issues.html"/>
         <title value="Open and Closed issues"/>
         <generation value="markdown"/>

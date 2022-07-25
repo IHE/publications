@@ -13,11 +13,11 @@
      fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_RAD_IMR</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/RAD/IMR/ImplementationGuide/ihe.rad.imr</pre><div><p>Support encoding and presentation of an interactive multimedia report</p>\n</div></div>"
   ];
   fhir:ImplementationGuide.url [ fhir:value "https://profiles.ihe.net/RAD/IMR/ImplementationGuide/ihe.rad.imr"];
-  fhir:ImplementationGuide.version [ fhir:value "1.0.0-comment"];
+  fhir:ImplementationGuide.version [ fhir:value "1.0.0"];
   fhir:ImplementationGuide.name [ fhir:value "IHE_RAD_IMR"];
   fhir:ImplementationGuide.title [ fhir:value "Interactive Multimedia Report (IMR)"];
   fhir:ImplementationGuide.status [ fhir:value "active"];
-  fhir:ImplementationGuide.date [ fhir:value "2022-03-18"^^xsd:date];
+  fhir:ImplementationGuide.date [ fhir:value "2022-07-25"^^xsd:date];
   fhir:ImplementationGuide.publisher [ fhir:value "IHE Radiology Technical Committee"];
   fhir:ImplementationGuide.contact [
      fhir:index 0;
@@ -51,12 +51,21 @@
        fhir:Coding.code [ fhir:value "001" ]
      ]
   ];
-  fhir:ImplementationGuide.copyright [ fhir:value "IHE http://www.ihe.net/Governance/#Intellectual_Property"];
   fhir:ImplementationGuide.packageId [ fhir:value "ihe.rad.imr"];
-  fhir:ImplementationGuide.license [ fhir:value "CC-BY-SA-4.0"];
+  fhir:ImplementationGuide.license [ fhir:value "CC-BY-4.0"];
   fhir:ImplementationGuide.fhirVersion [
      fhir:value "4.0.1";
      fhir:index 0
+  ];
+  fhir:ImplementationGuide.dependsOn [
+     fhir:index 0;
+     fhir:Element.id [ fhir:value "hl7tx" ];
+     fhir:ImplementationGuide.dependsOn.uri [
+       fhir:value "http://terminology.hl7.org/ImplementationGuide/hl7.terminology";
+       fhir:link <http://terminology.hl7.org/ImplementationGuide/hl7.terminology>
+     ];
+     fhir:ImplementationGuide.dependsOn.packageId [ fhir:value "hl7.terminology.r4" ];
+     fhir:ImplementationGuide.dependsOn.version [ fhir:value "3.1.0" ]
   ];
   fhir:ImplementationGuide.definition [
      fhir:Element.extension [
@@ -80,7 +89,7 @@
        ], [
          fhir:index 1;
          fhir:Extension.url [ fhir:value "value" ];
-         fhir:Extension.valueString [ fhir:value "ballot" ]
+         fhir:Extension.valueString [ fhir:value "Trial-Implementation" ]
        ];
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
@@ -371,6 +380,18 @@
          fhir:Extension.valueString [ fhir:value "true" ]
        ];
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
+     ], [
+       fhir:index 26;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "code" ];
+         fhir:Extension.valueString [ fhir:value "excludelogbinaryformat" ]
+       ], [
+         fhir:index 1;
+         fhir:Extension.url [ fhir:value "value" ];
+         fhir:Extension.valueString [ fhir:value "true" ]
+       ];
+       fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ];
      fhir:ImplementationGuide.definition.resource [
        fhir:index 0;
@@ -384,7 +405,7 @@
          fhir:Reference.reference [ fhir:value "StructureDefinition/imr-diagnosticreport" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on DiagnosticRpoert" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on DiagnosticReport" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 1;
@@ -425,8 +446,8 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>;
          fhir:Reference.reference [ fhir:value "StructureDefinition/imr-observation" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on Observation" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) Imaging Observation" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental profile on Observation for Imaging" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 4;
@@ -440,7 +461,7 @@
          fhir:Reference.reference [ fhir:value "StructureDefinition/imr-servicerequest" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR ServiceRequest" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on ServiceRequest" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on ServiceRequest\n\nAn IMR ServiceRequest captures the service request (a.k.a. order) for an imaging procedure.\nAn IMR ServiceRequest is usually created before an imaging study is acquired (e.g. in radiology)\nwhile some other departments (e.g. cardiology) may not create an order at all." ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 5;
@@ -468,7 +489,7 @@
          fhir:Reference.reference [ fhir:value "StructureDefinition/imr-store-multimedia-report-bundle-response" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Store Multimedia Report Bundle Response" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A profile on the Bundle transaction-response for [RAD-Y1] Store Multimedia Report Response.\n\n- shall be a transaction response\n- shall have at least 1 entry for each entry in the request, in the same order as received in the request\n  - entry response location must be indicated" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A profile on the Bundle transaction-response for [RAD-141] Store Multimedia Report Response.\n\n- shall be a transaction response\n- shall have at least 1 entry for each entry in the request, in the same order as received in the request\n  - entry response location must be indicated" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 7;
@@ -478,11 +499,11 @@
          fhir:Extension.valueString [ fhir:value "StructureDefinition:resource" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint>;
-         fhir:Reference.reference [ fhir:value "StructureDefinition/imr-study-endpoint" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint>;
+         fhir:Reference.reference [ fhir:value "StructureDefinition/imaging-study-endpoint" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Study Endpoint" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Interactive Multimedia Report (IMR) profile on Endpoint for Study" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imaging Study Endpoint" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Radiology profile on Endpoint for Study" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 8;
@@ -492,84 +513,14 @@
          fhir:Extension.valueString [ fhir:value "StructureDefinition:extension" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/comparisonStudy>;
-         fhir:Reference.reference [ fhir:value "StructureDefinition/comparisonStudy" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/associatedStudy>;
+         fhir:Reference.reference [ fhir:value "StructureDefinition/associatedStudy" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport Comparison Study" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Comparison study used in part of diagnostic reporting" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport Associated Study" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Associated studies used in part of diagnostic reporting" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 9;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "StructureDefinition:extension" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/indication>;
-         fhir:Reference.reference [ fhir:value "StructureDefinition/indication" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport Indication" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Indication that provides contextual information used during the reporting" ];
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 10;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "ValueSet" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-diagnosticreport-status-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-diagnosticreport-status-vs" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport Status Value Set" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Status codes that are applicable to imaging diagnostic report lifecycle." ];
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 11;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "ValueSet" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-observation-code-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-observation-code-vs" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Study Endpoint PayloadType Value Set" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Codes representing the different kinds of findings in radiology report." ];
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 12;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "ValueSet" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-provide-readwriteupdate-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-provide-readwriteupdate-vs" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Read Write Update Types ValueSet" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A ValueSet that allows read, write or update actions. Where the resource would typically be indicated as a GET (read), but might be created or updated depending on policy." ];
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 13;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "ValueSet" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-provide-readwrite-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-provide-readwrite-vs" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Read Write Types ValueSet" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A ValueSet that allows read or write actions. Where the resource would typically be indicated as a POST (write), but might be created or updated depending on policy." ];
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 14;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -583,35 +534,49 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Codes representing the applicable intent for a ServiceRequestd." ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 15;
+       fhir:index 10;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
          fhir:Extension.valueString [ fhir:value "ValueSet" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-study-endpoint-connectiontype-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-study-endpoint-connectiontype-vs" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imaging-study-endpoint-connectiontype-vs>;
+         fhir:Reference.reference [ fhir:value "ValueSet/imaging-study-endpoint-connectiontype-vs" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Study Endpoint ConnectionType Value Set" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imaging Study Endpoint ConnectionType Value Set" ];
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Codes representing the applicable endpoint connectionType to retrieve a study." ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 16;
+       fhir:index 11;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
          fhir:Extension.valueString [ fhir:value "ValueSet" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imr-study-endpoint-payloadtype-vs>;
-         fhir:Reference.reference [ fhir:value "ValueSet/imr-study-endpoint-payloadtype-vs" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/ValueSet/imaging-study-endpoint-payloadtype-vs>;
+         fhir:Reference.reference [ fhir:value "ValueSet/imaging-study-endpoint-payloadtype-vs" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Study Endpoint PayloadType Value Set" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imaging Study Endpoint PayloadType Value Set" ];
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Codes representing the applicable endpoint payloadType to retrieve a study." ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 17;
+       fhir:index 12;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "SearchParameter" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/SearchParameter/DiagnosticReport-ImagingStudy>;
+         fhir:Reference.reference [ fhir:value "SearchParameter/DiagnosticReport-ImagingStudy" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Search on the imagingStudy attribute in IMR DiagnosticReport" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "This SearchParameter enables finding DiagnosticReports by ImagingStudy." ];
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 13;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -622,13 +587,30 @@
          fhir:Reference.reference [ fhir:value "DiagnosticReport/ex-DiagnosticReport" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR DiagnosticReport example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR DiagnosticReport" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "This example uses IMR DiagnosticReport to capture the following real world radiology diagnostic report.\n\n--- SAMPLE REPORT ---\n\nPatient Name: John Smith \n\nMRN: 1234567\n\nAccession Number: 12345\n\nStudy Date: December 31, 2020\n\nStudy Type: CT CHEST W/O CONTRAST\n\n------------------------------------------------------------ \n\nFULL REPORT\n\nEXAMINATION: CT CHEST W/O CONTRAST\n\nINDICATION: History: 24M with stent placement in the left main bronchus presents with right sided chest pain since 9am \n\nTECHNIQUE: Volumetric, multidetector CT of the chest was performed without intravenous or oral contrast administration. Images are presented for display in the axial plane at 5 mm and 1.25 mm collimation. A series of multiplanar reformation images are also submitted for review. \n\nDLP: 373 mGy-cm. \n\nCOMPARISON: CT of the chest dated January 1, 2020. \n\nFINDINGS:  \n\nThe imaged portion of a thyroid gland is unremarkable. Prominent or mildly enlarged mediastinal and bilateral hilar lymph nodes measure up to 1.2 x 0.8 cm in the right paratracheal station (2:12) , 2.3 x 1.4 cm in the subcarinal station (2:18), and 1.4 x 0.9 cm in the right hilar stations (2:16). No significant axillary lymphadenopathy is detected. The esophagus is unremarkable. The thoracic aorta is normal in caliber with a typical 3 vessel takeoff from the arch. The pulmonary arterial trunk is normal in caliber. The heart is normal in size without pericardial effusion. \n\nThere is focal narrowing of the proximal portion of the bronchial stent in the left mainstem bronchus (601b:56), which is nearly collapsed and appears new from the prior chest radiograph. Trace fluid or debris is seen in the distal lumen of the stent (4:71). A tracheostomy tube is unchanged in position without evidence of complications. There is circumferential thickening of the tracheal and bronchial walls, which is unchanged, in keeping with the patient's known diagnosis of polychondritis. The remainder of the tracheobronchial tree is patent to the subsegmental levels. The airways are normal in caliber. \n\nWithin the pulmonary parenchyma, there is diffuse peribronchovascular nodular and ground-glass opacities becoming confluent in the right middle (601:52) and left upper (601:65) and lower lobes (601:72) consistent with multifocal pneumonia. There is a small left and trace right pleural effusion. No pneumothorax is present. There are no suspicious masses or pleural abnormalities. \n\nThe patient is status post median sternotomy with intact sternal wires. No blastic or lytic lesion suspicious for malignancy is present. \n\nAlthough this study is not tailored for the evaluation of subdiaphragmatic contents, the imaged upper abdomen demonstrates diffuse hypoattenuation of the liver consistent with hepatic steatosis. \n\n\nIMPRESSION:  \n\n1. Multifocal pneumonia involving the right middle, left upper and left lower lobes with small left and trace right pleural effusions. \n\n2. Central medianstinal lymphadenopathy is likely reactive. \n\n3. Focal stenosis of the proximal portion of the left main stem bronchial stent, which appears new from the prior chest radiograph. There is trace fluid or debris within the distal lumen of the stent. \n\n4. Unchanged circumferential thickening of the tracheal and bronchial walls, in keeping with the patient's known diagnosis of polychondritis. \n\n5. Hepatic steatosis." ];
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
          fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport";
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport>
        ]
      ], [
-       fhir:index 18;
+       fhir:index 14;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "DiagnosticReport" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/DiagnosticReport/ex-DiagnosticReport-Using-Observation>;
+         fhir:Reference.reference [ fhir:value "DiagnosticReport/ex-DiagnosticReport-Using-Observation" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR DiagnosticReport example with experimental IMR Observation" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "This example uses IMR DiagnosticReport to capture the same real world radiology diagnostic report,\nwith the addition of using the experimental IMR Observation to capture findings and impressions." ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport>
+       ]
+     ], [
+       fhir:index 15;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -638,8 +620,59 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Finding>;
          fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Finding" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of all findings and technique" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding a complex clinical findings that include multiple components" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of all findings and technique" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding a complex clinical findings that include multiple components" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
+       ]
+     ], [
+       fhir:index 16;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Observation" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-1>;
+         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-1" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of Impression 1" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding an impression as text" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
+       ]
+     ], [
+       fhir:index 17;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Observation" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-2>;
+         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-2" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of Impression 2" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding an impression as text" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
+       ]
+     ], [
+       fhir:index 18;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Observation" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-3>;
+         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-3" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of Impression 3" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding an impression as text" ];
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
          fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
@@ -652,11 +685,11 @@
          fhir:Extension.valueString [ fhir:value "Observation" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-1>;
-         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-1" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-4>;
+         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-4" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of Impression 1" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding an impression as text" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of Impression 4" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding an impression as text" ];
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
          fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
@@ -669,119 +702,17 @@
          fhir:Extension.valueString [ fhir:value "Observation" ]
        ];
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-2>;
-         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-2" ]
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-5>;
+         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-5" ]
        ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of Impression 2" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding an impression as text" ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "(Experimental) IMR Observation of Impression 5" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Experimental example of encoding an impression as text" ];
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
          fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
        ]
      ], [
        fhir:index 21;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Observation" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-3>;
-         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-3" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of Impression 3" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding an impression as text" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
-       ]
-     ], [
-       fhir:index 22;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Observation" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-4>;
-         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-4" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of Impression 4" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding an impression as text" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
-       ]
-     ], [
-       fhir:index 23;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Observation" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Observation/ex-IMRObservation-Impression-5>;
-         fhir:Reference.reference [ fhir:value "Observation/ex-IMRObservation-Impression-5" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Observation of Impression 5" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Example of encoding an impression as text" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation>
-       ]
-     ], [
-       fhir:index 24;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Endpoint" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-IMRStudyEndpoint-Series>;
-         fhir:Reference.reference [ fhir:value "Endpoint/ex-IMRStudyEndpoint-Series" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Endpoint for Series example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR Series Endpoint" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint>
-       ]
-     ], [
-       fhir:index 25;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Endpoint" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-IMRStudyEndpoint-Study>;
-         fhir:Reference.reference [ fhir:value "Endpoint/ex-IMRStudyEndpoint-Study" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Endpoint for Study example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR Study Endpoint" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint>
-       ]
-     ], [
-       fhir:index 26;
-       fhir:Element.extension [
-         fhir:index 0;
-         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
-         fhir:Extension.valueString [ fhir:value "Endpoint" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-IMRStudyEndpoint-Study-Comparison>;
-         fhir:Reference.reference [ fhir:value "Endpoint/ex-IMRStudyEndpoint-Study-Comparison" ]
-       ];
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR Endpoint for Study example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR Study Endpoint fpr the comparison study" ];
-       fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint";
-         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint>
-       ]
-     ], [
-       fhir:index 27;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -792,13 +723,13 @@
          fhir:Reference.reference [ fhir:value "ImagingStudy/ex-ImagingStudy" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "IMR ImagingStudy example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR ImagingStudy to be used in DiagnosticReport and Observation" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple IMR ImagingStudy to be used in DiagnosticReport" ];
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
          fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy";
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy>
        ]
      ], [
-       fhir:index 28;
+       fhir:index 22;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -815,7 +746,58 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy>
        ]
      ], [
-       fhir:index 29;
+       fhir:index 23;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Endpoint" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-ImagingStudyEndpoint-Series>;
+         fhir:Reference.reference [ fhir:value "Endpoint/ex-ImagingStudyEndpoint-Series" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imaging Endpoint for Series example" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Imaging Series Endpoint" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint>
+       ]
+     ], [
+       fhir:index 24;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Endpoint" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-ImagingStudyEndpoint-Study>;
+         fhir:Reference.reference [ fhir:value "Endpoint/ex-ImagingStudyEndpoint-Study" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imagin Endpoint for Study example" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Imagin Study Endpoint" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint>
+       ]
+     ], [
+       fhir:index 25;
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
+         fhir:Extension.valueString [ fhir:value "Endpoint" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://profiles.ihe.net/RAD/IMR/Endpoint/ex-ImagingStudyEndpoint-Study-Comparison>;
+         fhir:Reference.reference [ fhir:value "Endpoint/ex-ImagingStudyEndpoint-Study-Comparison" ]
+       ];
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Imaging Endpoint for Study example" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Imaging Study Endpoint fpr the comparison study" ];
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint";
+         fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint>
+       ]
+     ], [
+       fhir:index 26;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -826,10 +808,10 @@
          fhir:Reference.reference [ fhir:value "Organization/ex-Organization" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Organization example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Organization to be used in iagnosticReport" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Organization to be used in DiagnosticReport" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
      ], [
-       fhir:index 30;
+       fhir:index 27;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -843,7 +825,7 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Patient used in IMR example" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
      ], [
-       fhir:index 31;
+       fhir:index 28;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -854,10 +836,10 @@
          fhir:Reference.reference [ fhir:value "Practitioner/ex-Practitioner" ]
        ];
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Practitioner example" ];
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Practitioner to be used in iagnosticReport" ];
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Simple Practitioner to be used in DiagnosticReport" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
      ], [
-       fhir:index 32;
+       fhir:index 29;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -874,7 +856,7 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-servicerequest>
        ]
      ], [
-       fhir:index 33;
+       fhir:index 30;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -891,7 +873,7 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-store-multimedia-report-bundle>
        ]
      ], [
-       fhir:index 34;
+       fhir:index 31;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -908,7 +890,7 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-store-multimedia-report-bundle-response>
        ]
      ], [
-       fhir:index 35;
+       fhir:index 32;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -925,7 +907,7 @@
          fhir:link <https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-find-multimedia-report-response>
        ]
      ], [
-       fhir:index 36;
+       fhir:index 33;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -939,7 +921,7 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Radiology Interactive Multimedia Report (IMR) - Rendered Report Reader" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 37;
+       fhir:index 34;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -953,7 +935,7 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Radiology Interactive Multimedia Report (IMR) - Report Creator" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 38;
+       fhir:index 35;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -967,7 +949,7 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "IHE Radiology Interactive Multimedia Report (IMR) - Report Reader" ];
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 39;
+       fhir:index 36;
        fhir:Element.extension [
          fhir:index 0;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ];
@@ -988,50 +970,55 @@
        fhir:ImplementationGuide.definition.page.page [
          fhir:index 0;
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "index.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "1:XX. Profile Home" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "1:52. IMR Home" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 1;
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "volume-1.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "1:XX Interactive Multimedia Report (IMR)" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "1:52 Interactive Multimedia Report (IMR)" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 2;
-         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-Y1.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.Y1 Store Multimedia Report [RAD-Y1]" ];
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-141.html" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.141 Store Multimedia Report [RAD-141]" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 3;
-         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-Y2.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.Y2 Display Multimedia Report [RAD-Y2]" ];
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-142.html" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.142 Display Multimedia Report [RAD-142]" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 4;
-         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-Y3.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.Y3 Find Multimedia Report [RAD-Y3]" ];
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-143.html" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.143 Find Multimedia Report [RAD-143]" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 5;
-         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-Y4.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.Y4 Retrieve Rendered Multimedia Report [RAD-Y4]" ];
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-144.html" ];
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.144 Retrieve Rendered Multimedia Report [RAD-144]" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index 6;
-         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "RAD-Y5.html" ];
-         fhir:ImplementationGuide.definition.page.title [ fhir:value "2:4.Y5 Display Images [RAD-Y5]" ];
-         fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
-       ], [
-         fhir:index 7;
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status" ];
+           fhir:Extension.valueCode [ fhir:value "informative" ]
+         ];
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "testplan.html" ];
          fhir:ImplementationGuide.definition.page.title [ fhir:value "Test Plan" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
-         fhir:index 8;
+         fhir:index 7;
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status" ];
+           fhir:Extension.valueCode [ fhir:value "informative" ]
+         ];
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "issues.html" ];
          fhir:ImplementationGuide.definition.page.title [ fhir:value "Open and Closed issues" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
-         fhir:index 9;
+         fhir:index 8;
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "other.html" ];
          fhir:ImplementationGuide.definition.page.title [ fhir:value "Changes to Other Documents" ];
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]

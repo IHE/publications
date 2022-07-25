@@ -6,11 +6,11 @@
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_RAD_IMR</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/RAD/IMR/ImplementationGuide/ihe.rad.imr</pre><div><p>Support encoding and presentation of an interactive multimedia report</p>\n</div></div>"
   },
   "url": "https://profiles.ihe.net/RAD/IMR/ImplementationGuide/ihe.rad.imr",
-  "version": "1.0.0-comment",
+  "version": "1.0.0",
   "name": "IHE_RAD_IMR",
   "title": "Interactive Multimedia Report (IMR)",
   "status": "active",
-  "date": "2022-03-18",
+  "date": "2022-07-25",
   "publisher": "IHE Radiology Technical Committee",
   "contact": [
     {
@@ -50,11 +50,18 @@
       ]
     }
   ],
-  "copyright": "IHE http://www.ihe.net/Governance/#Intellectual_Property",
   "packageId": "ihe.rad.imr",
-  "license": "CC-BY-SA-4.0",
+  "license": "CC-BY-4.0",
   "fhirVersion": [
     "4.0.1"
+  ],
+  "dependsOn": [
+    {
+      "id": "hl7tx",
+      "uri": "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+      "packageId": "hl7.terminology.r4",
+      "version": "3.1.0"
+    }
   ],
   "definition": {
     "extension": [
@@ -79,7 +86,7 @@
           },
           {
             "url": "value",
-            "valueString": "ballot"
+            "valueString": "Trial-Implementation"
           }
         ],
         "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
@@ -395,6 +402,19 @@
           }
         ],
         "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+      },
+      {
+        "extension": [
+          {
+            "url": "code",
+            "valueString": "excludelogbinaryformat"
+          },
+          {
+            "url": "value",
+            "valueString": "true"
+          }
+        ],
+        "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
       }
     ],
     "resource": [
@@ -409,7 +429,7 @@
           "reference": "StructureDefinition/imr-diagnosticreport"
         },
         "name": "IMR DiagnosticReport",
-        "description": "IHE Interactive Multimedia Report (IMR) profile on DiagnosticRpoert",
+        "description": "IHE Interactive Multimedia Report (IMR) profile on DiagnosticReport",
         "exampleBoolean": false
       },
       {
@@ -450,8 +470,8 @@
         "reference": {
           "reference": "StructureDefinition/imr-observation"
         },
-        "name": "IMR Observation",
-        "description": "IHE Interactive Multimedia Report (IMR) profile on Observation",
+        "name": "(Experimental) Imaging Observation",
+        "description": "Experimental profile on Observation for Imaging",
         "exampleBoolean": false
       },
       {
@@ -465,7 +485,7 @@
           "reference": "StructureDefinition/imr-servicerequest"
         },
         "name": "IMR ServiceRequest",
-        "description": "IHE Interactive Multimedia Report (IMR) profile on ServiceRequest",
+        "description": "IHE Interactive Multimedia Report (IMR) profile on ServiceRequest\n\nAn IMR ServiceRequest captures the service request (a.k.a. order) for an imaging procedure.\nAn IMR ServiceRequest is usually created before an imaging study is acquired (e.g. in radiology)\nwhile some other departments (e.g. cardiology) may not create an order at all.",
         "exampleBoolean": false
       },
       {
@@ -493,7 +513,7 @@
           "reference": "StructureDefinition/imr-store-multimedia-report-bundle-response"
         },
         "name": "IMR Store Multimedia Report Bundle Response",
-        "description": "A profile on the Bundle transaction-response for [RAD-Y1] Store Multimedia Report Response.\n\n- shall be a transaction response\n- shall have at least 1 entry for each entry in the request, in the same order as received in the request\n  - entry response location must be indicated",
+        "description": "A profile on the Bundle transaction-response for [RAD-141] Store Multimedia Report Response.\n\n- shall be a transaction response\n- shall have at least 1 entry for each entry in the request, in the same order as received in the request\n  - entry response location must be indicated",
         "exampleBoolean": false
       },
       {
@@ -504,10 +524,10 @@
           }
         ],
         "reference": {
-          "reference": "StructureDefinition/imr-study-endpoint"
+          "reference": "StructureDefinition/imaging-study-endpoint"
         },
-        "name": "IMR Study Endpoint",
-        "description": "IHE Interactive Multimedia Report (IMR) profile on Endpoint for Study",
+        "name": "Imaging Study Endpoint",
+        "description": "IHE Radiology profile on Endpoint for Study",
         "exampleBoolean": false
       },
       {
@@ -518,80 +538,10 @@
           }
         ],
         "reference": {
-          "reference": "StructureDefinition/comparisonStudy"
+          "reference": "StructureDefinition/associatedStudy"
         },
-        "name": "IMR DiagnosticReport Comparison Study",
-        "description": "Comparison study used in part of diagnostic reporting",
-        "exampleBoolean": false
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "StructureDefinition:extension"
-          }
-        ],
-        "reference": {
-          "reference": "StructureDefinition/indication"
-        },
-        "name": "IMR DiagnosticReport Indication",
-        "description": "Indication that provides contextual information used during the reporting",
-        "exampleBoolean": false
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "ValueSet"
-          }
-        ],
-        "reference": {
-          "reference": "ValueSet/imr-diagnosticreport-status-vs"
-        },
-        "name": "IMR DiagnosticReport Status Value Set",
-        "description": "Status codes that are applicable to imaging diagnostic report lifecycle.",
-        "exampleBoolean": false
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "ValueSet"
-          }
-        ],
-        "reference": {
-          "reference": "ValueSet/imr-observation-code-vs"
-        },
-        "name": "IMR Study Endpoint PayloadType Value Set",
-        "description": "Codes representing the different kinds of findings in radiology report.",
-        "exampleBoolean": false
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "ValueSet"
-          }
-        ],
-        "reference": {
-          "reference": "ValueSet/imr-provide-readwriteupdate-vs"
-        },
-        "name": "IMR Read Write Update Types ValueSet",
-        "description": "A ValueSet that allows read, write or update actions. Where the resource would typically be indicated as a GET (read), but might be created or updated depending on policy.",
-        "exampleBoolean": false
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "ValueSet"
-          }
-        ],
-        "reference": {
-          "reference": "ValueSet/imr-provide-readwrite-vs"
-        },
-        "name": "IMR Read Write Types ValueSet",
-        "description": "A ValueSet that allows read or write actions. Where the resource would typically be indicated as a POST (write), but might be created or updated depending on policy.",
+        "name": "IMR DiagnosticReport Associated Study",
+        "description": "Associated studies used in part of diagnostic reporting",
         "exampleBoolean": false
       },
       {
@@ -616,9 +566,9 @@
           }
         ],
         "reference": {
-          "reference": "ValueSet/imr-study-endpoint-connectiontype-vs"
+          "reference": "ValueSet/imaging-study-endpoint-connectiontype-vs"
         },
-        "name": "IMR Study Endpoint ConnectionType Value Set",
+        "name": "Imaging Study Endpoint ConnectionType Value Set",
         "description": "Codes representing the applicable endpoint connectionType to retrieve a study.",
         "exampleBoolean": false
       },
@@ -630,10 +580,24 @@
           }
         ],
         "reference": {
-          "reference": "ValueSet/imr-study-endpoint-payloadtype-vs"
+          "reference": "ValueSet/imaging-study-endpoint-payloadtype-vs"
         },
-        "name": "IMR Study Endpoint PayloadType Value Set",
+        "name": "Imaging Study Endpoint PayloadType Value Set",
         "description": "Codes representing the applicable endpoint payloadType to retrieve a study.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "SearchParameter"
+          }
+        ],
+        "reference": {
+          "reference": "SearchParameter/DiagnosticReport-ImagingStudy"
+        },
+        "name": "Search on the imagingStudy attribute in IMR DiagnosticReport",
+        "description": "This SearchParameter enables finding DiagnosticReports by ImagingStudy.",
         "exampleBoolean": false
       },
       {
@@ -647,7 +611,21 @@
           "reference": "DiagnosticReport/ex-DiagnosticReport"
         },
         "name": "IMR DiagnosticReport example",
-        "description": "Simple IMR DiagnosticReport",
+        "description": "This example uses IMR DiagnosticReport to capture the following real world radiology diagnostic report.\n\n--- SAMPLE REPORT ---\n\nPatient Name: John Smith \n\nMRN: 1234567\n\nAccession Number: 12345\n\nStudy Date: December 31, 2020\n\nStudy Type: CT CHEST W/O CONTRAST\n\n------------------------------------------------------------ \n\nFULL REPORT\n\nEXAMINATION: CT CHEST W/O CONTRAST\n\nINDICATION: History: 24M with stent placement in the left main bronchus presents with right sided chest pain since 9am \n\nTECHNIQUE: Volumetric, multidetector CT of the chest was performed without intravenous or oral contrast administration. Images are presented for display in the axial plane at 5 mm and 1.25 mm collimation. A series of multiplanar reformation images are also submitted for review. \n\nDLP: 373 mGy-cm. \n\nCOMPARISON: CT of the chest dated January 1, 2020. \n\nFINDINGS:  \n\nThe imaged portion of a thyroid gland is unremarkable. Prominent or mildly enlarged mediastinal and bilateral hilar lymph nodes measure up to 1.2 x 0.8 cm in the right paratracheal station (2:12) , 2.3 x 1.4 cm in the subcarinal station (2:18), and 1.4 x 0.9 cm in the right hilar stations (2:16). No significant axillary lymphadenopathy is detected. The esophagus is unremarkable. The thoracic aorta is normal in caliber with a typical 3 vessel takeoff from the arch. The pulmonary arterial trunk is normal in caliber. The heart is normal in size without pericardial effusion. \n\nThere is focal narrowing of the proximal portion of the bronchial stent in the left mainstem bronchus (601b:56), which is nearly collapsed and appears new from the prior chest radiograph. Trace fluid or debris is seen in the distal lumen of the stent (4:71). A tracheostomy tube is unchanged in position without evidence of complications. There is circumferential thickening of the tracheal and bronchial walls, which is unchanged, in keeping with the patient's known diagnosis of polychondritis. The remainder of the tracheobronchial tree is patent to the subsegmental levels. The airways are normal in caliber. \n\nWithin the pulmonary parenchyma, there is diffuse peribronchovascular nodular and ground-glass opacities becoming confluent in the right middle (601:52) and left upper (601:65) and lower lobes (601:72) consistent with multifocal pneumonia. There is a small left and trace right pleural effusion. No pneumothorax is present. There are no suspicious masses or pleural abnormalities. \n\nThe patient is status post median sternotomy with intact sternal wires. No blastic or lytic lesion suspicious for malignancy is present. \n\nAlthough this study is not tailored for the evaluation of subdiaphragmatic contents, the imaged upper abdomen demonstrates diffuse hypoattenuation of the liver consistent with hepatic steatosis. \n\n\nIMPRESSION:  \n\n1. Multifocal pneumonia involving the right middle, left upper and left lower lobes with small left and trace right pleural effusions. \n\n2. Central medianstinal lymphadenopathy is likely reactive. \n\n3. Focal stenosis of the proximal portion of the left main stem bronchial stent, which appears new from the prior chest radiograph. There is trace fluid or debris within the distal lumen of the stent. \n\n4. Unchanged circumferential thickening of the tracheal and bronchial walls, in keeping with the patient's known diagnosis of polychondritis. \n\n5. Hepatic steatosis.",
+        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "DiagnosticReport"
+          }
+        ],
+        "reference": {
+          "reference": "DiagnosticReport/ex-DiagnosticReport-Using-Observation"
+        },
+        "name": "(Experimental) IMR DiagnosticReport example with experimental IMR Observation",
+        "description": "This example uses IMR DiagnosticReport to capture the same real world radiology diagnostic report,\nwith the addition of using the experimental IMR Observation to capture findings and impressions.",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-diagnosticreport"
       },
       {
@@ -660,8 +638,8 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Finding"
         },
-        "name": "IMR Observation of all findings and technique",
-        "description": "Example of encoding a complex clinical findings that include multiple components",
+        "name": "(Experimental) IMR Observation of all findings and technique",
+        "description": "Experimental example of encoding a complex clinical findings that include multiple components",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
       },
       {
@@ -674,8 +652,8 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Impression-1"
         },
-        "name": "IMR Observation of Impression 1",
-        "description": "Example of encoding an impression as text",
+        "name": "(Experimental) IMR Observation of Impression 1",
+        "description": "Experimental example of encoding an impression as text",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
       },
       {
@@ -688,8 +666,8 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Impression-2"
         },
-        "name": "IMR Observation of Impression 2",
-        "description": "Example of encoding an impression as text",
+        "name": "(Experimental) IMR Observation of Impression 2",
+        "description": "Experimental example of encoding an impression as text",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
       },
       {
@@ -702,8 +680,8 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Impression-3"
         },
-        "name": "IMR Observation of Impression 3",
-        "description": "Example of encoding an impression as text",
+        "name": "(Experimental) IMR Observation of Impression 3",
+        "description": "Experimental example of encoding an impression as text",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
       },
       {
@@ -716,8 +694,8 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Impression-4"
         },
-        "name": "IMR Observation of Impression 4",
-        "description": "Example of encoding an impression as text",
+        "name": "(Experimental) IMR Observation of Impression 4",
+        "description": "Experimental example of encoding an impression as text",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
       },
       {
@@ -730,51 +708,9 @@
         "reference": {
           "reference": "Observation/ex-IMRObservation-Impression-5"
         },
-        "name": "IMR Observation of Impression 5",
-        "description": "Example of encoding an impression as text",
+        "name": "(Experimental) IMR Observation of Impression 5",
+        "description": "Experimental example of encoding an impression as text",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-observation"
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "Endpoint"
-          }
-        ],
-        "reference": {
-          "reference": "Endpoint/ex-IMRStudyEndpoint-Series"
-        },
-        "name": "IMR Endpoint for Series example",
-        "description": "Simple IMR Series Endpoint",
-        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "Endpoint"
-          }
-        ],
-        "reference": {
-          "reference": "Endpoint/ex-IMRStudyEndpoint-Study"
-        },
-        "name": "IMR Endpoint for Study example",
-        "description": "Simple IMR Study Endpoint",
-        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "Endpoint"
-          }
-        ],
-        "reference": {
-          "reference": "Endpoint/ex-IMRStudyEndpoint-Study-Comparison"
-        },
-        "name": "IMR Endpoint for Study example",
-        "description": "Simple IMR Study Endpoint fpr the comparison study",
-        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-study-endpoint"
       },
       {
         "extension": [
@@ -787,7 +723,7 @@
           "reference": "ImagingStudy/ex-ImagingStudy"
         },
         "name": "IMR ImagingStudy example",
-        "description": "Simple IMR ImagingStudy to be used in DiagnosticReport and Observation",
+        "description": "Simple IMR ImagingStudy to be used in DiagnosticReport",
         "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imr-imagingstudy"
       },
       {
@@ -808,6 +744,48 @@
         "extension": [
           {
             "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-ImagingStudyEndpoint-Series"
+        },
+        "name": "Imaging Endpoint for Series example",
+        "description": "Simple Imaging Series Endpoint",
+        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-ImagingStudyEndpoint-Study"
+        },
+        "name": "Imagin Endpoint for Study example",
+        "description": "Simple Imagin Study Endpoint",
+        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-ImagingStudyEndpoint-Study-Comparison"
+        },
+        "name": "Imaging Endpoint for Study example",
+        "description": "Simple Imaging Study Endpoint fpr the comparison study",
+        "exampleCanonical": "https://profiles.ihe.net/RAD/IMR/StructureDefinition/imaging-study-endpoint"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
             "valueString": "Organization"
           }
         ],
@@ -815,7 +793,7 @@
           "reference": "Organization/ex-Organization"
         },
         "name": "Organization example",
-        "description": "Simple Organization to be used in iagnosticReport",
+        "description": "Simple Organization to be used in DiagnosticReport",
         "exampleBoolean": true
       },
       {
@@ -843,7 +821,7 @@
           "reference": "Practitioner/ex-Practitioner"
         },
         "name": "Practitioner example",
-        "description": "Simple Practitioner to be used in iagnosticReport",
+        "description": "Simple Practitioner to be used in DiagnosticReport",
         "exampleBoolean": true
       },
       {
@@ -966,45 +944,52 @@
       "page": [
         {
           "nameUrl": "index.html",
-          "title": "1:XX. Profile Home",
+          "title": "1:52. IMR Home",
           "generation": "markdown"
         },
         {
           "nameUrl": "volume-1.html",
-          "title": "1:XX Interactive Multimedia Report (IMR)",
+          "title": "1:52 Interactive Multimedia Report (IMR)",
           "generation": "markdown"
         },
         {
-          "nameUrl": "RAD-Y1.html",
-          "title": "2:4.Y1 Store Multimedia Report [RAD-Y1]",
+          "nameUrl": "RAD-141.html",
+          "title": "2:4.141 Store Multimedia Report [RAD-141]",
           "generation": "markdown"
         },
         {
-          "nameUrl": "RAD-Y2.html",
-          "title": "2:4.Y2 Display Multimedia Report [RAD-Y2]",
+          "nameUrl": "RAD-142.html",
+          "title": "2:4.142 Display Multimedia Report [RAD-142]",
           "generation": "markdown"
         },
         {
-          "nameUrl": "RAD-Y3.html",
-          "title": "2:4.Y3 Find Multimedia Report [RAD-Y3]",
+          "nameUrl": "RAD-143.html",
+          "title": "2:4.143 Find Multimedia Report [RAD-143]",
           "generation": "markdown"
         },
         {
-          "nameUrl": "RAD-Y4.html",
-          "title": "2:4.Y4 Retrieve Rendered Multimedia Report [RAD-Y4]",
+          "nameUrl": "RAD-144.html",
+          "title": "2:4.144 Retrieve Rendered Multimedia Report [RAD-144]",
           "generation": "markdown"
         },
         {
-          "nameUrl": "RAD-Y5.html",
-          "title": "2:4.Y5 Display Images [RAD-Y5]",
-          "generation": "markdown"
-        },
-        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+              "valueCode": "informative"
+            }
+          ],
           "nameUrl": "testplan.html",
           "title": "Test Plan",
           "generation": "markdown"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+              "valueCode": "informative"
+            }
+          ],
           "nameUrl": "issues.html",
           "title": "Open and Closed issues",
           "generation": "markdown"
