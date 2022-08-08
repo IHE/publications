@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Patient Master Identity Registry (PMIR)</span>
             <br/>
-            <span style="display:inline-block;">1.4.0 - ballot
+            <span style="display:inline-block;">1.5.0 - Trial-Implementation
 
 
 
@@ -197,7 +197,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Master Identity Registry (PMIR) (v1.4.0: Public Comment Ballot 2) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/PMIR/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Master Identity Registry (PMIR) (v1.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/PMIR/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>2:3.93 Mobile Patient Identity Feed [ITI-93]</h2>
   
 
@@ -275,16 +275,16 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h5 id="2393411-trigger-events">2:3.93.4.1.1 Trigger Events</h5>
 
-<p>A Supplier triggers a Mobile Patient Identity Feed Request to a Consumer when it detects, according to domain policy, a change in the Patient Master Identity (see <a href="volume-1.html">ITI TF-1: 49</a>) i.e., create, update, merge, delete.</p>
+<p>A Supplier triggers a Mobile Patient Identity Feed Request to a Consumer when it detects, according to domain policy, a change in the Patient Master Identity (see <a href="volume-1.html">ITI TF-1: 49</a>), i.e., create, update, merge, delete.</p>
 
 <p>A patient’s “Patient Master Identity” contains:</p>
 
 <ul>
   <li>
-    <p>a unique identifier for the patient (<code class="highlighter-rouge">Patient.id</code> in the FHIR Patient Resource) that is assigned by the Patient Identity Registry in the domain.</p>
+    <p>a unique identifier for the patient (<code class="language-plaintext highlighter-rouge">Patient.id</code> in the FHIR Patient Resource) that is assigned by the Patient Identity Registry in the domain.</p>
   </li>
   <li>
-    <p>zero or more business identifiers for the patient, e.g., local patient ID(s), driver’s license number, etc. (<code class="highlighter-rouge">Patient.identifier</code> in the FHIR Patient Resource).</p>
+    <p>zero or more business identifiers for the patient, e.g., local patient ID(s), driver’s license number, etc. (<code class="language-plaintext highlighter-rouge">Patient.identifier</code> in the FHIR Patient Resource).</p>
   </li>
   <li>
     <p>other information to identify the patient in the FHIR Patient Resource.</p>
@@ -297,7 +297,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>A Supplier initiates a FHIR message request using HTTP POST as defined at <a href="https://www.hl7.org/fhir/R4/messaging.html">https://www.hl7.org/fhir/R4/messaging.html</a> on a Bundle Resource.</p>
 
-<p>A Supplier shall create a Bundle Resource of type <code class="highlighter-rouge">message</code> constrained as specified in Section 2:3.93.4.1.2.1 and conforming to the <a href="MessageDefinition-IHE.PMIR.MessageDefinition.html">PMIR Feed MessageDefinition</a>.</p>
+<p>A Supplier shall create a Bundle Resource of type <code class="language-plaintext highlighter-rouge">message</code> constrained as specified in Section 2:3.93.4.1.2.1 and conforming to the <a href="MessageDefinition-IHE.PMIR.MessageDefinition.html">PMIR Feed MessageDefinition</a>.</p>
 
 <p>A Supplier shall be able to send a request for both the JSON and the XML messaging formats as defined in FHIR. A Consumer shall support accepting either the JSON or the XML messaging formats as defined in FHIR depending on the Subscription or configuration of the Consumer. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Appendix Z.6</a> for more details.</p>
 
@@ -317,7 +317,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h6 id="23934124-fhir-history-bundle-entry-constraints-for-merge">2:3.93.4.1.2.4 FHIR History Bundle entry Constraints for Merge</h6>
 
-<p>When a merge is needed, the Patient Resource to be deprecated shall be included in the history Bundle.<code class="highlighter-rouge">entry</code> and shall be constrained as described in the <a href="StructureDefinition-IHE.PMIR.Patient.Merge.html">Merged Patient Profile for PMIR</a> and the <code class="highlighter-rouge">entry.request.method</code> shall be <code class="highlighter-rouge">PUT</code>.</p>
+<p>When a merge is needed, the Patient Resource to be deprecated shall be included in the history Bundle.<code class="language-plaintext highlighter-rouge">entry</code> and shall be constrained as described in the <a href="StructureDefinition-IHE.PMIR.Patient.Merge.html">Merged Patient Profile for PMIR</a> and the <code class="language-plaintext highlighter-rouge">entry.request.method</code> shall be <code class="language-plaintext highlighter-rouge">PUT</code>.</p>
 
 <h6 id="23934125-fhir-patient-resource-constraints-for-related-person">2:3.93.4.1.2.5 FHIR Patient Resource Constraints for Related Person</h6>
 
@@ -365,18 +365,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h6 id="23934131-post-mergedelete-expectations">2:3.93.4.1.3.1 Post Merge/Delete Expectations</h6>
 
-<p>Based upon policy, a Patient Identity Registry, when performing a GET on the deprecated or deleted Patient Resource Id (e.g., GET [base]/Patient/pat01), shall return:</p>
-
-<ul>
-  <li>
-    <p>200 OK, and return the deprecated Patient which is now marked as inactive, or</p>
-  </li>
-  <li>
-    <p>404 Not Found</p>
-  </li>
-</ul>
-
-<p>Based up policy, a Patient Identity Registry, when performing a SEARCH by the deprecated or deleted Patient Resource Id (e.g., GET [base]/Patient?_id=pat01), shall return:</p>
+<p>Based upon policy, when a Patient Identity Registry responds to a <code class="language-plaintext highlighter-rouge">search</code> where the Patient is deprecated or deleted, for example, from a PDQm query <a href="https://profiles.ihe.net/ITI/PDQm/ITI-78.html">ITI-78</a> or a PIXm query <a href="https://profiles.ihe.net/ITI/PIXm/ITI-83.html">ITI-83</a>, it shall return:</p>
 
 <ul>
   <li>
@@ -387,6 +376,17 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   </li>
   <li>
     <p>If merged, 200 OK, and return a Bundle with both the target and old patient resources</p>
+  </li>
+</ul>
+
+<p>Based upon policy, when a Patient Identity Registry responds to a <code class="language-plaintext highlighter-rouge">read</code> or <code class="language-plaintext highlighter-rouge">vread</code>, <code class="language-plaintext highlighter-rouge">GET \[base\]/Patient/pat01</code>, on the deprecated or deleted Patient Resource Id, it shall return:</p>
+
+<ul>
+  <li>
+    <p>200 OK, and return the deprecated Patient which is now marked as inactive, or</p>
+  </li>
+  <li>
+    <p>404 Not Found</p>
   </li>
 </ul>
 
@@ -467,7 +467,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.pmir#1.4.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, May 12, 2022 07:36-0500">2022-05-12</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.pmir#1.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Aug 8, 2022 16:08-0500">2022-08-08</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

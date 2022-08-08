@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Patient Master Identity Registry (PMIR)</span>
             <br/>
-            <span style="display:inline-block;">1.4.0 - ballot
+            <span style="display:inline-block;">1.5.0 - Trial-Implementation
 
 
 
@@ -197,7 +197,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Master Identity Registry (PMIR) (v1.4.0: Public Comment Ballot 2) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/PMIR/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Patient Master Identity Registry (PMIR) (v1.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/PMIR/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>1:49 Patient Master Identity Registry (PMIR) Profile Volume 1</h2>
   
 
@@ -236,7 +236,7 @@ information about a subject of care, as well as subscribing to changes, using HL
 
 <p><strong>PMIR Concepts and Defined Terms:</strong></p>
 
-<p>In PMIR, a patient has a single “Patient Master Identity” (a.k.a. Golden Patient record) that is comprised of identifying information, such as business identifiers, name, phone, gender, birth date, address, marital status, photo, contacts, preference for language, and links to other patient identities (e.g., a mother’s identity linked to a newborn).</p>
+<p>In PMIR, a patient has a single “Patient Master Identity” (a.k.a., Golden Patient record) that is comprised of identifying information, such as business identifiers, name, phone, gender, birth date, address, marital status, photo, contacts, preference for language, and links to other patient identities (e.g., a mother’s identity linked to a newborn).</p>
 
 <p>A “Master Patient Identification Domain” is a collection of Patient Master Identities shared among a set of PMIR Patient Identity Source and Patient Identity Consumer Actors using the services of a single Patient Identity Registry.</p>
 
@@ -246,7 +246,7 @@ information about a subject of care, as well as subscribing to changes, using HL
 
 <h2 id="1491-pmir-actors-transactions-and-content-modules">1:49.1 PMIR Actors, Transactions, and Content Modules</h2>
 
-<p>This section defines the actors, transactions, and/or content modules in this profile. General definitions of actors are given in the [Technical Frameworks General Introduction Appendix A] (https://profiles.ihe.net/GeneralIntro/ch-A.html). IHE Transactions can be found in the [Technical Frameworks General Introduction Appendix B] (https://profiles.ihe.net/GeneralIntro/ch-B.html).</p>
+<p>This section defines the actors, transactions, and/or content modules in this profile. General definitions of actors are given in the <a href="https://profiles.ihe.net/GeneralIntro/ch-A.html">Technical Frameworks General Introduction Appendix A</a>. IHE Transactions can be found in the <a href="https://profiles.ihe.net/GeneralIntro/ch-B.html">Technical Frameworks General Introduction Appendix B</a>.</p>
 
 <p>Figure 1:49.1-1 shows the actors directly involved in the PMIR Profile and the relevant transactions between them.</p>
 
@@ -583,7 +583,11 @@ domain policy, whether it needs to initiate a merge of one of the Patient Master
 
 <p>Joshua completes the HIV rapid test, which is positive. A confirmatory test is taken, which must be sent to the regional lab for processing. Both the results of the rapid test and the results of the confirmatory test reference Joshua’s <strong><em>duplicate</em></strong> patient master identity. The test results are saved to the Shared Health Record (SHR) referencing the duplicate patient master identity.</p>
 
-<p>When Joshua returns to the clinic to receive his confirmatory lab results, and after receiving counseling regarding confidentiality rules and the importance of care continuity, Joshua corrects his patient master identity. The EMR merges Joshua’s two patient master identities to a single patient master identity and sends a merge message to the national CR to do the same. Note: An unmerge would be handled as an administrative function and is out of scope for this profile.</p>
+<p>When Joshua returns to the clinic to receive his confirmatory lab results, and after receiving counseling regarding confidentiality rules and the importance of care continuity, Joshua corrects his patient master identity. The EMR merges Joshua’s two patient master identities to a single patient master identity and sends a merge message to the national CR to do the same.</p>
+
+<blockquote>
+  <p>Note: An unmerge would be handled as an administrative function and is out of scope for this profile.</p>
+</blockquote>
 
 <p>The various databases that store health information about Joshua have subscribed to patient update transactions on the national CR. To ensure patient safety for Joshua, these systems ensure that a query using Joshua’s resolved patient master identity would, correctly, return all of the health information associated with him – whether it was originally persisted under his correct (surviving) patient master identity or under the duplicate (subsumed) patient master identity.</p>
 
@@ -620,6 +624,7 @@ merged. Each of these health data systems updates their local health data to ref
 <h2 id="1496-pmir-cross-profile-considerations">1:49.6 PMIR Cross Profile Considerations</h2>
 
 <p>None.</p>
+
 
 
 
@@ -667,7 +672,7 @@ merged. Each of these health data systems updates their local health data to ref
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.pmir#1.4.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, May 12, 2022 07:36-0500">2022-05-12</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.pmir#1.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Aug 8, 2022 16:08-0500">2022-08-08</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
