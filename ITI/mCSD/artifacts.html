@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
             <br/>
-            <span style="display:inline-block;">3.5.0 - Trial-Implementation
+            <span style="display:inline-block;">3.8.0 - Trial-Implementation
 
 
 
@@ -133,6 +133,9 @@
       </li>
       <li>
         <a href="volume-1.html#1467-mcsd-deployment-considerations">Deployment Considerations</a>
+      </li>
+      <li>
+        <a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">Endpoint Usage Considerations</a>
       </li>
     </ul>
   </li>
@@ -200,7 +203,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.8.0: Public-Comment) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Artifacts Summary</h2>
   
   
@@ -215,16 +218,22 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
          <a href="#1">Behavior: Capability Statements</a>
       </li>
       <li>
-         <a href="#2">Structures: Resource Profiles</a>
+         <a href="#2">Behavior: Search Parameters</a>
       </li>
       <li>
-         <a href="#3">Structures: Extension Definitions</a>
+         <a href="#3">Structures: Resource Profiles</a>
       </li>
       <li>
-         <a href="#4">Terminology: Code Systems</a>
+         <a href="#4">Structures: Extension Definitions</a>
       </li>
       <li>
-         <a href="#5">Example: Example Instances</a>
+         <a href="#5">Terminology: Value Sets</a>
+      </li>
+      <li>
+         <a href="#6">Terminology: Code Systems</a>
+      </li>
+      <li>
+         <a href="#7">Example: Example Instances</a>
       </li>
    </ul>
 </div>
@@ -317,6 +326,36 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       </table>
    </p>
    <a name="2"> </a>
+   <h3>Behavior: Search Parameters </h3>
+   <p>
+    <p>These define the properties by which a RESTful server can be searched.  They can also be used for sorting and including related resources.</p>
+</p>
+   <p>
+      <table class="grid">
+         <col style="width:20%"/>
+         <tbody>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="SearchParameter-Endpoint-EndpointSpecificType.html"
+                     title="SearchParameter/Endpoint-EndpointSpecificType">Search on the IHE defined extension for Endpoint specificType</a>
+               </td>
+               <td>
+<p>This SearchParameter enables finding Endpoints by the specificType code.  This resource is created as informative content.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="SearchParameter-IHE.mCSD.Search.PurposeOfUse.html"
+                     title="SearchParameter/IHE.mCSD.Search.PurposeOfUse">Search on the IHE defined extension for Purpose of Use</a>
+               </td>
+               <td>
+<p>This SearchParameter enables finding Endpoints or Organizatoins by the purpose of use code.  This resource is created as informative content.</p>
+</td>
+            </tr>
+         </tbody>
+      </table>
+   </p>
+   <a name="3"> </a>
    <h3>Structures: Resource Profiles </h3>
    <p>
     <p>These define constraints on FHIR resources for systems conforming to this implementation guide</p>
@@ -325,6 +364,72 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <table class="grid">
          <col style="width:20%"/>
          <tbody>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Query.html"
+                     title="StructureDefinition/IHE.mCSD.Audit.CareServices.Query">Audit Event for Find Matching Care Services Transaction by the Care Services Selective Consumer and Care Services Selective Supplier for Query</a>
+               </td>
+               <td>
+<p>Defines constraints on the AuditEvent Resource to record when a Find Matching Care Services Transaction happens
+to query a Care Services Resource, as recorded by the Care Services Selective Supplier or Care Services Selective Consumer.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Read.html"
+                     title="StructureDefinition/IHE.mCSD.Audit.CareServices.Read">Audit Event for Find Matching Care Services Transaction by the Care Services Selective Supplier and Care Services Selective Supplier for Read</a>
+               </td>
+               <td>
+<p>Defines constraints on the AuditEvent Resource to record when a Find Matching Care Services Transaction happens
+to read a Care Services resource, as recorded by the Care Services Selective Supplier or Care Services Selective Supplier.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Updates.html"
+                     title="StructureDefinition/IHE.mCSD.Audit.CareServices.Updates">Audit Event for Request Care Services Updates Transaction by the Care Services Update Consumer and Care Services Update Supplier</a>
+               </td>
+               <td>
+<p>Defines constraints on the AuditEvent Resource to record when a Request Care Services Updates Transaction happens
+for a Care Services Resource updates, as recorded by the Care Services Update Supplier or Care Services Update Consumer.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.Endpoint.html"
+                     title="StructureDefinition/IHE.mCSD.Endpoint">mCSD Endpoint</a>
+               </td>
+               <td>
+<p>A profile on the mCSD Endpoint.</p>
+
+<p>An Organization may be reachable through electronic Endpoint(s).
+An Endpoint may be a FHIR server, an IHE web services actor, or some other
+mechanism. If an Organization does not have an Endpoint, it may still be
+reachable via an Endpoint at its parent Organization or an affiliated Organization.</p>
+
+<p>Given that in FHIR R4 the .connnectionType is 1..1, each type of endpoint will be indicated with an independent Endpoint resource.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.Endpoint.DocShare.html"
+                     title="StructureDefinition/IHE.mCSD.Endpoint.DocShare">mCSD Endpoint for Document Sharing</a>
+               </td>
+               <td>
+<p>A profile on the mCSD Endpoint for Document Sharing environments.</p>
+
+<p>Given that in FHIR R4 the .connnectionType is 1..1, each type of endpoint will be indicated with an independent Endpoint resource. Thus a XCA Responding Gateway will need two Endpoint instances to express Query vs Retrieve.</p>
+
+<p>Open-Issues:</p>
+<ol>
+  <li>That payloadType and payloadMimeType are either empty to indicate that the endpoint is not constrained; or fully populated.</li>
+  <li>That payloadType and PayloadMimeType for XCA/XDS/MHD Query and XCA/XDS/MHD Retrieve would be the same thus replicating the capability at both endpoints.</li>
+  <li>It did not seem right that Query be indicated with a mimeType of ebRegistry as that is not helpful to the use-case.</li>
+  <li>should the homeCommunityId be mandated here, should those behind it be here, should this be empty?</li>
+  <li>would a Proxy service that is supporting OrgAff be a good example of NOT putting a homeCommunityId in the endpoint.identifier?</li>
+</ol>
+</td>
+            </tr>
             <tr>
                <td style="column-width:30%">
                   <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html"
@@ -340,7 +445,7 @@ attributes, attributes regarding its hours of operation, etc. Each Facility is d
 <a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization</a>.</p>
 
 <p>In addition to the base requirements of <a href="StructureDefinition-IHE.mCSD.Location.html">mCSD Location</a>,
-one <code class="highlighter-rouge">type</code> must be set to <code class="highlighter-rouge">urn:ietf:rfc:3986#urn:ihe:iti:mcsd:2019:facility</code>.</p>
+one <code class="language-plaintext highlighter-rouge">type</code> must be set to <code class="language-plaintext highlighter-rouge">https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#facility</code>.</p>
 </td>
             </tr>
             <tr>
@@ -358,7 +463,7 @@ attributes, attributes regarding its hours of operation, etc. Each Facility is d
 <a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization</a>.</p>
 
 <p>In addition to the base requirements of <a href="StructureDefinition-IHE.mCSD.Organization.html">mCSD Organization</a>,
-one <code class="highlighter-rouge">type</code> must be set to <code class="highlighter-rouge">urn:ietf:rfc:3986#urn:ihe:iti:mcsd:2019:facility</code>.</p>
+one <code class="language-plaintext highlighter-rouge">type</code> must be set to <code class="language-plaintext highlighter-rouge">https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#facility</code>.</p>
 </td>
             </tr>
             <tr>
@@ -387,6 +492,9 @@ contact person, hours of operation, etc.</p>
 has a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village
 districts or regions.  Each Jurisdiction is defined by a pairing of <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location</a>
 and <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization</a>.</p>
+
+<p>In addition to the base requirements of <a href="StructureDefinition-IHE.mCSD.Location.html">mCSD Location</a>,
+one <code class="language-plaintext highlighter-rouge">type</code> must be set to <code class="language-plaintext highlighter-rouge">https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#jurisdiction</code>.</p>
 </td>
             </tr>
             <tr>
@@ -401,6 +509,9 @@ and <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organiz
 has a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village
 districts or regions.  Each Jurisdiction is defined by a pairing of <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location</a>
 and <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization</a>.</p>
+
+<p>In addition to the base requirements of <a href="StructureDefinition-IHE.mCSD.Organization.html">mCSD Organization</a>,
+one <code class="language-plaintext highlighter-rouge">type</code> must be set to <code class="language-plaintext highlighter-rouge">https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#jurisdiction</code>.</p>
 </td>
             </tr>
             <tr>
@@ -447,6 +558,36 @@ represented as child Organizations of a parent Organization.</p>
             </tr>
             <tr>
                <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.html"
+                     title="StructureDefinition/IHE.mCSD.OrganizationAffiliation">mCSD Organization Affiliation</a>
+               </td>
+               <td>
+<p>A profile on the OrganizationAffiliation resource for mCSD.</p>
+
+<p>An Organization may have relationships with
+other organizations that are not hierarchical. These relationships may indicate
+an electronic routing path to other organizations that cannot be reached directly.
+OrganizationAffiliation can be used to specify relationships such as supply chains 
+or administrative reporting structures.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.DocShare.html"
+                     title="StructureDefinition/IHE.mCSD.OrganizationAffiliation.DocShare">mCSD Organization Affiliation DocumentSharing</a>
+               </td>
+               <td>
+<p>A profile on the OrganizationAffiliation resource for mCSD in Document Sharing. Karen’s Cross, when expanded to either/or a service that translates protocols, or a proxy that mediates network communication.</p>
+
+<p>Not used for direct connected mesh networks of depth 2 as that is handled fine with Organization-&gt;Endpoint.</p>
+
+<p>Affiliation is used to show Document Sharing network linkage to a set of communities that are not directly addressible.<br />
+The participating organization would not have Organization-&gt;Endpoint advertised in the network directory. 
+There will be many OrganizationAffiliations, one for each pathway provided on the network by the serving organization (.organization) to another organization (.participatingOrganization).</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
                   <a href="StructureDefinition-IHE.mCSD.Practitioner.html"
                      title="StructureDefinition/IHE.mCSD.Practitioner">mCSD Practitioner</a>
                </td>
@@ -480,7 +621,7 @@ for an <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization</a>
          </tbody>
       </table>
    </p>
-   <a name="3"> </a>
+   <a name="4"> </a>
    <h3>Structures: Extension Definitions </h3>
    <p>
     <p>These define constraints on FHIR data types for systems conforming to this implementation guide</p>
@@ -491,17 +632,92 @@ for an <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization</a>
          <tbody>
             <tr>
                <td style="column-width:30%">
-                  <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.html"
-                     title="StructureDefinition/IHE.mCSD.OrganizationHierarchy">mCSD Additional Hierarchies extension for mCSD Organization.</a>
+                  <a href="StructureDefinition-ihe-endpointspecifictype.html"
+                     title="StructureDefinition/ihe-endpointspecifictype">Endpoint Specific Type</a>
                </td>
                <td>
-<p>If there are additional hierarchies (such as funding source), then use this extension.</p>
+<p>The specific endpoint type. Given that the FHIR R4 Endpoint.connectionType is limited to a one value from a valueSet given by FHIR core and that valueSet includes XCA thus by Extensible rules one is forced to pick that value, we choose to add an additional codeableConcept for a more detailed code(s).</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="StructureDefinition-IHE.mCSD.PurposeOfUse.html"
+                     title="StructureDefinition/IHE.mCSD.PurposeOfUse">Purpose of Use Extension</a>
+               </td>
+               <td>
+<p>Set a purpose of use for an mCSD Endpoint or mCSD Organization.</p>
 </td>
             </tr>
          </tbody>
       </table>
    </p>
-   <a name="4"> </a>
+   <a name="5"> </a>
+   <h3>Terminology: Value Sets </h3>
+   <p>
+    <p>These define sets of codes used by systems conforming to this implementation guide</p>
+</p>
+   <p>
+      <table class="grid">
+         <col style="width:20%"/>
+         <tbody>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-MCSDEndpointIdentifierTypeValueSet.html"
+                     title="ValueSet/MCSDEndpointIdentifierTypeValueSet">mCSD Type codes for Endpoint.identifier</a>
+               </td>
+               <td>
+<p>mCSD Type codes for specific business identifiers for Endpoint resources.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-MCSDEndpointTypesCoreDocShareVS.html"
+                     title="ValueSet/MCSDEndpointTypesCoreDocShareVS">mCSD Endpoint Core Document Sharing Types ValueSet</a>
+               </td>
+               <td>
+<p>ValueSet of the Core Document Sharing Endpoint types allowed</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-MCSDEndpointTypesVS.html"
+                     title="ValueSet/MCSDEndpointTypesVS">mCSD Endpoint Types ValueSet</a>
+               </td>
+               <td>
+<p>ValueSet of the Endpoint types allowed</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-MCSDOrgAffTypesVS.html"
+                     title="ValueSet/MCSDOrgAffTypesVS">mCSD Organization Affiliation Types ValueSet</a>
+               </td>
+               <td>
+<p>ValueSet of Organization Affiliation types allowed</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-MCSDOrganizationIdentifierTypeValueSet.html"
+                     title="ValueSet/MCSDOrganizationIdentifierTypeValueSet">mCSD Type codes for Organization.identifier</a>
+               </td>
+               <td>
+<p>mCSD Type codes for specific business identifiers for Organization resources.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="ValueSet-IHE.mCSD.Organization.Location.Types.html"
+                     title="ValueSet/IHE.mCSD.Organization.Location.Types">mCSD Types for Organizations and Locations</a>
+               </td>
+               <td>
+<p>mCSD Types for specialized Organization and Location resources.</p>
+</td>
+            </tr>
+         </tbody>
+      </table>
+   </p>
+   <a name="6"> </a>
    <h3>Terminology: Code Systems </h3>
    <p>
     <p>These define new code systems used by systems conforming to this implementation guide</p>
@@ -512,6 +728,38 @@ for an <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization</a>
          <tbody>
             <tr>
                <td style="column-width:30%">
+                  <a href="CodeSystem-MCSDEndpointIdentifierTypes.html"
+                     title="CodeSystem/MCSDEndpointIdentifierTypes">mCSD Type codes for Endpoint.identifier</a>
+               </td>
+               <td>
+<p>mCSD Type codes for specific business identifiers for Endpoint resources.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="CodeSystem-MCSDEndpointTypes.html"
+                     title="CodeSystem/MCSDEndpointTypes">mCSD Endpoint Types</a>
+               </td>
+               <td>
+<p>mCSD Endpoint types beyond those in the FHIR core.</p>
+
+<p>The codes defined here are endpoint types defined in IHE profiles at the time of publication. 
+Other codes might be defined in new IHE profiles written later, where they could define their own code and own codeSystem.</p>
+
+<p>Code pattern: <code class="language-plaintext highlighter-rouge">{Profile}-{Actor}-{Transaction}[-{option}]</code></p>
+<ul>
+  <li>Where Profile is the acronym</li>
+  <li>Where Actor name compressed to be short yet clear (camel case)</li>
+  <li>Where Transaction name is compressed to be short yet clear (camel case)</li>
+  <li>Where the code definition spells out these using the formal names and transaction number</li>
+  <li>Where an option is important it can be prepended</li>
+</ul>
+
+<p>Note that this codeSystem contains only endpoints needed for Some IHE profiles, and only for the synchronous communication pattern. When Async is supported additional entries will be needed on these actors, and the peer actor will also need to be described. Async is not in scope at this time.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
                   <a href="CodeSystem-mcsd-example-hierarchy.html"
                      title="CodeSystem/mcsd-example-hierarchy">mCSD Example Hierarchy Code System</a>
                </td>
@@ -519,10 +767,37 @@ for an <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization</a>
 <p>An example vocabulary of hierarchies.</p>
 </td>
             </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="CodeSystem-MCSDOrgAffTypes.html"
+                     title="CodeSystem/MCSDOrgAffTypes">mCSD Organization Affiliation Types</a>
+               </td>
+               <td>
+<p>mCSD OrganizationAffiliation types beyond those in the FHIR core.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="CodeSystem-MCSDOrganizationIdentifierTypes.html"
+                     title="CodeSystem/MCSDOrganizationIdentifierTypes">mCSD Type codes for Organization.identifier</a>
+               </td>
+               <td>
+<p>mCSD Type codes for specific business identifiers for Organization resources.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="CodeSystem-IHE.mCSD.Organization.Location.Types.html"
+                     title="CodeSystem/IHE.mCSD.Organization.Location.Types">mCSD Type codes for Organizations and Locations</a>
+               </td>
+               <td>
+<p>mCSD Type codes for specialized Organization and Location resources.</p>
+</td>
+            </tr>
          </tbody>
       </table>
    </p>
-   <a name="5"> </a>
+   <a name="7"> </a>
    <h3>Example: Example Instances </h3>
    <p>
     <p>These are example instances that show what data produced and consumed by systems conforming with this implementation guide might look like</p>
@@ -536,27 +811,7 @@ for an <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization</a>
                   <a href="Bundle-Example-MCSD.html" title="Bundle/Example-MCSD">Example Bundle of mCSD Resources</a>
                </td>
                <td>
-<p>Example Bundle of Core mCSD Resources: Organization, Location, HealthcareService, Practitioner, and PractitionerRole with Facility and Jursidiction.</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="SearchParameter-IHE.mCSD.Organization.HierarchyPartOf.html"
-                     title="SearchParameter/IHE.mCSD.Organization.HierarchyPartOf">Search on the IHE defined extension for hierarchy part of.</a>
-               </td>
-               <td>
-<p>This Search Parameter enables finding <a href="StructureDefinition-IHE.mCSD.Organization.html">Organizations</a>
-by the hierarchy <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.html">mCSD extension</a> part of.</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="SearchParameter-IHE.mCSD.Organization.HierarchyType.html"
-                     title="SearchParameter/IHE.mCSD.Organization.HierarchyType">Search on the IHE defined extension for hierarchy type.</a>
-               </td>
-               <td>
-<p>This Search Parameter enables finding <a href="StructureDefinition-IHE.mCSD.Organization.html">Organizations</a> by the
-<a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.html">mCSD extension</a> hierarchy type.</p>
+<p>Example Bundle of Core mCSD Resources.</p>
 </td>
             </tr>
             <tr>
@@ -575,6 +830,15 @@ by the hierarchy <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.htm
                </td>
                <td>
 <p>Organization resource for an example mCSD Facility</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="OrganizationAffiliation-MCSDFacilityOrganizationAffiliation-Example.html"
+                     title="OrganizationAffiliation/MCSDFacilityOrganizationAffiliation-Example">Example mCSD Facility Admin Organization Affiliation</a>
+               </td>
+               <td>
+<p>Organization Affiliation resource for an example administrative relationship for a facility.</p>
 </td>
             </tr>
             <tr>
@@ -649,6 +913,130 @@ by the hierarchy <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.htm
 <p>PractitionerRole resource example for mCSD.</p>
 </td>
             </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="AuditEvent-ex-AuditMcsdCareServicesQuery.html"
+                     title="AuditEvent/ex-AuditMcsdCareServicesQuery">Audit example for ITI-90 for Care Services Selective Consumer for query.</a>
+               </td>
+               <td>
+<p>Audit example for a Care Services Selective Consumer requesting a query on a Care Services Resource for ITI-90.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="AuditEvent-ex-AuditMcsdCareServicesRead.html"
+                     title="AuditEvent/ex-AuditMcsdCareServicesRead">Audit example for ITI-90 for Care Services Selective Consumer for read.</a>
+               </td>
+               <td>
+<p>Audit example for a Care Services Selective Consumer requesting a read on a Care Services resource for ITI-90.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="AuditEvent-ex-AuditMcsdCareServicesUpdates.html"
+                     title="AuditEvent/ex-AuditMcsdCareServicesUpdates">Audit example for ITI-91 for Care Services Update Supplier.</a>
+               </td>
+               <td>
+<p>Audit example for a Care Services Update Consumer requesting updates on a Care Services Resource for ITI-91.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Organization-ex-OrgA.html" title="Organization/ex-OrgA">Example Organization A</a>
+               </td>
+               <td>
+<p>Example Organization A that wants to communicate with Organization B</p>
+<ul>
+  <li>Note this Organization has no endpoint, but it is a client in this scenario</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="OrganizationAffiliation-ex-OrgAff.html"
+                     title="OrganizationAffiliation/ex-OrgAff">Example of an OrganizationAffiliation in mCSD.</a>
+               </td>
+               <td>
+<p>This is a simple OrganizationAffiliation for an HIE. This is NOT representative of a Document Sharing affiliation.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="OrganizationAffiliation-ex-OrgAffC.html"
+                     title="OrganizationAffiliation/ex-OrgAffC">Example OrganizationAffiliation C</a>
+               </td>
+               <td>
+<p>Example OrganizationAffiliation C that indicates that C will provide communication to B.</p>
+<ul>
+  <li>Note that the endpoint is listed here in addition to in ex-OrgC to be more efficient</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Organization-ex-OrgB.html" title="Organization/ex-OrgB">Example Organization B</a>
+               </td>
+               <td>
+<p>Example Organization B that is not on the network directly</p>
+<ul>
+  <li>Note that this organization has no endpoint as it is not directly participating in the network</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Organization-ex-OrgC.html" title="Organization/ex-OrgC">Example Organization C</a>
+               </td>
+               <td>
+<p>Example Organization C supports communication with Organization B</p>
+<ul>
+  <li>Note that this organization hosts an XDS Query endpoint on the network.</li>
+  <li>More endponts would be here, but the use-case is simplified to just XDS Query</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Device-ex-device.html" title="Device/ex-device">Device Example for SVCM</a>
+               </td>
+               <td>
+<p>Device Example for SVCM.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Endpoint-ex-endpointDicom.html" title="Endpoint/ex-endpointDicom">Example of an Endpoint that is not constrained by mCSD XCA constraints.</a>
+               </td>
+               <td>
+<p>This is an example of a DICOM WADO-RS endpoint.</p>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Endpoint-ex-endpointXCAquery.html"
+                     title="Endpoint/ex-endpointXCAquery">Example of an mCSD XCA Query Endpoint</a>
+               </td>
+               <td>
+<p>This is an example of an XCA Retrieve endpoint for OrgA</p>
+<ul>
+  <li>supports XPHR and IPS</li>
+  <li>supports mime-type for FHIR, CDA, and PDF</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="Endpoint-ex-endpointXCAretrieve.html"
+                     title="Endpoint/ex-endpointXCAretrieve">Example of an mCSD XCA Retrieve Endpoint</a>
+               </td>
+               <td>
+<p>This is an example of an XCA Retrieve endpoint</p>
+<ul>
+  <li>supports XPHR and IPS</li>
+  <li>supports mime-type for FHIR, CDA, and PDF</li>
+</ul>
+</td>
+            </tr>
          </tbody>
       </table>
    </p>
@@ -698,7 +1086,7 @@ by the hierarchy <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.htm
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 19:51-0600">2022-02-28</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.8.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Aug 12, 2022 09:44-0500">2022-08-12</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -706,7 +1094,7 @@ by the hierarchy <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.htm
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>

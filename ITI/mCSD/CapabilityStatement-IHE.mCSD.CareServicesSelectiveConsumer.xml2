@@ -9,7 +9,7 @@
     </div>
   </text>
   <url value="http://profiles.ihe.net/ITI/mCSD/CapabilityStatement/IHE.mCSD.CareServicesSelectiveConsumer"/>
-  <version value="3.5.0"/>
+  <version value="3.8.0"/>
   <name value="IHE_mCSD_Care_Services_Selective_Consumer"/>
   <title value="IHE ITI Mobile Care Services Discovery (mCSD) - Care Services Selective Consumer"/>
   <status value="draft"/>
@@ -86,48 +86,8 @@
         <type value="reference"/>
       </searchParam>
       <searchParam>
-        <name value="type"/>
+        <name value="service-type"/>
         <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.active"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.status"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name:exact"/>
-        <type value="string"/>
       </searchParam>
     </resource>
     <resource>
@@ -139,6 +99,7 @@
       <interaction>
         <code value="search-type"/>
       </interaction>
+      <searchInclude value="Location:organization"/>
       <searchParam>
         <name value="identifier"/>
         <type value="token"/>
@@ -171,42 +132,6 @@
         <name value="status"/>
         <type value="token"/>
       </searchParam>
-      <searchParam>
-        <name value="partof.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.active"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:exact"/>
-        <type value="string"/>
-      </searchParam>
     </resource>
     <resource>
       <type value="Organization"/>
@@ -217,6 +142,10 @@
       <interaction>
         <code value="search-type"/>
       </interaction>
+      <searchInclude value="Organization.endpoint"/>
+      <searchRevInclude value="Location:organization"/>
+      <searchRevInclude value="OrganizationAffiliation:participating-organization"/>
+      <searchRevInclude value="OrganizationAffiliation:primary-organization"/>
       <searchParam>
         <name value="active"/>
         <type value="token"/>
@@ -244,42 +173,6 @@
       <searchParam>
         <name value="type"/>
         <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="partof.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="ihe-mcsd-hierarchy-type"/>
-        <definition value="http://profiles.ihe.net/ITI/mCSD/SearchParameter/IHE.mCSD.Organization.HierarchyType"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="ihe-mcsd-hierarchy-partof"/>
-        <definition value="http://profiles.ihe.net/ITI/mCSD/SearchParameter/IHE.mCSD.Organization.HierarchyPartOf"/>
-        <type value="reference"/>
-      </searchParam>
-      <searchParam>
-        <name value="ihe-mcsd-hierarchy-partof:below"/>
-        <definition value="http://profiles.ihe.net/ITI/mCSD/SearchParameter/IHE.mCSD.Organization.HierarchyPartOf"/>
-        <type value="reference"/>
-      </searchParam>
-      <searchParam>
-        <name value="ihe-mcsd-hierarchy-partof:above"/>
-        <definition value="http://profiles.ihe.net/ITI/mCSD/SearchParameter/IHE.mCSD.Organization.HierarchyPartOf"/>
-        <type value="reference"/>
       </searchParam>
     </resource>
     <resource>
@@ -341,7 +234,7 @@
       <interaction>
         <code value="search-type"/>
       </interaction>
-      <searchInclude value="Practitioner"/>
+      <searchInclude value="PractitionerRole:practitioner"/>
       <searchParam>
         <name value="active"/>
         <type value="token"/>
@@ -366,113 +259,59 @@
         <name value="specialty"/>
         <type value="token"/>
       </searchParam>
+    </resource>
+    <resource>
+      <type value="Endpoint"/>
+      <supportedProfile value="http://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint"/>
+      <supportedProfile value="http://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint.DocShare"/>
+      <documentation value="."/>
+      <interaction>
+        <code value="search-type"/>
+      </interaction>
       <searchParam>
-        <name value="practitioner.identifier"/>
+        <name value="identifier"/>
         <type value="token"/>
       </searchParam>
       <searchParam>
-        <name value="practitioner.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.given"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.given:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.given:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.family"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.family:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="practitioner.family:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.active"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="organization.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.status"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name:contains"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="location.name:exact"/>
-        <type value="string"/>
-      </searchParam>
-      <searchParam>
-        <name value="service.active"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="service.identifier"/>
-        <type value="token"/>
-      </searchParam>
-      <searchParam>
-        <name value="service.location"/>
+        <name value="organization"/>
         <type value="reference"/>
       </searchParam>
       <searchParam>
-        <name value="service.name"/>
-        <type value="string"/>
+        <name value="status"/>
+        <type value="token"/>
+      </searchParam>
+    </resource>
+    <resource>
+      <type value="OrganizationAffiliation"/>
+      <supportedProfile value="http://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.OrganizationAffiliation"/>
+      <documentation value="."/>
+      <interaction>
+        <code value="search-type"/>
+      </interaction>
+      <searchInclude value="OrganizationAffiliation.endpoint"/>
+      <searchParam>
+        <name value="active"/>
+        <type value="token"/>
       </searchParam>
       <searchParam>
-        <name value="service.name:contains"/>
-        <type value="string"/>
+        <name value="date"/>
+        <type value="date"/>
       </searchParam>
       <searchParam>
-        <name value="service.name:exact"/>
-        <type value="string"/>
+        <name value="identifier"/>
+        <type value="token"/>
       </searchParam>
       <searchParam>
-        <name value="service.organization"/>
+        <name value="participating-organization"/>
         <type value="reference"/>
+      </searchParam>
+      <searchParam>
+        <name value="primary-organization"/>
+        <type value="reference"/>
+      </searchParam>
+      <searchParam>
+        <name value="role"/>
+        <type value="token"/>
       </searchParam>
     </resource>
     <searchParam>

@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
             <br/>
-            <span style="display:inline-block;">3.5.0 - Trial-Implementation
+            <span style="display:inline-block;">3.8.0 - Trial-Implementation
 
 
 
@@ -133,6 +133,9 @@
       </li>
       <li>
         <a href="volume-1.html#1467-mcsd-deployment-considerations">Deployment Considerations</a>
+      </li>
+      <li>
+        <a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">Endpoint Usage Considerations</a>
       </li>
     </ul>
   </li>
@@ -200,7 +203,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.8.0: Public-Comment) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Mobile Care Services Discovery (mCSD)</h2>
   
 
@@ -215,7 +218,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td colspan="4"><i>Official URL</i>: <span class="copy-text">https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd<button title="Click to copy URL" class="btn-copy" data-clipboard-text="https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd"/></span>
       </td>
       <td><i>Version</i>:
-      <span class="copy-text">3.5.0<button title="Click to copy versioned URL" class="btn-copy" data-clipboard-text="https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd|3.5.0"/></span>
+      <span class="copy-text">3.8.0<button title="Click to copy versioned URL" class="btn-copy" data-clipboard-text="https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd|3.8.0"/></span>
       </td>
     </tr>
 
@@ -231,7 +234,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
         
           Active
           
-            as of 2022-03-01
+            as of 2022-08-12
           
         
       </td>
@@ -243,11 +246,6 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 
 
-
-    <tr>
-      <td colspan="5"><p><em>Copyright/Legal</em>: IHE http://www.ihe.net/Governance/#Intellectual_Property</p>
-</td>
-    </tr>
 
   </table>
 
@@ -270,7 +268,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 </div>
 
 <p>The Mobile Care Services Discovery (mCSD) Profile supports RESTful
-queries across related care service resources.</p>
+queries across related care services resources.</p>
 
 <p>The loosely coupled design and flexible querying capability of the mCSD
 Profile means it can be deployed within a variety of eHealth
@@ -291,40 +289,40 @@ architectures and support a wide array of care workflows.</p>
 </div>
 
 <h3 id="organization-of-this-guide">Organization of This Guide</h3>
-<p>This guide is organized into three main sections:</p>
+<p>This guide is organized into the following four main sections:</p>
 
 <ol>
-  <li>Volume 1: <a href="volume-1.html">46 mCSD Introduction</a>
+  <li>Volume 1: Profiles
     <ol>
-      <li><a href="volume-1.html#1461-mcsd-actors-transactions-and-content-modules">46.1 mCSD Actors, Transactions, and Content Modules</a></li>
-      <li><a href="volume-1.html#1462-mcsd-actor-options">46.2 mCSD Actor Options</a></li>
-      <li><a href="volume-1.html#1463-mcsd-required-actor-groupings">46.3 mCSD Required Groupings</a></li>
-      <li><a href="volume-1.html#1464-mcsd-overview">46.4 mCSD Overview</a></li>
-      <li><a href="volume-1.html#1465-mcsd-security-considerations">46.5 mCSD Security Considerations</a></li>
-      <li><a href="volume-1.html#1466-mcsd-cross-profile-considerations">46.6 mCSD Cross-Profile Considerations</a></li>
-      <li><a href="volume-1.html#1467-mcsd-deployment-considerations">46.7 mCSD Deployment Considerations</a></li>
+      <li><a href="volume-1.html">mCSD Introduction</a></li>
+      <li><a href="volume-1.html#1461-mcsd-actors-transactions-and-content-modules">mCSD Actors, Transactions, and Content Modules</a></li>
+      <li><a href="volume-1.html#1462-mcsd-actor-options">mCSD Actor Options</a></li>
+      <li><a href="volume-1.html#1463-mcsd-required-actor-groupings">mCSD Required Groupings</a></li>
+      <li><a href="volume-1.html#1464-mcsd-overview">mCSD Overview</a></li>
+      <li><a href="volume-1.html#1465-mcsd-security-considerations">mCSD Security Considerations</a></li>
+      <li><a href="volume-1.html#1466-mcsd-cross-profile-considerations">mCSD Cross-Profile Considerations</a></li>
+      <li><a href="volume-1.html#1467-mcsd-deployment-considerations">mCSD Deployment Considerations</a></li>
+      <li><a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">mCSD Endpoint Usage Considerations</a></li>
     </ol>
   </li>
   <li>Volume 2: Transaction Detail
     <ol>
-      <li><a href="ITI-90.html">3.90 Find Matching Care Services [ITI-90]</a></li>
-      <li><a href="ITI-91.html">3.91 Request Care Services Updates [ITI-91]</a></li>
+      <li><a href="ITI-90.html">Find Matching Care Services [ITI-90]</a></li>
+      <li><a href="ITI-91.html">Request Care Services Updates [ITI-91]</a></li>
     </ol>
   </li>
-  <li>
-    <p><a href="testplan.html">Test Plan</a></p>
-  </li>
+  <li><a href="testplan.html">Test Plan</a></li>
   <li><a href="other.html">Changes to other Profiles</a></li>
 </ol>
 
-<p>Click on any of the links above, go to the <a href="toc.html">table of contents</a>, or
+<p>Click on any of the links above, navigate the contents using the <a href="toc.html">table of contents</a>, or
 if you are looking for a specific artifact, check out the <a href="artifacts.html">index</a>.</p>
 
 <h3 id="conformance-expectations">Conformance Expectations</h3>
 
 <p>IHE uses the normative words: Shall, Should, and May according to <a href="https://profiles.ihe.net/GeneralIntro/ch-E.html">standards conventions</a>.</p>
 
-<p>mCSD uses <code class="highlighter-rouge">Must Support</code> in StructureDefinition profiles. This is equivalent to the IHE use of <strong>R2</strong> as defined in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir">Appendix Z</a>.</p>
+<p>mCSD uses <code class="language-plaintext highlighter-rouge">Must Support</code> in StructureDefinition profiles. This is equivalent to the IHE use of <strong>R2</strong> as defined in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir">Appendix Z</a>.</p>
 
 <h3 id="download">Download</h3>
 
@@ -385,7 +383,7 @@ if you are looking for a specific artifact, check out the <a href="artifacts.htm
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 19:51-0600">2022-02-28</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.8.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Aug 12, 2022 09:44-0500">2022-08-12</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -393,7 +391,7 @@ if you are looking for a specific artifact, check out the <a href="artifacts.htm
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>

@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
             <br/>
-            <span style="display:inline-block;">3.5.0 - Trial-Implementation
+            <span style="display:inline-block;">3.8.0 - Trial-Implementation
 
 
 
@@ -133,6 +133,9 @@
       </li>
       <li>
         <a href="volume-1.html#1467-mcsd-deployment-considerations">Deployment Considerations</a>
+      </li>
+      <li>
+        <a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">Endpoint Usage Considerations</a>
       </li>
     </ul>
   </li>
@@ -200,7 +203,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.8.0: Public-Comment) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>2:3.91 Request Care Services Updates [ITI-91]</h2>
   
 
@@ -229,10 +232,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="23911-scope">2:3.91.1 Scope</h3>
 
-<p>The Request Care Services Updates transaction is used to return a list
-of updated care services resources. A Care Services Update Consumer
-initiates a Request Care Services Updates transaction against a Care
-Services Update Supplier.</p>
+<p>The Request Care Services Updates transaction is used to return a list of updated care services resources. A Care Services Update Consumer initiates a Request Care Services Updates transaction against a Care Services Update Supplier.</p>
 
 <h3 id="23912-actor-roles">2:3.91.2 Actor Roles</h3>
 
@@ -272,66 +272,42 @@ Services Update Supplier.</p>
 
 <h4 id="239141-request-care-services-updates-request-message">2:3.91.4.1 Request Care Services Updates Request Message</h4>
 
-<p>A Request Care Services Updates message is a FHIR history operation,
-optionally using the <code class="highlighter-rouge">_since</code> parameter, on the Organization, Location,
-Practitioner, PractitionerRole, or HealthcareService Resources.</p>
+<p>A Request Care Services Updates message is a FHIR history operation, optionally using the <code class="language-plaintext highlighter-rouge">_since</code> parameter, on the mCSD Resources.</p>
 
 <h5 id="2391411-trigger-events">2:3.91.4.1.1 Trigger Events</h5>
 
-<p>A Care Services Update Consumer triggers a Request Care Services Updates
-Request to a Care Services Update Supplier according to the business
-rules for the query. These business rules are outside the scope of this
-transaction.</p>
+<p>A Care Services Update Consumer triggers a Request Care Services Updates Request to a Care Services Update Supplier according to the business rules for the query. These business rules are outside the scope of this transaction.</p>
 
 <h5 id="2391412-message-semantics">2:3.91.4.1.2 Message Semantics</h5>
 
-<p>A Care Services Update Consumer initiates a history request using HTTP
-GET as defined at <a href="http://hl7.org/fhir/R4/http.html#history">http://hl7.org/fhir/R4/http.html#history</a> on the
-Organization, Location, Practitioner, PractitionerRole, or
-HealthcareService Resources.</p>
+<p>A Care Services Update Consumer initiates a history request using HTTP GET as defined at <a href="http://hl7.org/fhir/R4/http.html#history">http://hl7.org/fhir/R4/http.html#history</a> on the mCSD Resources.</p>
 
-<p>A Care Services Update Supplier and Care Services Update Consumer shall
-support the following parameters.</p>
+<p>A Care Services Update Supplier and Care Services Update Consumer shall support the following parameters.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_since
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_since
 </code></pre></div></div>
 
-<p>They shall also support the requirements in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Z.6</a>, Populating
-the Expected Response Format.</p>
+<p>They shall also support the requirements in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Z.6</a>, Populating the Expected Response Format.</p>
 
-<p>A Care Services Update Supplier shall support receiving a request for
-both the JSON and the XML messaging formats as defined in FHIR. A Care
-Services Update Consumer shall accept either the JSON or the XML
-messaging formats as defined in FHIR.</p>
+<p>A Care Services Update Supplier shall support receiving a request for both the JSON and the XML messaging formats as defined in FHIR. A Care Services Update Consumer shall accept either the JSON or the XML messaging formats as defined in FHIR.</p>
 
-<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-W.html">ITI TF-2: Appendix W</a> for informative implementation material for
-this transaction.</p>
+<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-W.html">ITI TF-2: Appendix W</a> for informative implementation material for this transaction.</p>
 
 <h5 id="2391413-expected-actions">2:3.91.4.1.3 Expected Actions</h5>
 
-<p>The Care Services Update Supplier shall process the query to discover
-the resources that match the search parameters given, and gives a
-response as per <a href="#239142-request-care-services-updates-response-message">Section 2:3.91.4.2</a> or an error as per
-<a href="http://hl7.org/fhir/R4/search.html#errors">http://hl7.org/fhir/R4/search.html#errors</a>.</p>
+<p>The Care Services Update Supplier shall process the query to discover the resources that match the search parameters given, and gives a response as per <a href="#239142-request-care-services-updates-response-message">Section 2:3.91.4.2</a> or an error as per <a href="http://hl7.org/fhir/R4/search.html#errors">http://hl7.org/fhir/R4/search.html#errors</a>.</p>
 
 <h4 id="239142-request-care-services-updates-response-message">2:3.91.4.2 Request Care Services Updates Response Message</h4>
 
-<p>The Request Care Services Updates [ITI-91] transaction uses the
-response semantics as defined at
-<a href="http://hl7.org/fhir/R4/http.html#history">http://hl7.org/fhir/R4/http.html#history</a> as applicable for the
-resources.</p>
+<p>The Request Care Services Updates [ITI-91] transaction uses the response semantics as defined at <a href="http://hl7.org/fhir/R4/http.html#history">http://hl7.org/fhir/R4/http.html#history</a> as applicable for the resources.</p>
 
 <h5 id="2391421-trigger-events">2:3.91.4.2.1 Trigger Events</h5>
 
-<p>The Care Services Update Supplier sends the Request Care Services
-Updates Response to the Care Services Update Consumer when results are
-ready.</p>
+<p>The Care Services Update Supplier sends the Request Care Services Updates Response to the Care Services Update Consumer when results are ready.</p>
 
 <h5 id="2391422-message-semantics">2:3.91.4.2.2 Message Semantics</h5>
 
-<p>The Care Services Update Supplier shall support the history response
-message as defined at <a href="http://hl7.org.fhir/R4/http.html#history">http://hl7.org.fhir/R4/http.html#history</a> on the
-following Resources:</p>
+<p>The Care Services Update Supplier shall support the history response message as defined at <a href="http://hl7.org.fhir/R4/http.html#history">http://hl7.org.fhir/R4/http.html#history</a> on the following Resources:</p>
 
 <ul>
   <li>
@@ -363,70 +339,53 @@ accessible to the client.</p>
 
 <h6 id="23914221-fhir-organization-resource-constraints">2:3.91.4.2.2.1 FHIR Organization Resource Constraints</h6>
 
-<p>A Care Services Update Consumer and a Care Services Update Supplier
-shall query or return an Organization Resource. The Organization
-Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.Organization.html">Organization Profile for mCSD</a>.</p>
+<p>A Care Services Update Consumer and a Care Services Update Supplier shall query or return an Organization Resource. The Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization Profile for mCSD</a>.</p>
 
-<p>When the Organization represents a Facility and is paired with a
-Location, the FHIR Organization Resource shall be further constrained as
-described in the
-<a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization for Facilities Profile for mCSD</a>.</p>
+<p>When the Organization represents a Facility and is paired with a Location, the FHIR Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization for Facilities Profile for mCSD</a>.</p>
 
-<p>When the Organization represents a Jurisdiction and is paired with a Location,
-the FHIR Organization Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization for Jurisdictions Profile for mCSD</a>.</p>
+<p>When the Organization represents a Jurisdiction and is paired with a Location, the FHIR Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization for Jurisdictions Profile for mCSD</a>.</p>
 
 <h6 id="23914222-fhir-location-resource-constraints">2:3.91.4.2.2.2 FHIR Location Resource Constraints</h6>
 
-<p>A Care Services Update Consumer and a Care Services Update Supplier
-shall query or return a Location Resource. The Location Resource shall
-be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
+<p>A Care Services Update Consumer and a Care Services Update Supplier shall query or return a Location Resource. The Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
 
-<p>When the Location represents a Facility and is paired with an
-Organization, the FHIR Location Resource shall be further constrained as
-described in the 
+<p>When the Location represents a Facility and is paired with an Organization, the FHIR Location Resource shall be further constrained as described in the 
 <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a>.</p>
 
-<p>When the Location represents a Jurisdiction and is paired with an Organization, the FHIR 
-Location Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location for Jurisdictions Profile for mCSD</a>.</p>
+<p>When the Location represents a Jurisdiction and is paired with an Organization, the FHIR Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location for Jurisdictions Profile for mCSD</a>.</p>
 
-<p>When supporting the Location Distance Option, the FHIR Location Resource
-shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.LocationDistance.html">Location with Distance Option Profile for mCSD</a>.</p>
+<p>When supporting the Location Distance Option, the FHIR Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.LocationDistance.html">Location with Distance Option Profile for mCSD</a>.</p>
 
 <h6 id="23914223-fhir-practitioner-resource-constraints">2:3.91.4.2.2.3 FHIR Practitioner Resource Constraints</h6>
 
-<p>A Care Services Update Consumer and a Care Services Update Supplier
-shall query or return a Practitioner Resource. The Practitioner Resource
-shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.Practitioner.html">Practitioner Profile for mCSD</a>.</p>
+<p>A Care Services Update Consumer and a Care Services Update Supplier shall query or return a Practitioner Resource. The Practitioner Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Practitioner.html">Practitioner Profile for mCSD</a>.</p>
 
 <h6 id="23914224-fhir-practitionerrole-resource-constraints">2:3.91.4.2.2.4 FHIR PractitionerRole Resource Constraints</h6>
 
-<p>A Care Services Update Consumer and a Care Services Update Supplier
-shall query or return a PractitionerRole Resource. The PractitionerRole
-Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.PractitionerRole.html">PractitionerRole Profile for mCSD</a>.</p>
+<p>A Care Services Update Consumer and a Care Services Update Supplier shall query or return a PractitionerRole Resource. The PractitionerRole Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.PractitionerRole.html">PractitionerRole Profile for mCSD</a>.</p>
 
 <h6 id="23914225-fhir-healthcareservice-resource-constraints">2:3.91.4.2.2.5 FHIR HealthcareService Resource Constraints</h6>
 
-<p>A Care Services Update Consumer and a Care Services Update Supplier
-shall query or return a HealthcareService Resource. The
-HealthcareService Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.HealthcareService.html">HealthcareService Profile for mCSD</a>.</p>
+<p>A Care Services Update Consumer and a Care Services Update Supplier shall query or return a HealthcareService Resource. The HealthcareService Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.HealthcareService.html">HealthcareService Profile for mCSD</a>.</p>
 
 <h5 id="2391423-expected-actions">2:3.91.4.2.3 Expected Actions</h5>
 
-<p>The Care Services Update Consumer has received the response and
-continues with its workflow.</p>
+<p>The Care Services Update Consumer has received the response and continues with its workflow.</p>
 
 <h3 id="23915-security-considerations">2:3.91.5 Security Considerations</h3>
 
 <p>See <a href="volume-1.html#1465-mcsd-security-considerations">ITI TF-1: 46.5</a> for security considerations for the mCSD Profile.</p>
 
 <p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.8-mobile-security-considerations">ITI TF-2: Appendix Z.8</a> for common mobile security considerations.</p>
+
+<h4 id="239151-security-audit-considerations">2:3.91.5.1 Security Audit Considerations</h4>
+
+<p>Note that the same audit message is recorded by both Care Services Update Supplier and Care Services Update Consumer. The
+difference being the Audit Source element. Both sides record to show consistency
+between the message sent by the Supplier and the action taken at the Consumer.</p>
+
+<p>The actors involved shall record audit events according to the
+<a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Updates.html">Audit Event for Request Care Services Updates by the Care Services Update Supplier and Consumer</a>.</p>
 
 
 
@@ -475,7 +434,7 @@ continues with its workflow.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 19:51-0600">2022-02-28</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.8.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Aug 12, 2022 09:44-0500">2022-08-12</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -483,7 +442,7 @@ continues with its workflow.</p>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>

@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
             <br/>
-            <span style="display:inline-block;">3.5.0 - Trial-Implementation
+            <span style="display:inline-block;">3.8.0 - Trial-Implementation
 
 
 
@@ -133,6 +133,9 @@
       </li>
       <li>
         <a href="volume-1.html#1467-mcsd-deployment-considerations">Deployment Considerations</a>
+      </li>
+      <li>
+        <a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">Endpoint Usage Considerations</a>
       </li>
     </ul>
   </li>
@@ -200,7 +203,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.5.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v3.8.0: Public-Comment) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>2:3.90 Find Matching Care Services [ITI-90]</h2>
   
 
@@ -229,10 +232,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="23901-scope">2:3.90.1 Scope</h3>
 
-<p>The Find Matching Care Services transaction returns a list of matching
-care services resources based on the query sent. A Care Services
-Selective Consumer initiates a Find Matching Care Services transaction
-against a Care Services Selective Supplier.</p>
+<p>The Find Matching Care Services transaction returns a list of matching care services resources based on the query sent. A Care Services Selective Consumer initiates a Find Matching Care Services transaction against a Care Services Selective Supplier.</p>
 
 <h3 id="23902-actor-roles">2:3.90.2 Actor Roles</h3>
 
@@ -272,119 +272,67 @@ against a Care Services Selective Supplier.</p>
 
 <h4 id="239041-find-matching-care-services-request-message">2:3.90.4.1 Find Matching Care Services Request Message</h4>
 
-<p>The Find Matching Care Services message is a FHIR search operation on
-the Organization, Location, Practitioner, PractitionerRole, and/or
-HealthcareService Resources.</p>
+<p>The Find Matching Care Services message is a FHIR search operation on the mCSD Resources.</p>
 
 <h5 id="2390411-trigger-events">2:3.90.4.1.1 Trigger Events</h5>
 
-<p>A Care Services Selective Consumer triggers a Find Matching Care
-Services Request to a Care Services Selective Supplier according to the
-business rules for the query. These business rules are outside the scope
-of this transaction.</p>
+<p>A Care Services Selective Consumer triggers a Find Matching Care Services Request to a Care Services Selective Supplier according to the business rules for the query. These business rules are outside the scope of this transaction.</p>
 
 <h5 id="2390412-message-semantics">2:3.90.4.1.2 Message Semantics</h5>
 
-<p>A Care Services Selective Consumer initiates a search request using HTTP
-GET or POST as defined at <a href="http://hl7.org/fhir/R4/http.html#search">http://hl7.org/fhir/R4/http.html#search</a> on the
-Organization, Location, Practitioner, PractitionerRole, or
-HealthcareService Resources. The Care Services Selective Supplier shall support 
-both GET and POST based searches. The query parameters are identified below.
-A Care Services Selective Consumer may query any combination or subset
-of the parameters.</p>
+<p>A Care Services Selective Consumer initiates a search request using HTTP GET or POST as defined at <a href="http://hl7.org/fhir/R4/http.html#search">http://hl7.org/fhir/R4/http.html#search</a> on the mCSD Resources. The Care Services Selective Supplier shall support both GET and POST based searches. The query parameters are identified below. A Care Services Selective Consumer may query any combination or subset of the parameters.</p>
 
-<p>A Care Services Selective Supplier shall support combinations of search
-parameters as defined at <a href="http://hl7.org/fhir/R4/search.html#combining">http://hl7.org/fhir/R4/search.html#combining</a>,
-“Composite Search Parameters.”</p>
+<p>A Care Services Selective Supplier shall support responding to a request for both the JSON and the XML messaging formats as defined in FHIR. A Care Services Selective Consumer shall accept either the JSON or the XML messaging formats as defined in FHIR. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Z.6</a> for more details.</p>
 
-<p>A Care Services Selective Supplier shall support responding to a request
-for both the JSON and the XML messaging formats as defined in FHIR. A
-Care Services Selective Consumer shall accept either the JSON or the XML
-messaging formats as defined in FHIR. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Z.6</a> for
-more details.</p>
+<p>A Care Services Selective Supplier shall implement the parameters described below for the mCSD resources it supports. A Care Services Selective Supplier may choose to support additional query parameters beyond the subset listed below. Any additional query parameters supported shall be supported according to the core FHIR specification.</p>
 
-<p>A Care Services Selective Supplier shall implement the parameters
-described below. A Care Services Selective Supplier may choose to
-support additional query parameters beyond the subset listed below. Any
-additional query parameters supported shall be supported according to
-the core FHIR specification.</p>
-
-<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-W.html">ITI TF-2: Appendix W</a> for informative implementation material for
-this transaction.</p>
+<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-W.html">ITI TF-2: Appendix W</a> for informative implementation material for this transaction.</p>
 
 <h6 id="23904121-common-parameters">2:3.90.4.1.2.1 Common Parameters</h6>
 
-<p>The Care Services Selective Supplier shall support the <code class="highlighter-rouge">:contains</code> and
-<code class="highlighter-rouge">:exact</code> modifiers in all of the string query parameters below.</p>
+<p>The Care Services Selective Supplier shall support the <code class="language-plaintext highlighter-rouge">:contains</code> and <code class="language-plaintext highlighter-rouge">:exact</code> modifiers in all of the string query parameters below.</p>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters as defined at <a href="http://hl7.org/fhir/R4/search.html#all">http://hl7.org/fhir/R4/search.html#all</a>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters as defined at <a href="http://hl7.org/fhir/R4/search.html#all">http://hl7.org/fhir/R4/search.html#all</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_id
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_id
 _lastUpdated
 </code></pre></div></div>
 
-<p>The Care Services Selective Supplier shall also support the following
-prefixes for the <code class="highlighter-rouge">_lastUpdated</code> parameter: <code class="highlighter-rouge">gt</code>, <code class="highlighter-rouge">lt</code>, <code class="highlighter-rouge">ge</code>, <code class="highlighter-rouge">le</code>, <code class="highlighter-rouge">sa</code>, and <code class="highlighter-rouge">eb</code>.</p>
+<p>The Care Services Selective Supplier shall also support the following prefixes for the <code class="language-plaintext highlighter-rouge">_lastUpdated</code> parameter: <code class="language-plaintext highlighter-rouge">gt</code>, <code class="language-plaintext highlighter-rouge">lt</code>, <code class="language-plaintext highlighter-rouge">ge</code>, <code class="language-plaintext highlighter-rouge">le</code>, <code class="language-plaintext highlighter-rouge">sa</code>, and <code class="language-plaintext highlighter-rouge">eb</code>.</p>
 
 <h6 id="23904122-organization-resource-message-semantics">2:3.90.4.1.2.2 Organization Resource Message Semantics</h6>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters on the Organization Resource as defined at
-<a href="http://hl7.org/fhir/R4/organization.html#search">http://hl7.org/fhir/R4/organization.html#search</a>. String parameter
-modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.
-The <a href="SearchParameter-IHE.mCSD.Organization.HierarchyType.html"><code class="highlighter-rouge">ihe-mcsd-hierarchy-type</code> search parameter</a> and 
-<a href="SearchParameter-IHE.mCSD.Organization.HierarchyPartOf.html"><code class="highlighter-rouge">ihe-mcsd-hierarchy-partof</code> search parameter</a> query the <a href="StructureDefinition-IHE.mCSD.OrganizationHierarchy.html">hierarchy
-extension</a> identified by the following canonical URI
-<code class="highlighter-rouge">http://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.OrganizationHierarchy</code>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters on the Organization Resource as defined at <a href="http://hl7.org/fhir/R4/organization.html#search">http://hl7.org/fhir/R4/organization.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
 identifier
 name
 partof
-partof:above
-partof:below
 type
-partof.identifier
-partof.name
+_include=Organization.endpoint
 _revInclude=Location:organization
-ihe-mcsd-hierarchy-type
-ihe-mcsd-hierarchy-partof
-ihe-mcsd-hierarchy-partof:above
-ihe-mcsd-hierarchy-partof:below
+_revInclude=OrganizationAffiliation:participating-organization
+_revInclude=OrganizationAffiliation:primary-organization
 </code></pre></div></div>
 
 <h6 id="23904123-location-resource-message-semantics">2:3.90.4.1.2.3 Location Resource Message Semantics</h6>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters on the Location Resource as defined at
-<a href="http://hl7.org/fhir/R4/location.html#search">http://hl7.org/fhir/R4/location.html#search</a>. String parameter
-modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters on the Location Resource as defined at <a href="http://hl7.org/fhir/R4/location.html#search">http://hl7.org/fhir/R4/location.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identifier
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identifier
 name
 organization
 partof
-partof:above
-partof:below
 status
 type
-partof.identifier
-partof.name
-organization.active
-organization.identifier
-organization.name
 _include=Location:organization
 </code></pre></div></div>
 
 <h6 id="23904124-practitioner-resource-message-semantics">2:3.90.4.1.2.4 Practitioner Resource Message Semantics</h6>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters on the Practitioner Resource as defined at
-<a href="http://hl7.org/fhir/R4/practitioner.html#search">http://hl7.org/fhir/R4/practitioner.html#search</a>. String parameter
-modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters on the Practitioner Resource as defined at <a href="http://hl7.org/fhir/R4/practitioner.html#search">http://hl7.org/fhir/R4/practitioner.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
 identifier
 name
 given
@@ -393,85 +341,73 @@ family
 
 <h6 id="23904125-practitionerrole-resource-message-semantics">2:3.90.4.1.2.5 PractitionerRole Resource Message Semantics</h6>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters on the PractitionerRole Resource as defined at
-<a href="http://hl7.org/fhir/R4/practitionerrole.html#search">http://hl7.org/fhir/R4/practitionerrole.html#search</a>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters on the PractitionerRole Resource as defined at [http://hl7.org/fhir/R4/practitionerrole.html#search] (http://hl7.org/fhir/R4/practitionerrole.html#search).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
 location
 organization
 practitioner
 role
 service
 specialty
-practitioner.identifier
-practitioner.name
-practitioner.given
-practitioner.family
 _include=PractitionerRole:practitioner
-organization.active
-organization.identifier
-organization.name
-location.status
-location.identifier
-location.name
-service.active
-service.indentifier
-service.location
-service.name
-service.organization
 </code></pre></div></div>
 
 <h6 id="23904126-healthcareservice-resource-message-semantics">2:3.90.4.1.2.6 HealthcareService Resource Message Semantics</h6>
 
-<p>The Care Services Selective Supplier shall support the following search
-parameters on the HealthcareService Resource as defined at
-<a href="http://hl7.org/fhir/R4/healthcareservice.html#search">http://hl7.org/fhir/R4/healthcareservice.html#search</a>. String parameter
-modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
+<p>The Care Services Selective Supplier shall support the following search parameters on the HealthcareService Resource as defined at <a href="http://hl7.org/fhir/R4/healthcareservice.html#search">http://hl7.org/fhir/R4/healthcareservice.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
 identifier
 location
 name
 organization
 service-type
-organization.active
-organization.identifier
-organization.name
-location.status
-location.identifier
-location.name
 </code></pre></div></div>
 
 <h6 id="23904127-location-distance-option-message-semantics">2:3.90.4.1.2.7 Location Distance Option Message Semantics</h6>
 
-<p>The Care Services Selective Supplier supporting the Location Distance
-Option shall support the following search parameters on the Location
-Resource as defined at <a href="http://hl7.org/fhir/R4/location.html#search">http://hl7.org/fhir/R4/location.html#search</a>.</p>
+<p>The Care Services Selective Supplier supporting the Location Distance Option shall support the following search parameters on the Location Resource as defined at <a href="http://hl7.org/fhir/R4/location.html#search">http://hl7.org/fhir/R4/location.html#search</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>near
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>near
+</code></pre></div></div>
+
+<h6 id="23904128-endpoint-resource-message-semantics">2:3.90.4.1.2.8 Endpoint Resource Message Semantics</h6>
+
+<p>The Care Services Selective Supplier shall support the following search parameters on the Endpoint Resource as defined at <a href="http://hl7.org/fhir/R4/endpoint.html#search">http://hl7.org/fhir/R4/endpoint.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identifier
+organization
+status
+</code></pre></div></div>
+
+<h6 id="23904129-organizationaffiliation-resource-message-semantics">2:3.90.4.1.2.9 OrganizationAffiliation Resource Message Semantics</h6>
+
+<p>The Care Services Selective Supplier shall support the following search parameters on the OrganizationAffiliation Resource as defined at <a href="http://hl7.org/fhir/R4/organizationaffiliation.html#search">http://hl7.org/fhir/R4/organizationaffiliation.html#search</a>. String parameter modifiers are defined at <a href="http://hl7.org/fhir/R4/search.html#string">http://hl7.org/fhir/R4/search.html#string</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>active
+date
+identifier
+participating-organization
+primary-organization
+role
+_include=OrganizationAffiliation.endpoint
 </code></pre></div></div>
 
 <h5 id="2390413-expected-actions">2:3.90.4.1.3 Expected Actions</h5>
 
-<p>The Care Services Selective Supplier shall process the query to discover
-the resources that match the search parameters given, and return a
-response as per Section 2:3.90.4.2 or an error as per
+<p>The Care Services Selective Supplier shall process the query to discover the resources that match the search parameters given, and return a response as per Section 2:3.90.4.2 or an error as per
 <a href="http://hl7.org/fhir/R4/search.html#errors">http://hl7.org/fhir/R4/search.html#errors</a>.</p>
 
 <h4 id="239042-find-matching-care-services-response-message">2:3.90.4.2 Find Matching Care Services Response Message</h4>
 
 <h5 id="2390421-trigger-events">2:3.90.4.2.1 Trigger Events</h5>
 
-<p>The Care Services Selective Supplier sends the Find Matching Care
-Services Response to the Care Services Selective Consumer when results
-to the query are ready.</p>
+<p>The Care Services Selective Supplier sends the Find Matching Care Services Response to the Care Services Selective Consumer when results to the query are ready.</p>
 
 <h5 id="2390422-message-semantics">2:3.90.4.2.2 Message Semantics</h5>
 
-<p>The Care Services Selective Supplier shall support the search response
-message as defined at <a href="http://hl7.org/fhir/R4/http.html#search">http://hl7.org/fhir/R4/http.html#search</a> on the
-following Resources.</p>
+<p>The Care Services Selective Supplier shall support the search response message as defined at <a href="http://hl7.org/fhir/R4/http.html#search">http://hl7.org/fhir/R4/http.html#search</a> on the following Resources.</p>
 
 <ul>
   <li>
@@ -493,132 +429,99 @@ following Resources.</p>
     <p>HealthcareService, as defined at
 <a href="http://hl7.org/fhir/R4/healthcareservice.html">http://hl7.org/fhir/R4/healthcareservice.html</a></p>
   </li>
+  <li>
+    <p>Endpoint, as defined at
+<a href="http://hl7.org/fhir/R4/endpoint.html">http://hl7.org/fhir/R4/endpoint.html</a></p>
+  </li>
+  <li>
+    <p>OrganizationAffiliation, as defined at
+<a href="http://hl7.org/fhir/R4/organizationaffiliation.html">http://hl7.org/fhir/R4/organizationaffiliation.html</a></p>
+  </li>
 </ul>
 
-<p>All References (reference.reference element) to Resources defined in
-this transaction shall be populated with an accessible URL (see
-<a href="https://www.hl7.org/fhir/references-definitions.html#Reference.reference">https://www.hl7.org/fhir/references-definitions.html#Reference.reference</a>), unless the referenced resource is not present on a server accessible
-to the client.</p>
+<p>All References (Reference.reference element) to Resources defined in this transaction shall be populated with an accessible URL (see <a href="https://www.hl7.org/fhir/references-definitions.html#Reference.reference">https://www.hl7.org/fhir/references-definitions.html#Reference.reference</a>), unless the referenced resource is not available at a URL known to the server.</p>
 
 <h6 id="23904221-fhir-organization-resource-constraints">2:3.90.4.2.2.1 FHIR Organization Resource Constraints</h6>
 
-<p>A Care Services Selective Consumer may query on Organization Resources.
-A Care Services Selective Supplier shall return a Bundle of matching
-Organization Resources. The Organization Resource shall be further
-constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.Organization.html">Organization Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on Organization Resources. A Care Services Selective Supplier shall return a Bundle of matching Organization Resources. The Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Organization.html">Organization Profile for mCSD</a>.</p>
 
-<p>A Care Services Selective Consumer may query on Organization Resources
-when working with Facilities. A Care Services Selective Supplier shall
-return a Bundle of matching Organization Resources when working with
-Facilities. The FHIR Organization Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization for Facilities Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on Organization Resources when working with Facilities. A Care Services Selective Supplier shall return a Bundle of matching Organization Resources when working with Facilities. The FHIR Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.FacilityOrganization.html">Organization for Facilities Profile for mCSD</a>.</p>
 
-<p>A Care Services Selective Consumer may query on Organization Resources when
-working with Jurisdictions. A Care Services Selective Supplier shall return a
-Bundle of matching Organization Resources when working with Jurisdictions. The
-FHIR Organization Resource shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization for Jurisdictions Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on Organization Resources when working with Jurisdictions. A Care Services Selective Supplier shall return a Bundle of matching Organization Resources when working with Jurisdictions. The FHIR Organization Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.JurisdictionOrganization.html">Organization for Jurisdictions Profile for mCSD</a>.</p>
 
 <h6 id="23904222-fhir-location-resource-constraints">2:3.90.4.2.2.2 FHIR Location Resource Constraints</h6>
 
-<p>A Care Services Selective Consumer may query on Location Resources. A
-Care Services Selective Supplier shall return a Bundle of matching
-Location Resources. The Location Resource shall be further constrained
-as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on Location Resources. A Care Services Selective Supplier shall return a Bundle of matching Location Resources. The Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
 
-<p>When the resource is a Facility, the Location Resource shall be paired
-with an Organization Resource using the managingOrganization element in
-Location. A Care Services Selective Consumer may query on Location
-Resources when working with Facilities. A Care Services Selective
-Supplier shall return a Bundle of matching Location Resources when
-working with Facilities. The FHIR Location Resource shall be further constrained
-as described in the <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a>.</p>
+<p>When the resource is a Facility, the Location Resource shall be paired with an Organization Resource using the managingOrganization element in Location. A Care Services Selective Consumer may query on Location Resources when working with Facilities. A Care Services Selective Supplier shall return a Bundle of matching Location Resources when working with Facilities. The FHIR Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a>.</p>
 
-<p>When the resource is a Jurisdiction, the Location Resource shall be paired with an Organization
-Resource using the managingOrganization element in Location. A Care Services Selective Consumer 
-may query on Location Resources when working with Jurisdictions. A Care Services Selective Supplier 
-shall return a Bundle of matching Location Resources when working with Jurisdictions. The FHIR Location Resource shall be further constrained as 
-described in the <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location for Jurisdictions Profile for mCSD</a>.</p>
+<p>When the resource is a Jurisdiction, the Location Resource shall be paired with an Organization Resource using the managingOrganization element in Location. A Care Services Selective Consumer 
+may query on Location Resources when working with Jurisdictions. A Care Services Selective Supplier shall return a Bundle of matching Location Resources when working with Jurisdictions. The FHIR Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.JurisdictionLocation.html">Location for Jurisdictions Profile for mCSD</a>.</p>
 
-<p>When a geographic boundary is available for the Jurisdiction Location, the location-boundary-geojson extension defined at 
-<a href="http://hl7.org/fhir/extension-location-boundary-geojson.html">http://hl7.org/fhir/extension-location-boundary-geojson.html</a> shall be used to store this information.</p>
+<p>When a geographic boundary is available for the Jurisdiction Location, the location-boundary-geojson extension defined at <a href="http://hl7.org/fhir/extension-location-boundary-geojson.html">http://hl7.org/fhir/extension-location-boundary-geojson.html</a> shall be used to store this information.</p>
 
-<p>When supporting the Location Distance Option. The Location Resource
-shall be further constrained as described in the 
-<a href="StructureDefinition-IHE.mCSD.LocationDistance.html">Location with Distance Option Profile for mCSD</a>.</p>
+<p>When supporting the Location Distance Option, the Location Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.LocationDistance.html">Location with Distance Option Profile for mCSD</a>.</p>
 
 <h6 id="23904223-fhir-practitioner-resource-constraints">2:3.90.4.2.2.3 FHIR Practitioner Resource Constraints</h6>
 
-<p>A Care Services Selective Consumer may query on Practitioner Resources.
-A Care Services Selective Supplier shall return a Bundle of matching
-Practitioner Resources. The Practitioner Resource shall be further
-constrained as described in the 
-<a href="StructureDefinition-IHE.mCSD.Practitioner.html">Practitioner Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on Practitioner Resources. A Care Services Selective Supplier shall return a Bundle of matching Practitioner Resources. The Practitioner Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Practitioner.html">Practitioner Profile for mCSD</a>.</p>
 
 <h6 id="23904224-fhir-practitionerrole-resource-constraints">2:3.90.4.2.2.4 FHIR PractitionerRole Resource Constraints</h6>
 
-<p>A Care Services Selective Consumer may query on PractitionerRole
-Resources. A Care Services Selective Supplier shall return a Bundle of
-matching PractitionerRole Resources. The PractitionerRole Resource shall
-be further constrained as described in the 
+<p>A Care Services Selective Consumer may query on PractitionerRole Resources. A Care Services Selective Supplier shall return a Bundle of matching PractitionerRole Resources. The PractitionerRole Resource shall be further constrained as described in the 
 <a href="StructureDefinition-IHE.mCSD.PractitionerRole.html">PractitionerRole Profile for mCSD</a>.</p>
 
 <h6 id="23904225-fhir-healthcareservice-resource-constraints">2:3.90.4.2.2.5 FHIR HealthcareService Resource Constraints</h6>
 
-<p>A Care Services Selective Consumer may query on HealthcareService
-Resources. A Care Services Selective Supplier shall return a Bundle of
-matching HealthcareService Resources. The HealthcareService Resource
-shall be further constrained as described in the
-<a href="StructureDefinition-IHE.mCSD.HealthcareService.html">HealthcareService Profile for mCSD</a>.</p>
+<p>A Care Services Selective Consumer may query on HealthcareService Resources. A Care Services Selective Supplier shall return a Bundle of matching HealthcareService Resources. The HealthcareService Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.HealthcareService.html">HealthcareService Profile for mCSD</a>.</p>
+
+<h6 id="23904226-fhir-organizationaffiliation-resource-constraints">2:3.90.4.2.2.6 FHIR OrganizationAffiliation Resource Constraints</h6>
+
+<p>A Care Services Selective Consumer may query on OrganizationAffiliation Resources. A Care Services Selective Supplier shall return a Bundle of matching OrganizationAffiliation Resources. The OrganizationAffiliation Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.html">OrganizationAffiliation Profile for mCSD</a>.</p>
+
+<p>When the OrganizationAffiliation contains an Endpoint to an IHE document sharing environment, it shall further be constrained as described in the <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.DocShare.html">OrganizationAffiliation for Document Sharing Profile for mCSD</a>.</p>
+
+<h6 id="23904227-fhir-endpoint-resource-constraints">2:3.90.4.2.2.7 FHIR Endpoint Resource Constraints</h6>
+
+<p>A Care Services Selective Consumer may query on Endpoint Resources. A Care Services Selective Supplier shall return a Bundle of matching Endpoint Resources. The Endpoint Resource shall be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Endpoint.html">Endpoint Profile for mCSD</a>.</p>
+
+<p>When the Endpoint is to an IHE document sharing environment, it shall further be constrained as described in the <a href="StructureDefinition-IHE.mCSD.Endpoint.DocShare.html">Endpoint for Document Sharing Profile for mCSD</a>.</p>
 
 <h5 id="2390423-expected-actions">2:3.90.4.2.3 Expected Actions</h5>
 
-<p>The Care Services Selective Consumer has received the response and
-continues with its workflow.</p>
+<p>The Care Services Selective Consumer has received the response and continues with its workflow.</p>
 
 <h4 id="239043-retrieve-care-services-resource-message">2:3.90.4.3 Retrieve Care Services Resource message</h4>
-<p>This message represents an HTTP GET from the Care Services Selective Consumer to the Care Services Selective
-Supplier and provides a mechanism for retrieving a single Care Services Resource with a known resource identifier.</p>
+<p>This message represents an HTTP GET from the Care Services Selective Consumer to the Care Services Selective Supplier and provides a mechanism for retrieving a single Care Services Resource with a known resource identifier.</p>
 
 <h5 id="2390431-trigger-events">2:3.90.4.3.1 Trigger Events</h5>
-<p>When the Care Services Selective Consumer possesses a Care Services Resource identifier (either through query,
-database lookup, or other mechanism) for which it requires additional or new information, it issues a Retrieve
-Care Services Resource interaction.</p>
+<p>When the Care Services Selective Consumer possesses a Care Services Resource identifier (either through query, database lookup, or other mechanism) for which it requires additional or new information, it issues a Retrieve Care Services Resource interaction.</p>
 
 <h5 id="2390432--message-semantics">2:3.90.4.3.2  Message Semantics</h5>
-<p>The Retrieve Care Services Resource is conducted by executing an HTTP GET against the Care Services Selective
-Supplier’s Care Services Resource URL, providing the resource id of the resource being retrieved. The target is
-formatted as:</p>
+<p>The Retrieve Care Services Resource is conducted by executing an HTTP GET against the Care Services Selective Supplier’s Care Services Resource URL, providing the resource id of the resource being retrieved. The target is formatted as:</p>
 
-<p><code class="highlighter-rouge">   GET [base]/[resource]/[resourceId]</code></p>
+<p><code class="language-plaintext highlighter-rouge">   GET [base]/[resource]/[resourceId]</code></p>
 
 <p>The Care Services Selective Supplier shall respond to this query by sending a single Care Services Resource instance.</p>
 
-<p>The <code class="highlighter-rouge">resourceId</code> included in the request always represents the unique identifier for the Resource within the scope of
-the URL. For example, while <code class="highlighter-rouge">http://example1.org/ihe/Practitioner/1</code> and <code class="highlighter-rouge">http://example2.com/ihe/Practitioner/1</code> both
-contain the same <code class="highlighter-rouge">[resourceId]</code>, they reference two different resource instances.</p>
+<p>The <code class="language-plaintext highlighter-rouge">resourceId</code> included in the request always represents the unique identifier for the Resource within the scope of the URL. For example, while <code class="language-plaintext highlighter-rouge">http://example1.org/ihe/Practitioner/1</code> and <code class="language-plaintext highlighter-rouge">http://example2.com/ihe/Practitioner/1</code> both contain the same <code class="language-plaintext highlighter-rouge">[resourceId]</code>, they reference two different resource instances.</p>
 
 <p>Note: The use of “http” or “https” in URL does not override requirements to use TLS for security purposes.</p>
 
 <h5 id="2390433-expected-actions">2:3.90.4.3.3 Expected Actions</h5>
-<p>The Care Services Selective Supplier shall retrieve the record indicated by the Resource identifier on the HTTP GET
-supplied by the Care Services Selective Consumer. The Care Services Selective Supplier shall respond to the retrieve
-request as described by the following cases:</p>
+<p>The Care Services Selective Supplier shall retrieve the record indicated by the Resource identifier on the HTTP GET supplied by the Care Services Selective Consumer. The Care Services Selective Supplier shall respond to the retrieve request as described by the following cases:</p>
 
-<p><strong>Case 1</strong>: The Care Services Selective Supplier finds the care services record matching the <code class="highlighter-rouge">resourceId</code> sent in the
-HTTP request.</p>
+<p><strong>Case 1</strong>: The Care Services Selective Supplier finds the care services record matching the <code class="language-plaintext highlighter-rouge">resourceId</code> sent in the HTTP request.</p>
 
-<p><code class="highlighter-rouge">HTTP 200</code> (OK) is returned as the HTTP status code.</p>
+<p><code class="language-plaintext highlighter-rouge">HTTP 200</code> (OK) is returned as the HTTP status code.</p>
 
 <p>A Care Services Resource is returned representing the result.</p>
 
-<p><strong>Case 2</strong>: The Care Services Selective Supplier fails to find the care services record matching the <code class="highlighter-rouge">resourceId</code> sent
-in the HTTP request.</p>
+<p><strong>Case 2</strong>: The Care Services Selective Supplier fails to find the care services record matching the <code class="language-plaintext highlighter-rouge">resourceId</code> sent in the HTTP request.</p>
 
-<p><code class="highlighter-rouge">HTTP 404</code> (Not Found) is returned as the HTTP status code</p>
+<p><code class="language-plaintext highlighter-rouge">HTTP 404</code> (Not Found) is returned as the HTTP status code</p>
 
-<p>An <code class="highlighter-rouge">OperationOutcome</code> Resource is returned indicating that the Care Services Resource could not be found, in an issue having:</p>
+<p>An <code class="language-plaintext highlighter-rouge">OperationOutcome</code> Resource is returned indicating that the Care Services Resource could not be found, in an issue having:</p>
 
 <table class="grid">
   <thead>
@@ -639,36 +542,26 @@ in the HTTP request.</p>
   </tbody>
 </table>
 
-<p>The Care Services Selective Supplier may return other HTTP status codes to represent specific error conditions. When HTTP
-error status codes are returned by the Care Services Selective Supplier, they shall conform to the HTTP standard
-<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>. Their use is not further constrained or specified by this transaction.</p>
+<p>The Care Services Selective Supplier may return other HTTP status codes to represent specific error conditions. When HTTP error status codes are returned by the Care Services Selective Supplier, they shall conform to the HTTP standard <a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>. Their use is not further constrained or specified by this transaction.</p>
 
 <h4 id="239044-retrieve-care-services-resource-response-message">2:3.90.4.4 Retrieve Care Services Resource Response message</h4>
 
-<p>The Care Services Selective Supplier’s response to a successful Retrieve Care Services Resource message shall be an <code class="highlighter-rouge">HTTP 200</code>
-(OK) Status code with a Care Services Resource, or an appropriate error code.</p>
+<p>The Care Services Selective Supplier’s response to a successful Retrieve Care Services Resource message shall be an <code class="language-plaintext highlighter-rouge">HTTP 200</code> (OK) Status code with a Care Services Resource, or an appropriate error code.  See the <a href="#2390433-expected-actions">Retrieve Care Services Resource message expected actions</a> for additional details.</p>
 
 <h5 id="2390441-trigger-events">2:3.90.4.4.1 Trigger Events</h5>
-<p>The Care Services Selective Supplier found a record matching the Resource identifier specified by the Care Services Selective
-Consumer.</p>
+<p>The Care Services Selective Supplier found a record matching the Resource identifier specified by the Care Services Selective Consumer.</p>
 
 <h5 id="2390442-message-semantics">2:3.90.4.4.2 Message Semantics</h5>
-<p>The Retrieve Care Services Resource response is sent from the Care Services Selective Supplier to the Care Services Selective
-Consumer as a single Care Services Resource.</p>
+<p>The Retrieve Care Services Resource response is sent from the Care Services Selective Supplier to the Care Services Selective Consumer as a single Care Services Resource.</p>
 
-<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Appendix Z.6</a> for
-more details on response format handling. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.7-guidance-on-access-denied-results">ITI TF-2: Appendix Z.7</a>
-for guidance on Access Denied.</p>
+<p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Appendix Z.6</a> for more details on response format handling. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.7-guidance-on-access-denied-results">ITI TF-2: Appendix Z.7</a> for guidance on Access Denied.</p>
 
-<p>If the Care Services Selective Supplier is unable to produce a response in the requested format, it shall respond with an
-<code class="highlighter-rouge">HTTP 400</code> error indicating that it was unable to fulfill the request. The Care Services Selective Supplier may be capable
-of servicing requests for response formats not listed, but shall, at minimum, be capable of producing XML and JSON encodings.</p>
+<p>If the Care Services Selective Supplier is unable to produce a response in the requested format, it shall respond with an <code class="language-plaintext highlighter-rouge">HTTP 400</code> error indicating that it was unable to fulfill the request. The Care Services Selective Supplier may be capable of servicing requests for response formats not listed, but shall, at minimum, be capable of producing XML and JSON encodings.</p>
 
 <h6 id="23904421-care-services-resource-definition-in-the-context-of-care-services-resource-response">2:3.90.4.4.2.1 Care Services Resource Definition in the Context of Care Services Resource Response</h6>
-<p>The Care Services Resource definition in the context of a retrieve interaction is the FHIR definition of the 
-various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with where to find the additional constraints.</p>
+<p>The Care Services Resource definition in the context of a retrieve interaction is the FHIR definition of the various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with where to find the additional constraints.</p>
 
-<p><a name="table2.3.90.4.4.2.1-1"></a><strong>Table 2:3.90.4.4.2.1-1: Care Services Resource Constraints</strong></p>
+<p><strong>Table 2:3.90.4.4.2.1-1: Care Services Resource Constraints</strong></p>
 
 <table class="grid table-striped">
   <thead>
@@ -679,23 +572,23 @@ various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">Organization</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Organization</code></td>
       <td><a href="#23904221-fhir-organization-resource-constraints">2:3.90.4.2.2.1 FHIR Organization Resource Constraints</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">Location</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Location</code></td>
       <td><a href="#23904222-fhir-location-resource-constraints">2:3.90.4.2.2.2 FHIR Location Resource Constraints</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">Practitioner</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Practitioner</code></td>
       <td><a href="#23904223-fhir-practitioner-resource-constraints">2:3.90.4.2.2.3 FHIR Practitioner Resource Constraints</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">PractitionerRole</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PractitionerRole</code></td>
       <td><a href="#23904224-fhir-practitionerrole-resource-constraints">2:3.90.4.2.2.4 FHIR PractitionerRole Resource Constraints</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HealthcareService</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HealthcareService</code></td>
       <td><a href="#23904225-fhir-healthcareservice-resource-constraints">2:3.90.4.2.2.5 FHIR HealthcareService Resource Constraints</a></td>
     </tr>
   </tbody>
@@ -706,6 +599,16 @@ various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with
 <p>See <a href="volume-1.html#1465-mcsd-security-considerations">ITI TF-1: 46.5</a> for security considerations for the mCSD Profile.</p>
 
 <p>See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.8-mobile-security-considerations">ITI TF-2: Appendix Z.8</a> for common mobile security considerations.</p>
+
+<h4 id="239051-security-audit-considerations">2:3.90.5.1 Security Audit Considerations</h4>
+
+<p>Note that the same audit message is recorded by both Care Services Selective Supplier and Care Services Selective Consumer. The
+difference being the Audit Source element. Both sides record to show consistency
+between the message sent by the Consumer and the action taken at the Supplier.</p>
+
+<p>The actors involved shall record audit events according to the
+<a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Read.html">Audit Event for Find Matching Care Services for Read by the Care Services Selective Supplier and Consumer</a>
+or the <a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Query.html">Audit Event for Find Matching Care Services for Query by the Care Services Selective Supplier and Consumer</a>.</p>
 
 
 
@@ -754,7 +657,7 @@ various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.5.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 19:51-0600">2022-02-28</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#3.8.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Aug 12, 2022 09:44-0500">2022-08-12</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)"></span>
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -762,7 +665,7 @@ various Care Services Resources. Table 2:3.90.4.4.2.1-1 lists the resources with
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.mCSD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/mCSD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>
