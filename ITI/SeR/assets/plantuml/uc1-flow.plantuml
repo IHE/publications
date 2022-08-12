@@ -1,0 +1,43 @@
+@startuml
+skinparam responseMessageBelowArrow true
+hide footbox
+
+participant "XDS Document Consumer \n (X-Service User) \n" as RequestingActor #FFFFFF
+participant "X-Assertion Provider \n \n" as AssertionProvider #FFFFF
+participant "XDS Document Registry \n (X-Service Provider, \n Authn Decisions Manager)" as Registry
+participant "XDS Document Repository \n (X-Service User, \n Authn Decisions Verifier)" as RespondingActor
+
+autonumber 1 1 "<b>[00]"
+
+RequestingActor --> RequestingActor: Entity Identification
+
+|||
+RequestingActor --> AssertionProvider: Get X-User Assertion Request (XUA)
+AssertionProvider --> RequestingActor: Get X-User Assertion Response (XUA)
+
+|||
+RequestingActor --> Registry: Registry Stored Query [ITI-18] (Provide X-User Assertion [ITI-40])
+
+|||
+Registry --> Registry: Auth Decisions Query [ITI-79]
+Registry --> Registry: Create Access Decisions
+
+|||
+Registry --> RequestingActor: Registry Stored Query [ITI-18] Response
+
+|||
+RequestingActor --> RespondingActor: Retrieve Document Set-b Request [ITI-43] (Provide X-User Assertion [ITI-40])
+
+|||
+RespondingActor -> Registry: Auth Decisions Query [ITI-79]
+Registry -> RespondingActor: Access Decisions
+
+|||
+RespondingActor -> RespondingActor: enforce Access Decisions
+|||
+
+RespondingActor --> RequestingActor: Retrieve Document Set-b Response [ITI-43]
+
+autonumber stop
+
+@enduml

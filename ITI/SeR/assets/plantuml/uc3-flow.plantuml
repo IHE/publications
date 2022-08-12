@@ -1,0 +1,39 @@
+@startuml
+skinparam responseMessageBelowArrow true
+hide footbox
+
+actor "Requester Entity" as User #FFFFFF
+participant "MHD Document Consumer \n (IUA Authorization Client)" as RequestingActor #FFFFFF
+participant "IUA Authorization Server \n" as AuthorizationServer #FFFFFF
+participant "MHD Document Provider \n (Auth Decisions Verifier)" as RespondingActor
+
+participant "Auth Decisions Manager \n" as Manager
+
+autonumber 1 1 "<b>[00]"
+
+User --> RequestingActor: Access clinical data
+
+|||
+RequestingActor --> AuthorizationServer: Get Access Token Request (IUA)
+
+AuthorizationServer --> AuthorizationServer: authenticate user
+AuthorizationServer --> AuthorizationServer: authorize mHealth app
+
+AuthorizationServer --> RequestingActor: Get Access Token Response (IUA)
+
+|||
+RequestingActor --> RespondingActor: MHD Retrieve Document [ITI-68] Request (Incorporate Access Token [ITI-72])
+
+RespondingActor -> Manager: Auth Decisions Query [ITI-79]
+Manager -> Manager: create Access Decisions
+Manager -> RespondingActor: Access Decisions
+
+|||
+RespondingActor -> RespondingActor: enforce Access Decisions
+|||
+
+RespondingActor --> RequestingActor: MHD Retrieve Document [ITI-68] Response
+
+autonumber stop
+
+@enduml
