@@ -1,0 +1,39 @@
+@startuml
+skinparam responseMessageBelowArrow true
+hide footbox
+
+actor "Requester Entity" as User #FFFFFF
+participant "Requesting Actor \n (X-Service User)" as RequestingActor #FFFFFF
+participant "User AuthenticationProvider \n" as AuthenticationProvider #FFFFFF
+participant "X-Assertion Provider \n" as AssertionProvider #FFFFFF
+participant "Responding Actor \n (Auth Decisions Verifier)" as RespondingActor
+
+participant "Auth Decisions Manager \n" as Manager
+
+
+autonumber 1 1 "<b>[00]"
+
+User --> RequestingActor: Access clinical data
+RequestingActor --> AuthenticationProvider: Authenticate User Request  (XUA)
+AuthenticationProvider --> RequestingActor: Authenticate User Response (XUA)
+
+|||
+RequestingActor --> AssertionProvider: Get X-User Assertion Request (XUA)
+AssertionProvider --> RequestingActor: Get X-User Assertion Response (XUA)
+
+|||
+RequestingActor --> RespondingActor: Query Request (Provide X-User Assertion [ITI-40])
+
+RespondingActor -> Manager: Auth Decisions Query [ITI-79]
+Manager -> Manager: create Access Decisions
+Manager -> RespondingActor: Access Decisions
+
+|||
+RespondingActor -> RespondingActor: enforce Access Decisions
+|||
+
+RespondingActor --> RequestingActor: Query Response
+
+autonumber stop
+
+@enduml
