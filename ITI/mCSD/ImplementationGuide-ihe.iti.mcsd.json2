@@ -6,11 +6,11 @@
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_ITI_mCSD</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd</pre><div><p>The IHE Mobile Care Services Discovery (mCSD) IG provides a transaction for mobile and lightweight browser-based applications to find and update care services resources.</p>\n</div></div>"
   },
   "url": "https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd",
-  "version": "3.5.0",
+  "version": "3.8.0",
   "name": "IHE_ITI_mCSD",
   "title": "Mobile Care Services Discovery (mCSD)",
   "status": "active",
-  "date": "2022-03-01",
+  "date": "2022-08-12",
   "publisher": "IHE IT Infrastructure Technical Committee",
   "contact": [
     {
@@ -50,11 +50,24 @@
       ]
     }
   ],
-  "copyright": "IHE http://www.ihe.net/Governance/#Intellectual_Property",
   "packageId": "ihe.iti.mcsd",
-  "license": "CC-BY-SA-4.0",
+  "license": "CC-BY-4.0",
   "fhirVersion": [
     "4.0.1"
+  ],
+  "dependsOn": [
+    {
+      "id": "hl7tx",
+      "uri": "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+      "packageId": "hl7.terminology.r4",
+      "version": "3.1.0"
+    },
+    {
+      "id": "ihe_iti_balp",
+      "uri": "https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp",
+      "packageId": "ihe.iti.balp",
+      "version": "1.1.0"
+    }
   ],
   "definition": {
     "extension": [
@@ -66,7 +79,7 @@
           },
           {
             "url": "value",
-            "valueString": "2020+"
+            "valueString": "2022+"
           }
         ],
         "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
@@ -408,6 +421,19 @@
           }
         ],
         "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+      },
+      {
+        "extension": [
+          {
+            "url": "code",
+            "valueString": "excludelogbinaryformat"
+          },
+          {
+            "url": "value",
+            "valueString": "true"
+          }
+        ],
+        "url": "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
       }
     ],
     "resource": [
@@ -419,10 +445,80 @@
           }
         ],
         "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.Audit.CareServices.Query"
+        },
+        "name": "Audit Event for Find Matching Care Services Transaction by the Care Services Selective Consumer and Care Services Selective Supplier for Query",
+        "description": "Defines constraints on the AuditEvent Resource to record when a Find Matching Care Services Transaction happens\nto query a Care Services Resource, as recorded by the Care Services Selective Supplier or Care Services Selective Consumer.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.Audit.CareServices.Read"
+        },
+        "name": "Audit Event for Find Matching Care Services Transaction by the Care Services Selective Supplier and Care Services Selective Supplier for Read",
+        "description": "Defines constraints on the AuditEvent Resource to record when a Find Matching Care Services Transaction happens\nto read a Care Services resource, as recorded by the Care Services Selective Supplier or Care Services Selective Supplier.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.Audit.CareServices.Updates"
+        },
+        "name": "Audit Event for Request Care Services Updates Transaction by the Care Services Update Consumer and Care Services Update Supplier",
+        "description": "Defines constraints on the AuditEvent Resource to record when a Request Care Services Updates Transaction happens\nfor a Care Services Resource updates, as recorded by the Care Services Update Supplier or Care Services Update Consumer.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.Endpoint"
+        },
+        "name": "mCSD Endpoint",
+        "description": "A profile on the mCSD Endpoint.\n\nAn Organization may be reachable through electronic Endpoint(s).\nAn Endpoint may be a FHIR server, an IHE web services actor, or some other\nmechanism. If an Organization does not have an Endpoint, it may still be\nreachable via an Endpoint at its parent Organization or an affiliated Organization.\n\nGiven that in FHIR R4 the .connnectionType is 1..1, each type of endpoint will be indicated with an independent Endpoint resource.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.Endpoint.DocShare"
+        },
+        "name": "mCSD Endpoint for Document Sharing",
+        "description": "A profile on the mCSD Endpoint for Document Sharing environments.\n\nGiven that in FHIR R4 the .connnectionType is 1..1, each type of endpoint will be indicated with an independent Endpoint resource. Thus a XCA Responding Gateway will need two Endpoint instances to express Query vs Retrieve.\n\nOpen-Issues:\n1. That payloadType and payloadMimeType are either empty to indicate that the endpoint is not constrained; or fully populated. \n2. That payloadType and PayloadMimeType for XCA/XDS/MHD Query and XCA/XDS/MHD Retrieve would be the same thus replicating the capability at both endpoints. \n3. It did not seem right that Query be indicated with a mimeType of ebRegistry as that is not helpful to the use-case.\n4. should the homeCommunityId be mandated here, should those behind it be here, should this be empty?\n5. would a Proxy service that is supporting OrgAff be a good example of NOT putting a homeCommunityId in the endpoint.identifier?",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
           "reference": "StructureDefinition/IHE.mCSD.FacilityLocation"
         },
         "name": "mCSD Location for Facilities",
-        "description": "A profile on mCSD Location for mCSD Facilities.\n\nFacilities are physical care delivery sites such as hospitals, clinics, health outposts, physician offices,\nlabs, pharmacies, etc. A Facility has a unique identifier, geographic attributes (address, geocode), contact\nattributes, attributes regarding its hours of operation, etc. Each Facility is defined by a pairing of \n[Location](StructureDefinition-IHE.mCSD.FacilityLocation.html) and\n[Organization](StructureDefinition-IHE.mCSD.FacilityOrganization.html).\n\nIn addition to the base requirements of [mCSD Location](StructureDefinition-IHE.mCSD.Location.html),\none `type` must be set to `urn:ietf:rfc:3986#urn:ihe:iti:mcsd:2019:facility`.",
+        "description": "A profile on mCSD Location for mCSD Facilities.\n\nFacilities are physical care delivery sites such as hospitals, clinics, health outposts, physician offices,\nlabs, pharmacies, etc. A Facility has a unique identifier, geographic attributes (address, geocode), contact\nattributes, attributes regarding its hours of operation, etc. Each Facility is defined by a pairing of \n[Location](StructureDefinition-IHE.mCSD.FacilityLocation.html) and\n[Organization](StructureDefinition-IHE.mCSD.FacilityOrganization.html).\n\nIn addition to the base requirements of [mCSD Location](StructureDefinition-IHE.mCSD.Location.html),\none `type` must be set to `https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#facility`.",
         "exampleBoolean": false
       },
       {
@@ -436,7 +532,7 @@
           "reference": "StructureDefinition/IHE.mCSD.FacilityOrganization"
         },
         "name": "mCSD Organization for Facilities",
-        "description": "A profile on mCSD Organization for mCSD Facilities.\n\nFacilities are physical care delivery sites such as hospitals, clinics, health outposts, physician offices,\nlabs, pharmacies, etc. A Facility has a unique identifier, geographic attributes (address, geocode), contact\nattributes, attributes regarding its hours of operation, etc. Each Facility is defined by a pairing of \n[Location](StructureDefinition-IHE.mCSD.FacilityLocation.html) and\n[Organization](StructureDefinition-IHE.mCSD.FacilityOrganization.html).\n\nIn addition to the base requirements of [mCSD Organization](StructureDefinition-IHE.mCSD.Organization.html),\none `type` must be set to `urn:ietf:rfc:3986#urn:ihe:iti:mcsd:2019:facility`.",
+        "description": "A profile on mCSD Organization for mCSD Facilities.\n\nFacilities are physical care delivery sites such as hospitals, clinics, health outposts, physician offices,\nlabs, pharmacies, etc. A Facility has a unique identifier, geographic attributes (address, geocode), contact\nattributes, attributes regarding its hours of operation, etc. Each Facility is defined by a pairing of \n[Location](StructureDefinition-IHE.mCSD.FacilityLocation.html) and\n[Organization](StructureDefinition-IHE.mCSD.FacilityOrganization.html).\n\nIn addition to the base requirements of [mCSD Organization](StructureDefinition-IHE.mCSD.Organization.html),\none `type` must be set to `https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#facility`.",
         "exampleBoolean": false
       },
       {
@@ -464,7 +560,7 @@
           "reference": "StructureDefinition/IHE.mCSD.JurisdictionLocation"
         },
         "name": "mCSD Location for Jurisdictions",
-        "description": "A profile on the mCSD Location for mCSD Jurisdictions.\n\nJurisdictions are political administrative units or other territories over which authority is exercised. A Jurisdiction\nhas a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village\ndistricts or regions.  Each Jurisdiction is defined by a pairing of [Location](StructureDefinition-IHE.mCSD.JurisdictionLocation.html)\nand [Organization](StructureDefinition-IHE.mCSD.JurisdictionOrganization.html).",
+        "description": "A profile on the mCSD Location for mCSD Jurisdictions.\n\nJurisdictions are political administrative units or other territories over which authority is exercised. A Jurisdiction\nhas a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village\ndistricts or regions.  Each Jurisdiction is defined by a pairing of [Location](StructureDefinition-IHE.mCSD.JurisdictionLocation.html)\nand [Organization](StructureDefinition-IHE.mCSD.JurisdictionOrganization.html).\n\nIn addition to the base requirements of [mCSD Location](StructureDefinition-IHE.mCSD.Location.html),\none `type` must be set to `https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#jurisdiction`.",
         "exampleBoolean": false
       },
       {
@@ -478,7 +574,7 @@
           "reference": "StructureDefinition/IHE.mCSD.JurisdictionOrganization"
         },
         "name": "mCSD Organization for Jurisdictions",
-        "description": "A profile on the mCSD Organization for mCSD Jurisdictions.\n\nJurisdictions are political administrative units or other territories over which authority is exercised. A Jurisdiction\nhas a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village\ndistricts or regions.  Each Jurisdiction is defined by a pairing of [Location](StructureDefinition-IHE.mCSD.JurisdictionLocation.html)\nand [Organization](StructureDefinition-IHE.mCSD.JurisdictionOrganization.html).",
+        "description": "A profile on the mCSD Organization for mCSD Jurisdictions.\n\nJurisdictions are political administrative units or other territories over which authority is exercised. A Jurisdiction\nhas a unique identifier, geographic attributes, etc. Jurisdictions include political administrative units such as village\ndistricts or regions.  Each Jurisdiction is defined by a pairing of [Location](StructureDefinition-IHE.mCSD.JurisdictionLocation.html)\nand [Organization](StructureDefinition-IHE.mCSD.JurisdictionOrganization.html).\n\nIn addition to the base requirements of [mCSD Organization](StructureDefinition-IHE.mCSD.Organization.html),\none `type` must be set to `https://profiles.ihe.net/ITI/mCSD/CodeSystem/IHE.mCSD.Organization.Location.Types#jurisdiction`.",
         "exampleBoolean": false
       },
       {
@@ -531,6 +627,34 @@
           }
         ],
         "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.OrganizationAffiliation"
+        },
+        "name": "mCSD Organization Affiliation",
+        "description": "A profile on the OrganizationAffiliation resource for mCSD.\n\nAn Organization may have relationships with\nother organizations that are not hierarchical. These relationships may indicate\nan electronic routing path to other organizations that cannot be reached directly.\nOrganizationAffiliation can be used to specify relationships such as supply chains \nor administrative reporting structures.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.OrganizationAffiliation.DocShare"
+        },
+        "name": "mCSD Organization Affiliation DocumentSharing",
+        "description": "A profile on the OrganizationAffiliation resource for mCSD in Document Sharing. Karen's Cross, when expanded to either/or a service that translates protocols, or a proxy that mediates network communication.\n\nNot used for direct connected mesh networks of depth 2 as that is handled fine with Organization->Endpoint. \n\nAffiliation is used to show Document Sharing network linkage to a set of communities that are not directly addressible.  \nThe participating organization would not have Organization->Endpoint advertised in the network directory. \nThere will be many OrganizationAffiliations, one for each pathway provided on the network by the serving organization (.organization) to another organization (.participatingOrganization).",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:resource"
+          }
+        ],
+        "reference": {
           "reference": "StructureDefinition/IHE.mCSD.Practitioner"
         },
         "name": "mCSD Practitioner",
@@ -559,10 +683,136 @@
           }
         ],
         "reference": {
-          "reference": "StructureDefinition/IHE.mCSD.OrganizationHierarchy"
+          "reference": "StructureDefinition/ihe-endpointspecifictype"
         },
-        "name": "mCSD Additional Hierarchies extension for mCSD Organization.",
-        "description": "If there are additional hierarchies (such as funding source), then use this extension.",
+        "name": "Endpoint Specific Type",
+        "description": "The specific endpoint type. Given that the FHIR R4 Endpoint.connectionType is limited to a one value from a valueSet given by FHIR core and that valueSet includes XCA thus by Extensible rules one is forced to pick that value, we choose to add an additional codeableConcept for a more detailed code(s).",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "StructureDefinition:extension"
+          }
+        ],
+        "reference": {
+          "reference": "StructureDefinition/IHE.mCSD.PurposeOfUse"
+        },
+        "name": "Purpose of Use Extension",
+        "description": "Set a purpose of use for an mCSD Endpoint or mCSD Organization.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/MCSDEndpointIdentifierTypeValueSet"
+        },
+        "name": "mCSD Type codes for Endpoint.identifier",
+        "description": "mCSD Type codes for specific business identifiers for Endpoint resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/MCSDEndpointTypesCoreDocShareVS"
+        },
+        "name": "mCSD Endpoint Core Document Sharing Types ValueSet",
+        "description": "ValueSet of the Core Document Sharing Endpoint types allowed",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/MCSDEndpointTypesVS"
+        },
+        "name": "mCSD Endpoint Types ValueSet",
+        "description": "ValueSet of the Endpoint types allowed",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/MCSDOrgAffTypesVS"
+        },
+        "name": "mCSD Organization Affiliation Types ValueSet",
+        "description": "ValueSet of Organization Affiliation types allowed",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/MCSDOrganizationIdentifierTypeValueSet"
+        },
+        "name": "mCSD Type codes for Organization.identifier",
+        "description": "mCSD Type codes for specific business identifiers for Organization resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "ValueSet"
+          }
+        ],
+        "reference": {
+          "reference": "ValueSet/IHE.mCSD.Organization.Location.Types"
+        },
+        "name": "mCSD Types for Organizations and Locations",
+        "description": "mCSD Types for specialized Organization and Location resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "CodeSystem"
+          }
+        ],
+        "reference": {
+          "reference": "CodeSystem/MCSDEndpointIdentifierTypes"
+        },
+        "name": "mCSD Type codes for Endpoint.identifier",
+        "description": "mCSD Type codes for specific business identifiers for Endpoint resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "CodeSystem"
+          }
+        ],
+        "reference": {
+          "reference": "CodeSystem/MCSDEndpointTypes"
+        },
+        "name": "mCSD Endpoint Types",
+        "description": "mCSD Endpoint types beyond those in the FHIR core.\n\nThe codes defined here are endpoint types defined in IHE profiles at the time of publication. \nOther codes might be defined in new IHE profiles written later, where they could define their own code and own codeSystem.\n\nCode pattern: `{Profile}-{Actor}-{Transaction}[-{option}]`\n* Where Profile is the acronym\n* Where Actor name compressed to be short yet clear (camel case)\n* Where Transaction name is compressed to be short yet clear (camel case)\n* Where the code definition spells out these using the formal names and transaction number\n* Where an option is important it can be prepended\n\nNote that this codeSystem contains only endpoints needed for Some IHE profiles, and only for the synchronous communication pattern. When Async is supported additional entries will be needed on these actors, and the peer actor will also need to be described. Async is not in scope at this time.",
         "exampleBoolean": false
       },
       {
@@ -583,6 +833,62 @@
         "extension": [
           {
             "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "CodeSystem"
+          }
+        ],
+        "reference": {
+          "reference": "CodeSystem/MCSDOrgAffTypes"
+        },
+        "name": "mCSD Organization Affiliation Types",
+        "description": "mCSD OrganizationAffiliation types beyond those in the FHIR core.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "CodeSystem"
+          }
+        ],
+        "reference": {
+          "reference": "CodeSystem/MCSDOrganizationIdentifierTypes"
+        },
+        "name": "mCSD Type codes for Organization.identifier",
+        "description": "mCSD Type codes for specific business identifiers for Organization resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "CodeSystem"
+          }
+        ],
+        "reference": {
+          "reference": "CodeSystem/IHE.mCSD.Organization.Location.Types"
+        },
+        "name": "mCSD Type codes for Organizations and Locations",
+        "description": "mCSD Type codes for specialized Organization and Location resources.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "SearchParameter"
+          }
+        ],
+        "reference": {
+          "reference": "SearchParameter/Endpoint-EndpointSpecificType"
+        },
+        "name": "Search on the IHE defined extension for Endpoint specificType",
+        "description": "This SearchParameter enables finding Endpoints by the specificType code.  This resource is created as informative content.",
+        "exampleBoolean": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
             "valueString": "Bundle"
           }
         ],
@@ -590,7 +896,7 @@
           "reference": "Bundle/Example-MCSD"
         },
         "name": "Example Bundle of mCSD Resources",
-        "description": "Example Bundle of Core mCSD Resources: Organization, Location, HealthcareService, Practitioner, and PractitionerRole with Facility and Jursidiction.",
+        "description": "Example Bundle of Core mCSD Resources.",
         "exampleBoolean": true
       },
       {
@@ -601,25 +907,11 @@
           }
         ],
         "reference": {
-          "reference": "SearchParameter/IHE.mCSD.Organization.HierarchyPartOf"
+          "reference": "SearchParameter/IHE.mCSD.Search.PurposeOfUse"
         },
-        "name": "Search on the IHE defined extension for hierarchy part of.",
-        "description": "This Search Parameter enables finding [Organizations](StructureDefinition-IHE.mCSD.Organization.html)\nby the hierarchy [mCSD extension](StructureDefinition-IHE.mCSD.OrganizationHierarchy.html) part of.",
-        "exampleBoolean": true
-      },
-      {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "valueString": "SearchParameter"
-          }
-        ],
-        "reference": {
-          "reference": "SearchParameter/IHE.mCSD.Organization.HierarchyType"
-        },
-        "name": "Search on the IHE defined extension for hierarchy type.",
-        "description": "This Search Parameter enables finding [Organizations](StructureDefinition-IHE.mCSD.Organization.html) by the\n[mCSD extension](StructureDefinition-IHE.mCSD.OrganizationHierarchy.html) hierarchy type.",
-        "exampleBoolean": true
+        "name": "Search on the IHE defined extension for Purpose of Use",
+        "description": "This SearchParameter enables finding Endpoints or Organizatoins by the purpose of use code.  This resource is created as informative content.",
+        "exampleBoolean": false
       },
       {
         "extension": [
@@ -648,6 +940,20 @@
         "name": "Example mCSD Facility Organization",
         "description": "Organization resource for an example mCSD Facility",
         "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.FacilityOrganization"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "OrganizationAffiliation"
+          }
+        ],
+        "reference": {
+          "reference": "OrganizationAffiliation/MCSDFacilityOrganizationAffiliation-Example"
+        },
+        "name": "Example mCSD Facility Admin Organization Affiliation",
+        "description": "Organization Affiliation resource for an example administrative relationship for a facility.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.OrganizationAffiliation"
       },
       {
         "extension": [
@@ -760,6 +1066,174 @@
         "name": "Example mCSD PractitionerRole",
         "description": "PractitionerRole resource example for mCSD.",
         "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.PractitionerRole"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "AuditEvent"
+          }
+        ],
+        "reference": {
+          "reference": "AuditEvent/ex-AuditMcsdCareServicesQuery"
+        },
+        "name": "Audit example for ITI-90 for Care Services Selective Consumer for query.",
+        "description": "Audit example for a Care Services Selective Consumer requesting a query on a Care Services Resource for ITI-90.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Audit.CareServices.Query"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "AuditEvent"
+          }
+        ],
+        "reference": {
+          "reference": "AuditEvent/ex-AuditMcsdCareServicesRead"
+        },
+        "name": "Audit example for ITI-90 for Care Services Selective Consumer for read.",
+        "description": "Audit example for a Care Services Selective Consumer requesting a read on a Care Services resource for ITI-90.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Audit.CareServices.Read"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "AuditEvent"
+          }
+        ],
+        "reference": {
+          "reference": "AuditEvent/ex-AuditMcsdCareServicesUpdates"
+        },
+        "name": "Audit example for ITI-91 for Care Services Update Supplier.",
+        "description": "Audit example for a Care Services Update Consumer requesting updates on a Care Services Resource for ITI-91.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Audit.CareServices.Updates"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Organization"
+          }
+        ],
+        "reference": {
+          "reference": "Organization/ex-OrgA"
+        },
+        "name": "Example Organization A",
+        "description": "Example Organization A that wants to communicate with Organization B\n- Note this Organization has no endpoint, but it is a client in this scenario",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Organization"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "OrganizationAffiliation"
+          }
+        ],
+        "reference": {
+          "reference": "OrganizationAffiliation/ex-OrgAff"
+        },
+        "name": "Example of an OrganizationAffiliation in mCSD.",
+        "description": "This is a simple OrganizationAffiliation for an HIE. This is NOT representative of a Document Sharing affiliation.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.OrganizationAffiliation"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "OrganizationAffiliation"
+          }
+        ],
+        "reference": {
+          "reference": "OrganizationAffiliation/ex-OrgAffC"
+        },
+        "name": "Example OrganizationAffiliation C",
+        "description": "Example OrganizationAffiliation C that indicates that C will provide communication to B.\n- Note that the endpoint is listed here in addition to in ex-OrgC to be more efficient",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.OrganizationAffiliation.DocShare"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Organization"
+          }
+        ],
+        "reference": {
+          "reference": "Organization/ex-OrgB"
+        },
+        "name": "Example Organization B",
+        "description": "Example Organization B that is not on the network directly\n- Note that this organization has no endpoint as it is not directly participating in the network",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Organization"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Organization"
+          }
+        ],
+        "reference": {
+          "reference": "Organization/ex-OrgC"
+        },
+        "name": "Example Organization C",
+        "description": "Example Organization C supports communication with Organization B\n- Note that this organization hosts an XDS Query endpoint on the network. \n- More endponts would be here, but the use-case is simplified to just XDS Query",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Organization"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Device"
+          }
+        ],
+        "reference": {
+          "reference": "Device/ex-device"
+        },
+        "name": "Device Example for SVCM",
+        "description": "Device Example for SVCM.",
+        "exampleBoolean": true
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-endpointDicom"
+        },
+        "name": "Example of an Endpoint that is not constrained by mCSD XCA constraints.",
+        "description": "This is an example of a DICOM WADO-RS endpoint.",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-endpointXCAquery"
+        },
+        "name": "Example of an mCSD XCA Query Endpoint",
+        "description": "This is an example of an XCA Retrieve endpoint for OrgA\n- supports XPHR and IPS\n- supports mime-type for FHIR, CDA, and PDF",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint.DocShare"
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "valueString": "Endpoint"
+          }
+        ],
+        "reference": {
+          "reference": "Endpoint/ex-endpointXCAretrieve"
+        },
+        "name": "Example of an mCSD XCA Retrieve Endpoint",
+        "description": "This is an example of an XCA Retrieve endpoint\n- supports XPHR and IPS\n- supports mime-type for FHIR, CDA, and PDF",
+        "exampleCanonical": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint.DocShare"
       },
       {
         "extension": [
