@@ -20,9 +20,8 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
-<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
-
 <link href="assets/css/nonum.css" rel="stylesheet"/>
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
@@ -63,17 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
-        </div>
-
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Basic Audit Log Patterns (BALP)</span>
             <br/>
-            <span style="display:inline-block;">1.1.0 - Trial-Implementation
+            <span style="display:inline-block;">1.1.1 - Trial-Implementation
 
 
 
@@ -221,7 +219,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.1: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Artifacts Summary</h2>
   
   
@@ -403,12 +401,23 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Create action happens successfully.</p>
 
 <ul>
-  <li>Given a Resource Create is requested with no Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Create of a new Resource</li>
-  <li>And the new Resource is successfully created thus having an id assigned</li>
-  <li>Then an AuditEvent following this profile is recorded</li>
-  <li>And when a user is known they are the Author, Informant, or Custodian</li>
+  <li>Given a Resource Create is requested</li>
+  <li>And that resource does not have a Patient subject or is otherwise associated with a Patient
+    <ul>
+      <li>when the resource is Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientCreate.html">PatientCreate</a> is used</li>
+    </ul>
+  </li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
@@ -421,18 +430,30 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Delete action happens successfully.</p>
 
 <ul>
-  <li>Given a Resource has no Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Delete of a target Resource</li>
-  <li>And the target Resource is successfully Deleted thus having an id that is no longer valid</li>
-  <li>Then an AuditEvent following this profile is recorded using the id that is no longer valid</li>
+  <li>Given a Resource Delete is requested</li>
+  <li>And that resource has does not have a Patient subject or is otherwise associated with a Patient
+    <ul>
+      <li>when the resource is Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientDelete.html">PatientDelete</a> is used</li>
+    </ul>
+  </li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
             <tr>
                <td style="column-width:30%">
-                  <a href="StructureDefinition-IHE.BasicAudit.IUAaccessTokenUse.html"
-                     title="StructureDefinition/IHE.BasicAudit.IUAaccessTokenUse">Basic AuditEvent pattern for when an activity was authorized by an IUA access token</a>
+                  <a href="StructureDefinition-IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive.html"
+                     title="StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive">Basic AuditEvent pattern for when an activity was authorized by an IUA access token</a>
                </td>
                <td>
 <p>A basic AuditEvent profile for when an activity was authorized by an IUA access token. This profile is expected to be used with some other detail that explains the activity. This profile only covers the IUA access token.</p>
@@ -451,25 +472,35 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <li>When an AuditEvent is recorded for the activity</li>
   <li>Then that AuditEvent would follow this profile regarding recording the IUA access token details</li>
   <li>note: this profile records minimal information from the IUA access token, which presumes that use of the AuditEvent at a later time will be able to resolve the given information.</li>
+  <li>client slice holds the application details
+    <ul>
+      <li>This is likely replicated in other slices, but is consistently identified as the Application slice for ease of tracking all events caused by this client</li>
+      <li>place the client_id into .who.identifier.value (system is not needed, but avaialble if you have a system)</li>
+      <li>any network identification detail should be placed in .network (may be a IP address, or hostname)</li>
+    </ul>
+  </li>
+  <li>oUser slice holds the user details
+    <ul>
+      <li>user id is recorded in the .who.identifier</li>
+      <li>user id is also recorded in .name to be more easy searched</li>
+      <li>if roles or purposeOfUse are known record them here</li>
+      <li>the JWT ID is recorded in .policy. Expecting that during audit anaysis this ID can be looked up and dereferenced</li>
+    </ul>
+  </li>
 </ul>
 </td>
             </tr>
             <tr>
                <td style="column-width:30%">
-                  <a href="StructureDefinition-IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive.html"
-                     title="StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Comprehensive">Basic AuditEvent pattern for oAuth Comprehensive</a>
-               </td>
-               <td>
-<p>Used when only have access to the oAuth token details (JWT).</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
                   <a href="StructureDefinition-IHE.BasicAudit.OAUTHaccessTokenUse.Minimal.html"
-                     title="StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Minimal">Basic AuditEvent pattern for oAuth Minimal</a>
+                     title="StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Minimal">Basic AuditEvent pattern for oAuth Opaque</a>
                </td>
                <td>
-<p>Used when only have access to the oAuth token details (JWT).</p>
+<p>Used when access to the oAuth token, but want to log minimal details.</p>
+
+<ul>
+  <li>oUser slice holds only the JWT ID</li>
+</ul>
 </td>
             </tr>
             <tr>
@@ -478,7 +509,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
                      title="StructureDefinition/IHE.BasicAudit.OAUTHaccessTokenUse.Opaque">Basic AuditEvent pattern for oAuth Opaque</a>
                </td>
                <td>
-<p>Used when only have an opaque oAuth token.</p>
+<p>Used when:</p>
+<ul>
+  <li>only have an opaque oAuth token (e.g. clients).</li>
+  <li>
+    <p>have access to the oAuth token, but want to log minimal details.</p>
+  </li>
+  <li>oUser slice holds fragment of the opaque oAuth token
+    <ul>
+      <li>record only the last 32 characters of the oAuth token to limit risk or replay</li>
+      <li>presume 32 characters is enough to coorelate AuditEvent log entries</li>
+    </ul>
+  </li>
+</ul>
 </td>
             </tr>
             <tr>
@@ -490,12 +533,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Create action happens successfully, and where there is an identifiable Patient subject associated with the create of the Resource.</p>
 
 <ul>
-  <li>Given a Resource Create is requested with a Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Create of a new Resource</li>
-  <li>And the new Resource is successfully created thus having an id assigned</li>
-  <li>Then an AuditEvent following this profile is recorded</li>
-  <li>And when a user is known they are the Author, Informant, or Custodian</li>
+  <li>Given a Resource Create is requested</li>
+  <li>And that resource has a Patient subject or is otherwise associated with a Patient</li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
@@ -508,12 +558,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Delete action happens successfully, and where there is an identifiable Patient subject associated with the Resource being deleted.</p>
 
 <ul>
-  <li>Given a Resource has a Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Delete of a target Resource</li>
-  <li>And the target Resource is successfully Deleted thus having an id that is no longer valid</li>
-  <li>Then an AuditEvent following this profile is recorded using the id that is no longer valid</li>
-  <li>Patient is specified</li>
+  <li>Given a Resource Delete is requested</li>
+  <li>And that resource has a Patient subject or is otherwise associated with a Patient</li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
@@ -526,39 +583,31 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Query action happens successfully, and where there is an identifiable Patient subject associated with the read Resource(s).</p>
 
 <ul>
-  <li>Given a RESTful Query</li>
-  <li>And there is a known Patient subject.
+  <li>Given a RESTful Query is requested</li>
+  <li>And the request is for a Patient subject indicated
     <ul>
-      <li>The query parameters may have identified a specific patient, or</li>
-      <li>The data resulting from a query do have a patient subject</li>
+      <li>The requestor includes a Patient id or identifier as a query parameter</li>
+      <li>The requestor security context is limited to a given Patient identity</li>
     </ul>
   </li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Query to retrieve Resource(s)</li>
-  <li>Then the search request is recorded
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+      <li>Note success may result in zero or more results. The number of results and the content of the results are not recorded.</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform
     <ul>
       <li>The raw search request is base64 encoded and placed in the .entity[query].query element. The base64 encoding of the raw search request enables preserving exactly what was requested, including possibly malicious patterns. This enables detection of malicious or malformed requests.</li>
       <li>The cleaned search may be recorded (not base64) in the .entity[query].description. The cleaned search request would have removed parameters that were not understood/supported. The cleaned search request in the .description element enables more efficient processing.</li>
     </ul>
   </li>
-</ul>
-
-<p>no results returned</p>
-<ul>
-  <li>Given no Resource(s) are available for a given Patient identity</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Query to retrieve Resources(s) for a given single Patient</li>
-  <li>When policy indicates success with an empty bundle should be returned</li>
-  <li>Then an AuditEvent following this profile is recorded for the requested given Patient</li>
-</ul>
-
-<p>multiple patient results are returned. Note that one AuditEvent is created for every Patient identified in the resulting search set. Note this is true when the search set bundle includes any number of resources that collectively reference multiple Patients. This includes one Resource with multiple subject values, or many Resources with single subject values that are different.</p>
-<ul>
-  <li>Given Resource(s) are known associated with multiple subjects</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Query to retrieve Resource(s)</li>
-  <li>And when the query resulting search set contains Resources associated with more than one Patient</li>
-  <li>Then an AuditEvent following this profile is recorded for the Patient identified in the search set returned</li>
+  <li>And When multiple patient results are returned, one AuditEvent is created for every Patient identified in the resulting search set. Note this is true when the search set bundle includes any number of resources that collectively reference multiple Patients. This includes one Resource with multiple subject values, or many Resources with single subject values that are different.</li>
 </ul>
 
 <p>Note: the pattern defined in DICOM and IHE have that the client is identified as the Source Role ID, and the server is identified as the Destination Role ID. This may not be so obvious, as the data actually flows the opposite direction. This pattern is established and thus followed here.</p>
@@ -573,10 +622,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Read action happens successfully, and where there is an identifiable Patient subject associated with the read Resource.</p>
 
 <ul>
-  <li>Given a Resource has a Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Read to retrieve that Resource</li>
-  <li>Then an AuditEvent following this profile is recorded</li>
+  <li>Given a Resource Read is requested</li>
+  <li>And that resource has a Patient subject or is otherwise associated with a Patient</li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
@@ -589,11 +647,20 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Update action happens successfully, and where there is an identifiable Patient subject associated with the Update of the Resource.</p>
 
 <ul>
-  <li>Given a Resource has a Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Update of an existing Resource</li>
-  <li>And the Resource is successfully Updated thus where the server supports FHIR Versioning the updated Resource has a new id version assigned</li>
-  <li>Then an AuditEvent following this profile is recorded where the Resource is identified by the updated version specific id where versioning is available</li>
+  <li>Given a Resource Update is requested</li>
+  <li>And that resource has a Patient subject or is otherwise associated with a Patient</li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
+  <li>And where the server supports FHIR Versioning the AuditEvent should use the version specific id</li>
 </ul>
 </td>
             </tr>
@@ -606,16 +673,31 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Query / Search action happens successfully.</p>
 
 <ul>
-  <li>Given a RESTful Query</li>
-  <li>And there is no known Patient subject.
+  <li>Given a RESTful Query is requested</li>
+  <li>And the request does not have a Patient subject indicated
     <ul>
-      <li>The requestor logging the event would potentially not know a patient identity</li>
+      <li>The requestor logging the event would potentially not know they have requested Patient specific data</li>
       <li>The data objects may not be patient specific kind of objects</li>
+      <li>when the request is Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientQuery.html">PatientQuery</a> is used</li>
     </ul>
   </li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Query to retrieve Resource(s)</li>
-  <li>Then the search request is recorded
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+      <li>Note success may result in zero or more results. The number of results and the content of the results are not recorded.</li>
+    </ul>
+  </li>
+  <li>And the results are not Patient specific
+    <ul>
+      <li>when the results are Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientQuery.html">PatientQuery</a> are used</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform
     <ul>
       <li>The raw search request is base64 encoded and placed in the .entity[query].query element. The base64 encoding of the raw search request enables preserving exactly what was requested, including possibly malicious patterns. This enables detection of malicious or malformed requests.</li>
       <li>The cleaned search may be recorded (not base64) in the .entity[query].description. The cleaned search request would have removed parameters that were not understood/supported. The cleaned search request in the .description element enables more efficient processing.</li>
@@ -635,10 +717,23 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Read action happens successfully.</p>
 
 <ul>
-  <li>Given a Resource has no Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Read to retrieve that Resource</li>
-  <li>Then an AuditEvent following this profile is recorded</li>
+  <li>Given a Resource Read is requested</li>
+  <li>And that resource does not have a Patient subject or is otherwise associated with a Patient
+    <ul>
+      <li>when the resource is Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientRead.html">PatientRead</a> is used</li>
+    </ul>
+  </li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
 </ul>
 </td>
             </tr>
@@ -650,7 +745,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
                <td>
 <p>A basic AuditEvent profile for when an activity was authorized by an SAML access token. This profile is expected to be used with some other detail that explains the activity. This profile only covers the SAML access token.</p>
 
-<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="highlighter-rouge">~</code> character represents attributes under the SAML <code class="highlighter-rouge">AttributeStatement</code>.</p>
+<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="language-plaintext highlighter-rouge">~</code> character represents attributes under the SAML <code class="language-plaintext highlighter-rouge">AttributeStatement</code>.</p>
 
 <p><strong>Builds upon the Minimal</strong></p>
 
@@ -749,7 +844,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <li>Then that AuditEvent would follow this profile regarding recording the SAML access token details</li>
 </ul>
 
-<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="highlighter-rouge">~</code> character represents attributes under the SAML <code class="highlighter-rouge">AttributeStatement</code>.</p>
+<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="language-plaintext highlighter-rouge">~</code> character represents attributes under the SAML <code class="language-plaintext highlighter-rouge">AttributeStatement</code>.</p>
 
 <table>
   <thead>
@@ -790,11 +885,24 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <p>A basic AuditEvent profile for when a RESTful Update action happens successfully.</p>
 
 <ul>
-  <li>Given a Resource has no Patient subject</li>
-  <li>And OAuth is used to authorize both app and user</li>
-  <li>When an App requests a RESTful Update of an existing Resource</li>
-  <li>And the Resource is successfully Updated thus where the server supports FHIR Versioning the updated Resource has a new id version assigned</li>
-  <li>Then an AuditEvent following this profile is recorded where the Resource is identified by the updated version specific id where versioning is available</li>
+  <li>Given a Resource Update is requested</li>
+  <li>And that resource does not have a Patient subject or is otherwise associated with a Patient
+    <ul>
+      <li>when the resource is Patient specific then <a href="StructureDefinition-IHE.BasicAudit.PatientUpdate.html">PatientUpdate</a> is used</li>
+    </ul>
+  </li>
+  <li>And the request is authorized
+    <ul>
+      <li>Authorization failures should follow <a href="http://hl7.org/fhir/security.html#AccessDenied">FHIR core Access Denied</a></li>
+    </ul>
+  </li>
+  <li>When successful
+    <ul>
+      <li>Note a failure AuditEvent may follow this pattern, but would not be a successful outcome and should have an OperationOutcome</li>
+    </ul>
+  </li>
+  <li>Then the AuditEvent recorded will conform</li>
+  <li>And where the server supports FHIR Versioning the AuditEvent should use the version specific id</li>
 </ul>
 </td>
             </tr>
@@ -818,7 +926,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
                <td>
 <p>The assuranceLevel element carries various types of Assurance level. May be an Identity Assurance (IAL), an Authentication Assurance Level (AAL), a Federation Assurance Level (FAL), or other.</p>
 
-<p>In SAML this is <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf">defined to be carried</a> in the <code class="highlighter-rouge">saml:AuthnContextClassRef</code>, but may be carried elsewhere based on the use-case and profiling of SAML.</p>
+<p>In SAML this is <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf">defined to be carried</a> in the <code class="language-plaintext highlighter-rouge">saml:AuthnContextClassRef</code>, but may be carried elsewhere based on the use-case and profiling of SAML.</p>
 
 <p>The Vocabulary is not defined here. Some sources of vocabulary:</p>
 <ul>
@@ -829,7 +937,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     </ul>
   </li>
   <li>OASIS <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf">Authentication Context for SAML</a></li>
-  <li>An example of a customized and purpose defined small set of codes can be found in the HL7 <a href="http://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/">SMART Health Cards</a> defines a <a href="http://hl7.org/fhir/uv/shc-vaccination/ValueSet/identity-assurance-level">valueset</a></li>
+  <li>An example of a customized and purpose defined small set of codes can be found in the HL7 <a href="http://hl7.org/fhir/uv/shc-vaccination/2021Sep/">SMART Health Cards</a> defines a <a href="http://hl7.org/fhir/uv/shc-vaccination/ValueSet/identity-assurance-level">valueset</a></li>
 </ul>
 </td>
             </tr>
@@ -950,15 +1058,6 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
                </td>
                <td>
 <p>OtherId Types beyond those in the FHIR core</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="CodeSystem-UserAgentHomeCommunity.html"
-                     title="CodeSystem/UserAgentHomeCommunity">XCA code for homeCommunity</a>
-               </td>
-               <td>
-<p>one code</p>
 </td>
             </tr>
             <tr>
@@ -1438,6 +1537,58 @@ Defined codes for SAML vs OAuth to enable differentiation of .policy as the toke
             </tr>
             <tr>
                <td style="column-width:30%">
+                  <a href="AuditEvent-ex-auditBasicReadOClient.html"
+                     title="AuditEvent/ex-auditBasicReadOClient">oAuth Client - Audit Example of a basic patient identifiable read</a>
+               </td>
+               <td>
+<p>Audit Example for a oAuth authorized RESTful read of a resource with a patient subject</p>
+
+<ul>
+  <li>This example is otherwise the same as <a href="AuditEvent-ex-auditBasicReadClient.html">client</a></li>
+  <li>client logs using the OAUTHaccessTokenUseOpaque profile as it doesn’t have access to the details</li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="AuditEvent-ex-auditBasicReadOServer.html"
+                     title="AuditEvent/ex-auditBasicReadOServer">oAuth Server - Audit Example of a basic patient identifiable read</a>
+               </td>
+               <td>
+<p>Audit Example for a oAuth authorized RESTful read of a resource with a patient subject</p>
+
+<ul>
+  <li>This example is otherwise the same as <a href="AuditEvent-ex-auditBasicReadServer.html">server</a></li>
+  <li>server has access to the oAuth token details so uses IUAaccessOAUTHaccessTokenUseComprehensiveTokenUse profile</li>
+  <li>TODO. Sushi has issues that prevent me from including all the agent entries, so this just has the agent entries for the oAuth profile and not the Read profile
+    <ul>
+      <li>should also be a Destination and Source agent</li>
+    </ul>
+  </li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
+                  <a href="AuditEvent-ex-auditBasicReadOServerMin.html"
+                     title="AuditEvent/ex-auditBasicReadOServerMin">oAuth Server Minimal - Audit Example of a basic patient identifiable read</a>
+               </td>
+               <td>
+<p>Audit Example for minimally recorded oAuth authorized RESTful read of a resource with a patient subject</p>
+
+<ul>
+  <li>This example is otherwise the same as <a href="AuditEvent-ex-auditBasicReadServer.html">server</a></li>
+  <li>server has access to the oAuth token details but policy requests minimal recorded so uses IUAaccessOAUTHaccessTokenUseMinimalTokenUse profile</li>
+  <li>TODO. Sushi has issues that prevent me from including all the agent entries, so this just has the agent entries for the oAuth profile and not the Read profile
+    <ul>
+      <li>should also be a Destination and Source agent</li>
+    </ul>
+  </li>
+</ul>
+</td>
+            </tr>
+            <tr>
+               <td style="column-width:30%">
                   <a href="AuditEvent-ex-auditBasicReadServer.html"
                      title="AuditEvent/ex-auditBasicReadServer">Server - Audit Example of a basic patient identifiable read</a>
                </td>
@@ -1561,107 +1712,6 @@ Defined codes for SAML vs OAuth to enable differentiation of .policy as the toke
             </tr>
             <tr>
                <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditFindDocumentLists-consumer.html"
-                     title="AuditEvent/ex-auditFindDocumentLists-consumer">Audit Example of ITI-66 at Consumer</a>
-               </td>
-               <td>
-<p>Audit Example for a Find Document Lists Transaction as recorded at the consumer</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditFindDocumentLists-responder.html"
-                     title="AuditEvent/ex-auditFindDocumentLists-responder">Audit Example of ITI-66 at responder</a>
-               </td>
-               <td>
-<p>Audit Example for a Find Document Lists Transaction from responder perspective</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditFindDocumentReferences-consumer.html"
-                     title="AuditEvent/ex-auditFindDocumentReferences-consumer">Audit Example of ITI-67 at Consumer</a>
-               </td>
-               <td>
-<p>Audit Example for a Find Document References Transaction as recorded at the consumer</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditFindDocumentReferences-post-responder.html"
-                     title="AuditEvent/ex-auditFindDocumentReferences-post-responder">Audit Example of ITI-67 using POST recorded at responder</a>
-               </td>
-               <td>
-<p>Audit Example for a Find Document References Transaction using POST search as recorded at the responder perspective</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditFindDocumentReferences-responder.html"
-                     title="AuditEvent/ex-auditFindDocumentReferences-responder">Audit Example of ITI-67 at responder</a>
-               </td>
-               <td>
-<p>Audit Example for a Find Document References Transaction from responder perspective</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditPdqmQuery-consumer.html"
-                     title="AuditEvent/ex-auditPdqmQuery-consumer">Audit Example of ITI-78 at Consumer</a>
-               </td>
-               <td>
-<p>Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Consumer</p>
-
-<p>where the Query was executed with a GET as follows:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET https://server.example.com/fhir/Patient?family=MOHR&amp;amp;given=ALICE&amp;amp;active=true&amp;amp;gender=female
-Accept: application/fhir+json; fhirVersion=4.0
-</code></pre></div></div>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditPdqmQuery-supplier.html"
-                     title="AuditEvent/ex-auditPdqmQuery-supplier">Audit Example of ITI-78 at Supplier</a>
-               </td>
-               <td>
-<p>Audit Event for PDQm Query Transaction by the Patient Identifier Cross-reference Supplier</p>
-
-<p>where the Query was executed with a GET as follows:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET https://server.example.com/fhir/Patient?family=MOHR&amp;amp;given=ALICE&amp;amp;active=true&amp;amp;gender=female
-Accept: application/fhir+json; fhirVersion=4.0
-</code></pre></div></div>
-
-<p>Note the Supplier may choose to record patient identities found, but is not required to.</p>
-
-<p>Given the Supplier chooses to record a patient in the AuditEvent 
-When the search finds multiple Patients, 
-Then the Supplier would create an AuditEvent for each of those Patients.</p>
-
-<p>This example shows where ex-patient is returned. This single result does not affect the response returned on the ITI-78 that would include all results.</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditPixmQuery-consumer.html"
-                     title="AuditEvent/ex-auditPixmQuery-consumer">Audit Example of ITI-83 at Consumer</a>
-               </td>
-               <td>
-<p>Audit Event for PIXm Query Transaction ITI-83 by the Patient Identifier Cross-reference Consumer</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditPixmQuery-manager.html"
-                     title="AuditEvent/ex-auditPixmQuery-manager">Audit Example of ITI-83 at Manager</a>
-               </td>
-               <td>
-<p>Audit Event for PIXm Query Transaction ITI-83 by the Patient Identifier Cross-reference Manager</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
                   <a href="AuditEvent-ex-auditPoke-SAML-Comp.html"
                      title="AuditEvent/ex-auditPoke-SAML-Comp">Audit Example of a basic SAML access token of comprehensive</a>
                </td>
@@ -1682,19 +1732,19 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
   <tbody>
     <tr>
       <td>Subject.NameID</td>
-      <td>“05086900124”</td>
+      <td>05086900124</td>
     </tr>
     <tr>
       <td>Issuer</td>
-      <td>“https://sts.sykehuspartner.no”</td>
+      <td>https://sts.sykehuspartner.no</td>
     </tr>
     <tr>
       <td>ID</td>
-      <td>“XC4WdYS0W5bjsMGc5Ue6tClD_5U”</td>
+      <td>XC4WdYS0W5bjsMGc5Ue6tClD_5U</td>
     </tr>
     <tr>
       <td>purposeOfUse</td>
-      <td>“http://terminology.hl7.org/CodeSystem/v3-ActReason#PATRQT”</td>
+      <td>http://terminology.hl7.org/CodeSystem/v3-ActReason#PATRQT</td>
     </tr>
     <tr>
       <td>assurance</td>
@@ -1702,39 +1752,39 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
     </tr>
     <tr>
       <td>~subject:subject-id</td>
-      <td>“JohnDoe”</td>
+      <td>JohnDoe</td>
     </tr>
     <tr>
       <td>~subject:npi</td>
-      <td>“1234567@myNPIregistry.example.org”</td>
+      <td>1234567@myNPIregistry.example.org</td>
     </tr>
     <tr>
       <td>~subject:provider-identifier</td>
-      <td>“JohnD”</td>
+      <td>JohnD</td>
     </tr>
     <tr>
       <td>~subject:organization</td>
-      <td>“St. Mary of Examples”</td>
+      <td>St. Mary of Examples</td>
     </tr>
     <tr>
       <td>~subject:organization-id</td>
-      <td>“1234567@myOrganizationRegistry.example.org”</td>
+      <td>1234567@myOrganizationRegistry.example.org</td>
     </tr>
     <tr>
       <td>~bppc:2007:docid</td>
-      <td>“urn:uuid:a4b1d27e-5493-11ec-bf63-0242ac130002”</td>
+      <td>urn:uuid:a4b1d27e-5493-11ec-bf63-0242ac130002</td>
     </tr>
     <tr>
       <td>~xua:2012:acp</td>
-      <td>“urn:uuid:b8aa8eec-5493-11ec-bf63-0242ac130002”</td>
+      <td>urn:uuid:b8aa8eec-5493-11ec-bf63-0242ac130002</td>
     </tr>
     <tr>
       <td>~homeCommunityId</td>
-      <td>“urn:uuid:cadbf8d0-5493-11ec-bf63-0242ac130002”</td>
+      <td>urn:uuid:cadbf8d0-5493-11ec-bf63-0242ac130002</td>
     </tr>
     <tr>
       <td>~resource:resource-id</td>
-      <td>“urn:uuid:d7391e5a-5493-11ec-bf63-0242ac130002”</td>
+      <td>urn:uuid:d7391e5a-5493-11ec-bf63-0242ac130002</td>
     </tr>
   </tbody>
 </table>
@@ -1760,15 +1810,15 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
   <tbody>
     <tr>
       <td>Subject.NameID</td>
-      <td>“05086900124”</td>
+      <td>05086900124</td>
     </tr>
     <tr>
       <td>Issuer</td>
-      <td>“https://sts.sykehuspartner.no”</td>
+      <td>https://sts.sykehuspartner.no</td>
     </tr>
     <tr>
       <td>ID</td>
-      <td>“XC4WdYS0W5bjsMGc5Ue6tClD_5U”</td>
+      <td>XC4WdYS0W5bjsMGc5Ue6tClD_5U</td>
     </tr>
   </tbody>
 </table>
@@ -1842,43 +1892,43 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
   <tbody>
     <tr>
       <td>Subject.NameID</td>
-      <td>“UID=kskagerb”</td>
+      <td>UID=kskagerb</td>
     </tr>
     <tr>
       <td>Issuer</td>
-      <td>“CN=John Miller,OU=Harris,O=HITS,L=Melbourne,ST=FL,C=US”</td>
+      <td>CN=John Miller,OU=Harris,O=HITS,L=Melbourne,ST=FL,C=US</td>
     </tr>
     <tr>
       <td>ID</td>
-      <td>“_d87f8adf-711a-4545-bf77-ff8517b498e4”</td>
+      <td>_d87f8adf-711a-4545-bf77-ff8517b498e4</td>
     </tr>
     <tr>
       <td>subject-id</td>
-      <td>“Karl S Skagerberg”</td>
+      <td>Karl S Skagerberg</td>
     </tr>
     <tr>
       <td>subject:organization</td>
-      <td>“connectred5.fedsconnect.org”</td>
+      <td>connectred5.fedsconnect.org</td>
     </tr>
     <tr>
       <td>subject:organization-id</td>
-      <td>“urn:oid:2.16.840.1.113883.3.333”</td>
+      <td>urn:oid:2.16.840.1.113883.3.333</td>
     </tr>
     <tr>
       <td>homeCommunityId</td>
-      <td>“urn:oid:2.16.840.1.113883.3.333”</td>
+      <td>urn:oid:2.16.840.1.113883.3.333</td>
     </tr>
     <tr>
       <td>subject:role</td>
-      <td>“2.16.840.1.113883.6.96#307969004”</td>
+      <td>2.16.840.1.113883.6.96#307969004</td>
     </tr>
     <tr>
       <td>purposofuse</td>
-      <td>“2.16.840.1.113883.3.18.7.1#PUBLICHEALTH”</td>
+      <td>2.16.840.1.113883.3.18.7.1#PUBLICHEALTH</td>
     </tr>
     <tr>
       <td>resource-id</td>
-      <td>“500000000^^^&amp;amp;2.16.840.1.113883.3.333&amp;amp;ISO”</td>
+      <td>500000000^^^&amp;amp;2.16.840.1.113883.3.333&amp;amp;ISO</td>
     </tr>
     <tr>
       <td>AuthzDecisionStatement</td>
@@ -1886,15 +1936,15 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
     </tr>
     <tr>
       <td>.AccessConsentPolicy</td>
-      <td>“urn:oid:1.2.3.4”</td>
+      <td>urn:oid:1.2.3.4</td>
     </tr>
     <tr>
       <td>.InstanceAccessConsentPolicy</td>
-      <td>“urn:oid:1.2.3.4.123456789”</td>
+      <td>urn:oid:1.2.3.4.123456789</td>
     </tr>
     <tr>
       <td>AuthnContextClassRef</td>
-      <td>“urn:oasis:names:tc:SAML:2.0:ac:classes:X509”</td>
+      <td>urn:oasis:names:tc:SAML:2.0:ac:classes:X509</td>
     </tr>
   </tbody>
 </table>
@@ -1920,43 +1970,43 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
   <tbody>
     <tr>
       <td>Subject.NameID</td>
-      <td>“UID=kskagerb”</td>
+      <td>UID=kskagerb</td>
     </tr>
     <tr>
       <td>Issuer</td>
-      <td>“CN=John Miller,OU=Harris,O=HITS,L=Melbourne,ST=FL,C=US”</td>
+      <td>CN=John Miller,OU=Harris,O=HITS,L=Melbourne,ST=FL,C=US</td>
     </tr>
     <tr>
       <td>ID</td>
-      <td>“_d87f8adf-711a-4545-bf77-ff8517b498e4”</td>
+      <td>_d87f8adf-711a-4545-bf77-ff8517b498e4</td>
     </tr>
     <tr>
       <td>subject-id</td>
-      <td>“Karl S Skagerberg”</td>
+      <td>Karl S Skagerberg</td>
     </tr>
     <tr>
       <td>subject:organization</td>
-      <td>“connectred5.fedsconnect.org”</td>
+      <td>connectred5.fedsconnect.org</td>
     </tr>
     <tr>
       <td>subject:organization-id</td>
-      <td>“urn:oid:2.16.840.1.113883.3.333”</td>
+      <td>urn:oid:2.16.840.1.113883.3.333</td>
     </tr>
     <tr>
       <td>homeCommunityId</td>
-      <td>“urn:oid:2.16.840.1.113883.3.333”</td>
+      <td>urn:oid:2.16.840.1.113883.3.333</td>
     </tr>
     <tr>
       <td>subject:role</td>
-      <td>“2.16.840.1.113883.6.96#307969004”</td>
+      <td>2.16.840.1.113883.6.96#307969004</td>
     </tr>
     <tr>
       <td>purposofuse</td>
-      <td>“2.16.840.1.113883.3.18.7.1#PUBLICHEALTH”</td>
+      <td>2.16.840.1.113883.3.18.7.1#PUBLICHEALTH</td>
     </tr>
     <tr>
       <td>resource-id</td>
-      <td>“500000000^^^&amp;amp;2.16.840.1.113883.3.333&amp;amp;ISO”</td>
+      <td>500000000^^^&amp;amp;2.16.840.1.113883.3.333&amp;amp;ISO</td>
     </tr>
     <tr>
       <td>AuthzDecisionStatement</td>
@@ -1964,15 +2014,15 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
     </tr>
     <tr>
       <td>.AccessConsentPolicy</td>
-      <td>“urn:oid:1.2.3.4”</td>
+      <td>urn:oid:1.2.3.4</td>
     </tr>
     <tr>
       <td>.InstanceAccessConsentPolicy</td>
-      <td>“urn:oid:1.2.3.4.123456789”</td>
+      <td>urn:oid:1.2.3.4.123456789</td>
     </tr>
     <tr>
       <td>AuthnContextClassRef</td>
-      <td>“urn:oasis:names:tc:SAML:2.0:ac:classes:X509”</td>
+      <td>urn:oasis:names:tc:SAML:2.0:ac:classes:X509</td>
     </tr>
   </tbody>
 </table>
@@ -2012,24 +2062,6 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
                </td>
                <td>
 <p>Audit Example for a Privacy Disclosure from source perspective</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditRetrieveDocument-consumer.html"
-                     title="AuditEvent/ex-auditRetrieveDocument-consumer">Audit Example of ITI-68 at consumer</a>
-               </td>
-               <td>
-<p>Audit Example for a Retrieve Document Transaction as recorded at the consumer</p>
-</td>
-            </tr>
-            <tr>
-               <td style="column-width:30%">
-                  <a href="AuditEvent-ex-auditRetrieveDocument-responder.html"
-                     title="AuditEvent/ex-auditRetrieveDocument-responder">Audit Example of ITI-68 at responder</a>
-               </td>
-               <td>
-<p>Audit Example for a Retrieve Document Transaction from responder perspective</p>
 </td>
             </tr>
             <tr>
@@ -2174,9 +2206,9 @@ Then the Supplier would create an AuditEvent for each of those Patients.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, May 4, 2022 10:16-0500">2022-05-04</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Oct 21, 2022 09:04-0500">2022-10-21</span>
           <br/>
-          <span style="color: var(--footer-highlight-text-color)"></span>
+          <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues">Issues</a>

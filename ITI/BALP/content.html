@@ -20,9 +20,8 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
-<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
-
 <link href="assets/css/nonum.css" rel="stylesheet"/>
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
@@ -63,17 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
-        </div>
-
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Basic Audit Log Patterns (BALP)</span>
             <br/>
-            <span style="display:inline-block;">1.1.0 - Trial-Implementation
+            <span style="display:inline-block;">1.1.1 - Trial-Implementation
 
 
 
@@ -221,7 +219,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.1: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>3:5.7 Basic Audit Log Patterns</h2>
   
 
@@ -268,7 +266,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>All but Delete follow a similar pattern where the initiator (client) of the RESTful interaction is identified as the Source Role ID and the responder (server) is the Destination Role ID. This pattern is found in both DICOM and XDS.  It is possible to deviate from that pattern and use Application and Custodian. This deviation should be carefully considered.</p>
 
-<p>When a FHIR RESTful interaction happens, the following AuditEvent patterns can be used. These AuditEvent patterns include a <code class="highlighter-rouge">user</code> slice that is minimally populated. These AuditEvent patterns can be combined with the Security Token Use pattern to record one AuditEvent that contains the details of the security context and the FHIR RESTful context.</p>
+<p>When a FHIR RESTful interaction happens, the following AuditEvent patterns can be used. These AuditEvent patterns include a <code class="language-plaintext highlighter-rouge">user</code> slice that is minimally populated. These AuditEvent patterns can be combined with the Security Token Use pattern to record one AuditEvent that contains the details of the security context and the FHIR RESTful context.</p>
 
 <p>There are two sets of profiles distinguished by <a href="volume-1.html#152416-patient-as-a-subject">Patient as a subject</a> being mandated to be populated.</p>
 
@@ -325,7 +323,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>This section only applies to auditing agents that have access to the content of the SAML Security Token. This section is only concerned with the AuditEvent profiling to use when an event is attributable to an agent defined in a SAML Security Token. This does not cover how the SAML Token was created, acquired, authorized, or managed. See <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-13.html">IHE-XUA</a>.  This specification presumes that the interactions to obtain the “SAML Security Token” were themselves auditable events and properly recorded in the audit log.</p>
 
-<p>In this section, we use the term “SAML Security Token” in a general sense to refer to either (a) a XUA SAML token being used in an <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-40.html#3.40">ITI-40</a> or (b) any other SAML token used to secure an Interoperability transaction.</p>
+<p>In this section, we use the term “SAML Security Token” in a general sense to refer to either (a) an XUA SAML token being used in an <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-40.html#3.40">[ITI-40]</a> or (b) any other SAML token used to secure an Interoperability transaction.</p>
 
 <p>There is documentation of the audit event details to be added to a grouped transaction audit event log in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-40.html#3.40.4.2">XUA Security Considerations 2:3.40.4.2</a>; however, this does not explain how this should be recorded in a FHIR AuditEvent. There are two patterns defined here: minimal and comprehensive. Where minimal presumes that when the audit log is used, the system using the AuditEvent has access to the security infrastructure registry and logs to lookup the identifiers, thus the details that could be looked up later are not replicated in the AuditEvent. Comprehensive presumes that there is no access to lookup these details, thus preserving as much of the Security Token into the AuditEvent as is reasonable and useful.</p>
 
@@ -363,7 +361,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h4 id="35743-saml-mapping-to-auditevent">3:5.7.4.3 SAML mapping to AuditEvent</h4>
 
-<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="highlighter-rouge">~</code> character represents attributes under the SAML <code class="highlighter-rouge">AttributeStatement</code>. There are SAML fields defined that are not shown in the following table, these SAML fields need not be preserved in the AuditEvent.</p>
+<p>The following table uses a short-hand for the SAML fields and FHIR AuditEvent elements to keep the table compact. It is presumed the reader can understand the SAML field and the FHIR AuditEvent element given. Note the <code class="language-plaintext highlighter-rouge">~</code> character represents attributes under the SAML <code class="language-plaintext highlighter-rouge">AttributeStatement</code>. There are SAML fields defined that are not shown in the following table, these SAML fields need not be preserved in the AuditEvent.</p>
 
 <table class="grid">
   <thead>
@@ -436,12 +434,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     </tr>
     <tr>
       <td>~xua:2012:acp</td>
-      <td>entity[consent].detail.valueString</td>
+      <td>entity[consent].detail[acp].valueString</td>
       <td> </td>
     </tr>
     <tr>
       <td>~resource:resource-id</td>
-      <td>entity[consent-patient].what.identifier.value</td>
+      <td>entity[consent].detail[patient-id].valueString</td>
       <td> </td>
     </tr>
     <tr>
@@ -458,7 +456,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>This section is only concerned with the AuditEvent profiling to use when an event is attributable to an agent defined in an OAuth Security Token. This does not cover how the oAuth Token was created, acquired, authorized, or managed. See <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a>.  This specification presumes that the interactions to obtain the “Oauth Security Token” were themselves auditable events and properly recorded in the audit log.</p>
 
-<p>In this section we use the term “OAuth Security Token” in a general sense to refer to either (a) an <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> OAuth Access Token being used in an <a href="https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72">ITI-72</a> or (b) any other OAuth Access Token used to secure an Interoperability transaction (e.g., <a href="https://hl7.org/fhir/uv/bulkdata/authorization/index.html#presenting-an-access-token-to-fhir-api">SMART Backend Services</a>, or <a href="http://hl7.org/fhir/smart-app-launch/index.html#step-4-app-accesses-clinical-data-via-fhir-api">SMART App Launch Framework</a>, or other).</p>
+<p>In this section we use the term “OAuth Security Token” in a general sense to refer to either (a) an <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> OAuth Access Token being used in an <a href="https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72">[ITI-72]</a> or (b) any other OAuth Access Token used to secure an Interoperability transaction (e.g., <a href="https://hl7.org/fhir/uv/bulkdata/authorization/index.html#presenting-an-access-token-to-fhir-api">SMART Backend Services</a>, or <a href="http://hl7.org/fhir/smart-app-launch/index.html#step-4-app-accesses-clinical-data-via-fhir-api">SMART App Launch Framework</a>, or other).</p>
 
 <p>There are three patterns defined: opaque, minimal, and comprehensive.</p>
 <ul>
@@ -469,7 +467,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>Given that IHE has the <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA Profile</a>, and has <a href="https://profiles.ihe.net/ITI/IUA/index.html#37251-security-audit-considerations">Security Audit Considerations</a>, the AuditEvent specification here will focus on IUA interactions. The profiling AuditEvent defined here is the AuditEvent that the Client and Server would record when using <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> with the <a href="https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72">ITI TF-2: 3.72 Incorporate Access Token [ITI-72]</a> to secure some RESTful transaction. The RESTful transaction is not defined here, just the additional AuditEvent element details that would be added to the AuditEvent for the RESTful transaction being secured (see <a href="content.html#3573-restful-activities">RESTful activities</a> for general purpose logging).</p>
 
-<p>The <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> Profile is used here as a proxy for all oAuth specifications. <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> is used here because IHE has direct access and has defined fields. The Minimal AuditEvent pattern defined here is not the same as the one defined in <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a>, mostly due to the more expressive and coded nature of the FHIR AuditEvent fs the DICOM AuditMessage.</p>
+<p>The <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> Profile is used here as a proxy for all oAuth specifications. <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a> is used here because IHE has direct access and has defined fields. The Minimal AuditEvent pattern defined here is not the same as the one defined in <a href="https://profiles.ihe.net/ITI/IUA/index.html">IUA</a>, mostly due to the more expressive and coded nature of the FHIR AuditEvent vs. the DICOM AuditMessage.</p>
 
 <p>The Client and Server are both encouraged to log an AuditEvent covering any security relevant event, and to enhance that AuditEvent with one of the following patterns when an oAuth token is associated with authorizing (or forbidding) the event.</p>
 
@@ -477,7 +475,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>The Opaque AuditEvent profile would be used when the token is opaque (usually encrypted JWT). The token should be shortened to not more than 32 characters, and those characters should be from the end of the token to assure the most entropy. The presumption is that the many AuditEvent(s) can be correlated to all be related to the same security token given this shortened token string.</p>
 
-<p>Other elements may be recorded following the Minimal or Comprehensive pattern.</p>
+<p>Other elements may be recorded following the Minimal or Comprehensive patterns.</p>
 
 <ul>
   <li><a href="StructureDefinition-IHE.BasicAudit.OAUTHaccessTokenUse.Opaque.html">StructureDefinition profile of Basic AuditEvent pattern for oAuth Opaque</a>
@@ -489,11 +487,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h4 id="35752-oauth---minimal-auditevent-record">3:5.7.5.2 oAuth - Minimal AuditEvent record</h4>
 
-<p>The Minimal AuditEvent pattern would be used when the JWT token is available at the time the AuditEvent is recorded.</p>
+<p>The Minimal AuditEvent pattern would be used when the JWT token is available at the time the AuditEvent is recorded, but where minimal oAuth details are desired in the AuditEvent log.</p>
 
-<p>The Minimal AuditEvent pattern defined here is not the same as the one defined in <a href="https://profiles.ihe.net/ITI/IUA/index.html#37251-security-audit-considerations">ITI-72 Security Audit Considerations</a>, mostly due to the more expressive and coded nature of the FHIR AuditEvent over the DICOM AuditMessage. This AuditEvent pattern is also recommended for both client and server to the extent possible.</p>
+<p>The Minimal AuditEvent pattern defined here is not the same as the one defined in <a href="https://profiles.ihe.net/ITI/IUA/index.html#37251-security-audit-considerations">[ITI-72] Security Audit Considerations</a>, mostly due to the more expressive and coded nature of the FHIR AuditEvent over the DICOM AuditMessage. This AuditEvent pattern is also recommended for both client and server to the extent possible.</p>
 
-<p>The Minimal AuditEvent pattern preserves the oAuth JWT ID so that the contents of the oAuth token can be retrieved from the oAuth Authority when such access is available. The Minimal AuditEvent pattern preserves the iss (JWT Issuer) and sub (JWT Subject) in the who.Identifier, the client_id in second agent, and any purposeOfUse into the purposeOfUse element.</p>
+<p>The Minimal AuditEvent record recommends using the Opaque AuditEvent record</p>
 
 <ul>
   <li><a href="StructureDefinition-IHE.BasicAudit.OAUTHaccessTokenUse.Minimal.html">StructureDefinition profile of Basic AuditEvent pattern for when activity was authorized by an oAuth security token</a>
@@ -651,7 +649,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="3577-privacy-disclosure-audit-message">3:5.7.7 Privacy Disclosure Audit Message</h3>
 
-<p>This is transformed from the content defined today in ATNA ITI-20 <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html#3.20.8">2:3.20.8 Disclosure audit message</a>. It is replicated here for ease of understanding, and is presented here using the FHIR AuditEvent. There are some differences caused and enabled by the FHIR AuditEvent schema and profiling.</p>
+<p>This is transformed from the content defined today in ATNA [ITI-20] <a href="https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html#3.20.8">2:3.20.8 Disclosure audit message</a>. It is replicated here for ease of understanding, and is presented here using the FHIR AuditEvent. There are some differences caused and enabled by the FHIR AuditEvent schema and profiling.</p>
 
 <p>In some countries a Patient has the right to get an accounting of disclosures. This report includes disclosures of their data that meet regulatory criteria. Most audit events, including export events, must be post-analyzed to determine whether they describe an event that needs to be included in the accounting of disclosures. For example, in the USA these rules are defined in <a href="https://www.cdc.gov/phlp/publications/topic/hipaa.html">HIPAA</a>, and only a few kinds of export events meet the criteria to be included in an accounting of disclosures report. When it is known, at the time the event is recorded that the event is indeed a disclosure, the disclosure audit message can be used to document the event.</p>
 
@@ -735,9 +733,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, May 4, 2022 10:16-0500">2022-05-04</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Oct 21, 2022 09:04-0500">2022-10-21</span>
           <br/>
-          <span style="color: var(--footer-highlight-text-color)"></span>
+          <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.BasicAudit/issues">Issues</a>
