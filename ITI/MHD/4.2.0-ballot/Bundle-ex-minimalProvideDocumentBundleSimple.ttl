@@ -1,0 +1,206 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/MHD/Bundle/ex-minimalProvideDocumentBundleSimple> a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "ex-minimalProvideDocumentBundleSimple"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.ProvideBundle";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.ProvideBundle>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Bundle.type [ fhir:value "transaction"];
+  fhir:Bundle.timestamp [ fhir:value "2004-10-25T23:50:50-05:00"^^xsd:dateTime];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100001" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100001>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "List" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100002" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100002>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "DocumentReference" ]
+     ]
+  ], [
+     fhir:index 2;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100003" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100003>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "Binary" ]
+     ]
+  ], [
+     fhir:index 3;
+     fhir:Bundle.entry.fullUrl [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004" ];
+     fhir:Bundle.entry.resource <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004>;
+     fhir:Bundle.entry.request [
+       fhir:Bundle.entry.request.method [ fhir:value "POST" ];
+       fhir:Bundle.entry.request.url [ fhir:value "Patient" ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100001> a fhir:List;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00111100001"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.SubmissionSet";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.SubmissionSet>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "extensions" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">SubmissionSet with Patient</div>"
+  ];
+  fhir:DomainResource.contained [
+     a fhir:Practitioner;
+     fhir:index 0;
+     fhir:Resource.id [ fhir:value "in-practitioner2" ];
+     fhir:Practitioner.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "email" ];
+       fhir:ContactPoint.value [ fhir:value "JohnMoehrke@gmail.com" ]
+     ]
+  ];
+  fhir:DomainResource.extension [
+     fhir:index 0;
+     fhir:Extension.url [ fhir:value "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-sourceId" ];
+     fhir:Extension.valueIdentifier [
+       fhir:Identifier.value [ fhir:value "urn:oid:1.2.3.4" ]
+     ]
+  ], [
+     fhir:index 1;
+     fhir:Extension.url [ fhir:value "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-intendedRecipient" ];
+     fhir:Extension.valueReference [
+       fhir:Reference.reference [ fhir:value "#in-practitioner2" ]
+     ]
+  ];
+  fhir:List.identifier [
+     fhir:index 0;
+     fhir:Identifier.use [ fhir:value "usual" ];
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46343" ]
+  ];
+  fhir:List.status [ fhir:value "current"];
+  fhir:List.mode [ fhir:value "working"];
+  fhir:List.code [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes" ];
+       fhir:Coding.code [ fhir:value "submissionset" ]
+     ]
+  ];
+  fhir:List.subject [
+     fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004" ]
+  ];
+  fhir:List.date [ fhir:value "2004-10-25T23:50:50-05:00"^^xsd:dateTime];
+  fhir:List.entry [
+     fhir:index 0;
+     fhir:List.entry.item [
+       fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100002" ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100002> a fhir:DocumentReference;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00111100002"];
+  fhir:Resource.meta [
+     fhir:Meta.profile [
+       fhir:value "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference";
+       fhir:index 0;
+       fhir:link <https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference>
+     ];
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: DocumentReference</b><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00111100002\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource DocumentReference \"aaaaaaaa-bbbb-cccc-dddd-e00111100002\" </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Minimal.DocumentReference.html\">MHD DocumentReference Minimal</a></p><p style=\"margin-bottom: 0px\">Security Labels: <span title=\"{http://terminology.hl7.org/CodeSystem/v3-ActReason http://terminology.hl7.org/CodeSystem/v3-ActReason}\">http://terminology.hl7.org/CodeSystem/v3-ActReason</span></p></div><p><b>masterIdentifier</b>: id: urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012</p><p><b>status</b>: current</p><p><b>subject</b>: <a href=\"#Patient_aaaaaaaa-bbbb-cccc-dddd-e00111100004\">See above (urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004)</a></p><blockquote><p><b>content</b></p><h3>Attachments</h3><table class=\"grid\"><tr><td>-</td><td><b>ContentType</b></td><td><b>Url</b></td><td><b>Size</b></td><td><b>Hash</b></td></tr><tr><td>*</td><td>text/plain</td><td><code>urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100003</code></td><td>11</td><td>MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA==</td></tr></table><p><b>format</b>: ITI XDS-SD TEXT (Details: http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode code urn:ihe:iti:xds-sd:text:2008 = 'ITI XDS-SD TEXT', stated as 'null')</p></blockquote></div>"
+  ];
+  fhir:DocumentReference.masterIdentifier [
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012" ]
+  ];
+  fhir:DocumentReference.status [ fhir:value "current"];
+  fhir:DocumentReference.subject [
+     fhir:Reference.reference [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004" ]
+  ];
+  fhir:DocumentReference.content [
+     fhir:index 0;
+     fhir:DocumentReference.content.attachment [
+       fhir:Attachment.contentType [ fhir:value "text/plain" ];
+       fhir:Attachment.url [ fhir:value "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100003" ];
+       fhir:Attachment.size [ fhir:value "11"^^xsd:nonNegativeInteger ];
+       fhir:Attachment.hash [ fhir:value "MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA=="^^xsd:base64Binary ]
+     ];
+     fhir:DocumentReference.content.format [
+       fhir:Coding.system [ fhir:value "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode" ];
+       fhir:Coding.code [ fhir:value "urn:ihe:iti:xds-sd:text:2008" ]
+     ]
+  ] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100003> a fhir:Binary;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00111100003"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:Binary.contentType [ fhir:value "text/plain"];
+  fhir:Binary.data [ fhir:value "SGVsbG8gV29ybGQ="^^xsd:base64Binary] .
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100004> a fhir:Patient;
+  fhir:Resource.id [ fhir:value "aaaaaaaa-bbbb-cccc-dddd-e00111100004"];
+  fhir:Resource.meta [
+     fhir:Meta.security [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://terminology.hl7.org/CodeSystem/v3-ActReason" ];
+       fhir:Coding.code [ fhir:value "HTEST" ]
+     ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: Patient</b><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00111100004\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource Patient \"aaaaaaaa-bbbb-cccc-dddd-e00111100004\" </p><p style=\"margin-bottom: 0px\">Security Labels: <span title=\"{http://terminology.hl7.org/CodeSystem/v3-ActReason http://terminology.hl7.org/CodeSystem/v3-ActReason}\">http://terminology.hl7.org/CodeSystem/v3-ActReason</span></p></div><p><b>name</b>: Dee Schmidt </p></div>"
+  ];
+  fhir:Patient.name [
+     fhir:index 0;
+     fhir:HumanName.family [ fhir:value "Schmidt" ];
+     fhir:HumanName.given [
+       fhir:value "Dee";
+       fhir:index 0
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/MHD/Bundle/ex-minimalProvideDocumentBundleSimple.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
