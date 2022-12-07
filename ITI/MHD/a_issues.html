@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -43,8 +43,8 @@
 
 	  <script src="assets/js/prism.js"></script>
 
-    <style type="text/css">h2{--heading-prefix:"15"}
-    h3,h4,h5,h6{--heading-prefix:"15"}</style>
+    <style type="text/css">h2{--heading-prefix:"17"}
+    h3,h4,h5,h6{--heading-prefix:"17"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
         <!-- Placeholder for child template header declarations -->
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.1.0 - Trial-Implementation
+            <span style="display:inline-block;">4.2.0 - Trial-Implementation
 
 
 
@@ -150,6 +150,12 @@
       <li>
         <a href="ITI-68.html">Retrieve Document [ITI-68]</a>
       </li>
+      <li>
+        <a href="ITI-105.html">Simplified Publish [ITI-105]</a>
+      </li>
+      <li>
+        <a href="ITI-106.html">Generate Metadata [ITI-106]</a>
+      </li>
     </ul>
   </li>
   <li class="dropdown">
@@ -213,7 +219,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.0: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Issues</h2>
   
 
@@ -231,6 +237,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <p><!-- white space is critical inside of capture --></p>
 <div class="markdown-toc">
 <ul id="markdown-toc">
+  <li><a href="#significant-changes-since-mhd-version-410" id="markdown-toc-significant-changes-since-mhd-version-410">Significant changes since MHD Version 4.1.0</a></li>
   <li><a href="#significant-changes-since-mhd-version-32" id="markdown-toc-significant-changes-since-mhd-version-32">Significant changes since MHD Version 3.2</a></li>
   <li><a href="#issues" id="markdown-toc-issues">Issues</a>    <ul>
       <li><a href="#open-issues" id="markdown-toc-open-issues">Open Issues</a></li>
@@ -241,6 +248,49 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 </div>
 <div class="stu-note">
+
+  <h3 id="significant-changes-since-mhd-version-410">Significant changes since MHD Version 4.1.0</h3>
+
+  <p>Version 4.2.0</p>
+  <ul>
+    <li>changed to AuditEvent profiling leveraging <a href="https://profiles.ihe.net/ITI/BALP/index.html">Basic Audit Log Patterns (BALP) Release 1.1.0</a>
+      <ul>
+        <li>changes to RESTful type, and query subtype</li>
+      </ul>
+    </li>
+    <li>Added new features
+      <ul>
+        <li>Add an <a href="1332_actor_options.html#13325-generate-metadata-option">Generate Metadata</a> that adds the <a href="ITI-106.html">ITI-106</a> operation that allows for one structured/coded document to be published.
+          <ul>
+            <li>Is the use of Operation preferrable to the Simplified Publish?</li>
+          </ul>
+        </li>
+        <li>Add an <a href="1332_actor_options.html#13324-simplified-publish-option">Simplified Publish</a> option that allows for one DocumentReference with the document in the .data element to be published, expecting the Document Recipient to create the SubmissionSet derived off of the DocumentReference and Community mapping policy.</li>
+        <li>Add an <a href="1332_actor_options.html#13326-iti-65-fhir-documents-publish-option">ITI-65 FHIR Documents Publish</a> option with support in ITI-65 to include a FHIR Document Bundle as an alternative to Binary. This makes less the burden on the Document Source to seralize the content into an appropriate Binary format, as that requirement is moved to the Document Recipient. There are use-cases where the Document Recipient will use the FHIR Document Bundle directly, and there are requirements on the Document Recipient to seralize the FHIR Document Bundle when grouped with non-FHIR Actors like XDS/XDR/XDM.
+          <ul>
+            <li>This is added as an option at this time to keep base compatibility with existing MHD. This may become normal functionality of ITI-65 eventually</li>
+          </ul>
+        </li>
+        <li>Each of these new options may survive or may be removed. Please voice your interest, and sign up for IHE-Connectathon to test these options. Based on interest these Options may survive or be removed.</li>
+      </ul>
+    </li>
+    <li>better clarity on types of Identifier</li>
+    <li>a method has been added to support DocumentReference replace that is used by the Document Source to mark the old/replaced DocumentReference instance as superseded.</li>
+  </ul>
+
+  <h4 id="other-changes">Other changes</h4>
+  <ul>
+    <li>added clarity on when ITI-65 would/should/could include a Patient resource, vs relying on Patient services like PIXm/PDQm/PMIR.</li>
+    <li>added a search parameter for searching against DocumentReference.content.attachment.creation</li>
+    <li>eliminated mandate for entryUUID in ITI-65 from the StructureDefinitions, it was already relaxed in the ITI-65 narrative.</li>
+    <li>allow .custodian element</li>
+    <li>allow .context.encounter element and indicate how it can be handled with legacy Document Sharing (e.g. XDS)</li>
+    <li>add clarification that search results do NOT need to be and may NOT be conformant to the MHD structureDefinition profiles. They will be in an enclosed environment, but the ITI-66 and ITI-67 transactions do not require that the results are compliant, simply that they meet the search parameters given.</li>
+    <li>added clarity on the benefits of using CXi datatype in DocumentEntry.referenceIdList to distinguish various kinds of identifiers.</li>
+    <li>moved status mapping table closer to where it is referenced</li>
+    <li>link testplan better to test tools</li>
+    <li>cleanup of various quality concerns illuminated by newer IG builder and validator.</li>
+  </ul>
 
   <h3 id="significant-changes-since-mhd-version-32">Significant changes since MHD Version 3.2</h3>
   <ul>
@@ -260,23 +310,25 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <p>IHE welcomes <a href="https://github.com/IHE/ITI.MHD/issues/new/choose">New Issues</a> from the GitHub community. 
 For those without GitHub access, issues may be submitted to the <a href="https://www.ihe.net/resources/public_comment/">Public Comment form</a>.</p>
 
-  <p>As issues are submitted they will be managed on the <a href="https://github.com/IHE/ITI.MHD/issues">PDQm GitHub Issues</a>, where discussion and workarounds may be found. These issues, when critical, will be processed using the normal <a href="https://wiki.ihe.net/index.php/Category:CPs">IHE Change Proposal</a> management and balloting. 
+  <p>As issues are submitted they will be managed on the <a href="https://github.com/IHE/ITI.MHD/issues">MHD GitHub Issues</a>, where discussion and workarounds may be found. These issues, when critical, will be processed using the normal <a href="https://wiki.ihe.net/index.php/Category:CPs">IHE Change Proposal</a> management and balloting. 
 It is important to note that as soon as a Change Proposal is approved, it carries the same weight as a published Implementation Guide (i.e., it is testable at an <a href="https://www.ihe.net/participate/connectathon/">IHE Connectathon</a> from the time it is approved, even if it will not be integrated until several months later).</p>
 
   <h3 id="open-issues">Open Issues</h3>
-  <p>These issues were known as part of the publication, and IHE invites comments.</p>
+  <p>These issues were known as part of the publication, and IHE invites comments. Comments can be submitted to <a href="mailto:iticomments@googlegroups.com">iticomments@googlegroups.com</a> or may be submitted as comments to the specific GitHUB issue identified for that Open-Issue.</p>
 
   <ul>
-    <li>MHD_063: Should MHD defined CapabilityStatement requirements so that a client can determine that the server supports MHD and which MHD server actor? Today we do require servers to support metadata endpoint returning their CapabilityStatment, but do not require it to contain anything specifically. We could first require that the CapabilityStatment.implementationGuide be populated with MHD canonical IG URL. We could additionally require specific .transaction values for DocumentRecipient, and .rest.resource.supportedProfile for DocumentResponder. Might we need an extension in .transaction to be more specific for Document Recipient? Should a DocumentRecipient need to publish that it is capable of receiving a create/update on these .rest resources (which we only defined thru the transaction, not individually REST)? Might we add an extension on CapabilityStatement.implementationGuide to hold the actor name and options?</li>
-    <li>MHD_061: The new IUA supplement includes guidance on use of OAuth scopes when grouped with MHD. That text updates MHD, but be maintained in MHD until IUA goes Final Text. see https://profiles.ihe.net/ITI/IUA/index.html#33-mhd-profile</li>
-    <li>MHD_055: List.source does not allow for Organization which is needed for SubmissionSet.author. So created an extension (SourceOrg) to hold the SubmissionSet sourceId as a Reference(Organization). This could be reverted if the submitted CR changes R5 https://jira.hl7.org/browse/FHIR-30154</li>
-    <li>MHD_058: The profile requires that the document submitted is encoded in a FHIR Binary. Is there interest in also allowing a Bundle of type Document? This would be useful when publishing FHIR-Documents. The FHIR-Document would still need to be seralized into a Bundle of type Document, but that Bundle would not need to be further encoded into a Binary (e.g. base64 encoding). Note that the mime-type in this case would be forced to be the same mime-type as the ITI-65 Bundle, where a Document Source wants to encode ITI-65 in a mime-type that is different than the document, the Binary methodology would need to be used.
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/158">MHD_063</a>: Should MHD defined CapabilityStatement requirements so that a client can determine that the server supports MHD and which MHD server actor? Today we do require servers to support metadata endpoint returning their CapabilityStatment, but do not require it to contain anything specifically. We could first require that the CapabilityStatment.implementationGuide be populated with MHD canonical IG URL. We could additionally require specific .transaction values for DocumentRecipient, and .rest.resource.supportedProfile for DocumentResponder. Might we need an extension in .transaction to be more specific for Document Recipient? Should a DocumentRecipient need to publish that it is capable of receiving a create/update on these .rest resources (which we only defined thru the transaction, not individually REST)? Might we add an extension on CapabilityStatement.implementationGuide to hold the actor name and options?</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/157">MHD_061</a>: The new IUA supplement includes guidance on use of OAuth scopes when grouped with MHD. That text updates MHD, but be maintained in MHD until IUA goes Final Text. see https://profiles.ihe.net/ITI/IUA/index.html#33-mhd-profile</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/156">MHD_055</a>: List.source does not allow for Organization which is needed for SubmissionSet.author. So created an extension (SourceOrg) to hold the SubmissionSet sourceId as a Reference(Organization). This could be reverted if the submitted CR changes R5 https://jira.hl7.org/browse/FHIR-30154</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/91">MHD_058</a>: The profile requires that the document submitted is encoded in a FHIR Binary. Is there interest in also allowing a Bundle of type Document? This would be useful when publishing FHIR-Documents. The FHIR-Document would still need to be seralized into a Bundle of type Document, but that Bundle would not need to be further encoded into a Binary (e.g. base64 encoding). Note that the mime-type in this case would be forced to be the same mime-type as the ITI-65 Bundle, where a Document Source wants to encode ITI-65 in a mime-type that is different than the document, the Binary methodology would need to be used.
       <ul>
         <li>note that retrieve (ITI-68) does allow the Document Client to ask for the document content in various mime types, thus allowing support for preferred mime type encoding if the Document Responder has the ability to return the content in a encoding other than the DocumentReference indicates.</li>
       </ul>
     </li>
-    <li>MHD_065: Is it needed to have a mapping between XDS RegistryError and FHIR OperationOutcome at the element level, and also addressing OperationOutcome.issue.code vocabulary could be mapped to the XDS error vocabulary between XDS https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.4.1 and FHIR OperationOutcome?</li>
-    <li>MHD_066: Note that On-Demand may become supported in FHIR R5 https://jira.hl7.org/browse/FHIR-22501</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/155">MHD_065</a>: Is it needed to have a mapping between XDS RegistryError and FHIR OperationOutcome at the element level, and also addressing OperationOutcome.issue.code vocabulary could be mapped to the XDS error vocabulary between XDS https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.4.1 and FHIR OperationOutcome?</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/154">MHD_066</a>: Note that On-Demand may become supported in FHIR R5 https://jira.hl7.org/browse/FHIR-22501</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/109">MHD_067</a>: Potential use of $docref operation from HL7 Implementation Guide. This operation is currently in US-Core, and is being added/moved to IPA. It is unclear how MHD would be able to use just this operation without being fully dependant upon all of IPA.</li>
+    <li><a href="https://github.com/IHE/ITI.MHD/issues/197">MHD_068</a>: Document Source “replace” methodology to better support FHIR backends like MHDS.</li>
   </ul>
 
   <h3 id="closed-issues">Closed Issues</h3>
@@ -396,15 +448,15 @@ It is important to note that as soon as a Change Proposal is approved, it carrie
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 20:12-0600">2022-02-28</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Dec 7, 2022 16:41-0600">2022-12-07</span>
           <br/>
-          <span style="color: var(--footer-highlight-text-color)"></span>
+          <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.MHD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.MHD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/MHD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>
