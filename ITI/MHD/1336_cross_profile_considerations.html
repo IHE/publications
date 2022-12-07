@@ -20,9 +20,9 @@
   	<link href="assets/css/prism.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
+<link href="assets/css/nonum.css" rel="stylesheet"/>
 <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
 
-<link href="assets/css/nonum.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="fhir-table-scripts.js"> </script>
 
@@ -62,16 +62,16 @@
   <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
-        <div id="project-nav">
-          <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI_Graphic.png"/> </a>
-        </div>
-
-
+<div id="project-nav">
+  
+  
+    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+</div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.1.0 - Trial-Implementation
+            <span style="display:inline-block;">4.2.0 - Trial-Implementation
 
 
 
@@ -150,6 +150,12 @@
       <li>
         <a href="ITI-68.html">Retrieve Document [ITI-68]</a>
       </li>
+      <li>
+        <a href="ITI-105.html">Simplified Publish [ITI-105]</a>
+      </li>
+      <li>
+        <a href="ITI-106.html">Generate Metadata [ITI-106]</a>
+      </li>
     </ul>
   </li>
   <li class="dropdown">
@@ -213,7 +219,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.1.0: Trial Implementation) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.0: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>1:33.6 Cross Profile Considerations</h2>
   
 
@@ -229,12 +235,17 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 
     <p><!-- white space is critical inside of capture --></p>
-<div>
-<!-- do not remove - needed to prevent Jekyll from adding a p tag to any non block level element in the markdown.-->
+<div class="markdown-toc">
+<ul id="markdown-toc">
+  <li><a href="#13361-mhd-actor-grouped-with-xds-infrastructure" id="markdown-toc-13361-mhd-actor-grouped-with-xds-infrastructure">1:33.6.1 MHD Actor Grouped with XDS Infrastructure</a></li>
+  <li><a href="#13362-mhd-actors-grouped-with-xca-infrastructure" id="markdown-toc-13362-mhd-actors-grouped-with-xca-infrastructure">1:33.6.2 MHD Actors Grouped with XCA Infrastructure</a></li>
+  <li><a href="#13363-mhd-actor-grouped-with-retrieve-information-for-display-rid-profile" id="markdown-toc-13363-mhd-actor-grouped-with-retrieve-information-for-display-rid-profile">1:33.6.3 MHD Actor Grouped with Retrieve Information for Display (RID) Profile</a></li>
+</ul>
+
 </div>
 <p>Considerations when applications group MHD actors with other IHE actors.</p>
 
-<h4 id="13361-mhd-actor-grouped-with-xds-infrastructure">1:33.6.1 MHD Actor grouped with XDS infrastructure</h4>
+<h3 id="13361-mhd-actor-grouped-with-xds-infrastructure">1:33.6.1 MHD Actor Grouped with XDS Infrastructure</h3>
 
 <p>When the MHD Document Recipient is acting as a proxy for an XDS environment, it could be grouped with an XDS Document Source as the “XDS on FHIR” Option defines. In this way, a received Provide Document Bundle [ITI-65] transaction would be converted by the grouped system into an XDS Provide and Register Document Set-b [ITI-41] transaction. The MHD Document Recipient, acting as a proxy, could be configured to support only a designated set of mobile devices authorized by the hosting organization and use the security model defined by that hosting organization. The proxy might convert user authentication credentials, and fully implement the ATNA Secure Node or Secure Application Actors.</p>
 
@@ -249,25 +260,25 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <div>
 <img alt="Figure: MHD Actors grouped with XDS Document Sharing" src="Figure33.6.1-1.png" width="100%" />
 </div>
-<p><strong>Figure 1:33.6.1-1: MHD Actors grouped with XDS Document Sharing</strong></p>
+<p><strong>Figure 1:33.6.1-1: MHD Actors Grouped with XDS Document Sharing</strong></p>
 
-<h4 id="13362-mhd-actors-grouped-with-xca-infrastructure">1:33.6.2 MHD Actors grouped with XCA infrastructure</h4>
+<h3 id="13362-mhd-actors-grouped-with-xca-infrastructure">1:33.6.2 MHD Actors Grouped with XCA Infrastructure</h3>
 
 <p>When an MHD Document Responder acts as a proxy into an XCA environment, it could be grouped with an Initiating Gateway. This type of MHD Document Responder will support the Find Document Lists [ITI-66], Find Document References [ITI-67], and Retrieve Document [ITI-68] transactions by utilizing the XCA Cross Gateway Query [ITI-38] and Cross Gateway Retrieve [ITI-39] transactions as necessary. This type of proxy would be configured to support a designated set of mobile devices and enable a security model as defined by the hosting organization. The proxy might fill in missing metadata information, convert user authentication credentials, and fully implement the ATNA Secure Node or Secure Application requirements.</p>
 
 <div>
 <img alt="Figure: MHD Actors grouped with XCA" src="Figure33.6.2-1.png" width="100%" />
 </div>
-<p><strong>Figure 1:33.6.2-1: MHD Actors grouped with XCA</strong></p>
+<p><strong>Figure 1:33.6.2-1: MHD Actors Grouped with XCA</strong></p>
 
-<h4 id="13363-mhd-actor-grouped-with-retrieve-information-for-display-rid-profile">1:33.6.3 MHD Actor grouped with Retrieve Information for Display (RID) Profile</h4>
+<h3 id="13363-mhd-actor-grouped-with-retrieve-information-for-display-rid-profile">1:33.6.3 MHD Actor Grouped with Retrieve Information for Display (RID) Profile</h3>
 
 <p>The Retrieve Information for Display (RID) Profile includes a similar set of transactions to those defined in the MHD Profile for Document Consumer. The RID Profile is focused more on delivering display-ready health information that may or may not be document based, whereas the MHD Profile focuses on providing access to Documents and the metadata about the document. Grouping the RID Information Source with an MHD Document Responder will provide both access to the metadata and document content, and also access to display-ready information.</p>
 
 <div>
 <img alt="Figure: MHD Actors grouped with RID" src="Figure33.6.3-1.png" width="100%" />
 </div>
-<p><strong>Figure 1:33.6.3-1: MHD Actors grouped with RID</strong></p>
+<p><strong>Figure 1:33.6.3-1: MHD Actors Grouped with RID</strong></p>
 
 
 
@@ -316,15 +327,15 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Feb 28, 2022 20:12-0600">2022-02-28</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Dec 7, 2022 16:41-0600">2022-12-07</span>
           <br/>
-          <span style="color: var(--footer-highlight-text-color)"></span>
+          <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
                  <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
                   | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.MHD/issues/new/choose">New Issue</a> | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://github.com/IHE/ITI.MHD/issues">Issues</a>
                 
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://profiles.ihe.net/ITI/MHD/history.html">Version History</a></a> |
-                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
 <script>
