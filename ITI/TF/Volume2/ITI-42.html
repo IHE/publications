@@ -157,7 +157,6 @@
       <p>The Content Sender sends metadata for a set of documents to the Content Receiver.</p>
       <h5 id="3.42.4.1.1">3.42.4.1.1 Trigger Events</h5>
       <p>The Register Document Set-b Request message is triggered when a Content Sender wants to register metadata for a set of documents it holds. These documents may have been stored in the Document Repository by a Document Source (using the Provide and Register Document Set-b transaction [ITI-41]) or generated internally by an Integrated Document Source/Repository.</p>
-      <p>If an Integrated Document Source/Repository supports the Delayed Document Assembly Option and is registering a Stable Document Entry with size=0, it shall internally mark the document contents that will be assembled if a Retrieve Document Set [ITI-43] transaction is received containing the uniqueID of the registered Stable Document Entry.</p>
       <h5 id="3.42.4.1.2">3.42.4.1.2 Message Semantics</h5>
       <p>
         The Register Document Set-b Request message shall use SOAP 1.2 and Simple SOAP. Implementors of this transaction shall comply with all requirements described in:
@@ -265,9 +264,10 @@
       </p>
       <p>If the Integrated Document Source/Repository supports the Delayed Document Assembly Option, shall be able to register a Stable Document Entry with the following attribute values</p>
       <ul>
-        <li class="bullet-list1">size = 0 (zero)</li>
-        <li class="bullet-list1">hash = da39a3ee5e6b4b0d3255bfef95601890afd80709 (SHA1 hash of a zero length file).</li>
+        <li class="bullet-list1">size = <code>0</code> (zero)</li>
+        <li class="bullet-list1">hash = <code>da39a3ee5e6b4b0d3255bfef95601890afd80709</code> (SHA1 hash of a zero length file).</li>
       </ul>
+      <p>When the Integrated Document Source/Repository registers the document, it shall internally mark the document contents that will be assembled when a subsequent Retrieve Document Set [ITI-43] transaction is received containing the uniqueID of the registered Stable Document Entry.</p>
       <h5 id="3.42.4.1.3">3.42.4.1.3 Expected Actions</h5>
       <p>Upon receipt of a Register Document Set-b Request message, the Document Registry shall:</p>
       <ul>
