@@ -293,48 +293,508 @@
           <h5 id="3.10.5.1.1">3.10.5.1.1 Patient Identifier Cross-reference Manager audit message:</h5>
 
 
-          <p>Shall be able to record <a href="https://gazelle.ihe.net/gss/audit-messages/view.seam?id=97">IHE
-              - ITI-10 Patient Identifier Cross-reference Consumer audit message</a>. Where:</p>
-          <ol>
-            <li class="bullet-list1">Source.ActiveParticipant.UserId: The identity of the Patient
-              Identifier Cross-reference Manager facility and sending application from the HL7 message;
-              concatenated together, separated by the | character.</li>
-            <li class="bullet-list1">Source.ActiveParticipant.AlternativeUserId: The process ID as used
-              within the local operating system in the local system logs</li>
-            <li class="bullet-list1">HumanRequestor.UserID: Identity of the human that initiated the
-              transaction</li>
-            <li class="bullet-list1">HumanRequestor.RoleIDCode: Access Control role(s) the user holds
-              that allowed this transaction</li>
-            <li class="bullet-list1">Destination.ActiveParticipant.UserId: The identity of the Patient
-              Identifier Cross-reference Manager facility and sending application from the HL7 message;
-              concatenated together, separated by the | character.</li>
-            <li class="bullet-list1">Patient.ParticipantObjectID: The patient ID in HL7 CX format</li>
-            <li class="bullet-list1">Patient.ParticipantObjectDetail: Type=MSH-10 (the literal string),
-              Value=the value of MSH-10 (from the message content, base64 encoded)</li>
-          </ol>
-
-
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <div />
+              </td>
+              <td class="tableHeader">Field Name</td>
+              <td class="tableHeader">Opt</td>
+              <td class="tableHeader">Value Constraints</td>
+            </tr>
+            <tr>
+              <td rowspan="5">
+                <p>Event</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">EventIdentification</span>
+                </p>
+              </td>
+              <td>EventID</td>
+              <td>M</td>
+              <td>EV(110110, DCM, “Patient Record”)</td>
+            </tr>
+            <tr>
+              <td>EventActionCode</td>
+              <td>M</td>
+              <td>“R” (Read)</td>
+            </tr>
+            <tr>
+              <td>EventDateTime</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>EventOutcomeIndicator</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>EventTypeCode</td>
+              <td>M</td>
+              <td>EV(“ITI-10”, “IHE Transactions”, “PIX Update Notification”)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Source (Patient Identifier Cross-reference Manager) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Human Requestor (0..n)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Destination (Patient Identifier Cross-reference Consumer) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Audit Source (Patient Identifier Cross-reference Manager) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Patient IDs (1..n) (represents the components of PID-3)</td>
+            </tr>
+          </table>
+          <p>Where:</p>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="7">
+                <p>Source</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ActiveParticipant</span>
+                </p>
+              </td>
+              <td>UserID</td>
+              <td>M</td>
+              <td>The identity of the Patient Identifier Cross-reference Manager facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+            </tr>
+            <tr>
+              <td>AlternativeUserID</td>
+              <td>M</td>
+              <td>The process ID as used within the local operating system in the local system logs.</td>
+            </tr>
+            <tr>
+              <td>UserName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserIsRequestor</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>RoleIDCode</td>
+              <td>M</td>
+              <td>EV(110153, DCM, “Source”)</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointTypeCode</td>
+              <td>M</td>
+              <td>“1” for machine (DNS) name, “2” for IP address</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointID</td>
+              <td>M</td>
+              <td>The machine name or IP address.</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="7">
+                <p>Human Requestor (if known)</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ActiveParticipant</span>
+                </p>
+              </td>
+              <td>UserID</td>
+              <td>M</td>
+              <td>Identity of the human that initiated the transaction.</td>
+            </tr>
+            <tr>
+              <td>AlternativeUserID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserIsRequestor</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>RoleIDCode</td>
+              <td>U</td>
+              <td>Access Control role(s) the user holds that allows this transaction.</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointTypeCode</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="7">
+                <p>Destination</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ActiveParticipant</span>
+                </p>
+              </td>
+              <td>UserID</td>
+              <td>M</td>
+              <td>The identity of the Patient Identifier Cross-reference Consumer facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+            </tr>
+            <tr>
+              <td>AlternativeUserID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserIsRequestor</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>RoleIDCode</td>
+              <td>M</td>
+              <td>EV(110152, DCM, “Destination”)</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointTypeCode</td>
+              <td>M</td>
+              <td>“1” for machine (DNS) name, “2” for IP address</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointID</td>
+              <td>M</td>
+              <td>The machine name or IP address.</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="3">
+                <p>Audit Source</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">AuditSourceIdentification</span>
+                </p>
+              </td>
+              <td>AuditSourceID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>AuditEnterpriseSiteID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>AuditSourceTypeCode</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="9">
+                <p>Patient IDs</p>
+                <p>
+                  <span style="font-weight:bold">(AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+                </p>
+              </td>
+              <td>ParticipantObjectTypeCode</td>
+              <td>M</td>
+              <td>“1” (Person)</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectTypeCodeRole</td>
+              <td>M</td>
+              <td>“1” (Patient)</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectDataLifeCycle</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectIDTypeCode</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectSensitivity</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectID</td>
+              <td>M</td>
+              <td>the patient ID in HL7 CX format.</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectQuery</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectDetail</td>
+              <td>M</td>
+              <td>Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+            </tr>
+          </table>
           <h5 id="3.10.5.1.2">3.10.5.1.2 Patient Identifier Cross-reference Consumer audit message:</h5>
-
-          <p>Shall be able to record <a href="https://gazelle.ihe.net/gss/audit-messages/view.seam?id=98">IHE
-              - ITI-10 Patient Identifier Cross-reference Manager audit message</a>. Where:</p>
-          <ol>
-            <li class="bullet-list1">Source.ActiveParticipant.UserId: The identity of the Patient
-              Identifier Cross-reference Manager facility and sending application from the HL7 message;
-              concatenated together, separated by the | character.</li>
-            <li class="bullet-list1">HumanRequestor.UserID: Identity of the human that initiated the
-              transaction</li>
-            <li class="bullet-list1">HumanRequestor.RoleIDCode: Access Control role(s) the user holds
-              that allowed this transaction</li>
-            <li class="bullet-list1">Destination.ActiveParticipant.AlternativeUserId: The process ID as
-              used within the local operating system in the local system logs</li>
-            <li class="bullet-list1">Destination.ActiveParticipant.UserId: The identity of the Patient
-              Identifier Cross-reference Manager facility and sending application from the HL7 message;
-              concatenated together, separated by the | character.</li>
-            <li class="bullet-list1">Patient.ParticipantObjectID: The patient ID in HL7 CX format</li>
-            <li class="bullet-list1">Patient.ParticipantObjectDetail: Type=MSH-10 (the literal string),
-              Value=the value of MSH-10 (from the message content, base64 encoded)</li>
-          </ol>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <div />
+              </td>
+              <td>Field Name</td>
+              <td>Opt</td>
+              <td>Value Constraints</td>
+            </tr>
+            <tr>
+              <td rowspan="5">
+                <p>Event</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">EventIdentification</span>
+                </p>
+              </td>
+              <td>EventID</td>
+              <td>M</td>
+              <td>EV(110110, DCM, “Patient Record”)</td>
+            </tr>
+            <tr>
+              <td>EventActionCode</td>
+              <td>M</td>
+              <td>“U” (update)</td>
+            </tr>
+            <tr>
+              <td>EventDateTime</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>EventOutcomeIndicator</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>EventTypeCode</td>
+              <td>M</td>
+              <td>EV(“ITI-10”, “IHE Transactions”, “PIX Update Notification”)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Source (Patient Identifier Cross-reference Manager) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Destination (Patient Identifier Cross-reference Consumer) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Audit Source (Patient Identifier Cross-reference Consumer) (1)</td>
+            </tr>
+            <tr>
+              <td colspan="4">Patient IDs (1..n) (represents the components of PID-3)</td>
+            </tr>
+          </table>
+          <p>Where:</p>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="7">
+                <p>Source</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ActiveParticipant</span>
+                </p>
+              </td>
+              <td>UserID</td>
+              <td>M</td>
+              <td>The identity of the Patient Identifier Cross-reference Manager facility and sending application from the HL7 message; concatenated together, separated by the | character.</td>
+            </tr>
+            <tr>
+              <td>AlternativeUserID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserIsRequestor</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>RoleIDCode</td>
+              <td>M</td>
+              <td>EV(110153, DCM, “Source”)</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointTypeCode</td>
+              <td>M</td>
+              <td>“1” for machine (DNS) name, “2” for IP address</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointID</td>
+              <td>M</td>
+              <td>The machine name or IP address.</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="7">
+                <p>Destination</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ActiveParticipant</span>
+                </p>
+              </td>
+              <td>UserID</td>
+              <td>M</td>
+              <td>The identity of the Patient Identifier Cross-reference Consumer facility and receiving application from the HL7 message; concatenated together, separated by the | character.</td>
+            </tr>
+            <tr>
+              <td>AlternativeUserID</td>
+              <td>M</td>
+              <td>The process ID as used within the local operating system in the local system logs.</td>
+            </tr>
+            <tr>
+              <td>UserName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>UserIsRequestor</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>RoleIDCode</td>
+              <td>M</td>
+              <td>EV(110152, DCM, “Destination”)</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointTypeCode</td>
+              <td>M</td>
+              <td>“1” for machine (DNS) name, “2” for IP address</td>
+            </tr>
+            <tr>
+              <td>NetworkAccessPointID</td>
+              <td>M</td>
+              <td>The machine name or IP address.</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="3">
+                <p>Audit Source</p>
+                <p>
+                  <span style="font-weight:bold">AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">AuditSourceIdentification</span>
+                </p>
+              </td>
+              <td>AuditSourceID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>AuditEnterpriseSiteID</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>AuditSourceTypeCode</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+          </table>
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="9">
+                <p>Patient IDs</p>
+                <p>
+                  <span style="font-weight:bold">(AuditMessage/</span>
+                  <br />
+                  <span style="font-weight:bold">ParticipantObjectIdentification)</span>
+                </p>
+              </td>
+              <td>ParticipantObjectTypeCode</td>
+              <td>M</td>
+              <td>“1” (Person)</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectTypeCodeRole</td>
+              <td>M</td>
+              <td>“1” (Patient)</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectDataLifeCycle</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectIDTypeCode</td>
+              <td>M</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectSensitivity</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectID</td>
+              <td>M</td>
+              <td>the patient ID in HL7 CX format.</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectName</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectQuery</td>
+              <td>U</td>
+              <td>not specialized</td>
+            </tr>
+            <tr>
+              <td>ParticipantObjectDetail</td>
+              <td>M</td>
+              <td>Type=MSH-10 (the literal string), Value=the value of MSH-10 (from the message content, base64 encoded)</td>
+            </tr>
+          </table>
+    
 
         </div>
       </div>
