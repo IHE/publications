@@ -1,0 +1,94 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRecorder> a fhir:CapabilityStatement ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "IHE.PCF.consentRecorder"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "extensions" ] ;
+     fhir:div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_PCF_consentRecorder</h2><div><p>CapabilityStatement for the Consent Recorder Actor</p>\n<p>Explain</p>\n<ul>\n<li>uses <a href=\"ITI-108.html\">Access Consent [ITI-108]</a> to record new or updated Consent Resources</li>\n</ul>\n</div><table><tr><td>Mode</td><td>CLIENT</td></tr><tr><td>Description</td><td><div><p>PCF Consent Recorder provides capability to record a Privacy Consent.</p>\n</div></td></tr><tr><td>Transaction</td><td></td></tr><tr><td>System History</td><td></td></tr><tr><td>System Search</td><td>y</td></tr></table><table><tr><th><b>Resource Type</b></th><th><b>Profile</b></th><th><b title=\"GET a resource (read interaction)\">Read</b></th><th><b title=\"GET all set of resources of the type (search interaction)\">Search</b></th><th><b title=\"PUT a new resource version (update interaction)\">Update</b></th><th><b title=\"POST a new resource (create interaction)\">Create</b></th><th><b title=\"DELETE a resource (delete interaction)\">Delete</b></th></tr><tr><td>Consent</td><td> </td><td>y</td><td>y</td><td>y</td><td>y</td><td>y</td></tr></table></div>"
+  ] ; # 
+  fhir:url [ fhir:v "https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRecorder"^^xsd:anyURI] ; # 
+  fhir:version [ fhir:v "1.0.0-comment"] ; # 
+  fhir:name [ fhir:v "IHE_PCF_consentRecorder"] ; # 
+  fhir:title [ fhir:v "IHE PCF Consent Recorder"] ; # 
+  fhir:status [ fhir:v "active"] ; # 
+  fhir:experimental [ fhir:v "false"^^xsd:boolean] ; # 
+  fhir:date [ fhir:v "2023-02-14"^^xsd:date] ; # 
+  fhir:publisher [ fhir:v "IHE IT Infrastructure Technical Committee"] ; # 
+  fhir:contact ( [
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.ihe.net/ihe_domains/it_infrastructure/" ]
+     ] )
+  ] [
+     fhir:telecom ( [
+       fhir:system [ fhir:v "email" ] ;
+       fhir:value [ fhir:v "iti@ihe.net" ]
+     ] )
+  ] [
+     fhir:name [ fhir:v "IHE IT Infrastructure Technical Committee" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "email" ] ;
+       fhir:value [ fhir:v "iti@ihe.net" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "CapabilityStatement for the Consent Recorder Actor \n\nExplain\n- uses [Access Consent \\[ITI-108\\]](ITI-108.html) to record new or updated Consent Resources"] ; # 
+  fhir:jurisdiction ( [
+     fhir:coding ( [
+       fhir:system [ fhir:v "http://unstats.un.org/unsd/methods/m49/m49.htm"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "001" ]
+     ] )
+  ] ) ; # 
+  fhir:kind [ fhir:v "requirements"] ; # 
+  fhir:fhirVersion [ fhir:v "4.0.1"] ; # 
+  fhir:format ( [ fhir:v "application/fhir+xml"] [ fhir:v "application/fhir+json"] ) ; # 
+  fhir:rest ( [
+     fhir:mode [ fhir:v "client" ] ;
+     fhir:documentation [ fhir:v "PCF Consent Recorder provides capability to record a Privacy Consent." ] ;
+     fhir:security [
+       fhir:description [ fhir:v "Recommend [ATNA](https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html), encouraged [IHE-IUA](https://profiles.ihe.net/ITI/IUA/index.html) or [SMART-app-launch](http://www.hl7.org/fhir/smart-app-launch/)" ]
+     ] ;
+     fhir:resource ( [
+       fhir:type [ fhir:v "Consent" ] ;
+       fhir:documentation [ fhir:v "PCF transaction [Access Consent \\[ITI-108\\]](ITI-108.html)" ] ;
+       fhir:interaction ( [
+         fhir:code [ fhir:v "create" ]
+       ] [
+         fhir:code [ fhir:v "read" ]
+       ] [
+         fhir:code [ fhir:v "update" ]
+       ] [
+         fhir:code [ fhir:v "delete" ]
+       ] [
+         fhir:code [ fhir:v "search-type" ]
+       ] ) ;
+       fhir:searchParam ( [
+         fhir:name [ fhir:v "_lastUpdated" ] ;
+         fhir:type [ fhir:v "date" ] ;
+         fhir:documentation [ fhir:v "When the resource version last changed" ]
+       ] [
+         fhir:name [ fhir:v "_id" ] ;
+         fhir:type [ fhir:v "token" ] ;
+         fhir:documentation [ fhir:v "Logical id of this artifact" ]
+       ] [
+         fhir:name [ fhir:v "status" ] ;
+         fhir:type [ fhir:v "token" ] ;
+         fhir:documentation [ fhir:v "Whether the Consent record is active" ]
+       ] [
+         fhir:name [ fhir:v "patient" ] ;
+         fhir:type [ fhir:v "reference" ] ;
+         fhir:documentation [ fhir:v "The Patient" ]
+       ] )
+     ] ) ;
+     fhir:interaction ( [
+       fhir:code [ fhir:v "search-system" ]
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+
