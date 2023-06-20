@@ -70,6 +70,7 @@
         <a href="http://ihe.net/TF_Intro_Appendices.aspx">http://ihe.net/TF_Intro_Appendices</a>.
       </p>
       <p>Figure 9.1-1 shows the actors directly involved in the ATNA Profile and the relevant transactions between them.</p>
+      <p>Note:  In Figure 9.1-1, the Node Authentication [ITI-19] transaction is shown between the Secure Application and Secure Node actors.  It may also occur between two Secure Node actors, or between two Secure Application actors.</p>
       <div id="f9.1-1">
         <img src="media/Figure_9.1-1.png" alt="" />
         <p class="figureTitle">Figure 9.1-1: Audit Trail and Node Authentication Actor Diagram</p>
@@ -135,12 +136,12 @@
         </tbody>
       </table>
       <h3 id="9.1.1">9.1.1 Actor Descriptions and Actor Profile Requirements</h3>
-      <p>When an implementation supports a Secure Node, Secure Application or Audit Record Repository, the ATNA requirements – node authentication, user authentication, access control, event logging, and other security rules – apply to all of the actors in the implementation.</p>
+      
       <h4 id="9.1.1.1">9.1.1.1 Secure Node</h4>
       <p>A Secure Node is a system that provides security and privacy services (user authentication, secure communications, security audit recording, and security policy enforcement) for all software and services on that system. An ultrasound machine is an example of a Secure Node.</p>
       <p>Security services apply to all aspects of the system from the hardware up to the user interface and external communication. A Secure Node has control over this entire stack, and ensures that all aspects are covered by the security and privacy services. A Secure Node vendor does not need to invent its own disk drives or write its own operating system. Contractual control over security is sufficient. A short list of exceptions may exist if the risk analysis indicates that these are not significant and the full list of exceptions is documented.</p>
       <p>This permits cloud-based and other system architectures to claim to be a Secure Node when there are sufficient contractual controls to ensure that security and privacy services cover the entire relevant hardware and software stack. This includes any non-IHE applications that process PHI in that environment, such as database services.</p>
-      <p>The Secure Node shall:</p>
+      <p>When a system claims conformance to Secure Node, then the ATNA requirements apply to all actors in that system. The Secure Node shall:</p>
       <ol>
         <li class="numbered-list1">
           Use the Authenticate Node transaction for all network connections to or from the node that may expose private information as specified in
@@ -149,7 +150,9 @@
         </li>
       </ol>
       <ol start="2">
-        <li class="numbered-list1">Provide sufficient authentication methods, based on risk assessment, to ensure that only authorized users access the Secure Node.</li>
+        <li class="numbered-list1">Provide sufficient authentication methods, based on risk assessment, to ensure that only authorized users access the Secure Node.
+          See<a href="../Volume1/ch-9.html#9.4.1.2.1"> Section 9.4.1.2.1</a>.
+        </li>
         <li class="numbered-list1">
           Detect and report a Record Audit Event as specified in
           <a href="../Volume2/ITI-20.html#3.20">ITI TF-2: 3.20</a>
@@ -163,7 +166,7 @@
       <h4 id="9.1.1.2">9.1.1.2 Secure Application</h4>
       <p>A Secure Application provides security and privacy services (user authentication, secure communications, security audit recording, and security policy enforcement) for both grouped IHE actors and for functionality provided by related software and services within control of the Secure Application. A Secure Application is not responsible for security of its environment, e.g., the operating system and database outside of its control the way that a Secure Node is. A smartphone app is an example of a Secure Application that has control over the security for the application, but not the rest of the mobile device software or hardware security.</p>
       <p>The Secure Application does not have complete control over the full stack from hardware to user interface and external communications. It only has security services control over the actors with which it is grouped.</p>
-      <p>The Secure Application shall:</p>
+      <p>When a system claims conformance to Secure Application, then the ATNA requirements apply to all actors in that system. The Secure Application shall:</p>
       <ol>
         <li class="numbered-list1">
           Use the Authenticate Node transaction for all network connections to or from the application that may expose private information as specified in
@@ -172,7 +175,9 @@
         </li>
       </ol>
       <ol start="2">
-        <li class="numbered-list1">Provide sufficient authentication methods to ensure that only authorized users access the Secure Application</li>
+        <li class="numbered-list1">Provide sufficient authentication methods to ensure that only authorized users access the Secure Application
+          See<a href="../Volume1/ch-9.html#9.4.1.2.1"> Section 9.4.1.2.1</a>.
+        </li>
         <li class="numbered-list1">
           Detect and report a Record Audit Event as specified in
           <a href="../Volume2/ITI-20.html#3.20">ITI TF-2: 3.20</a>
@@ -540,8 +545,7 @@
           </tr>
         </tbody>
       </table>
-      <h3 id="9.3.1">9.3.1 Grouping implications</h3>
-      <p>When an IHE profile requires a grouping of an actor with either Secure Node or Secure Application, then the ATNA requirements apply to all actors in the implementation.</p>
+      
       <h2 id="9.4">9.4 ATNA Overview</h2>
       <p>The Audit Trail and Node Authentication (ATNA) Profile specifies foundational components that are part of an overall privacy and security system. These are:</p>
       <ul>
