@@ -444,6 +444,163 @@
           .
         </span>
       </p>
+      <p class="heading7" id="3.51.4.1.2.1.3">3.51.4.1.2.1.3 FindDocumentsByReferenceIdForMultiplePatients</p>
+      <p>This query shall be supported by Registries claiming the "Reference ID for Multiple Patients" Option.</p>
+      <p>This Multi-Patient Query is semantically identical to the FindDocumentsByReferenceIdList Stored Query (see <a
+              href="ITI-18.html#3.18.4.1.2.3.7.14">ITI TF-2:3.18.4.1.2.3.7.14</a>)
+          except:</p>
+      <ul>
+          <li class="bullet-list1">$XDSDocumentEntryPatientId is optional (may have zero values).
+          </li>
+          <li class="bullet-list1">$XDSDocumentEntryPatientId may contain multiple values.
+          </li>
+      </ul>
+      <p>
+          <strong>Returns:</strong>
+          XDSDocumentEntry or ObjectRef objects matching the query parameters
+      </p>
+      <table class="hover">
+          <thead>
+          <tr>
+              <td>Parameter Name</td>
+              <td>Attribute</td>
+              <td>Opt</td>
+              <td>Mult</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>$XDSDocumentEntryPatientId</td>
+              <td>XDSDocumentEntry.patientId</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryReferenceIdList <sup>5</sup></td>
+              <td>XDSDocumentEntry.referenceIdList <sup>2</sup></td>
+              <td>R</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryClassCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.classCode</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryTypeCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.typeCode</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryPracticeSettingCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.practiceSettingCode</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryCreationTimeFrom</td>
+              <td>Lower value of XDSDocumentEntry.creationTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryCreationTimeTo</td>
+              <td>Upper value of XDSDocumentEntry.creationTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryServiceStartTimeFrom</td>
+              <td>Lower value of XDSDocumentEntry.serviceStartTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryServiceStartTimeTo</td>
+              <td>Upper value of XDSDocumentEntry.serviceStartTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryServiceStopTimeFrom</td>
+              <td>Lower value of XDSDocumentEntry.serviceStopTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryServiceStopTimeTo</td>
+              <td>Upper value of XDSDocumentEntry.serviceStopTime</td>
+              <td>O</td>
+              <td>—</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryHealthcareFacilityTypeCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.healthcareFacilityTypeCode</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryEventCodeList <sup>1</sup></td>
+              <td>XDSDocumentEntry.eventCodeList <sup>2</sup></td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryConfidentialityCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.confidentialityCode <sup>2</sup></td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryAuthorPerson <sup>3</sup></td>
+              <td>XDSDocumentEntry.author</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryFormatCode <sup>1</sup></td>
+              <td>XDSDocumentEntry.formatCode</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryStatus</td>
+              <td>XDSDocumentEntry.availabilityStatus</td>
+              <td>R</td>
+              <td>M</td>
+          </tr>
+          <tr>
+              <td>$XDSDocumentEntryType <sup>4</sup></td>
+              <td>XDSDocumentEntry.objectType</td>
+              <td>O</td>
+              <td>M</td>
+          </tr>
+          </tbody>
+      </table>
+      <p>
+          <sup>1</sup>
+          Shall be coded according to specification in <a href="ITI-18.html#3.18.4.1.2.3.4">ITI TF-2:3.18.4.1.2.3.4 Coding of Code/Code-Scheme</a>.
+      </p>
+      <p>
+          <sup>2</sup>
+          Supports AND/OR semantics as specified in <a
+                  href="ITI-18.html#3.18.4.1.2.3.5.">ITI TF-2:3.18.4.1.2.3.5</a>.
+      </p>
+      <p>
+        <sup>3</sup>
+        The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character. The match shall be applied to the text contained in the Value elements of the authorPerson Slot on the author Classification (value strings of the authorPerson sub-attribute)
+      </p>
+      <p>
+          <sup>4</sup>
+          Valid values for this parameter are those defined in <a
+                  href="ITI-18.html#3.18.4.1.2.3.6.2.">ITI TF-2:3.18.4.1.2.3.6.2</a>.
+      </p>
+      <p>
+          <sup>5</sup>
+          The value for this parameter is a pattern compatible with the SQL keyword LIKE which allows the use of the following wildcard characters: % to match any (or no) characters and _ to match a single character.
+      </p>
       <h6 id="3.51.4.1.2.2">3.51.4.1.2.2 Multi-Patient Stored Query IDs</h6>
       <p>The following Query Ids shall be used to represent these queries.</p>
       <table cellspacing="0" cellpadding="0">
@@ -461,6 +618,10 @@
           <tr>
             <td>FindFoldersForMultiplePatients</td>
             <td>urn:uuid:50d3f5ac-39a2-11de-a1ca-b366239e58df</td>
+          </tr>
+          <tr>
+            <td>FindDocumentsByReferenceIdListForMultiplePatients</td>
+            <td>urn:uuid:1191642d-86c4-42d8-b784-f95445f9f0d5</td>
           </tr>
         </tbody>
       </table>
