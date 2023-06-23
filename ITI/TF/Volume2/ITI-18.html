@@ -220,6 +220,275 @@
                         whether this DocumentEntry matches the query.
                     </li>
                 </ul>
+
+                <p class="heading8" id="3.18.4.1.2.3.3.2">3.18.4.1.2.3.3.2 Handling partial dates/times</p>
+
+                <p>Both the query parameters and the metadata attributes
+                themselves are in DTM format. The DTM format allows for a varying degree of
+                specificity by allowing a particular year, month, date, hour, minute, or second
+                to be specified (See <a href="../Volume3/ch-4.2.html#4.2.3.1.7">ITI TF-3: Table 4.2.3.1.7-2: Data Types</a> for a description of the DTM
+                format). This introduces additional complexity when determining whether a
+                particular metadata attribute matches the supplied query parameters. </p>
+                
+                <p>If the query parameters and the metadata attributes are
+                specified at the same specificity level, then comparison is simple string
+                comparison. The following table illustrates some examples of this comparison:</p>
+                
+                <table>
+                 <tr>
+                  <td class="tableHeader">From Search Parameter</td>
+                  <td class="tableHeader">Metadata Value</td>
+                  <td class="tableHeader">To Search Parameter</td>
+                  <td class="tableHeader">Metadata Matches Query?</td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210101</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20211231</p>
+                  </td>
+                  <td>
+                  <p>Yes, May 27 2021 is between Jan 1 2021 and Dec 31 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20211231</p>
+                  </td>
+                  <td>
+                  <p>Yes, May 27 2021 is between May 27 2021 and Dec 31 2021
+                  (inclusive)</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210528</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20211231</p>
+                  </td>
+                  <td>
+                  <p>No, May 28 2021 is after May 27 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210101</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20210526</p>
+                  </td>
+                  <td>
+                  <p>No, May 26 2021 is before May 27 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210101</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>No, May 27 2021 is not between Jan 1 2021 and May 27
+                  2021 (exclusive).</p>
+                  </td>
+                 </tr>
+                </table>
+                
+                
+                
+                <p>If the query parameters are less specific than the metadata
+                attributes, then the from query parameter should be increased in specificity by
+                selecting the earliest possible instant that matches that parameter, while the
+                to query parameter should be increased in specificity by selecting the latest
+                possible instant that matches that parameter. The following table illustrates
+                some examples of this comparison:</p>
+                
+                <table>
+                 <tr>
+                        <td class="tableHeader">From Search Parameter</td>
+                        <td class="tableHeader">Metadata Value</td>
+                        <td class="tableHeader">To Search Parameter</td>
+                        <td class="tableHeader">Metadata Matches Query?</td>
+                 <tr>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>Yes, May 27 2021 is between Jan 1 2021 and Dec 31 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>20210526</p>
+                  </td>
+                  <td>
+                  <p>No, May 26 2021 is before May 27 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20210528</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>No, May 28 2021 is before May 27 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>2020</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>2020</p>
+                  </td>
+                  <td>
+                  <p>No, May 27 2021 is not in the year 2020.</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>2020</p>
+                  </td>
+                  <td>
+                  <p>20210527</p>
+                  </td>
+                  <td>
+                  <p>2022</p>
+                  </td>
+                  <td>
+                  <p>Yes, May 27 2021 is between Jan 01 2020 and Dec 31 2022</p>
+                  </td>
+                 </tr>
+                </table>
+                
+                <p>Finally, if the metadata attributes are less specific than
+                the query parameters, then the metadata attributes should be considered to
+                match the query parameters as if the query parameters had been reduced in
+                specificity to the level of the metadata attributes. The following table
+                illustrates some examples of this comparison:</p>
+                
+                <table>
+                    <tr>
+                        <td class="tableHeader">From Search Parameter</td>
+                        <td class="tableHeader">Metadata Value</td>
+                        <td class="tableHeader">To Search Parameter</td>
+                        <td class="tableHeader">Metadata Matches Query?</td>
+                       </tr>
+                  <td>
+                  <p>20210701</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20210701</p>
+                  </td>
+                  <td>
+                  <p>Yes, the query covers a range of time in 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20211231</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20221231</p>
+                  </td>
+                  <td>
+                  <p>Yes, the query covers a range of time in 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20200101</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  <p>&nbsp;</p>
+                  </td>
+                  <td>
+                  <p>20210101</p>
+                  </td>
+                  <td>
+                  <p>Yes, the query covers a range of time in 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20100101</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20201231</p>
+                  </td>
+                  <td>
+                  <p>No, the query does not cover a range of time in 2021</p>
+                  </td>
+                 </tr>
+                 <tr>
+                  <td>
+                  <p>20220101</p>
+                  </td>
+                  <td>
+                  <p>2021</p>
+                  </td>
+                  <td>
+                  <p>20301231</p>
+                  </td>
+                  <td>
+                  <p>No, the query does not cover a range of time in 2021</p>
+                  </td>
+                 </tr>
+                </table>
+                
+                
+
                 <p class="heading7" id="3.18.4.1.2.3.4">3.18.4.1.2.3.4 Coding of Code/Code-Scheme</p>
                 <p>When specifying a coded value parameter, an abbreviated form of the HL7 V2.5 CE format shall be used.
                     Only the first (identifier) and third (coding scheme) elements shall be specified. Both are
