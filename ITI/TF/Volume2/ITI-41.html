@@ -318,6 +318,18 @@
       <ul>
         <li class="bullet-list1">Validate the sourceId. If the submission is not from a permitted Content Sender, the submission may be rejected and an error returned.</li>
       </ul>
+
+      <p>If a DocumentEntry is included but the document content is missing (e.g. no Document element with matching id), the Content Receiver should reject the submission and return an XDSMissingDocument error.</p>
+      <p>
+      If a Document element is included with no associated DocumentEntry, the Content Receiver may reject the submission and return an XDSMissingDocumentMetadata error.</p>
+      <p>The Content Receiver may return the DocumentQueued warning to notify the Content Sender that a specific document will be processed later.</p>
+      <p>If the SubmissionSet intendedRecipient is populated, the Content Receiver should make reasonable efforts to determine whether each recipient can be notified, but may return success before confirming full receipt and processing by the intendedRecipients. If notification of an intendedRecipient is not possible, the Content Receiver may do any of the following:</p>
+      <ul>
+        <li class="bullet-list1">Fail the transaction and return the code UnknownRecipient or UnavailableRecipient as an error</li>
+        <li class="bullet-list1">Succeed and return the code UnknownRecipient or UnavailableRecipient as a warning</li>
+        <li class="bullet-list1">Succeed silently</li>
+      </ul>
+
       <h6 id="3.41.4.1.3.1">3.41.4.1.3.1 Document Recipient Expected Actions</h6>
       <p>In addition to the Expected Actions of all Content Receivers (described in the beginning of Section 3.41.4.1.3), a Document Recipient shall meet the following requirements.</p>
       <p>A Document Recipient may choose to accept a submission without any context, such as knowledge of a prior submission.</p>
