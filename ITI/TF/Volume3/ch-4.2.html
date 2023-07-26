@@ -1748,6 +1748,10 @@
                     <br />
                     <span>20050102030405</span>
                   </p>
+		  <p>In situations where systems distinguish between strings and numbers, the data type of DTM in document sharing 
+                    metadata shall be handled as a number. Note that this means that only years between 1000 and 9999 inclusive are 
+                    supported in document sharing metadata, since the year portion is fixed to 4 digits and the numeric data type 
+                    prevents the use of leading zeros.</p>
                 </td>
               </tr>
               <tr>
@@ -2876,6 +2880,14 @@
               href="http://profiles.ihe.net/fhir/ihe.formatcode.fhir/">http://profiles.ihe.net/fhir/ihe.formatcode.fhir/</a><span>.</span>
           </p>
           <p>Format codes defined by non-IHE domains should be a valid unique URN.</p>
+          <p><span>The canonical URI that identifies a</span> 
+            <a
+             href="https://hl7.org/fhir/structuredefinition.html">FHIR StructureDefinition “profile”</a> <span>may be used as a formatCode. 
+            For example there is a</span>
+            <a
+             href="https://hl7.org/fhir/clinicaldocument.html">“Clinical Document”</a> <span>FHIR StructureDefinition profile on the 
+              Composition Resource that has the canonical URI: </span> <span class="XMLname">http//hl7.org/fhir/StructureDefinition/clinicaldocument</span><span>.</span>
+            </p>
           <p>
             <span style="font-weight:bold">Coding:</span>
           </p>
@@ -3198,8 +3210,11 @@
             <span style="font-weight:bold">Description:</span>
           </p>
           <p>Represents the start time of the service being documented (clinically significant, but not necessarily when
-            the document was produced or approved). This may be the same as the encounter time in case the service was
-            delivered during an encounter. Encounter time is not coded in metadata but may be coded within the document.
+            the document was produced or approved). This may be the encounter time in case the service was
+            delivered during an encounter.
+          </p>
+          <p>There are cases where it may be appropriate to omit this attribute, for example: the document is not 
+            episodic (e.g., an On-Demand “Active Problem List”), or the service start time is not known.
           </p>
           <p>Note: If needed, other times associated with the document, such as time of approval, are to be recorded
             within the document.</p>
@@ -3226,8 +3241,12 @@
             <span style="font-weight:bold">Description:</span>
           </p>
           <p>Represents the stop time of the service being documented (clinically significant, but not necessarily when
-            the document was produced or approved). This may be the same as the encounter time in case the service was
-            delivered during an encounter. Encounter time is not coded in metadata but may be coded within the document.
+            the document was produced or approved). This may be the encounter time in case the service was
+            delivered during an encounter.
+          </p>
+          <p>There are cases where it may be appropriate to omit this attribute, for example: the document is not 
+            episodic (e.g., an On-Demand “Active Problem List”), the document is for an episode that is still in 
+            progress, or the end time is not known.
           </p>
           <p>If the service happens at a point in time, this attribute shall contain the same value as the
             serviceStartTime.</p>
@@ -3473,7 +3492,8 @@
           <p>
             <span style="font-weight:bold">Description:</span>
           </p>
-          <p>Globally unique identifier assigned to the document by its creator.</p>
+          <p>Globally unique identifier assigned to the document by its creator. This value may come from 
+            inside the document, e.g., for a CDA, ClinicalDocument/id.</p>
           <p>A DocumentEntry representing a single document is identified by the uniqueId attribute; the linkage between
             DocumentEntry and the document it represents is made with the uniqueId attribute.</p>
           <p>This unique identifier may be used in other documents to reference this document.</p>
@@ -3496,17 +3516,15 @@
             <span>for a description of coding an ebRIM ExternalIdentifier) which references, and is contained in, the
               ExtrinsicObject representing the DocumentEntry. There shall be only a single uniqueId value.</span>
           </p>
-          <p>Document creators should use OIDs in dot notation (see OID in Table 4.2.3.1.7-2) as uniqueIds, with the
-            following exceptions:</p>
+          <p>Document creators should use one of the following formats for the uniqueId:</p>
           <ul>
+            <li class="bullet-list1">OID in dot notation (see OID in Table 4.2.3.1.7-2).</li>
+            <li class="bullet-list1">UUID URN-encoded (see UUID in Table 4.2.3.1.7-2).</li>
+            <li class="bullet-list1">URI (see URI in Table 4.2.3.1.7-2).</li>
             <li class="bullet-list1">For documents using HL7v3 Instance Identifiers (e.g., CDAs) with an extension
               attribute, the uniqueId should be a serialization of the root and extension attributes in the form
               root^extension. The HL7v3 Instance Identifier URN encoding (using the namespace urn:hl7ii) should not be
               used.</li>
-            <li class="bullet-list1">For documents using UUIDs, the uniqueId should be URN-encoded (see UUID in Table
-              4.2.3.1.7-2).</li>
-            <li class="bullet-list1">For documents using URIs, the uniqueId should be the URI, except for URNs with the
-              “urn:oid:” and “urn:uuid:” namespaces (see OID and UUID above).</li>
           </ul>
           <p>All guidance regarding the structure and format of the identifier is meant to support document creators in
             following best practices for identifier management. From the perspective of all other actors, the uniqueId
@@ -4806,30 +4824,30 @@
               </tr>
               <tr>
                 <td>XDSMissingDocument</td>
-                <td>DocumentEntry exists in metadata with no corresponding attached document</td>
+                <td>DocumentEntry exists in metadata with no matching Document element</td>
                 <td>P</td>
               </tr>
               <tr>
                 <td>XDSMissingDocumentMetadata</td>
-                <td>MIME package contains MIME part with Content-Id header not found in metadata</td>
+                <td>Document element present with no matching DocumentEntry</td>
                 <td>P</td>
               </tr>
               <tr>
                 <td>XDSMissingHomeCommunityId</td>
                 <td>A value for the homeCommunityId is required and has not been specified</td>
-                <td>SQ, XGQ, RS, XGR</td>
+                <td>P, SQ, XGQ, RS, XGR</td>
               </tr>
               <tr>
                 <td>XDSNonIdenticalHash</td>
                 <td>Document being registered was a duplicate (uniqueId already in Document Registry) but hash does not
                   match. The codeContext shall indicate uniqueId.</td>
-                <td>R</td>
+                <td>P, R</td>
               </tr>
               <tr>
                 <td>XDSNonIdenticalSize</td>
                 <td>Document being registered was a duplicate (uniqueId already in Document Registry) but size does not
                   match. The codeContext shall indicate uniqueId.</td>
-                <td>R</td>
+                <td>P, R</td>
               </tr>
               <tr>
                 <td>XDSPatientIdDoesNotMatch</td>
@@ -4937,12 +4955,12 @@
               <tr>
                 <td>XDSUnavailableCommunity</td>
                 <td>A community which would have been contacted was not available. See Note 2.</td>
-                <td>SQ, RS</td>
+                <td>P, SQ, RS</td>
               </tr>
               <tr>
                 <td>XDSUnknownCommunity</td>
                 <td>A value for the homeCommunityId is not recognized</td>
-                <td>SQ, XGQ, RS, XGR</td>
+                <td>P, SQ, XGQ, RS, XGR</td>
               </tr>
               <tr>
                 <td>XDSUnknownPatientId</td>
@@ -4963,6 +4981,16 @@
                 <td>The Query Id provided in the request is not recognized.</td>
                 <td>SQ, XGQ</td>
               </tr>
+              <tr>
+                <td>UnavailableRecipient</td>
+                <td>An intendedRecipient which would have been contacted was not available.</td>
+                <td>P</td>
+              </tr>
+              <tr>
+                <td>UnknownRecipient</td>
+                <td>A value for intendedRecipient is not recognized.</td>
+                <td>P</td>
+              </tr>
             </tbody>
           </table>
           <p class="note">
@@ -4978,8 +5006,8 @@
             <span style="font-weight:bold">Note 2:</span>
           </p>
           <p class="note">Two examples of the use of error code XDSUnavailableCommunity are:</p>
-          <p class="note">1. A Cross Gateway Query or Cross Gateway Retrieve fails because the community identified by a
-            homeCommunityId could not be contacted.</p>
+          <p class="note">1. A Cross Gateway Query, Cross Gateway Retrieve or Cross Gateway Document Set Provide fails 
+            because the community identified by a homeCommunityId could not be contacted.</p>
           <p class="note">2. A Cross Gateway Query based on Patient ID could not contact some known communities to relay
             the query.</p>
           <p class="note">The error would be generated by the Initiating Gateway and returned in the Registry Stored
