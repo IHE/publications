@@ -196,6 +196,26 @@
       Gateway Retrieve requests for On-Demand Documents to responders which have returned an On-Demand
       Document Entry in a Cross Gateway Query response. Thus there are no compatibility concerns with
       this transaction.</p>
+    <h6 id="3.39.4.1.3.2">3.39.4.1.3.2 Delayed Document Assembly Options</h6>
+    <p>
+    If a Responding Gateway supports the Delayed Document Assembly Option and the Stable Document Entry being retrieved currently has:
+    </p>
+    <ul>
+      <li class="bullet-list2">size = <code>0</code> (zero)</li>
+      <li class="bullet-list2">hash = <code>da39a3ee5e6b4b0d3255bfef95601890afd80709</code> (SHA1 hash of a zero length file)</li>
+    </ul>
+    <p>
+      then the Responding Gateway shall:
+    </p>
+    <ul>
+      <li class="bullet-list1">Assemble the content into a complete document.</li>
+      <li class="bullet-list1">Return the assembled document in response to the Cross Gateway Retrieve Request.</li>
+      <li class="bullet-list1">Save the assembled document for future retrievals since all future retrievals shall return the identical content.</li>
+      <li class="bullet-list1">Calculate and save the size and hash values of the assembled document and return these if this Stable Document Entry is included in any subsequent Cross Gateway Query Responses.</li>
+    </ul>
+    <p>
+      and the Responding Gateway should save the current time and return this as the creationTime if this Stable Document Entry is included in any subsequent Cross Gateway Query Responses.
+    </p>
     <h4 id="3.39.4.2">3.39.4.2 Cross Gateway Retrieve Response</h4>
     <h5 id="3.39.4.2.1">3.39.4.2.1 Trigger Events</h5>
     <p>This message will be triggered by a Cross Gateway Retrieve Message.</p>
