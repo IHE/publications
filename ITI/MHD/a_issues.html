@@ -33,10 +33,10 @@
     <![endif]-->
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
+    <link rel="fhir-logo" sizes="144x144" href="assets/ico/icon-fhir-144.png"/>
+    <link rel="fhir-logo" sizes="114x114" href="assets/ico/icon-fhir-114.png"/>
+    <link rel="fhir-logo" sizes="72x72" href="assets/ico/icon-fhir-72.png"/>
+    <link rel="fhir-logo" href="assets/ico/icon-fhir-57.png"/>
     <link rel="shortcut icon" href="assets/ico/favicon.png"/>
   </head>
   <body onload="document.body.style.opacity='1'">
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.2.0 - Trial-Implementation
+            <span style="display:inline-block;">4.2.1 - Trial-Implementation
 
 
 
@@ -172,10 +172,13 @@
     </ul>
   </li>
   <li>
+    <a href="artifacts.html">Artifact Index</a>
+  </li>
+  <li>
     <a href="testplan.html">Test Plan</a>
   </li>
   <li>
-    <a href="artifacts.html">Artifact Index</a>
+    <a href="download.html">Download</a>
   </li>
 </ul>
             </div>  <!-- /.nav-collapse -->
@@ -197,7 +200,7 @@
 
             <a href="#bottom">bottom</a>
 
-          | <a href="artifacts.html">next&gt;</a>
+          | <a href="download.html">next&gt;</a>
 
           </span>
 
@@ -219,7 +222,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.0: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.1: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
   <h2>Issues</h2>
   
 
@@ -237,6 +240,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <p><!-- white space is critical inside of capture --></p>
 <div class="markdown-toc">
 <ul id="markdown-toc">
+  <li><a href="#significant-changes-since-mhd-version-420" id="markdown-toc-significant-changes-since-mhd-version-420">Significant changes since MHD Version 4.2.0</a></li>
   <li><a href="#significant-changes-since-mhd-version-410" id="markdown-toc-significant-changes-since-mhd-version-410">Significant changes since MHD Version 4.1.0</a></li>
   <li><a href="#significant-changes-since-mhd-version-32" id="markdown-toc-significant-changes-since-mhd-version-32">Significant changes since MHD Version 3.2</a></li>
   <li><a href="#issues" id="markdown-toc-issues">Issues</a>    <ul>
@@ -248,6 +252,17 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 </div>
 <div class="stu-note">
+
+  <h3 id="significant-changes-since-mhd-version-420">Significant changes since MHD Version 4.2.0</h3>
+
+  <p>Version 4.2.1</p>
+  <ul>
+    <li>quality improvements</li>
+    <li>downloads and analysis page</li>
+    <li>add context to extensions</li>
+    <li>CP-ITI-1254 Date range clarity,</li>
+    <li>capabilityStatement improvements.</li>
+  </ul>
 
   <h3 id="significant-changes-since-mhd-version-410">Significant changes since MHD Version 4.1.0</h3>
 
@@ -374,7 +389,7 @@ It is important to note that as soon as a Change Proposal is approved, it carrie
     <li>CP-ITI-1113: Added additional clarification of Reference url compliance vs .attachment.url compliance. Where attachment.url is a datatype “URL” it can carry a value that is compliant with Reference but can also carry any valid URL.</li>
     <li>CP-ITI-1102: Addressed bugs in the volume 3 table.</li>
     <li>CP-ITI-1101: This CP requests specifics on what is expected of a Document Responder implementing the Comprehensive Metadata Option. This is already handled in the more correct location in Volume 2 on the expected actions for the Document Responder. See Section 3.65.4.1.3.</li>
-    <li>CP-ITI-1095: It is observed that in FHIR a transaction must succeed or fail. Thus, the inclusion of a Folder that the Document Recipient can’t process should result in failure of the whole transaction. The text of MHD has aligned with the text of XDS ITI TF-2b:3.41.4.1.3.1 that allows a soft failure on Folders that are not supported. Should MHD take this softer position or stick with normal FHIR transaction behavior. For those systems based on a FHIR system they would likely prefer sticking with the FHIR definition, but those are likely also to easily support Folder (List Resource). Those that are a frontend to an XDS (XDS-on-FHIR) are more likely to prefer the softer approach, as they are going to need to pass through PartialFolderContentNotProcessed. Thus, the MHD Profile has been updated to indicate that either a full transaction failure or soft failure shall happen.</li>
+    <li>CP-ITI-1095: It is observed that in FHIR a transaction must succeed or fail. Thus, the inclusion of a Folder that the Document Recipient can’t process should result in failure of the whole transaction. The text of MHD has aligned with the text of XDS ITI TF-2:3.41.4.1.3.1 that allows a soft failure on Folders that are not supported. Should MHD take this softer position or stick with normal FHIR transaction behavior. For those systems based on a FHIR system they would likely prefer sticking with the FHIR definition, but those are likely also to easily support Folder (List Resource). Those that are a frontend to an XDS (XDS-on-FHIR) are more likely to prefer the softer approach, as they are going to need to pass through PartialFolderContentNotProcessed. Thus, the MHD Profile has been updated to indicate that either a full transaction failure or soft failure shall happen.</li>
     <li>CP-ITI-1089: Added emphasis on the response to the query transactions are compliant resources to the FHIR specification and will likely be compliant with MHD. There was already emphasis for the Document Consumer to be robust when processing the Bundle. There were questions of needing to address an operational environment with mismatched minimal vs comprehensive, this seems well enough explained and unclear what further wording would help with this clarity.</li>
     <li>MHD_049: ProviderRole has been added to FHIR STU3, and now added to DocumentReference and DocumentManifest. A FHIR CR 13266 resolved this.</li>
     <li>MHD_050: Using FHIR List as a Folder is minimally supported. Have defined a constant List.code that identifies those List resources that are Document Sharing Folders.</li>
@@ -438,7 +453,7 @@ It is important to note that as soon as a Change Proposal is approved, it carrie
               </td>
               <td style="text-align:right">&#xA0;
 
-                <a href="artifacts.html">next&gt;</a>
+                <a href="download.html">next&gt;</a>
 
               </td>
             </tr>
@@ -448,7 +463,7 @@ It is important to note that as soon as a Change Proposal is approved, it carrie
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Dec 7, 2022 16:41-0600">2022-12-07</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Aug 2, 2023 11:14-0500">2023-08-02</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
