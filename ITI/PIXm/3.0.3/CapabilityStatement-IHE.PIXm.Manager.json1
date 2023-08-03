@@ -1,0 +1,72 @@
+{
+  "resourceType" : "CapabilityStatement",
+  "id" : "IHE.PIXm.Manager",
+  "text" : {
+    "status" : "extensions",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_PIXm_Manager</h2><div><p>The <a href=\"volume-1.html#141113-patient-identifier-cross-reference-manager\">Patient Identifier Cross-reference Manager Actor</a> CapabililtyStatement expresses the requirements that shall be provided.</p>\n<ul>\n<li>using FHIR R4</li>\n<li>using json and xml encoding</li>\n<li>support for <a href=\"ITI-83.html\">ITI-83</a> the $ihe-pix operation</li>\n<li>support conditional update for [ITI-104]</li>\n<li>support conditional delete for [ITI-104] if Remove Patient Option is supported</li>\n<li>should use a security framework. Recommend <a href=\"https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html\">ATNA</a>, encouraged <a href=\"https://profiles.ihe.net/ITI/IUA/index.html\">IHE-IUA</a> or <a href=\"http://www.hl7.org/fhir/smart-app-launch/\">SMART-app-launch</a></li>\n</ul>\n</div><table><tr><td>Mode</td><td>SERVER</td></tr><tr><td>Description</td><td><div><p>PIXm server provides capability to query for Patient Identity Cross-reference matching a query parameters</p>\n</div></td></tr><tr><td>Transaction</td><td></td></tr><tr><td>System History</td><td></td></tr><tr><td>System Search</td><td></td></tr></table><table><tr><th><b>Resource Type</b></th><th><b>Profile</b></th><th><b title=\"GET a resource (read interaction)\">Read</b></th><th><b title=\"GET all set of resources of the type (search interaction)\">Search</b></th><th><b title=\"PUT a new resource version (update interaction)\">Update</b></th><th><b title=\"POST a new resource (create interaction)\">Create</b></th><th><b title=\"DELETE a resource (delete interaction)\">Delete</b></th></tr><tr><td>Patient</td><td>Supported profiles:<br/>\u00a0\u00a0<a href=\"StructureDefinition-IHE.PIXm.Patient.html\">PIXm Patient constraints for Feed</a></td><td></td><td></td><td>y</td><td></td><td>y</td></tr></table></div>"
+  },
+  "url" : "https://profiles.ihe.net/ITI/PIXm/CapabilityStatement/IHE.PIXm.Manager",
+  "version" : "3.0.3",
+  "name" : "IHE_PIXm_Manager",
+  "title" : "IHE ITI Patient Identifier Cross-referencing for mobile (PIXm) - Manager (server)",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2023-08-03T15:57:19-05:00",
+  "publisher" : "IHE IT Infrastructure Technical Committee",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
+  "description" : "The [Patient Identifier Cross-reference Manager Actor](volume-1.html#141113-patient-identifier-cross-reference-manager) CapabililtyStatement expresses the requirements that shall be provided.\n - using FHIR R4\n - using json and xml encoding\n - support for [ITI-83](ITI-83.html) the $ihe-pix operation\n - support conditional update for [ITI-104]\n - support conditional delete for [ITI-104] if Remove Patient Option is supported\n - should use a security framework. Recommend [ATNA](https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html), encouraged [IHE-IUA](https://profiles.ihe.net/ITI/IUA/index.html) or [SMART-app-launch](http://www.hl7.org/fhir/smart-app-launch/)",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "kind" : "requirements",
+  "fhirVersion" : "4.0.1",
+  "format" : ["application/fhir+xml",
+  "application/fhir+json"],
+  "rest" : [{
+    "mode" : "server",
+    "documentation" : "PIXm server provides capability to query for Patient Identity Cross-reference matching a query parameters",
+    "security" : {
+      "description" : "Recommend [ATNA](https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html), encouraged [IHE-IUA](https://profiles.ihe.net/ITI/IUA/index.html) or [SMART-app-launch](http://www.hl7.org/fhir/smart-app-launch/)"
+    },
+    "resource" : [{
+      "type" : "Patient",
+      "supportedProfile" : ["https://profiles.ihe.net/ITI/PIXm/StructureDefinition/IHE.PIXm.Patient"],
+      "interaction" : [{
+        "code" : "update",
+        "documentation" : "conditional update for [ITI-104]"
+      },
+      {
+        "code" : "delete",
+        "documentation" : "conditional delete for [ITI-104] for Remove Patient Option"
+      }],
+      "conditionalCreate" : true,
+      "conditionalUpdate" : true,
+      "conditionalDelete" : "single",
+      "operation" : [{
+        "name" : "$ihe-pix",
+        "definition" : "https://profiles.ihe.net/ITI/PIXm/OperationDefinition/IHE_PIXm_pix"
+      }]
+    }]
+  }]
+}
