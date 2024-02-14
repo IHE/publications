@@ -6,11 +6,11 @@
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_ITI_BALP</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp</pre><div><p>The Basic Audit Log Patterns (BALP) Implementation Guide is a Content Profile that defines some basic and reusable AuditEvent patterns. This includes basic audit log profiles for FHIR RESTful operations to be used when there is not a more specific audit event defined. A focus is enabling Privacy centric AuditEvent logs that hold well formed indication of the Patient when they are the subject of the activity being recorded in the log. Where a more specific audit event can be defined it should be derived off of these basic patterns.</p>\n</div></div>"
   },
   "url" : "https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp",
-  "version" : "1.1.2",
+  "version" : "1.1.3",
   "name" : "IHE_ITI_BALP",
   "title" : "Basic Audit Log Patterns (BALP)",
   "status" : "active",
-  "date" : "2023-08-04",
+  "date" : "2024-02-16",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "name" : "IHE IT Infrastructure Technical Committee",
@@ -48,7 +48,7 @@
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "5.0.0"
+    "version" : "5.3.0"
   },
   {
     "id" : "hl7ext",
@@ -339,6 +339,17 @@
     {
       "extension" : [{
         "url" : "code",
+        "valueString" : "apply-wg"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
         "valueString" : "fmm-definition"
       },
       {
@@ -382,7 +393,7 @@
     },
     {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools#current"
+      "valueCode" : "hl7.fhir.uv.tools#0.1.0"
     },
     {
       "extension" : [{
@@ -662,6 +673,17 @@
     {
       "extension" : [{
         "url" : "code",
+        "valueCode" : "apply-wg"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
         "valueCode" : "fmm-definition"
       },
       {
@@ -713,6 +735,42 @@
       },
       "name" : "Agent types holding User-Agent",
       "description" : "AuditEvent.agent.type values holding OAuth/SAML identified user. Note that user is not just users, but representes the higest agent responsible for triggering the activity being recorded in the AuditEvent.\n\nOften this agent also has a type coding that is more specific to the transaction and the direction of the transaction.\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#IRCP // use for query/retrieve\n- http://terminology.hl7.org/CodeSystem/v3-RoleClass#AGNT // use for push/create/update\n- http://terminology.hl7.org/CodeSystem/v3-RoleClass#PAT  // use when the user is the patient\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#AUT \"Author\" // used with create/update\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#INF \"Informant\" // used with export\n- http://terminology.hl7.org/CodeSystem/v3-ParticipationType#CST \"Custodian\" // used with export",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/AllReadVS"
+      },
+      "name" : "all Reads",
+      "description" : "ValueSet of the restful-interaction reads",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/AllSearchVS"
+      },
+      "name" : "all Searches",
+      "description" : "ValueSet of the restful-interaction searches",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/AllUpdateVS"
+      },
+      "name" : "all Updates",
+      "description" : "ValueSet of the restful-interaction updates",
       "exampleBoolean" : false
     },
     {
@@ -1414,24 +1472,12 @@
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "StructureDefinition:resource"
-      }],
-      "reference" : {
-        "reference" : "StructureDefinition/IHE.IUA.71"
-      },
-      "name" : "IHE IUA ITI-71 AuditEvent for a successful Get Access Token",
-      "description" : "Defines constraints on the AuditEvent Resource to record when a ITI-71 - Get Access Token succeeds\n\nThis AuditEvent is recorded by Authorization Client and/or Authorization Server that are grouped with ATNA Secure Node or Secure Application.\n- User Authenticated event\n- ITI-71 subtype\n- 2 or 3 agents\n  - client - \n  - auth-server\n  - user user\n- 1 entity  \n  - the access token request",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.BALP.ATNA.AuditRecordRepository"
       },
-      "name" : "IHE.BALP.ATNA.AuditRecordRepository",
+      "name" : "IHE ATNA Audit Record Repository supporting BALP Content",
       "description" : "CapabilityStatement for [ATNA](https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html) Audit Record Repository Actor with the ATNA ATX:FHIR Feed Option and Retrieve Audit Message Option defined in [RESTful-ATNA Supplement](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_RESTful-ATNA.pdf) that also has support for BALP Content.\n\nThis Actor is derived off of the ATNA Audit Record Repository actor that is not yet defined fully in an IG. This CapabilityStatement does not represent a formal Actor, but rather a system that has grouped ATNA and BALP.",
       "exampleBoolean" : false
     },
@@ -1443,7 +1489,7 @@
       "reference" : {
         "reference" : "CapabilityStatement/IHE.BALP.AuditConsumer"
       },
-      "name" : "IHE.BALP.AuditConsumer",
+      "name" : "IHE BALP Audit Consumer",
       "description" : "CapabilityStatement for [Audit Consumer](volume-1.html#152112-audit-consumer) Actor in [BALP](index.html).\n\nThis CapabilityStatement replicates the requirements that would come from the ATNA **Audit Consumer* actor supporting **ATNA Retrieve Audit Message Option**.",
       "exampleBoolean" : false
     },
@@ -1455,8 +1501,20 @@
       "reference" : {
         "reference" : "CapabilityStatement/IHE.BALP.AuditCreator"
       },
-      "name" : "IHE.BALP.AuditCreator",
+      "name" : "IHE BALP Audit Creator",
       "description" : "CapabilityStatement for [Audit Creator](volume-1.html#152111-audit-creator) Actor in [BALP](index.html).\n\nThis Actor is derived off of the **ATNA Secure Application** or **Secure Node** actor with **ATNA ATX:FHIR Feed Option** using ITI-20.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.IUA.71"
+      },
+      "name" : "IHE IUA ITI-71 AuditEvent for a successful Get Access Token",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a ITI-71 - Get Access Token succeeds\n\nThis AuditEvent is recorded by Authorization Client and/or Authorization Server that are grouped with ATNA Secure Node or Secure Application.\n- User Authenticated event\n- ITI-71 subtype\n- 2 or 3 agents\n  - client - \n  - auth-server\n  - user user\n- 1 entity  \n  - the access token request",
       "exampleBoolean" : false
     },
     {
@@ -1857,7 +1915,7 @@
           "valueUrl" : "other.html"
         }],
         "nameUrl" : "other.html",
-        "title" : "Changes to Other Profiles",
+        "title" : "Changes to Other IHE Profiles",
         "generation" : "markdown"
       },
       {
@@ -1872,19 +1930,19 @@
       {
         "extension" : [{
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
-          "valueUrl" : "issues.html"
+          "valueUrl" : "appendix.html"
         }],
-        "nameUrl" : "issues.html",
-        "title" : "BasicAudit Open and Closed issues",
+        "nameUrl" : "appendix.html",
+        "title" : "AuditEvent Use in IHE Profiles",
         "generation" : "markdown"
       },
       {
         "extension" : [{
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
-          "valueUrl" : "appendix.html"
+          "valueUrl" : "issues.html"
         }],
-        "nameUrl" : "appendix.html",
-        "title" : "AuditEvent use in IHE Implementation Guides",
+        "nameUrl" : "issues.html",
+        "title" : "BasicAudit Open and Closed issues",
         "generation" : "markdown"
       }]
     },
