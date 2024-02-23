@@ -38,11 +38,13 @@
       <sch:assert test="count(f:type) &gt;= 1">type: minimum cardinality of 'type' is 1</sch:assert>
       <sch:assert test="count(f:what) &lt;= 0">what: maximum cardinality of 'what' is 0</sch:assert>
       <sch:assert test="count(f:type) &gt;= 1">type: minimum cardinality of 'type' is 1</sch:assert>
+      <sch:assert test="count(f:role) &gt;= 1">role: minimum cardinality of 'role' is 1</sch:assert>
       <sch:assert test="count(f:lifecycle) &lt;= 0">lifecycle: maximum cardinality of 'lifecycle' is 0</sch:assert>
       <sch:assert test="count(f:query) &gt;= 1">query: minimum cardinality of 'query' is 1</sch:assert>
       <sch:assert test="count(f:detail) &lt;= 0">detail: maximum cardinality of 'detail' is 0</sch:assert>
       <sch:assert test="count(f:what) &gt;= 1">what: minimum cardinality of 'what' is 1</sch:assert>
       <sch:assert test="count(f:type) &gt;= 1">type: minimum cardinality of 'type' is 1</sch:assert>
+      <sch:assert test="count(f:role) &gt;= 1">role: minimum cardinality of 'role' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
