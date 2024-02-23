@@ -7,11 +7,11 @@
 </div></div>
   </text>
   <url value="https://profiles.ihe.net/ITI/PCF/ImplementationGuide/ihe.iti.pcf"/>
-  <version value="1.0.0"/>
+  <version value="1.1.0"/>
   <name value="IHE_ITI_PCF"/>
   <title value="Privacy Consent on FHIR (PCF)"/>
   <status value="active"/>
-  <date value="2023-08-04"/>
+  <date value="2024-02-23"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -41,14 +41,14 @@
   </jurisdiction>
   <packageId value="ihe.iti.pcf"/>
   <license value="CC-BY-4.0"/>
-  <fhirVersion value="4.3.0"/>
+  <fhirVersion value="4.0.1"/>
   <dependsOn id="hl7tx">
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment">
       <valueMarkdown value="Automatically added as a dependency - all IGs depend on HL7 Terminology"/>
     </extension>
     <uri value="http://terminology.hl7.org/ImplementationGuide/hl7.terminology"/>
     <packageId value="hl7.terminology.r4"/>
-    <version value="5.0.0"/>
+    <version value="5.3.0"/>
   </dependsOn>
   <dependsOn id="hl7ext">
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment">
@@ -279,6 +279,14 @@
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
+        <valueString value="apply-wg"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
         <valueString value="fmm-definition"/>
       </extension>
       <extension url="value">
@@ -310,7 +318,7 @@
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency">
-      <valueCode value="hl7.fhir.uv.tools#current"/>
+      <valueCode value="hl7.fhir.uv.tools#0.1.0"/>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
@@ -515,6 +523,14 @@
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
         <valueCode value="apply-license"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
+        <valueCode value="apply-wg"/>
       </extension>
       <extension url="value">
         <valueString value="true"/>
@@ -888,7 +904,7 @@
         <reference value="Consent/ex-consent-intermediate-data"/>
       </reference>
       <name value="Consent allowing specific data"/>
-      <description value="Consent allowing specific data&#xA;&#xA;This is the Basic part:&#xA;- status is active - so it should be enforced&#xA;- scope is privacy &#xA;- category is LOINC 59284-0 Consent&#xA;- date indicated when the consent is recorded&#xA;- patient is identified&#xA;- performer is the patient&#xA;- organization is identified&#xA;- source indicate a DocumentReference (with included text of the policy)&#xA;- policy url is to a base policy&#xA;- base provision is #permit -- accepting the policy&#xA;- base provision includes TPO so as to be clear this is a consent about TPO&#xA;&#xA;This is the Intermediate part:&#xA;- with specific data itemized.&#xA;  - [alcohol use 1](Observation-ex-alcoholUse.html)&#xA;  - [blood sugar 1](Observation-ex-bloodSugar.html)&#xA;  - [blood pressure 1](Observation-ex-bloodPressure.html)&#xA;  - [weight 1](Observation-ex-weight.html)&#xA;  - [weight 2](Observation-ex-weight-stone.html)&#xA;  - [encounter 1](Encounter-ex-encounter.html)"/>
+      <description value="Consent allowing specific data&#xA;&#xA;This is the Basic part:&#xA;- status is active - so it should be enforced&#xA;- scope is privacy &#xA;- category is LOINC 59284-0 Consent&#xA;- date indicated when the consent is recorded&#xA;- patient is identified&#xA;- performer is the patient&#xA;- organization is identified&#xA;- source indicate a DocumentReference (with included text of the policy)&#xA;- policy url is to a base policy&#xA;- base provision is #permit -- accepting the policy&#xA;- base provision includes TPO so as to be clear this is a consent about TPO&#xA;&#xA;This is the Intermediate part:&#xA;- with specific data itemized.&#xA;  - [alcohol use 1](Observation-ex-alcoholUse.html)&#xA;  - [blood sugar 1](Observation-ex-bloodSugar.html)&#xA;  - [blood pressure 1](Observation-ex-bloodPressure.html)&#xA;  - [weight 1](Observation-ex-weight.html)&#xA;  - [weight 2](Observation-ex-weight-2.html)&#xA;  - [encounter 1](Encounter-ex-encounter.html)"/>
       <exampleCanonical value="https://profiles.ihe.net/ITI/PCF/StructureDefinition/IHE.PCF.consentIntermediate"/>
       <groupingId value="IntermediateConsent"/>
     </resource>
@@ -993,6 +1009,17 @@
         <valueString value="Practitioner"/>
       </extension>
       <reference>
+        <reference value="Practitioner/ex-author"/>
+      </reference>
+      <name value="Dummy Authoring Practitioner example"/>
+      <description value="Dummy Practitioner example for completeness sake. No actual use of this resource other than an example target"/>
+      <exampleBoolean value="true"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="Practitioner"/>
+      </extension>
+      <reference>
         <reference value="Practitioner/ex-practitioner"/>
       </reference>
       <name value="Dummy Practitioner example"/>
@@ -1053,10 +1080,10 @@
         <valueString value="Observation"/>
       </extension>
       <reference>
-        <reference value="Observation/ex-weight-stone"/>
+        <reference value="Observation/ex-weight-2"/>
       </reference>
       <name value="Example of an valid FHIR bodyWeight R4 observation, but not compliant with the profile"/>
-      <description value="Sample for demonstration purposes of a common weight Observation.&#xA;- Given that this is not compliant, it is thus not declaring that it is compliant, it is just an Observation&#xA;- marked as test data&#xA;- status of final&#xA;- category of vital-signs&#xA;- code of loinc 29463-7 and 3141-9&#xA;- also code of snomed 27113001&#xA;- subject of the example patient&#xA;- linked to an encounter&#xA;- effectiveDateTime = March 28, 2016&#xA;- weight 20 stone&#xA;- note: a bit heavy, about 280 lbs"/>
+      <description value="Sample for demonstration purposes of a common weight Observation.&#xA;- Given that this is not compliant, it is thus not declaring that it is compliant, it is just an Observation&#xA;- marked as test data&#xA;- status of final&#xA;- category of vital-signs&#xA;- code of loinc 29463-7 and 3141-9&#xA;- also code of snomed 27113001&#xA;- subject of the example patient&#xA;- linked to an encounter&#xA;- effectiveDateTime = March 28, 2016&#xA;- weight 280 lbs&#xA;- note: a bit heavy, about 280 lbs"/>
       <exampleBoolean value="true"/>
       <groupingId value="SLS"/>
     </resource>
@@ -1255,50 +1282,80 @@
       <exampleBoolean value="false"/>
     </resource>
     <page>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+        <valueUrl value="toc.html"/>
+      </extension>
       <nameUrl value="toc.html"/>
       <title value="Table of Contents"/>
       <generation value="html"/>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="index.html"/>
+        </extension>
         <nameUrl value="index.html"/>
         <title value="Privacy Consent on FHIR (PCF) Home"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="volume-1.html"/>
+        </extension>
         <nameUrl value="volume-1.html"/>
         <title value="1:53 Privacy Consent on FHIR"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="ch-P.html"/>
+        </extension>
         <nameUrl value="ch-P.html"/>
         <title value="1:Appendix P: Privacy Access Policies (Informative)"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="ITI-108.html"/>
+        </extension>
         <nameUrl value="ITI-108.html"/>
         <title value="2:3.108 Access Consent [ITI-108]"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="content.html"/>
+        </extension>
         <nameUrl value="content.html"/>
         <title value="3:5.8 Privacy Consent Patterns"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="other.html"/>
+        </extension>
         <nameUrl value="other.html"/>
         <title value="Changes to Other IHE Specifications"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="download.html"/>
+        </extension>
         <nameUrl value="download.html"/>
         <title value="Download and Analysis"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="testplan.html"/>
+        </extension>
         <nameUrl value="testplan.html"/>
         <title value="Test Plan"/>
         <generation value="markdown"/>
       </page>
       <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="issues.html"/>
+        </extension>
         <nameUrl value="issues.html"/>
         <title value="Significant Changes &amp; Issues"/>
         <generation value="markdown"/>
