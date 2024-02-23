@@ -1,0 +1,83 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "PDQmMatch",
+  "text" : {
+    "status" : "extensions",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>URL: [base]/Patient/$match</p><p>Input parameters Profile: <a href=\"StructureDefinition-IHE.PDQm.MatchParametersIn.html\">PDQm Match Input Parameters Profile</a></p><p>Output parameters Profile: <a href=\"StructureDefinition-IHE.PDQm.MatchParametersOut.html\">PDQm Match Output Bundle Profile</a></p><p>Parameters</p><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>resource</td><td/><td>1..1</td><td><a href=\"http://hl7.org/fhir/R4/patient.html\">Patient</a></td><td/><td><div><p>Use this to provide an entire set of patient details for the MPI to match against (e.g. POST a patient record to Patient/$match).</p>\n</div></td></tr><tr><td>IN</td><td>onlyCertainMatches</td><td/><td>0..1</td><td><a href=\"http://hl7.org/fhir/R4/datatypes.html#boolean\">boolean</a></td><td/><td><div><p>If there are multiple potential matches, then the match SHOULD not return the results with this flag set to true. When false, the server MAY return multiple results with each result graded accordingly.</p>\n</div></td></tr><tr><td>IN</td><td>count</td><td/><td>0..1</td><td><a href=\"http://hl7.org/fhir/R4/datatypes.html#integer\">integer</a></td><td/><td><div><p>The maximum number of records to return. If no value is provided, the server decides how many matches to return. Note that clients SHOULD be careful when using this, as it MAY prevent probable - and valid - matches from being returned.</p>\n</div></td></tr><tr><td>OUT</td><td>return</td><td/><td>1..1</td><td><a href=\"http://hl7.org/fhir/R4/bundle.html\">Bundle</a></td><td/><td><div><p>A bundle contain a set of Patient records that represent possible matches, optionally it MAY also contain an OperationOutcome with further information about the search results (such as warnings or information messages, such as a count of records that were close but eliminated) If the operation was unsuccessful, then an OperationOutcome MAY be returned along with a BadRequest status Code (e.g. security issue, or insufficient properties in patient fragment - check against profile).</p>\n<p>Note: as this is the only out parameter, it is a resource, and it has the name 'return', the result of this operation is returned directly as a resource</p>\n</div></td></tr></table></div>"
+  },
+  "url" : "https://profiles.ihe.net/ITI/PDQm/OperationDefinition/PDQmMatch",
+  "version" : "3.0.0",
+  "name" : "Find_Patient_Matches_PDQm",
+  "title" : "PDQm $Match",
+  "status" : "draft",
+  "kind" : "operation",
+  "date" : "2024-02-23T14:37:19-06:00",
+  "publisher" : "IHE IT Infrastructure Technical Committee",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
+  "description" : "This operation implements the [Patient Demographics Match \\[ITI-119\\]](ITI-119.html) transaction.\nIt is fully compatible with the [$match Operation on Patient](http://hl7.org/fhir/R4/patient-operation-match.html). \nThe only changes are to constrain the input parameters to use the [PDQm Patient Profile for $match Input](StructureDefinition-IHE.PDQm.MatchInputPatient.html) profile\nand to constring the output parameters to use the [PDQm Patient Profile](StructureDefinition-IHE.PDQm.Patient.html) profile.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "match",
+  "base" : "http://hl7.org/fhir/OperationDefinition/Patient-match",
+  "resource" : ["Patient"],
+  "system" : false,
+  "type" : true,
+  "instance" : false,
+  "inputProfile" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersIn",
+  "outputProfile" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersOut",
+  "parameter" : [{
+    "name" : "resource",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "Use this to provide an entire set of patient details for the MPI to match against (e.g. POST a patient record to Patient/$match).",
+    "type" : "Patient"
+  },
+  {
+    "name" : "onlyCertainMatches",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "If there are multiple potential matches, then the match SHOULD not return the results with this flag set to true. When false, the server MAY return multiple results with each result graded accordingly.",
+    "type" : "boolean"
+  },
+  {
+    "name" : "count",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The maximum number of records to return. If no value is provided, the server decides how many matches to return. Note that clients SHOULD be careful when using this, as it MAY prevent probable - and valid - matches from being returned.",
+    "type" : "integer"
+  },
+  {
+    "name" : "return",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "A bundle contain a set of Patient records that represent possible matches, optionally it MAY also contain an OperationOutcome with further information about the search results (such as warnings or information messages, such as a count of records that were close but eliminated) If the operation was unsuccessful, then an OperationOutcome MAY be returned along with a BadRequest status Code (e.g. security issue, or insufficient properties in patient fragment - check against profile).\n\nNote: as this is the only out parameter, it is a resource, and it has the name 'return', the result of this operation is returned directly as a resource",
+    "type" : "Bundle"
+  }]
+}
