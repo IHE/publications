@@ -1,0 +1,63 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/DSUBm/Bundle/ex-operationStatus> a fhir:Bundle ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "ex-operationStatus"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/DSUBm/StructureDefinition/IHE.DSUBm.StatusOperation-Bundle"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/DSUBm/StructureDefinition/IHE.DSUBm.StatusOperation-Bundle>
+     ] )
+  ] ; # 
+  fhir:type [ fhir:v "searchset"] ; # 
+  fhir:link ( [
+     fhir:relation [ fhir:v "self" ] ;
+     fhir:url [ fhir:v "https://example.org/fhir/Subscription/$status?status=error"^^xsd:anyURI ]
+  ] ) ; # 
+  fhir:entry ( [
+     fhir:fullUrl [ fhir:v "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100007"^^xsd:anyURI ] ;
+     fhir:resource ( <urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100007> ) ;
+     fhir:search [
+       fhir:mode [ fhir:v "match" ]
+     ]
+  ] ) . # 
+
+<urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00111100007> a fhir:Parameters ;
+  fhir:id [ fhir:v "ex-SubscriptionStatus-StatusOperation"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/DSUBm/StructureDefinition/IHE.DSUBm.SubscriptionStatus-StatusOperation"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/DSUBm/StructureDefinition/IHE.DSUBm.SubscriptionStatus-StatusOperation>
+     ] )
+  ] ; # 
+  fhir:parameter ( [
+     fhir:name [ fhir:v "subscription" ] ;
+     fhir:value [
+       a fhir:Reference ;
+       fhir:link <https://example.org/fhir/Subscription/ex-Subscription-DocumentReference-PatientDependent> ;
+       fhir:reference [ fhir:v "https://example.org/fhir/Subscription/ex-Subscription-DocumentReference-PatientDependent" ]
+     ]
+  ] [
+     fhir:name [ fhir:v "status" ] ;
+     fhir:value [ fhir:v "error" ]
+  ] [
+     fhir:name [ fhir:v "type" ] ;
+     fhir:value [ fhir:v "query-status" ]
+  ] [
+     fhir:name [ fhir:v "events-since-subscription-start" ] ;
+     fhir:value [ fhir:v "3" ]
+  ] [
+     fhir:name [ fhir:v "topic" ] ;
+     fhir:value [
+       fhir:v "https://profiles.ihe.net/ITI/DSUBm/SubscriptionTopic/DSUBm-SubscriptionTopic-DocumentReference-PatientDependent"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/DSUBm/SubscriptionTopic/DSUBm-SubscriptionTopic-DocumentReference-PatientDependent>
+     ]
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+
