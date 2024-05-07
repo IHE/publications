@@ -26,7 +26,7 @@
           </div>
           <div class="top-bar-right hide-for-small-only">
             <ul class="menu">
-              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br /><mark>Revision 1.0, March 4, 2024 – Initial Draft</mark></li>
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 1.0, April 24, 2024 – Initial Draft</li>
             </ul>
               <ul class="menu align-right">
                     <li><input id="ihe-search-field" type="search" placeholder="Search"></li>
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div id="main-top" class="cell medium-10 large-10">
-      <h2 id="5.10">5.10 Document Digital Signature in JSON (DSGj) Document Content</h2>
+      <h2 id="5.10">5.10 Document Digital Signature (DSG) JSON Signature Document Content</h2>
       <p>Document Digital Signature content shall conform to JAdES schema for signatures, with extensions and restrictions defined in the following. IHE is not changing any optionality, prohibiting use of options, or mandating options. Issues such as long-term archival management of certificates are out of scope of this profile. Shall there be a conflict in the requirements specified here versus as specified in JAdES, then the JAdES specification shall be considered as authoritative.</p>
       <h3 id="5.10.1">5.10.1 References</h3>
       <h4 id="5.10.1.1">5.10.1.1 Normative References</h4>
@@ -77,7 +77,6 @@
         <a href="https://www.etsi.org/deliver/etsi_ts/119100_119199/11918201/01.01.01_60/ts_11918201v010101p.pdf">https://www.etsi.org/deliver/etsi_ts/119100_119199/11918201/01.01.01_60/ts_11918201v010101p.pdf</a>
         <span>  -- aka. ETSI TS 119 182-1</span>
       </p>
-      <h4 id="5.10.1.2">5.10.1.2 Informative References</h4>
       <p>
         <span style="font-weight:bold">[RFC 7797]</span>
         <span>JSON Web Signature (JWS) Unencoded Payload Option</span>
@@ -96,6 +95,24 @@
         <a href="https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.04.03_60/ts_119312v010403p.pdf">https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.04.03_60/ts_119312v010403p.pdf</a>
         <span />
       </p>
+      <h4 id="5.10.1.2">5.10.1.2 Informative References</h4>
+      <p>
+        <span style="font-weight:bold">[ASTM-E1762-05]</span>
+        <span>ASTM E1762-95(2013) – Standard Guide for the Authentication of Health Care Information</span>
+        <span />
+      </p>
+      <p>
+        <span style="font-weight:bold">[ETSI TS 119 511]</span>
+        <span>Electronic Signatures and Infrastructures (ESI); Policy and security requirements for trust service providers providing long-term preservation of digital signatures or general data using digital signature techniques</span>
+        <a href="https://www.etsi.org/deliver/etsi_ts/119500_119599/119511/01.01.01_60/ts_119511v010101p.pdf">https://www.etsi.org/deliver/etsi_ts/119500_119599/119511/01.01.01_60/ts_119511v010101p.pdf</a>
+        <span />
+      </p>
+      <p>
+        <span style="font-weight:bold">[ETSI ES 201 733]</span>
+        <span>Electronic Signatures Formats</span>
+        <a href="https://www.etsi.org/deliver/etsi_es/201700_201799/201733/01.01.02_50/es_201733v010102m.pdf">https://www.etsi.org/deliver/etsi_es/201700_201799/201733/01.01.02_50/es_201733v010102m.pdf</a>
+        <span />
+      </p>
       <h3 id="5.10.2">5.10.2 JSON Signature Specification</h3>
       <p>The following constraints define the <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-3.2">JWS JSON</a> object. This block is common to the detached signature and Enveloping signature.</p>
       <ul>
@@ -105,11 +122,39 @@
         </ul>
       
       <h4 id="5.10.2.1">5.10.2.1 Protected Header</h4>
-        <h5 id ="5.10.2.1.1">"alg" (Algorithm) Header Parameter</h5>
+        <h5 id ="5.10.2.1.1">5.10.2.1.1 "alg" (Algorithm) Header Parameter</h5>
           <ul>
-            <li class="bullet-list1">SHALL have "alg" as "HS256" (must support), "RS256" (recommended) and more algorithm options can be supported as specified in JSON Web Algorithms (JWA) (see <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-3.1">RFC 7518</a>)</li>
-            <li><mark>Its value should be one of the algorithms for digital signatures recommended by in ETSI TS 119 312 [21].</mark></li>
+            <li class="bullet-list1">SHALL be present</li>
+            <li> It is recommend to use algorithms as specified in <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-3.1">RFC 7518</a> and <a href="https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.01.01_60/ts_119312v010101p.pdf">ETSI TS 119 312</a></li>
           </ul>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>RFC 7518</th>
+                <th>ETSI TS 119 312 (Table 4.a)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>required</td>
+                <td>RS256</td>
+                <td>sha256-with-rsa</td>
+              </tr>
+              <tr>
+                <td>recommended</td>
+                <td>ES256</td>
+                <td>sha256-with-ecdsa</td>
+              </tr>
+              <tr>
+                <td>required by RFC 7518*</td>
+                <td>HS256</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+            </table>
+            <p class="note">* HS256 is required by RFC 7518 and not by this specification, it is only mentioned here for consistency purposes</p>
+
         <h5 id="5.10.2.1.2">5.10.2.1.2 "crit" (Critical) Parameter</h5>
           <ul>
             <li>The header SHALL include the crit header parameter and conform to specifications as per JAdES</li>
@@ -154,24 +199,21 @@
         <h5 id="5.10.3.1.1">5.10.3.1.1 "sigD" Header Parameter</h5>
         <ul>
           <li>sigD parameter shall be included as per 5.2.8.1 of the JAdES Specification</li>
-            <li>mID member shall be present and set to "http://uri.etsi.org/19182/ObjectIdByURIHash"</li>
-            
-              <li class="bullet-list1"><mark>
-                pars member shall shall be used and hold the document uniqueID. For documents that do not use a URI as the uniqueId, the Affinity Domain should determine an appropriate way to encode the DocumentEntry.uniqueId</mark>
+            <li>mID member shall be present and set to "http://uri.etsi.org/19182/ObjectIdByURI"</li>            
+              <li class="bullet-list1">
+                The pars member shall be an array of strings that contain references to each data object* being signed. This array is considered the manifest of the data objects being signed. Each string in this array shall be an URI. See <a href="5.10.6.1.9">Section 5.10.6.1.9</a> for more details.
              </li>
             <li>ctys member shall be present</li>
-            <li>hashV, and the hashM members shall be present</li>
         </ul>
+        <p class="note">* Note: Data Objects refer to the binary representations of document, or any other content on which the digital signature is captured and verified</p>
         <h5 id="5.10.3.1.2">5.10.3.1.2 "cty" (content type) Header Parameter</h5>
           <ul><li>SHALL not be included</li></ul>
-        <h5 id="5.10.3.1.2">5.10.3.1.2 "b64" Header Parameter</h5>
-        <ul><li>SHALL not be included or SHALL be set to "true" if included</li></ul>
         <h4 id="5.10.3.2">5.10.3.2 Unprotected Header</h4>
           <ul><li>No additional considerations other than the ones specified in the section <a href="5.10.2.2">5.10.2.2</a></li></ul>
       <h4 id="5.10.3.3">5.10.3.3 Payload</h4>
-        <ul><li>The Detached Signature is accomplished by deleting the "payload" member of the JWS JSON Object.</li></ul>
+        <ul><li>The Detached Signature is accomplished by deleting the "payload" member of the JWS JSON Object</li></ul>
       <h4 id="5.10.3.4">5.10.3.4 Signature</h4>
-        <ul><li>As per section 5.2.8.3.3 of JAdES, the JWS Payload shall contribute as an empty stream to the computation of JWS Signature Value</a></li></ul>
+        <ul><li>As per section 5.2.8.3.2 of JAdES, the JWS Payload shall contribute as a stream of octets to the computation of JWS Signature Value</a></li></ul>
       <h3 id="5.10.4">5.10.4 JSON Enveloping Signature</h3> 
       <h4 id="5.10.4.1">5.10.4.1 Protected Header</h4>
         <h5 id="5.10.4.1.1">5.10.4.1.1 "cty" (content type) Header Parameter</h5>
@@ -230,12 +272,15 @@
       <p>Should be the same as the display name for the signature purpose</p>
       <h5 id="5.10.6.1.8">5.10.6.1.8 XDSDocumentEntry.language</h5>
       <p>The language of the signature content shall be ‘art’ as in “artificial”.</p>
+      <h5 id ="5.10.6.1.9">5.10.6.1.9 XDSDocumentEntry.uniqueId</h5>
+      <p>
+        Shall use an URI format to hold the document uniqueID. For documents that do not use a URI as the uniqueId, the Affinity Domain should determine an appropriate way to encode the DocumentEntry.uniqueId. See ebRIM Representation <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2.26">Section 4.2.3.2.26</a></p>
       <h4 id="5.10.6.3">5.10.6.3 Document Sharing - Folder Metadata</h4>
       <p>This document content profile makes no changes to the structure of Folders.</p>
       <h4 id="5.10.6.4">5.10.6.4 Document Associations</h4>
-      <p>When Detached Signature Option is used, the Content Creator shall use the “SIGNS” associationType Document Relationship to associate the signature (sourceObject) to the documents that it signs (targetObjects). <mark>See Section 4.2.2.</mark></p>
+      <p>When Detached Signature Option is used, the Content Creator shall use the “SIGNS” associationType Document Relationship to associate the signature (sourceObject) to the documents that it signs (targetObjects). See ebRIM Representation <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.2">Section 4.2.2</a>.</p>
       <h3 id="5.10.7">5.10.7 Security Considerations</h3>
-      <p><mark>See JAdES specification for risk assessment and mitigation plan on Digital Signatures.</mark></p>
+      <p>See ETSI ES 201 733 and ETSI TS 119 511 specifications for risk assessment and mitigation plan on Digital Signatures. Note that Content Creators and Content Consumers should be capable of being configured to other conformance policies to support other jurisdictional policies.</p>
       <h4 id="5.10.7.1">5.10.7.1 Content Creator</h4>
       <p>When a Content Creator is grouped with an ATNA Secure Node or Secure Application, it shall create an Audit Message indicating the Signature Creation event.</p>
       <table cellspacing="0" cellpadding="0">
