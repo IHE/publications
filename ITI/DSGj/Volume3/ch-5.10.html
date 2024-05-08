@@ -114,7 +114,7 @@
         <span />
       </p>
       <h3 id="5.10.2">5.10.2 JSON Signature Specification</h3>
-      <p>The following constraints define the <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-3.2">JWS JSON</a> object. This block is common to the detached signature and Enveloping signature.</p>
+      <p>The following constraints define the <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-3.2">JWS JSON</a> object. This block is common to the Detached signature and Enveloping signature.</p>
       <ul>
         <li class="bullet-list1"><p><strong>SHALL</strong> use JSON Web Signature (JWS)(see <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>). JSON Web Signature (JWS) is a means of representing content secured with digital signatures or Hash-based Message Authentication Codes (HMACs) using JSON data structures. Cryptographic algorithms and identifiers used with this specification are enumerated in the separate JSON Web Algorithms (JWA)</li>
         <li class="bullet-list1">The JWS SHALL be represented as a JSON object which uses JWS JSON serialization as specified in <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a></li>
@@ -126,50 +126,27 @@
           <ul>
             <li class="bullet-list1">SHALL be present</li>
             <li> It is recommend to use algorithms as specified in <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-3.1">RFC 7518</a> and <a href="https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.01.01_60/ts_119312v010101p.pdf">ETSI TS 119 312</a></li>
+            <li>RS256 algorithm SHALL be implemented for the purpose of interoperability testing. However, implementors SHOULD take into account additional considerations such as jurisdictional policies, quantum safe computing, and evolving guidance from RFC 7518 and ETSI TS 119 312.</li>
           </ul>
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>RFC 7518</th>
-                <th>ETSI TS 119 312 (Table 4.a)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>required</td>
-                <td>RS256</td>
-                <td>sha256-with-rsa</td>
-              </tr>
-              <tr>
-                <td>recommended</td>
-                <td>ES256</td>
-                <td>sha256-with-ecdsa</td>
-              </tr>
-              <tr>
-                <td>required by RFC 7518*</td>
-                <td>HS256</td>
-                <td>-</td>
-              </tr>
-            </tbody>
-            </table>
-            <p class="note">* HS256 is required by RFC 7518 and not by this specification, it is only mentioned here for consistency purposes</p>
-
-        <h5 id="5.10.2.1.2">5.10.2.1.2 "crit" (Critical) Parameter</h5>
+        <h5 id="5.10.2.1.2">5.10.2.1.2 "kid" (key identifier) Parameter</h5>
+        <ul>
+          <li>The kid parameter, if present, is a hint indicating which key was used to secure the JWS. The kid claim is used by DSG Content Consumers for looking up the public key for verification of digital signatures</li>
+        </ul>
+        <h5 id="5.10.2.1.3">5.10.2.1.3 "crit" (critical) Parameter</h5>
           <ul>
             <li>The header SHALL include the crit header parameter and conform to specifications as per JAdES</li>
           </ul>
-        <h5 id="5.10.2.1.3">5.10.2.1.3 "sigT" (claimed signing Time) Parameter</h5>
+        <h5 id="5.10.2.1.4">5.10.2.1.4 "sigT" (claimed signing Time) Parameter</h5>
           <ul>
             <li>The header SHALL include the sigT header parameter and conform to specifications as per IHE Consistent Time (CT) profile</li>
           </ul>
-         <h5 id="5.10.2.1.4">5.10.2.1.4 Certificate Digest</h5>
+         <h5 id="5.10.2.1.5">5.10.2.1.5 Certificate Digest</h5>
           <ul>
             <li>SHALL have at least one of the following header parameters in its JWS Protected Header: x5t#S256 (specified in clause 4.1.8 of IETF RFC 7515), x5c (specified in clause 4.1.6 of IETF RFC 7515), sigX5ts (specified in clause 5.2.2.3 of the JAdES specification), or x5t#o (specified in clause 5.2.2 of the JAdES Specification).</li>
           </ul>
-        <h5 id="5.10.2.1.5">5.10.2.1.5 "srCms" (signer commitments) Header Parameter</h5>
+        <h5 id="5.10.2.1.6">5.10.2.1.6 "srCms" (signer commitments) Header Parameter</h5>
           <ul><li class="bullet-list1">The Signature SHALL include a "srCms signer commitments" element for the Purpose(s) of Signature. The Purpose can be the action being attested to, or the role associated with the signature. The value shall come from <a href = "http://hl7.org/fhir/ValueSet/signature-type">Signature type ValueSet</a> as defined in FHIR.</li></ul>
-        <h5 id="5.10.2.1.6">5.10.2.1.6 "sigPId" (signature Policy Identifier) Header Parameter</h5>
+        <h5 id="5.10.2.1.7">5.10.2.1.7 "sigPId" (signature Policy Identifier) Header Parameter</h5>
         <ul>
         <li class="bullet-list1">
          <span>The policy may be identified in the sigPId header parameter as</span>
@@ -192,7 +169,7 @@
         <ul><li class="bullet-list1">See the Payload sections within Detached (<a href="5.10.3.3">section 5.10.3.3</a>) and within Enveloping (<a href="5.10.4.3">section 5.10.4.3</a>) for specific guidance</li></ul>
       <h4 id="5.10.2.4">5.10.2.4 Signature</h4>
       
-        <ul><li class="bullet-list1">The Signature SHALL at least support the hashing algorithm SHA256. The signature validation policy will apply to the signature and determine the acceptability</li>
+        <ul><li class="bullet-list1">The Signature SHALL use the algorithm in the <a href="5.10.2.1.1">5.10.2.1.1</a> alg parameter section above.</li>
         </ul>
       <h3 id="5.10.3">5.10.3 JSON Detached Signature</h3>
       <h4 id="5.10.3.1">5.10.3.1 Protected Header</h4>
