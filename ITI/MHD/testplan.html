@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>IHE.ITI.MHD\Test Plan - FHIR v4.0.1</title>
+    <title>Test Plan - Mobile access to Health Documents (MHD) v4.2.2</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.2.1 - Trial-Implementation
+            <span style="display:inline-block;">4.2.2 - Trial-Implementation
 
 
 
@@ -222,7 +222,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.1: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.2: Publication) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>Test Plan</h2>
   
 
@@ -242,9 +242,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <ul id="markdown-toc">
   <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
   <li><a href="#high-level-test-scope" id="markdown-toc-high-level-test-scope">High-level Test Scope</a>    <ul>
-      <li><a href="#iti-65-provide-document-bundle" id="markdown-toc-iti-65-provide-document-bundle">ITI-65 Provide Document Bundle</a></li>
+      <li><a href="#submit-iti-65-iti-105-and-iti-106" id="markdown-toc-submit-iti-65-iti-105-and-iti-106">Submit [ITI-65], [ITI-105], and [ITI-106]</a></li>
       <li><a href="#iti-66-find-document-lists-iti-67-find-document-references-iti-68-retrieve-document" id="markdown-toc-iti-66-find-document-lists-iti-67-find-document-references-iti-68-retrieve-document">[ITI-66] Find Document Lists, [ITI-67] Find Document References, [ITI-68] Retrieve Document</a></li>
-      <li><a href="#options" id="markdown-toc-options">Options</a></li>
+      <li><a href="#end-to-end-testing" id="markdown-toc-end-to-end-testing">End-to-End testing</a></li>
     </ul>
   </li>
   <li><a href="#unit-test-procedure-conformance-testing" id="markdown-toc-unit-test-procedure-conformance-testing">Unit Test Procedure (Conformance Testing)</a>    <ul>
@@ -254,6 +254,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <li><a href="#integration-test-procedure-interoperability-testing" id="markdown-toc-integration-test-procedure-interoperability-testing">Integration Test Procedure (Interoperability Testing)</a>    <ul>
       <li><a href="#document-source--document-recipient-interoperability-tests" id="markdown-toc-document-source--document-recipient-interoperability-tests">Document Source –&gt; Document Recipient Interoperability Tests</a></li>
       <li><a href="#document-consumer--document-responder-interoperability-tests" id="markdown-toc-document-consumer--document-responder-interoperability-tests">Document Consumer –&gt; Document Responder Interoperability Tests</a></li>
+      <li><a href="#additional-tests-not-included-in-gazelle-today" id="markdown-toc-additional-tests-not-included-in-gazelle-today">Additional Tests not included in Gazelle today</a></li>
     </ul>
   </li>
 </ul>
@@ -261,7 +262,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 </div>
 <div class="stu-note">
 
-  <p>This Test Plan page is a prototype. We expect the maturity of the content will improve over time.  For now, we summarize high level testing scope and available tools. Comments are welcome.</p>
+  <p>We expect the maturity of testing will improve over time independent of the versions of MHD.</p>
+
+  <p>This page was last updated May 2024.</p>
 </div>
 
 <h2 id="introduction">Introduction</h2>
@@ -270,11 +273,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>The overall scope of MHD testing is affected by the infrastructure that MHD is connected to. For example, where the Document Responder and Document Recipient are grouped with XDS or MHDS infrastructure, more tests apply.</p>
 
-<p>MHD does not mandate the functionality to be provided by the data communicated via MHD transations. How MHD actors use the data communicated via these transaction is out-of-scope for MHD testing, but may apply to other related Implementation Guides or IHE Profiles.</p>
+<p>MHD does not mandate the functionality to be provided by the data communicated via MHD transactions. How MHD actors use the data communicated via these transaction is out-of-scope for MHD testing, but may apply to other related Implementation Guides or IHE Profiles.</p>
 
 <h2 id="high-level-test-scope">High-level Test Scope</h2>
 
-<h3 id="iti-65-provide-document-bundle">ITI-65 Provide Document Bundle</h3>
+<h3 id="submit-iti-65-iti-105-and-iti-106">Submit [ITI-65], [ITI-105], and [ITI-106]</h3>
 
 <ul>
   <li>Document Source publishes document and folder combinations
@@ -296,13 +299,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <li>Document Responder responds to query and retrieve as appropriate</li>
 </ul>
 
-<h3 id="options">Options</h3>
+<h3 id="end-to-end-testing">End-to-End testing</h3>
 
-<ul>
-  <li>“Comprehensive Metadata” for the Document Source &amp; Document Recipient</li>
-  <li>“XDS on FHIR” for the Document Recipient and Document Responder (i.e., XDS backend for server actors)</li>
-  <li>“Uncontained Reference” for all MHD actors</li>
-</ul>
+<p>The best case testing would be to have Document Source submit various content, combinations, and transforms; and these are detected to have happened correctly by using a Document Consumer. This kind of end-to-end testing can’t be done in all cases, such as PUSH, but can be used when the Document Recipient and Document Responder are grouped with a Document Sharing infrastructure. Such as using the XDSonFHIR option, MHDS, or simply having MHD as a direct API to an XDS Registry/Repository.</p>
 
 <h2 id="unit-test-procedure-conformance-testing">Unit Test Procedure (Conformance Testing)</h2>
 
@@ -341,25 +340,97 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>Integration Testing in this context is where two SUT of paired actors test against each other.  Integration testing is often limited by the capability of the client (Document Source or Document Consumer), which may support only a subset of the semantics required to be supported by the server (Document Recipient or Document Responder).  Full message semantics and failure-modes are more thoroughly exercised with unit (conformance) tests.</p>
 
-<p>The tests listed below are defined in Gazelle Master Model (https://gazelle.ihe.net/GMM) and are performed by systems testing MHD at IHE Connectathons.</p>
+<p>The tests listed below are defined in Gazelle Master Model (https://gazelle.ihe.net/GMM) and are performed by systems testing MHD at IHE Connectathons. Note the following links into the Gazelle Master Model do require a account to view.</p>
+
+<ul>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13700">Capability Statement Checks</a></li>
+</ul>
 
 <h3 id="document-source--document-recipient-interoperability-tests">Document Source –&gt; Document Recipient Interoperability Tests</h3>
 
 <ul>
-  <li>MHD_Create_ITI-65</li>
-  <li>MHD_Create_with_List</li>
-  <li>MHD_Submit_XDSonFHIR</li>
-  <li>MHD_XDSonFHIR_Replace</li>
-  <li>MHD_XDSonFHIR_Append</li>
-  <li>MHD_XDSonFHIR_Transform</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13690">Setup proxy tools</a></li>
+  <li>Document Recipient without <strong>Comprehensive Metadata Option</strong> - <a href="https://gazelle.ihe.net/GMM/test.seam?id=13691">MHD_11_Toolkit_RecipMinimal</a>
+    <ul>
+      <li>Should be Document Recipient declaring <strong>UnContained Option</strong> can handle it.</li>
+    </ul>
+  </li>
+  <li>Document Recipient with <strong>Comprehensive Metadata Option</strong> - <a href="https://gazelle.ihe.net/GMM/test.seam?id=13692">MHD_12_Toolkit_RecipComprehensiv</a></li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13427">MHD_22_ProvideDocBundle_ITI-65</a> - Testing of ITI-65
+    <ul>
+      <li>alternative flows for <strong>Comprehensive Metadata Option</strong> and <strong>UnContained Option</strong> and <strong>XDS on FHIR Option</strong></li>
+      <li>alternative flows for Replace, Append, and Transform</li>
+    </ul>
+  </li>
+  <li>Document Source with <strong>Comprehensive Metadata Option</strong> - <a href="https://gazelle.ihe.net/GMM/test.seam?id=13693">MHD_13_Toolkit_SourceComprehensive</a>
+    <ul>
+      <li>alternative flow for <strong>UnContained Option</strong></li>
+    </ul>
+  </li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13713">MHD_22a_ITI-65_Resource_Check</a> - AuditEvent tests</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13699">MHD_25_Create_with_List_Resource</a> – testing Folders</li>
+</ul>
+
+<h4 id="document-recipient---xds-on-fhir-option">Document Recipient - XDS on FHIR Option</h4>
+
+<ul>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13698">MHD_70_Submit_XDSonFHIR</a> - basic ITI-65 test of Document Recipient declaring <strong>XDS On FHIR Option</strong></li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13694">MHD_71_XDSonFHIR_Replace</a></li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13695">MHD_72_XDSonFHIR_Append</a></li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13696">MHD_73_XDSonFHIR_Transform</a></li>
 </ul>
 
 <h3 id="document-consumer--document-responder-interoperability-tests">Document Consumer –&gt; Document Responder Interoperability Tests</h3>
 
 <ul>
-  <li>MHD_Search_ITI-66</li>
-  <li>MHD_SearchRead_ITI-67_ITI-68</li>
-  <li>MHD_QryRetr_XDSonFHIR</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13709">MHD_30a_ITI-66_Resource_Check</a> - AuditEvent tests</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13727">MHD_30_FindDocumentLists_ITI-66</a> - Test ITI-66
+    <ul>
+      <li>should be Document Consumer declaring <strong>UnContained Option</strong> can handle it.</li>
+    </ul>
+  </li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13709">MHD_30a_ITI-66_Resource_Check</a> - AuditEvent tests</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13711">MHD_31a-ITI-67_Resource_Check</a> AuditEvent tests</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13726">MHD_31_FindDocReferences_ITI-67</a> - Test ITI-67
+    <ul>
+      <li>should be Document Consumer declaring <strong>UnContained Option</strong> can handle it.</li>
+    </ul>
+  </li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13714">MHD_33a-ITI-68_Resource_Check</a> AuditEvent tests</li>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13725">MHD_32_RetrieveDocument_ITI-68</a> - test ITI-68</li>
+</ul>
+
+<h4 id="xds-on-fhir-option">XDS on FHIR Option</h4>
+
+<ul>
+  <li><a href="https://gazelle.ihe.net/GMM/test.seam?id=13697">MHD_75_QryRetr_XDSonFHIR</a> - The Doc Responder supports the XDS on FHIR and is grouped with an XDS Document Consumer</li>
+</ul>
+
+<h3 id="additional-tests-not-included-in-gazelle-today">Additional Tests not included in Gazelle today</h3>
+
+<ul>
+  <li>Update a Folder, where the test is focused on creating a Folder, but the ITI-65 supports updating an existing folder.</li>
+  <li>UnContained is not tested specifically for Practitioner not being contained</li>
+  <li>Should be tests for Replace, Transform, or Append for non XDS on FHIR situations (aka MHDS, or just push)</li>
+  <li>Test MHD as a direct API to XDS Registry/Repository. Where the MHD Document Recipient to XDS Document Source is logical and not exposed; and where the MHD Document Responder to XDS Document Consumer is logical and not exposed.</li>
+</ul>
+
+<h4 id="simplified-publish-option">Simplified Publish Option</h4>
+
+<ul>
+  <li>no tests for this option:</li>
+</ul>
+
+<h4 id="generate-metadata-option">Generate Metadata Option</h4>
+
+<ul>
+  <li>no tests for this option:</li>
+</ul>
+
+<h4 id="iti-65-fhir-documents-publish-option">ITI-65 FHIR Documents Publish Option</h4>
+
+<ul>
+  <li>no tests for this option</li>
 </ul>
 
 
@@ -374,13 +445,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
   <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      if(window.location.hash != "") {
-          $('a[href="' + window.location.hash + '"]').click()
-      }
-    });
-  </script>
+  <script type="text/javascript" src="assets/js/window-hash.js"> </script>
   <a name="bottom"> </a>
   <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
     <div class="container">  <!-- container -->
@@ -409,7 +474,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Aug 2, 2023 11:14-0500">2023-08-02</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.2 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Sat, May 18, 2024 12:39-0500">2024-05-18</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -420,13 +485,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
                  <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HLBNC861DJ');
-</script>
-
+                 <script type="text/javascript" src=".assets/js/google-analytics.js"> </script>
           </span>
         </p>
       </div>  <!-- /inner-wrapper -->
@@ -447,26 +506,8 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
-  <script>anchors.options.visible = 'hover'
-anchors.add()</script>
+  <script type="text/javascript" src="assets/js/anchor-hover.js"> </script>
   
-<!-- feedback form - Google forms -->
-<!-- v0.1, 2021-01-09 -->
-
-
-  
-    
-  
-
-
-  
-    
-  
-
-
-
-<!-- / feedback form  -->
-
   <!-- Analytics Below
   ================================================== -->
   </body>
