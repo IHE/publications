@@ -7,11 +7,11 @@
 </div></div>
   </text>
   <url value="https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd"/>
-  <version value="4.2.1"/>
+  <version value="4.2.2"/>
   <name value="IHE_ITI_MHD"/>
   <title value="Mobile access to Health Documents (MHD)"/>
   <status value="active"/>
-  <date value="2022-08-04"/>
+  <date value="2024-05-23"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -48,7 +48,7 @@
     </extension>
     <uri value="http://terminology.hl7.org/ImplementationGuide/hl7.terminology"/>
     <packageId value="hl7.terminology.r4"/>
-    <version value="5.0.0"/>
+    <version value="5.5.0"/>
   </dependsOn>
   <dependsOn id="hl7ext">
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment">
@@ -56,7 +56,7 @@
     </extension>
     <uri value="http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions"/>
     <packageId value="hl7.fhir.uv.extensions.r4"/>
-    <version value="1.0.0"/>
+    <version value="5.1.0"/>
   </dependsOn>
   <dependsOn id="iheitibasicaudit">
     <uri value="https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp"/>
@@ -66,7 +66,7 @@
   <dependsOn id="iheformatcodefhir">
     <uri value="https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir"/>
     <packageId value="ihe.formatcode.fhir"/>
-    <version value="1.1.x"/>
+    <version value="1.2.x"/>
   </dependsOn>
   <definition>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
@@ -255,6 +255,14 @@
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
+        <valueString value="apply-wg"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
         <valueString value="fmm-definition"/>
       </extension>
       <extension url="value">
@@ -286,7 +294,7 @@
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency">
-      <valueCode value="hl7.fhir.uv.tools#current"/>
+      <valueCode value="hl7.fhir.uv.tools#0.1.0"/>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
@@ -467,6 +475,14 @@
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
         <valueCode value="apply-license"/>
+      </extension>
+      <extension url="value">
+        <valueString value="true"/>
+      </extension>
+    </extension>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
+      <extension url="code">
+        <valueCode value="apply-wg"/>
       </extension>
       <extension url="value">
         <valueString value="true"/>
@@ -1369,7 +1385,7 @@
       <reference>
         <reference value="OperationDefinition/generate-metadata"/>
       </reference>
-      <name value="generate-metadata"/>
+      <name value="Generate a DocumentReference from a document"/>
       <description value="The $generate-metadata Operation defintion. &#xA;&#xA;This operation is needed as the $generate in FHIR R4 is not properly defined, and thus has incorrect parameters. &#xA;The MHD $generate-metadata should be replaced when MHD is upgraded to FHIR R5. &#xA;This MHD $generate-metadata is modeled after the expected changes in FHIR R5, and follows the example given in FHIR R4:&#xA;&#xA;Input:&#xA;- Binary 0..1 the *document* in Binary Resource format. Usually used with CDA documents.&#xA;- Bundle 0..1 the *document* in FHIR-Document form of a Bundle of kind Document&#xA;Output:&#xA;- reference to a DocumentReference with metadata generated from the *document*"/>
       <exampleBoolean value="false"/>
     </resource>
@@ -1480,7 +1496,7 @@
         <reference value="StructureDefinition/IHE.MHD.Patch.Parameters"/>
       </reference>
       <name value="MHD DocumentReference Patch Parameters"/>
-      <description value="A profile on the Parameters resource to update DocumentReference"/>
+      <description value="A profile on the Parameters resource to update the superseded DocumentReference status."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -1590,7 +1606,7 @@
         <reference value="StructureDefinition/IHE.MHD.Minimal.ProvideBundle"/>
       </reference>
       <name value="MHD Minimal Provide Document Bundle"/>
-      <description value="A profile on the Bundle transaction for ITI-65 Provide Document resources with Minimal metadata for MHD.&#xD;&#xA;&#xD;&#xA;- [Minimal Metadata](StructureDefinition-IHE.MHD.Minimal.ProvideBundle.html): `https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.ProvideBundle`&#xD;&#xA;  - shall be a Transaction Bundle&#xD;&#xA;  - all resources shall be compliant with minimal constraints, they may be marked minimal, comprehensive, or unContained&#xD;&#xA;  - shall create a [SubmissionSet type List](StructureDefinition-IHE.MHD.Minimal.SubmissionSet.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;  - may create one or more [DocumentReference](StructureDefinition-IHE.MHD.Minimal.DocumentReference.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;    - with a document as a [Binary](http://hl7.org/fhir/R4/binary.html)&#xD;&#xA;    - or, when implementing the **ITI-65 FHIR Document Publish** option, a [FHIR Document Bundle](http://hl7.org/fhir/R4/bundle.html)&#xD;&#xA;  - may create/update one or more [Folder type List](StructureDefinition-IHE.MHD.Minimal.Folder.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;  - may create/update/read one [Patient](http://hl7.org/fhir/R4/patient.html)"/>
+      <description value="A profile on the Bundle transaction for ITI-65 Provide Document resources with Minimal metadata for MHD.&#xD;&#xA;&#xD;&#xA;- [Minimal Metadata](StructureDefinition-IHE.MHD.Minimal.ProvideBundle.html): `https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.ProvideBundle`&#xD;&#xA;  - shall be a Transaction Bundle&#xD;&#xA;  - all resources shall be compliant with minimal constraints, they may be marked minimal, comprehensive, or unContained&#xD;&#xA;  - shall create a [SubmissionSet type List](StructureDefinition-IHE.MHD.Minimal.SubmissionSet.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;  - may create one or more [DocumentReference](StructureDefinition-IHE.MHD.Minimal.DocumentReference.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;    - with a document as a [Binary](http://hl7.org/fhir/R4/binary.html)&#xD;&#xA;    - or, when implementing the **ITI-65 FHIR Document Publish** option, a [FHIR Document Bundle](http://hl7.org/fhir/R4/bundle.html)&#xD;&#xA;  - when DocumentReference replace is used the UpdateDocumentRefs slice is used to indicate the superseded DocumentReference&#xD;&#xA;  - may create/update one or more [Folder type List](StructureDefinition-IHE.MHD.Minimal.Folder.html) that is either minimal, comprehensive, or unContained&#xD;&#xA;  - may create/update/read one [Patient](http://hl7.org/fhir/R4/patient.html)"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>

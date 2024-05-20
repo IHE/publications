@@ -7,7 +7,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>IHE.ITI.MHD\MHD DocumentReference Minimal - Mappings - FHIR v4.0.1</title>
+    <title>MHD DocumentReference Minimal - Mappings - Mobile access to Health Documents (MHD) v4.2.2</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -75,7 +75,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.2.1 - Trial-Implementation
+            <span style="display:inline-block;">4.2.2 - Trial-Implementation
 
 
 
@@ -219,7 +219,7 @@
           <div class="inner-wrapper">
 
 <div style="counter-reset: section 5" class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.1: Publication) based on <a href="http://hl7.org/fhir/R4">FHIR R4</a>. This is the current published version.  For a full list of available versions, see the <a href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions <img src="external.png" style="text-align: baseline"></a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.2: Publication) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   
 
 
@@ -302,7 +302,7 @@
         
           Active
           
-            as of 2023-08-02
+            as of 2024-05-18
           
         
       </td>
@@ -318,7 +318,49 @@
 
 
 
-  <a name="workflow"> </a><h3>Mappings for Workflow Pattern (<a href="http://hl7.org/fhir/workflow.html">http://hl7.org/fhir/workflow</a>)</h3><table class="grid">
+  <a name="DocumentEntry-Mapping"> </a><h3>Mappings for XDS and MHD Mapping (XDS)</h3><table class="grid">
+ <tr><td colspan="3"><b>MinimalDocumentReference</b></td></tr>
+ <tr><td>DocumentReference</td><td>XDS DocumentEntry: Used in the context of the IHE MHD ImplementationGuide</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;meta</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile</td><td>DocumentEntry.limitedMetadata</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;masterIdentifier</td><td>DocumentEntry.uniqueId</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;identifier</td><td>DocumentEntry.entryUUID</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;status</td><td>DocumentEntry.availabilityStatus</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;type</td><td>DocumentEntry.typeCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;category</td><td>DocumentEntry.classCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;subject</td><td>DocumentEntry.patientId</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;author</td><td>DocumentEntry.author</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;authenticator</td><td>DocumentEntry.legalAuthenticator</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;custodian</td><td>not mapped</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;relatesTo</td><td>DocumentEntry Associations</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;code</td><td>DocumentEntry Associations.type</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target</td><td>DocumentEntry Associations.reference</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;description</td><td>DocumentEntry.comments</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;securityLabel</td><td>DocumentEntry.confidentialityCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;content</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attachment</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contentType</td><td>DocumentEntry.mimeType</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;language</td><td>DocumentEntry.languageCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url</td><td>DocumentEntry.repositoryUniqueId or DocuemntEntry.URI</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size</td><td>DocumentEntry.size</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash</td><td>DocumentEntry.hash</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title</td><td>DocumentEntry.title</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creation</td><td>DocumentEntry.creationTime</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format</td><td>DocumentEntry.formatCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;context</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encounter</td><td>DocumentEntry.referenceIdList with CXi encoding for urn:ihe:iti:xds:2015:encounterId</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event</td><td>DocumentEntry.eventCodeList</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;period</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start</td><td>DocumetEntry.serviceStartTime</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end</td><td>DocumentEntry.serviceStopTime</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;facilityType</td><td>DocumentEntry.healthcareFacilityTypeCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;practiceSetting</td><td>DocumentEntry.practiceSettingCode</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourcePatientInfo</td><td></td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference</td><td>DocumentEntry.sourcePatientInfo</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;identifier</td><td>DocumentEntry.sourcePatientId</td> </tr>
+ <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related</td><td>DocumentEntry.referenceIdList using CXi encoding for type when possible</td> </tr>
+</table>
+<a name="workflow"> </a><h3>Mappings for Workflow Pattern (<a href="http://hl7.org/fhir/workflow.html">http://hl7.org/fhir/workflow</a>)</h3><table class="grid">
  <tr><td colspan="3"><b>MinimalDocumentReference</b></td></tr>
  <tr><td>DocumentReference</td><td>Event</td> </tr>
  <tr><td>&nbsp;&nbsp;&nbsp;identifier</td><td>Event.identifier</td> </tr>
@@ -511,49 +553,6 @@ serviceEvent/effectiveTime/high/
  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourcePatientInfo</td><td>DocumentEntry.sourcePatientInfo, DocumentEntry.sourcePatientId</td> </tr>
  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related</td><td>DocumentEntry.referenceIdList</td> </tr>
 </table>
-<a name="DocumentEntry-Mapping"> </a><h3>Mappings for XDS and MHD Mapping (XDS)</h3><table class="grid">
- <tr><td colspan="3"><b>MinimalDocumentReference</b></td></tr>
- <tr><td>DocumentReference</td><td>XDS DocumentEntry</td><td><p>Used in the context of the IHE MHD ImplementationGuide</p>
-</td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;meta</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile</td><td>DocumentEntry.limitedMetadata</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;masterIdentifier</td><td>DocumentEntry.uniqueId</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;identifier</td><td>DocumentEntry.entryUUID</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;status</td><td>DocumentEntry.availabilityStatus</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;type</td><td>DocumentEntry.typeCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;category</td><td>DocumentEntry.classCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;subject</td><td>DocumentEntry.patientId</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;author</td><td>DocumentEntry.author</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;authenticator</td><td>DocumentEntry.legalAuthenticator</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;custodian</td><td>not mapped</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;relatesTo</td><td>DocumentEntry Associations</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;code</td><td>DocumentEntry Associations.type</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target</td><td>DocumentEntry Associations.reference</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;description</td><td>DocumentEntry.comments</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;securityLabel</td><td>DocumentEntry.confidentialityCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;content</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attachment</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contentType</td><td>DocumentEntry.mimeType</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;language</td><td>DocumentEntry.languageCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url</td><td>DocumentEntry.repositoryUniqueId or DocuemntEntry.URI</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size</td><td>DocumentEntry.size</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash</td><td>DocumentEntry.hash</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title</td><td>DocumentEntry.title</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creation</td><td>DocumentEntry.creationTime</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format</td><td>DocumentEntry.formatCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;context</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encounter</td><td>DocumentEntry.referenceIdList with CXi encoding for urn:ihe:iti:xds:2015:encounterId</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event</td><td>DocumentEntry.eventCodeList</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;period</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start</td><td>DocumetEntry.serviceStartTime</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end</td><td>DocumentEntry.serviceStopTime</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;facilityType</td><td>DocumentEntry.healthcareFacilityTypeCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;practiceSetting</td><td>DocumentEntry.practiceSettingCode</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourcePatientInfo</td><td></td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference</td><td>DocumentEntry.sourcePatientInfo</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;identifier</td><td>DocumentEntry.sourcePatientId</td><td></td> </tr>
- <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related</td><td>DocumentEntry.referenceIdList using CXi encoding for type when possible</td><td></td> </tr>
-</table>
 
 
   <!-- insert notes if present -->
@@ -571,36 +570,9 @@ serviceEvent/effectiveTime/high/
   <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
   <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
 
-  <script type="text/javascript">
-    try {
-      var currentTabIndex = sessionStorage.getItem('fhir-resource-tab-index');
-    } catch(exception) {
-    }
+  <script type="text/javascript" src="assets/js/tabs.js"> </script>
 
-    if (!currentTabIndex)
-      currentTabIndex = '0';
-
-    $( '#tabs' ).tabs({
-      active: currentTabIndex,
-      activate: function( event, ui ) {
-        var active = $('.selector').tabs('option', 'active');
-        currentTabIndex = ui.newTab.index();
-        document.activeElement.blur();
-        try {
-          sessionStorage.setItem('fhir-resource-tab-index', currentTabIndex);
-        } catch(exception) {
-        }
-      }
-    });
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      if(window.location.hash != "") {
-          $('a[href="' + window.location.hash + '"]').click()
-      }
-    });
-  </script>
+  <script type="text/javascript" src="assets/js/window-hash.js"> </script>
   <a name="bottom"> </a>
   <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
     <div class="container">  <!-- container -->
@@ -629,7 +601,7 @@ serviceEvent/effectiveTime/high/
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Aug 2, 2023 11:14-0500">2023-08-02</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.2 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Sat, May 18, 2024 12:39-0500">2024-05-18</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -640,13 +612,7 @@ serviceEvent/effectiveTime/high/
                  <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HLBNC861DJ');
-</script>
-
+                 <script type="text/javascript" src=".assets/js/google-analytics.js"> </script>
           </span>
         </p>
       </div>  <!-- /inner-wrapper -->
@@ -667,26 +633,8 @@ serviceEvent/effectiveTime/high/
   <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
-  <script>anchors.options.visible = 'hover'
-anchors.add()</script>
+  <script type="text/javascript" src="assets/js/anchor-hover.js"> </script>
   
-<!-- feedback form - Google forms -->
-<!-- v0.1, 2021-01-09 -->
-
-
-  
-    
-  
-
-
-  
-    
-  
-
-
-
-<!-- / feedback form  -->
-
   <!-- Analytics Below
   ================================================== -->
   </body>
