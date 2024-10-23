@@ -64,9 +64,113 @@
           </div>
         </div>
         <div id="main-top" class="cell medium-10 large-10">
-          <h1 id="2">2 </h1>
-
-
+          <h1 id="2">2 Profiles</h1>
+          <h2 id="2.1">2.1 Overview</h2>
+          <p>IHE Integration Profiles offer a common language that healthcare professionals and vendors can use to discuss integration needs of healthcare enterprises and the integration capabilities of information systems in precise terms. Integration Profiles specify implementations of standards that are designed to meet identified clinical needs. They enable users and vendors to state which IHE capabilities they require or provide, by reference to the detailed specifications of the IHE Patient Care Coordination Technical Framework.</p>
+          <p>Integration profiles are defined in terms of IHE Actors, transactions and their content. Actors (which can be found through the <a href="https://profiles.ihe.net/GeneralIntro/ch-A.html" target="_target">General Introduction, Appendix A</a>) are information systems or components of information systems that produce, manage, or act on information associated with clinical and operational activities. Transactions (which can be found through the <a href="https://profiles.ihe.net/GeneralIntro/ch-B.html" target="_target">General Introduction, Appendix B</a>) are interactions between actors that communicate the required information through standards-based messages. Content is what is exchanged in these transactions, and are defined by Content Profiles.</p>
+          <p>Vendor products support an Integration Profile by implementing the appropriate actor(s) and transaction(s). A given product may implement more than one actor and more than one integration profile.</p>
+          <p>Content Profiles define how the content used in a transaction is structured. Each transaction is viewed as having two components, a payload, which is the bulk of the information being carried, and metadata that describes that payload. The binding of the Content to an IHE transaction specifies how this payload influences the metadata of the transaction. Content modules within the Content Profile then define the payloads. Content modules are transaction neutral, in that what they describe is independent of the transaction in which they are used, whereas content bindings explain how the payload influences the transaction metadata.</p>
+          <p>Various content and integration profiles can be grouped in several topics <em>topics</em> that can be found on the <a href="https://profiles.ihe.net/PCC/" target="_blank">main PCC domain publishing page</a>.</p>
+          <p>In this Technical Framework, each IHE Integration Profile is defined by:</p>
+          <ul>
+            <li class="bullet-list1">The IHE actors involved</li>
+            <li class="bullet-list1">The specific set of IHE transactions exchanged by each IHE actor</li>
+            <li class="bullet-list1">The content of the IHE transactions</li>
+          </ul>
+          <p>These requirements are presented in the form of a table of transactions required for each actor supporting the Integration Profile. Actors supporting multiple Integration Profiles are required to support all the required transactions of each Integration Profile supported. When an Integration Profile depends upon another Integration Profile, the transactions required for the dependent Integration Profile have not been included in the table.</p>
+          <p>The content of the transactions are presented as Content Integration Profiles. These are specification of the content to be exchange, along with explanations (called bindings) of how the content affects the transactions in which it is exchanged. It is expected that Content Integration Profiles will be used environments where the physician offices and hospitals have a coordinated infrastructure that serves the information sharing needs of this community of care. Several mechanisms are supported by IHE profiles:</p>
+          <ul>
+            <li class="bullet-list1">A registry/repository-based sharing community infrastructure is defined by the IHE ITI Cross-Enterprise
+              Document Sharing (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-10.html" target="_blank">XDS.b</a>) and other IHE ITI Integration Profiles such as patient
+              identification (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-23.html" target="_blank">PIXV3</a> & <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-24.html" target="_blank">PDQV3</a>), and Document Metadata Subscription (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-26.html" target="_blank">DSUB</a>).</li>
+            <li class="bullet-list1">A media-based infrastructure is defined by the IHE ITI Cross-Enterprise Document Media
+              Interchange (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-16.html" target="_blank">XDM</a>) Profile (which includes exchange over email).</li>
+            <li class="bullet-list1">A reliable messaging-based infrastructure is defined by the IHE ITI Cross-Enterprise
+              Document Reliable Interchange (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-15.html" target="_blank">XDR</a>) Profile.</li>
+            <li class="bullet-list1">A cross-community federated sharing architecture extends the above via the IHE ITI Cross-Community Access (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html" target="_blank">XCA</a>) profile and the related profiles for patient identification (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-27.html" target="_blank">XCPD</a>) and document reliable interchange (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-40.html" target="_blank">XCDR</a>)</li>
+            <li class="bullet-list1">All of these infrastructures support Security and privacy through the use of the Consistent
+              Time (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-7.html" target="_blank">CT</a>) and Audit Trail and Node Authentication (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html" target="_blank">ATNA</a>) Profiles.</li>
+          </ul>
+          <p>For more details on these profiles, follow the links above to the <a href="https://profiles.ihe.net/ITI/TF/" target="_blanket">IHE IT Infrastructure Technical Framework</a>.</p>
+          <p><strong>Current Sharing with a Known Consumer</strong></p>
+          <p>The existence of a sharing infrastructure is assumed by the use cases that focus on the context for defining the specific clinical information content for this profile. These content integration profiles use similar transactions and differ only in the content exchanged. A process flow for these use cases using Cross Enterprise Document Sharing (XDS) and Document Metadata Subscription (<a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-26.html" target="_blank">DSUB</a>) is shown in the figure below. Other process flows are possible using XDM and/or XDR.</p>
+          <div id="f2.1-1">
+            <img src="media/Figure_2.1-1.png" alt="" >
+            <p class="figureTitle">Figure 2.1-1: Use Case Process Flow Diagram</p>
+            <p class="note"><a href="media/Figure_2.1-1.drawio" alt="">Source for Figure 2.1-1</a></p>
+          </div>
+          <p>These steps are:</p>
+          <ol>
+            <li class="numbered-list1">Extract/capture a collection of records into a set of documents packaged as an XDS Submission Set. This submission contains at least one clinical document, and may contain a number of other related clinical documents. For example, Medical Summaries are clinical documents (already known in the paper world), which often serve the dual purpose of documenting an encounter and providing the rationale for sending the information to another provider. This step utilizes the transactions provided by the ITI XDS Profile to place the records in an XDS Repository (local or shared).</li>
+            <li class="numbered-list1">The Repository ensures that the documents of the submission set are registered with the XDS Registry of the Affinity Domain (set of cooperating care delivery institutions).</li>
+            <li class="numbered-list1">Notify the other provider that documents are now available for review. This step utilizes the transactions provided by the ITI DSUB Profile to perform the subscription notification. Note that the process of creating and managing a subscription is not shown in that diagram.</li>
+            <li class="numbered-list1">The receiving provider can then utilize existing query transactions from the XDS Profile to find the the retrievable location of the documents.</li>
+            <li class="numbered-list1">Finally, the receiving provider uses the retrieve document transaction from the XDS Profile to obtain the documents, and may choose to display them, or import relevant information from these records into their own EMR system.</li>
+          </ol>
+          <p><strong>Unplanned Access to Past Content</strong></p>
+          <p>In many cases, a provider may need to assess information from the patient care history, and patients may have content in the XDS repository from prior visits to other providers. For example, Medical Summaries, as well as other documents such as laboratory and radiology eports are critical for emergency physicians and nurses to provide the best care to patient in acute conditions. The figure below shows the transactions required for this use case, again, using XDS. Other process flows are possible using XDM and/or XDR.</p>
+          <div id="f2.1-2">
+            <img src="media/Figure_2.1-2.png" alt="" >
+            <p class="figureTitle">Figure 2.1-2: Unplanned Access Process Flow Diagram</p>
+            <p class="note"><a href="media/Figure_2.1-2.drawio" alt="">Source for Figure 2.1-2</a></p>
+          </div>
+          <p>Note that IHE Integration Profiles are not statements of conformance to standards, and IHE is not a certifying body. Users should continue to request that vendors provide statements of their conformance to standards issued by relevant standards bodies, such as HL7 and DICOM. Standards conformance is a prerequisite for vendors adopting IHE Integration Profiles</p>
+          <p>Also note that there are critical requirements for any successful integration project that IHE cannot address. Successfully integrating systems still requires a project plan that minimizes disruptions and describes fail-safe strategies, specific and mutually understood performance expectations, well-defined user interface requirements, clearly identified systems limitations, detailed cost objectives, plans for maintenance and support, etc.</p>
+          <h3 id="2.1.1">2.1.1 Cross-Enterprise Sharing of Medical Summaries (XDS-MS) Integration Profile</h2>
+          <p>By their nature, Medical Summaries form a class of clinical documents that contain the most relevant portions of this information. As the name would indicate they have the purpose of summarizing, both abstracting the most important pieces of information from the EMR and recording free-text summaries at the time of medical summary creation. Operationally, they are commonly created at points in time of transfers of care from one provider to another or from one setting to another.</p>
+          <p>The challenge is to identify the clinically relevant documents (and data elements those documents contain) that are used in typical <em>transfer of care</em> scenarios and then to provide interoperability standards to promote ease in transmission of those documents (and data elements). The Cross-Enterprise Sharing of Medical Summary (XDS-MS) Integration Profile facilitates this by defining the appropriate standards for document transmission and a minimum set of "record entries" that should be forwarded or made available to subsequent care provider(s) during specific transfer of care scenarios. In addition, this integration profile needs to define the utilization requirements/options for the receiving entity in order to ensure that the <em>care context</em> of the sending entity is appropriately maintained following the information transfer.</p>
+          <h3 id="2.1.2">2.1.2 Exchange of Personal Health Record Content Integration Profile (XPHR)</h3>
+          <p>The Exchange of Personal Health Record Content (XPHR) Integration Profile describes the content and format of summary information extracted from a PHR system used by a patient for import into healthcare provider information systems, and vice versa. The purpose of this profile is to support interoperability between PHR systems used by patients and the information systems used by healthcare providers. This profile does not address all the data exchange requirements of PHR systems. A PHR system may leverage other IHE Integration and Content Profiles for interoperability in addition to the XPHR Content Profile. For example, a PHR Systems may implement XDS-MS to import medical summaries produced by EHR systems, XDS-I to import imaging information, XDS-Lab to import laboratory reports, et cetera.</p>
+          <p>The Exchange of Personal Health Record Content (XPHR) Integration Profile describes the content and format of summary information extracted from a PHR system used by a patient for import into healthcare provider information systems, and vice versa. The purpose of this profile is to support interoperability between PHR systems used by patients and the information systems used by healthcare providers. This profile does not address all the data exchange requirements of PHR systems. A PHR system may leverage other IHE Integration and Content Profiles for interoperability in addition to the XPHR Content Profile. For example, a PHR Systems may implement XDS-MS to import medical summaries produced by EHR systems, XDS-I to import imaging information, XDS-Lab to import laboratory reports, et cetera.</p>
+          <h3 id="2.1.3">2.1.3 Emergency Department Referral (EDR) Integration Profile</h3>
+          <p>Physicians frequently determine that patients either onsite, or calling in, should proceed directly to an emergency department for care. The referring physician has valuable data that can inform ED providers, including the history of the current problem, past medical problems, medications, allergies, and frequently a concrete assessment and plan for the patient such as hospital admission. Unfortunately, this information is inconsistently relayed to the ED provider who ultimately cares for the patient. Currently, this transfer of care requires verbal transfer of extensive information. Unfortunately, the ED provider recording the information may not be the person who will ultimately care for the patient, may not document sufficient detail, or may forget to document any information at all.</p>
+          <p>Loss of this data can lead to costly over-testing in the ED, or worse, an inappropriate disposition for the patient.</p>
+          <p>Using an EHR, an ED Referral is created; including the nature of the current problem, past medical history, and medications. Upon arrival of the patient to the ED, the patient is identified as a referral, and the transfer document is incorporated into the EDIS.</p>
+          <p>This profile may be used to cover a wide variety of ED referral situations, for example, primary care provider to ED Referral, Long term care to ED referral, or even ED to ED referral (as in the case of transfer from a level 2 Critical care facility to a level 1 facility).</p>
+          <h3 id="2,1,4">2.1.4 The Immunization Content Profile (IC)</h3>
+          <p>The Immunization Content Profile (IC) provides a standard document to exchange immunization data. It is intended to facilitate the exchange of immunization data among multiple systems belonging to a single or to multiple organizations. Data exchange with and among the installed base of U.S. Immunization Information System (IIS) base was a critical consideration in formulating this profile. However, its intention is to go beyond data exchange among IISs, and facilitate immunization data exchange on a healthcare information network that includes electronic medical record (EMR) systems, Health Information Exchanges, other public health systems, Personal Health Record (PHR) systems, and other stakeholder systems. Thus, the profile specifies common data formats for exchanging immunization data only, or for exchanging immunization data along with medical summary data needed for the overall care of a patient related to immunizations.</p>
+          <p>To accomplish this, IC includes a history of administered vaccines with such details as lot number, who administered the shot, and so forth, and handles immunization as well as other information related to the patient's care. For example, it includes medical history, medications, allergies, vital signs, and so forth.</p>
+          <h2 id="2.2">2.2 Actor Descriptions</h2>
+          <p>Please see the <a href="https://profiles.ihe.net/GeneralIntro/ch-A.html" target="_target">IHE General Introduction, Appendix A</a></p>
+          <h2 id="2.3">2.3 Transaction Descriptions</h2>
+          <p>Please see the <a href="https://profiles.ihe.net/GeneralIntro/ch-B.html" target="_target">IHE General Introduction, Appendix B</a></p>
+          <h2 id="2.4">2.4 Dependencies</h2>
+          <p>Dependencies among IHE Integration Profiles exist when implementation of one integration profile is a prerequisite for achieving the functionality defined in another integration profile. The table below defines these dependencies. Some dependencies require that an actor supporting one profile be grouped with one or more actors supporting other integration profiles.</p>
+          <p id="t2.4-1" class="tableTitle">Table 2.4-1: PCC Profile Dependencies</p>
+          <table cellspacing="0" cellpadding="0">
+            <thead>
+              <tr>
+                <td class="tableHeader">Integration Profile</td>
+                <td class="tableHeader">Depends on</td>
+                <td class="tableHeader">Dependency Type</td>
+                <td class="tableHeader">Purpose</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>All PCC content profiles</td>
+                <td><em>Consistent Time (CT)</em></td>
+                <td>Each Content Creator and Content Consumer Actor shall be grouped with the Time Client Actor</td>
+                <td>Required to manage and resolve conflicts in multiple updates.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>To support a dependent profile, an actor must implement all required transactions in the prerequisite profiles in addition to those in the dependent profile. In some cases, the prerequisite is that the actor selects any one of a given set of profiles.</p>
+          <h2 id="2.5">2.5 History of Annual Changes</h2>
+          <p>Since its beginning in the 2005-2006 cycle, the IHE Patient Care Coordination initiative has published a large number of profiles for many different use cases. The list of profiles, both in <em>Final Text</em> and as upplements for <em>Trial Implementation</em> are listed in the <a href="https://profiles.ihe.net/PCC/" target="_blank">PCC Domain publishing page</a>.</p>
+          <h2 id="2.6">2.6 Product Implementations</h2>
+          <p>Developers have a number of options in implementing IHE actors and transactions in product implementations. The decisions cover three classes of optionality:</p>
+          <ul>
+            <li class="bullet-list1">For a system, select which actors it will incorporate (multiple actors per system are acceptable).</li>
+            <li class="bullet-list1">For each actor, select the integration profiles in which it will participate.</li>
+            <li class="bullet-list1">For each actor and profile, select which options will be implemented.</li>
+          </ul>
+          <p>All required transactions must be implemented for the profile to be supported (for XDS-MS, refer to the transaction descriptions for <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-10.html#10.1.2" target="_blank">XDS in ITI TF-2</a>).</p>
+          <p>Implementers should provide a statement describing which IHE actors, IHE integration profiles and options are incorporated in a given product. The recommended form for such a statement is defined in <a href="https://profiles.ihe.net/GeneralIntro/ch-F.html" target="_blank">Appendix F of the IHE General Introduction</a>.</p>
+          <p>In general, a product implementation may incorporate any single actor or combination of actors. When two or more actors are grouped together, internal communication between actors is assumed to be sufficient to allow the necessary information flow to support their functionality; for example, the Document Source Actor of XDS-MS may use the Patient Identifier Cross-reference Consumer Actor to obtain the necessary patient identifier mapping information from its local patient id to that used in the document sharing domain. The exact mechanisms of such internal communication are outside the scope of the IHE Technical Framework.</p>
+          <p>When multiple actors are grouped in a single product implementation, all transactions originating or terminating with each of the supported actors shall be supported (i.e., the IHE transactions shall be offered on an external product interface).</p>
+          <p>The following examples describe which actors typical systems might be expected to support. This is not intended to be a requirement, but rather to provide illustrative examples.</p>
+          <p>An acute care EMR serving a hospital might include a Document Source Actor, Document Consumer Actor, a Document Repository Actor, a Patient Identification Consumer Actor, as well as a Secure Node Actor. An Ambulatory EMR serving a physician practice might include a Document Source Actor, Document Consumer Actor, a Patient Demographics Client Actor, as well as a Secure Application Actor.</p>
         </div>
       </div>
     </main>
