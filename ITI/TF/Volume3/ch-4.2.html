@@ -562,8 +562,8 @@
           </div>
           <p>When submitting an existing document by value:</p>
           <ul>
-            <li class="bullet-list1">The targetObject shall contain the Id of the DocumentEntry object.</li>
-            <li class="bullet-list1">The sourceObject shall contain the Id of the SubmissionSet object</li>
+            <li class="bullet-list1">The targetObject shall contain the entryUUID of the DocumentEntry object.</li>
+            <li class="bullet-list1">The sourceObject shall contain the entryUUID of the SubmissionSet object</li>
           </ul>
           <p>The following XML example demonstrates how to encode a submission by value.</p>
           <code class="code-block">&lt;rim:Association
@@ -598,8 +598,8 @@
           </div>
           <p>When submitting a reference to an existing document:</p>
           <ul>
-            <li class="bullet-list1">The targetObject shall contain the Id of the DocumentEntry object.</li>
-            <li class="bullet-list1">The sourceObject shall contain the Id of the SubmissionSet object.</li>
+            <li class="bullet-list1">The targetObject shall contain the entryUUID of the DocumentEntry object.</li>
+            <li class="bullet-list1">The sourceObject shall contain the entryUUID of the SubmissionSet object.</li>
           </ul>
           <p>The following XML example demonstrates how to encode a submission by reference.</p>
           <div style="border:0.75pt solid #000000; clear:both">
@@ -629,8 +629,8 @@
 		   </div>
           <p>When submitting a Folder:</p>
           <ul>
-            <li class="bullet-list1">The targetObject shall contain the Id of the Folder object.</li>
-            <li class="bullet-list1">The sourceObject shall contain the Id of the SubmissionSet object.</li>
+            <li class="bullet-list1">The targetObject shall contain the entryUUID of the Folder object.</li>
+            <li class="bullet-list1">The sourceObject shall contain the entryUUID of the SubmissionSet object.</li>
           </ul>
           <p><span style="font-weight:bold"Example SubmissionSet – Folder HasMember Association</span></p>
           <div style="border:0.75pt solid #000000; clear:both">
@@ -663,8 +663,8 @@
           </p>
           <p>When adding a DocumentEntry to a Folder:</p>
           <ul>
-            <li class="bullet-list1">The targetObject shall contain the Id of the DocumentEntry object.</li>
-            <li class="bullet-list1">The sourceObject shall contain the Id of the Folder object.</li>
+            <li class="bullet-list1">The targetObject shall contain the entryUUID of the DocumentEntry object.</li>
+            <li class="bullet-list1">The sourceObject shall contain the entryUUID of the Folder object.</li>
           </ul>
           <p><span style="font-weight:bold">Example Folder HasMember Association  </p>
           <div style="border:0.75pt solid #000000; clear:both">
@@ -700,7 +700,7 @@
           <ul>
             <li class="bullet-list1">The targetObject shall contain the Id of the Association that links the
               DocumentEntry and the Folder.</li>
-            <li class="bullet-list1">The sourceObject shall contain the Id of the SubmissionSet object.</li>
+            <li class="bullet-list1">The sourceObject shall contain the entryUUID of the SubmissionSet object.</li>
           </ul>
           <h5 id="4.2.2.1.5">4.2.2.1.5 Adding DocumentEntries to Folders</h5>
           <p>A DocumentEntry can be added to a Folder in one of four ways:</p>
@@ -2926,7 +2926,7 @@
 
           <h5 id="4.2.3.2.10">4.2.3.2.10 DocumentEntry.hash</h5>
           <p>
-            <span style="font-weight:bold">Description:</span>
+            <span style="font-weight:bold">Description:</span>When adding a DocumentEntry to a Folder
           </p>
           <p>The hash of the contents of the document.</p>
           <p>The hash attribute can be used to identify accidental document corruption, mistaken duplicate IDs, etc. The
@@ -3010,8 +3010,8 @@
           <p>
             <span style="font-weight:bold">Coding:</span>
           </p>
-          <p>Max length is unbounded. Contained in the ebRS ExtrinsicObject home attribute for the ExtrinsicObject that
-            corresponds to the DocumentEntry. It is an OID URN (see Table 4.2.3.1.7-2).</p>
+          <p>Contained in the ebRS ExtrinsicObject home attribute for the ExtrinsicObject that
+            corresponds to the DocumentEntry. It is an OID URN (see Table 4.2.3.1.7-2). The OID is limited to 64 characters.</p>
           <p>
             See
             <a href="../Volume2/ITI-18.html#3.18.4.1.2.3.8">ITI TF-2: 3.18.4.1.2.3.8</a>
@@ -3580,7 +3580,8 @@
           <p>
             <span style="font-weight:bold">Coding:</span>
           </p>
-          <p>Max length is 256 characters. Coded as an ebRIM Slot. May have multiple values.</p>
+          <p>Coded as an ebRIM Slot. May have multiple rim:Value.</p>
+          <p>Maximum length of each rim:Value is 256 characters.</p>
           <p>
             <span>The name of the slot in the metadata shall be</span>
             <code>urn:ihe:iti:xds:2013:referenceIdList</code><span>.</span>
@@ -3985,12 +3986,13 @@
           <p>
             <span style="font-weight:bold">Coding:</span>
           </p>
-          <p>Max length is 256. The format of the SubmissionSet.intendedRecipient value is XON|XCN|XTN where XON
+          <p>The format of the SubmissionSet.intendedRecipient value is XON|XCN|XTN where XON
             identifies the organization, XCN identifies a person and XTN identifies the telecommunications, see Table
             4.2.3.1.7-2 for description of XON, XCN and XTN format. There is a "|" character separator between the
             organization and the person, and between the person and the telecommunications address, which is required
             when the person or the telecommunications address information is present.</p>
-          <p>The value is coded as zero or more values within a single ebRIM Slot in the SubmissionSet.</p>
+          <p>The value is coded as zero or more rim:Value within a single ebRIM Slot in the SubmissionSet.</p>
+          <p>Maximum length of each rim:Value is 256 characters.</p>
           <p>The following example shows two doctors from the same organization, another doctor without the organization
             details and another organization without the person details, and just a telecommunications address.</p>
           <div style="border:0.75pt solid #000000; clear:both">
@@ -4452,8 +4454,8 @@
           <p>
             <span style="font-weight:bold">Coding:</span>
           </p>
-          <p>Max length is unbounded. The ebRS RegistryPackage home attribute for the RegistryPackage that corresponds
-            to the Folder. It is an OID URN (see Table 4.2.3.1.7-2).</p>
+          <p>The ebRS RegistryPackage home attribute for the RegistryPackage that corresponds
+            to the Folder. It is an OID URN (see Table 4.2.3.1.7-2). The OID is limited to 64 characters.</p>
           <p>
             See
             <a href="../Volume2/ITI-18.html#3.18.4.1.2.3.8">ITI TF-2: 3.18.4.1.2.3.8</a>
@@ -4917,7 +4919,7 @@
                   <p>XDSRegistryOutOfResources</p>
                   <p>XDSRepositoryOutOfResources</p>
                 </td>
-                <td>Resources are low.</td>
+                <td>System Resources are currently unavailable to respond to the request. The request may be retried later.</td>
                 <td>
                   <p>P, R, SQ, XGQ</p>
                   <p>P, RS, XGR</p>
@@ -4949,7 +4951,7 @@
               </tr>
               <tr>
                 <td>XDSTooManyResults</td>
-                <td>Results exceed the limits of the responder.</td>
+                <td>The request cannot be satisfied due to being overly broad or having a response that is too large. The request should be adjusted, e.g., narrowed to reduce the number of results.</td>
                 <td>SQ, XGQ, RS, XGR</td>
               </tr>
               <tr>
