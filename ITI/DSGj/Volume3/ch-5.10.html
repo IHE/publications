@@ -26,7 +26,7 @@
           </div>
           <div class="top-bar-right hide-for-small-only">
             <ul class="menu">
-              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 1.0, April 24, 2024 – Initial Draft</li>
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 20.0, August 4, 2023 – Final Text</li>
             </ul>
               <ul class="menu align-right">
                     <li><input id="ihe-search-field" type="search" placeholder="Search"></li>
@@ -116,21 +116,21 @@
       <h3 id="5.10.2">5.10.2 JSON Signature Specification</h3>
       <p>The following constraints define the <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-3.2">JWS JSON</a> object. This block is common to the Detached signature and Enveloping signature.</p>
       <ul>
-        <li class="bullet-list1">SHALL use JSON Web Signature (JWS)(see <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>). JSON Web Signature (JWS) is a means of representing content secured with digital signatures or Hash-based Message Authentication Codes (HMACs) using JSON data structures. Cryptographic algorithms and identifiers used with this specification are enumerated in the separate JSON Web Algorithms (JWA)</li>
-        <li class="bullet-list1">The JWS SHALL be represented as a JSON object which uses JWS JSON serialization as specified in <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a></li>
-        <li class="bullet-list1">SHALL conform to JAdES-B-LT – for support of Long Term signatures. The JAdES-B-LT specification adds the timestamp of the signing, inclusion of the signing certificate and statement of revocation</li>
+        <li class="bullet-list1">SHALL use JSON Web Signature (JWS)(see <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>). JSON Web Signature (JWS) is a means of representing content secured with digital signatures or Hash-based Message Authentication Codes (HMACs) using JSON data structures. Cryptographic algorithms and identifiers used with this specification are enumerated in the separate JSON Web Algorithms (JWA).</li>
+        <li class="bullet-list1">The JWS SHALL be represented as a JSON object which uses JWS JSON serialization as specified in <a href="https://tools.ietf.org/html/rfc7515">RFC 7515.</a></li>
+        <li class="bullet-list1">SHALL conform to JAdES-B-LT – for support of Long Term signatures. The JAdES-B-LT specification adds the timestamp of the signing, inclusion of the signing certificate and statement of revocation.</li>
         </ul>
       
       <h4 id="5.10.2.1">5.10.2.1 Protected Header</h4>
         <h5 id ="5.10.2.1.1">5.10.2.1.1 "alg" (Algorithm) Header Parameter</h5>
           <ul>
-            <li class="bullet-list1">SHALL be present</li>
-            <li> It is recommend to use algorithms as specified in <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-3.1">RFC 7518</a> and <a href="https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.01.01_60/ts_119312v010101p.pdf">ETSI TS 119 312</a></li>
+            <li class="bullet-list1">SHALL be present.</li>
+            <li> It is recommend to use algorithms as specified in <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-3.1">RFC 7518</a> and <a href="https://www.etsi.org/deliver/etsi_ts/119300_119399/119312/01.01.01_60/ts_119312v010101p.pdf">ETSI TS 119 312.</a></li>
             <li>RS256 algorithm SHALL be implemented for the purpose of interoperability testing. However, implementors SHOULD take into account additional considerations such as jurisdictional policies, quantum safe computing, and evolving guidance from RFC 7518 and ETSI TS 119 312.</li>
           </ul>
         <h5 id="5.10.2.1.2">5.10.2.1.2 "kid" (key identifier) Parameter</h5>
         <ul>
-          <li>The kid parameter, if present, is a hint indicating which key was used to secure the JWS. The kid claim is used by DSG Content Consumers for looking up the public key for verification of digital signatures</li>
+          <li>The kid parameter, if present, is a hint indicating which key was used to secure the JWS. The kid claim is used by DSG Content Consumers for looking up the public key for verification of digital signatures.</li>
         </ul>
         <h5 id="5.10.2.1.3">5.10.2.1.3 "crit" (critical) Parameter</h5>
           <ul>
@@ -175,14 +175,15 @@
       <h4 id="5.10.3.1">5.10.3.1 Protected Header</h4>
         <h5 id="5.10.3.1.1">5.10.3.1.1 "sigD" Header Parameter</h5>
         <ul>
-          <li>sigD parameter SHALL be included as per 5.2.8.1 of the JAdES Specification</li>
-            <li>mID member SHALL be present and set to "http://uri.etsi.org/19182/ObjectIdByURI"</li>            
-              <li class="bullet-list1">
-                The pars member SHALL be an array of strings that contain references to each data object* being signed. This array is considered the manifest of the data objects being signed. Each string in this array shall be a URI. See <a href="5.10.6.1.9">Section 5.10.6.1.9</a> for more details.
-             </li>
-            <li>ctys member SHALL be present</li>
+          <li>The sigD parameter SHALL be included as per 5.2.8.1 of the JAdES Specification.</li>
+            <li>The mID member SHALL be present and set to "http://uri.etsi.org/19182/ObjectIdByURIHash"<sup>1</sup>.</li>            
+            <li>The pars member SHALL be an array of strings that contain references to each data object<sup>2</sup> being signed. This array is considered the manifest of the data objects being signed. Each string in this array shall be a URI. See <a href="5.10.6.1.9">Section 5.10.6.1.9</a> for more details.</li>
+            <li>The hashV, and the hashM members SHALL be present.</li>
+            <li>The ctys member SHALL be present.</li>
         </ul>
-        <p class="note">* Note: Data Objects refer to the binary representations of documents or any other content on which the digital signature is captured and verified</p>
+        <p class="note">1: For minimal interoperability and to claim conformance to IHE-DSG, the recommendation is to use the objectIdByURIHash mechanism given performance and consistency reasons, as signatures may need to be calculated on low compute devices and in distributed systems, URIs can change due to network restructuring or other factors. A hash can provide a consistent identifier that remains the same even if the underlying URI changes.
+        </p>
+        <p class="note">2: Data Objects refer to the binary representations of documents or any other content on which the digital signature is captured and verified</p>
         <h5 id="5.10.3.1.2">5.10.3.1.2 "cty" (content type) Header Parameter</h5>
           <ul><li>SHALL NOT be included</li></ul>
         <h4 id="5.10.3.2">5.10.3.2 Unprotected Header</h4>
@@ -190,11 +191,50 @@
       <h4 id="5.10.3.3">5.10.3.3 Payload</h4>
         <ul><li>The Detached Signature is accomplished by deleting the "payload" member of the JWS JSON Object</li></ul>
       <h4 id="5.10.3.4">5.10.3.4 Signature</h4>
-        <ul><li>As per section 5.2.8.3.2 of JAdES, the JWS Payload SHALL contribute as a stream of octets to the computation of JWS Signature Value</a></li></ul>
-      <h3 id="5.10.4">5.10.4 JSON Enveloping Signature</h3> 
+        <ul><li>As per section 5.2.8.3.3 of JAdES, the JWS Payload SHALL contribute shall contribute as an empty stream to the computation of the JWS Signature Value.</a></li></ul>
+      <h4 id="5.10.3.5">5.10.3.5 JSON SubmissionSet Signature</h4>
+      <p>The SubmissionSet Signature is a variant of the Detached Signature used to digitally sign a complete SubmissionSet. The signature can later be validated to assure that the SubmissionSet is complete and the same as when it was created.
+
+        The SubmissionSet Signature shall be a Detached Signature that has references for:</p>
+        <ul>
+            <li>the SubmissionSet uniqueId as per <a href="5.10.3.5.1">5.10.3.5.1 "iheSSId" (SubmissionSet uniqueId) Header Parameter</a></li>
+            <li>the document uniqueId for each of the documents contained in the SubmissionSet not including the SubmissionSet Signature document within the manifest as per <a href="5.10.3.1.1">above section</a></li>
+        </ul>
+        <p>
+          The SubmissionSet Signature creation is informatively described here with the Content Creator grouped with an XDS Document Source and is equally applicable with grouping the Content Creator with the other Document Sharing infrastructure. The document publication transaction is not specific to the SubmissionSet Signature process or content, and is included here only to show overall workflow.
+          
+          Informative process for creating a SubmissionSet Signature:
+       </p>
+      <ol>
+          <li>A set (n) of Documents of interest are gathered, or generated to be published.</li>
+          <li>A SubmissionSet is created for the Documents, for example in preparation for using the Provide and Register Document Set-b [ITI-41] transaction or equivalent.</li>
+          <li>
+              A Digital Signature document is created which includes reference of:</li>
+              <ol type="i">
+                <li>The SubmissionSet.uniqueId is included in the iheSSId header parameter.</li>
+                <li>All of the (n) documents to be included in the SubmissionSet, other than the signature document, are listed in the manifest.</li>
+                <li>The signature document is processed according to <a href="5.10.3">Section 5.10.3</a>, and thus signed.</li>
+              </ol>
+            </li>
+          <li>The signature document would be added to the SubmissionSet according to <a href="5.10.6">Section 5.10.6</a>. The SubmissionSet may, but is not required, include all the “SIGNS” association defined in <a href="5.10.6.4">Section 5.10.6.4</a> with associations to all the other documents in the SubmissionSet. The “SIGNS” association is redundant in this case as the SubmissionSet already groups these documents.</li>
+          <li>The SubmissionSet with the (n) documents and the Digital Signature document is submitted using the Provide and Register Document Set-b [ITI-41] transaction, or equivalent from the other Document Sharing infrastructures.</li>
+      </ol>
+        <h5 id="5.10.3.5.1">5.10.3.5.1 "iheSSId" (SubmissionSet uniqueId) Header Parameter</h4>
+          <p><b>Semantics</b></p>
+          <p>The iheSSId header parameter shall be a new signed (protected) header parameter that qualifies the signature.</br></br>
+            The iheSSId header parameter's value shall specify the SubmissionSet uniqueId as per the <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.3.12">4.2.3.3.12 SubmissionSet.uniqueId</a>
+          </p>
+          <p><b>Syntax</b></p>
+          <p>The iheSSId header parameter is defined below:</br></br>
+          
+            "iheSSId" : {"type":"string","format":"oid"}. </br></br>
+
+            <b>Note:</b> The <a href="5.10.2.1.3">crit</a> header parameter shall include the "iheSSId" extension header parameter when the SubmissionSet Option is used. 
+          </p>
+        <h3 id="5.10.4">5.10.4 JSON Enveloping Signature</h3> 
       <h4 id="5.10.4.1">5.10.4.1 Protected Header</h4>
         <h5 id="5.10.4.1.1">5.10.4.1.1 "cty" (content type) Header Parameter</h5>
-        <ul><li>SHALL be included as per syntax specified in IETF RFC 7515, clause 4.1.10.</li></ul>
+        <ul><li>SHALL be included as per syntax specified in IETF RFC 7515, clause 4.1.10</li></ul>
       <h4 id="5.10.4.2">5.10.4.2 Unprotected Header</h4>
       <ul><li>No additional considerations other than the ones specified in the section <a href="5.10.2.2">5.10.2.2</a></li></ul>
       <h4 id="5.10.4.3">5.10.4.3 Payload</h4>
@@ -217,7 +257,7 @@
         <li class="bullet-list1">The document may not be accessible to the user, for example authorization denied, so confirmation of valid signed content may be impossible.</li>
       </ul>
       <p>The decision on what degree of verification is needed is determined by the application and use case.</p>
-      <p>The Content Consumer SHALL be able to validate content that uses SHA256 as well as SHA1.</p>
+      <p>The Content Consumer SHALL be able to validate content that uses SHA256.</p>
       <h3 id="5.10.6">5.10.6 JSON Document Sharing Metadata</h3>
       <p>This section applies when the Content Creator or Content Consumer is utilizing a Document Sharing Profile for transport. This section defines the source for all required Document Sharing attributes and as many optional attributes as makes sense for implementers’ applications.</p>
       <h4 id="5.10.6.1">5.10.6.1 Document Sharing – DocumentEntry Metadata</h4>
@@ -229,7 +269,7 @@
         <span>when the signature document is a Detached Signature and</span>
         <span style="font-weight:bold">urn:ihe:iti:dsg:enveloping:2014</span>
         <span>when the signature document is an Enveloping Signature. The formatCode codeSystem SHALL be</span>
-        <span style="font-weight:bold">1.3.6.1.4.1.19376.1.2.3</span>
+        <span style="font-weight:bold">1.3.6.1.4.1.19376.1.2.3</span>.
         <span>.</span>
       </p>
       <h5 id="5.10.6.1.2">5.10.6.1.2 XDSDocumentEntry.classCode</h5>
@@ -251,7 +291,7 @@
       <p>The language of the signature content SHALL be ‘art’ as in "artificial".</p>
       <h5 id ="5.10.6.1.9">5.10.6.1.9 XDSDocumentEntry.uniqueId</h5>
       <p>
-        SHALL use a URI format to hold the document uniqueID. For documents that do not use a URI as the uniqueId, the Affinity Domain SHOULD determine an appropriate way to encode the DocumentEntry.uniqueId. See ebRIM Representation <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2.26">Section 4.2.3.2.26</a></p>
+        SHALL use a URI format to hold the document uniqueId. For documents that do not use a URI as the uniqueId, the Affinity Domain SHOULD determine an appropriate way to encode the DocumentEntry.uniqueId. See ebRIM Representation <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2.26">Section 4.2.3.2.26</a></p>
       <h4 id="5.10.6.3">5.10.6.3 Document Sharing - Folder Metadata</h4>
       <p>This document content profile makes no changes to the structure of Folders.</p>
       <h4 id="5.10.6.4">5.10.6.4 Document Associations</h4>
