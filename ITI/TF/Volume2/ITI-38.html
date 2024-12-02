@@ -180,22 +180,38 @@
         Stored Query transactions to indicate the association of a response element with a community.
         It is specified as the ebRIM 'home' attribute within the relevant response elements. Document
         Consumers process the value as an opaque unique identifier.</li>
-      <li class="bullet-list1">It is an optional parameter to Registry Stored Query requests, not
-        requiring a patient id parameter, and Retrieve Document Set requests to indicate which
-        community to direct the request.</li>
+      <li class="bullet-list1">It is used by optional parameters to Registry Stored Query, Cross Gateway
+	Query, and Retrieve Document Set requests, and by a required parameter to Cross Gateway Retrieve requests,
+	to indicate which community to direct the request.</li>
     </ul>
-    <p>
-      The Initiating Gateway shall specify the homeCommunityId parameter within all queries which
-      do not include a patient identifier parameter. These would be queries which specify an
-      entryUUID or uniqueID. The homeCommunityId shall contain the value that identifies the
-      community associated with the Responding Gateway. The homeCommunityId value is specified as the
-      home attribute on the AdhocQuery element of the query request, as in: <code>
-             &lt;AdhocQuery id=”…” home=”urn:oid:1.2.3” … &gt; </code></p>
-    <p>Each Cross Gateway Query request
-      can have at most one homeCommunityId value. If multiple
-      entryUUID or uniqueID values are specified they must all be associated with the same
-      homeCommunityId value. Multiple individual query requests can be used to retrieve data associated
-      with different homeCommunityIds.</p>
+    <p>For stored queries which do not require the patient id as a parameter, meaning query by EntryUUID or UniqueID:</p>
+    <ul>
+      <li class="bullet-list1">If the Cross Gateway Query is being addressed to a Responding Gateway then the Initiating 
+	Gateway or the client on whose behalf it is forwarding the request may have previously sent a Cross Gateway Query 
+	to the Responding Gateway which included a patient id and saved the homeCommunityId which was returned on the element 
+	containing the EntryUUID or uniqueID. If this is not the case the Initiating Gateway shall have access to the correct 
+	homeCommunityId through some other means.
+      </li>
+      <li class="bullet-list1">The homeCommunityId value is specified as the home attribute on the AdhocQuery element of the 
+	query request, as in:
+ 	<AdhocQuery id="…" home="urn:oid:1.2.3" … >
+      </li>
+      <li class="bullet-list1">Each query request can have at most one homeCommunityId value. If the Document Consumer 
+	specifies multiple entryUUID or uniqueID values they must all be associated with the same homeCommunityId value. 
+	Multiple individual query requests can be used to retrieve data associated with different homeCommunityIds.
+      </li>
+    <p>For stored queries which do require the patient id as a parameter:</</p>
+      <li class="bullet-list1">The homeCommunityId values are specified in the $targetCommunityIdList query parameter. 
+	This parameter is respected by XCA Initiating Gateway and XCA Responding Gateway actors that support the Target 
+	Communities option. It may be ignored by actors which do not support the Target Communities option. 
+      </li>
+      <li class="bullet-list1">A single homeCommunityId value can instead be specified in the home attribute on the 
+	AdhocQuery element of the query request, as in:  <AdhocQuery id="…" home="urn:oid:1.2.3" … >. However, 
+	it may be ignored by all other actors.
+      </li>
+      <li class="bullet-list1">If the query contains the $targetCommunityIdList parameter, then the home attribute 
+	on the AdhocQuery element of the query request shall not be populated. 
+      </li>
     <h6 id="3.38.4.1.2.2">3.38.4.1.2.2 Specifying patient identifier</h6>
     <p>The Initiating Gateway shall specify in relevant queries a patient identifier known to the
       Responding Gateway. The mechanism used by the Initiating Gateway to determine the correct
@@ -373,17 +389,24 @@
         </ul>
     </ul>
     <h6 id="3.38.4.1.3.1">3.38.4.1.3.1 Compatibility of Options</h6>
-    <p>
-      The presence or absence of the optional $XDSDocumentEntryType parameter triggers the behaviors
-      on
-      the Responding Gateway. If this value is specified, and the Responding Gateway (or XDS
-      community
-      supported by the Responding Gateway) does not support it, it shall be ignored. If it is
-      specified, and the Responding Gateway (or underlying XDS community) does support it, the proper
-      information is returned. See
-      <a href="../Volume2/ITI-18.html#3.18.4.1.2.5">ITI TF-2: 3.18.4.1.2.5</a>
-      for more details regarding compatibility of the Registry Stored Query transaction.
-    </p>
+    <p>Compatibility of Options supported by Actors are defined as follows:</p>
+    <ol>
+	<li class="numbered-list1">
+	      The presence or absence of the optional $XDSDocumentEntryType parameter triggers the behaviors on
+  	      the Responding Gateway. If this value is specified, and the Responding Gateway (or XDS community
+ 	      supported by the Responding Gateway) does not support it, it shall be ignored. If it is
+ 	      specified, and the Responding Gateway (or underlying XDS community) does support it, the proper
+ 	      information is returned. See
+ 	      <a href="../Volume2/ITI-18.html#3.18.4.1.2.5">ITI TF-2: 3.18.4.1.2.5</a>
+	      for more details regarding compatibility of the Registry Stored Query transaction.
+        </li>
+	<li class="numbered-list1">The presence or absence of the optional “$targetCommunityIdList” parameter 
+		triggers the behaviors on the Responding Gateway. If this value is specified, and the Responding
+		Gateway does not support it, it will be ignored. If it is specified, and the Responding Gateway 
+		does support it, it shall accept the query and direct the request to the communities specified in 
+		the “$targetCommunityIdList” that it supports. See ITI TF-2: 3.18.4.1.2.5 for more details 
+		regarding compatibility of the Registry Stored Query transaction.
+        </li>
     <h6 id="3.38.4.1.3.2">3.38.4.1.3.2 Assigning homeCommunityID to Responding Gateway</h6>
     <p>
       As described in
