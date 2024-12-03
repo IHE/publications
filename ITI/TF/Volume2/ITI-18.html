@@ -2432,14 +2432,28 @@ SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
                     <li class="bullet-list1">
                         <strong>For Document Registry Actors:</strong>
                         Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in <a
-                                href="#3.18.4.1.2.3.7">Section 3.18.4.1.2.3.7 Parameters for Required Queries</a> and execute the query. The Document Registry shall accept the homeCommunityId value if it is specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry it shall return a successful response with no elements, or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.
+                                href="#3.18.4.1.2.3.7">Section 3.18.4.1.2.3.7 Parameters for Required Queries</a> and execute the query. The Document Registry shall accept the homeCommunityId
+                                and/or targetCommunityIdList values if they are specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry
+                                it shall return a successful response with no elements, or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.
                     </li>
                     <li class="bullet-list1">
                         <strong>For Initiating Gateway Actors:</strong></li>
                 </ul>
                 <ul>
                     <li class="bullet-list2">Initiating Gateway receives a Registry Stored Query by patient id: It shall
-                        determine a) which Responding Gateways this request should be sent to and b) what patient id to
+                        determine:
+                        <ul>
+                        <li class="bullet-list3" which Responding Gateways this request should be sent to.
+                            <ul>
+                                <li class="bullet-list4">
+                                </li>
+                                <li class="bullet-list4">
+                                </li>
+                                <li class="bullet-list4">
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="bullet-list3" what patient id to
                         use in the Cross Gateway Query. Detailed specification of these steps is not in the intended
                         scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ),
                         future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.7 XCA and
@@ -2448,6 +2462,8 @@ SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
                         patient identifier corresponding to the Responding Gateway's community and initiates a Cross
                         Gateway Query transaction to the Responding Gateway. If the Initiating Gateway is grouped with a
                         Document Consumer it will also initiate a Registry Stored Query to the local Document Registry.
+                        </li>
+                        </ul>
                     </li>
                     <li class="bullet-list2">
                         Initiating Gateway receives a Registry Stored Query by entryUUID or uniqueID: Verify
