@@ -2409,98 +2409,93 @@ SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
                 <h5 id="3.18.4.1.3">3.18.4.1.3 Expected Actions</h5>
                 <p>The Document Registry shall:</p>
                 <ol>
-                    <li class="numbered-list1">Accept a parameterized query in an AdhocQueryRequest message</li>
-                    <li class="numbered-list1">Verify the required parameters are included in the request. Additionally,
-                        special rules documented in the above section 'Parameters for Required Queries' shall be
-                        verified.
+                  <li class="numbered-list1">Accept a parameterized query in an AdhocQueryRequest message</li>
+                  <li class="numbered-list1">Verify the required parameters are included in the request. Additionally,
+                      special rules documented in the above section 'Parameters for Required Queries' shall be
+                      verified.
+                  </li>
+                  <li class="numbered-list1">Errors shall be returned for the following conditions:
+                    <p>
+                      See
+                      <a href="../Volume3/ch-4.2.html#4.2.4">ITI TF-3: 4.2.4</a>
+                      Error Reporting for additional error codes and general information on formatting error responses.
+                    </p>
+
+                    <ul>
+                        <li class="bullet-list2">Unknown query ID (error code XDSUnknownStoredQuery)</li>
+                        <li class="bullet-list2">Required parameter missing (error code XDSStoredQueryMissingParam)</li>
+                      </ul>
+                  </li>
+                  <li class="numbered-list1">Process the query as appropriate:
+                  <ul>
+                    <li class="bullet-list2"> <strong>For Document Registry Actors:</strong>
+                      Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in <a
+                              href="#3.18.4.1.2.3.7">Section 3.18.4.1.2.3.7 Parameters for Required Queries</a> and execute the query. The Document Registry shall accept the homeCommunityId
+                              and/or targetCommunityIdList values if they are specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry
+                              it shall return a successful response with no elements, or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.
                     </li>
-                    <li class="numbered-list1">Errors shall be returned for the following conditions:</li>
-                </ol>
-                <ul>
-                    <li class="bullet-list2">Unknown query ID (error code XDSUnknownStoredQuery)</li>
-                    <li class="bullet-list2">Required parameter missing (error code XDSStoredQueryMissingParam)</li>
-                </ul>
-                <p>
-                    See
-                    <a href="../Volume3/ch-4.2.html#4.2.4">ITI TF-3: 4.2.4</a>
-                    Error Reporting for additional error codes and general information on formatting error responses.
-                </p>
-                <ol start="4">
-                    <li class="numbered-list1">Process the query as appropriate:</li>
-                </ol>
-                <ul>
-                    <li class="bullet-list1">
-                        <strong>For Document Registry Actors:</strong>
-                        Retrieve the internal implementation template of the query based on the Query ID supplied in the query request. Substitute appropriate parameters as indicated in <a
-                                href="#3.18.4.1.2.3.7">Section 3.18.4.1.2.3.7 Parameters for Required Queries</a> and execute the query. The Document Registry shall accept the homeCommunityId
-                                and/or targetCommunityIdList values if they are specified in a Registry Stored Query request. If a patient identifier specified as a parameter to the query is unknown to the Document Registry
-                                it shall return a successful response with no elements, or an XDSUnknownPatientId error, depending on XDS Affinity Domain policy.
-                    </li>
-                    <li class="bullet-list1">
-                        <strong>For Initiating Gateway Actors:</strong></li>
-                </ul>
-                <ul>
-                    <li class="bullet-list2">Initiating Gateway receives a Registry Stored Query by patient id: It shall
-                        determine:
-                        <ul>
-                        <li class="alpha-list3"> which Responding Gateways this request should be sent to.
+                    <li class="bullet-list2"> <strong>For Initiating Gateway Actors:</strong>
+                    <ul>
+                      <li class="bullet-list3">Initiating Gateway receives a Registry Stored Query by patient id: It shall
+                      determine:
+                        <ol>
+                          <li class="alpha-list4"> which Responding Gateways this request should be sent to.
                             <ul>
-                                <li class="bullet-list4">If the adhocQuery home attribute is populated with a recognized value,
-                                    it may choose to send the request to only that community, or it may ignore the value. 
+                              <li class="bullet-list5">If the adhocQuery home attribute is populated with a recognized value,
+                                  it may choose to send the request to only that community, or it may ignore the value. 
+                              </li>
+                              <li class="bullet-list5">If the adhocQuery home attribute is populated with an unrecognized value,
+                                  it may return an XDSUnknownCommunity error. 
+                              </li>
+                              <li class="bullet-list5">If the Initiating Gateway supports the “Target Communities” Option,
+                                  it shall additionally: 
+                                  <ul>
+                                    <li class="bullet-list6">verify the presence of the parameter “$targetCommunityIdList”. 
+                                      If it is present, check the values. If not recognized, return a Failure or PartialSuccess status
+                                      (according to ITI-TF3 4.2.4.2) with XDSUnknownCommunity error code for each unrecognized community.   
+                                    </li>
+                                    <li class="bullet-list6">Determine which Responding Gateways to contact by using the homeCommunityIds
+                                      contained in the “$targetCommunityIdList” parameter to identify the Responding Gateways. If a 
+                                      homeCommunityId represents a local community the Initiating Gateway shall initiate a Registry Stored Query
+                                      to the local Document Registry. For details regarding the homeCommunityId see Section 3.18.4.1.2.3.8 and ITI TF-2: 3.38.4.1.2.1. 
+                                    </li>
+                                    <li class="bullet-list6">Verify that the $targetCommunityIdList and adhocQuery home attribute are not both 
+                                      populated. If they are both populated, an XDSRegistryError shall be returned. 
+                                    </li>
+                                  </ul>
                                 </li>
-                                <li class="bullet-list4">If the adhocQuery home attribute is populated with an unrecognized value,
-                                    it may return an XDSUnknownCommunity error. 
-                                </li>
-                                <li class="bullet-list4">If the Initiating Gateway supports the “Target Communities” Option,
-                                    it shall additionally: 
-                                    <ul>
-                                    <li class="bullet-list5">verify the presence of the parameter “$targetCommunityIdList”. 
-                                        If it is present, check the values. If not recognized, return a Failure or PartialSuccess status
-                                        (according to ITI-TF3 4.2.4.2) with XDSUnknownCommunity error code for each unrecognized community.   
-                                    </li>
-                                    <li class="bullet-list5">Determine which Responding Gateways to contact by using the homeCommunityIds
-                                        contained in the “$targetCommunityIdList” parameter to identify the Responding Gateways. If a 
-                                        homeCommunityId represents a local community the Initiating Gateway shall initiate a Registry Stored Query
-                                        to the local Document Registry. For details regarding the homeCommunityId see Section 3.18.4.1.2.3.8 and ITI TF-2: 3.38.4.1.2.1. 
-                                    </li>
-                                    <li class="bullet-list5">Verify that the $targetCommunityIdList and adhocQuery home attribute are not both 
-                                        populated. If they are both populated, an XDSRegistryError shall be returned. 
-                                    </li>
-                                    </ul>
-                                  </li>
-                            </ul>
-                        </li>
-                        <li class="alpha-list3"> what patient id to
-                        use in the Cross Gateway Query. Detailed specification of these steps is not in the intended
-                        scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ),
-                        future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.7 XCA and
-                        Patient Identification Management for possible use of existing profiles PIX and PDQ. For each
-                        Responding Gateway identified, the Initiating Gateway shall update the query with the correct
-                        patient identifier corresponding to the Responding Gateway's community and initiates a Cross
-                        Gateway Query transaction to the Responding Gateway. If the Initiating Gateway is grouped with a
-                        Document Consumer it will also initiate a Registry Stored Query to the local Document Registry.
-                        </li>
-                        </ul>
-                    </li>
-                    <li class="bullet-list2">
-                        Initiating Gateway receives a Registry Stored Query by entryUUID or uniqueID: Verify
-                        homeCommunityId has been specified. If missing return Failure status with
-                        XDSMissingHomeCommunityId error code. If homeCommunityId not recognized return a Failure or
-                        PartialSuccess status with XDSUnknownCommunity error code. Determine which Responding Gateway to
-                        contact by using the homeCommunityId to obtain the Web Services endpoint of the Responding
-                        Gateway. The process of obtaining the Web Services endpoint is not further specified in this
-                        profile. If the homeCommunityId represents the local community the Initiating Gateway shall
-                        initiate a Registry Stored Query to the local Document Registry. The Initiating Gateway shall
-                        specify the homeCommunityId in the Cross Gateway Query by entryUUID or uniqueID which identifies
-                        the community associated with the Responding Gateway. For details regarding the homeCommunityId
-                        see <a href="#3.18.4.1.2.3.8">Section 3.18.4.1.2.3.8</a> and
-                        <a href="../Volume2/ITI-38.html#3.38.4.1.2.1">ITI TF-2: 3.38.4.1.2.1</a>.
-                    </li>
-                </ul>
-                <ol start="5">
-                    <li class="numbered-list1">Return XML formatted metadata in an AdhocQueryResponse message.</li>
-                </ol>
-                <ul>
+                              </ul>
+                            </li>
+                            <li class="alpha-list4"> what patient id to
+                              use in the Cross Gateway Query. Detailed specification of these steps is not in the intended
+                              scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ),
+                              future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.7 XCA and
+                              Patient Identification Management for possible use of existing profiles PIX and PDQ. For each
+                              Responding Gateway identified, the Initiating Gateway shall update the query with the correct
+                              patient identifier corresponding to the Responding Gateway's community and initiates a Cross
+                              Gateway Query transaction to the Responding Gateway. If the Initiating Gateway is grouped with a
+                              Document Consumer it will also initiate a Registry Stored Query to the local Document Registry.
+                          </li>
+                        </ol>
+                      </li>
+                      <li class="bullet-list3">
+                            Initiating Gateway receives a Registry Stored Query by entryUUID or uniqueID: Verify
+                            homeCommunityId has been specified. If missing return Failure status with
+                            XDSMissingHomeCommunityId error code. If homeCommunityId not recognized return a Failure or
+                            PartialSuccess status with XDSUnknownCommunity error code. Determine which Responding Gateway to
+                            contact by using the homeCommunityId to obtain the Web Services endpoint of the Responding
+                            Gateway. The process of obtaining the Web Services endpoint is not further specified in this
+                            profile. If the homeCommunityId represents the local community the Initiating Gateway shall
+                            initiate a Registry Stored Query to the local Document Registry. The Initiating Gateway shall
+                            specify the homeCommunityId in the Cross Gateway Query by entryUUID or uniqueID which identifies
+                            the community associated with the Responding Gateway. For details regarding the homeCommunityId
+                            see <a href="#3.18.4.1.2.3.8">Section 3.18.4.1.2.3.8</a> and
+                            <a href="../Volume2/ITI-38.html#3.38.4.1.2.1">ITI TF-2: 3.38.4.1.2.1</a>.
+                      </li>
+                    </ol>
+                  </li>
+                <li class="numbered-list1">Return XML formatted metadata in an AdhocQueryResponse message.
+                  <ul>
                     <li class="bullet-list2">The Document Registry may specify the homeCommunityID attribute on any
                         appropriate elements
                     </li>
@@ -2531,16 +2526,16 @@ SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
                         shall return to the Document Consumer either a Failure status (if no part was successful) or a
                         PartialSuccess status.
                     </li>
-                </ul>
-                <ol start="6">
-                    <li class="numbered-list1">When the Document Consumer receives the query response from the
+                  </ul>
+                </li>
+                <li class="numbered-list1">When the Document Consumer receives the query response from the
                         Initiating Gateway it must account for two aspects of the response; namely that a) the
                         homeCommunityId attribute will be specified b) the Document Consumer may not be able to map the
                         repository id value directly to the Document Repository. XCA assumes a common coding/vocabulary
                         scheme is used across all communities. For example, all communities shall have common privacy
                         consent vocabularies. The Document Consumer shall retain the values of the homeCommunityId
                         attribute for future interaction with the Initiating Gateway.
-                    </li>
+                </li>
                 </ol>
                 <p>
                     This transaction may return both errors and results in an AdhocQueryResponse message. To do this,
