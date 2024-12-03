@@ -319,19 +319,31 @@
     <p>In addition, the Responding Gateway shall:</p>
     <ul>
       <li class="bullet-list1">Return an XDSUnknownCommunity error code if the value of
-        homeCommunityId
+        the $homeCommunityId parameter
         is specified and is not known by the Responding Gateway.</li>
-      <li class="bullet-list1">Verify the homeCommunityId is specified on relevant queries and return
+      <li class="bullet-list1">Verify the $homeCommunityId parameter is specified on relevant queries and return
         an XDSMissingHomeCommunityId error code if missing.</li>
-      <li class="bullet-list1">Route the query to the local XDS Document Registry or perform
-        equivalent
-        action to form a query response. When routing to a local XDS Document Registry, the
-        Responding
-        Gateway shall pass all parameters into the Registry Stored Query [ITI-18] transaction.</li>
+      <li class="bullet-list1">If the Responding Gateway supports the Target Communities option and both 
+	      the $targetCommunityIdList parameter and AdhocQuery home attribute are populated, return an XDSRegistryError.
+      </li>
+      <li class="bullet-list1">If the Responding Gateway supports the Target Communities option and the $targetCommunityIdList 
+	      parameter is specified, then return an XDSUnknownCommunity error code for each value which is not known by the 
+	      Responding Gateway. Note that the Responding Gateway MAY continue to process the query if any values are those 
+	      of communities that are known.</li>
+      <li class="bullet-list1">If the AdhocQuery home attribute is populated on a query for which the $homeCommunityId 
+	      parameter is not defined per ITI-2 3.18.4.1.2.3.7, then the Responding Gateway may ignore the value, 
+	      or it may only query the community specified by that homeCommunityId.</li>
+      <li class="bullet-list1">Route the query to local XDS Document Registries or perform
+        equivalent action to form a query response for communities that are in scope according to the query parameters. 
+	      When routing to a local XDS Document Registry, the Responding Gateway shall pass all parameters into the 
+	      Registry Stored Query [ITI-18] transaction except the $targetCommunityIdList parameter, which it may omit.</li>
+      <li class="bullet-list1">If configured to forward on to other Responding Gateways and those Responding Gateways serve 
+	      communities that are in scope based on the query parameters, then route the query to those Responding Gateways. 
+	      When routing to a remote Responding Gateway, the Responding Gateway shall pass all parameters into the 
+	      Cross Gateway Query [ITI-38] transaction including the $targetCommunityIdList parameter.</li>
       <li class="bullet-list1">When routing a response from a local XDS Document Registry, the
         Responding Gateway shall pass all entities received in the Registry Stored Query response
-        into
-        the response to the Cross Gateway Query.</li>
+        into the response to the Cross Gateway Query.</li>
       <li class="bullet-list1">Ensure that the response contains a value identifying one of the
         Responding Gateway's communities for the homeCommunityId attribute in every appropriate
         element. The elements that shall include the ebRIM home attribute are:</li>
