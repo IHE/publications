@@ -2443,17 +2443,32 @@ SOAP 1.2 port    -&gt; "DocumentRegistry_Port_Soap12"</pre>
                     <li class="bullet-list2">Initiating Gateway receives a Registry Stored Query by patient id: It shall
                         determine:
                         <ul>
-                        <li class="bullet-list3" which Responding Gateways this request should be sent to.
+                        <li class="alpha-list3"> which Responding Gateways this request should be sent to.
                             <ul>
-                                <li class="bullet-list4">
+                                <li class="bullet-list4">If the adhocQuery home attribute is populated with a recognized value,
+                                    it may choose to send the request to only that community, or it may ignore the value. 
                                 </li>
-                                <li class="bullet-list4">
+                                <li class="bullet-list4">If the adhocQuery home attribute is populated with an unrecognaized value,
+                                    it may return an XDSUnknownCommunity error. 
                                 </li>
-                                <li class="bullet-list4">
-                                </li>
+                                <li class="bullet-list4">If the Initiating Gateway supports the “Target Communities” Option,
+                                    it shall additionally: 
+                                    <li class="bullet-list5">verify the presence of the parameter “$targetCommunityIdList”. 
+                                        If it is present, check the values. If not recognized, return a Failure or PartialSuccess status
+                                        (according to ITI-TF3 4.2.4.2) with XDSUnknownCommunity error code for each unrecognized community.   
+                                    </li>
+                                    <li class="bullet-list5">Determine which Responding Gateways to contact by using the homeCommunityIds
+                                        contained in the “$targetCommunityIdList” parameter to identify the Responding Gateways. If a 
+                                        homeCommunityId represents a local community the Initiating Gateway shall initiate a Registry Stored Query
+                                        to the local Document Registry. For details regarding the homeCommunityId see Section 3.18.4.1.2.3.8 and ITI TF-2: 3.38.4.1.2.1. 
+                                    </li>
+                                    <li class="bullet-list5">Verify that the $targetCommunityIdList and adhocQuery home attribute are not both 
+                                        populated. If they are both populated, an XDSRegistryError shall be returned. 
+                                    </li>
+                      
                             </ul>
                         </li>
-                        <li class="bullet-list3" what patient id to
+                        <li class="alpha-list3"> what patient id to
                         use in the Cross Gateway Query. Detailed specification of these steps is not in the intended
                         scope of this profile. Combination of this profile with other existing profiles (e.g., PIX/PDQ),
                         future profiles or configuration mechanisms is possible. Please refer to ITI TF-1: E.7 XCA and
