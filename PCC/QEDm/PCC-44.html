@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>2:3.44 Mobile Query Existing Data [PCC-44] - Query for Existing Data for Mobile (QEDm) v3.0.0-comment1</title>
+    <title>2:3.44 Mobile Query Existing Data [PCC-44] - Query for Existing Data for Mobile (QEDm) v3.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Query for Existing Data for Mobile (QEDm)</span>
             <br/>
-            <span style="display:inline-block;">3.0.0-comment1 - ballot
+            <span style="display:inline-block;">3.0.0 - Trial-Implementation
 
 
 
@@ -207,7 +207,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the Query for Existing Data for Mobile (QEDm) (v3.0.0-comment1: Publication Ballot 1) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/PCC/QEDm/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the Query for Existing Data for Mobile (QEDm) (v3.0.0: Publication) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/PCC/QEDm/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>2:3.44 Mobile Query Existing Data [PCC-44]</h2>
   
 
@@ -751,7 +751,40 @@ processing the <code class="language-plaintext highlighter-rouge">_revinclude</c
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET [base]/[Resource-type]?_revinclude=Provenance:target&amp;criteria
 </code></pre></div></div>
 
-<p>See Section 2:3.44.4.2.2.1 for the specification about the Provenance
+<p>When supporting the Provenance Option, the Clinical Data Consumer
+supplies and the Clinical Data Source SHALL support the
+FHIR <a href="http://hl7.org/fhir/R4/provenance.html">Provenance</a> Resource
+and be capable of processing all
+the search parameters as specified by the following table, according to
+the related optionality.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET [base]/Provenance?[parameters]
+</code></pre></div></div>
+
+<p><strong>Table 2:3.44.4.1.2.1.9-1: Provenance Option Search Parameters</strong></p>
+
+<table class="grid table-striped">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Modifiers</th>
+      <th>Clinical Data Source</th>
+      <th>Clinical Data Consumer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>target</td>
+      <td>reference</td>
+      <td> </td>
+      <td>R</td>
+      <td>O</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>See Section <a href="PCC-44.html#23444221-provenance-option">2:3.44.4.2.2.1 for the specification about the Provenance</a>
 content.</p>
 
 <h6 id="2344412110-occupational-data-for-health-option-search-parameters">2:3.44.4.1.2.1.10 Occupational Data for Health Option Search Parameters</h6>
@@ -796,8 +829,9 @@ initiate the request).</p>
 <p>When the Provenance Option is specified, the response FHIR
 Bundle SHALL also contain FHIR Provenance Resource entries that provide
 consistency of the returned fine-grained data elements with the
-coarse-grained data origin (e.g., Document). See Section 3.44.4.2.2.1
-for the specification about the Provenance content. If the fine-grained
+coarse-grained data origin (e.g., Document). 
+See Section <a href="PCC-44.html#23444221-provenance-option">3.44.4.2.2.1 for the specification about the Provenance content</a>. 
+If the fine-grained
 data element has not been extracted from a document, the Provenance
 Resource MAY be absent.</p>
 
@@ -831,7 +865,7 @@ with more details on the failure. See FHIR
 <p>In particular, if a Data Source receives a Mobile Query Existing Data
 transaction for a resource related to a QEDm Option not supported, it
 SHALL return an OperationOutcome.issue.code valued as: ‘not-supported’
-and an OperationOutcome.issue.details valued as: MSG_NO_MATCH No
+and SHOULD set OperationOutcome.issue.details valued as: MSG_NO_MATCH No
 Resource found matching the query “%s”.</p>
 
 <p>If the Mobile Query Existing Data request message is processed
@@ -840,12 +874,14 @@ status code SHALL be 200.</p>
 
 <p>The Mobile Query Existing Data Response message SHALL be a FHIR Bundle
 Resource containing zero or more clinical data Resources plus optional
-Provenance Resources (see Section 2:3.44.4.2.2.1). If the Clinical Data
+Provenance Resources (see Section <a href="PCC-44.html#23444221-provenance-option">2:3.44.4.2.2.1</a>). If the Clinical Data
 Source is sending warnings, the Bundle Resource SHALL also contain an
 OperationOutcome Resource that contains those warnings.</p>
 
 <p>The response SHALL adhere to the FHIR Bundle constraints specified in
 <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.1-resource-bundles">ITI TF-2: Appendix Z.1</a>.</p>
+
+<p>See <a href="Bundle-ex-search.html">an example of a search set bundle</a>.</p>
 
 <h6 id="23444221-provenance-option">2:3.44.4.2.2.1 Provenance Option</h6>
 
@@ -861,8 +897,8 @@ purposes than the one defined here. These would not have the indicated
 <p>Resource Bundling SHALL comply with the guidelines in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.1-resource-bundles">ITI TF-2: Appendix Z.1</a>.</p>
 
 <p>The Clinical Data Source SHALL include all resources to be returned as a
-contained resource. This means that the query SHALL return resource data
-contained in the FHIR Bundle as entries.</p>
+resource. This means that the query SHALL return resource data
+in the FHIR Bundle as entries. See <a href="Bundle-ex-search.html">an example of a search set bundle</a>.</p>
 
 <h5 id="2344423-expected-actions">2:3.44.4.2.3 Expected Actions</h5>
 
@@ -966,7 +1002,7 @@ generate audit messages.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2023+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/patient_care_coordination/">IHE Patient Care Coordination Technical Committee</a>.  Package ihe.pcc.qedm#3.0.0-comment1 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Aug 5, 2024 09:53-0500">2024-08-05</span>
+          IG &#169; 2023+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/patient_care_coordination/">IHE Patient Care Coordination Technical Committee</a>.  Package ihe.pcc.qedm#3.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Thu, Dec 5, 2024 12:45-0600">2024-12-05</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
