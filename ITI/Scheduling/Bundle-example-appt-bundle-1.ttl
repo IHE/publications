@@ -1,0 +1,214 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://profiles.ihe.net/ITI/Scheduling/Bundle/example-appt-bundle-1> a fhir:Bundle ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "example-appt-bundle-1"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-avail-bundle"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-avail-bundle>
+     ] )
+  ] ; # 
+  fhir:type [ fhir:v "searchset"] ; # 
+  fhir:total [ fhir:v "3"^^xsd:nonNegativeInteger] ; # 
+  fhir:entry ( [
+     fhir:fullUrl [ fhir:v "https://example.com/base/Appointment/proposed-appt1a-1"^^xsd:anyURI ] ;
+     fhir:resource ( <https://example.com/base/Appointment/proposed-appt1a-1> ) ;
+     fhir:search [
+       fhir:mode [ fhir:v "match" ]
+     ]
+  ] [
+     fhir:fullUrl [ fhir:v "https://example.com/base/Appointment/proposed-appt1a-2"^^xsd:anyURI ] ;
+     fhir:resource ( <https://example.com/base/Appointment/proposed-appt1a-2> ) ;
+     fhir:search [
+       fhir:mode [ fhir:v "match" ]
+     ]
+  ] [
+     fhir:fullUrl [ fhir:v "https://example.com/base/Appointment/proposed-appt1a-3"^^xsd:anyURI ] ;
+     fhir:resource ( <https://example.com/base/Appointment/proposed-appt1a-3> ) ;
+     fhir:search [
+       fhir:mode [ fhir:v "match" ]
+     ]
+  ] [
+     fhir:fullUrl [ fhir:v "https://example.com/base/OperationOutcome/example"^^xsd:anyURI ] ;
+     fhir:resource ( <https://example.com/base/OperationOutcome/example> ) ;
+     fhir:search [
+       fhir:mode [ fhir:v "outcome" ]
+     ]
+  ] ) . # 
+
+<https://example.com/base/Appointment/proposed-appt1a-1> a fhir:Appointment ;
+  fhir:id [ fhir:v "proposed-appt1a-1"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt>
+     ] )
+  ] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: proposed-appt1a-1</p><p><b>meta</b>: </p><p><b>status</b>: proposed</p><p><b>serviceType</b>: Office Call <span style=\"background: LightGoldenRodYellow\">(Details : {http://fhir.org/guides/argonaut-scheduling/CodeSystem/visit-type code 'consult' = 'CONSULTATION', given as 'CONSULTATION'})</span></p><p><b>appointmentType</b>: Routine <span style=\"background: LightGoldenRodYellow\">(Details : {http://hl7.org/fhir/v2/0276 code 'ROUTINE' = 'Routine appointment - default if not valued)</span></p><p><b>start</b>: 17/07/2017 12:45:00 AM</p><p><b>end</b>: 17/07/2017 1:00:00 AM</p><blockquote><p><b>participant</b></p><p><b>actor</b>: <a href=\"Practitioner-dr-y.html\">Dr Y. Generated Summary: id: dr-y; 9941339108, 25456; Y </a></p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><blockquote><p><b>participant</b></p><p><b>actor</b>: Napa Office</p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><p><b>requestedPeriod</b>: 16/07/2017 6:00:00 AM --&gt; 18/07/2017 6:00:00 AM</p></div>"
+  ] ; # 
+  fhir:status [ fhir:v "proposed"] ; # 
+  fhir:serviceType ( [
+     fhir:coding ( [
+       a sct:185389009 ;
+       fhir:system [ fhir:v "http://snomed.info/sct"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "185389009" ] ;
+       fhir:display [ fhir:v "Follow-up visit" ]
+     ] ) ;
+     fhir:text [ fhir:v "Office Call" ]
+  ] ) ; # 
+  fhir:appointmentType [
+     fhir:coding ( [
+       fhir:system [ fhir:v "http://terminology.hl7.org/CodeSystem/v2-0276"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "ROUTINE" ]
+     ] ) ;
+     fhir:text [ fhir:v "Routine" ]
+  ] ; # 
+  fhir:start [ fhir:v "2017-07-17T00:45:00Z"^^xsd:dateTime] ; # 
+  fhir:end [ fhir:v "2017-07-17T01:00:00Z"^^xsd:dateTime] ; # 
+  fhir:participant ( [
+     fhir:actor [
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/Practitioner/dr-y> ;
+       fhir:reference [ fhir:v "Practitioner/dr-y" ] ;
+       fhir:display [ fhir:v "Dr Y" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] [
+     fhir:actor [
+       fhir:display [ fhir:v "Napa Office" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] ) ; # 
+  fhir:requestedPeriod ( [
+     fhir:start [ fhir:v "2017-07-15T20:00:00Z"^^xsd:dateTime ] ;
+     fhir:end [ fhir:v "2017-07-17T20:00:00Z"^^xsd:dateTime ]
+  ] ) . # 
+
+<https://example.com/base/Appointment/proposed-appt1a-2> a fhir:Appointment ;
+  fhir:id [ fhir:v "proposed-appt1a-2"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt>
+     ] )
+  ] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: proposed-appt1a-2</p><p><b>meta</b>: </p><p><b>status</b>: proposed</p><p><b>serviceType</b>: Office Call <span style=\"background: LightGoldenRodYellow\">(Details : {http://fhir.org/guides/argonaut-scheduling/CodeSystem/visit-type code 'consult' = 'CONSULTATION', given as 'CONSULTATION'})</span></p><p><b>appointmentType</b>: Routine <span style=\"background: LightGoldenRodYellow\">(Details : {http://hl7.org/fhir/v2/0276 code 'ROUTINE' = 'Routine appointment - default if not valued)</span></p><p><b>start</b>: 17/07/2017 1:00:00 AM</p><p><b>end</b>: 17/07/2017 1:15:00 AM</p><blockquote><p><b>participant</b></p><p><b>actor</b>: <a href=\"Practitioner-dr-y.html\">Dr Y. Generated Summary: id: dr-y; 9941339108, 25456; Y </a></p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><blockquote><p><b>participant</b></p><p><b>actor</b>: Napa Office</p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><p><b>requestedPeriod</b>: 16/07/2017 6:00:00 AM --&gt; 18/07/2017 6:00:00 AM</p></div>"
+  ] ; # 
+  fhir:status [ fhir:v "proposed"] ; # 
+  fhir:serviceType ( [
+     fhir:coding ( [
+       a sct:185389009 ;
+       fhir:system [ fhir:v "http://snomed.info/sct"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "185389009" ] ;
+       fhir:display [ fhir:v "Follow-up visit" ]
+     ] ) ;
+     fhir:text [ fhir:v "Office Call" ]
+  ] ) ; # 
+  fhir:appointmentType [
+     fhir:coding ( [
+       fhir:system [ fhir:v "http://terminology.hl7.org/CodeSystem/v2-0276"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "ROUTINE" ]
+     ] ) ;
+     fhir:text [ fhir:v "Routine" ]
+  ] ; # 
+  fhir:start [ fhir:v "2017-07-17T01:00:00Z"^^xsd:dateTime] ; # 
+  fhir:end [ fhir:v "2017-07-17T01:15:00Z"^^xsd:dateTime] ; # 
+  fhir:participant ( [
+     fhir:actor [
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/Practitioner/dr-y> ;
+       fhir:reference [ fhir:v "Practitioner/dr-y" ] ;
+       fhir:display [ fhir:v "Dr Y" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] [
+     fhir:actor [
+       fhir:display [ fhir:v "Napa Office" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] ) ; # 
+  fhir:requestedPeriod ( [
+     fhir:start [ fhir:v "2017-07-15T20:00:00Z"^^xsd:dateTime ] ;
+     fhir:end [ fhir:v "2017-07-17T20:00:00Z"^^xsd:dateTime ]
+  ] ) . # 
+
+<https://example.com/base/Appointment/proposed-appt1a-3> a fhir:Appointment ;
+  fhir:id [ fhir:v "proposed-appt1a-3"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt"^^xsd:anyURI ;
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/ihe-sched-appt>
+     ] )
+  ] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: proposed-appt1a-3</p><p><b>meta</b>: </p><p><b>status</b>: proposed</p><p><b>serviceType</b>: Office Call <span style=\"background: LightGoldenRodYellow\">(Details : {http://fhir.org/guides/argonaut-scheduling/CodeSystem/visit-type code 'consult' = 'CONSULTATION', given as 'CONSULTATION'})</span></p><p><b>appointmentType</b>: Routine <span style=\"background: LightGoldenRodYellow\">(Details : {http://hl7.org/fhir/v2/0276 code 'ROUTINE' = 'Routine appointment - default if not valued)</span></p><p><b>start</b>: 17/07/2017 2:00:00 AM</p><p><b>end</b>: 17/07/2017 2:15:00 AM</p><blockquote><p><b>participant</b></p><p><b>actor</b>: <a href=\"Practitioner-dr-y.html\">Dr Y. Generated Summary: id: dr-y; 9941339108, 25456; Y </a></p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><blockquote><p><b>participant</b></p><p><b>actor</b>: Napa Office</p><p><b>required</b>: required</p><p><b>status</b>: needs-action</p></blockquote><p><b>requestedPeriod</b>: 16/07/2017 6:00:00 AM --&gt; 18/07/2017 6:00:00 AM</p></div>"
+  ] ; # 
+  fhir:status [ fhir:v "proposed"] ; # 
+  fhir:serviceType ( [
+     fhir:coding ( [
+       a sct:185389009 ;
+       fhir:system [ fhir:v "http://snomed.info/sct"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "185389009" ] ;
+       fhir:display [ fhir:v "Follow-up visit" ]
+     ] ) ;
+     fhir:text [ fhir:v "Office Call" ]
+  ] ) ; # 
+  fhir:appointmentType [
+     fhir:coding ( [
+       fhir:system [ fhir:v "http://terminology.hl7.org/CodeSystem/v2-0276"^^xsd:anyURI ] ;
+       fhir:code [ fhir:v "ROUTINE" ]
+     ] ) ;
+     fhir:text [ fhir:v "Routine" ]
+  ] ; # 
+  fhir:start [ fhir:v "2017-07-17T02:00:00Z"^^xsd:dateTime] ; # 
+  fhir:end [ fhir:v "2017-07-17T02:15:00Z"^^xsd:dateTime] ; # 
+  fhir:participant ( [
+     fhir:actor [
+       fhir:link <https://profiles.ihe.net/ITI/Scheduling/Practitioner/dr-y> ;
+       fhir:reference [ fhir:v "Practitioner/dr-y" ] ;
+       fhir:display [ fhir:v "Dr Y" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] [
+     fhir:actor [
+       fhir:display [ fhir:v "Napa Office" ]
+     ] ;
+     fhir:required [ fhir:v "required" ] ;
+     fhir:status [ fhir:v "needs-action" ]
+  ] ) ; # 
+  fhir:requestedPeriod ( [
+     fhir:start [ fhir:v "2017-07-15T20:00:00Z"^^xsd:dateTime ] ;
+     fhir:end [ fhir:v "2017-07-17T20:00:00Z"^^xsd:dateTime ]
+  ] ) . # 
+
+<https://example.com/base/OperationOutcome/example> a fhir:OperationOutcome ;
+  fhir:id [ fhir:v "example"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example</p><h3>Issues</h3><table class=\"grid\"><tr><td>-</td><td><b>Severity</b></td><td><b>Code</b></td><td><b>Details</b></td></tr><tr><td>*</td><td>information</td><td>informational</td><td>the appointment availability operation was successful <span style=\"background: LightGoldenRodYellow\">(Details )</span></td></tr></table></div>"
+  ] ; # 
+  fhir:issue ( [
+     fhir:severity [ fhir:v "information" ] ;
+     fhir:code [ fhir:v "informational" ] ;
+     fhir:details [
+       fhir:text [ fhir:v "the appointment availability operation was successful" ]
+     ]
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+
