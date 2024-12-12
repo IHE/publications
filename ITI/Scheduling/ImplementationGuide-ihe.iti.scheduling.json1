@@ -6,11 +6,11 @@
     "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide ihe.iti.scheduling</b></p><a name=\"ihe.iti.scheduling\"> </a><a name=\"hcihe.iti.scheduling\"> </a><a name=\"ihe.iti.scheduling-en-US\"> </a><h2>IHE_ITI_Scheduling</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/Scheduling/ImplementationGuide/ihe.iti.scheduling</pre><div><p>The IHE FHIR Scheduling Profile is a specification providing FHIR APIs and guidance for access to and booking of appointments for patients by both patient and practitioner end users. This specification is based on FHIR Version 4 and specifically the Schedule, Slot, and Appointment resources, and on the previous work of the <a href=\"https://fhir.org/guides/argonaut/scheduling/release1/\">Argonaut Project</a>.</p>\n</div></div>"
   },
   "url" : "https://profiles.ihe.net/ITI/Scheduling/ImplementationGuide/ihe.iti.scheduling",
-  "version" : "1.0.0-comment",
+  "version" : "1.0.0",
   "name" : "IHE_ITI_Scheduling",
   "title" : "Scheduling",
   "status" : "active",
-  "date" : "2024-08-13",
+  "date" : "2024-12-12",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -49,7 +49,7 @@
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "6.0.2"
+    "version" : "6.1.0"
   },
   {
     "id" : "hl7ext",
@@ -60,12 +60,6 @@
     "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
     "packageId" : "hl7.fhir.uv.extensions.r4",
     "version" : "5.1.0"
-  },
-  {
-    "id" : "hl7_fhir_uv_ipa",
-    "uri" : "http://hl7.org/fhir/uv/ipa/ImplementationGuide/hl7.fhir.uv.ipa",
-    "packageId" : "hl7.fhir.uv.ipa",
-    "version" : "1.0.0"
   },
   {
     "id" : "iheitibasicaudit",
@@ -92,7 +86,7 @@
       },
       {
         "url" : "value",
-        "valueString" : "ballot"
+        "valueString" : "Trial-Implementation"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -395,7 +389,7 @@
     },
     {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools#0.1.0"
+      "valueCode" : "hl7.fhir.uv.tools.r4#0.3.0"
     },
     {
       "extension" : [{
@@ -415,7 +409,7 @@
       },
       {
         "url" : "value",
-        "valueString" : "ballot"
+        "valueString" : "Trial-Implementation"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -737,8 +731,128 @@
         "reference" : "StructureDefinition/IHE.Scheduling.Book.Audit.Source"
       },
       "name" : "Audit Event for the Book Appointment Transaction at Source",
-      "description" : "Defines constraints on the AuditEvent Resource to record when a Book Appointment \\[ITI-117\\] Transaction happens at the Source.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-117 as a subtype\n- client is the Schedulking Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity\n- shall have an appointment identity entity",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a Book Appointment \\[ITI-117\\] Transaction happens at the Source.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-117 as a subtype\n- client is the Scheduling Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity\n- shall have an appointment identity entity",
       "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.Scheduling.FindPotential.Audit.Recipient"
+      },
+      "name" : "Audit Event for the Find Potential Appointments Transaction at Recipient",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a Find Potential Appointments \\[ITI-115\\] Transaction happens at the Recipient, and the transaction contains a Patient resource.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-115 as a subtype\n- client is the Scheduling Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.Scheduling.FindPotential.Audit.Source"
+      },
+      "name" : "Audit Event for the Find Potential Appointments Transaction at Source",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a Find Potential Appointments \\[ITI-115\\] Transaction happens at the Source.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-115 as a subtype\n- client is the Scheduling Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity\n- shall have an appointment identity entity",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.Scheduling.Hold.Audit.Recipient"
+      },
+      "name" : "Audit Event for the Hold Appointment Transaction at Recipient",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a hold Appointment \\[ITI-116\\] Transaction happens at the Recipient.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-116 as a subtype\n- client is the Scheduling Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity\n- shall have an appointment identity entity",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.Scheduling.Hold.Audit.Source"
+      },
+      "name" : "Audit Event for the Hold Appointment Transaction at Source",
+      "description" : "Defines constraints on the AuditEvent Resource to record when a Hold Appointment \\[ITI-116\\] Transaction happens at the Source.\n- Build off of the IHE Basic Audit Patient Create event\n- add the ITI-116 as a subtype\n- client is the Scheduling Client\n- Server is the Scheduling Server\n- may have user, app, organization agent(s)\n- shall have a patient entity\n- shall have an appointment identity entity",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingBook-source"
+      },
+      "name" : "Audit Example of ITI-1017 at source",
+      "description" : "Audit Example for a Simplified Publish Transaction from source perspective",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.Book.Audit.Source"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingFindPotential-recipient"
+      },
+      "name" : "Audit Example of ITI-115 at recipient",
+      "description" : "Audit Example for a Book Appointment Transaction as recorded at the recipient",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.FindPotential.Audit.Recipient"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingFindPotential-source"
+      },
+      "name" : "Audit Example of ITI-115 at source",
+      "description" : "Audit Example for a Simplified Publish Transaction from source perspective",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.FindPotential.Audit.Source"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingHold-recipient"
+      },
+      "name" : "Audit Example of ITI-116 at recipient",
+      "description" : "Audit Example for a Book Appointment Transaction as recorded at the recipient",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.Hold.Audit.Recipient"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingHold-source"
+      },
+      "name" : "Audit Example of ITI-116 at source",
+      "description" : "Audit Example for a Simplified Publish Transaction from source perspective",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.Hold.Audit.Source"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AuditEvent"
+      }],
+      "reference" : {
+        "reference" : "AuditEvent/ex-auditSchedulingBook-recipient"
+      },
+      "name" : "Audit Example of ITI-117 at recipient",
+      "description" : "Audit Example for a Book Appointment Transaction as recorded at the recipient",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/Scheduling/StructureDefinition/IHE.Scheduling.Book.Audit.Recipient"
     },
     {
       "extension" : [{
@@ -749,31 +863,31 @@
         "reference" : "OperationDefinition/appointment-book"
       },
       "name" : "Book_Appointment_Operation",
-      "description" : "Request to book a selected Appointment. This operation follows the appointment availability and optional hold interactions.  This operaton completes the booking of an appointment.  The server determines if the nominated appointment is still available (i.e., all the required actors and physical assets needed for the appointment are still available) and either accepts or rejects the book request and updates the resource status accordingly. \n\n In addition to the booking an appointment, this operation can also request to modify or cancel an existing appointment. \n\n### Book a New Appointment\n When booking a new appoint, the operation SHALL have either an `appointment-reference` or an `appointment-resource` parameter. If the `appointment-resource` parameter is used, the value of `Appointment.status` SHALL have the value of `pending`.\n\nA successful new appointment `$book` operation returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `booked`.\n\n### Modify an Existing Appointment\n When requesting a modification of an existing appointment, the operation SHALL have an `appointment-resource` parameter and the value of `Appointment.status` SHALL have the value of `booked`.\n\nA successful request to modify an existing modification returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `booked` and the changes that were requested correspondingly reflected in the resource.\n\n### Cancel an Existing Appointment  \n When requesting a cancelation of an existing appointment, the operation SHALL have an `appointment-resource` parameter and the value of `Appointment.status` SHALL have the value of `cancelled`.\n\nA successful request to cancel an existing modification returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `cancelled`",
+      "description" : "Request to book a selected Appointment. This operation follows the appointment availability and optional hold interactions.  This operation completes the booking of an appointment.  The server determines if the nominated appointment is still available (i.e., all the required actors and physical assets needed for the appointment are still available) and either accepts or rejects the book request and updates the resource status accordingly. \n\n In addition to the booking an appointment, this operation can also request to modify or cancel an existing appointment. \n\n### Book a New Appointment\n When booking a new appoint, the operation SHALL have either an `appointment-reference` or an `appointment-resource` parameter. If the `appointment-resource` parameter is used, the value of `Appointment.status` SHALL have the value of `pending`.\n\nA successful new appointment `$book` operation returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `booked`.\n\n### Modify an Existing Appointment\n When requesting a modification of an existing appointment, the operation SHALL have an `appointment-resource` parameter and the value of `Appointment.status` SHALL have the value of `booked`.\n\nA successful request to modify an existing modification returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `booked` and the changes that were requested correspondingly reflected in the resource.\n\n### Cancel an Existing Appointment  \n When requesting a cancellation of an existing appointment, the operation SHALL have an `appointment-resource` parameter and the value of `Appointment.status` SHALL have the value of `cancelled`.\n\nA successful request to cancel an existing modification returns an [IHE ITI Appointment](./StructureDefinition-ihe-sched-appt.html) resource with the the value of `Appointment.status` set to `cancelled`",
       "exampleBoolean" : false
     },
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "Encounter"
+        "valueString" : "Device"
       }],
       "reference" : {
-        "reference" : "Encounter/example"
+        "reference" : "Device/ex-device"
       },
-      "name" : "Example Encounter",
-      "description" : "holding typical values",
+      "name" : "Dummy Device example",
+      "description" : "Dummy Device example for completeness sake. No actual use of this resource other than an example target",
       "exampleBoolean" : true
     },
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "Patient"
+        "valueString" : "Appointment"
       }],
       "reference" : {
-        "reference" : "Patient/ex-patient"
+        "reference" : "Appointment/appt1-1"
       },
-      "name" : "Example Patient",
-      "description" : "The patient from which all the example relate",
+      "name" : "Example appointment with Dr. Y",
+      "description" : "Example appointment",
       "exampleBoolean" : true
     },
     {
@@ -895,6 +1009,42 @@
       "name" : "ITI Appointment Status Reason Codes",
       "description" : "The reason for the current state of the Appointment.",
       "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      }],
+      "reference" : {
+        "reference" : "Patient/pat1"
+      },
+      "name" : "Meiko Lufhir Jr., PhD",
+      "description" : "Example patient",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      }],
+      "reference" : {
+        "reference" : "Bundle/example-appt-bundle-1"
+      },
+      "name" : "Potential Appointment List",
+      "description" : "Response to a $find operation example",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Practitioner"
+      }],
+      "reference" : {
+        "reference" : "Practitioner/dr-y"
+      },
+      "name" : "Practitioner Dr. Y",
+      "description" : "Example practitioner",
+      "exampleBoolean" : true
     },
     {
       "extension" : [{
