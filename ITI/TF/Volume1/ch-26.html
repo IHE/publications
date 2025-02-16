@@ -26,7 +26,7 @@
           </div>
           <div class="top-bar-right hide-for-small-only">
             <ul class="menu">
-              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 20.0, August 4, 2023 – Final Text</li>
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 20.1, December 12, 2024 - Final Text</li>
             </ul>
               <ul class="menu align-right">
                     <li><input id="ihe-search-field" type="search" placeholder="Search"></li>
@@ -328,14 +328,155 @@
       </div>
       <h2 id="26.5">26.5 DSUB Security Considerations</h2>
       <p>
-        <span>The risk analysis for this profile enumerates assets, threats, and mitigations. The risk assessment spreadsheet is stored and available from IHE at</span>
-        <a href="http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls">http://wiki.ihe.net/images/4/46/DSUB_risk_assesment.xls</a>
-        <span>.</span>
+        <span>The risk analysis for this profile enumerates assets, threats, and mitigations.</span>
       </p>
       <p>
+	The notification provides sufficient data to retrieve documents, the retrieval of the document itself is handled through regular XDS retrieve document.      
+      </p>
+      <p>
+	The risk assessment for DSUB is presented in the table below:     
+      </p>
+      <p style="font-size:11pt">
+	      <b>Table 26.5-1: DSUB risk assessment</b>
+      </p>
+      <table class="hover" cellspacing="0" cellpadding="0" >
+        <thead>
+          <tr>
+            <td class="tableHeader">Scenario Actor</td>
+            <td class="tableHeader">Asset</td>
+            <td class="tableHeader">Type of impact</td>
+	    <td class="tableHeader">Level of impact</td>
+	    <td class="tableHeader">Probability</td>
+	    <td class="tableHeader">Mitigation</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:16.6pt">
+            <td>Eavesdropping of notification</td>
+            <td>metadata (as sent in notification)</td>
+	    <td>Loss of confidentiality for patients</td>
+	    <td>High (from an organizational point of view)</td>
+            <td>High</td>
+	    <td>Recommend use of TLS unless the transmission is otherwise protected through specific implementation</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td rowspan="2">A user replaying subscription to overload the recipient</td>
+            <td rowspan="2">notification recipient</td>
+	    <td rowspan="2">Availability of notification recipient</td>
+	    <td rowspan="2">Medium</td>
+            <td rowspan="2">Medium</td>
+	    <td>DSUB design: Node authentication through ATNA, audit trails through ATNA and recommendation to use XUA to convey personal authentication</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Implementation: Access control</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td rowspan="2">Replay of subscription generates multiplication of actions automatically taken on notification (e.g. database updates) that have to be flushed out later</td>
+            <td rowspan="2">notification recipient and associated systems</td>
+	    <td rowspan="2">Availability of notification recipient and associated systems</td>
+	    <td rowspan="2">Medium</td>
+            <td rowspan="2">Low</td>
+	    <td>DSUB design: Node authentication through ATNA, audit trails through ATNA and recommendation to use XUA to convey personal authentication</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Implementation: Access control</td>
+          </tr>		
+	  <tr style="height:16.6pt">
+            <td rowspan="2">A user gets unauthorized access to metadata through a subscription sent to an authentified node (as there is no link to end user in the subscription)</td>
+            <td rowspan="2">metadata (as sent in notification)</td>
+	    <td rowspan="2">Loss of confidentiality for patients</td>
+	    <td rowspan="2">High (from an organizational point of view)</td>
+            <td rowspan="2">High</td>
+	    <td>DSUB design: Node authentication through ATNA and association of SAML assertion to notification to define who the notification can be disclosed to</td>
+          </tr>
+          <tr style="height:16.6pt">
+            <td>Implementation: Access control on the notification recipient</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>A notification is done without any record of that notification.</td>
+            <td>metadata (as sent in notification)</td>
+	    <td>Loss of confidentiality for patients that cannot be traced to a user</td>
+	    <td>High (from an organizational point of view)</td>
+            <td>High</td>
+	    <td>DSUB design: audit trails through ATNA on the notification recipient actor</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td rowspan="2">Malicious subscriptions to overload an innocent recipient are done without any information about the user requesting the information</td>
+            <td rowspan="2">notification recipient</td>
+	    <td rowspan="2">Availability of notification recipient</td>
+	    <td rowspan="2">High (from an organizational point of view)</td>
+            <td rowspan="2">High</td>
+	    <td>DSUB design: Node authentication through ATNA and recommendation to use XUA to convey personal authentication</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Implementation: Access control</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Intrusion in the Notification recipient (either through the application or through the taking over of the system on which the notification recipient is implemented)</td>
+            <td>metadata (as sent in notification)</td>
+	    <td>Loss of confidentiality for patients</td>
+	    <td>High (from an organizational point of view)</td>
+            <td>High</td>
+	    <td>Implementation: notification recipient should be secured against intrusion</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Overload of a notification recipient because notification ids have been lost and the subscriptions cannot be cancelled</td>
+            <td>notification recipient</td>
+	    <td>Availability of notification recipient</td>
+	    <td>Medium</td>
+            <td>High</td>
+	    <td>Implementation: administrative service allowing cancellation of subscription</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td rowspan="2">A subscription gets maliciously canceled</td>
+            <td rowspan="2">notification recipient</td>
+	    <td rowspan="2">Availability of notification</td>
+	    <td rowspan="2">Medium</td>
+            <td rowspan="2">Medium</td>
+	    <td>DSUB design: Node authentication through ATNA, audit trails through ATNA and recommendation to use XUA to convey personal authentication</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Implementation: administrative mechanism to inform the intended recipient of the cancellation of the subscription</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Back-up recovery or reboot of the system restarts old subscriptions and/or erase newly submitted subscription</td>
+            <td>notification broker</td>
+	    <td>integrity of subscription</td>
+	    <td>Medium</td>
+            <td>Medium</td>
+	    <td>Implementation: back-up recovery design should take the consistency of subscription handling into account</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Updates to access control policies is not conveyed to the publisher and/or the notification broker leading to unauthorized disclosure of metadata</td>
+            <td>metadata (as sent in publication or in notification)</td>
+	    <td>Loss of confidentiality for patients</td>
+	    <td>Medium</td>
+            <td>High</td>
+	    <td>None identified</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>Eavesdropping of publication</td>
+            <td>metadata (as sent in publication)</td>
+	    <td>Loss of confidentiality for patients</td>
+	    <td>High (from an organizational point of view)</td>
+            <td>High</td>
+	    <td>DSUB design: Recommend use of TLS unless the transmission is otherwise protected through specific implementation</td>
+          </tr>
+	  <tr style="height:16.6pt">
+            <td>A system masquerading for an authorized system is maliciously publishing wrong metadata to the notification broker</td>
+            <td>metadata (as sent in publication)</td>
+	    <td>Integrity of metadata being published</td>
+	    <td>Medium</td>
+            <td>Medium</td>
+	    <td>DSUB design: Node authentication through ATNA</td>
+          </tr>
+	</tbody>
+      </table>	  
+      <p>
         The purpose of this risk assessment is to notify implementers of some of the risks that they need to consider in implementing DSUB actors. For general IHE risks and threats please see
-        <a href="../Volume1/ch-L.html#Appendix L">ITI TF-1: Appendix L</a>
-        . The implementers are also advised that many risks cannot be mitigated by the IHE profile and instead the responsibility for mitigation is transferred to the implementer, and occasionally to the XDS Affinity Domain and enterprises. In these instances, IHE’s responsibility to notify affected parties is fulfilled through the following section.
+        <a href="../Volume1/ch-L.html#Appendix L">ITI TF-1: Appendix L</a>. The implementers are also advised that many risks cannot be mitigated by the IHE profile and instead the responsibility 
+	      for mitigation is transferred to the implementer, and occasionally to the XDS Affinity Domain and enterprises. In these instances, IHE’s responsibility to notify affected parties 
+	      is fulfilled through the following section.
       </p>
       <p>A policy decision can be made during the Subscribe transaction, whether the subscription is an authorized subscription and whether a notification/type of notification is authorized. (This could be based on the XUA identity, the consumer address value, etc.)</p>
       <p>This profile does not include the solution to changes of policy between the subscribe time and notify time (which can be substantial). The recommendation is that the policy is enforced conservatively (i.e., the length of subscription can be determined by the Document Metadata Notification Broker). An approach allows the access of content published in accordance to consent given by the patient. The consent is dynamic and can change during time. The availability of content can be discovered only asking the document-sharing infrastructure. The creation of subscription is not dependent to access policies rules. If the Document Metadata Notification Broker sends the references, then the control of access policies is in query/retrieve transactions of the Document Metadata Notification Recipient.</p>

@@ -26,7 +26,7 @@
           </div>
           <div class="top-bar-right hide-for-small-only">
             <ul class="menu">
-              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 20.0, August 4, 2023 – Final Text</li>
+              <li class="menu-text tf-version">IHE IT Infrastructure (ITI) Technical Framework, Volume <span id="volumeNo"></span><br />Revision 20.1, December 12, 2024 - Final Text</li>
             </ul>
               <ul class="menu align-right">
                     <li><input id="ihe-search-field" type="search" placeholder="Search"></li>
@@ -885,6 +885,8 @@
         <span style="font-weight:bold">Comparison of homeCommunityId and assigning authority</span>
       </p>
       <p>The value of homeCommunityId is an OID which may, or may not, also be an assigning authority. An assigning authority is designated by an OID and issues identifiers, in this case patient identifiers. A community’s patient identifier assigning authority issues patient identifiers for patients managed by the community. It is possible for there to be more than one patient identifier assigning authority in a community. The Initiating Gateway must specify the right patient identifier assigning authority for the patient being described. There is only one homeCommunityId per community. This OID may also be used by the community as the patient identifier assigning authority, but this is not required and should not be expected. While both values are OIDs, they have no necessary relationship. In general it is expected that the homeCommunityId will be assigned by an organization which governs the interaction among communities. In many countries this will be facilitated by the government who will manage the community level agreements necessary for sharing and also assign homeCommunityIds. An assigning authority has no expected level of management, and there may be multiple patient identifier assigning authorities within a community.</p>
+      <h6 id="3.55.4.1.2.5">3.55.4.1.2.5 Requesting Results From A Single Community in a Hierarchy</h6>
+      <p>When the Responding Gateway serves more than one community, such as the case in <a href="/Volume1/ch-27.html#27.3.2.2">ITI TF-1: 27.3.2.2</a>, the Initiating Gateway might only want results from one of those communities. In that case, the Initiating Gateway can indicate which community it wants results from by populating the homeCommunityId of the targeted community in the id element within the Organization associated with the device of the receiver. See Figure 3.55.4.1.2.4-1.</p>
       <h5 id="3.55.4.1.3">3.55.4.1.3 Expected Actions</h5>
       <p>If responsePriorityCode is “I” the Responding Gateway shall return a Find Candidates Response message as specified in Section 3.55.4.2. The response message uses the Application Acknowledgement transmission wrapper, as specified in ITI TF-2: O.1.3, and no other acknowledgments are part of this the transaction.</p>
       <p>If responsePriorityCode is “D” and the Responding Gateway does not support the Deferred Response Option, it shall return an application error in the HL7 V3 Accept Acknowledgement with acknowledgeDetail to indicate Unsupported Processing Mode.</p>
@@ -936,6 +938,8 @@
       <h6 id="3.55.4.1.3.1">3.55.4.1.3.1 Query Parameter Processing</h6>
       <p>The Responding Gateway shall be capable of accepting, searching on, and responding with attributes in the Query Person by Demographics message.</p>
       <p>Handling of phonetic issues, alternate spellings, upper and lower case, accented characters, etc., if deemed appropriate, is to be supported by the Responding Gateway rather than by the Initiating Gateway. The Responding Gateway shall return any matches to the query parameters that reflect a high degree of match, after consideration of all policy constraints; IHE does not further specify matching requirements, except as already discussed in the LivingSubjectName parameter description.</p>
+      <h6 id="3.55.4.1.3.2">3.55.4.1.3.2 Targeted Community Processing</h6>
+      <p>If the Responding Gateway serves results from multiple communities, and the Initiating Gateway specified a target community in which to search results as described in Section 3.55.4.1.2.5, then the Responding Gateway SHOULD search only the community identified by the homeCommunityId of the receiver device’s Organization. If the homeCommunityId is not one that is served by the Responding Gateway, then it SHOULD return an error as specified in Case 5 of Section 3.55.4.2.3.</p>
       <h4 id="3.55.4.2">3.55.4.2 Cross Gateway Patient Discovery Response</h4>
       <p>The Cross Gateway Patient Discovery Response is implemented using the HL7 Patient Registry Find Candidates Response message (PRPA_MT201310UV02).</p>
       <h5 id="3.55.4.2.1">3.55.4.2.1 Trigger Events</h5>
@@ -1413,6 +1417,7 @@
         </li>
       </ul>
       <p>The homeCommunityId is specified as the id element within the assignedEntity of the custodian of the RegistrationEvent. The id element designating the homeCommunityId shall have only the root element, the contents of which is the homeCommunityId.</p>
+      <p>If the Initiating Gateway specified a target community as specified in Section 3.55.4.1.2.5, then the Responding Gateway SHOULD include only RegistrationEvents with homeCommunityIds that match the specified target community. However, the Initiating Gateway SHALL NOT rely on this behavior, and SHALL ensure that it is inspecting the homeCommunityId of each RegistrationEvent returned for relevance to its query.</p>
       <p>The following example shows part of a response specifying a homeCommunityId value of urn:oid:1.2.840.114350.1.13.99998.8734.</p>
       <div style="margin-top:3pt; border:0.75pt solid #000000; clear:both">
         <p style="font-size:8pt">
