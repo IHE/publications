@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>2:3.130 Care Services Feed [ITI-130] - Mobile Care Services Discovery (mCSD) v4.0.0-comment</title>
+    <title>2:3.130 Care Services Feed [ITI-130] - Mobile Care Services Discovery (mCSD) v4.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Care Services Discovery (mCSD)</span>
             <br/>
-            <span style="display:inline-block;">4.0.0-comment - ballot
+            <span style="display:inline-block;">4.0.0 - Trial-Implementation
 
 
 
@@ -135,7 +135,7 @@
         <a href="volume-1.html#1467-mcsd-deployment-considerations">Deployment Considerations</a>
       </li>
       <li>
-        <a href="volume-1.html#1468-mcsd-endpoint-usage-considerations">Endpoint Usage Considerations</a>
+        <a href="volume-1.html#1468-mcsd-as-a-health-information-network-directory">mCSD as a Health Information Network Directory</a>
       </li>
     </ul>
   </li>
@@ -216,7 +216,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v4.0.0-comment: Publication Ballot 8) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE ITI Mobile Care Services Discovery (v4.0.0: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/mCSD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>2:3.130 Care Services Feed [ITI-130]</h2>
   
 
@@ -285,7 +285,8 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h4 id="2313041-create-care-services-resource-request-message">2:3.130.4.1 Create Care Services Resource Request Message</h4>
 
-<p>A Create Care Services Resource Request Message is a FHIR create operation on any supported Care Services resource the Directory supports.</p>
+<p>A Create Care Services Resource Request Message is a FHIR create operation on any supported Care Services resource the Directory supports.<br />
+The Data Source and Directory Actors SHALL support this message.</p>
 
 <h5 id="23130411-trigger-events">2:3.130.4.1.1 Trigger Events</h5>
 
@@ -299,7 +300,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 thus the media type of the HTTP body SHALL be either <code class="language-plaintext highlighter-rouge">application/fhir+json</code> or <code class="language-plaintext highlighter-rouge">application/fhir+xml</code> respectively.
 A Directory SHALL accept both XML and JSON formats.</p>
 
-<p>All References (Reference.reference element) to Resources defined in this transaction SHALL be populated with an accessible URL (see <a href="https://www.hl7.org/fhir/references-definitions.html#Reference.reference">https://www.hl7.org/fhir/references-definitions.html#Reference.reference</a>), unless the referenced resource is not available at a URL known to the server.</p>
+<p>All References (Reference.reference element) to Resources defined in this transaction SHALL be populated with an resolvable URL (see <a href="http://hl7.org/fhir/R4/references-definitions.html#Reference.reference">http://hl7.org/fhir/R4/references-definitions.html#Reference.reference</a>), unless the referenced resource is not available at a URL known to the server.</p>
 
 <p>See the CapabilityStatements for the Data Source for additional details:</p>
 
@@ -317,7 +318,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h6 id="231304122-fhir-location-resource-constraints">2:3.130.4.1.2.2 FHIR Location Resource Constraints</h6>
 
-<p>A Data Source may submit Location Resources. A Care Services Selective Supplier SHALL return a Bundle of matching Location Resources. The Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
+<p>A Data Source may submit Location Resources. The Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
 
 <p>When the resource is a Facility, the Location Resource SHALL be paired with an Organization Resource using the managingOrganization element in Location. A Data Source may submit Location Resources when working with Facilities. The FHIR Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a>.</p>
 
@@ -342,7 +343,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <p>A Data Source may submit OrganizationAffiliation Resources. The OrganizationAffiliation Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.html">OrganizationAffiliation Profile for mCSD</a>.</p>
 
-<p>When the OrganizationAffiliation contains an Endpoint to an IHE document sharing environment, it SHALL further be constrained as described in the <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.DocShare.html">OrganizationAffiliation for Document Sharing Profile for mCSD</a>.</p>
+<p>When the OrganizationAffiliation references an Endpoint to an IHE document sharing environment, it SHALL further be constrained as described in the <a href="StructureDefinition-IHE.mCSD.OrganizationAffiliation.DocShare.html">OrganizationAffiliation for Document Sharing Profile for mCSD</a>.</p>
 
 <h6 id="231304127-fhir-endpoint-resource-constraints">2:3.130.4.1.2.7 FHIR Endpoint Resource Constraints</h6>
 
@@ -352,7 +353,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h5 id="23130413-expected-actions">2:3.130.4.1.3 Expected Actions</h5>
 
-<p>A Directory SHALL process the submission to validate the resources submitted, SHOULD do additional checks to confirm it is a new record and not a duplicate, and give a response as per <a href="#2313042-create-care-services-resource-response-message">Section 2:3.130.4.2</a> or an error as per <a href="http://hl7.org/fhir/R4/http.html#create">http://hl7.org/fhir/R4/http.html#create</a>.</p>
+<p>A Directory SHALL process the submission to validate the resources submitted and give a response as per <a href="#2313042-create-care-services-resource-response-message">Section 2:3.130.4.2</a> or an error as per <a href="http://hl7.org/fhir/R4/http.html#create">http://hl7.org/fhir/R4/http.html#create</a>.  Additional validation and resolution may be required by your business rules, for example with checking for duplicate resources.</p>
 
 <h4 id="2313042-create-care-services-resource-response-message">2:3.130.4.2 Create Care Services Resource Response Message</h4>
 
@@ -380,7 +381,8 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h4 id="2313043-update-care-services-resource-request-message">2:3.130.4.3 Update Care Services Resource Request Message</h4>
 
-<p>A Update Care Services Resource Request Message is a FHIR update operation on any supported Care Services resource the Directory supports.</p>
+<p>A Update Care Services Resource Request Message is a FHIR update operation on any supported Care Services resource the Directory supports.
+The Data Source and Directory Actors SHALL support this message.</p>
 
 <h5 id="23130431-trigger-events">2:3.130.4.3.1 Trigger Events</h5>
 
@@ -394,7 +396,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 thus the media type of the HTTP body SHALL be either <code class="language-plaintext highlighter-rouge">application/fhir+json</code> or <code class="language-plaintext highlighter-rouge">application/fhir+xml</code> respectively.
 A Directory SHALL accept both XML and JSON formats.</p>
 
-<p>All References (Reference.reference element) to Resources defined in this transaction SHALL be populated with an accessible URL (see <a href="https://www.hl7.org/fhir/references-definitions.html#Reference.reference">https://www.hl7.org/fhir/references-definitions.html#Reference.reference</a>), unless the referenced resource is not available at a URL known to the server.</p>
+<p>All References (Reference.reference element) to Resources defined in this transaction SHALL be populated with an resolvable URL (see <a href="http://hl7.org/fhir/R4/references-definitions.html#Reference.reference">http://hl7.org/fhir/R4/references-definitions.html#Reference.reference</a>), unless the referenced resource is not available at a URL known to the server.</p>
 
 <p>See the CapabilityStatements for the Data Source for additional details:</p>
 
@@ -412,7 +414,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h6 id="231304322-fhir-location-resource-constraints">2:3.130.4.3.2.2 FHIR Location Resource Constraints</h6>
 
-<p>A Data Source may submit Location Resources. A Care Services Selective Supplier SHALL return a Bundle of matching Location Resources. The Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
+<p>A Data Source may submit Location Resources. The Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.Location.html">Location Profile for mCSD</a>.</p>
 
 <p>When the resource is a Facility, the Location Resource SHALL be paired with an Organization Resource using the managingOrganization element in Location. A Data Source may submit Location Resources when working with Facilities. The FHIR Location Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.FacilityLocation.html">Location for Facilities Profile for mCSD</a>.</p>
 
@@ -475,7 +477,19 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h4 id="2313045-delete-care-services-resource-request-message">2:3.130.4.5 Delete Care Services Resource Request Message</h4>
 
-<p>A Delete Care Services Resource Request Message is a FHIR delete operation on any supported Care Services resource the Directory supports.</p>
+<p>A Delete Care Services Resource Request Message is a FHIR delete operation on any supported Care Services resource the Directory supports.
+This message is optional for both the Data Source and Directory Actors.</p>
+
+<p>Care Services Resources support <code class="language-plaintext highlighter-rouge">.status</code> or <code class="language-plaintext highlighter-rouge">.active</code> elements to identify whether or not those Resources are currently valid.</p>
+
+<p>In many cases, managing Resources using those elements is preferable to inactivating with the HTTP DELETE interaction.</p>
+
+<ol>
+  <li>Inactivating, rather than deleting, makes maintaining referential integrity in the Directory and in dependent systems easier as existing data can reference an Inactive entry.</li>
+  <li>Inactivating makes it easier to discover historic entries</li>
+</ol>
+
+<p>Directory policy should consider if the delete message or an update message to deactivate resources should be used and support this message or not accordingly.</p>
 
 <h5 id="23130451-trigger-events">2:3.130.4.5.1 Trigger Events</h5>
 
@@ -519,7 +533,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <h4 id="2313047-process-care-services-resources-request-message">2:3.130.4.7 Process Care Services Resources Request Message</h4>
 
-<p>A Process Care Services Resources Request Message is a FHIR batch or transaction operation including Care Services resources the Directory supports.    Each entry in the bundle SHALL conform to the other feed request messages:</p>
+<p>A Process Care Services Resources Request Message is a FHIR transaction operation including Care Services resources the Directory supports.    Each entry in the bundle SHALL conform to the other feed request messages:</p>
 
 <ul>
   <li><a href="#2313041-create-care-services-resource-request-message">Create Care Services Resource Request Message</a></li>
@@ -527,15 +541,17 @@ A Directory SHALL accept both XML and JSON formats.</p>
   <li><a href="#2313045-delete-care-services-resource-request-message">Delete Care Services Resource Request Message</a></li>
 </ul>
 
+<p>The Directory SHALL support this message. The Data Source MAY support this message.</p>
+
 <h5 id="23130471-trigger-events">2:3.130.4.7.1 Trigger Events</h5>
 
 <p>A Data Source triggers a Process Care Services Resources Request to a Directory when it needs to process multiple Care Services resource feed messages.</p>
 
 <h5 id="23130472-message-semantics">2:3.130.4.7.2 Message Semantics</h5>
 
-<p>A Data Source SHALL initiate a batch or transaction request using HTTP POST as defined at <a href="http://hl7.org/fhir/R4/http.html#transaction">http://hl7.org/fhir/R4/http.html#transaction</a> on the server with a FHIR Bundle as the body of the request.</p>
+<p>A Data Source SHALL initiate a transaction request using HTTP POST as defined at <a href="http://hl7.org/fhir/R4/http.html#transaction">http://hl7.org/fhir/R4/http.html#transaction</a> on the server with a FHIR Bundle as the body of the request.</p>
 
-<p>For a batch, the <code class="language-plaintext highlighter-rouge">Bundle.type</code> SHALL be <code class="language-plaintext highlighter-rouge">batch</code> and each entry will be handled independently.  For a transaction, the <code class="language-plaintext highlighter-rouge">Bundle.type</code> SHALL be <code class="language-plaintext highlighter-rouge">transaction</code> and each entry will succeed or fail together.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Bundle.type</code> SHALL be <code class="language-plaintext highlighter-rouge">transaction</code> and each entry will succeed or fail together.</p>
 
 <p>A Data Source SHALL submit the Care Services resource in either XML format or JSON format 
 thus the media type of the HTTP body SHALL be either <code class="language-plaintext highlighter-rouge">application/fhir+json</code> or <code class="language-plaintext highlighter-rouge">application/fhir+xml</code> respectively.
@@ -547,9 +563,11 @@ A Directory SHALL accept both XML and JSON formats.</p>
   <li><a href="CapabilityStatement-IHE.mCSD.DataSource.html">IHE ITI Mobile Care Services Discovery (mCSD) - Data Source</a></li>
 </ul>
 
+<p>The Bundle Resource SHALL be further constrained as described in the <a href="StructureDefinition-IHE.mCSD.ProcessCareServices.html">Process Care Services Profile for mCSD</a>.</p>
+
 <h5 id="23130473-expected-actions">2:3.130.4.7.3 Expected Actions</h5>
 
-<p>A Directory SHALL process the submission and give a response as per <a href="#2313048-process-care-services-resources-response-message">Section 2:3.130.4.8</a> or an error as per <a href="http://hl7.org/fhir/R4/http.html#transaction">http://hl7.org/fhir/R4/http.html#transaction</a>.  For a batch type, the Directory SHALL follow the <a href="http://hl7.org/fhir/R4/http.html#brules">batch processing rules</a>.  For a transaction type, the Directory SHALL follow the <a href="http://hl7.org/fhir/R4/http.html#trules">transaction processing rules</a>.</p>
+<p>A Directory SHALL process the submission and give a response as per <a href="#2313048-process-care-services-resources-response-message">Section 2:3.130.4.8</a> or an error as per <a href="http://hl7.org/fhir/R4/http.html#transaction">http://hl7.org/fhir/R4/http.html#transaction</a>.  The Directory SHALL follow the <a href="http://hl7.org/fhir/R4/http.html#trules">transaction processing rules</a>.</p>
 
 <h4 id="2313048-process-care-services-resources-response-message">2:3.130.4.8 Process Care Services Resources Response Message</h4>
 
@@ -571,7 +589,7 @@ A Directory SHALL accept both XML and JSON formats.</p>
 
 <p>A Directory SHALL also support the requirements in <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format">ITI TF-2: Z.6</a>, Populating the Expected Response Format.</p>
 
-<p>The response will be a FHIR Bundle with the type set to either <code class="language-plaintext highlighter-rouge">batch-response</code> or <code class="language-plaintext highlighter-rouge">transaction-response</code> for the type <code class="language-plaintext highlighter-rouge">batch</code> or <code class="language-plaintext highlighter-rouge">transaction</code> of the request message respectively.  The entries in the Bundle will correspond to the entries in the request with the result of processing each entry.</p>
+<p>The response will be a FHIR Bundle with the type set to <code class="language-plaintext highlighter-rouge">transaction-response</code>.  The entries in the Bundle will correspond to the entries in the request with the result of processing each entry.</p>
 
 <p>See the CapabilityStatements for the Directory for additional details:</p>
 
@@ -597,16 +615,16 @@ A Directory SHALL accept both XML and JSON formats.</p>
 difference being the Audit Source element. Both sides record to show consistency
 between the message sent by the Directory and the action taken at the Data Source.</p>
 
-<p>The actors involved shall be able to record audit events according to the transaction being used:</p>
+<p>When grouped with ATNA Secure Node or Secure Application Actors, the actors involved shall be able to record audit events according to the transaction being used:</p>
 
 <ul>
-  <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Create.html">Audit Event for Care Services Feed by the Data Source and Directory for Create</a></li>
-  <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Update.html">Audit Event for Care Services Feed by the Data Source and Directory for Update</a></li>
+  <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Create.html">Audit Event for Care Services Feed by the Data Source and Directory for Create</a>.</li>
+  <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Update.html">Audit Event for Care Services Feed by the Data Source and Directory for Update</a>.</li>
   <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Delete.html">Audit Event for Care Services Feed by the Data Source and Directory for Delete</a>.</li>
   <li><a href="StructureDefinition-IHE.mCSD.Audit.CareServices.Process.html">Audit Event for Care Services Feed by the Data Source and Directory for Process</a>.</li>
 </ul>
 
-<p>For a batch or transaction Bundle, the actors shall also be able to record audit events for the individual entries in the Bundle.</p>
+<p>For a transaction Bundle, the actors shall also be able to record audit events for the individual entries in the Bundle.</p>
 
 
 
@@ -649,7 +667,7 @@ between the message sent by the Directory and the action taken at the Data Sourc
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#4.0.0-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Mar 12, 2025 11:05-0500">2025-03-12</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mcsd#4.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, May 21, 2025 13:41-0500">2025-05-21</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
