@@ -1,0 +1,10 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../input-cache/schemas/R5/fhir-single.xsd">
+  <h3>Heading 1</h3>
+  <p>
+    Some text
+  </p>
+  <h3>Heading 3</h3>
+	<p>
+
+	</p>
+</div>
