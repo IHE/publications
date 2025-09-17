@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>2:3.58 Send Aggregate Report [QRPH-58] - Mobile Aggregate Data Exchange v3.0.0-comment</title>
+    <title>2:3.58 Send Aggregate Report [QRPH-58] - Mobile Aggregate Data Exchange v3.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Aggregate Data Exchange</span>
             <br/>
-            <span style="display:inline-block;">3.0.0-comment - ballot
+            <span style="display:inline-block;">3.0.0 - trial-use
 
 
 
@@ -217,7 +217,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the Mobile Aggregate Data Exchange (v3.0.0-comment: Publication Ballot 1) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/QRPH/mADX/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the Mobile Aggregate Data Exchange (v3.0.0: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/QRPH/mADX/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>2:3.58 Send Aggregate Report [QRPH-58]</h2>
   
 
@@ -344,31 +344,26 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>The indicator <strong>SHALL</strong> contain the following elements:</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">subject</code> A required subject reference</li>
-  <li><code class="language-plaintext highlighter-rouge">improvementNotation</code> Indicates if the values reported indicate an improvement</li>
-  <li><code class="language-plaintext highlighter-rouge">group.code.coding.code</code> A required reference for a valid indicator</li>
-  <li><code class="language-plaintext highlighter-rouge">group.population.code</code> The populations in the group</li>
-  <li><code class="language-plaintext highlighter-rouge">group.population.count</code> Size of the population</li>
+  <li><code class="language-plaintext highlighter-rouge">subject</code> A required subject reference.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.code.coding.code</code> A required reference for a valid indicator.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.population.code</code> The population(s) in the group.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.population.count</code> Size of the population.</li>
 </ul>
 
 <p>The indicator <strong>SHALL</strong> contain the following additional elements if the indicator includes disaggregation criteria:</p>
-
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.code</code> Indicates the disaggregation criterion</li>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum</code> Indicates the stratum results</li>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore</code> The value that is reported</li>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore.value</code> The numeric value reported in the aggregate report</li>
+  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum</code> Indicates the stratum results.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore</code> The value that is reported.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore.value</code> The numeric value reported in the aggregate report.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.component.code</code> Represents a disaggregation dimension for the disaggregation criterion reported.</li>
+  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.component.value</code> Represents a disaggregation value for the disaggregation dimension reported.</li>
 </ul>
 
-<p>The implementer <strong>MUST SUPPORT</strong> the following elements, needed for representing disaggregation criteria:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.value</code> Represents a disaggregation value for the disaggregation criterion reported</li>
-  <li><code class="language-plaintext highlighter-rouge">group.stratifier.stratum.component</code> Represents a disaggregation dimension for the disaggregation criterion reported</li>
-</ul>
+<p>The implementers <strong>MUST SUPPORT</strong> support the  element <code class="language-plaintext highlighter-rouge">improvementNotation</code> because is critical for indicating improvements for the measured values. However <code class="language-plaintext highlighter-rouge">improvementNotation</code>  is optional in the MeasureReport response message.</p>
 
 <h5 id="2358413-expected-actions">2:3.58.4.1.3 Expected Actions</h5>
 
-<p>The Content Consumer <strong>SHALL</strong> process the mADX message received and return the status of the transaction as per section 2:3.58.4.2. .</p>
+<p>The Content Consumer <strong>SHALL</strong> process the mADX message received and return the status of the transaction as per section 2:3.58.4.2.</p>
 
 <h5 id="2358414-send-aggregate-report-bundle-message">2:3.58.4.1.4 Send Aggregate Report Bundle Message</h5>
 <p>A Content Creator may submit multiple Measures using a Collection Bundle in FHIR in a single transaction. This option can be valuable in use cases where the system may not have constant connection. (See  <a href="http://hl7.org/fhir/R4/bundle.html">http://hl7.org/fhir/R4/bundle.html</a>.)</p>
@@ -400,7 +395,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <tbody>
     <tr>
       <td>200</td>
-      <td>Send Aggregate Report request message was successfully processed</td>
+      <td>Send Aggregate Report request message was successfully processed.</td>
     </tr>
     <tr>
       <td>202</td>
@@ -412,19 +407,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     </tr>
     <tr>
       <td>400</td>
-      <td>Bad Request - message content is badly formed or invalid</td>
+      <td>Bad Request - message content is badly formed or invalid.</td>
     </tr>
     <tr>
       <td>401</td>
-      <td>Not authorized - authorization is required for the interaction that was attempted</td>
+      <td>Not authorized - authorization is required for the interaction that was attempted.</td>
     </tr>
     <tr>
       <td>404</td>
-      <td>Not found - resource type is not supported</td>
+      <td>Not found - resource type is not supported.</td>
     </tr>
     <tr>
       <td>405</td>
-      <td>Method not allowed - the resource did not exist prior to the update, and the server does not allow client defined ids</td>
+      <td>Method not allowed - the resource did not exist prior to the update, and the server does not allow client defined ids.</td>
     </tr>
     <tr>
       <td>409/412</td>
@@ -432,7 +427,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     </tr>
     <tr>
       <td>415</td>
-      <td>Unsupported content-type or media</td>
+      <td>Unsupported content-type or media.</td>
     </tr>
     <tr>
       <td>422</td>
@@ -458,7 +453,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <ul>
   <li>Use response codes as in Table 2:3.58.4.2.2-1 for the OperationOutcome.issue.code</li>
   <li>Provide a FHIRPath identifying the invalid MeasureReport in OperationOutcome.issue.expression</li>
-  <li>Set the value of OperationOutcome.issue.expression to fatal.</li>
+  <li>Set the value of OperationOutcome.issue.expression to fatal</li>
 </ul>
 
 <h3 id="23585-protocol-requirements">2:3.58.5 Protocol Requirements</h3>
@@ -518,7 +513,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/quality_research_and_public_health/">IHE QRPH Technical Committee</a>.  Package ihe.qrph.madx#3.0.0-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Mar 24, 2025 16:20-0500">2025-03-24</span>
+          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/quality_research_and_public_health/">IHE QRPH Technical Committee</a>.  Package ihe.qrph.madx#3.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Sep 17, 2025 13:27-0500">2025-09-17</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
