@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>Significant Changes and Issues - Mobile Aggregate Data Exchange v3.0.0-comment</title>
+    <title>Significant Changes and Issues - Mobile Aggregate Data Exchange v3.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -71,7 +71,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile Aggregate Data Exchange</span>
             <br/>
-            <span style="display:inline-block;">3.0.0-comment - ballot
+            <span style="display:inline-block;">3.0.0 - trial-use
 
 
 
@@ -217,7 +217,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the Mobile Aggregate Data Exchange (v3.0.0-comment: Publication Ballot 1) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/QRPH/mADX/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the Mobile Aggregate Data Exchange (v3.0.0: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/QRPH/mADX/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>Significant Changes and Issues</h2>
   
 
@@ -260,14 +260,14 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <ul>
       <li><strong>MeasureReport</strong>:
         <ul>
-          <li>Deletions: <del>period</del></li>
-          <li>Additions: <code class="language-plaintext highlighter-rouge">improvementNotation</code>, <code class="language-plaintext highlighter-rouge">group.population.code</code>, <code class="language-plaintext highlighter-rouge">group.population.count</code>, <code class="language-plaintext highlighter-rouge">group.stratifier.code</code>, <code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore</code></li>
+          <li>Deletions: <code class="language-plaintext highlighter-rouge">period</code></li>
+          <li>Additions: <code class="language-plaintext highlighter-rouge">improvementNotation</code>, <code class="language-plaintext highlighter-rouge">group.population.code</code>, <code class="language-plaintext highlighter-rouge">group.population.count</code>, <code class="language-plaintext highlighter-rouge">group.stratifier.stratum.measureScore</code></li>
+          <li>Updates: <code class="language-plaintext highlighter-rouge">subject</code>- updated the functional definition. The old definition suggested that the subject is always a <code class="language-plaintext highlighter-rouge">Location</code>.</li>
         </ul>
       </li>
       <li><strong>Measure</strong>:
         <ul>
-          <li>Deletions: <del>group.stratifier.component</del></li>
-          <li>Additions: <code class="language-plaintext highlighter-rouge">improvementNotation</code>, <code class="language-plaintext highlighter-rouge">group.population.code</code>, <code class="language-plaintext highlighter-rouge">group.stratifier.code</code></li>
+          <li>Additions: <code class="language-plaintext highlighter-rouge">improvementNotation</code>, <code class="language-plaintext highlighter-rouge">group.population.code</code></li>
         </ul>
       </li>
     </ul>
@@ -286,31 +286,32 @@ It is important to note that as soon as a Change Proposal is approved, it carrie
 <h3 id="open-issues">Open Issues</h3>
 
 <ul>
-  <li>mADX_001: Are the current validation options sufficient, currently it is only the Content Consumer. Potential to validate on submission of data to the Content Consumer (in which case the Validate Option is only for the Content Consumer and not so much the Content Creator) or as a separate transaction to a Content Data Structure Creator (which could be the same actor as the Content Consumer)?</li>
-  <li>mADX_002: Should the FHIR resource OperationOutcome described in Section 3.58.4.2.3 Expected Actions have its messaging semantics detailed as part of the validation transaction?</li>
-  <li>mADX_003: For each value set referenced, a FHIRPath needs to be defined. See Section 3.58.4.2.4 Expected Actions Validation Option.<br />
+  <li>mADX_005: Are the current validation options sufficient, currently it is only the Content Consumer. Potential to validate on submission of data to the Content Consumer (in which case the Validate Option is only for the Content Consumer and not so much the Content Creator) or as a separate transaction to a Content Data Structure Creator (which could be the same actor as the Content Consumer)?</li>
+  <li>mADX_006: Should the FHIR resource OperationOutcome described in Section 3.58.4.2.3 Expected Actions have its messaging semantics detailed as part of the validation transaction?</li>
+  <li>mADX_007: For each value set referenced, a FHIRPath needs to be defined. See Section 3.58.4.2.4 Expected Actions Validation Option.<br />
 Question in sure the cross-referencing of components and related artifacts are correct.</li>
-  <li>mADX_004: Should the mCSD Find Matching Care Services [ITI-90] transaction be used to locate care services or should the mCSD Request for Care Services Updates [ITI-91] transaction be used instead? Should we provide optionality to choose either one, or should we add a discussion in the cross-profile considerations which would suggest that the [ITI-91] transaction can be used in production for caching/performance issues?</li>
-  <li>mADX_005: FHIR supports batch use of the Read and Update transactions. Should those transactions be profiled in mADX?</li>
-  <li>mADX_006: Is there a need to profile async transactions in mADX? This was in scope for ADX, but is Maturity Level 2 in <a href="http://hl7.org/fhir/R4/async.html">FHIR: Async</a></li>
-  <li>mADX_007: Do we need to make required in mADXMeasureReport to have a “reporter”? In FHIR R4 and R5 “reporter” is optional.</li>
-  <li>mADX_008: Do we need a search transaction on Measure that reflects how a Content Data Structure Consumer is able to request all Measures available? If the answer is “yes”, then what <a href="http://hl7.org/fhir/R4/measure.html#search">search parameters</a> should be included?</li>
-  <li>mADX_010: An example for stratification by 2 dimensions (Age group and Gender) was added, as this is a common scenario. We encourage the community to review the example and come up with suggestions related to how we can best represent the disaggregation by multiple criteria and multiple dimensions at the same time.</li>
+  <li>mADX_008: Should the mCSD Find Matching Care Services [ITI-90] transaction be used to locate care services or should the mCSD Request for Care Services Updates [ITI-91] transaction be used instead? Should we provide optionality to choose either one, or should we add a discussion in the cross-profile considerations which would suggest that the [ITI-91] transaction can be used in production for caching/performance issues?</li>
+  <li>mADX_009: FHIR supports batch use of the Read and Update transactions. Should those transactions be profiled in mADX?</li>
+  <li>mADX_011: Is there a need to profile async transactions in mADX? This was in scope for ADX, but is Maturity Level 2 in <a href="http://hl7.org/fhir/R4/async.html">FHIR: Async</a></li>
+  <li>mADX_012: Do we need to make required in mADXMeasureReport to have a “reporter”? In FHIR R4 and R5 “reporter” is optional.</li>
+  <li>mADX_013: Do we need a search transaction on Measure that reflects how a Content Data Structure Consumer is able to request all Measures available? If the answer is “yes”, then what <a href="http://hl7.org/fhir/R4/measure.html#search">search parameters</a> should be included?</li>
+  <li>mADX_014: According to the <a href="https://github.com/IHE/QRPH.mADX/issues/8">comment</a> received in the  public-comment phase, the QM IG will receive enhancements that will benefit the mADX profile. These enhancements would bring a better solution for the way the stratification value sets are represented in mADX Measure (in mADX this is currently done via a cross-reference between the stratification component code and an instance of the relatedArtifact element). Once the QM IG is updated, we could add a dependency to it and utilize the enhancements.</li>
 </ul>
 
 <h3 id="closed-issues">Closed Issues</h3>
 
 <ul>
-  <li>mADX_001: How will mADX handle what is covered in Appendix 8D - Formatting of times and time intervals in mADX?
+  <li>mADX_001: How will mADX handle what is covered in Appendix 8D - Formatting of times and time intervals in mADX? <br />
 <em>Resolution</em>: mADX does not include ADX to mADX mapping. This may be included in the IHE QRPH Clinical Quality Language for <a href="https://www.ihe.net/uploadedFiles/Documents/QRPH/IHE_QRPH_White_Paper_CQL.pdf">ADX White Paper</a>.</li>
-  <li>mADX_002: How are stratification codes handled in the FHIR Terminology Server? E.g., Age 1-4 and Male/Female. In ADX the added Schematron definition handled this issue, how will validation of stratified codes work in mADX?
+  <li>mADX_002: How are stratification codes handled in the FHIR Terminology Server? E.g., Age 1-4 and Male/Female. In ADX the added Schematron definition handled this issue, how will validation of stratified codes work in mADX?<br />
 <em>Resolution</em>: The stratification codes are defined as ValueSets that are referenced in a Measure.relatedArtifact and then linked to the stratifiers. This can be used to validate under the Validate Option. There is no need for the mADX Profile to have the equivalent of the Schematron.</li>
-  <li>mADX_003: Should the term Data Structure Definition (DSD) be changed? This is an SDMX specific term from ADX that has been borrowed in mADX because we anticipate the FHIR Measure shares a similar role. Changing the term DSD may also necessitate of a change of the actor the Content Data Structure Creator.
+  <li>mADX_003: Should the term Data Structure Definition (DSD) be changed? This is an SDMX specific term from ADX that has been borrowed in mADX because we anticipate the FHIR Measure shares a similar role. Changing the term DSD may also necessitate of a change of the actor the Content Data Structure Creator.<br />
 <em>Resolution</em>: This term should be changed to use Measure, so as not to cause confusion with the ADX Profile.</li>
-  <li>mADX_004: Is how mADX return errors for validation as an OperationOutcome against the FHIR Terminology Service and Content Services Update Supplier specified in mCSD sufficient? Should the profile describe the potential errors and messages?
+  <li>mADX_004: Is how mADX return errors for validation as an OperationOutcome against the FHIR Terminology Service and Content Services Update Supplier specified in mCSD sufficient? Should the profile describe the potential errors and messages?<br />
 <em>Resolution</em>: This behavior is described in the SVCM transaction Validate Code [ITI-99] detailed in Section 3.99.4.3.3 of the SVCM Profile. The Terminology Service shall respond with an error message.</li>
+  <li>mADX_010: An example for stratification by 2 dimensions (Age group and Gender) was added, as this is a common scenario. We encourage the community to review the example and come up with suggestions related to how we can best represent the disaggregation by multiple criteria and multiple dimensions at the same time.<br />
+<em>Resolution</em>: The example was improved and now reflects how a stratification by 2 dimensions (Age group and Gender) should be done.</li>
 </ul>
-
 
 
 
@@ -352,7 +353,7 @@ Question in sure the cross-referencing of components and related artifacts are c
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/quality_research_and_public_health/">IHE QRPH Technical Committee</a>.  Package ihe.qrph.madx#3.0.0-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Mar 24, 2025 16:20-0500">2025-03-24</span>
+          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/quality_research_and_public_health/">IHE QRPH Technical Committee</a>.  Package ihe.qrph.madx#3.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Sep 17, 2025 13:27-0500">2025-09-17</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
