@@ -3,15 +3,15 @@
 <ImplementationGuide xmlns="http://hl7.org/fhir">
   <id value="ihe.iti.mhd"/>
   <text>
-    <status value="extensions"/><div xmlns="http://www.w3.org/1999/xhtml"><h2>IHE_ITI_MHD</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd</pre><div><p>ImplementationGuide for IHE IT Infrastructure Technical Framework Supplement Mobile access to Health Documents (MHD)</p>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: ImplementationGuide ihe.iti.mhd</b></p><a name="ihe.iti.mhd"> </a><a name="hcihe.iti.mhd"> </a><h2>IHE_ITI_MHD</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd</pre><div><p>ImplementationGuide for IHE IT Infrastructure Technical Framework Supplement Mobile access to Health Documents (MHD)</p>
 </div></div>
   </text>
   <url value="https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd"/>
-  <version value="4.2.2"/>
+  <version value="4.2.3"/>
   <name value="IHE_ITI_MHD"/>
   <title value="Mobile access to Health Documents (MHD)"/>
   <status value="active"/>
-  <date value="2024-05-23"/>
+  <date value="2025-10-31T14:38:46-05:00"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -37,6 +37,7 @@
     <coding>
       <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
       <code value="001"/>
+      <display value="World"/>
     </coding>
   </jurisdiction>
   <packageId value="ihe.iti.mhd"/>
@@ -48,7 +49,7 @@
     </extension>
     <uri value="http://terminology.hl7.org/ImplementationGuide/hl7.terminology"/>
     <packageId value="hl7.terminology.r4"/>
-    <version value="5.5.0"/>
+    <version value="6.5.0"/>
   </dependsOn>
   <dependsOn id="hl7ext">
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment">
@@ -56,17 +57,17 @@
     </extension>
     <uri value="http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions"/>
     <packageId value="hl7.fhir.uv.extensions.r4"/>
-    <version value="5.1.0"/>
+    <version value="5.2.0"/>
   </dependsOn>
   <dependsOn id="iheitibasicaudit">
     <uri value="https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp"/>
     <packageId value="ihe.iti.balp"/>
-    <version value="1.1.x"/>
+    <version value="1.1.4"/>
   </dependsOn>
   <dependsOn id="iheformatcodefhir">
     <uri value="https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir"/>
     <packageId value="ihe.formatcode.fhir"/>
-    <version value="1.2.x"/>
+    <version value="1.4.x"/>
   </dependsOn>
   <definition>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
@@ -294,7 +295,7 @@
       </extension>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency">
-      <valueCode value="hl7.fhir.uv.tools#0.1.0"/>
+      <valueCode value="hl7.fhir.uv.tools.r4#0.8.0"/>
     </extension>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-parameter">
       <extension url="code">
@@ -1221,7 +1222,7 @@
         <reference value="Parameters/ex-input-binary"/>
       </reference>
       <name value="ex-input-binary"/>
-      <description value="example Parameters with a binary"/>
+      <description value="example Parameters with a binary. Note that the Binary is not a CDA or FHIR document, but is provided for example purposes."/>
       <exampleCanonical value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.In"/>
     </resource>
     <resource>
@@ -1229,11 +1230,11 @@
         <valueString value="Parameters"/>
       </extension>
       <reference>
-        <reference value="Parameters/ex-out"/>
+        <reference value="Parameters/ex-input-doc-bundle"/>
       </reference>
-      <name value="ex-out"/>
-      <description value="example output from GenerateMetadata"/>
-      <exampleCanonical value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.Out"/>
+      <name value="ex-input-doc-bundle"/>
+      <description value="example Parameters with a Document Bundle"/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.In"/>
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
@@ -1292,17 +1293,6 @@
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="Bundle"/>
-      </extension>
-      <reference>
-        <reference value="Bundle/Bundle-FindDocumentReferences"/>
-      </reference>
-      <name value="Example FindDocumentReferences response"/>
-      <description value="An example of a searchset Bundle with one DocumentReference"/>
-      <exampleBoolean value="true"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
         <valueString value="List"/>
       </extension>
       <reference>
@@ -1350,11 +1340,22 @@
         <valueString value="Bundle"/>
       </extension>
       <reference>
+        <reference value="Bundle/FindDocumentReferences"/>
+      </reference>
+      <name value="Example of a FindDocumentReferences Response Bundle"/>
+      <description value="An example of a searchset Bundle with one DocumentReference as returned by a FindDocumentReferences query"/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage"/>
+    </resource>
+    <resource>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
+        <valueString value="Bundle"/>
+      </extension>
+      <reference>
         <reference value="Bundle/ex-comprehensiveProvideDocumentBundleDocument"/>
       </reference>
       <name value="Example Provide Bundle with a FHIR-Document"/>
-      <description value="An example of a Provide Bundle with a single DocumentReference pointing at a FHIR-Document Bundle"/>
-      <exampleBoolean value="true"/>
+      <description value="An example of a Comprehensive Provide Document Bundle containing a DocumentReference and a FHIR-Document Bundle. This is an example of using a FHIR-Document Bundle rather than a Binary resource to carry the document content."/>
+      <exampleCanonical value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle"/>
     </resource>
     <resource>
       <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
@@ -1386,7 +1387,7 @@
         <reference value="OperationDefinition/generate-metadata"/>
       </reference>
       <name value="Generate a DocumentReference from a document"/>
-      <description value="The $generate-metadata Operation defintion. &#xA;&#xA;This operation is needed as the $generate in FHIR R4 is not properly defined, and thus has incorrect parameters. &#xA;The MHD $generate-metadata should be replaced when MHD is upgraded to FHIR R5. &#xA;This MHD $generate-metadata is modeled after the expected changes in FHIR R5, and follows the example given in FHIR R4:&#xA;&#xA;Input:&#xA;- Binary 0..1 the *document* in Binary Resource format. Usually used with CDA documents.&#xA;- Bundle 0..1 the *document* in FHIR-Document form of a Bundle of kind Document&#xA;Output:&#xA;- reference to a DocumentReference with metadata generated from the *document*"/>
+      <description value="The $generate-metadata Operation definition. &#xA;&#xA;This operation is needed as the $generate in FHIR R4 is not properly defined, and thus has incorrect parameters. &#xA;The MHD $generate-metadata should be replaced when MHD is upgraded to FHIR R5/R6&#xA;This MHD $generate-metadata is modeled after the expected changes in FHIR R5/R6, and follows the example given in FHIR R4:"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -1398,17 +1399,6 @@
       </reference>
       <name value="IHE MHD GenerateMetadata Parameters In"/>
       <description value="The Input Parameters for the $generate-metadata operation&#xD;&#xA;- Input: binary, bundle"/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="StructureDefinition:resource"/>
-      </extension>
-      <reference>
-        <reference value="StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.Out"/>
-      </reference>
-      <name value="IHE MHD GenerateMetadata Parameters Out"/>
-      <description value="The Output Parameters for the $generate-metadata operation&#xD;&#xA;- Output: DocumentReference reference"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
