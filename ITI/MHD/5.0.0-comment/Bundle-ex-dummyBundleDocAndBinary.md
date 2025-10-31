@@ -1,0 +1,172 @@
+# Dummy Bundle with DocumentReference + Binary - Mobile access to Health Documents (MHD) v5.0.0-comment
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Dummy Bundle with DocumentReference + Binary**
+
+## Example Bundle: Dummy Bundle with DocumentReference + Binary
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+Bundle ex-dummyBundleDocAndBinary of type transaction
+
+-------
+
+Entry 1 - fullUrl = urn:uuid:cccccccc-2222-0000-0000-000000000001
+
+Resource DocumentReference:
+
+> 
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+**status**: Current**type**:Patient summary Document**category**:History of Immunization note**date**: 2020-02-01 23:50:50-0500
+> **content**
+
+### Attachments
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| - | **ContentType** | **Url** | **Size** | **Hash** |
+| * | text/plain | [Binary: text/plain (16 bytes base64)](Bundle-ex-dummyBundleDocAndBinary.md#urn-uuid-cccccccc-2222-0000-0000-000000000002) | 11 | `MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA==` |
+
+### Profiles
+
+| | |
+| :--- | :--- |
+| - | **Value[x]** |
+| * | [IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds-sd:text:2008](http://tx.fhir.org/r5/ValueSet/formatcode#formatcode-urn.58ihe.58iti.58xds-sd.58text.582008)(ITI XDS-SD TEXT) |
+
+
+
+Request:
+
+```
+POST DocumentReference
+
+```
+
+-------
+
+Entry 2 - fullUrl = urn:uuid:cccccccc-2222-0000-0000-000000000002
+
+Resource Binary:
+
+> 
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+**contentType**: text/plain**data**:`SGVsbG8gV29ybGQ=`
+
+Request:
+
+```
+POST Binary
+
+```
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "ex-dummyBundleDocAndBinary",
+  "meta" : {
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HTEST"
+      }
+    ]
+  },
+  "type" : "transaction",
+  "timestamp" : "2020-11-24T23:50:50-05:00",
+  "entry" : [
+    {
+      "fullUrl" : "urn:uuid:cccccccc-2222-0000-0000-000000000001",
+      "resource" : {
+        "resourceType" : "DocumentReference",
+        "id" : "cccccccc-2222-0000-0000-000000000001",
+        "meta" : {
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"DocumentReference_cccccccc-2222-0000-0000-000000000001\"> </a><p class=\"res-header-id\"><b>Generated Narrative: DocumentReference cccccccc-2222-0000-0000-000000000001</b></p><a name=\"cccccccc-2222-0000-0000-000000000001\"> </a><a name=\"hccccccccc-2222-0000-0000-000000000001\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p><b>status</b>: Current</p><p><b>type</b>: <span title=\"Codes:{http://loinc.org 60591-5}\">Patient summary Document</span></p><p><b>category</b>: <span title=\"Codes:{http://loinc.org 11369-6}\">History of Immunization note</span></p><p><b>date</b>: 2020-02-01 23:50:50-0500</p><blockquote><p><b>content</b></p><h3>Attachments</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>ContentType</b></td><td><b>Url</b></td><td><b>Size</b></td><td><b>Hash</b></td></tr><tr><td style=\"display: none\">*</td><td>text/plain</td><td><a href=\"Bundle-ex-dummyBundleDocAndBinary.html#urn-uuid-cccccccc-2222-0000-0000-000000000002\">Binary: text/plain (16 bytes base64)</a></td><td>11</td><td><code>MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA==</code></td></tr></table><h3>Profiles</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Value[x]</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://tx.fhir.org/r5/ValueSet/formatcode#formatcode-urn.58ihe.58iti.58xds-sd.58text.582008\">IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds-sd:text:2008</a> (ITI XDS-SD TEXT)</td></tr></table></blockquote></div>"
+        },
+        "status" : "current",
+        "type" : {
+          "coding" : [
+            {
+              "system" : "http://loinc.org",
+              "code" : "60591-5"
+            }
+          ]
+        },
+        "category" : [
+          {
+            "coding" : [
+              {
+                "system" : "http://loinc.org",
+                "code" : "11369-6"
+              }
+            ]
+          }
+        ],
+        "date" : "2020-02-01T23:50:50-05:00",
+        "content" : [
+          {
+            "attachment" : {
+              "contentType" : "text/plain",
+              "url" : "urn:uuid:cccccccc-2222-0000-0000-000000000002",
+              "size" : "11",
+              "hash" : "MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA=="
+            },
+            "profile" : [
+              {
+                "valueCoding" : {
+                  "system" : "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode",
+                  "code" : "urn:ihe:iti:xds-sd:text:2008"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "DocumentReference"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:cccccccc-2222-0000-0000-000000000002",
+      "resource" : {
+        "resourceType" : "Binary",
+        "id" : "cccccccc-2222-0000-0000-000000000002",
+        "meta" : {
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "contentType" : "text/plain",
+        "data" : "SGVsbG8gV29ybGQ="
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "Binary"
+      }
+    }
+  ]
+}
+
+```
