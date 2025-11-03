@@ -1,0 +1,812 @@
+# Example Provide Bundle with a FHIR-Document - Mobile access to Health Documents (MHD) v4.2.3
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Example Provide Bundle with a FHIR-Document**
+
+## Example Bundle: Example Provide Bundle with a FHIR-Document
+
+Profile: [MHD Comprehensive Provide Document Bundle](StructureDefinition-IHE.MHD.Comprehensive.ProvideBundle.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+Bundle ex-comprehensiveProvideDocumentBundleDocument of type transaction
+
+-------
+
+Entry 1 - fullUrl = urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800001
+
+Resource List:
+
+> 
+
+Profile: [MHD SubmissionSet Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.SubmissionSet.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+
+Request:
+
+```
+POST List
+
+```
+
+-------
+
+Entry 2 - fullUrl = urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800002
+
+Resource DocumentReference:
+
+> 
+
+Profile: [MHD DocumentReference Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+**identifier**:[Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.3.0/NamingSystem-uri.html)/urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0 (use: usual, ),[Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.3.0/NamingSystem-uri.html)/urn:uuid:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d (use: official, )**status**: Current**type**:Attending Discharge summary**category**:History of Immunization note**subject**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#http-//example.org/fhir/Patient/fdoc-patient)
+> **context**Identifier:`https://www.example.org/encounters`/S100
+**date**: 2020-02-01 23:50:50-0500**author**:[Practitioner Adam Careful](#hcex-comprehensiveProvideDocumentBundleDocument/aaaaaaaa-bbbb-cccc-dddd-e00888800002/fdoc-practitioner)**securityLabel**:normal
+> **content**
+
+### Attachments
+
+| | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| - | **ContentType** | **Language** | **Url** | **Title** | **Creation** |
+| * | application/fhir+json | en | [Bundle: identifier = UUID:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0; type = document; timestamp = 2013-05-28 22:12:21+0000](Bundle-ex-comprehensiveProvideDocumentBundleDocument.md#urn-uuid-aaaaaaaa-bbbb-cccc-dddd-e00888800003) | Discharge Summary from Responsible Clinician | 2013-05-28 22:12:21+0000 |
+
+
+-------
+
+> **identifier**:`http://www.acme.org/practitioners`/23**name**: Adam Careful
+
+-------
+
+> Dee Schmidt (no stated gender), DoB Unknown ( http://example.org/patients#mrn-1234)
+-------
+
+
+Request:
+
+```
+POST DocumentReference
+
+```
+
+-------
+
+Entry 3 - fullUrl = urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800003
+
+Resource Bundle:
+
+> 
+
+**Document Details**
+
+Last updated: 2013-05-28 22:12:21+0000
+
+Final Document at 2013-02-01 12:30:02+0000 by [Practitioner Adam Careful](Bundle-ex-fhir-document-bundle.md#Practitioner_fdoc-practitioner) for [Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient) in encounter [Encounter: identifier = http://www.example.org/encounters#S100; status = finished; class = inpatient encounter (ActCode#IMP); type = ; period = 2013-01-20 12:30:02+0000 --> 2013-02-01 12:30:02+0000](Bundle-ex-fhir-document-bundle.md#Encounter_fdoc-encounter)
+
+-------
+
+**Document Subject**
+
+Eve Everywoman Female, DoB: 1955-01-06
+
+-------
+
+-------
+
+**Document Content**
+
+## Reason for admission
+
+| | |
+| :--- | :--- |
+| Details |  |
+| Acute Asthmatic attack. Was wheezing for days prior to admission. |  |
+
+## Medications on Discharge
+
+| | | |
+| :--- | :--- | :--- |
+| Medication | Last Change | Last ChangeReason |
+| Theophylline 200mg BD after meals | continued | |
+| Ventolin Inhaler | stopped | Getting side effect of tremor |
+
+## Known allergies
+
+| | |
+| :--- | :--- |
+| Allergen | Reaction |
+| Doxycycline | Hives |
+
+-------
+
+## Additional Resources Included in Document
+
+-------
+Entry 2 - fullUrl = http://example.org/fhir/Practitioner/fdoc-practitionerResource Practitioner:
+> **identifier**:`http://www.acme.org/practitioners`/23**name**: Adam Careful
+
+-------
+Entry 3 - fullUrl = http://example.org/fhir/Patient/fdoc-patientResource Patient:
+> Eve Everywoman Female, DoB: 1955-01-06
+-------
+
+-------
+Entry 4 - fullUrl = http://example.org/fhir/Encounter/fdoc-encounterResource Encounter:
+> **identifier**:`http://www.example.org/encounters`/S100**status**: completed**class**:inpatient encounter**type**:Orthopedic Admission**subject**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient)
+
+-------
+Entry 5 - fullUrl = http://example.org/fhir/Observation/fdoc-observationResource Observation:
+> **status**: Final**code**:Reason for admission**subject**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient)**encounter**:[Encounter: identifier = http://www.example.org/encounters#S100; status = finished; class = inpatient encounter (ActCode#IMP); type = ; period = 2013-01-20 12:30:02+0000 --> 2013-02-01 12:30:02+0000](Bundle-ex-fhir-document-bundle.md#Encounter_fdoc-encounter)**value**: Acute Asthmatic attack. Was wheezing for days prior to admission.
+
+-------
+Entry 6 - fullUrl = http://example.org/fhir/MedicationRequest/fdoc-medicationrequestResource MedicationRequest:
+> **status**: Unknown**intent**: Order**subject**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient)**requester**:[Practitioner Adam Careful](Bundle-ex-fhir-document-bundle.md#Practitioner_fdoc-practitioner)
+> **dosageInstruction****additionalInstruction**:Take with Food**timing**: 2 per 1 day**route**:oral administration of treatment
+
+### DoseAndRates
+
+| | | |
+| :--- | :--- | :--- |
+| - | **Type** | **Dose[x]** |
+| * | Ordered | 1 tablet(Details: Orderable Drug Form codeTAB = 'Tablet') |
+
+
+
+-------
+Entry 7 - fullUrl = http://example.org/fhir/MedicationStatement/fdoc-medicationstatementResource MedicationStatement:
+> **status**: active**status**: recorded**subject**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient)**dateAsserted**: 2013-05-05 16:13:03+0000
+
+-------
+Entry 8 - fullUrl = http://example.org/fhir/AllergyIntolerance/fdoc-allergyintoleranceResource AllergyIntolerance:
+> **clinicalStatus**:Active**verificationStatus**:Confirmed**type**:Allergy**criticality**: High Risk**code**:Doxycycline**patient**:[Eve Everywoman Female, DoB: 1955-01-06](Bundle-ex-fhir-document-bundle.md#Patient_fdoc-patient)**recordedDate**: 2012-09-17
+
+### Reactions
+
+| | |
+| :--- | :--- |
+| - | **Manifestation** |
+| * | No display for AllergyIntolerance.reaction.manifestation (concept: ) |
+
+
+
+Request:
+
+```
+POST Bundle
+
+```
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "ex-comprehensiveProvideDocumentBundleDocument",
+  "meta" : {
+    "profile" : [
+      "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle"
+    ],
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HTEST"
+      }
+    ]
+  },
+  "type" : "transaction",
+  "timestamp" : "2004-10-25T23:50:50-05:00",
+  "entry" : [
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800001",
+      "resource" : {
+        "resourceType" : "List",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00888800001",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"List_aaaaaaaa-bbbb-cccc-dddd-e00888800001\"> </a><p class=\"res-header-id\"><b>Generated Narrative: List aaaaaaaa-bbbb-cccc-dddd-e00888800001</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00888800001\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00888800001\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Comprehensive.SubmissionSet.html\">MHD SubmissionSet Comprehensive</a></p><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><table class=\"clstu\"><tr><td>Date: 2004-10-25 23:50:50-0500 </td><td>Mode: Working List </td><td>Status: Current </td><td>Code: SubmissionSet as a FHIR List </td></tr><tr><td>Subject: <a href=\"Bundle-ex-fhir-document-bundle.html#http-//example.org/fhir/Patient/fdoc-patient\">Eve Everywoman Female, DoB: 1955-01-06</a></td></tr></table><table class=\"grid\"><tr style=\"backgound-color: #eeeeee\"><td><b>Items</b></td></tr><tr><td><a href=\"Bundle-ex-comprehensiveProvideDocumentBundleDocument.html#urn-uuid-aaaaaaaa-bbbb-cccc-dddd-e00888800002\">DocumentReference: masterIdentifier = UUID:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0 (use: usual, ); identifier = UUID:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d (use: official, ); status = current; type = Attending Discharge summary; category = History of Immunization note; date = 2020-02-01 23:50:50-0500; securityLabel = normal</a></td></tr></table></div>"
+        },
+        "extension" : [
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType",
+            "valueCodeableConcept" : {
+              "coding" : [
+                {
+                  "system" : "http://snomed.info/sct",
+                  "code" : "225728007"
+                }
+              ]
+            }
+          },
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-sourceId",
+            "valueIdentifier" : {
+              "value" : "urn:oid:1.2.3.4"
+            }
+          }
+        ],
+        "identifier" : [
+          {
+            "use" : "official",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:uuid:5d3d3a7d-82a6-4fe0-8d87-ee2cb87fa219"
+          },
+          {
+            "use" : "usual",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:oid:1.2.129.6.58.92.88337.1"
+          }
+        ],
+        "status" : "current",
+        "mode" : "working",
+        "code" : {
+          "coding" : [
+            {
+              "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes",
+              "code" : "submissionset"
+            }
+          ]
+        },
+        "subject" : {
+          "reference" : "http://example.org/fhir/Patient/fdoc-patient"
+        },
+        "date" : "2004-10-25T23:50:50-05:00",
+        "entry" : [
+          {
+            "item" : {
+              "reference" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800002"
+            }
+          }
+        ]
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "List"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800002",
+      "resource" : {
+        "resourceType" : "DocumentReference",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00888800002",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"DocumentReference_aaaaaaaa-bbbb-cccc-dddd-e00888800002\"> </a><p class=\"res-header-id\"><b>Generated Narrative: DocumentReference aaaaaaaa-bbbb-cccc-dddd-e00888800002</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00888800002\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00888800002\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.html\">MHD DocumentReference Comprehensive</a></p><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p><b>masterIdentifier</b>: <a href=\"http://terminology.hl7.org/6.3.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0 (use: usual, )</p><p><b>identifier</b>: <a href=\"http://terminology.hl7.org/6.3.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:uuid:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d (use: official, )</p><p><b>status</b>: Current</p><p><b>type</b>: <span title=\"Codes:{http://loinc.org 28655-9}\">Attending Discharge summary</span></p><p><b>category</b>: <span title=\"Codes:{http://loinc.org 11369-6}\">History of Immunization note</span></p><p><b>subject</b>: <a href=\"Bundle-ex-fhir-document-bundle.html#http-//example.org/fhir/Patient/fdoc-patient\">Eve Everywoman Female, DoB: 1955-01-06</a></p><p><b>date</b>: 2020-02-01 23:50:50-0500</p><p><b>author</b>: <a href=\"#hcaaaaaaaa-bbbb-cccc-dddd-e00888800002/fdoc-practitioner\">Practitioner Adam Careful </a></p><p><b>securityLabel</b>: <span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-Confidentiality N}\">normal</span></p><blockquote><p><b>content</b></p><h3>Attachments</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>ContentType</b></td><td><b>Language</b></td><td><b>Url</b></td><td><b>Title</b></td><td><b>Creation</b></td></tr><tr><td style=\"display: none\">*</td><td>application/fhir+json</td><td>English</td><td><a href=\"Bundle-ex-comprehensiveProvideDocumentBundleDocument.html#urn-uuid-aaaaaaaa-bbbb-cccc-dddd-e00888800003\">Bundle: identifier = UUID:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0; type = document; timestamp = 2013-05-28 22:12:21+0000</a></td><td>Discharge Summary from Responsible Clinician</td><td>2013-05-28 22:12:21+0000</td></tr></table><p><b>format</b>: <a href=\"https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.4.0/CodeSystem-formatcode.html#formatcode-urn.58ihe.58iti.58xds.582017.58mimeTypeSufficient\">IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds:2017:mimeTypeSufficient</a> (mimeType Sufficient)</p></blockquote><h3>Contexts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Encounter</b></td><td><b>FacilityType</b></td><td><b>PracticeSetting</b></td><td><b>SourcePatientInfo</b></td></tr><tr><td style=\"display: none\">*</td><td>Identifier: <code>https://www.example.org/encounters</code>/S100</td><td><span title=\"Codes:{http://snomed.info/sct 82242000}\">Children's hospital</span></td><td><span title=\"Codes:{http://snomed.info/sct 408467006}\">Adult mental illness - specialty (qualifier value)</span></td><td><a href=\"#hcaaaaaaaa-bbbb-cccc-dddd-e00888800002/aaaaaaaa-bbbb-cccc-dddd-e00888800004\">Dee Schmidt  (no stated gender), DoB Unknown ( http://example.org/patients#mrn-1234)</a></td></tr></table><hr/><blockquote><p class=\"res-header-id\"><b>Generated Narrative: Practitioner #fdoc-practitioner</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00888800002/fdoc-practitioner\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00888800002/fdoc-practitioner\"> </a><p><b>identifier</b>: <code>http://www.acme.org/practitioners</code>/23</p><p><b>name</b>: Adam Careful </p></blockquote><hr/><blockquote><p class=\"res-header-id\"><b>Generated Narrative: Patient #aaaaaaaa-bbbb-cccc-dddd-e00888800004</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00888800002/aaaaaaaa-bbbb-cccc-dddd-e00888800004\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00888800002/aaaaaaaa-bbbb-cccc-dddd-e00888800004\"> </a><p style=\"border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;\">Dee Schmidt  (no stated gender), DoB Unknown ( http://example.org/patients#mrn-1234)</p><hr/></blockquote></div>"
+        },
+        "contained" : [
+          {
+            "resourceType" : "Practitioner",
+            "id" : "fdoc-practitioner",
+            "identifier" : [
+              {
+                "system" : "http://www.acme.org/practitioners",
+                "value" : "23"
+              }
+            ],
+            "name" : [
+              {
+                "family" : "Careful",
+                "given" : ["Adam"],
+                "prefix" : ["Dr"]
+              }
+            ]
+          },
+          {
+            "resourceType" : "Patient",
+            "id" : "aaaaaaaa-bbbb-cccc-dddd-e00888800004",
+            "identifier" : [
+              {
+                "system" : "http://example.org/patients",
+                "value" : "mrn-1234"
+              }
+            ],
+            "name" : [
+              {
+                "family" : "Schmidt",
+                "given" : ["Dee"]
+              }
+            ]
+          }
+        ],
+        "masterIdentifier" : {
+          "use" : "usual",
+          "system" : "urn:ietf:rfc:3986",
+          "value" : "urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0"
+        },
+        "identifier" : [
+          {
+            "use" : "official",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:uuid:7d5bb8ac-68ee-4926-85e7-b8aac8e1f09d"
+          }
+        ],
+        "status" : "current",
+        "type" : {
+          "coding" : [
+            {
+              "system" : "http://loinc.org",
+              "code" : "28655-9"
+            }
+          ]
+        },
+        "category" : [
+          {
+            "coding" : [
+              {
+                "system" : "http://loinc.org",
+                "code" : "11369-6"
+              }
+            ]
+          }
+        ],
+        "subject" : {
+          "reference" : "http://example.org/fhir/Patient/fdoc-patient"
+        },
+        "date" : "2020-02-01T23:50:50-05:00",
+        "author" : [
+          {
+            "reference" : "#fdoc-practitioner"
+          }
+        ],
+        "securityLabel" : [
+          {
+            "coding" : [
+              {
+                "system" : "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                "code" : "N",
+                "display" : "normal"
+              }
+            ]
+          }
+        ],
+        "content" : [
+          {
+            "attachment" : {
+              "contentType" : "application/fhir+json",
+              "language" : "en",
+              "url" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800003",
+              "title" : "Discharge Summary from Responsible Clinician",
+              "creation" : "2013-05-28T22:12:21Z"
+            },
+            "format" : {
+              "system" : "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode",
+              "code" : "urn:ihe:iti:xds:2017:mimeTypeSufficient"
+            }
+          }
+        ],
+        "context" : {
+          "encounter" : [
+            {
+              "identifier" : {
+                "system" : "https://www.example.org/encounters",
+                "value" : "S100"
+              }
+            }
+          ],
+          "facilityType" : {
+            "coding" : [
+              {
+                "system" : "http://snomed.info/sct",
+                "code" : "82242000"
+              }
+            ]
+          },
+          "practiceSetting" : {
+            "coding" : [
+              {
+                "system" : "http://snomed.info/sct",
+                "code" : "408467006"
+              }
+            ]
+          },
+          "sourcePatientInfo" : {
+            "reference" : "#aaaaaaaa-bbbb-cccc-dddd-e00888800004"
+          }
+        }
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "DocumentReference"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00888800003",
+      "resource" : {
+        "resourceType" : "Bundle",
+        "id" : "ex-fhir-document-bundle",
+        "meta" : {
+          "lastUpdated" : "2013-05-28T22:12:21Z"
+        },
+        "identifier" : {
+          "system" : "urn:ietf:rfc:3986",
+          "value" : "urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0"
+        },
+        "type" : "document",
+        "timestamp" : "2013-05-28T22:12:21Z",
+        "entry" : [
+          {
+            "fullUrl" : "http://example.org/fhir/Composition/180f219f-97a8-486d-99d9-ed631fe4fc57",
+            "resource" : {
+              "resourceType" : "Composition",
+              "id" : "180f219f-97a8-486d-99d9-ed631fe4fc57",
+              "meta" : {
+                "lastUpdated" : "2013-05-28T22:12:21Z"
+              },
+              "status" : "final",
+              "type" : {
+                "coding" : [
+                  {
+                    "system" : "http://loinc.org",
+                    "code" : "28655-9"
+                  }
+                ],
+                "text" : "Discharge Summary from Responsible Clinician"
+              },
+              "subject" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "encounter" : {
+                "reference" : "Encounter/fdoc-encounter"
+              },
+              "date" : "2013-02-01T12:30:02Z",
+              "author" : [
+                {
+                  "reference" : "Practitioner/fdoc-practitioner"
+                }
+              ],
+              "title" : "Discharge Summary",
+              "section" : [
+                {
+                  "title" : "Reason for admission",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "29299-5",
+                        "display" : "Reason for visit Narrative"
+                      }
+                    ]
+                  },
+                  "text" : {
+                    "status" : "additional",
+                    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table><thead><tr><td>Details</td><td/></tr></thead><tbody><tr><td>Acute Asthmatic attack. Was wheezing for days prior to admission.</td><td/></tr></tbody></table></div>"
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Observation/fdoc-observation"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Medications on Discharge",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "10183-2",
+                        "display" : "Hospital discharge medications Narrative"
+                      }
+                    ]
+                  },
+                  "text" : {
+                    "status" : "additional",
+                    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table><thead><tr><td>Medication</td><td>Last Change</td><td>Last ChangeReason</td></tr></thead><tbody><tr><td>Theophylline 200mg BD after meals</td><td>continued</td></tr><tr><td>Ventolin Inhaler</td><td>stopped</td><td>Getting side effect of tremor</td></tr></tbody></table></div>"
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "MedicationRequest/fdoc-medicationrequest"
+                    },
+                    {
+                      "reference" : "MedicationStatement/fdoc-medicationstatement"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Known allergies",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "48765-2",
+                        "display" : "Allergies and adverse reactions Document"
+                      }
+                    ]
+                  },
+                  "text" : {
+                    "status" : "additional",
+                    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table><thead><tr><td>Allergen</td><td>Reaction</td></tr></thead><tbody><tr><td>Doxycycline</td><td>Hives</td></tr></tbody></table></div>"
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "AllergyIntolerance/fdoc-allergyintolerance"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/Practitioner/fdoc-practitioner",
+            "resource" : {
+              "resourceType" : "Practitioner",
+              "id" : "fdoc-practitioner",
+              "identifier" : [
+                {
+                  "system" : "http://www.acme.org/practitioners",
+                  "value" : "23"
+                }
+              ],
+              "name" : [
+                {
+                  "family" : "Careful",
+                  "given" : ["Adam"],
+                  "prefix" : ["Dr"]
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/Patient/fdoc-patient",
+            "resource" : {
+              "resourceType" : "Patient",
+              "id" : "fdoc-patient",
+              "active" : true,
+              "name" : [
+                {
+                  "text" : "Eve Everywoman",
+                  "family" : "Everywoman1",
+                  "given" : ["Eve"]
+                }
+              ],
+              "telecom" : [
+                {
+                  "system" : "phone",
+                  "value" : "555-555-2003",
+                  "use" : "work"
+                }
+              ],
+              "gender" : "female",
+              "birthDate" : "1955-01-06",
+              "address" : [
+                {
+                  "use" : "home",
+                  "line" : ["2222 Home Street"]
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/Encounter/fdoc-encounter",
+            "resource" : {
+              "resourceType" : "Encounter",
+              "id" : "fdoc-encounter",
+              "identifier" : [
+                {
+                  "system" : "http://www.example.org/encounters",
+                  "value" : "S100"
+                }
+              ],
+              "status" : "finished",
+              "class" : {
+                "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                "code" : "IMP",
+                "display" : "inpatient encounter"
+              },
+              "type" : [
+                {
+                  "text" : "Orthopedic Admission"
+                }
+              ],
+              "subject" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "period" : {
+                "start" : "2013-01-20T12:30:02Z",
+                "end" : "2013-02-01T12:30:02Z"
+              },
+              "hospitalization" : {
+                "dischargeDisposition" : {
+                  "text" : "Discharged to care of GP"
+                }
+              }
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/Observation/fdoc-observation",
+            "resource" : {
+              "resourceType" : "Observation",
+              "id" : "fdoc-observation",
+              "status" : "final",
+              "code" : {
+                "coding" : [
+                  {
+                    "system" : "http://loinc.org",
+                    "code" : "46241-6"
+                  }
+                ],
+                "text" : "Reason for admission"
+              },
+              "subject" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "encounter" : {
+                "reference" : "Encounter/fdoc-encounter"
+              },
+              "valueString" : "Acute Asthmatic attack. Was wheezing for days prior to admission."
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/MedicationRequest/fdoc-medicationrequest",
+            "resource" : {
+              "resourceType" : "MedicationRequest",
+              "id" : "fdoc-medicationrequest",
+              "status" : "unknown",
+              "intent" : "order",
+              "medicationCodeableConcept" : {
+                "coding" : [
+                  {
+                    "system" : "http://snomed.info/sct",
+                    "code" : "66493003"
+                  }
+                ],
+                "text" : "Theophylline 200mg"
+              },
+              "subject" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "requester" : {
+                "reference" : "Practitioner/fdoc-practitioner"
+              },
+              "reasonCode" : [
+                {
+                  "text" : "Management of Asthma"
+                }
+              ],
+              "dosageInstruction" : [
+                {
+                  "additionalInstruction" : [
+                    {
+                      "text" : "Take with Food"
+                    }
+                  ],
+                  "timing" : {
+                    "repeat" : {
+                      "frequency" : 2,
+                      "period" : 1,
+                      "periodUnit" : "d"
+                    }
+                  },
+                  "route" : {
+                    "coding" : [
+                      {
+                        "system" : "http://snomed.info/sct",
+                        "code" : "394899003",
+                        "display" : "oral administration of treatment"
+                      }
+                    ]
+                  },
+                  "doseAndRate" : [
+                    {
+                      "type" : {
+                        "coding" : [
+                          {
+                            "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+                            "code" : "ordered",
+                            "display" : "Ordered"
+                          }
+                        ]
+                      },
+                      "doseQuantity" : {
+                        "value" : 1,
+                        "unit" : "tablet",
+                        "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+                        "code" : "TAB"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/MedicationStatement/fdoc-medicationstatement",
+            "resource" : {
+              "resourceType" : "MedicationStatement",
+              "id" : "fdoc-medicationstatement",
+              "status" : "active",
+              "statusReason" : [
+                {
+                  "text" : "Management of Asthma"
+                }
+              ],
+              "medicationCodeableConcept" : {
+                "text" : "Ventolin Inhaler"
+              },
+              "subject" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "dateAsserted" : "2013-05-05T16:13:03Z"
+            }
+          },
+          {
+            "fullUrl" : "http://example.org/fhir/AllergyIntolerance/fdoc-allergyintolerance",
+            "resource" : {
+              "resourceType" : "AllergyIntolerance",
+              "id" : "fdoc-allergyintolerance",
+              "clinicalStatus" : {
+                "coding" : [
+                  {
+                    "system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+                    "code" : "active",
+                    "display" : "Active"
+                  }
+                ]
+              },
+              "verificationStatus" : {
+                "coding" : [
+                  {
+                    "system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+                    "code" : "confirmed",
+                    "display" : "Confirmed"
+                  }
+                ]
+              },
+              "type" : "allergy",
+              "criticality" : "high",
+              "code" : {
+                "text" : "Doxycycline"
+              },
+              "patient" : {
+                "reference" : "Patient/fdoc-patient"
+              },
+              "recordedDate" : "2012-09-17",
+              "reaction" : [
+                {
+                  "manifestation" : [
+                    {
+                      "text" : "Hives"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "Bundle"
+      }
+    }
+  ]
+}
+
+```

@@ -2,15 +2,15 @@
   "resourceType" : "ImplementationGuide",
   "id" : "ihe.iti.mhd",
   "text" : {
-    "status" : "extensions",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>IHE_ITI_MHD</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd</pre><div><p>ImplementationGuide for IHE IT Infrastructure Technical Framework Supplement Mobile access to Health Documents (MHD)</p>\n</div></div>"
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide ihe.iti.mhd</b></p><a name=\"ihe.iti.mhd\"> </a><a name=\"hcihe.iti.mhd\"> </a><h2>IHE_ITI_MHD</h2><p>The official URL for this implementation guide is: </p><pre>https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd</pre><div><p>ImplementationGuide for IHE IT Infrastructure Technical Framework Supplement Mobile access to Health Documents (MHD)</p>\n</div></div>"
   },
   "url" : "https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd",
-  "version" : "4.2.2",
+  "version" : "4.2.3",
   "name" : "IHE_ITI_MHD",
   "title" : "Mobile access to Health Documents (MHD)",
   "status" : "active",
-  "date" : "2024-05-23",
+  "date" : "2025-10-31T14:38:46-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -35,7 +35,8 @@
   "jurisdiction" : [{
     "coding" : [{
       "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-      "code" : "001"
+      "code" : "001",
+      "display" : "World"
     }]
   }],
   "packageId" : "ihe.iti.mhd",
@@ -49,7 +50,7 @@
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "5.5.0"
+    "version" : "6.5.0"
   },
   {
     "id" : "hl7ext",
@@ -59,19 +60,19 @@
     }],
     "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
     "packageId" : "hl7.fhir.uv.extensions.r4",
-    "version" : "5.1.0"
+    "version" : "5.2.0"
   },
   {
     "id" : "iheitibasicaudit",
     "uri" : "https://profiles.ihe.net/ITI/BALP/ImplementationGuide/ihe.iti.balp",
     "packageId" : "ihe.iti.balp",
-    "version" : "1.1.x"
+    "version" : "1.1.4"
   },
   {
     "id" : "iheformatcodefhir",
     "uri" : "https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir",
     "packageId" : "ihe.formatcode.fhir",
-    "version" : "1.2.x"
+    "version" : "1.4.x"
   }],
   "definition" : {
     "extension" : [{
@@ -384,7 +385,7 @@
     },
     {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools#0.1.0"
+      "valueCode" : "hl7.fhir.uv.tools.r4#0.8.0"
     },
     {
       "extension" : [{
@@ -1459,7 +1460,7 @@
         "reference" : "Parameters/ex-input-binary"
       },
       "name" : "ex-input-binary",
-      "description" : "example Parameters with a binary",
+      "description" : "example Parameters with a binary. Note that the Binary is not a CDA or FHIR document, but is provided for example purposes.",
       "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.In"
     },
     {
@@ -1468,11 +1469,11 @@
         "valueString" : "Parameters"
       }],
       "reference" : {
-        "reference" : "Parameters/ex-out"
+        "reference" : "Parameters/ex-input-doc-bundle"
       },
-      "name" : "ex-out",
-      "description" : "example output from GenerateMetadata",
-      "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.Out"
+      "name" : "ex-input-doc-bundle",
+      "description" : "example Parameters with a Document Bundle",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.In"
     },
     {
       "extension" : [{
@@ -1537,18 +1538,6 @@
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "Bundle"
-      }],
-      "reference" : {
-        "reference" : "Bundle/Bundle-FindDocumentReferences"
-      },
-      "name" : "Example FindDocumentReferences response",
-      "description" : "An example of a searchset Bundle with one DocumentReference",
-      "exampleBoolean" : true
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
       }],
       "reference" : {
@@ -1600,11 +1589,23 @@
         "valueString" : "Bundle"
       }],
       "reference" : {
+        "reference" : "Bundle/FindDocumentReferences"
+      },
+      "name" : "Example of a FindDocumentReferences Response Bundle",
+      "description" : "An example of a searchset Bundle with one DocumentReference as returned by a FindDocumentReferences query",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      }],
+      "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleDocument"
       },
       "name" : "Example Provide Bundle with a FHIR-Document",
-      "description" : "An example of a Provide Bundle with a single DocumentReference pointing at a FHIR-Document Bundle",
-      "exampleBoolean" : true
+      "description" : "An example of a Comprehensive Provide Document Bundle containing a DocumentReference and a FHIR-Document Bundle. This is an example of using a FHIR-Document Bundle rather than a Binary resource to carry the document content.",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle"
     },
     {
       "extension" : [{
@@ -1639,7 +1640,7 @@
         "reference" : "OperationDefinition/generate-metadata"
       },
       "name" : "Generate a DocumentReference from a document",
-      "description" : "The $generate-metadata Operation defintion. \n\nThis operation is needed as the $generate in FHIR R4 is not properly defined, and thus has incorrect parameters. \nThe MHD $generate-metadata should be replaced when MHD is upgraded to FHIR R5. \nThis MHD $generate-metadata is modeled after the expected changes in FHIR R5, and follows the example given in FHIR R4:\n\nInput:\n- Binary 0..1 the *document* in Binary Resource format. Usually used with CDA documents.\n- Bundle 0..1 the *document* in FHIR-Document form of a Bundle of kind Document\nOutput:\n- reference to a DocumentReference with metadata generated from the *document*",
+      "description" : "The $generate-metadata Operation definition. \n\nThis operation is needed as the $generate in FHIR R4 is not properly defined, and thus has incorrect parameters. \nThe MHD $generate-metadata should be replaced when MHD is upgraded to FHIR R5/R6\nThis MHD $generate-metadata is modeled after the expected changes in FHIR R5/R6, and follows the example given in FHIR R4:",
       "exampleBoolean" : false
     },
     {
@@ -1652,18 +1653,6 @@
       },
       "name" : "IHE MHD GenerateMetadata Parameters In",
       "description" : "The Input Parameters for the $generate-metadata operation\r\n- Input: binary, bundle",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "StructureDefinition:resource"
-      }],
-      "reference" : {
-        "reference" : "StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.Out"
-      },
-      "name" : "IHE MHD GenerateMetadata Parameters Out",
-      "description" : "The Output Parameters for the $generate-metadata operation\r\n- Output: DocumentReference reference",
       "exampleBoolean" : false
     },
     {
