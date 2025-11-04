@@ -1,0 +1,259 @@
+# 2:3.83 Mobile Patient Identifier Cross-reference Query [ITI-83] - Patient Identifier Cross-referencing for mobile (PIXm) v3.1.0
+
+* [**Table of Contents**](toc.md)
+* **2:3.83 Mobile Patient Identifier Cross-reference Query [ITI-83]**
+
+## 2:3.83 Mobile Patient Identifier Cross-reference Query [ITI-83]
+
+This section corresponds to transaction [ITI-83] of the IHE IT Infrastructure Technical Framework.
+
+### 2:3.83.1 Scope
+
+This transaction is used by the Patient Identifier Cross-reference Consumer to solicit information about patients whose Patient Identifiers cross-match with a Patient Identifier it provides in the request message. The request is received by the Patient Identifier Cross-reference Manager. The Patient Identifier Cross-reference Manager processes the request and returns a response that includes zero or more Patient Identifiers for the matching patient.
+
+### 2:3.83.2 Actor Roles
+
+The roles in this transaction are defined in the following table and may be played by the actors shown here:
+
+**Table 2:3.83.2-1: Actor Roles**
+
+| | |
+| :--- | :--- |
+| Patient Identifier Cross-reference Consumer | Queries the Patient Identifier Cross-reference Manager for a list of corresponding patient identifiers, if any |
+| Patient Identifier Cross-reference Manager | Manages the cross-referencing of patient identifiers across Patient Identification Domains. Upon request it returns a list of corresponding patient identifiers, if any. |
+
+### 2:3.83.3 Referenced Standards
+
+**FHIR-R4** [HL7 FHIR Release 4.0](http://www.hl7.org/FHIR/R4)
+
+[HL7 Cross Paradigm Implementation Guide: Gender Harmony - Sex and Gender Representation, Edition 1](https://hl7.org/xprod/ig/uv/gender-harmony/)
+
+### 2:3.83.4 Messages
+
+**Figure 2:3.83.4-1: Interaction Diagram**
+
+#### 2:3.83.4.1 Get Corresponding Identifiers message
+
+This message is implemented as an HTTP GET operation from the Patient Identifier Cross-reference Consumer to the Patient Identifier Cross-reference Manager using the FHIR $ihe-pix operation described in Section 2:3.83.4.1.2 Message Semantics.
+
+##### 2:3.83.4.1.1 Trigger Events
+
+A Patient Identifier Cross-reference Consumer needs to obtain, or determine the existence of, alternate patient identifiers.
+
+##### 2:3.83.4.1.2 Message Semantics
+
+The Get Corresponding Identifiers message is a FHIR operation request as defined in FHIR ([http://hl7.org/fhir/operations.html](http://hl7.org/fhir/operations.html)) with the [$ihe-pix operation definition](OperationDefinition-IHE.PIXm.pix.md) and the input parameters shown in Table 2:3.83.4.1.2-1.
+
+Given that the parameters are not complex types, the HTTP GET operation shall be used as defined in FHIR ([http://hl7.org/fhir/operations.html#request](http://hl7.org/fhir/operations.html#request)).
+
+The name of the operation is `$ihe-pix`, and it is applied to FHIR Patient Resource type.
+
+The Get Corresponding Identifiers message is conducted by the Patient Identifier Cross-reference Consumer by executing an HTTP GET against the Patient Identifier Cross-reference Manager’s Patient Resource URL.
+
+The URL for this operation is: `[base]/Patient/$ihe-pix`
+
+Where **[base]** is the URL of Patient Identifier Cross-reference Manager Service provider.
+
+The Get Corresponding Identifiers message is performed by an HTTP GET command shown below:
+
+```
+GET [base]/Patient/$ihe-pix?sourceIdentifier=[token]{&targetSystem=[uri]}{&_format=[token]}
+
+```
+
+**Table 2:3.83.4.1.2-1: $ihe-pix Message HTTP query Parameters**
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| sourceIdentifier | [1..1] | token | The Patient Identifier that will be used by the Patient Identifier Cross-reference Manager to find cross matching identifiers associated with the Patient. See[Section 3.83.4.1.2.1](ITI-83.md#23834121-source-patient-identifier-parameter). |
+| targetSystem | [0..*] | uri | The Assigning Authorities for the Patient Identifier Domains from which the returned identifiers shall be selected. See[Section 3.83.4.1.2.2](ITI-83.md#23834122-requesting-patient-identifier-domains-to-be-returned).2. |
+| _format | [0..1] | token | The requested format of the response from the mime-type value set. See[ITI TF-2: Appendix Z.6](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format) |
+
+Informative Profile for the [In Parameters resource for a request](StructureDefinition-IHE.PIXm.Query.Parameters.In.md), with [Examples](StructureDefinition-IHE.PIXm.Query.Parameters.In-examples.md).
+
+###### 2:3.83.4.1.2.1 Source Patient Identifier Parameter
+
+The required HTTP query parameter `sourceIdentifier` is a token that specifies an identifier associated with the patient whose information is being queried (i.e., a business identifier such as a local identifier or account identifier, or the Logical id of a FHIR Patient Resource). Its value shall include both the Patient Identifier Domain (i.e., Assigning Authority) and the identifier value, separated by a `|`.
+
+See [ITI TF-2: Appendix Z.2.2](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.2-query-parameters) for use of the `token` search parameter type for patient identifiers.
+
+The Patient Identifier Cross-reference Consumer shall provide exactly one (1) instance of this parameter in the query.
+
+For example, a query searching for all Patient Identifiers, for a patient with identifier IHERED-994 assigned by authority “1.3.6.1.4.1.21367.13.20.1000” would be represented as:
+
+```
+sourceIdentifier=urn:oid:1.3.6.1.4.1.21367.13.20.1000|IHERED-994
+
+```
+
+For example, a query searching all Patient Identifiers, for a patient’s FHIR Patient Resource with a Logical id of "123" on the FHIR Server `http://fhir.mydomain.com` would be represented as:
+
+```
+sourceIdentifier=http://fhir.mydomain.com|Patient/123
+
+```
+
+###### 2:3.83.4.1.2.2 Requesting Patient Identifier Domains to be Returned
+
+If the Patient Identifier Cross-reference Consumer wishes to select the Patient Identifier Domain(s) from which to receive Patient Identifiers, it does so by populating the `targetSystem` parameter with as many domains for which it wants to receive Patient Identifiers. The Patient Identifier Cross-reference Manager shall return the Patient Identifiers for each requested domain if a value is known.
+
+The targetSystem parameter uses this format:
+
+```
+targetSystem=<patient ID Assigning Authority domain>
+
+```
+
+Examples:
+
+```
+targetSystem=urn:oid:1.3.6.1.4.1.21367.13.20.3000
+targetSystem=http://fhir.mydomain.com
+
+```
+
+##### 2:3.83.4.1.3 Expected Actions
+
+The Patient Identifier Cross-reference Manager shall use the `sourceIdentifier` and the `targetSystem` to determine the Patient Identifiers that match, where Patient Identifiers include business identifier(s) and the Logical id(s) of FHIR Patient Resource(s).
+
+Response returned encoding and semantics is defined in Section 2:3.83.4.2:
+
+The Patient Identifiers returned may be a subset based on policies that might restrict access to some Patient Identifiers. For guidance on handling Access Denied, see [ITI TF-2: Appendix Z.7](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.7-guidance-on-access-denied-results).
+
+#### 2:3.83.4.2 Response message
+
+##### 2:3.83.4.2.1 Trigger Events
+
+The Patient Identifier Cross-reference Manager needs to return failure, or success with zero to many results to the Patient Identifier Cross-reference Consumer.
+
+##### 2:3.83.4.2.2 Message Semantics
+
+See [ITI TF-2: Appendix Z.6](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.6-populating-the-expected-response-format) for more details on response format handling.
+
+The response message is a [FHIR operation response](http://hl7.org/fhir/operations.html#response).
+
+On Failure, the response message is an HTTP status code of 4xx or 5xx indicates an error, and an OperationOutcome Resource shall be returned with details. See specific failure modes in Sections 2:3.83.4.2.2.2 through 2:3.83.4.2.2.4.
+
+###### 2:3.83.4.2.2.1 Success
+
+On Success, the response message is an HTTP status code of 200 with a single Parameters Resource as shown in Table 2:3.83.4.2.2-1.
+
+The Parameters Resource shall include:
+
+* for each business identifier for the patient, one `parameter` element with `name="targetIdentifier"` and the `valueIdentifier` of the identifier
+* for each matching Patient Resource, one `parameter` element with `name="targetId"` and the `valueReference` of the Patient Resource
+
+The values may be returned in any order. The identifier value given in the `sourceIdentifier` parameter in the query shall not be included in the returned Response.
+
+**Table 2:3.83.4.2.2.1-1: $ihe-pix Message Response**
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| targetIdentifier | [0..*] | Identifier | The business identifier found. Shall include the assigning authority as specified in[ITI TF-2: Appendix E.3](https://profiles.ihe.net/ITI/TF/Volume2/ch-E.html#E.3) |
+| targetId | [0..*] | Reference(Patient) | The URL of the Patient Resource |
+
+Informative profile of [Out Parameters](StructureDefinition-IHE.PIXm.Query.Parameters.Out.md), with [Examples](StructureDefinition-IHE.PIXm.Query.Parameters.Out-examples.md).
+
+* [example response](Parameters-pixm-response-mohralice-red-all.md) for [query](Parameters-pixm-request-mohralice-red-all.md):
+
+###### 2:3.83.4.2.2.2 Source Identifier not found
+
+When the Patient Identifier Cross-reference Manager recognizes the Patient Identifier Domain in the `sourceIdentifier` but the identifier is not found, then the following failure shall be returned:
+
+**HTTP 404** (Not Found) is returned as the HTTP status code.
+
+An OperationOutcome Resource is returned indicating that the patient identifier is not recognized in an issue having:
+
+| | |
+| :--- | :--- |
+| severity | error |
+| code | [not-found](http://hl7.org/fhir/R4/codesystem-issue-type.html#not-found) |
+| diagnostics | “sourceIdentifier Patient Identifier not found” |
+
+[example](OperationOutcome-pixm-response-error-not-found.md):
+
+```
+<OperationOutcome>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml"><p>sourceIdentifier Patient Identifier not found</p></div>
+  </text>
+  <issue>
+  <severity value="error" />
+    <code value="not-found" />
+    <diagnostics value="sourceIdentifier Patient Identifier not found" />
+  </issue>
+</OperationOutcome>
+
+```
+
+###### 2:3.83.4.2.2.3 Source Domain not recognized
+
+When the Patient Identifier Cross-reference Manager does not recognize the Patient Identifier Domain in the `sourceIdentifier`, then the following failure shall be returned:
+
+**HTTP 400** (Bad Request) is returned as the HTTP status code.
+
+An OperationOutcome Resource is returned indicating that the Patient Assigning Authority domain is not recognized in an `issue` having:
+
+| | |
+| :--- | :--- |
+| severity | error |
+| code | [code-invalid](http://hl7.org/fhir/R4/codesystem-issue-type.html#code-invalid) |
+| diagnostics | “sourceIdentifier Assigning Authority not found” |
+
+###### 2:3.83.4.2.2.4 Target Domain not recognized
+
+When the Patient Identifier Cross-reference Manager does not recognize one or more of the Patient Identifier Domains in the `targetSystem`, then the following failure shall be returned:
+
+**HTTP 403** (Forbidden) is returned as the HTTP status code.
+
+An OperationOutcome Resource is returned indicating that the Patient Identifier Domain is not recognized in an `issue` having:
+
+| | |
+| :--- | :--- |
+| severity | error |
+| code | [code-invalid](http://hl7.org/fhir/R4/codesystem-issue-type.html#code-invalid) |
+| diagnostics | “targetSystem not found” |
+
+###### 2:3.83.4.2.2.5 Post Merge/Delete
+
+Based upon policy, when the Patient is deprecated or deleted, the response message shall return:
+
+* 200 OK, and return a Bundle with no patient resource, or
+* 404 Not Found
+
+### 2:3.83.5 Security Considerations
+
+See [ITI TF-2: Appendix Z.8 “Mobile Security Considerations”](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.8-mobile-security-considerations), which includes guidance on the use of [ATNA](https://profiles.ihe.net/ITI/TF/Volume1/ch-9.html) and [IUA](https://profiles.ihe.net/ITI/TF/Volume1/ch-34.html) to protect the communication, access control, and audit logging.
+
+#### 2:3.83.5.1 Security Audit Considerations
+
+The Security audit logging will conform to the RESTful interactions following [IHE-BALP Basic Audit Logging Patterns](https://profiles.ihe.net/ITI/BALP/index.html).
+
+##### 2:3.83.5.1.1 Patient Identifier Cross-reference Consumer Audit
+
+The Patient Identifier Cross-reference Consumer when grouped with ATNA Secure Node or Secure Application actor shall be able to record a [PIXm Query Consumer Audit Event Log](StructureDefinition-IHE.PIXm.Query.Audit.Consumer.md). [Audit Example for a PIXm Query transaction from consumer perspective](AuditEvent-ex-auditPixmQuery-consumer.md).
+
+##### 2:3.83.5.1.2 Patient Identifier Cross-reference Manager Audit
+
+The Patient Identifier Cross-reference Manager when grouped with ATNA Secure Node or Secure Application actor shall be able to record a [PIXm Query Manager Audit Event Log](StructureDefinition-IHE.PIXm.Query.Audit.Manager.md). [Audit Example for a PIXm Query transaction from manager perspective](AuditEvent-ex-auditPixmQuery-manager.md).
+
+#### 2:3.83.5.2 Use with the Internet User Authorization (IUA) Profile
+
+The [Internet User Authorization (IUA)](https://profiles.ihe.net/ITI/IUA/index.html) Profile provides support for user authentication, app authentication, and authorization decisions. When PIXm actors are grouped with IUA actors there are additional security and privacy functionality enabled by this grouping. There are additional requirements and functionality enabled through scope definitions that are transaction-specific.
+
+A Patient Identifier Cross-reference Consumer, when grouped with an [IUA](https://profiles.ihe.net/ITI/IUA/index.html) Authorization Client, shall use [Get Access Token [ITI-71]](https://profiles.ihe.net/ITI/IUA/index.html#volume-2----transactions) to request the following scope from the IUA Authorization Server. This enables the Patient Identifier Cross-reference Consumer to get corresponding identifiers with the Mobile Patient Identifier Cross-reference Query [ITI-83] transaction with the authorizing token in the combined transaction [Incorporate Access Token [ITI-72]](https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72).
+
+The Patient Identifier Cross-reference Manager, when grouped with an [IUA](https://profiles.ihe.net/ITI/IUA/index.html) Resource Server, shall require [Incorporate Access Token [ITI-72]](https://profiles.ihe.net/ITI/IUA/index.html#372-incorporate-access-token-iti-72) in all Mobile Patient Identifier Cross-reference Query [ITI-83] transactions, shall enforce the authorization decision in the token, and may further enforce policies beyond those made by the Authorization Server such as consent or business rules.
+
+```
+scope: ITI-83
+
+```
+
+This scope request authorizes the full [ITI-83] transaction. This scope implicitly requests patient-specific queries for getting corresponding identifiers. Further scope refinement is allowed in realm or project-specific situations; these scopes would be in addition to the scope defined here.
+
+##### 2:3.83.5.2.1 AuditEvent augmentation
+
+The Security audit logging interactions should be augmented following [IHE-BALP Basic Audit Logging Patterns](https://profiles.ihe.net/ITI/BALP/index.html), to include agent details [from the OAuth Security token](https://profiles.ihe.net/ITI/BALP/content.html#3575-oauth-security-token).
+

@@ -26,6 +26,7 @@
       <sch:assert test="count(f:who) &gt;= 1">who: minimum cardinality of 'who' is 1</sch:assert>
       <sch:assert test="count(f:media) &lt;= 0">media: maximum cardinality of 'media' is 0</sch:assert>
       <sch:assert test="count(f:network) &gt;= 1">network: minimum cardinality of 'network' is 1</sch:assert>
+      <sch:assert test="count(f:type) &gt;= 1">type: minimum cardinality of 'type' is 1</sch:assert>
       <sch:assert test="count(f:who) &gt;= 1">who: minimum cardinality of 'who' is 1</sch:assert>
       <sch:assert test="count(f:media) &lt;= 0">media: maximum cardinality of 'media' is 0</sch:assert>
       <sch:assert test="count(f:network) &lt;= 0">network: maximum cardinality of 'network' is 0</sch:assert>
