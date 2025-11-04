@@ -1,0 +1,217 @@
+# Example $match Output Bundle - 2 Patients - Patient Demographics Query for Mobile (PDQm) v3.2.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Example $match Output Bundle - 2 Patients**
+
+## Example Bundle: Example $match Output Bundle - 2 Patients
+
+Profile: [PDQm Match Output Bundle Profile](StructureDefinition-IHE.PDQm.MatchParametersOut.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+Bundle ex-match-output-multiple of type searchset
+
+-------
+
+Entry 1 - fullUrl = https://profiles.ihe.net/ITI/PDQm/Patient-ex-patient.html
+
+Search:Mode = match,Score = 0.9
+
+Resource Patient:
+
+> 
+
+Profile: [PDQm Patient Profile](StructureDefinition-IHE.PDQm.Patient.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+John Schmidt Other, DoB: 1923-07-25 ( http://example.org/exampleSystem#8675309)
+-------
+
+-------
+
+Entry 2 - fullUrl = https://profiles.ihe.net/ITI/PDQm/Patient-ex-patient-mothers-maiden-name.html
+
+Search:Mode = match,Score = 0.5
+
+Resource Patient:
+
+> 
+
+Profile: [PDQm Patient Profile](StructureDefinition-IHE.PDQm.Patient.md)
+
+Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+
+John Schmit Male, DoB: 1932-07-25 ( http://example.org/exampleSystem#90210)
+-------
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "ex-match-output-multiple",
+  "meta" : {
+    "profile" : [
+      "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersOut"
+    ],
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HTEST"
+      }
+    ]
+  },
+  "type" : "searchset",
+  "link" : [
+    {
+      "relation" : "self",
+      "url" : "http://example.com/fhir/Bundle-ex-match-output-multiple.html"
+    }
+  ],
+  "entry" : [
+    {
+      "fullUrl" : "https://profiles.ihe.net/ITI/PDQm/Patient-ex-patient.html",
+      "resource" : {
+        "resourceType" : "Patient",
+        "id" : "ex-patient",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Patient_ex-patient\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Patient ex-patient</b></p><a name=\"ex-patient\"> </a><a name=\"hcex-patient\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.PDQm.Patient.html\">PDQm Patient Profile</a></p><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p style=\"border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;\">John Schmidt Other, DoB: 1923-07-25 ( http://example.org/exampleSystem#8675309)</p><hr/><table class=\"grid\"><tr><td style=\"background-color: #f3f5da\" title=\"Ways to contact the Patient\">Contact Detail</td><td colspan=\"3\">WI USA </td></tr></table></div>"
+        },
+        "identifier" : [
+          {
+            "system" : "http://example.org/exampleSystem",
+            "value" : "8675309"
+          }
+        ],
+        "name" : [
+          {
+            "use" : "usual",
+            "text" : "John Schmidt",
+            "family" : "Schmidt",
+            "given" : ["John"]
+          },
+          {
+            "use" : "old",
+            "text" : "John Jacob Jingle Heimer Schnidt",
+            "family" : "Schnidt",
+            "given" : ["John", "Jacob", "Jingle", "Heimer"],
+            "period" : {
+              "end" : "1960"
+            }
+          },
+          {
+            "use" : "official",
+            "text" : "John Jacob Jingleheimer Schmidt",
+            "family" : "Schmidt",
+            "given" : ["John", "Jacob", "Jingleheimer"],
+            "period" : {
+              "start" : "1960-01-01"
+            }
+          },
+          {
+            "use" : "nickname",
+            "text" : "Jack Schmidt",
+            "family" : "Schmidt",
+            "given" : ["Jack"]
+          }
+        ],
+        "gender" : "other",
+        "birthDate" : "1923-07-25",
+        "address" : [
+          {
+            "state" : "WI",
+            "country" : "USA"
+          }
+        ]
+      },
+      "search" : {
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/match-grade",
+            "valueCode" : "probable"
+          }
+        ],
+        "mode" : "match",
+        "score" : 0.9
+      }
+    },
+    {
+      "fullUrl" : "https://profiles.ihe.net/ITI/PDQm/Patient-ex-patient-mothers-maiden-name.html",
+      "resource" : {
+        "resourceType" : "Patient",
+        "id" : "ex-patient-mothers-maiden-name",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Patient_ex-patient-mothers-maiden-name\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Patient ex-patient-mothers-maiden-name</b></p><a name=\"ex-patient-mothers-maiden-name\"> </a><a name=\"hcex-patient-mothers-maiden-name\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.PDQm.Patient.html\">PDQm Patient Profile</a></p><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p style=\"border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;\">John Schmit Male, DoB: 1932-07-25 ( http://example.org/exampleSystem#90210)</p><hr/><table class=\"grid\"><tr><td style=\"background-color: #f3f5da\" title=\"Ways to contact the Patient\">Contact Detail</td><td colspan=\"3\">WI USA </td></tr><tr><td style=\"background-color: #f3f5da\" title=\"Mother's maiden (unmarried) name, commonly collected to help verify patient identity.\"><a href=\"http://hl7.org/fhir/extensions/5.2.0/StructureDefinition-patient-mothersMaidenName.html\">Patient Mother's Maiden Name</a></td><td colspan=\"3\">Doe</td></tr></table></div>"
+        },
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName",
+            "valueString" : "Doe"
+          }
+        ],
+        "identifier" : [
+          {
+            "system" : "http://example.org/exampleSystem",
+            "value" : "90210"
+          }
+        ],
+        "name" : [
+          {
+            "use" : "usual",
+            "text" : "John Schmit",
+            "family" : "Schmit",
+            "given" : ["John"]
+          }
+        ],
+        "gender" : "male",
+        "birthDate" : "1932-07-25",
+        "address" : [
+          {
+            "state" : "WI",
+            "country" : "USA"
+          }
+        ]
+      },
+      "search" : {
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/match-grade",
+            "valueCode" : "possible"
+          }
+        ],
+        "mode" : "match",
+        "score" : 0.5
+      }
+    }
+  ]
+}
+
+```
