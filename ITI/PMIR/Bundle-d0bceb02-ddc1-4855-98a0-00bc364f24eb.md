@@ -1,0 +1,132 @@
+# CAT Sample 2 ITI-93 Mother - Patient Master Identity Registry (PMIR) v1.6.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **CAT Sample 2 ITI-93 Mother**
+
+## Bundle: CAT Sample 2 ITI-93 Mother
+
+Bundle d0bceb02-ddc1-4855-98a0-00bc364f24eb of type message
+
+-------
+
+Entry 1 - fullUrl = urn:uuid:58bcd46a-d810-4003-82c4-98b8a9fdf8c3
+
+Resource MessageHeader:
+
+> **event**:`urn:ihe:iti:pmir:2019:patient-feed`
+> **source**
+
+### Responses
+
+| | | |
+| :--- | :--- | :--- |
+| - | **Identifier** | **Code** |
+| * | 070b3907-883b-4f20-af66-88a5db6b73ad | OK |
+
+**focus**:[Bundle: type = history; timestamp = 2021-03-03 12:51:45-0500](Bundle-d0bceb02-ddc1-4855-98a0-00bc364f24eb.md#http-//172-223-006-088.res.spectrum.com-18035/PatientIdentityManager/fhir/Bundle/8f52a376-d6d2-46ab-a810-c4233bd46c69)
+
+-------
+
+Entry 2 - fullUrl = http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir/Bundle/8f52a376-d6d2-46ab-a810-c4233bd46c69
+
+Resource Bundle:
+
+> Bundle 8f52a376-d6d2-46ab-a810-c4233bd46c69 of type history
+-------
+Entry 1 - fullUrl = http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir/Patient/8f33f71d-497c-eb11-95e7-d067e54cbc0cResource Patient:
+> Connectathon Example Patient
+Request:```POST Patient/110fd932-7368-4d2a-acbd-1f5d28bf95d6```Response:```201 Location = Patient/8f33f71d-497c-eb11-95e7-d067e54cbc0c```
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "d0bceb02-ddc1-4855-98a0-00bc364f24eb",
+  "type" : "message",
+  "timestamp" : "2021-03-03T12:51:45.5268783-05:00",
+  "entry" : [
+    {
+      "fullUrl" : "urn:uuid:58bcd46a-d810-4003-82c4-98b8a9fdf8c3",
+      "resource" : {
+        "resourceType" : "MessageHeader",
+        "id" : "58bcd46a-d810-4003-82c4-98b8a9fdf8c3",
+        "text" : {
+          "status" : "generated",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"MessageHeader_58bcd46a-d810-4003-82c4-98b8a9fdf8c3\"> </a><p class=\"res-header-id\"><b>Generated Narrative: MessageHeader 58bcd46a-d810-4003-82c4-98b8a9fdf8c3</b></p><a name=\"58bcd46a-d810-4003-82c4-98b8a9fdf8c3\"> </a><a name=\"hc58bcd46a-d810-4003-82c4-98b8a9fdf8c3\"> </a><p><b>event</b>: urn:ihe:iti:pmir:2019:patient-feed</p><h3>Sources</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Endpoint</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir\">http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir</a></td></tr></table><h3>Responses</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Identifier</b></td><td><b>Code</b></td></tr><tr><td style=\"display: none\">*</td><td>070b3907-883b-4f20-af66-88a5db6b73ad</td><td>OK</td></tr></table><p><b>focus</b>: <a href=\"Bundle-d0bceb02-ddc1-4855-98a0-00bc364f24eb.html#http-//172-223-006-088.res.spectrum.com-18035/PatientIdentityManager/fhir/Bundle/8f52a376-d6d2-46ab-a810-c4233bd46c69\">Bundle: type = history; timestamp = 2021-03-03 12:51:45-0500</a></p></div>"
+        },
+        "eventUri" : "urn:ihe:iti:pmir:2019:patient-feed",
+        "source" : {
+          "endpoint" : "http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir"
+        },
+        "response" : {
+          "identifier" : "070b3907-883b-4f20-af66-88a5db6b73ad",
+          "code" : "ok"
+        },
+        "focus" : [
+          {
+            "reference" : "http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir/Bundle/8f52a376-d6d2-46ab-a810-c4233bd46c69"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl" : "http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir/Bundle/8f52a376-d6d2-46ab-a810-c4233bd46c69",
+      "resource" : {
+        "resourceType" : "Bundle",
+        "id" : "8f52a376-d6d2-46ab-a810-c4233bd46c69",
+        "type" : "history",
+        "timestamp" : "2021-03-03T12:51:45.5288783-05:00",
+        "entry" : [
+          {
+            "fullUrl" : "http://172-223-006-088.res.spectrum.com:18035/PatientIdentityManager/fhir/Patient/8f33f71d-497c-eb11-95e7-d067e54cbc0c",
+            "resource" : {
+              "resourceType" : "Patient",
+              "id" : "8f33f71d-497c-eb11-95e7-d067e54cbc0c",
+              "meta" : {
+                "lastUpdated" : "2021-03-03T12:51:45.173-05:00"
+              },
+              "text" : {
+                "status" : "additional",
+                "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Connectathon Example Patient</div>"
+              },
+              "identifier" : [
+                {
+                  "use" : "usual",
+                  "system" : "urn:oid:1.3.6.1.4.1.21367.13.20.308",
+                  "value" : "Mother",
+                  "assigner" : {
+                    "display" : "TIE5"
+                  }
+                }
+              ],
+              "active" : true,
+              "name" : [
+                {
+                  "use" : "official",
+                  "family" : "TIANI-SPIRIT",
+                  "given" : ["MOTHER"]
+                }
+              ],
+              "gender" : "female",
+              "birthDate" : "1985-06-04"
+            },
+            "request" : {
+              "method" : "POST",
+              "url" : "Patient/110fd932-7368-4d2a-acbd-1f5d28bf95d6"
+            },
+            "response" : {
+              "status" : "201",
+              "location" : "Patient/8f33f71d-497c-eb11-95e7-d067e54cbc0c"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+```
