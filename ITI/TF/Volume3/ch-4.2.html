@@ -3328,7 +3328,7 @@
           <p>Coded as an ebRIM Slot. If present, each rim:Value contains a Field (see Table 4.2.3.1.7-2 for a
             description of the Field datatype). Multiple rim:Value elements may exist for the same field name as a way
             to implement repetition; there shall be at most one rim:Value element for each of the PID-7 and PID-8
-            fields. Only field defined for the PID segment shall be used.</p>
+            fields.</p>
           <p>Maximum length of each rim:Value is 256 characters. The sourcePatientInfo attribute should include:</p>
           <ul>
             <li class="bullet-list1">PID-3 - (source patient identifier list)</li>
@@ -3344,6 +3344,31 @@
           </ul>
           <p>The sourcePatientInfo attribute should not include values for PID-2 (patient id), PID-4 (alternate patient
             id), PID-12 (country code), or PID-19 (social security number).</p>
+		  <p> The sourcePatientInfo attribute MAY optionally include gender identity, pronouns, and recorded gender and sex for the patient. If represented, actors SHALL encode gender identity and pronouns using the GSP (Gender, Sex, and Pronouns) segment as defined in <a href="https://www.hl7.org/implement/standards/product_brief.cfm?product_id=649">HL7 v2.9.1</a>. When specifying GSP, the following fields SHALL be included:</p>
+          <ul>
+            <li class="bullet-list1">GSP-4 – SOGI Concept</li>
+            <li class="bullet-list1">GSP-5 – SOGI Concept Value</li>
+          </ul>
+          <p>The sourcePatientInfo attribute SHOULD include:</p>
+          <ul>
+            <li class="bullet-list1">GSP-7 – Comment</li>
+          </ul>
+          <p>The sourcePatientInfo attribute SHALL NOT include values for GSP-2 (Action Code).</p>
+          <p>When specifying GSR, the following fields SHALL be included:</p>
+          <ul>
+            <li class="bullet-list1">GSR-4 – Recorded Gender or Sex</li>
+          </ul>
+          <p>The sourcePatientInfo attribute SHOULD include:</p>
+          <ul>
+     		<li class="bullet-list1">GSR-5 – Source Document Field Label</li>
+   			<li class="bullet-list1">GSR-6 – Source Document Type for Recorded Sex or Gender</li>
+    		<li class="bullet-list1">GSR-7 – Source Document Jurisdiction for Recorded Sex or Gender</li>
+			<li class="bullet-list1">GSR-8 – Acquisition Date</li>
+		  <p>The sourcePatientInfo attribute SHALL NOT include values for GSR-2 (Action Code).</p>
+		  <p>When representing GSP or GSR segments, the fields for each segment shall appear as adjacent rim: Value elements ordered by sequence number. When multiple GSP or GSR segments are present, each set of related fields can be distinguished by a sequence of increasing sequence numbers.</p>
+  		  <p>Fields other than those defined for PID, GSP, and GSR shall not be used.</p>
+		  <p class="note">Note: For implementation guidance and examples, refer to the <a href=https://hl7.org/xprod/ig/uv/gender-harmony/hl7v2examples.html>HL7 v2 Gender Harmony Examples</a>.</p>
+		  </ul>
           <p>Example 1:</p>
           <div style="border:0.75pt solid #000000; clear:both">
             <p style="font-size:8pt">
