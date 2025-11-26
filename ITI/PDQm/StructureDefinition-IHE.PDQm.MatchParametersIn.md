@@ -1,4 +1,4 @@
-# PDQm Match Input Parameters Profile - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# PDQm Match Input Parameters Profile - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersIn | *Version*:3.2.0 |
-| Active as of 2025-11-04 | *Computable Name*:MatchParametersIn |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersIn | *Version*:3.2.1 |
+| Active as of 2025-11-26 | *Computable Name*:MatchParametersIn |
 
  
 The PDQm Match Input Parameters Profile describes the Parameters Resource that is to be posted to the $match endpoint when invoking ITI-119. This profile is consistent with the expections of the[Patient-match operation in FHIR core](http://hl7.org/fhir/R4/patient-operation-match.html), except the input resource SHALL be an instance of the[PDQm Patient Profile for $match Input](StructureDefinition-IHE.PDQm.MatchInputPatient.md). 
@@ -38,11 +38,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.PDQm.MatchParame
   "resourceType" : "StructureDefinition",
   "id" : "IHE.PDQm.MatchParametersIn",
   "url" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.MatchParametersIn",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "MatchParametersIn",
   "title" : "PDQm Match Input Parameters Profile",
   "status" : "active",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {

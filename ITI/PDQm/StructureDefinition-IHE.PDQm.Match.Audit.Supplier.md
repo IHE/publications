@@ -1,4 +1,4 @@
-# Audit Event for PDQm Match at Supplier - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# Audit Event for PDQm Match at Supplier - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Match.Audit.Supplier | *Version*:3.2.0 |
-| Active as of 2025-11-04 | *Computable Name*:AuditPdqmMatchSupplier |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Match.Audit.Supplier | *Version*:3.2.1 |
+| Active as of 2025-11-26 | *Computable Name*:AuditPdqmMatchSupplier |
 
  
 Defines constraints on the AuditEvent (AuditMessage) Resource when a Patient Demographics Supplier responds to a Patient Demographics Match[ITI-119](./ITI-119.md). 
@@ -46,11 +46,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.PDQm.Match.Audit
   "resourceType" : "StructureDefinition",
   "id" : "IHE.PDQm.Match.Audit.Supplier",
   "url" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Match.Audit.Supplier",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "AuditPdqmMatchSupplier",
   "title" : "Audit Event for PDQm Match at Supplier",
   "status" : "active",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {

@@ -1,4 +1,4 @@
-# PDQm $Match - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# PDQm $Match - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/OperationDefinition/PDQmMatch | *Version*:3.2.0 |
-| Draft as of 2025-11-04 | *Computable Name*:Find_Patient_Matches_PDQm |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/OperationDefinition/PDQmMatch | *Version*:3.2.1 |
+| Draft as of 2025-11-26 | *Computable Name*:Find_Patient_Matches_PDQm |
 
  
 This operation implements the[Patient Demographics Match [ITI-119]](ITI-119.md)transaction. It is fully compatible with the[$match Operation on Patient](http://hl7.org/fhir/R4/patient-operation-match.html). The only changes are to constrain the input parameters to use the[PDQm Patient Profile for $match Input](StructureDefinition-IHE.PDQm.MatchInputPatient.md)profile and to constring the output parameters to use the[PDQm Patient Profile](StructureDefinition-IHE.PDQm.Patient.md)profile. 
@@ -56,12 +56,12 @@ URL: [base]/Patient/$match
   "resourceType" : "OperationDefinition",
   "id" : "PDQmMatch",
   "url" : "https://profiles.ihe.net/ITI/PDQm/OperationDefinition/PDQmMatch",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "Find_Patient_Matches_PDQm",
   "title" : "PDQm $Match",
   "status" : "draft",
   "kind" : "operation",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {

@@ -1,4 +1,4 @@
-# PDQm Patient Profile - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# PDQm Patient Profile - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient | *Version*:3.2.0 |
-| Active as of 2025-11-04 | *Computable Name*:PDQmPatient |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient | *Version*:3.2.1 |
+| Active as of 2025-11-26 | *Computable Name*:PDQmPatient |
 
  
 
@@ -67,11 +67,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.PDQm.Patient.csv
   "resourceType" : "StructureDefinition",
   "id" : "IHE.PDQm.Patient",
   "url" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "PDQmPatient",
   "title" : "PDQm Patient Profile",
   "status" : "active",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {

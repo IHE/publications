@@ -1,4 +1,4 @@
-# Patient Demographics Query for Mobile - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# Patient Demographics Query for Mobile - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * **Patient Demographics Query for Mobile**
@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/ImplementationGuide/ihe.iti.pdqm | *Version*:3.2.0 |
-| Active as of 2025-11-04 | *Computable Name*:IHE_PDQm |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/ImplementationGuide/ihe.iti.pdqm | *Version*:3.2.1 |
+| Active as of 2025-11-26 | *Computable Name*:IHE_PDQm |
 
 The Patient Demographics Query for Mobile (PDQm) Profile defines a lightweight RESTful interface to a patient demographics supplier leveraging technologies readily available to mobile applications and lightweight browser based applications.
 
@@ -58,11 +58,11 @@ PDQm uses `Must Support` in StructureDefinition profiles. This is equivalent to 
   "resourceType" : "ImplementationGuide",
   "id" : "ihe.iti.pdqm",
   "url" : "https://profiles.ihe.net/ITI/PDQm/ImplementationGuide/ihe.iti.pdqm",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "IHE_PDQm",
   "title" : "Patient Demographics Query for Mobile (PDQm)",
   "status" : "active",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {
@@ -116,7 +116,7 @@ PDQm uses `Must Support` in StructureDefinition profiles. This is equivalent to 
       ],
       "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
       "packageId" : "hl7.terminology.r4",
-      "version" : "6.5.0"
+      "version" : "7.0.0"
     },
     {
       "id" : "hl7ext",

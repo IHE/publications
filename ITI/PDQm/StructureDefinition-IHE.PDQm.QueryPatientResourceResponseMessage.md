@@ -1,4 +1,4 @@
-# PDQm Query Patient Resource Response message - Patient Demographics Query for Mobile (PDQm) v3.2.0
+# PDQm Query Patient Resource Response message - Patient Demographics Query for Mobile (PDQm) v3.2.1
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.QueryPatientResourceResponseMessage | *Version*:3.2.0 |
-| Active as of 2025-11-04 | *Computable Name*:QueryPatientResourceResponseMessage |
+| *Official URL*:https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.QueryPatientResourceResponseMessage | *Version*:3.2.1 |
+| Active as of 2025-11-26 | *Computable Name*:QueryPatientResourceResponseMessage |
 
  
 A profile on the Query Patient Resource Response message for ITI-78 
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.PDQm.QueryPatien
   "resourceType" : "StructureDefinition",
   "id" : "IHE.PDQm.QueryPatientResourceResponseMessage",
   "url" : "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.QueryPatientResourceResponseMessage",
-  "version" : "3.2.0",
+  "version" : "3.2.1",
   "name" : "QueryPatientResourceResponseMessage",
   "title" : "PDQm Query Patient Resource Response message",
   "status" : "active",
-  "date" : "2025-11-04T12:09:52-06:00",
+  "date" : "2025-11-26T14:04:43-06:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [
     {
