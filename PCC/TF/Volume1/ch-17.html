@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title xmlns="">IHE PCC TF Vol1</title>
   <link xmlns="" rel="stylesheet" href="../../../css/styles.css" />
-  <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script> 
+  <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" async> </script>
 </head>
 
 <body xmlns="">
@@ -52,8 +52,10 @@
   <div class="grid-container fluid">
     <div class="grid-x grid-margin-x align-center">
       <div class="cell medium-11">
-        <div class="callout disclaimer warning text-center">              
-          The Final Text PCC Technical Framework is partially published here in HTML format. Where there is overlap between this content and the parts published as PDF, the HTML content takes precedent. Trial Implementation supplements are available from the <a href="./index.html">Volume 1 Table of Contents</a>.               
+        <div class="callout disclaimer warning text-center">
+          The Final Text PCC Technical Framework is partially published here in HTML format. Where there is overlap
+          between this content and the parts published as PDF, the HTML content takes precedent. Trial Implementation
+          supplements are available from the <a href="./index.html">Volume 1 Table of Contents</a>.
         </div>
       </div>
     </div>
@@ -65,36 +67,341 @@
         </div>
         <div id="main-top" class="cell medium-10 large-10">
           <h1 id="17">17 360 Exchange Closed Loop Referral (360X)</h1>
-           <p>Volume 1 of 360X goes here.</p>
+          <p>The goal of this profile is to enable improved care coordination between providers utilizing different
+            Electronic Health Record technology (EHRT) / Health Information technology (HIT) when a patient is referred
+            from one provider to another, and when the expectation is that the patient will eventually return to the
+            referring provider for continued care. In particular, the 360X Profile seeks to enable providers — using
+            existing health data exchange standards and technologies — to exchange:</p>
+            <ul>
+            <li class="bullet-list0">referral requests containing relevant patient clinical information</li>
+            <li class="bullet-list0">result of referral containing relevant patient clinical information</li>
+          </ul>
+          <p>from within their EHRT workflow, regardless of the EHRT used. This will allow providers to communicate
+            electronically the related patient information even if utilizing different EHRT/HIT. This scope indicates
+            that the 360X Project includes defining the transport and content of:</p>
+          <ul>
+            <li class="bullet-list0">the <em>Referral Request</em></li>
+            <li class="bullet-list0">the <em>Result of Referral</em></li>
+            <li class="bullet-list0">additional information to facilitate the referral process workflow, and the closing of the loop</li>
+          </ul>
+          <h2 id="17.1">17.1 360X Actors, Transactions, and Content Modules
+          </h2>
+          <p>This section defines the actors, transactions, and/or content modules in this profile. General definitions
+            of actors are given in the Technical Frameworks General Introduction Appendix A at <a
+              href="https://profiles.ihe.net/GeneralIntro/ch-A.html">http://ihe.net/TF_Intro_Appendices.aspx</a>.
+          </p>
+          <h3 id="17.1.1">17.1.1 Actors and Transactions</h3>
+          <p>Figure 17.1-1 shows the actors directly involved in the 360X Profile and the relevant transactions between
+            them. If needed for context, other actors that may be indirectly involved due to their participation in
+            other related profiles are shown in dotted lines. Actors that have a mandatory grouping are shown in
+            conjoined boxes.</p>
+          <p><img src="data:image/png;base64..." alt=""></p>
+          <p>Figure 17.1-1: 360X Actor Diagram</p>
+          <p>Table 17.1-1 lists the transactions for each actor directly involved in the 360X Profile. To claim
+            compliance with this profile, an actor shall support all required transactions (labeled “R”) and may support
+            the optional transactions (labeled “O”). Note that receiving an optional transaction that is not supported,
+            must not trigger an error condition.</p>
+          <p>Table 17.1-1: 360X Profile - Actors and Transactions</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Actors</th>
+                <th>Transactions</th>
+                <th>Actions</th>
+                <th>Optionality</th>
+                <th>Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Referral Initiator</td>
+                <td>Referral Request PCC-55]</td>
+                <td>Send Referral Request / Receive Accept or Decline</td>
+                <td>R</td>
+                <td>PCC TF-2: 3.55</td>
+              </tr>
+              <tr>
+                <td>Referral Decline [PCC-56]</td>
+                <td>Receive Decline of Referral Request</td>
+                <td>R(see note 1)</td>
+                <td>PCC TF-2: 3.56</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Outcome [PCC-57]</td>
+                <td>Receive Referral Outcome</td>
+                <td>R(See note 1)</td>
+                <td>PCC TF-2: 3.57</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Cancellation [PCC-58]</td>
+                <td>Send Request for Cancellation / Receive Cancellation Confirmation</td>
+                <td>O(See note 2)</td>
+                <td>PCC TF-2: 3.58</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Interim Consultation Note [PCC-59]</td>
+                <td>Receive Interim Consultation Note</td>
+                <td>R</td>
+                <td>PCC TF-2: 3.59</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Appointment Notification [PCC-60]</td>
+                <td>Receive Appointment Notification</td>
+                <td>O</td>
+                <td>PCC TF-2: 3.60</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>No-Show Notification [PCC-61]</td>
+                <td>Receive “No Show” Notification</td>
+                <td>O</td>
+                <td>PCC TF-2: 3.61</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Recipient</td>
+                <td>Referral Request PCC-55]</td>
+                <td>Receive Referral Request / Send Accept or Decline</td>
+                <td>R</td>
+                <td>PCC TF-2: 3.55</td>
+              </tr>
+              <tr>
+                <td>Referral Decline [PCC-56]</td>
+                <td>Send Decline of Referral Request</td>
+                <td>O(see note 3)</td>
+                <td>PCC TF-2: 3.56</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Outcome [PCC-57]</td>
+                <td>Send Referral Outcome</td>
+                <td>R</td>
+                <td>PCC TF-2: 3.57</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Cancellation [PCC-58]</td>
+                <td>Receive Request for Cancellation / Send Cancellation Confirmation</td>
+                <td>O(see note 4)</td>
+                <td>PCC TF-2: 3.58</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Interim Consultation Note [PCC-59]</td>
+                <td>Send Interim Consultation Note</td>
+                <td>O</td>
+                <td>PCC TF-2: 3.59</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Appointment Notification [PCC-60]</td>
+                <td>Send Appointment Notification</td>
+                <td>O</td>
+                <td>PCC TF-2: 3.60</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>No-Show Notification [PCC-61]</td>
+                <td>Send “No Show” Notification</td>
+                <td>O</td>
+                <td>PCC TF-2: 3.61</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Note 1: When transaction 56 or 57 is received by the Referral Initiator, this signifies the end of the
+            referral process, and it should be represented correspondingly in the initiator's system*.*</p>
+          <p>Note 2: A Referral Initiator may not have a workflow where a cancellation of the referral request is
+            needed; that is why transaction 58 is optional. If transaction 58 is supported, then the Referral Initiator
+            must support receiving a Cancellation Confirmation message, which signifies the end of the referral process
+            (see note 1).</p>
+          <p>Note 3: A Referral Recipient must support sending a decline message as the initial response to a received
+            referral request, if there is a reason that it cannot be accepted. Transaction 56 provides the optional
+            ability of the Referral Recipient to send a decline message even after the referral request was initially
+            accepted.</p>
+          <p>Note 4: A Referral Recipient may operate in a context where they cannot interrupt the referral process when
+            they receive a request for cancellation message, and this is why receiving transaction 58 is optional. Even
+            if in some circumstances the Referral Recipient can receive and process transaction 58, there is no
+            requirement that a cancellation confirmation must always be sent, due to the timing of the cancellation
+            request, for example.</p>
+          <h3 id="17.1.2">17.1.2 Content Modules</h3>
+          <p>Figure 17.1-2 shows the actors engaged in content sharing in the 360X Profile and the direction that the
+            content is exchanged.</p>
+          <p>As already described in Figure 17.1-1, the actors from this profile are grouped with the Content Creator and
+            Content Consumer Actors. The grouping of the content modules described in this profile to specific actors is
+            described in more detail in the “Required Actor Groupings” section below.</p>
+          <p><img src="data:image/png;base64..." alt=""></p>
+          <p>Figure 17.1-2: 360X Actor Diagram</p>
+          <p>Table 17.1-2 lists the content options defined in the 360X Profile. To claim support with this profile, an
+            actor shall support at least one of the listed options. Note that the required actor groupings add a
+            requirement for the Content Consumer to support the Document Import Option for the corresponding option.</p>
+          <p>Table 17.1-2: 360X Profile - Actors and Content Options</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Actors</th>
+                <th>Content Option</th>
+                <th>Optionality</th>
+                <th>Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Referral Initiator/Content Creator</td>
+                <td>XDS-MS Referral Summary Option</td>
+                <td>O</td>
+                <td>PCC TF-2: 6.3.1.3</td>
+              </tr>
+              <tr>
+                <td>C-CDA Option</td>
+                <td>O</td>
+                <td>C-CDA 2.1 IG</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Initiator/Content Consumer</td>
+                <td>XPHR Option</td>
+                <td>O</td>
+                <td>PCC TF-2: 6.3.1.5</td>
+              </tr>
+              <tr>
+                <td>C-CDA Option</td>
+                <td>O</td>
+                <td>C-CDA 2.1 IG</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Recipient/Content Consumer</td>
+                <td>XDS-MS Referral Summary Option</td>
+                <td>O</td>
+                <td>PCC TF-2: 6.3.1.3</td>
+              </tr>
+              <tr>
+                <td>C-CDA Option</td>
+                <td>O</td>
+                <td>C-CDA 2.1 IG</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Referral Recipient/Content Creator</td>
+                <td>XPHR Option</td>
+                <td>O</td>
+                <td>PCC TF-2: 6.3.1.5</td>
+              </tr>
+              <tr>
+                <td>C-CDA Option</td>
+                <td>O</td>
+                <td>C-CDA 2.1 IG</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Note: A Referral Initiator SHALL support either the XDS-MS Referral Summary Option and XPHR Option, or the
+            C-CDA Option, or both. A Referral Recipient SHALL support either the XDS-MS Referral Summary Option and XPHR
+            Option, or the C-CDA Option, or both.</p>
+          <h3 id="17.1.3">17.1.3 Actor Descriptions and Actor Profile
+            Requirements</h3>
+          <p>Most requirements are documented in Transactions (Volume 2) and Content Modules (Volume 3). This section
+            documents any additional requirements on the 360X Profile’s actors.</p>
+          <h4 id="17.1.3.1">17.1.3.1 Referral Initiator</h4>
+          <p>The Referral Initiator starts the closed loop referral by sending a referral request to the Referral
+            Recipient. Once the referral request is sent, the Referral Initiator must be able to receive and process an
+            acceptance or a decline.</p>
+          <p>If the referral is accepted, the Referral Initiator must still be able to accept and process a subsequent
+            decline. The Referral Initiator must be able to receive and process an Interim Consultation Note, if one is
+            sent by the Referral Recipient, as well as a Referral Outcome.</p>
+          <p>The Referral Initiator must accept all the optional transactions that may be sent by the Referral
+            Recipient, but there is no requirement to process them.</p>
+          <p>If the Referral Initiator is able to send a Cancelation Request during any part of the workflow, it must be
+            able to receive and process a Cancellation Confirmation, and it also must be able to proceed in a
+            deterministic manner if the Referral Recipient sends a transaction different from a Cancellation
+            Confirmation.</p>
+          <p>The Referral Initiator, as a Content Consumer, must implement the Document Import Option (see PCC TF-2:
+            3.1.2) for all CDA document types based on the supported content option(s), and may implement the Section
+            Import Option (PCC TF-2: 3.1.3), and/or the Discrete Data Import Option (PCC TF-2: 3.1.3).</p>
+          <p>The following requirements apply to the Referral Initiator for all transactions:</p>
+          <p>The Referral Initiator shall provide a <strong>unique patient identifier</strong> with the initial referral
+            request, and must use the same patient identifier in any subsequent communications throughout a single
+            referral information exchange. This identifier shall be present in the metadata for the XD* submission set
+            and document entries, and in the PID segment of the HL7 V2 messages. The identifier should be present in the
+            CDA document header.</p>
+          <p>The Referral Initiator MUST use one of two options for the patient identifier:</p>
+          <ol>
+            <li>a unique patient identifier known to the Referral Initiator, which may or may not be known to the
+              Referral Recipient. In the XD* Metadata, this identifier shall be present in the sourcePatientId attribute
+              of each and every document entry.</li>
+            <li>a unique patient identifier commonly known to both the Referral Initiator and the Referral Recipient. The
+            method, by which this knowledge is obtained, is outside the scope of this implementation guide, and it may
+            include communication with other parties, such as a regional HIE, an MPI, etc. In the XD* Metadata, this
+            identifier shall be present in the patientId attribute of the submission set, and the patientId attribute of
+            each and every document entry.</li>
+          </ol>
+          <p>The Referral Initiator shall provide a <strong>unique identifier for the referral</strong> with the initial
+            referral request, and must use the same referral identifier in any subsequent communications throughout a
+            single referral information exchange. This identifier shall be present in the metadata for the XDM
+            submission set and document entries, and in the ORC and OBR segments of the HL7 V2 messages. The identifier
+            should be present in the CDA referral section.</p>
+          <h4 id="17.1.3.2">17.1.3.2 Referral Recipient</h4>
+          <p>The Referral Recipient must receive and process a referral request, which is sent by a Referral Initiator,
+            and the Referral Recipient must be able to respond with either an acceptance or a decline.</p>
+          <p>Once a referral request is accepted, the Referral Recipient must be able to create and send a Referral
+            Outcome. The Referral Recipient must be able to accept a Cancellation Request at any point of the workflow,
+            and it must respond with either a Cancellation Confirmation, or with the next step of the workflow.</p>
+          <p>The Referral Recipient, as a Content Consumer, must implement the Document Import Option (see PCC TF-2:
+            3.1.2) for all CDA document types based on the content option(s) supported, and may implement the Section
+            Import Option (PCC TF-2: 3.1.3), and/or the Discrete Data Import Option (PCC TF-2: 3.1.3).</p>
+          <p>The following requirements apply to the Referral Recipient for all transactions:</p>
+          <ul>
+            <li>The Referral Recipient MUST use the unique patient identifier provided in the initial referral request
+              in any subsequent communications with the Referral Initiator throughout the information exchange for a
+              specific referral. When sent by the Referral Recipient, this identifier shall be present in the patientId
+              metadata attribute for the XDM submission set and the patientId attribute of each and every document
+              entry, and in the PID segment of the HL7 V2 messages. The identifier may be present in the CDA document
+              header.</li>
+            <li>The Referral Recipient MAY provide another unique patient identifier in any subsequent communications
+              for the purpose of simplifying future communications between the two systems. Any further use of
+              additional patient identifiers is outside the scope of this profile.</li>
+            <li>The Referral Recipient shall use the unique referral identifier provided in the initial referral request
+              in any subsequent communications with the Referral Initiator throughout a single referral information
+              exchange. This identifier shall be present in the metadata for the XD submission set and document entries,
+              and in the ORC segment of the HL7 V2 messages. The identifier may be present in the CDA document header.
+            </li>
+          </ul>
         </div>
       </div>
     </main>
   </div>
   <footer class="ihe-footer">
     <div class="grid-container fluid">
-        <div class="grid-x grid-margin-x align-middle">
-            <div class="cell medium-9 small-order-2 medium-order-1 text-center medium-text-left">
-                    © 2000 &mdash; <span id="current-year"></span> IHE International | TEL 1-630-481-1004 | 1502&nbsp;W.&nbsp;Broadway Suite&nbsp;102, Madison, WI 53713
-            </div>
-            <div class="cell medium-3 small-order-1 medium-order-2 text-center medium-text-right ihe-footer-icons">
-                <a href="mailto:info@ihe.net"><i class="fi fi-mail"></i></a>
-                <a href="https://www.linkedin.com/company/iheintl"><i class="fi fi-social-linkedin"></i></a>
-                <a href="https://twitter.com/IHEIntl"><i class="fi fi-social-twitter" aria-hidden="true"></i></a>
-                <a href="https://www.youtube.com/user/IHEIntl"><i class="fi fi-social-youtube" aria-hidden="true"></i></a>
-            </div>
+      <div class="grid-x grid-margin-x align-middle">
+        <div class="cell medium-9 small-order-2 medium-order-1 text-center medium-text-left">
+          © 2000 &mdash; <span id="current-year"></span> IHE International | TEL 1-630-481-1004 |
+          1502&nbsp;W.&nbsp;Broadway Suite&nbsp;102, Madison, WI 53713
+        </div>
+        <div class="cell medium-3 small-order-1 medium-order-2 text-center medium-text-right ihe-footer-icons">
+          <a href="mailto:info@ihe.net"><i class="fi fi-mail"></i></a>
+          <a href="https://www.linkedin.com/company/iheintl"><i class="fi fi-social-linkedin"></i></a>
+          <a href="https://twitter.com/IHEIntl"><i class="fi fi-social-twitter" aria-hidden="true"></i></a>
+          <a href="https://www.youtube.com/user/IHEIntl"><i class="fi fi-social-youtube" aria-hidden="true"></i></a>
         </div>
       </div>
-    </footer>
-    <script src="../../../js/vendor/jquery.min.js"></script>
-    <script src="../../../js/vendor/motion-ui.min.js"></script>
-    <script src="../../../js/vendor/what-input.js"></script>
-    <script src="../../../js/vendor/foundation.min.js"></script>
-    <script src="../../../js/app.js"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-HLBNC861DJ');
-    </script>
+    </div>
+  </footer>
+  <script src="../../../js/vendor/jquery.min.js"></script>
+  <script src="../../../js/vendor/motion-ui.min.js"></script>
+  <script src="../../../js/vendor/what-input.js"></script>
+  <script src="../../../js/vendor/foundation.min.js"></script>
+  <script src="../../../js/app.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-HLBNC861DJ');
+  </script>
 </body>
+
 </html>
