@@ -1,0 +1,368 @@
+# Provide Document Bundle with one document to be added to an existing folder - Mobile access to Health Documents (MHD) v5.0.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Provide Document Bundle with one document to be added to an existing folder**
+
+## Example Bundle: Provide Document Bundle with one document to be added to an existing folder
+
+Example of a comprehensive Provide Document Bundle for a publication and added to an existing folder.
+
+* The bundle contains 
+* SubmissionSet - identifies one documentReference
+* Folder - existing Folder to be updated
+* DocumentReference - One DocumentReference
+* Binary - the document
+* the Patient is contained in the DocumentReference
+* the Patient is also a reference to a PIXm/PDQm retrieved Resource.
+ 
+
+no response example is provided
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "ex-ProvideDocumentBundle-addToFolder",
+  "meta" : {
+    "profile" : [
+      "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle"
+    ],
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HTEST"
+      }
+    ]
+  },
+  "type" : "transaction",
+  "timestamp" : "2004-10-25T23:50:50-05:00",
+  "entry" : [
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700001",
+      "resource" : {
+        "resourceType" : "List",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00777700001",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "extensions",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"List_aaaaaaaa-bbbb-cccc-dddd-e00777700001\"> </a>SubmissionSet with Patient</div>"
+        },
+        "extension" : [
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType",
+            "valueCodeableConcept" : {
+              "coding" : [
+                {
+                  "system" : "http://snomed.info/sct",
+                  "code" : "225728007"
+                }
+              ]
+            }
+          },
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-sourceId",
+            "valueIdentifier" : {
+              "value" : "urn:oid:1.2.3.4"
+            }
+          }
+        ],
+        "identifier" : [
+          {
+            "use" : "usual",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46352"
+          }
+        ],
+        "status" : "current",
+        "mode" : "working",
+        "code" : {
+          "coding" : [
+            {
+              "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes",
+              "code" : "submissionset"
+            }
+          ]
+        },
+        "subject" : [
+          {
+            "reference" : "Patient/ex-patient"
+          }
+        ],
+        "date" : "2004-10-25T23:50:50-05:00",
+        "entry" : [
+          {
+            "item" : {
+              "reference" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700002"
+            }
+          },
+          {
+            "item" : {
+              "reference" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700005"
+            }
+          }
+        ]
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "List"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700002",
+      "resource" : {
+        "resourceType" : "DocumentReference",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00777700002",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "extensions",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"DocumentReference_aaaaaaaa-bbbb-cccc-dddd-e00777700002\"> </a><p class=\"res-header-id\"><b>Generated Narrative: DocumentReference aaaaaaaa-bbbb-cccc-dddd-e00777700002</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00777700002\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00777700002\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.html\">MHD DocumentReference Comprehensive</a></p><p style=\"margin-bottom: 0px\">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p><b>DocumentReference Source Patient</b>: <a href=\"#hcaaaaaaaa-bbbb-cccc-dddd-e00777700002/aaaaaaaa-bbbb-cccc-dddd-e00777700004\">Dee Schmidt  (no stated gender), DoB Unknown ( http://example.org/patients#mrn-1234)</a></p><p><b>identifier</b>: <a href=\"http://terminology.hl7.org/7.0.1/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012 (use: usual, )</p><p><b>status</b>: Current</p><p><b>type</b>: <span title=\"Codes:{http://loinc.org 60591-5}\">Patient summary Document</span></p><p><b>category</b>: <span title=\"Codes:{http://loinc.org 11369-6}\">History of Immunization note</span></p><p><b>subject</b>: <a href=\"Patient-ex-patient.html\">John Schmidt  Other, DoB: 1923-07-25</a></p><p><b>facilityType</b>: <span title=\"Codes:{http://snomed.info/sct 82242000}\">Children's hospital</span></p><p><b>practiceSetting</b>: <span title=\"Codes:{http://snomed.info/sct 408467006}\">Adult mental illness - specialty (qualifier value)</span></p><p><b>date</b>: 2020-02-01 23:50:50-0500</p><p><b>securityLabel</b>: <span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-Confidentiality R}\">restricted</span></p><blockquote><p><b>content</b></p><h3>Attachments</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>ContentType</b></td><td><b>Language</b></td><td><b>Url</b></td><td><b>Size</b></td><td><b>Hash</b></td><td><b>Title</b></td><td><b>Creation</b></td></tr><tr><td style=\"display: none\">*</td><td>text/plain</td><td>English</td><td><a href=\"Bundle-ex-ProvideDocumentBundle-addToFolder.html#urn-uuid-aaaaaaaa-bbbb-cccc-dddd-e00777700003\">Binary: text/plain (16 bytes base64)</a></td><td>11</td><td><code>MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA==</code></td><td>Hello World</td><td>2020-02-01 23:50:50-0500</td></tr></table><h3>Profiles</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Value[x]</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://tx.fhir.org/r5/ValueSet/formatcode#formatcode-urn.58ihe.58iti.58xds-sd.58text.582008\">IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds-sd:text:2008</a> (ITI XDS-SD TEXT)</td></tr></table></blockquote><hr/><blockquote><p class=\"res-header-id\"><b>Generated Narrative: Patient #aaaaaaaa-bbbb-cccc-dddd-e00777700004</b></p><a name=\"aaaaaaaa-bbbb-cccc-dddd-e00777700002/aaaaaaaa-bbbb-cccc-dddd-e00777700004\"> </a><a name=\"hcaaaaaaaa-bbbb-cccc-dddd-e00777700002/aaaaaaaa-bbbb-cccc-dddd-e00777700004\"> </a><p style=\"border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;\">Dee Schmidt  (no stated gender), DoB Unknown ( http://example.org/patients#mrn-1234)</p><hr/></blockquote></div>"
+        },
+        "contained" : [
+          {
+            "resourceType" : "Patient",
+            "id" : "aaaaaaaa-bbbb-cccc-dddd-e00777700004",
+            "identifier" : [
+              {
+                "system" : "http://example.org/patients",
+                "value" : "mrn-1234"
+              }
+            ],
+            "name" : [
+              {
+                "family" : "Schmidt",
+                "given" : ["Dee"]
+              }
+            ]
+          }
+        ],
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/documentreference-sourcepatient",
+            "valueReference" : {
+              "reference" : "#aaaaaaaa-bbbb-cccc-dddd-e00777700004"
+            }
+          }
+        ],
+        "identifier" : [
+          {
+            "use" : "usual",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012"
+          }
+        ],
+        "status" : "current",
+        "type" : {
+          "coding" : [
+            {
+              "system" : "http://loinc.org",
+              "code" : "60591-5"
+            }
+          ]
+        },
+        "category" : [
+          {
+            "coding" : [
+              {
+                "system" : "http://loinc.org",
+                "code" : "11369-6"
+              }
+            ]
+          }
+        ],
+        "subject" : {
+          "reference" : "Patient/ex-patient"
+        },
+        "facilityType" : {
+          "coding" : [
+            {
+              "system" : "http://snomed.info/sct",
+              "code" : "82242000"
+            }
+          ]
+        },
+        "practiceSetting" : {
+          "coding" : [
+            {
+              "system" : "http://snomed.info/sct",
+              "code" : "408467006"
+            }
+          ]
+        },
+        "date" : "2020-02-01T23:50:50-05:00",
+        "securityLabel" : [
+          {
+            "coding" : [
+              {
+                "system" : "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                "code" : "R"
+              }
+            ]
+          }
+        ],
+        "content" : [
+          {
+            "attachment" : {
+              "contentType" : "text/plain",
+              "language" : "en",
+              "url" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700003",
+              "size" : "11",
+              "hash" : "MGE0ZDU1YThkNzc4ZTUwMjJmYWI3MDE5NzdjNWQ4NDBiYmM0ODZkMA==",
+              "title" : "Hello World",
+              "creation" : "2020-02-01T23:50:50-05:00"
+            },
+            "profile" : [
+              {
+                "valueCoding" : {
+                  "system" : "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode",
+                  "code" : "urn:ihe:iti:xds-sd:text:2008"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "DocumentReference"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700005",
+      "resource" : {
+        "resourceType" : "List",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00777700005",
+        "meta" : {
+          "profile" : [
+            "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder"
+          ],
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "text" : {
+          "status" : "extensions",
+          "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"List_aaaaaaaa-bbbb-cccc-dddd-e00777700005\"> </a>Folder with Patient</div>"
+        },
+        "extension" : [
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType",
+            "valueCodeableConcept" : {
+              "coding" : [
+                {
+                  "system" : "http://snomed.info/sct",
+                  "code" : "225728007"
+                }
+              ]
+            }
+          },
+          {
+            "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType",
+            "valueCodeableConcept" : {
+              "coding" : [
+                {
+                  "system" : "http://snomed.info/sct",
+                  "code" : "284548004"
+                }
+              ]
+            }
+          }
+        ],
+        "identifier" : [
+          {
+            "use" : "usual",
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46353"
+          }
+        ],
+        "status" : "current",
+        "mode" : "working",
+        "title" : "Example Folder with comprehensive metadata",
+        "code" : {
+          "coding" : [
+            {
+              "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes",
+              "code" : "folder"
+            }
+          ]
+        },
+        "subject" : [
+          {
+            "reference" : "Patient/ex-patient"
+          }
+        ],
+        "date" : "2004-12-25T23:50:50-05:00",
+        "note" : [
+          {
+            "text" : "Folder for submission"
+          }
+        ],
+        "entry" : [
+          {
+            "item" : {
+              "reference" : "DocumentReference/ex-DocumentReferenceComprehensive"
+            }
+          },
+          {
+            "item" : {
+              "reference" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700002"
+            }
+          }
+        ]
+      },
+      "request" : {
+        "method" : "PUT",
+        "url" : "List"
+      }
+    },
+    {
+      "fullUrl" : "urn:uuid:aaaaaaaa-bbbb-cccc-dddd-e00777700003",
+      "resource" : {
+        "resourceType" : "Binary",
+        "id" : "aaaaaaaa-bbbb-cccc-dddd-e00777700003",
+        "meta" : {
+          "security" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code" : "HTEST"
+            }
+          ]
+        },
+        "contentType" : "text/plain",
+        "data" : "SGVsbG8gV29ybGQ="
+      },
+      "request" : {
+        "method" : "POST",
+        "url" : "Binary"
+      }
+    }
+  ]
+}
+
+```

@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>Audit Example of a basic SAML access token of comprehensive - Basic Audit Log Patterns (BALP) v1.1.3</title>
+    <title>Audit Example of a basic SAML access token of comprehensive - Basic Audit Log Patterns (BALP) v1.1.4</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -18,6 +18,7 @@
     <link href="assets/css/pygments-manni.css" rel="stylesheet"/>
     <link href="assets/css/jquery-ui.css" rel="stylesheet"/>
   	<link href="assets/css/prism.css" rel="stylesheet" />
+  	<link href="assets/css/cqf.css" rel="stylesheet" />
     <!-- Placeholder for child template CSS declarations -->
 <link href="assets/css/ihe.css" rel="stylesheet"/>
 <link href="assets/css/nonum.css" rel="stylesheet"/>
@@ -33,45 +34,47 @@
     <![endif]-->
 
     <!-- Favicons -->
-    <link rel="fhir-logo" sizes="144x144" href="assets/ico/icon-fhir-144.png"/>
-    <link rel="fhir-logo" sizes="114x114" href="assets/ico/icon-fhir-114.png"/>
-    <link rel="fhir-logo" sizes="72x72" href="assets/ico/icon-fhir-72.png"/>
-    <link rel="fhir-logo" href="assets/ico/icon-fhir-57.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/icon-fhir-144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/icon-fhir-114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/icon-fhir-72.png"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/icon-fhir-57.png"/>
     <link rel="shortcut icon" href="assets/ico/favicon.png"/>
   </head>
   <body onload="document.body.style.opacity='1'">
 
 	  <script src="assets/js/prism.js"></script>
-
+    <script type="text/javascript" src="assets/js/mermaid.js"></script>
+    <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
     <style type="text/css">h2{--heading-prefix:"9.40"}
     h3,h4,h5,h6{--heading-prefix:"9.40"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
+
         <!-- Placeholder for child template header declarations -->
 
 <div id="project-nav">
-  <a id="ihe-logo" no-external="true" href="http://profiles.ihe.net">
+  <a id="ihe-logo" data-no-external="true" href="http://profiles.ihe.net">
     <img height="71" alt="Visit the IHE website" src="assets/images/ihe-international.png"/>
   </a>
 </div>
 <div id="family-nav">
-  <a id="family-logo" no-external="true" href="http://hl7.org/fhir"><img height="30" alt="Visit the FHIR website" src="assets/images/fhir-logo.png"/> </a>
+  <a id="family-logo" data-no-external="true" href="http://hl7.org/fhir"><img height="30" alt="Visit the FHIR website" src="assets/images/fhir-logo.png"/> </a>
 </div>
 <!--
 <div id="hl7-search">
-  <a id="hl7-search-lnk" no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
+  <a id="hl7-search-lnk" data-no-external="true" href="searchform.html"><img alt="Search FHIR" src="assets/images/search.png"/></a>
 </div>
 -->
 <div id="project-nav">
   
   
-    <a id="project-logo" no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
+    <a id="project-logo" data-no-external="true" href="http://profiles.ihe.net/ITI/index.html"><img height="70" alt="Visit the ITI website" src="assets/images/ITI.png"/> </a>
 </div>
 
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Basic Audit Log Patterns (BALP)</span>
             <br/>
-            <span style="display:inline-block;">1.1.3 - Trial-Implementation
+            <span style="display:inline-block;">1.1.4 - Trial-Implementation
 
 
 
@@ -215,7 +218,7 @@
           <div class="inner-wrapper">
 
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.3: Publication) based on <a no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a no-external="true" href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Basic Audit Log Patterns (BALP) (v1.1.4: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/BALP/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
 
   
 
@@ -272,7 +275,7 @@
 
 
 
-  <div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative: AuditEvent</b><a name="ex-auditPoke-SAML-Comp"> </a></p><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px">Resource AuditEvent &quot;ex-auditPoke-SAML-Comp&quot; </p><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-IHE.BasicAudit.SAMLaccessTokenUse.Comprehensive.html">Basic AuditEvent pattern for when an activity was authorized by an SAML access token Comprehensive</a></p><p style="margin-bottom: 0px">Security Labels: <span title="{http://terminology.hl7.org/CodeSystem/v3-ActReason http://terminology.hl7.org/CodeSystem/v3-ActReason}">http://terminology.hl7.org/CodeSystem/v3-ActReason</span></p></div><p><b>type</b>: Application Activity (Details: DICOM code 110100 = 'Application Activity', stated as 'Application Activity')</p><p><b>subtype</b>: Boredom poke (Details: urn:ietf:rfc:1438 code poke = 'poke', stated as 'Boredom poke')</p><p><b>action</b>: R</p><p><b>recorded</b>: Dec 3, 2021, 3:49:00 AM</p><p><b>outcome</b>: 0</p><blockquote><p><b>agent</b></p><p><b>AuditEvent.agent Assurance Level</b>: high authentication process level of assurance <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="http://terminology.hl7.org/5.3.0/CodeSystem-v3-ObservationValue.html">ObservationValue</a>#LOAAP4)</span></p><p><b>AuditEvent.agent other identifiers</b>: SAML subject-id/JohnDoe</p><p><b>AuditEvent.agent other identifiers</b>: National provider identifier/1234567@myNPIregistry.example.org</p><p><b>AuditEvent.agent other identifiers</b>: Provider number/JohnD</p><p><b>type</b>: information recipient <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="CodeSystem-UserAgentTypes.html">The code used to identifiy a User Agent</a>#UserSamlAgent; <a href="http://terminology.hl7.org/5.3.0/CodeSystem-v3-ParticipationType.html">ParticipationType</a>#IRCP)</span></p><p><b>who</b>: <span><code>https://sts.sykehuspartner.no</code>/05086900124</span></p><p><b>requestor</b>: true</p><p><b>policy</b>: <code>XC4WdYS0W5bjsMGc5Ue6tClD_5U</code></p><p><b>purposeOfUse</b>: patient requested <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="http://terminology.hl7.org/5.3.0/CodeSystem-v3-ActReason.html">ActReason</a>#PATRQT)</span></p></blockquote><blockquote><p><b>agent</b></p><p><b>type</b>: healthcare provider <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="http://terminology.hl7.org/5.3.0/CodeSystem-v3-RoleClass.html">RoleClass</a>#PROV)</span></p><p><b>who</b>: <span>: St. Mary of Examples</span></p><p><b>requestor</b>: false</p></blockquote><blockquote><p><b>agent</b></p><p><b>type</b>: homeCommunityId <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (unknown#homeCommunityId)</span></p><p><b>who</b>: <span>homeCommunityId/urn:uuid:cadbf8d0-5493-11ec-bf63-0242ac130002</span></p><p><b>requestor</b>: false</p></blockquote><h3>Sources</h3><table class="grid"><tr><td style="display: none">-</td><td><b>Site</b></td><td><b>Observer</b></td><td><b>Type</b></td></tr><tr><td style="display: none">*</td><td>server.example.com</td><td><a href="Device-ex-device.html">Device/ex-device</a></td><td>Application Server (Details: http://terminology.hl7.org/CodeSystem/security-source-type code 4 = 'Application Server', stated as 'Application Server')</td></tr></table><blockquote><p><b>entity</b></p><p><b>what</b>: <span>urn:uuid:a4b1d27e-5493-11ec-bf63-0242ac130002</span></p><p><b>type</b>: Consent (Details: http://hl7.org/fhir/resource-types code Consent = 'Consent', stated as 'Consent')</p><blockquote><p><b>detail</b></p><p><b>type</b>: urn:ihe:iti:xua:2012:acp</p><p><b>value</b>: urn:uuid:b8aa8eec-5493-11ec-bf63-0242ac130002</p></blockquote><blockquote><p><b>detail</b></p><p><b>type</b>: urn:oasis:names:tc:xacml:2.0:resource:resource-id</p><p><b>value</b>: urn:uuid:d7391e5a-5493-11ec-bf63-0242ac130002</p></blockquote></blockquote></div>
+  <div xmlns="http://www.w3.org/1999/xhtml"><a name="ex-auditPoke-SAML-Comp"> </a><a name="hcex-auditPoke-SAML-Comp"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-IHE.BasicAudit.SAMLaccessTokenUse.Comprehensive.html">Basic AuditEvent pattern for when an activity was authorized by an SAML access token Comprehensive</a></p><p style="margin-bottom: 0px">Security Label: test health data (Details: ActReason code HTEST = 'test health data')</p></div><p><b>type</b>: <a href="http://hl7.org/fhir/R4/codesystem-dicom-dcim.html#dicom-dcim-110100">DICOM: 110100</a> (Application Activity)</p><p><b>subtype</b>: unknown: poke (Boredom poke)</p><p><b>action</b>: Read/View/Print</p><p><b>recorded</b>: 2021-12-03 09:49:00+0000</p><p><b>outcome</b>: Success</p><blockquote><p><b>agent</b></p><p><b>AuditEvent.agent Assurance Level</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/v3-ObservationValue LOAAP4}">high authentication process level of assurance</span></p><p><b>AuditEvent.agent other identifiers</b>: SAML subject-id/JohnDoe</p><p><b>AuditEvent.agent other identifiers</b>: National provider identifier/1234567@myNPIregistry.example.org</p><p><b>AuditEvent.agent other identifiers</b>: Provider number/JohnD</p><p><b>type</b>: <span title="Codes:{https://profiles.ihe.net/ITI/BALP/CodeSystem/UserAgentTypes UserSamlAgent}, {http://terminology.hl7.org/CodeSystem/v3-ParticipationType IRCP}">information recipient</span></p><p><b>who</b>: Identifier: <code>https://sts.sykehuspartner.no</code>/05086900124</p><p><b>requestor</b>: true</p><p><b>policy</b>: XC4WdYS0W5bjsMGc5Ue6tClD_5U</p><p><b>purposeOfUse</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/v3-ActReason PATRQT}">patient requested</span></p></blockquote><blockquote><p><b>agent</b></p><p><b>type</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/v3-RoleClass PROV}">healthcare provider</span></p><p><b>who</b>: St. Mary of Examples (Identifier: 1234567@myOrganizationRegistry.example.org)</p><p><b>requestor</b>: false</p></blockquote><blockquote><p><b>agent</b></p><p><b>type</b>: <span title="Codes:{urn:ihe:iti:xca:2010 homeCommunityId}">homeCommunityId</span></p><p><b>who</b>: Identifier: homeCommunityId/urn:uuid:cadbf8d0-5493-11ec-bf63-0242ac130002</p><p><b>requestor</b>: false</p></blockquote><h3>Sources</h3><table class="grid"><tr><td style="display: none">-</td><td><b>Site</b></td><td><b>Observer</b></td><td><b>Type</b></td></tr><tr><td style="display: none">*</td><td>server.example.com</td><td><a href="Device-ex-device.html">Device</a></td><td><a href="http://terminology.hl7.org/6.5.0/CodeSystem-security-source-type.html#security-source-type-4">Audit Event Source Type: 4</a> (Application Server)</td></tr></table><blockquote><p><b>entity</b></p><p><b>what</b>: Identifier: urn:uuid:a4b1d27e-5493-11ec-bf63-0242ac130002</p><p><b>type</b>: <a href="http://hl7.org/fhir/R4/codesystem-resource-types.html#resource-types-Consent">ResourceType: Consent</a> (Consent)</p><blockquote><p><b>detail</b></p><p><b>type</b>: urn:ihe:iti:xua:2012:acp</p><p><b>value</b>: urn:uuid:b8aa8eec-5493-11ec-bf63-0242ac130002</p></blockquote><blockquote><p><b>detail</b></p><p><b>type</b>: urn:oasis:names:tc:xacml:2.0:resource:resource-id</p><p><b>value</b>: urn:uuid:d7391e5a-5493-11ec-bf63-0242ac130002</p></blockquote></blockquote></div>
 
   
 
@@ -290,13 +293,7 @@
   <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
   <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      if(window.location.hash != "") {
-          $('a[href="' + window.location.hash + '"]').click()
-      }
-    });
-  </script>
+  <script type="text/javascript" src="assets/js/window-hash.js"> </script>
   <a name="bottom"> </a>
   <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
     <div class="container">  <!-- container -->
@@ -325,7 +322,7 @@
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.3 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Wed, Feb 14, 2024 15:31-0600">2024-02-14</span>
+          IG &#169; 2022+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.balp#1.1.4 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Oct 31, 2025 12:57-0500">2025-10-31</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
@@ -336,13 +333,7 @@
                  <a style="color: var(--footer-hyperlink-text-color)" rel="license" href="https://profiles.ihe.net/GeneralIntro/ch-9.html"><img style="border-style: none;" alt="CC0" src="assets/images/cc-by.png" height="17"/></a> |
                 <!-- <a style="color: var(--footer-hyperlink-text-color)" href="searchform.html">Search</a> | -->
                  <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.ihe.net/resources/public_comment/">Propose a change<img alt="external" style="vertical-align: baseline" src="external.png"/></a>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HLBNC861DJ');
-</script>
-
+                 <script type="text/javascript" src=".assets/js/google-analytics.js"> </script>
           </span>
         </p>
       </div>  <!-- /inner-wrapper -->
@@ -353,7 +344,7 @@
     <div class="container">  <!-- container -->
     </div>  <!-- /container -->
   </div>  <!-- /segment-post-footer -->
-  
+
   <!-- JS and analytics only. -->
   <!-- Bootstrap core JavaScript
   ================================================== -->
@@ -363,26 +354,7 @@
   <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
   <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
-  <script>anchors.options.visible = 'hover'
-anchors.add()</script>
-  
-<!-- feedback form - Google forms -->
-<!-- v0.1, 2021-01-09 -->
-
-
-  
-    
-  
-
-
-  
-    
-  
-
-
-
-<!-- / feedback form  -->
-
+  <script type="text/javascript" src="assets/js/anchor-hover.js"> </script>
   <!-- Analytics Below
   ================================================== -->
   </body>

@@ -1,0 +1,60 @@
+# Response to Provide Document Bundle with Minimal metadata of one document with sourcePatientInfo - Mobile access to Health Documents (MHD) v5.0.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Response to Provide Document Bundle with Minimal metadata of one document with sourcePatientInfo**
+
+## Example Bundle: Response to Provide Document Bundle with Minimal metadata of one document with sourcePatientInfo
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "ex-response-minimalProvideDocumentBundleSimpleContained",
+  "meta" : {
+    "profile" : [
+      "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.ProvideDocumentBundleResponse"
+    ],
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HTEST"
+      }
+    ]
+  },
+  "type" : "transaction-response",
+  "link" : [
+    {
+      "relation" : "self",
+      "url" : "http://example.com/fhir"
+    }
+  ],
+  "entry" : [
+    {
+      "response" : {
+        "status" : "201 Created",
+        "location" : "List/1",
+        "lastModified" : "2020-10-02T11:56:15.094+00:00"
+      }
+    },
+    {
+      "response" : {
+        "status" : "201 Created",
+        "location" : "DocumentReference/1",
+        "lastModified" : "2020-10-02T11:56:15.095+00:00"
+      }
+    },
+    {
+      "response" : {
+        "status" : "201 Created",
+        "location" : "Binary/1",
+        "lastModified" : "2020-10-02T11:56:15.096+00:00"
+      }
+    }
+  ]
+}
+
+```
