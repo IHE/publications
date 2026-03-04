@@ -1,0 +1,25 @@
+<?php
+function Redirect($url)
+{
+  header('Location: ' . $url, true, 302);
+  exit();
+}
+
+$accept = $_SERVER['HTTP_ACCEPT'];
+if (strpos($accept, 'application/json+fhir') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.json2');
+elseif (strpos($accept, 'application/fhir+json') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.json1');
+elseif (strpos($accept, 'json') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.json');
+elseif (strpos($accept, 'application/xml+fhir') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.xml2');
+elseif (strpos($accept, 'application/fhir+xml') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.xml1');
+elseif (strpos($accept, 'html') !== false)
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.html');
+else 
+  Redirect('https://profiles.ihe.net/PCC/FIIO/1.0.0-comment/Bundle-ex-bundle-secondaryUse-pandemnicips-patricia-jordana.xml');
+?>
+    
+You should not be seeing this page. If you do, PHP has failed badly.
