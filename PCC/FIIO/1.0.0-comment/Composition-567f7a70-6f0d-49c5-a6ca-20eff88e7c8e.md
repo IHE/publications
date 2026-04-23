@@ -1,0 +1,210 @@
+# Patient Summary of Frank MissingData - FHIR International Patient Summary v1.0.0-comment
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Patient Summary of Frank MissingData**
+
+## Example Composition: Patient Summary of Frank MissingData
+
+Profiles: [Composition (IPS)](http://hl7.org/fhir/uv/ips/STU2/StructureDefinition-Composition-uv-ips.html), [FHIR International Patient Summary Implementation Options - Complete Option Composition](StructureDefinition-IHE.FIPS.IO.Complete.Option.Composition.md)
+
+**status**: Final
+
+**type**: Patient summary Document
+
+**date**: 2026-02-06
+
+**author**: [Practitioner Jakob Leitner](Bundle-e0e8252a-4aab-4fab-ac8f-5734abbd1ec7.md#urn-uuid-1b953334-140c-4b02-b162-cb9f337e6e5e)
+
+**title**: Patient Summary of Frank MissingData
+
+**confidentiality**: normal
+
+**custodian**: [Organization IHE International PCC](Bundle-e0e8252a-4aab-4fab-ac8f-5734abbd1ec7.md#urn-uuid-8353925b-4e3e-4885-8330-01600699e428)
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Composition",
+  "id" : "567f7a70-6f0d-49c5-a6ca-20eff88e7c8e",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/ips/StructureDefinition/Composition-uv-ips",
+    "https://profiles.ihe.net/PCC/FIIO/StructureDefinition/IHE.FIPS.IO.Complete.Option.Composition"]
+  },
+  "status" : "final",
+  "type" : {
+    "coding" : [{
+      "system" : "http://loinc.org",
+      "code" : "60591-5",
+      "display" : "Patient summary Document"
+    }]
+  },
+  "subject" : {
+    "reference" : "urn:uuid:4aaab9e4-44e1-4a35-98ac-093fa22c87d4"
+  },
+  "date" : "2026-02-06",
+  "author" : [{
+    "reference" : "urn:uuid:1b953334-140c-4b02-b162-cb9f337e6e5e"
+  }],
+  "title" : "Patient Summary of Frank MissingData",
+  "confidentiality" : "N",
+  "custodian" : {
+    "reference" : "urn:uuid:8353925b-4e3e-4885-8330-01600699e428"
+  },
+  "section" : [{
+    "title" : "Problem List",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "11450-4",
+        "display" : "Problem list - Reported"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>[2007-04-27] - Attention deficit hyperactivity disorder</li><li>[2012-07-16] - Substance abuse</li><li>[2017-04-26] - Tonsillitis</li><li>[2007-01-26] - Decreased hearing</li></ul></div>"
+    },
+    "entry" : [{
+      "reference" : "urn:uuid:7eddf451-857a-41cc-bce8-5147ebf99961"
+    },
+    {
+      "reference" : "urn:uuid:24ed68db-6665-4272-8157-d1e71fb5a1f1"
+    },
+    {
+      "reference" : "urn:uuid:de5ad976-ddc8-4293-b676-d84d17fa8f9d"
+    }]
+  },
+  {
+    "title" : "Allergies and Intolerances",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "48765-2",
+        "display" : "Allergies and adverse reactions Document"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Severe Peanut Allergy</div>"
+    },
+    "entry" : [{
+      "reference" : "urn:uuid:bd89d6c4-f82c-42f7-ae22-f97caa69fc1e",
+      "display" : "Severe Peanut Allergy"
+    }]
+  },
+  {
+    "title" : "Medication List",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "10160-0",
+        "display" : "History of Medication use Narrative"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>[2018] - Methylphenidate 5mg chewable tablet - 2 tablets per day</li><li>[2018] - Diazepam product</li></ul></div>"
+    },
+    "entry" : [{
+      "reference" : "urn:uuid:9c494b70-41b2-46f4-955b-b9e8114dfb41",
+      "display" : "No known medications"
+    }]
+  },
+  {
+    "title" : "History of Immunizations",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "11369-6",
+        "display" : "History of Immunization note"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div><ul><li>[2013-02-09] - Diphtheria + tetanus + poliomyelitis vaccine</li><li>[2013-07-08] - Hepatitis B virus vaccine</li><li>[2025-10-17] - COVID-19 antigen vaccine</li></ul></div></div>"
+    },
+    "entry" : [{
+      "reference" : "urn:uuid:ccf288c9-6557-48b8-a18d-df9b84b856b5",
+      "display" : "No Known Immunization"
+    }]
+  },
+  {
+    "title" : "History of Procedures",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "47519-4",
+        "display" : "History of Procedures Document"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">substance use therapy</div>"
+    },
+    "emptyReason" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+        "code" : "not-applicable",
+        "display" : "Not Applicable"
+      }]
+    }
+  },
+  {
+    "title" : "Diagnostic Results",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "30954-2",
+        "display" : "Relevant diagnostic tests/laboratory data note"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Results section</div>"
+    },
+    "emptyReason" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+        "code" : "not-applicable",
+        "display" : "Not Applicable"
+      }]
+    }
+  },
+  {
+    "title" : "Medical Devices",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "46264-8",
+        "display" : "History of Medical Device Use"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">No known device use</div>"
+    },
+    "entry" : [{
+      "reference" : "urn:uuid:22f72d34-723c-485d-aa49-6cfaf55e0d22",
+      "display" : "No known device use"
+    }]
+  },
+  {
+    "title" : "Advance Directives",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "42348-3",
+        "display" : "Advance healthcare directives"
+      }]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">No Advanced Directives</div>"
+    }
+  }]
+}
+
+```
