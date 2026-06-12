@@ -1,0 +1,340 @@
+#  - IHE FormatCode Vocabulary v1.5.0
+
+## : 
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Bundle",
+  "id" : "history-IHE-formatcode.valueset",
+  "type" : "collection",
+  "entry" : [{
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.1.20250428.2",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20250428.2",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20250428.2\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20250428.2</b></p><a name=\"formatcode-provenance-20250428.2\"> </a><a name=\"hcformatcode-provenance-20250428.2\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2025-04-28</td></tr><tr><td>Recorded</td><td>2025-04-28 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>John Moehrke</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>Fix XDS-I code values</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2025-04-28"
+      },
+      "recorded" : "2025-04-28T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "The code `1.2.840.10008.5.1.4.1.1.88.59`, is used. but is now defined in system `http://dicom.nema.org/resources/ontology/DCMUID`, as defined in CP-2453"
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "John Moehrke"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "Fix XDS-I code values"
+        }
+      }]
+    }
+  },
+  {
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.1.20240514.1",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20240514",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20240514\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20240514</b></p><a name=\"formatcode-provenance-20240514\"> </a><a name=\"hcformatcode-provenance-20240514\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2024-05-15</td></tr><tr><td>Recorded</td><td>2024-05-14 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>Oliver Egger</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>IHE ITI Domain</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2024-05-15"
+      },
+      "recorded" : "2024-05-14T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "Add sIPS formatcode for IPS (International Patient Summary)"
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "Oliver Egger"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "IHE ITI Domain"
+        }
+      }]
+    }
+  },
+  {
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.1.20240205.1",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20240205",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20240205\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20240205</b></p><a name=\"formatcode-provenance-20240205\"> </a><a name=\"hcformatcode-provenance-20240205\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2024-02-05</td></tr><tr><td>Recorded</td><td>2024-02-05 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>John Moehrke</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>IHE ITI Domain</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2024-02-05"
+      },
+      "recorded" : "2024-02-05T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "Change the include to only pull in active."
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "John Moehrke"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "IHE ITI Domain"
+        }
+      }]
+    }
+  },
+  {
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.1.20240312.1",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20240312",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20240312\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20240312</b></p><a name=\"formatcode-provenance-20240312\"> </a><a name=\"hcformatcode-provenance-20240312\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2024-03-12</td></tr><tr><td>Recorded</td><td>2024-03-12 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>John Moehrke</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>IHE ITI Domain</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2024-03-12"
+      },
+      "recorded" : "2024-03-12T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "Change the include to only pull in active, using .compose.inactive rather than property filter."
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "John Moehrke"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "IHE ITI Domain"
+        }
+      }]
+    }
+  },
+  {
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.2.20220815",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20220815",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20220815\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20220815</b></p><a name=\"formatcode-provenance-20220815\"> </a><a name=\"hcformatcode-provenance-20220815\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2022-08-15</td></tr><tr><td>Recorded</td><td>2022-08-15 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>John Moehrke</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>IHE ITI Domain</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2022-08-15"
+      },
+      "recorded" : "2022-08-15T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "Change the include HL7 managed FormatCode vocabulary to formal one found on terminology.hl7.org."
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "John Moehrke"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "IHE ITI Domain"
+        }
+      }]
+    }
+  },
+  {
+    "fullUrl" : "urn:oid:1.3.6.1.4.1.19376.1.2.3.2.20201028",
+    "resource" : {
+      "resourceType" : "Provenance",
+      "id" : "formatcode-provenance-20201028",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"Provenance_formatcode-provenance-20201028\"> </a><p class=\"res-header-id\"><b>Generated Narrative: Provenance formatcode-provenance-20201028</b></p><a name=\"formatcode-provenance-20201028\"> </a><a name=\"hcformatcode-provenance-20201028\"> </a><p>Provenance for <a href=\"ValueSet-formatcode.html\">IHE ValueSet of Format Codes for use with Document Sharing</a></p><p>Summary</p><table class=\"grid\"><tr><td>Occurrence</td><td>?? --&gt; 2020-10-28</td></tr><tr><td>Recorded</td><td>2020-10-28 13:00:00+0000</td></tr><tr><td>Activity</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-DataOperation UPDATE}\">revise</span></td></tr></table><p><b>Agents</b></p><table class=\"grid\"><tr><td><b>Type</b></td><td><b>who</b></td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type author}\">Author</span></td><td>John Moehrke</td></tr><tr><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/provenance-participant-type custodian}\">Custodian</span></td><td>IHE ITI Domain</td></tr></table></div>"
+      },
+      "target" : [{
+        "reference" : "http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode",
+        "type" : "ValueSet"
+      }],
+      "occurredPeriod" : {
+        "end" : "2020-10-28"
+      },
+      "recorded" : "2020-10-28T13:00:00.0000Z",
+      "reason" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "METAMGT"
+        }],
+        "text" : "Add the include for the HL7 managed FormatCode vocabulary."
+      }],
+      "activity" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-DataOperation",
+          "code" : "UPDATE"
+        }]
+      },
+      "agent" : [{
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "author"
+          }]
+        },
+        "who" : {
+          "display" : "John Moehrke"
+        }
+      },
+      {
+        "type" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+            "code" : "custodian"
+          }]
+        },
+        "who" : {
+          "display" : "IHE ITI Domain"
+        }
+      }]
+    }
+  }]
+}
+
+```
