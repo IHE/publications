@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<OperationDefinition xmlns="http://hl7.org/fhir">
+  <id value="generate-vhl"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: OperationDefinition generate-vhl</b></p><a name="generate-vhl"> </a><a name="hcgenerate-vhl"> </a><h3>Parameters</h3><table class="grid"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>sourceIdentifier</td><td/><td>1..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#string">string</a><br/>(<a href="https://hl7.org/fhir/R4/search.html#token">token</a>)</td><td/><td><div><p>A FHIR Identifier (business identifier such as MRN, passport number, or national ID) that the VHL Sharer uses to locate the Patient record and that Patient's documents. Serialized as a FHIR token search parameter (<code>system|code</code>, e.g., <code>urn:oid:2.16.840.1.113883.2.4.6.3|PASSPORT123</code>).</p>
+</div></td></tr><tr><td>IN</td><td>exp</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#positiveInt">positiveInt</a></td><td/><td><div><p>Optional. Number representing expiration time in Epoch seconds.</p>
+</div></td></tr><tr><td>IN</td><td>flag</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#string">string</a><br/>(<a href="https://hl7.org/fhir/R4/search.html#string">string</a>)</td><td/><td><div><p>Optional. String created by concatenating single-character flags in alphabetical order. L (long-term use), P (Passcode required)</p>
+</div></td></tr><tr><td>IN</td><td>label</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#string">string</a><br/>(<a href="https://hl7.org/fhir/R4/search.html#string">string</a>)</td><td/><td><div><p>Optional. String no longer than 80 characters that provides a short description of the data behind the VHL.</p>
+</div></td></tr><tr><td>IN</td><td>passcode</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#string">string</a><br/>(<a href="https://hl7.org/fhir/R4/search.html#string">string</a>)</td><td/><td><div><p>Optional. User-supplied passcode for passcode-protected VHLs. If provided, the VHL Sharer SHALL securely hash and store this passcode for validation during manifest retrieval (ITI-YY5). The 'P' flag SHALL be included in the flag parameter when a passcode is set.</p>
+</div></td></tr><tr><td>IN</td><td>purposeOfUse</td><td/><td>0..*</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#string">string</a><br/>(<a href="https://hl7.org/fhir/R4/search.html#token">token</a>)</td><td/><td><div><p>Optional. Purpose(s) of use the VHL Holder is authorizing for this share (e.g., TREAT, HPAYMT, HRESCH). The VHL Sharer SHALL persist these value(s) against the generated folder ID. When the VHL Sharer is grouped with an IHE PCF Consent Creator or Consent Recipient, these values SHALL populate Consent.provision.purpose on any Consent created for or bound to this folder. At ITI-YY5 the VHL Sharer MAY use the recorded purpose to enforce consistency with the VHL Receiver's declared purpose claim (e.g., the OAuth access token's purposeOfUse claim, the SSRAA hl7-b2b extension, or an equivalent claim carried in a Verifiable Credential).</p>
+</div></td></tr><tr><td>IN</td><td>format</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/datatypes.html#code">code</a></td><td/><td><div><p>Optional. Requested carrier for the returned VHL. Allowed values: 'qrcode' (default - HCERT/CWT QR code) or 'vc' (W3C Verifiable Credential). The 'vc' value requires the VHL Sharer to support the VC Enveloped VHL Option; if unsupported, the VHL Sharer SHALL return an OperationOutcome error. If omitted, the VHL Sharer SHALL default to 'qrcode'.</p>
+</div></td></tr><tr><td>OUT</td><td>qrcode</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/binary.html">Binary</a></td><td/><td><div><p>A Binary resource containing the QR code image (PNG or SVG format) that encodes the VHL as an HCERT/CWT structure. Populated when format='qrcode' (default).</p>
+<p>VHL Payload Construction:</p>
+<ol>
+<li>Generate a unique folder ID with 256-bit entropy to serve as the List resource identifier</li>
+<li>Generate a 32-byte (256-bit) random encryption key, base64url-encode it (resulting in 43 characters) - this is the 'key' parameter</li>
+<li>Construct the manifest URL as a query on the base List resource:
+<ul>
+<li>If VHL Sharer supports Include DocumentReference Option:
+[base]/List?_id=[folder-id]&amp;code=folder&amp;status=current&amp;patient.identifier=[patient-id]&amp;_include=List:item</li>
+<li>If VHL Sharer does NOT support Include DocumentReference Option:
+[base]/List?_id=[folder-id]&amp;code=folder&amp;status=current&amp;patient.identifier=[patient-id]</li>
+</ul>
+</li>
+<li>Create the VHL payload (using the SHL payload format) as a JSON object with:
+<ul>
+<li>url: the manifest URL from step 3</li>
+<li>key: the base64url-encoded encryption key from step 2 (43 characters)</li>
+<li>exp: (optional) expiration time in Epoch seconds</li>
+<li>flag: (optional) flags string (e.g., 'P' for passcode, 'L' for long-term, 'U' for direct file access)</li>
+<li>label: (optional) description string (max 80 characters)</li>
+<li>v: version number (defaults to 1)</li>
+<li>extension: (conditional) object containing implementation-defined extensions. Required when the VHL Sharer supports the OAuth with SSRAA Option, in which case it SHALL include fhirBaseUrl (the FHIR base URL of the VHL Sharer, e.g., https://vhl-sharer.example.org)</li>
+</ul>
+</li>
+<li>Minify the JSON payload, Base64url-encode it, and prefix with vhlink:/</li>
+</ol>
+<p>QR Code Generation (HCERT/CWT Encoding):
+The VHL Sharer SHALL encode the VHL payload within an HCERT structure as per the [WHO SMART TRUST specification] (https://smart.who.int/trust/). The HCERT claim key SHALL be 5 for VHL. The QR code is then generated per the HCERT Specification.</p>
+<p>For complete HCERT specification, see: https://smart.who.int/trust/hcert_spec.html</p>
+<p>For HCERT logical model, see: https://smart.who.int/trust/StructureDefinition-HCert.html</p>
+<p>For SHL payload format details (the schema the VHL payload conforms to), see: https://hl7.org/fhir/uv/smart-health-cards-and-links/links-specification.html#construct-a-smart-health-link-payload</p>
+</div></td></tr><tr><td>OUT</td><td>verifiableCredential</td><td/><td>0..1</td><td><a href="http://hl7.org/fhir/R4/binary.html">Binary</a></td><td/><td><div><p>A Binary resource (contentType application/vc+ld+json) containing a W3C Verifiable Credential that carries the VHL. Populated only when format='vc' and the VHL Sharer supports the VC Enveloped VHL.</p>
+<p>The VC is a JSON-LD document per the W3C Verifiable Credentials Data Model v2 with an embedded proof of type DataIntegrityProof (cryptosuite ecdsa-2019) per W3C Verifiable Credential Data Integrity 1.0. The VC is issued and signed by the VHL Sharer using its trust-network key (same DSC/key material used for HCERT/CWT signing), so the VHL Receiver validates the VC proof against the trust list via the existing trust framework (no new trust mechanism introduced).</p>
+<p>The credentialSubject carries the VHL payload (conforming to the SHL payload format) with the same fields that are otherwise embedded at HCERT claim key 5 (url, key, flag, label, exp, v, extension). Exactly one of qrcode or verifiableCredential SHALL be populated.</p>
+<p>For details see ITI-YY3 VC Enveloped VHL Carrier (Option — format=vc).</p>
+</div></td></tr></table></div>
+  </text>
+  <url value="https://profiles.ihe.net/ITI/VHL/OperationDefinition/generate-vhl"/>
+  <version value="1.0.0-comment"/>
+  <name value="GenerateVHL"/>
+  <title value="Generate VHL"/>
+  <status value="active"/>
+  <kind value="operation"/>
+  <date value="2026-06-14T15:37:09-05:00"/>
+  <publisher value="IHE IT Infrastructure Technical Committee"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <contact>
+    <name value="IHE IT Infrastructure Technical Committee"/>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <description value="This operation generates a Verifiable Health Link (VHL) for transmission or display. The VHL MAY be returned as a QR code (HCERT/CWT) or, when the VHL Sharer supports the VC Envelope Option, as a signed W3C Verifiable Credential.&#xA;&#xA;Input Parameters:&#xA;- sourceIdentifier: Patient identifier (required)&#xA;- exp: Expiration time in Epoch seconds (optional)&#xA;- flag: Single-character flags in alphabetical order - L (long-term use), P (Passcode required), U (direct file access) (optional)&#xA;- label: Short description up to 80 characters (optional)&#xA;- passcode: User-supplied passcode for passcode-protected VHLs (optional)&#xA;- purposeOfUse: Purpose(s) of use the VHL Holder is authorizing for this share, bound to the HL7 v3 PurposeOfUse value set (optional). Populates Consent.provision.purpose when an IHE PCF Consent is bound to the generated folder.&#xA;- format: Requested output carrier - 'qrcode' (default) or 'vc'. 'vc' requires the VHL Sharer to support the VC Envelope Option.&#xA;&#xA;Output Generation:&#xA;- When format=qrcode: Returns a Binary resource containing the QR code image (PNG or SVG format) that encodes the VHL as an HCERT/CWT structure.&#xA;- When format=vc: Returns a Binary resource (media type application/vc+ld+json) containing a JSON-LD Verifiable Credential whose credentialSubject carries the VHL payload, signed with the VHL Sharer's trust-network key using W3C Data Integrity (DataIntegrityProof, cryptosuite ecdsa-2019).&#xA;- Exactly one of qrcode or verifiableCredential SHALL be populated."/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <code value="generate-vhl"/>
+  <system value="false"/>
+  <type value="true"/>
+  <instance value="false"/>
+  <parameter>
+    <name value="sourceIdentifier"/>
+    <use value="in"/>
+    <min value="1"/>
+    <max value="1"/>
+    <documentation value="A FHIR Identifier (business identifier such as MRN, passport number, or national ID) that the VHL Sharer uses to locate the Patient record and that Patient's documents. Serialized as a FHIR token search parameter (`system|code`, e.g., `urn:oid:2.16.840.1.113883.2.4.6.3|PASSPORT123`)."/>
+    <type value="string"/>
+    <searchType value="token"/>
+  </parameter>
+  <parameter>
+    <name value="exp"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="Optional. Number representing expiration time in Epoch seconds."/>
+    <type value="positiveInt"/>
+  </parameter>
+  <parameter>
+    <name value="flag"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="Optional. String created by concatenating single-character flags in alphabetical order. L (long-term use), P (Passcode required)"/>
+    <type value="string"/>
+    <searchType value="string"/>
+  </parameter>
+  <parameter>
+    <name value="label"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="Optional. String no longer than 80 characters that provides a short description of the data behind the VHL."/>
+    <type value="string"/>
+    <searchType value="string"/>
+  </parameter>
+  <parameter>
+    <name value="passcode"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="Optional. User-supplied passcode for passcode-protected VHLs. If provided, the VHL Sharer SHALL securely hash and store this passcode for validation during manifest retrieval (ITI-YY5). The 'P' flag SHALL be included in the flag parameter when a passcode is set."/>
+    <type value="string"/>
+    <searchType value="string"/>
+  </parameter>
+  <parameter>
+    <name value="purposeOfUse"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="*"/>
+    <documentation value="Optional. Purpose(s) of use the VHL Holder is authorizing for this share (e.g., TREAT, HPAYMT, HRESCH). The VHL Sharer SHALL persist these value(s) against the generated folder ID. When the VHL Sharer is grouped with an IHE PCF Consent Creator or Consent Recipient, these values SHALL populate Consent.provision.purpose on any Consent created for or bound to this folder. At ITI-YY5 the VHL Sharer MAY use the recorded purpose to enforce consistency with the VHL Receiver's declared purpose claim (e.g., the OAuth access token's purposeOfUse claim, the SSRAA hl7-b2b extension, or an equivalent claim carried in a Verifiable Credential)."/>
+    <type value="string"/>
+    <searchType value="token"/>
+  </parameter>
+  <parameter>
+    <name value="format"/>
+    <use value="in"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="Optional. Requested carrier for the returned VHL. Allowed values: 'qrcode' (default - HCERT/CWT QR code) or 'vc' (W3C Verifiable Credential). The 'vc' value requires the VHL Sharer to support the VC Enveloped VHL Option; if unsupported, the VHL Sharer SHALL return an OperationOutcome error. If omitted, the VHL Sharer SHALL default to 'qrcode'."/>
+    <type value="code"/>
+  </parameter>
+  <parameter>
+    <name value="qrcode"/>
+    <use value="out"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="A Binary resource containing the QR code image (PNG or SVG format) that encodes the VHL as an HCERT/CWT structure. Populated when format='qrcode' (default).&#xA;&#xA;VHL Payload Construction:&#xA;1. Generate a unique folder ID with 256-bit entropy to serve as the List resource identifier&#xA;2. Generate a 32-byte (256-bit) random encryption key, base64url-encode it (resulting in 43 characters) - this is the 'key' parameter&#xA;3. Construct the manifest URL as a query on the base List resource:&#xA;   - If VHL Sharer supports Include DocumentReference Option:&#xA;     [base]/List?_id=[folder-id]&amp;code=folder&amp;status=current&amp;patient.identifier=[patient-id]&amp;_include=List:item&#xA;   - If VHL Sharer does NOT support Include DocumentReference Option:&#xA;     [base]/List?_id=[folder-id]&amp;code=folder&amp;status=current&amp;patient.identifier=[patient-id]&#xA;4. Create the VHL payload (using the SHL payload format) as a JSON object with:&#xA;   - url: the manifest URL from step 3&#xA;   - key: the base64url-encoded encryption key from step 2 (43 characters)&#xA;   - exp: (optional) expiration time in Epoch seconds&#xA;   - flag: (optional) flags string (e.g., 'P' for passcode, 'L' for long-term, 'U' for direct file access)&#xA;   - label: (optional) description string (max 80 characters)&#xA;   - v: version number (defaults to 1)&#xA;   - extension: (conditional) object containing implementation-defined extensions. Required when the VHL Sharer supports the OAuth with SSRAA Option, in which case it SHALL include fhirBaseUrl (the FHIR base URL of the VHL Sharer, e.g., https://vhl-sharer.example.org)&#xA;5. Minify the JSON payload, Base64url-encode it, and prefix with vhlink:/&#xA;&#xA;QR Code Generation (HCERT/CWT Encoding):&#xA;The VHL Sharer SHALL encode the VHL payload within an HCERT structure as per the [WHO SMART TRUST specification] (https://smart.who.int/trust/). The HCERT claim key SHALL be 5 for VHL. The QR code is then generated per the HCERT Specification.&#xA;&#xA;For complete HCERT specification, see: https://smart.who.int/trust/hcert_spec.html&#xA;&#xA;For HCERT logical model, see: https://smart.who.int/trust/StructureDefinition-HCert.html&#xA;&#xA;For SHL payload format details (the schema the VHL payload conforms to), see: https://hl7.org/fhir/uv/smart-health-cards-and-links/links-specification.html#construct-a-smart-health-link-payload"/>
+    <type value="Binary"/>
+  </parameter>
+  <parameter>
+    <name value="verifiableCredential"/>
+    <use value="out"/>
+    <min value="0"/>
+    <max value="1"/>
+    <documentation value="A Binary resource (contentType application/vc+ld+json) containing a W3C Verifiable Credential that carries the VHL. Populated only when format='vc' and the VHL Sharer supports the VC Enveloped VHL.&#xA;&#xA;The VC is a JSON-LD document per the W3C Verifiable Credentials Data Model v2 with an embedded proof of type DataIntegrityProof (cryptosuite ecdsa-2019) per W3C Verifiable Credential Data Integrity 1.0. The VC is issued and signed by the VHL Sharer using its trust-network key (same DSC/key material used for HCERT/CWT signing), so the VHL Receiver validates the VC proof against the trust list via the existing trust framework (no new trust mechanism introduced).&#xA;&#xA;The credentialSubject carries the VHL payload (conforming to the SHL payload format) with the same fields that are otherwise embedded at HCERT claim key 5 (url, key, flag, label, exp, v, extension). Exactly one of qrcode or verifiableCredential SHALL be populated.&#xA;&#xA;For details see ITI-YY3 VC Enveloped VHL Carrier (Option — format=vc)."/>
+    <type value="Binary"/>
+  </parameter>
+</OperationDefinition>

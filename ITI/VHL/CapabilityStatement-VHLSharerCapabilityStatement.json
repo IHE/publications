@@ -1,0 +1,101 @@
+{
+  "resourceType" : "CapabilityStatement",
+  "id" : "VHLSharerCapabilityStatement",
+  "text" : {
+    "status" : "extensions",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CapabilityStatement VHLSharerCapabilityStatement</b></p><a name=\"VHLSharerCapabilityStatement\"> </a><a name=\"hcVHLSharerCapabilityStatement\"> </a><h2 id=\"title\">VHL Sharer Server Capability Statement</h2><ul><li>Implementation Guide Version: 1.0.0-comment </li><li>FHIR Version: 4.0.1 </li><li>Supported Formats: <code>application/fhir+json</code>, <code>application/fhir+xml</code></li><li>Published on: 2024-12-31 </li><li>Published by: IHE IT Infrastructure Technical Committee </li></ul><blockquote class=\"impl-note\"><p><strong>Note to Implementers: FHIR Capabilities</strong></p><p>Any FHIR capability may be 'allowed' by the system unless explicitly marked as 'SHALL NOT'. A few items are marked as MAY in the Implementation Guide to highlight their potential relevance to the use case.</p></blockquote><h2 id=\"rest\">FHIR RESTful Capabilities</h2><div class=\"panel panel-default\"><div class=\"panel-heading\"><h3 id=\"mode1\" class=\"panel-title\">Mode: <code>server</code></h3></div><div class=\"panel-body\"><div><p>VHL Sharer provides access to document manifests (List resources) and references (DocumentReference resources) authorized by Verified Health Links (VHLs). Authorization is based on validated VHL tokens containing manifest URLs with folder IDs.</p>\n</div><div class=\"lead\"><em>Security</em></div><blockquote><div><p>Implementations SHALL support ATNA Authenticate Node [ITI-19] for mutual TLS authentication. VHL-based authorization is required (folder ID in _id parameter), optionally supplemented by OAuth 2.0 or other token-based authentication.</p>\n</div></blockquote></div></div><h3 id=\"resourcesCap1\">Capabilities by Resource/Profile</h3><h4 id=\"resourcesSummary1\">Summary</h4><p>The summary table lists the resources that are part of this configuration, and for each resource it lists:</p><ul><li>The relevant profiles (if any)</li><li>The interactions supported by each resource (<b><span class=\"bg-info\">R</span></b>ead, <b><span class=\"bg-info\">S</span></b>earch, <b><span class=\"bg-info\">U</span></b>pdate, and <b><span class=\"bg-info\">C</span></b>reate, are always shown, while <b><span class=\"bg-info\">VR</span></b>ead, <b><span class=\"bg-info\">P</span></b>atch, <b><span class=\"bg-info\">D</span></b>elete, <b><span class=\"bg-info\">H</span></b>istory on <b><span class=\"bg-info\">I</span></b>nstance, or <b><span class=\"bg-info\">H</span></b>istory on <b><span class=\"bg-info\">T</span></b>ype are only present if at least one of the resources has support for them.</li><li><span>The required, recommended, and some optional search parameters (if any). </span></li><li>The linked resources enabled for <code>_include</code></li><li>The other resources enabled for <code>_revinclude</code></li><li>The operations on the resource (if any)</li></ul><div class=\"table-responsive\"><table class=\"table table-condensed table-hover\"><thead><tr><th><b>Resource Type</b></th><th><b>Profile</b></th><th class=\"text-center\"><b title=\"GET a resource (read interaction)\">R</b></th><th class=\"text-center\"><b title=\"GET all set of resources of the type (search interaction)\">S</b></th><th class=\"text-center\"><b title=\"PUT a new resource version (update interaction)\">U</b></th><th class=\"text-center\"><b title=\"POST a new resource (create interaction)\">C</b></th><th><b title=\"Required and recommended search parameters\">Searches</b></th><th><code><b>_include</b></code></th><th><code><b>_revinclude</b></code></th><th><b>Operations</b></th></tr></thead><tbody><tr><td><a href=\"#List1-1\">List</a></td><td><a href=\"http://hl7.org/fhir/R4/list.html\">http://hl7.org/fhir/StructureDefinition/List</a></td><td class=\"text-center\"/><td class=\"text-center\">y</td><td class=\"text-center\"/><td class=\"text-center\"/><td>_id, identifier, patient, code, status</td><td><code>List:item</code></td><td/><td/></tr><tr><td><a href=\"#DocumentReference1-2\">DocumentReference</a></td><td><a href=\"http://hl7.org/fhir/R4/documentreference.html\">http://hl7.org/fhir/StructureDefinition/DocumentReference</a></td><td class=\"text-center\">y</td><td class=\"text-center\"/><td class=\"text-center\"/><td class=\"text-center\"/><td/><td/><td/><td/></tr></tbody></table></div><hr/><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 id=\"List1-1\" class=\"panel-title\"><span style=\"float: right;\">Resource Conformance: unspecified </span>List</h4></div><div class=\"panel-body\"><div class=\"container\"><div class=\"row\"><div class=\"col-lg-6\"><span class=\"lead\">Base System Profile</span><br/><a href=\"http://hl7.org/fhir/R4/list.html\">List</a></div><div class=\"col-lg-3\"><span class=\"lead\">Profile Conformance</span><br/><b>SHALL</b></div><div class=\"col-lg-3\"><span class=\"lead\">Reference Policy</span><br/></div></div><p/><div class=\"row\"><div class=\"col-lg-6\"><span class=\"lead\">Interaction summary</span><br/><ul><li>Supports <br/><code>search-type</code><div><p>Search for List resources by folder ID, identifier, patient, code, or status. Used to retrieve document manifests authorized by VHLs. This transaction uses HTTP POST to the _search endpoint to securely transmit authorization parameters.</p>\n</div></li></ul></div></div><p/><div class=\"row\"><div class=\"col-12\"><span class=\"lead\">Documentation</span><blockquote><div><p>The List resource represents a folder or collection of documents authorized by a VHL. The List.id (folder ID) has 256-bit entropy and serves as the authorization token. List.entry.item contains references to DocumentReference resources.</p>\n</div></blockquote></div></div><div class=\"row\"><div class=\"col-lg-7\"><span class=\"lead\">Search Parameters</span><table class=\"table table-condensed table-hover\"><thead><tr><th>Conformance</th><th>Parameter</th><th>Type</th><th>Documentation</th></tr></thead><tbody><tr><td><b>SHALL</b></td><td><a href=\"http://hl7.org/fhir/R4/resource.html#search\">_id</a></td><td><code>token</code></td><td><div><p>Folder ID with 256-bit entropy from the VHL. This is the primary authorization mechanism. SHALL be supported.</p>\n</div></td></tr><tr><td><b>SHALL</b></td><td><a href=\"http://hl7.org/fhir/R4/list.html#search\">identifier</a></td><td><code>token</code></td><td><div><p>Business identifier for the List/folder. SHOULD be supported.</p>\n</div></td></tr><tr><td><b>SHALL</b></td><td><a href=\"http://hl7.org/fhir/R4/list.html#search\">patient</a></td><td><code>reference</code></td><td><div><p>The patient whose documents are referenced in the List. SHOULD be supported. The VHL Sharer SHALL accept chained searches on patient.identifier (e.g., patient.identifier=system|value) for List searches.</p>\n</div></td></tr><tr><td><b>SHALL</b></td><td>code</td><td><code>token</code></td><td><div><p>The type of List, typically 'folder' from MHD CodeSystem. SHOULD be supported.</p>\n</div></td></tr><tr><td><b>SHALL</b></td><td><a href=\"http://hl7.org/fhir/R4/list.html#search\">status</a></td><td><code>token</code></td><td><div><p>The status of the List (current, retired, etc.). SHOULD be supported.</p>\n</div></td></tr></tbody></table></div><div class=\"col-lg-5\">\u00a0</div></div></div></div></div><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 id=\"DocumentReference1-2\" class=\"panel-title\"><span style=\"float: right;\">Resource Conformance: unspecified </span>DocumentReference</h4></div><div class=\"panel-body\"><div class=\"container\"><div class=\"row\"><div class=\"col-lg-6\"><span class=\"lead\">Base System Profile</span><br/><a href=\"http://hl7.org/fhir/R4/documentreference.html\">DocumentReference</a></div><div class=\"col-lg-3\"><span class=\"lead\">Profile Conformance</span><br/><b>SHALL</b></div><div class=\"col-lg-3\"><span class=\"lead\">Reference Policy</span><br/></div></div><p/><div class=\"row\"><div class=\"col-lg-6\"><span class=\"lead\">Interaction summary</span><br/><ul><li>Supports <br/><code>read</code><div><p>Read DocumentReference by ID. May be used after Retrieve Manifest to get updated metadata.</p>\n</div></li></ul></div></div><p/><div class=\"row\"><div class=\"col-12\"><span class=\"lead\">Documentation</span><blockquote><div><p>DocumentReference resources are included in search results via the _include parameter. They are not directly searchable in this transaction but are returned as part of the List search response.</p>\n</div></blockquote></div></div></div></div></div></div>"
+  },
+  "url" : "https://profiles.ihe.net/ITI/VHL/CapabilityStatement/VHLSharerCapabilityStatement",
+  "version" : "1.0.0-comment",
+  "name" : "VHLSharerCapabilityStatement",
+  "title" : "VHL Sharer Server Capability Statement",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2024-12-31",
+  "publisher" : "IHE IT Infrastructure Technical Committee",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
+  "description" : "Capability Statement for a VHL Sharer implementing the Retrieve Manifest [ITI-YY5] transaction as a server. This server supports FHIR search on List resources with _include parameter to retrieve document manifests authorized by Verified Health Links.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "kind" : "requirements",
+  "fhirVersion" : "4.0.1",
+  "format" : ["application/fhir+json",
+  "application/fhir+xml"],
+  "rest" : [{
+    "mode" : "server",
+    "documentation" : "VHL Sharer provides access to document manifests (List resources) and references (DocumentReference resources) authorized by Verified Health Links (VHLs). Authorization is based on validated VHL tokens containing manifest URLs with folder IDs.",
+    "security" : {
+      "description" : "Implementations SHALL support ATNA Authenticate Node [ITI-19] for mutual TLS authentication. VHL-based authorization is required (folder ID in _id parameter), optionally supplemented by OAuth 2.0 or other token-based authentication."
+    },
+    "resource" : [{
+      "type" : "List",
+      "profile" : "http://hl7.org/fhir/StructureDefinition/List",
+      "documentation" : "The List resource represents a folder or collection of documents authorized by a VHL. The List.id (folder ID) has 256-bit entropy and serves as the authorization token. List.entry.item contains references to DocumentReference resources.",
+      "interaction" : [{
+        "code" : "search-type",
+        "documentation" : "Search for List resources by folder ID, identifier, patient, code, or status. Used to retrieve document manifests authorized by VHLs. This transaction uses HTTP POST to the _search endpoint to securely transmit authorization parameters."
+      }],
+      "searchInclude" : ["List:item"],
+      "searchParam" : [{
+        "name" : "_id",
+        "definition" : "http://hl7.org/fhir/SearchParameter/Resource-id",
+        "type" : "token",
+        "documentation" : "Folder ID with 256-bit entropy from the VHL. This is the primary authorization mechanism. SHALL be supported."
+      },
+      {
+        "name" : "identifier",
+        "definition" : "http://hl7.org/fhir/SearchParameter/clinical-identifier",
+        "type" : "token",
+        "documentation" : "Business identifier for the List/folder. SHOULD be supported."
+      },
+      {
+        "name" : "patient",
+        "definition" : "http://hl7.org/fhir/SearchParameter/clinical-patient",
+        "type" : "reference",
+        "documentation" : "The patient whose documents are referenced in the List. SHOULD be supported. The VHL Sharer SHALL accept chained searches on patient.identifier (e.g., patient.identifier=system|value) for List searches."
+      },
+      {
+        "name" : "code",
+        "type" : "token",
+        "documentation" : "The type of List, typically 'folder' from MHD CodeSystem. SHOULD be supported."
+      },
+      {
+        "name" : "status",
+        "definition" : "http://hl7.org/fhir/SearchParameter/List-status",
+        "type" : "token",
+        "documentation" : "The status of the List (current, retired, etc.). SHOULD be supported."
+      }]
+    },
+    {
+      "type" : "DocumentReference",
+      "profile" : "http://hl7.org/fhir/StructureDefinition/DocumentReference",
+      "documentation" : "DocumentReference resources are included in search results via the _include parameter. They are not directly searchable in this transaction but are returned as part of the List search response.",
+      "interaction" : [{
+        "code" : "read",
+        "documentation" : "Read DocumentReference by ID. May be used after Retrieve Manifest to get updated metadata."
+      }]
+    }]
+  }]
+}

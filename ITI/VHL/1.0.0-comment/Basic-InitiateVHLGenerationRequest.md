@@ -1,0 +1,111 @@
+# Resource InitiateVHLGenerationRequest
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Basic",
+  "id" : "InitiateVHLGenerationRequest",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.url",
+    "valueUri" : "https://profiles.ihe.net/ITI/VHL/Requirements/InitiateVHLGenerationRequest"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.version",
+    "valueString" : "1.0.0-comment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.name",
+    "valueString" : "InitiateVHLGenerationRequest"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.title",
+    "valueString" : "Request that a VHL authorization mechanism be issued"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.date",
+    "valueDateTime" : "2026-06-14T15:36:12-05:00"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.publisher",
+    "valueString" : "IHE IT Infrastructure Technical Committee"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "name" : "IHE IT Infrastructure Technical Committee",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.description",
+    "valueMarkdown" : "A [VHL Holder](ActorDefinition-VHLHolder.html) initiates a request to a [VHL Sharer](ActorDefinition-VHLSharer.html) to generate a Verified Health Link (VHL) that references one or more health documents. The resulting VHL allows the Holder to subsequently share access to those documents with a [VHL Receiver](ActorDefinition-VHLReceiver.html).\nThe Holder MAY include optional parameters to constrain or protect the issued VHL-such as defining an expiration period, scoping which documents are included, or requiring a passcode for retrieval. These parameters guide the Sharer's issuance of the VHL and influence the conditions under which the associated documents may be accessed.\n\n**Preconditions:**\n  * The [VHL Holder](ActorDefinition-VHLHolder.html) SHALL trust that the [VHL Sharer](ActorDefinition-VHLSharer.html) has been authorized by its jurisdiction to generate VHLs and to provide access to the corresponding health documents.\n  * Optionally, the [VHL Holder](ActorDefinition-VHLHolder.html) has selected consent directives or selective disclosure preferences, as permitted by the applicable content profile. "
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.jurisdiction",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.actor",
+    "valueCanonical" : "https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.key",
+      "valueId" : "initiate-request"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.label",
+      "valueString" : "Initiate Request"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.conformance",
+      "valueCode" : "SHALL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.requirement",
+      "valueMarkdown" : "Initiate a request to generate a Verified Health Link (VHL)"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "Requirements"
+    }]
+  }
+}
+
+```

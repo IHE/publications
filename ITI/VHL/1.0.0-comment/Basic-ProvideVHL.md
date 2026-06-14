@@ -1,0 +1,111 @@
+# Resource ProvideVHL
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Basic",
+  "id" : "ProvideVHL",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.url",
+    "valueUri" : "https://profiles.ihe.net/ITI/VHL/Requirements/ProvideVHL"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.version",
+    "valueString" : "1.0.0-comment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.name",
+    "valueString" : "ProvideVHL"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.title",
+    "valueString" : "Provide VHL"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.date",
+    "valueDateTime" : "2026-06-14T15:36:12-05:00"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.publisher",
+    "valueString" : "IHE IT Infrastructure Technical Committee"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "name" : "IHE IT Infrastructure Technical Committee",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.description",
+    "valueMarkdown" : "The Provide VHL transaction enables a [VHL Holder](ActorDefinition-VHLHolder.html) to transmit a Verified Health Link (VHL) to a [VHL Receiver](ActorDefinition-VHLReceiver.html). The VHL serves as a signed authorization mechanism that allows the Receiver to subsequently retrieve one or more health documents from a VHL Sharer.\n\nDepending on the use case, the VHL MAY be rendered or transmitted using formats such as QR code or deep link (HTTPS URL). "
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.jurisdiction",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.actor",
+    "valueCanonical" : "https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.key",
+      "valueId" : "transmit-vhl"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.label",
+      "valueString" : "Transmit VHL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.conformance",
+      "valueCode" : "SHALL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.requirement",
+      "valueMarkdown" : "This transaction SHALL support at least one rendering and transmission mechanism to accommodate the use cases and deployment scenario, including:\r\n- QR codes displayed on mobile devices or printed materials\r\n- Deep links shared via secure messaging or email"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "Requirements"
+    }]
+  }
+}
+
+```

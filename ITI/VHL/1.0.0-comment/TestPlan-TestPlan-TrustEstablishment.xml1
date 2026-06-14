@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Basic xmlns="http://hl7.org/fhir">
+  <id value="TestPlan-TrustEstablishment"/>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.url">
+    <valueUri value="https://profiles.ihe.net/ITI/VHL/TestPlan/TestPlan-TrustEstablishment"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.version">
+    <valueString value="1.0.0-comment"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.name">
+    <valueString value="TestPlan_TrustEstablishment"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.title">
+    <valueString value="Integration Test Plan – Trust Establishment"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.status">
+    <valueCode value="active"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.date">
+    <valueDateTime value="2026-06-14T15:36:12-05:00"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.publisher">
+    <valueString value="IHE IT Infrastructure Technical Committee"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <telecom>
+        <system value="url"/>
+        <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <telecom>
+        <system value="email"/>
+        <value value="iti@ihe.net"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <name value="IHE IT Infrastructure Technical Committee"/>
+      <telecom>
+        <system value="email"/>
+        <value value="iti@ihe.net"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.description">
+    <valueMarkdown value="Integration test plan for the **Trust Establishment** workflow of the IHE ITI Verifiable Health&#xA;Links (VHL) profile.&#xA;&#xA;Scope: validates multi-actor, cross-transaction scenarios that span ITI-YY1 (Submit PKI Material)&#xA;and ITI-YY2 (Retrieve Trust List) and cannot be covered by unit tests. Tests verify that a DID&#xA;Document submitted in YY1 is subsequently retrievable via YY2 in the same session, that both&#xA;the VHL Sharer and VHL Receiver can retrieve peer keys, that a full round-trip signature&#xA;verification succeeds, and that revocation propagates correctly across actors.&#xA;&#xA;Actors exercised: VHL Sharer, Trust Anchor, VHL Receiver."/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.jurisdiction">
+    <valueCodeableConcept>
+      <coding>
+        <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+        <code value="001"/>
+      </coding>
+    </valueCodeableConcept>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/VHLSharer"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/TrustAnchor"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/VHLReceiver"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase">
+    <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence">
+      <valueInteger value="1"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun">
+      <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative">
+        <valueMarkdown value="Execute all scenarios in the Gherkin integration feature file&#xA;`integration-trust-establishment.feature`.&#xA;&#xA;Scenario groups:&#xA;- **Group A – PKI Submission (YY1):** VHL Sharer and VHL Receiver each submit a DID Document;&#xA;  Trust Anchor validates and catalogs both.&#xA;- **Group B – Trust Retrieval by VHL Receiver (YY2):** VHL Receiver retrieves the newly&#xA;  registered VHL Sharer DID Document and all active DID Documents.&#xA;- **Group C – Trust Retrieval by VHL Sharer (YY2):** VHL Sharer retrieves its own DID Document&#xA;  and the VHL Receiver's DID Document to prepare for manifest authentication.&#xA;- **Group D – Round-trip Verification:** Verifies that the VHL Receiver can successfully verify&#xA;  a VHL Sharer signature using the public key retrieved in Group B/C; verifies rejection of&#xA;  signatures from unknown DIDs.&#xA;- **Group E – Revocation Propagation:** Verifies that a revoked DID Document is no longer&#xA;  returned by the Trust Anchor, and that the VHL Receiver's cache is invalidated.&#xA;&#xA;These scenarios require shared state across ITI-YY1 and ITI-YY2 (e.g., a DID submitted in&#xA;YY1 must be retrievable in YY2 in the same test execution)."/>
+      </extension>
+      <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script">
+        <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language">
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:ietf:bcp:13"/>
+              <code value="text/x-gherkin"/>
+            </coding>
+            <text value="Gherkin"/>
+          </valueCodeableConcept>
+        </extension>
+        <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString">
+          <valueString value="integration-trust-establishment.feature"/>
+        </extension>
+      </extension>
+    </extension>
+  </extension>
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/fhir-types"/>
+      <code value="TestPlan"/>
+    </coding>
+  </code>
+</Basic>
