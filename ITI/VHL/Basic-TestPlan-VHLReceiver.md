@@ -1,0 +1,410 @@
+# Resource TestPlan-VHLReceiver
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Basic",
+  "id" : "TestPlan-VHLReceiver",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.url",
+    "valueUri" : "https://profiles.ihe.net/ITI/VHL/TestPlan/TestPlan-VHLReceiver"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.version",
+    "valueString" : "1.0.0-comment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.name",
+    "valueString" : "TestPlan_VHLReceiver"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.title",
+    "valueString" : "Test Plan – VHL Receiver"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.date",
+    "valueDateTime" : "2026-06-14T15:37:09-05:00"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.publisher",
+    "valueString" : "IHE IT Infrastructure Technical Committee"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "name" : "IHE IT Infrastructure Technical Committee",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.description",
+    "valueMarkdown" : "Unit test plan for the **VHL Receiver** actor of the IHE ITI Verifiable Health Links (VHL) profile.\n\nScope: validates all behaviour expected of a VHL Receiver across its four transactions:\nsubmitting its own PKI material (ITI-YY1 initiator), retrieving the trust list (ITI-YY2\ninitiator), decoding and validating a VHL QR code (ITI-YY4 responder), and requesting the\ndocument manifest (ITI-YY5 initiator). Each test suite exercises three atomic feature files."
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.jurisdiction",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope",
+    "valueReference" : {
+      "reference" : "ActorDefinition/VHLReceiver"
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence",
+      "valueInteger" : 1
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY1 Message Semantics** – Shared message format file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY1-submit-pki-material-message.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY1 VHL Receiver Initiator Expected Actions** – The VHL Receiver shares the same\ninitiator requirements as the VHL Sharer: key pair generation, submission pathway, provenance\nmetadata, response handling, and private key retention."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY1-submit-pki-material-initiator.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY1 Security Considerations** – Shared security file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY1-submit-pki-material-security.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence",
+      "valueInteger" : 2
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY2 Message Semantics** – Shared message format file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY2-retrieve-trust-list-message.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY2 VHL Receiver Initiator Expected Actions** – Verifies that the VHL Receiver correctly\nconstructs retrieval requests, validates and caches returned DID Documents, maps public keys to\nintended uses, tracks expiry, handles revocation notifications, and processes error responses.\nSource: sections 2:3.YY2.4.1, 2:3.YY2.4.2.3, and 2:3.YY2.5."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY2-retrieve-trust-list-initiator.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY2 Security Considerations** – Shared security file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY2-retrieve-trust-list-security.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence",
+      "valueInteger" : 3
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY4 Message Semantics** – Verifies the VHL QR code message format: ISO/IEC 18004:2015\nAlphanumeric mode, HC1: prefix, Base45 encoding, ZLIB/DEFLATE compression, CWT structure\n(protected header: alg/kid, claims: exp/iat/hcert), and VHL payload fields (url/key/flag/exp)."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY4-provide-vhl-message.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY4 VHL Receiver Responder Expected Actions** – Verifies the complete nine-step decode\npipeline: QR scanning (ISO/IEC 18004:2015), HC1: verification, Base45 decoding, ZLIB\ndecompression, CWT parsing (RFC 8392), COSE signature verification (RFC 8152) using the\ntrust list, CWT claims validation (exp/iat), hcert extraction (claim key -260 / 5), and VHL\npayload validation (url/key/flag/exp). Also covers post-decoding actions, all decode failure\nrejections, and optional acknowledgment.\nSource: sections 2:3.YY4.4.1.4 (Receiver Expected Actions) and 2:3.YY4.5 (Security)."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY4-provide-vhl-responder.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY4 Security Considerations** – Verifies signature verification requirements, trust list\nenforcement, expiry enforcement, PHI exclusion from the QR payload, and acknowledgment safety."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY4-provide-vhl-security.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence",
+      "valueInteger" : 4
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY5 Message Semantics** – Shared message format file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY5-retrieve-manifest-message.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY5 VHL Receiver Initiator Expected Actions** – Verifies request construction (HTTP POST\n/List/_search), HTTP Message Signature creation (Content-Digest, Signature-Input with keyid/alg/created,\nSignature), OAuth with FAST Option (client_credentials, private_key_jwt, required scopes, Bearer\nheader, token caching), TLS requirements, and Bundle response processing (match/include search.mode,\nindividual DocumentReference retrieval fallback).\nSource: sections 2:3.YY5.4.1 (Request Message) and 2:3.YY5.5.2 (HTTP Message Signatures)."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY5-retrieve-manifest-initiator.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "**ITI-YY5 Security Considerations** – Shared security file."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "ITI-YY5-retrieve-manifest-security.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "TestPlan"
+    }]
+  }
+}
+
+```

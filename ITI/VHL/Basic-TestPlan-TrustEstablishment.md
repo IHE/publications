@@ -1,0 +1,137 @@
+# Resource TestPlan-TrustEstablishment
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Basic",
+  "id" : "TestPlan-TrustEstablishment",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.url",
+    "valueUri" : "https://profiles.ihe.net/ITI/VHL/TestPlan/TestPlan-TrustEstablishment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.version",
+    "valueString" : "1.0.0-comment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.name",
+    "valueString" : "TestPlan_TrustEstablishment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.title",
+    "valueString" : "Integration Test Plan – Trust Establishment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.date",
+    "valueDateTime" : "2026-06-14T15:37:09-05:00"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.publisher",
+    "valueString" : "IHE IT Infrastructure Technical Committee"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact",
+    "valueContactDetail" : {
+      "name" : "IHE IT Infrastructure Technical Committee",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.description",
+    "valueMarkdown" : "Integration test plan for the **Trust Establishment** workflow of the IHE ITI Verifiable Health\nLinks (VHL) profile.\n\nScope: validates multi-actor, cross-transaction scenarios that span ITI-YY1 (Submit PKI Material)\nand ITI-YY2 (Retrieve Trust List) and cannot be covered by unit tests. Tests verify that a DID\nDocument submitted in YY1 is subsequently retrievable via YY2 in the same session, that both\nthe VHL Sharer and VHL Receiver can retrieve peer keys, that a full round-trip signature\nverification succeeds, and that revocation propagates correctly across actors.\n\nActors exercised: VHL Sharer, Trust Anchor, VHL Receiver."
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.jurisdiction",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope",
+    "valueReference" : {
+      "reference" : "ActorDefinition/VHLSharer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope",
+    "valueReference" : {
+      "reference" : "ActorDefinition/TrustAnchor"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope",
+    "valueReference" : {
+      "reference" : "ActorDefinition/VHLReceiver"
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence",
+      "valueInteger" : 1
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative",
+        "valueMarkdown" : "Execute all scenarios in the Gherkin integration feature file\n`integration-trust-establishment.feature`.\n\nScenario groups:\n- **Group A – PKI Submission (YY1):** VHL Sharer and VHL Receiver each submit a DID Document;\n  Trust Anchor validates and catalogs both.\n- **Group B – Trust Retrieval by VHL Receiver (YY2):** VHL Receiver retrieves the newly\n  registered VHL Sharer DID Document and all active DID Documents.\n- **Group C – Trust Retrieval by VHL Sharer (YY2):** VHL Sharer retrieves its own DID Document\n  and the VHL Receiver's DID Document to prepare for manifest authentication.\n- **Group D – Round-trip Verification:** Verifies that the VHL Receiver can successfully verify\n  a VHL Sharer signature using the public key retrieved in Group B/C; verifies rejection of\n  signatures from unknown DIDs.\n- **Group E – Revocation Propagation:** Verifies that a revoked DID Document is no longer\n  returned by the Trust Anchor, and that the VHL Receiver's cache is invalidated.\n\nThese scenarios require shared state across ITI-YY1 and ITI-YY2 (e.g., a DID submitted in\nYY1 must be retrievable in YY2 in the same test execution)."
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "urn:ietf:bcp:13",
+              "code" : "text/x-gherkin"
+            }],
+            "text" : "Gherkin"
+          }
+        },
+        {
+          "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString",
+          "valueString" : "integration-trust-establishment.feature"
+        }],
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script"
+      }],
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "TestPlan"
+    }]
+  }
+}
+
+```

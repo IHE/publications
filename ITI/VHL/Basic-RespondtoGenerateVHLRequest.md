@@ -1,0 +1,153 @@
+# Resource RespondtoGenerateVHLRequest
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Basic",
+  "id" : "RespondtoGenerateVHLRequest",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.url",
+    "valueUri" : "https://profiles.ihe.net/ITI/VHL/Requirements/RespondtoGenerateVHLRequest"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.version",
+    "valueString" : "1.0.0-comment"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.name",
+    "valueString" : "RespondtoGenerateVHLRequest"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.title",
+    "valueString" : "Generate a VHL Authorization Mechanism Based on Query Parameters"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.experimental",
+    "valueBoolean" : true
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.date",
+    "valueDateTime" : "2026-06-14T15:37:09-05:00"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.publisher",
+    "valueString" : "IHE IT Infrastructure Technical Committee"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.contact",
+    "valueContactDetail" : {
+      "name" : "IHE IT Infrastructure Technical Committee",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "iti@ihe.net"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.description",
+    "valueMarkdown" : "The [VHL Sharer](ActorDefinition-VHLSharer.html) SHALL generate a Verified Health Link (VHL) to be issued to a [VHL Holder](ActorDefinition-VHLHolder.html).\n\nThe Sharer SHALL conduct all necessary tasks to prepare the content referenced by the VHL. These tasks MAY be further defined by applicable content profiles or implementation guides, and MAY include:\n* Generation of new documents in real time;\n* Querying for existing documents (e.g., IPS, CDA, FHIR Bundles) associated with the VHL Holder; or\n* Creation of digital signatures on one or more documents.\n\nOnce content preparation is complete, the Sharer SHALL construct the VHL payload and sign it to produce a cryptographically verifiable authorization mechanism.\n\n**Optional behaviors:**\n* The Sharer MAY record consent in accordance with the [Record Consent](Requirements-RecordConsent.html) requirement.\n* The Sharer MAY log an audit event describing the VHL issuance, in accordance with the [Audit Event – Accessed Health Data](Requirements-AuditEventAccess.html) requirement."
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.jurisdiction",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.actor",
+    "valueCanonical" : "https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLSharer"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.key",
+      "valueId" : "collect-content"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.label",
+      "valueString" : "Collect Content"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.conformance",
+      "valueCode" : "SHALL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.requirement",
+      "valueMarkdown" : "Collect any pre-existing content and/or generate any necessary content that will be referenced as part of the VHL."
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.key",
+      "valueId" : "generate-vhl-payload"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.label",
+      "valueString" : "Generate VHL Payload"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.conformance",
+      "valueCode" : "SHALL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.requirement",
+      "valueMarkdown" : "Generate the payload for the VHL in accordance with the applicable content profile."
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.key",
+      "valueId" : "sign-VHL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.label",
+      "valueString" : "Sign VHL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.conformance",
+      "valueCode" : "SHALL"
+    },
+    {
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement.requirement",
+      "valueMarkdown" : "Sign the VHL payload to produce a verifiable and cryptographically bound artifact."
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Requirements.statement"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "Requirements"
+    }]
+  }
+}
+
+```

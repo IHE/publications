@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Basic xmlns="http://hl7.org/fhir">
+  <id value="TestPlan-QRCodeFlow"/>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.url">
+    <valueUri value="https://profiles.ihe.net/ITI/VHL/TestPlan/TestPlan-QRCodeFlow"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.version">
+    <valueString value="1.0.0-comment"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.name">
+    <valueString value="TestPlan_QRCodeFlow"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.title">
+    <valueString value="Integration Test Plan – QR Code Generation and Validation Flow"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.status">
+    <valueCode value="active"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.date">
+    <valueDateTime value="2026-06-14T15:37:09-05:00"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.publisher">
+    <valueString value="IHE IT Infrastructure Technical Committee"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <telecom>
+        <system value="url"/>
+        <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <telecom>
+        <system value="email"/>
+        <value value="iti@ihe.net"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.contact">
+    <valueContactDetail>
+      <name value="IHE IT Infrastructure Technical Committee"/>
+      <telecom>
+        <system value="email"/>
+        <value value="iti@ihe.net"/>
+      </telecom>
+    </valueContactDetail>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.description">
+    <valueMarkdown value="Integration test plan for the **QR Code Generation and Validation Flow** of the IHE ITI&#xA;Verifiable Health Links (VHL) profile.&#xA;&#xA;Scope: validates multi-actor, cross-transaction scenarios that span ITI-YY3 (Generate VHL),&#xA;ITI-YY4 (Provide VHL), and ITI-YY5 (Retrieve Manifest). Tests verify that the QR code&#xA;generated in YY3 can be decoded in YY4, that the decoded VHL payload's manifest URL is used&#xA;correctly in YY5, and that the full end-to-end pipeline including passcode handling, signature&#xA;verification, and VHL authorization succeeds.&#xA;&#xA;Actors exercised: VHL Holder, VHL Sharer, VHL Receiver."/>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.jurisdiction">
+    <valueCodeableConcept>
+      <coding>
+        <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+        <code value="001"/>
+      </coding>
+    </valueCodeableConcept>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/VHLHolder"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/VHLSharer"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.scope">
+    <valueReference>
+      <reference value="ActorDefinition/VHLReceiver"/>
+    </valueReference>
+  </extension>
+  <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase">
+    <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.sequence">
+      <valueInteger value="1"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun">
+      <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.narrative">
+        <valueMarkdown value="Execute all scenarios in the Gherkin integration feature file&#xA;`integration-qrcode-flow.feature`.&#xA;&#xA;Scenario groups:&#xA;- **Group A – VHL Generation (YY3):** VHL Holder requests VHL; VHL Sharer generates a valid&#xA;  HCERT-signed QR code; VHL payload URL is verifiable; passcode is retained by VHL Holder.&#xA;- **Group B – QR Presentation and Decoding (YY4):** VHL Receiver decodes the QR code&#xA;  generated in Group A using the trust list; COSE signature verified; decoded manifest URL&#xA;  matches the YY5 endpoint; passcode is obtained from VHL Holder when P flag is present.&#xA;- **Group C – Manifest Retrieval (YY5):** VHL Receiver uses the decoded folder ID and URL&#xA;  to send an authenticated HTTP POST; VHL Sharer verifies the receiver's signature using the&#xA;  trust list; correct passcode results in HTTP 200 Bundle; incorrect passcode results in 422.&#xA;- **Group D – Full End-to-End:** Complete flow from YY3 generation through YY4 decode to YY5&#xA;  manifest retrieval succeeds; passcode-protected variant succeeds end-to-end.&#xA;- **Group E – Expired and Revoked VHL Rejection:** VHL Receiver rejects an expired QR code at&#xA;  YY4 without proceeding to YY5; VHL Sharer returns 403 for a revoked VHL at YY5.&#xA;&#xA;These scenarios require pipeline state: the QR code from YY3 feeds YY4, and the decoded&#xA;payload from YY4 feeds YY5."/>
+      </extension>
+      <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script">
+        <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.language">
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:ietf:bcp:13"/>
+              <code value="text/x-gherkin"/>
+            </coding>
+            <text value="Gherkin"/>
+          </valueCodeableConcept>
+        </extension>
+        <extension url="http://hl7.org/fhir/5.0/StructureDefinition/extension-TestPlan.testCase.testRun.script.sourceString">
+          <valueString value="integration-qrcode-flow.feature"/>
+        </extension>
+      </extension>
+    </extension>
+  </extension>
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/fhir-types"/>
+      <code value="TestPlan"/>
+    </coding>
+  </code>
+</Basic>
