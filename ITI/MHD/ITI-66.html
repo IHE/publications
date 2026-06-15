@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>2:3.66 Find Document Lists [ITI-66] - Mobile access to Health Documents (MHD) v4.2.3</title>
+    <title>2:3.66 Find Document Lists [ITI-66] - Mobile access to Health Documents (MHD) v4.2.4</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -74,7 +74,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.2.3 - Trial-Implementation
+            <span style="display:inline-block;">4.2.4 - Trial-Implementation
 
 
 
@@ -225,7 +225,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.3: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.4: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>2:3.66 Find Document Lists [ITI-66]</h2>
   
 
@@ -353,6 +353,9 @@ This IHE extension on parameters defined as <a href="SearchParameter-List-Source
 <p><strong>status</strong>:
 This parameter, of type token, specifies the status of the List. If included in the query, the Document Consumer shall populate the code portion of the token, the system portion of the token shall not be populated. See Table 2:3.66.4.1.3.1-3: Values for status of List for mapping to XDS on FHIR Option.</p>
 
+<p><strong>targetCommunityIdList</strong>:
+This IHE extension on parameters defined as <a href="SearchParameter-IHE-TargetCommunityIdList.html">IHE-TargetCommunityIdList</a>, of type uri, specifies the homeCommunityId value supplied in the List Resource. This parameter will only function when the <a href="1332_actor_options.html#13327-target-communities-option">Target Communities Option</a> is declared, and where the backend also supports it (e.g., <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html#18.2.6">XCA Target Communities</a>.)</p>
+
 <h6 id="23664122-populating-expected-response-format">2:3.66.4.1.2.2 Populating Expected Response Format</h6>
 
 <p>The FHIR standard provides encodings for responses as either XML or JSON. The Document Responder shall support both message encodings, whilst the Document Consumer shall support one and may support both.</p>
@@ -434,6 +437,10 @@ patient=9876&amp;code=submissionset&amp;status=current&amp;designationType=http:
       <td>status</td>
       <td>$XDSSubmissionSetStatus</td>
     </tr>
+    <tr>
+      <td>targetCommunityIdList</td>
+      <td>$targetCommunityIdList</td>
+    </tr>
   </tbody>
 </table>
 
@@ -472,6 +479,10 @@ patient=9876&amp;code=submissionset&amp;status=current&amp;designationType=http:
     <tr>
       <td>status</td>
       <td>$XDSFolderStatus</td>
+    </tr>
+    <tr>
+      <td>targetCommunityIdList</td>
+      <td>$targetCommunityIdList</td>
     </tr>
   </tbody>
 </table>
@@ -520,6 +531,12 @@ patient=9876&amp;code=submissionset&amp;status=current&amp;designationType=http:
     </tr>
   </tbody>
 </table>
+
+<h6 id="23664132-target-communities-option">2:3.66.4.1.3.2 Target Communities Option</h6>
+
+<p>The Document Responder SHOULD populate the <strong>homeCommunityId</strong> extension when a value is available and policy allows it to be populated. The population of this element is identified in the <a href="1332_actor_options.html#13327-target-communities-option">Target Communities Option</a> but the extension population is allowed at any time.</p>
+
+<p>The Document Responder declaring the <strong>Target Communities Option</strong> shall support the <a href="SearchParameter-IHE-TargetCommunityIdList.html">targetCommunityIdList</a> search parameter, and shall return an error when the homeCommunityId can not be fulfilled, See <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html#18.2.6">XCA Target Communities Option</a>. The Document Consumer declaring the <strong>Target Communities Option</strong> MAY use this search parameter. Actors not declaring the <strong>Target Communities Option</strong> may support the search parameter. Support for the Search parameter shall be declared in the product/implementation CapabilityStatement.</p>
 
 <h4 id="236642-find-document-lists-response-message">2:3.66.4.2 Find Document Lists Response Message</h4>
 
@@ -622,7 +639,7 @@ patient=9876&amp;code=submissionset&amp;status=current&amp;designationType=http:
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.3 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Oct 31, 2025 14:38-0500">2025-10-31</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.4 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Jun 15, 2026 14:55-0500">2026-06-15</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

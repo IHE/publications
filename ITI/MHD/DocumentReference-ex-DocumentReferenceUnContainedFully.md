@@ -1,4 +1,4 @@
-# DocumentReference for Comprehensive minimally filled metadata - Mobile access to Health Documents (MHD) v4.2.3
+# DocumentReference for Comprehensive minimally filled metadata - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,11 +8,11 @@
 
 Profile: [MHD DocumentReference Comprehensive UnContained References Option](StructureDefinition-IHE.MHD.UnContained.Comprehensive.DocumentReference.md)
 
-Security Label: test health data (Details: ActReason code HTEST = 'test health data')
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
 
-**masterIdentifier**: [Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.3.0/NamingSystem-uri.html)/urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340 (use: usual, )
+**masterIdentifier**: Identifier type for XDS UniqueId/urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340
 
-**identifier**: [Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.3.0/NamingSystem-uri.html)/urn:uuid:0c287d32-01e3-4d87-9953-9fcc9404eb21 (use: official, )
+**identifier**: Identifier type for XDS UniqueId/urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340, Identifier type for XDS entryUUID/urn:uuid:0c287d32-01e3-4d87-9953-9fcc9404eb21
 
 **status**: Current
 
@@ -46,16 +46,16 @@ Security Label: test health data (Details: ActReason code HTEST = 'test health d
 | | | | | | | | |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | - | **ContentType** | **Language** | **Url** | **Size** | **Hash** | **Title** | **Creation** |
-| * | text/plain | English | [http://example.com/nowhere.txt](http://example.com/nowhere.txt) | 0 | `ZGEzOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ==` | DocumentReference for Comprehensive minimally filled metadata | 2020-12-31 23:50:50-0500 |
+| * | text/plain | English | [http://example.com/nowhere.txt](http://example.com/nowhere.txt) | 0 | `2jmj7l5rSw0yVb/vlWAYkK/YBwk=` | DocumentReference for Comprehensive minimally filled metadata | 2020-12-31 23:50:50-0500 |
 
-**format**:[IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds-sd:text:2008](https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.4.0/CodeSystem-formatcode.html#formatcode-urn.58ihe.58iti.58xds-sd.58text.582008)(ITI XDS-SD TEXT)
+**format**: [IHE Format Code set for use with Document Sharing: urn:ihe:iti:xds-sd:text:2008](https://profiles.ihe.net/fhir/ihe.formatcode.fhir/1.5.0/CodeSystem-formatcode.html#formatcode-urn.58ihe.58iti.58xds-sd.58text.582008) (ITI XDS-SD TEXT)
 
 ### Contexts
 
 | | | | | | | |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | - | **Event** | **Period** | **FacilityType** | **PracticeSetting** | **SourcePatientInfo** | **Related** |
-| * | account receivable | 2020-12-31 23:50:50-0500 --> 2020-12-31 23:50:50-0500 | Children's hospital | Adult mental illness - specialty (qualifier value) | [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md) | Identifier:[Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.3.0/NamingSystem-uri.html)/urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759 |
+| * | account receivable | 2020-12-31 23:50:50-0500 --> 2020-12-31 23:50:50-0500 | Children's hospital | Adult mental illness - specialty (qualifier value) | [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md) | Identifier:[Uniform Resource Identifier (URI)](http://terminology.hl7.org/7.1.0/NamingSystem-uri.html)/urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759 |
 
 
 
@@ -66,137 +66,125 @@ Security Label: test health data (Details: ActReason code HTEST = 'test health d
   "resourceType" : "DocumentReference",
   "id" : "ex-DocumentReferenceUnContainedFully",
   "meta" : {
-    "profile" : [
-      "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"
-    ],
-    "security" : [
-      {
-        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
-        "code" : "HTEST"
-      }
-    ]
+    "profile" : ["https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"],
+    "security" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST"
+    }]
   },
   "masterIdentifier" : {
-    "use" : "usual",
+    "type" : {
+      "coding" : [{
+        "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType",
+        "code" : "uniqueId"
+      }]
+    },
     "system" : "urn:ietf:rfc:3986",
     "value" : "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340"
   },
-  "identifier" : [
-    {
-      "use" : "official",
-      "system" : "urn:ietf:rfc:3986",
-      "value" : "urn:uuid:0c287d32-01e3-4d87-9953-9fcc9404eb21"
-    }
-  ],
+  "identifier" : [{
+    "type" : {
+      "coding" : [{
+        "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType",
+        "code" : "uniqueId"
+      }]
+    },
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340"
+  },
+  {
+    "type" : {
+      "coding" : [{
+        "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType",
+        "code" : "entryUUID"
+      }]
+    },
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:0c287d32-01e3-4d87-9953-9fcc9404eb21"
+  }],
   "status" : "current",
   "type" : {
-    "coding" : [
-      {
-        "system" : "http://loinc.org",
-        "code" : "55107-7"
-      }
-    ]
+    "coding" : [{
+      "system" : "http://loinc.org",
+      "code" : "55107-7"
+    }]
   },
-  "category" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://loinc.org",
-          "code" : "11369-6"
-        }
-      ]
-    }
-  ],
+  "category" : [{
+    "coding" : [{
+      "system" : "http://loinc.org",
+      "code" : "11369-6"
+    }]
+  }],
   "subject" : {
     "reference" : "Patient/ex-patient"
   },
   "date" : "2020-12-31T23:50:50-05:00",
-  "author" : [
-    {
-      "reference" : "Practitioner/ex-practitioner"
-    }
-  ],
+  "author" : [{
+    "reference" : "Practitioner/ex-practitioner"
+  }],
   "authenticator" : {
     "reference" : "Practitioner/ex-practitioner"
   },
-  "relatesTo" : [
-    {
-      "code" : "appends",
-      "target" : {
-        "reference" : "DocumentReference/ex-documentreference"
-      }
+  "relatesTo" : [{
+    "code" : "appends",
+    "target" : {
+      "reference" : "DocumentReference/ex-documentreference"
     }
-  ],
+  }],
   "description" : "Example of a Comprehensive DocumentReference resource. This is minimally filled for all mandatory elements.",
-  "securityLabel" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-          "code" : "N"
-        }
-      ]
+  "securityLabel" : [{
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+      "code" : "N"
+    }]
+  }],
+  "content" : [{
+    "attachment" : {
+      "contentType" : "text/plain",
+      "language" : "en",
+      "url" : "http://example.com/nowhere.txt",
+      "size" : 0,
+      "hash" : "2jmj7l5rSw0yVb/vlWAYkK/YBwk=",
+      "title" : "DocumentReference for Comprehensive minimally filled metadata",
+      "creation" : "2020-12-31T23:50:50-05:00"
+    },
+    "format" : {
+      "system" : "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode",
+      "code" : "urn:ihe:iti:xds-sd:text:2008"
     }
-  ],
-  "content" : [
-    {
-      "attachment" : {
-        "contentType" : "text/plain",
-        "language" : "en",
-        "url" : "http://example.com/nowhere.txt",
-        "size" : 0,
-        "hash" : "ZGEzOWEzZWU1ZTZiNGIwZDMyNTViZmVmOTU2MDE4OTBhZmQ4MDcwOQ==",
-        "title" : "DocumentReference for Comprehensive minimally filled metadata",
-        "creation" : "2020-12-31T23:50:50-05:00"
-      },
-      "format" : {
-        "system" : "http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode",
-        "code" : "urn:ihe:iti:xds-sd:text:2008"
-      }
-    }
-  ],
+  }],
   "context" : {
-    "event" : [
-      {
-        "coding" : [
-          {
-            "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-            "code" : "ACCTRECEIVABLE"
-          }
-        ]
-      }
-    ],
+    "event" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+        "code" : "ACCTRECEIVABLE"
+      }]
+    }],
     "period" : {
       "start" : "2020-12-31T23:50:50-05:00",
       "end" : "2020-12-31T23:50:50-05:00"
     },
     "facilityType" : {
-      "coding" : [
-        {
-          "system" : "http://snomed.info/sct",
-          "code" : "82242000"
-        }
-      ]
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "82242000"
+      }]
     },
     "practiceSetting" : {
-      "coding" : [
-        {
-          "system" : "http://snomed.info/sct",
-          "code" : "408467006"
-        }
-      ]
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "408467006"
+      }]
     },
     "sourcePatientInfo" : {
       "reference" : "Patient/ex-patient"
     },
-    "related" : [
-      {
-        "identifier" : {
-          "system" : "urn:ietf:rfc:3986",
-          "value" : "urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759"
-        }
+    "related" : [{
+      "identifier" : {
+        "system" : "urn:ietf:rfc:3986",
+        "value" : "urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759"
       }
-    ]
+    }]
   }
 }
 

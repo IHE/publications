@@ -1,4 +1,4 @@
-# Audit Event for Generate Metadata ITI-106 Transaction at Source - Mobile access to Health Documents (MHD) v4.2.3
+# Audit Event for Generate Metadata ITI-106 Transaction at Source - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:AuditGenerateMetadataSource |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source | *Version*:4.2.4 |
+| Active as of 2026-06-15 | *Computable Name*:AuditGenerateMetadataSource |
 
  
 Defines constraints on the AuditEvent Resource to record when a Generate Metadata ITI-106 Transaction happens at the Soure. 
@@ -26,7 +26,7 @@ Defines constraints on the AuditEvent Resource to record when a Generate Metadat
 
 * Examples for this Profile: [AuditEvent/ex-auditGenerateMetadata-source](AuditEvent-ex-auditGenerateMetadata-source.md)
 
-You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/ihe.iti.mhd|current/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source)
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.GenerateMetadata.Audit.Source.json)
 
 ### Formal Views of Profile Content
 
@@ -45,145 +45,127 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.GenerateMeta
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.GenerateMetadata.Audit.Source",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source",
-  "version" : "4.2.3",
+  "version" : "4.2.4",
   "name" : "AuditGenerateMetadataSource",
   "title" : "Audit Event for Generate Metadata ITI-106 Transaction at Source",
   "status" : "active",
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-15T14:55:16-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "Defines constraints on the AuditEvent Resource to record when a Generate Metadata ITI-106 Transaction happens at the Soure.\n- Build off of the IHE Basic Audit Create event\n- add the ITI-106 as a subtype\n- client is the Document Source\n- Server is the Document Recipient\n- may have user, app, organization agent(s)\n- shall have a document uri\n- note the Document Source may add a patient if it knows it.",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "fhirVersion" : "4.0.1",
-  "mapping" : [
-    {
-      "identity" : "workflow",
-      "uri" : "http://hl7.org/fhir/workflow",
-      "name" : "Workflow Pattern"
-    },
-    {
-      "identity" : "rim",
-      "uri" : "http://hl7.org/v3",
-      "name" : "RIM Mapping"
-    },
-    {
-      "identity" : "dicom",
-      "uri" : "http://nema.org/dicom",
-      "name" : "DICOM Tag Mapping"
-    },
-    {
-      "identity" : "w5",
-      "uri" : "http://hl7.org/fhir/fivews",
-      "name" : "FiveWs Pattern Mapping"
-    },
-    {
-      "identity" : "w3c.prov",
-      "uri" : "http://www.w3.org/ns/prov",
-      "name" : "W3C PROV"
-    },
-    {
-      "identity" : "fhirprovenance",
-      "uri" : "http://hl7.org/fhir/provenance",
-      "name" : "FHIR Provenance Mapping"
-    }
-  ],
+  "mapping" : [{
+    "identity" : "workflow",
+    "uri" : "http://hl7.org/fhir/workflow",
+    "name" : "Workflow Pattern"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "dicom",
+    "uri" : "http://nema.org/dicom",
+    "name" : "DICOM Tag Mapping"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  },
+  {
+    "identity" : "w3c.prov",
+    "uri" : "http://www.w3.org/ns/prov",
+    "name" : "W3C PROV"
+  },
+  {
+    "identity" : "fhirprovenance",
+    "uri" : "http://hl7.org/fhir/provenance",
+    "name" : "FHIR Provenance Mapping"
+  }],
   "kind" : "resource",
   "abstract" : false,
   "type" : "AuditEvent",
   "baseDefinition" : "https://profiles.ihe.net/ITI/BALP/StructureDefinition/IHE.BasicAudit.Create",
   "derivation" : "constraint",
   "differential" : {
-    "element" : [
-      {
-        "id" : "AuditEvent",
-        "path" : "AuditEvent"
-      },
-      {
-        "id" : "AuditEvent.modifierExtension",
-        "path" : "AuditEvent.modifierExtension",
-        "max" : "0"
-      },
-      {
-        "id" : "AuditEvent.subtype",
-        "path" : "AuditEvent.subtype",
-        "min" : 2
-      },
-      {
-        "id" : "AuditEvent.subtype:iti106",
-        "path" : "AuditEvent.subtype",
-        "sliceName" : "iti106",
-        "min" : 1,
-        "max" : "1",
-        "patternCoding" : {
-          "system" : "urn:ihe:event-type-code",
-          "code" : "ITI-106",
-          "display" : "Generate Metadata"
-        }
-      },
-      {
-        "id" : "AuditEvent.agent:client",
-        "path" : "AuditEvent.agent",
-        "sliceName" : "client",
-        "short" : "Document Source",
-        "constraint" : [
-          {
-            "key" : "val-audit-source",
-            "severity" : "error",
-            "human" : "The Audit Source is this agent too.",
-            "expression" : "$this.who = %resource.source.observer",
-            "source" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source"
-          }
-        ]
-      },
-      {
-        "id" : "AuditEvent.agent:server",
-        "path" : "AuditEvent.agent",
-        "sliceName" : "server",
-        "short" : "Document Recipient"
-      },
-      {
-        "id" : "AuditEvent.entity:data",
-        "path" : "AuditEvent.entity",
-        "sliceName" : "data",
-        "short" : "document"
+    "element" : [{
+      "id" : "AuditEvent",
+      "path" : "AuditEvent"
+    },
+    {
+      "id" : "AuditEvent.modifierExtension",
+      "path" : "AuditEvent.modifierExtension",
+      "max" : "0"
+    },
+    {
+      "id" : "AuditEvent.subtype",
+      "path" : "AuditEvent.subtype",
+      "min" : 2
+    },
+    {
+      "id" : "AuditEvent.subtype:iti106",
+      "path" : "AuditEvent.subtype",
+      "sliceName" : "iti106",
+      "min" : 1,
+      "max" : "1",
+      "patternCoding" : {
+        "system" : "urn:ihe:event-type-code",
+        "code" : "ITI-106",
+        "display" : "Generate Metadata"
       }
-    ]
+    },
+    {
+      "id" : "AuditEvent.agent:client",
+      "path" : "AuditEvent.agent",
+      "sliceName" : "client",
+      "short" : "Document Source",
+      "constraint" : [{
+        "key" : "val-audit-source",
+        "severity" : "error",
+        "human" : "The Audit Source is this agent too.",
+        "expression" : "$this.who = %resource.source.observer",
+        "source" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source"
+      }]
+    },
+    {
+      "id" : "AuditEvent.agent:server",
+      "path" : "AuditEvent.agent",
+      "sliceName" : "server",
+      "short" : "Document Recipient"
+    },
+    {
+      "id" : "AuditEvent.entity:data",
+      "path" : "AuditEvent.entity",
+      "sliceName" : "data",
+      "short" : "document"
+    }]
   }
 }
 

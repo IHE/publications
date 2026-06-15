@@ -8,11 +8,11 @@
 <tr><td colspan="5" class="hierarchy"><br/><a href="https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views" title="Legend for this format"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3goXBCwdPqAP0wAAAldJREFUOMuNk0tIlFEYhp9z/vE2jHkhxXA0zJCMitrUQlq4lnSltEqCFhFG2MJFhIvIFpkEWaTQqjaWZRkp0g26URZkTpbaaOJkDqk10szoODP//7XIMUe0elcfnPd9zsfLOYplGrpRwZaqTtw3K7PtGem7Q6FoidbGgqHVy/HRb669R+56zx7eRV1L31JGxYbBtjKK93cxeqfyQHbehkZbUkK20goELEuIzEd+dHS+qz/Y8PTSif0FnGkbiwcAjHaU1+QWOptFiyCLp/LnKptpqIuXHx6rbR26kJcBX3yLgBfnd7CxwJmflpP2wUg0HIAoUUpZBmKzELGWcN8nAr6Gpu7tLU/CkwAaoKTWRSQyt89Q8w6J+oVQkKnBoblH7V0PPvUOvDYXfopE/SJmALsxnVm6LbkotrUtNowMeIrVrBcBpaMmdS0j9df7abpSuy7HWehwJdt1lhVwi/J58U5beXGAF6c3UXLycw1wdFklArBn87xdh0ZsZtArghBdAA3+OEDVubG4UEzP6x1FOWneHh2VDAHBAt80IbdXDcesNoCvs3E5AFyNSU5nbrDPZpcUEQQTFZiEVx+51fxMhhyJEAgvlriadIJZZksRuwBYMOPBbO3hePVVqgEJhFeUuFLhIPkRP6BQLIBrmMenujm/3g4zc398awIe90Zb5A1vREALqneMcYgP/xVQWlG+Ncu5vgwwlaUNx+3799rfe96u9K0JSDXcOzOTJg4B6IgmXfsygc7/Bvg9g9E58/cDVmGIBOP/zT8Bz1zqWqpbXIsd0O9hajXfL6u4BaOS6SeWAAAAAElFTkSuQmCC" alt="doco" style="background-color: inherit"/> Documentation for this format</a></td></tr></table></div>
   </text>
   <url value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet"/>
-  <version value="4.2.3"/>
+  <version value="4.2.4"/>
   <name value="SubmissionSetComprehensive"/>
   <title value="MHD SubmissionSet Comprehensive"/>
   <status value="active"/>
-  <date value="2025-10-31T14:38:46-05:00"/>
+  <date value="2026-06-15T14:55:16-05:00"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -64,7 +64,7 @@
   <derivation value="constraint"/>
   <snapshot>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version">
-      <valueString value="4.2.3"/>
+      <valueString value="4.2.4"/>
     </extension>
     <element id="List">
       <path value="List"/>
@@ -662,6 +662,46 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="List.extension:homeCommunityId">
+      <path value="List.extension"/>
+      <sliceName value="homeCommunityId"/>
+      <short value="The homeCommunityId where the artifact resides"/>
+      <definition value="The globally unique, immutable, identifier of the homeCommunityId entity where this artifact resides. The format of the value is an OID."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-HomeCommunityId"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="SubmissionSet-Mapping"/>
+        <map value="SubmissionSet.homeCommunityId"/>
+      </mapping>
+    </element>
     <element id="List.extension:sourceId">
       <path value="List.extension"/>
       <sliceName value="sourceId"/>
@@ -779,7 +819,7 @@
       <slicing>
         <discriminator>
           <type value="value"/>
-          <path value="use"/>
+          <path value="type"/>
         </discriminator>
         <rules value="open"/>
       </slicing>
@@ -821,8 +861,8 @@
     <element id="List.identifier:uniqueId">
       <path value="List.identifier"/>
       <sliceName value="uniqueId"/>
-      <short value="Business identifier"/>
-      <definition value="Identifier for the List assigned for business purposes outside the context of FHIR."/>
+      <short value="SubmissionSet.uniqueId"/>
+      <definition value="The XDS UniqueId for the SubmissionSet. Globally unique identifier for the SubmissionSet assigned by the creating entity."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -857,10 +897,10 @@
     <element id="List.identifier:entryUUID">
       <path value="List.identifier"/>
       <sliceName value="entryUUID"/>
-      <short value="Business identifier"/>
-      <definition value="Identifier for the List assigned for business purposes outside the context of FHIR."/>
+      <short value="SubmissionSet.entryUUID"/>
+      <definition value="The XDS entryUUID for the SubmissionSet. A globally unique identifier used to identify the XDS SubmissionSet in ebRIM."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="1"/>
       <base>
         <path value="List.identifier"/>
         <min value="0"/>

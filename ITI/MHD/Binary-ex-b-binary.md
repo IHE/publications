@@ -1,4 +1,4 @@
-# Example document that says: Hello World - Mobile access to Health Documents (MHD) v4.2.3
+# Example document that says: Hello World - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -18,5 +18,5 @@ Hello World
 text/plain:
 
 ```
-[B@7ec6cb51
+[B@461b1fdb
 ```
