@@ -1,4 +1,4 @@
-# MHD List Types ValueSet - Mobile access to Health Documents (MHD) v4.2.3
+# MHD List Types ValueSet - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDlistTypesVS | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:MHDlistTypesVS |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDlistTypesVS | *Version*:4.2.4 |
+| Active as of 2026-06-15 | *Computable Name*:MHDlistTypesVS |
 
  
 ValueSet of the MHD List Types allowed 
@@ -46,66 +46,50 @@ ValueSet of the MHD List Types allowed
   "resourceType" : "ValueSet",
   "id" : "MHDlistTypesVS",
   "url" : "https://profiles.ihe.net/ITI/MHD/ValueSet/MHDlistTypesVS",
-  "version" : "4.2.3",
+  "version" : "4.2.4",
   "name" : "MHDlistTypesVS",
   "title" : "MHD List Types ValueSet",
   "status" : "active",
   "experimental" : false,
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-15T14:55:16-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "ValueSet of the MHD List Types allowed",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "compose" : {
-    "include" : [
+    "include" : [{
+      "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes",
+      "concept" : [{
+        "code" : "folder"
+      },
       {
-        "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/MHDlistTypes",
-        "concept" : [
-          {
-            "code" : "folder"
-          },
-          {
-            "code" : "submissionset"
-          }
-        ]
-      }
-    ]
+        "code" : "submissionset"
+      }]
+    }]
   }
 }
 

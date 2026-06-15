@@ -1,4 +1,4 @@
-# uniqueId Identifier - Mobile access to Health Documents (MHD) v4.2.3
+# uniqueId Identifier - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UniqueIdIdentifier | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:UniqueIdIdentifier |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UniqueIdIdentifier | *Version*:4.2.4 |
+| Active as of 2026-06-15 | *Computable Name*:UniqueIdIdentifier |
 
  
 uniqueId Identifier 
@@ -19,9 +19,9 @@ uniqueId Identifier
 **Usages:**
 
 * Derived from this DataType Profile: [uniqueId Identifier for SubmissionSet](StructureDefinition-IHE.MHD.SubmissionSetUniqueIdIdentifier.md)
-* Use this DataType Profile: [MHD DocumentReference Minimal](StructureDefinition-IHE.MHD.Minimal.DocumentReference.md) and [MHD Folder Minimal](StructureDefinition-IHE.MHD.Minimal.Folder.md)
+* Use this DataType Profile: [MHD DocumentReference Minimal](StructureDefinition-IHE.MHD.Minimal.DocumentReference.md), [MHD Folder Minimal](StructureDefinition-IHE.MHD.Minimal.Folder.md) and [MHD DocumentReference for Simplified Publish](StructureDefinition-IHE.MHD.SimplifiedPublish.DocumentReference.md)
 
-You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/ihe.iti.mhd|current/StructureDefinition/IHE.MHD.UniqueIdIdentifier)
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.UniqueIdIdentifier.json)
 
 ### Formal Views of Profile Content
 
@@ -40,93 +40,82 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.UniqueIdIden
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.UniqueIdIdentifier",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UniqueIdIdentifier",
-  "version" : "4.2.3",
+  "version" : "4.2.4",
   "name" : "UniqueIdIdentifier",
   "title" : "uniqueId Identifier",
   "status" : "active",
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-15T14:55:16-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "uniqueId Identifier\r\n\r\n- see [Appendix Z](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.9.1-identifier-type)",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "fhirVersion" : "4.0.1",
-  "mapping" : [
-    {
-      "identity" : "v2",
-      "uri" : "http://hl7.org/v2",
-      "name" : "HL7 v2 Mapping"
-    },
-    {
-      "identity" : "rim",
-      "uri" : "http://hl7.org/v3",
-      "name" : "RIM Mapping"
-    },
-    {
-      "identity" : "servd",
-      "uri" : "http://www.omg.org/spec/ServD/1.0/",
-      "name" : "ServD"
-    }
-  ],
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "servd",
+    "uri" : "http://www.omg.org/spec/ServD/1.0/",
+    "name" : "ServD"
+  }],
   "kind" : "complex-type",
   "abstract" : false,
   "type" : "Identifier",
   "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Identifier",
   "derivation" : "constraint",
   "differential" : {
-    "element" : [
-      {
-        "id" : "Identifier.use",
-        "path" : "Identifier.use",
-        "min" : 1,
-        "patternCode" : "usual"
-      },
-      {
-        "id" : "Identifier.system",
-        "path" : "Identifier.system",
-        "min" : 1
-      },
-      {
-        "id" : "Identifier.value",
-        "path" : "Identifier.value",
-        "min" : 1
+    "element" : [{
+      "id" : "Identifier.type",
+      "path" : "Identifier.type",
+      "min" : 1,
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType",
+          "code" : "uniqueId"
+        }]
       }
-    ]
+    },
+    {
+      "id" : "Identifier.system",
+      "path" : "Identifier.system",
+      "min" : 1
+    },
+    {
+      "id" : "Identifier.value",
+      "path" : "Identifier.value",
+      "min" : 1
+    }]
   }
 }
 

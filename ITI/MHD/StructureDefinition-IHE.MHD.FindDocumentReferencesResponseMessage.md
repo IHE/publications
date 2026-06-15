@@ -1,4 +1,4 @@
-# MHD Find Document References Response message - Mobile access to Health Documents (MHD) v4.2.3
+# MHD Find Document References Response message - Mobile access to Health Documents (MHD) v4.2.4
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessage | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:FindDocumentReferencesResponse |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessage | *Version*:4.2.4 |
+| Active as of 2026-06-15 | *Computable Name*:FindDocumentReferencesResponse |
 
  
 A profile on the Find Document References Response message for ITI-67 
@@ -18,7 +18,7 @@ A profile on the Find Document References Response message for ITI-67
 
 * Examples for this Profile: [Bundle/ex-findDocumentReferencesResponse](Bundle-ex-findDocumentReferencesResponse.md)
 
-You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/ihe.iti.mhd|current/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessage)
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.FindDocumentReferencesResponseMessage.json)
 
 ### Formal Views of Profile Content
 
@@ -37,135 +37,112 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.FindDocument
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.FindDocumentReferencesResponseMessage",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessage",
-  "version" : "4.2.3",
+  "version" : "4.2.4",
   "name" : "FindDocumentReferencesResponse",
   "title" : "MHD Find Document References Response message",
   "status" : "active",
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-15T14:55:16-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "A profile on the Find Document References Response message for ITI-67",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "fhirVersion" : "4.0.1",
-  "mapping" : [
-    {
-      "identity" : "v2",
-      "uri" : "http://hl7.org/v2",
-      "name" : "HL7 v2 Mapping"
-    },
-    {
-      "identity" : "rim",
-      "uri" : "http://hl7.org/v3",
-      "name" : "RIM Mapping"
-    },
-    {
-      "identity" : "cda",
-      "uri" : "http://hl7.org/v3/cda",
-      "name" : "CDA (R2)"
-    },
-    {
-      "identity" : "w5",
-      "uri" : "http://hl7.org/fhir/fivews",
-      "name" : "FiveWs Pattern Mapping"
-    }
-  ],
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "cda",
+    "uri" : "http://hl7.org/v3/cda",
+    "name" : "CDA (R2)"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
   "kind" : "resource",
   "abstract" : false,
   "type" : "Bundle",
   "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Bundle",
   "derivation" : "constraint",
   "differential" : {
-    "element" : [
-      {
-        "id" : "Bundle",
-        "path" : "Bundle"
-      },
-      {
-        "id" : "Bundle.type",
-        "path" : "Bundle.type",
-        "fixedCode" : "searchset"
-      },
-      {
-        "id" : "Bundle.total",
-        "path" : "Bundle.total",
-        "min" : 1
-      },
-      {
-        "id" : "Bundle.entry",
-        "path" : "Bundle.entry",
-        "slicing" : {
-          "discriminator" : [
-            {
-              "type" : "profile",
-              "path" : "resource"
-            }
-          ],
-          "rules" : "open"
-        }
-      },
-      {
-        "id" : "Bundle.entry.fullUrl",
-        "path" : "Bundle.entry.fullUrl",
-        "min" : 1
-      },
-      {
-        "id" : "Bundle.entry:DocumentReference",
-        "path" : "Bundle.entry",
-        "sliceName" : "DocumentReference",
-        "short" : "DocumentReference",
-        "min" : 0,
-        "max" : "*"
-      },
-      {
-        "id" : "Bundle.entry:DocumentReference.resource",
-        "path" : "Bundle.entry.resource",
-        "min" : 1,
-        "type" : [
-          {
-            "code" : "DocumentReference",
-            "profile" : [
-              "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference"
-            ]
-          }
-        ]
+    "element" : [{
+      "id" : "Bundle",
+      "path" : "Bundle"
+    },
+    {
+      "id" : "Bundle.type",
+      "path" : "Bundle.type",
+      "fixedCode" : "searchset"
+    },
+    {
+      "id" : "Bundle.total",
+      "path" : "Bundle.total",
+      "min" : 1
+    },
+    {
+      "id" : "Bundle.entry",
+      "path" : "Bundle.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "resource"
+        }],
+        "rules" : "open"
       }
-    ]
+    },
+    {
+      "id" : "Bundle.entry.fullUrl",
+      "path" : "Bundle.entry.fullUrl",
+      "min" : 1
+    },
+    {
+      "id" : "Bundle.entry:DocumentReference",
+      "path" : "Bundle.entry",
+      "sliceName" : "DocumentReference",
+      "short" : "DocumentReference",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Bundle.entry:DocumentReference.resource",
+      "path" : "Bundle.entry.resource",
+      "min" : 1,
+      "type" : [{
+        "code" : "DocumentReference"
+      }]
+    }]
   }
 }
 
