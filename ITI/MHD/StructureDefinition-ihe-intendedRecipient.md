@@ -1,4 +1,4 @@
-# Intended recipient of the SubmissionSet - Mobile access to Health Documents (MHD) v4.2.4
+# Intended recipient of the SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-intendedRecipient | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:IntendedRecipient |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-intendedRecipient | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:IntendedRecipient |
 
 holds the identity of the organization or person the SubmissionSet is intended. For XDR and eMail (e.g. Direct) this tends to be a Practitioner or Patient with a telecom holding an email, but this is not strictly required.
 
@@ -43,11 +43,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-intendedRecipien
   "resourceType" : "StructureDefinition",
   "id" : "ihe-intendedRecipient",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-intendedRecipient",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "IntendedRecipient",
   "title" : "Intended recipient of the SubmissionSet",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

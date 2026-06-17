@@ -1,4 +1,4 @@
-# MHD DocumentReference Patch Parameters - Mobile access to Health Documents (MHD) v4.2.4
+# MHD DocumentReference Patch Parameters - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Patch.Parameters | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:PatchParameters |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Patch.Parameters | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:PatchParameters |
 
  
 A profile on the Parameters resource to update the superseded DocumentReference status. 
@@ -38,11 +38,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Patch.Parame
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Patch.Parameters",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Patch.Parameters",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "PatchParameters",
   "title" : "MHD DocumentReference Patch Parameters",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

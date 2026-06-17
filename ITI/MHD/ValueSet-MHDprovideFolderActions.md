@@ -1,4 +1,4 @@
-# MHD Folder List Types ValueSet - Mobile access to Health Documents (MHD) v4.2.4
+# MHD Folder List Types ValueSet - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovideFolderActions | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:MHDprovideFolderActions |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovideFolderActions | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:MHDprovideFolderActions |
 
  
 A ValueSet of the allowed actions in a ITI-65 Provide Document Bundle for the Folder List type Resources. Where Folders are allowed to be Updated in addition to Created. 
@@ -46,12 +46,12 @@ A ValueSet of the allowed actions in a ITI-65 Provide Document Bundle for the Fo
   "resourceType" : "ValueSet",
   "id" : "MHDprovideFolderActions",
   "url" : "https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovideFolderActions",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "MHDprovideFolderActions",
   "title" : "MHD Folder List Types ValueSet",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

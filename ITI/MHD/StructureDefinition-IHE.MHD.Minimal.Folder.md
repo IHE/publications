@@ -1,4 +1,4 @@
-# MHD Folder Minimal - Mobile access to Health Documents (MHD) v4.2.4
+# MHD Folder Minimal - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:Folder |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:Folder |
 
  
 A profile on the List resource for MHD use as a Folder with minimal metadata constraints. 
@@ -25,7 +25,7 @@ A profile on the List resource for MHD use as a Folder with minimal metadata con
 * Derived from this Profile: [MHD Folder Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.Folder.md)
 * Use this Profile: [MHD Find Document Lists Response Message](StructureDefinition-IHE.MHD.FindDocumentListsResponseMessage.md) and [MHD Minimal Provide Document Bundle](StructureDefinition-IHE.MHD.Minimal.ProvideBundle.md)
 * Examples for this Profile: [List/ex-minimalFolder](List-ex-minimalFolder.md)
-* CapabilityStatements using this Profile: [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
+* CapabilityStatements using this Profile: [Document Responder (server) with Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md), [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
 
 You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.Minimal.Folder.json)
 
@@ -46,11 +46,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Minimal.Fold
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Minimal.Folder",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "Folder",
   "title" : "MHD Folder Minimal",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

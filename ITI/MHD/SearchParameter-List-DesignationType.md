@@ -1,4 +1,4 @@
-# search on the IHE defined extension for designationType - Mobile access to Health Documents (MHD) v4.2.4
+# search on the IHE defined extension for designationType - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/SearchParameter/List-DesignationType | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:DesignationType |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/SearchParameter/List-DesignationType | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:DesignationType |
 
  
 This SearchParameter enables finding Lists by the designationType code in a submissionSet or folder. 
@@ -23,10 +23,10 @@ This SearchParameter enables finding Lists by the designationType code in a subm
   "resourceType" : "SearchParameter",
   "id" : "List-DesignationType",
   "url" : "https://profiles.ihe.net/ITI/MHD/SearchParameter/List-DesignationType",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "DesignationType",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

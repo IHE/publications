@@ -1,4 +1,4 @@
-# Document Source (publisher) implementing ITI-65 FHIR Documents Publish Option - Mobile access to Health Documents (MHD) v4.2.4
+# Document Source (publisher) implementing ITI-65 FHIR Documents Publish Option - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Fdoc | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:IHE_MHD_DocumentSource_Fdoc |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Fdoc | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:IHE_MHD_DocumentSource_Fdoc |
 
  
 IHE ITI Mobile access to Health Documents (MHD) - Document Source (publisher) - with ITI-65 FHIR Documents Publish Option. 
@@ -25,12 +25,12 @@ IHE ITI Mobile access to Health Documents (MHD) - Document Source (publisher) - 
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.MHD.DocumentSource.Fdoc",
   "url" : "https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Fdoc",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "IHE_MHD_DocumentSource_Fdoc",
   "title" : "Document Source (publisher) implementing ITI-65 FHIR Documents Publish Option",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

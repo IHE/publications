@@ -1,4 +1,4 @@
-# Author organization of the SubmissionSet - Mobile access to Health Documents (MHD) v4.2.4
+# Author organization of the SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-authorOrg | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:AuthorOrg |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-authorOrg | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:AuthorOrg |
 
 When the author of the SubmissionSet is an Organization, this extension shall be used.
 
@@ -43,11 +43,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-authorOrg.csv), 
   "resourceType" : "StructureDefinition",
   "id" : "ihe-authorOrg",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-authorOrg",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "AuthorOrg",
   "title" : "Author organization of the SubmissionSet",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

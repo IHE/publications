@@ -1,4 +1,4 @@
-# MHD DocumentReference Minimal - Mobile access to Health Documents (MHD) v4.2.4
+# MHD DocumentReference Minimal - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:MinimalDocumentReference |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:MinimalDocumentReference |
 
  
 A profile on the DocumentReference resource for MHD with minimal metadata constraints. 
@@ -23,9 +23,9 @@ A profile on the DocumentReference resource for MHD with minimal metadata constr
 **Usages:**
 
 * Derived from this Profile: [MHD DocumentReference Comprehensive UnContained References Option](StructureDefinition-IHE.MHD.UnContained.Comprehensive.DocumentReference.md)
-* Use this Profile: [MHD Minimal Provide Document Bundle](StructureDefinition-IHE.MHD.Minimal.ProvideBundle.md)
+* Use this Profile: [MHD Find Document References Response message with Full-Text Search Option](StructureDefinition-IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch.md) and [MHD Minimal Provide Document Bundle](StructureDefinition-IHE.MHD.Minimal.ProvideBundle.md)
 * Examples for this Profile: [DocumentReference/ex-DocumentReferenceMinimal](DocumentReference-ex-DocumentReferenceMinimal.md) and [DocumentReference/ex-DocumentReferenceMinimalEncounter](DocumentReference-ex-DocumentReferenceMinimalEncounter.md)
-* CapabilityStatements using this Profile: [Document Consumer (client) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentConsumer.Target.md), [Document Consumer (client)](CapabilityStatement-IHE.MHD.DocumentConsumer.md), [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
+* CapabilityStatements using this Profile: [Document Consumer (client) with Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentConsumer.FullTextSearch.md), [Document Consumer (client) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentConsumer.Target.md), [Document Consumer (client)](CapabilityStatement-IHE.MHD.DocumentConsumer.md), [Document Responder (server) with Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md)... Show 2 more, [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
 
 You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json)
 
@@ -46,11 +46,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Minimal.Docu
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Minimal.DocumentReference",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.DocumentReference",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "MinimalDocumentReference",
   "title" : "MHD DocumentReference Minimal",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

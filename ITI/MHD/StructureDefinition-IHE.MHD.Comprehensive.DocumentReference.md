@@ -1,4 +1,4 @@
-# MHD DocumentReference Comprehensive - Mobile access to Health Documents (MHD) v4.2.4
+# MHD DocumentReference Comprehensive - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:ComprehensiveDocumentReference |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:ComprehensiveDocumentReference |
 
  
 A profile on the DocumentReference resource for MHD Comprehensive Option with Contained (not UnContained), compatible with XDS-on-FHIR and XCA use. 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Comprehensiv
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Comprehensive.DocumentReference",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "ComprehensiveDocumentReference",
   "title" : "MHD DocumentReference Comprehensive",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

@@ -1,4 +1,4 @@
-# Audit Event for Generate Metadata ITI-106 Transaction at Recipient - Mobile access to Health Documents (MHD) v4.2.4
+# Audit Event for Generate Metadata ITI-106 Transaction at Recipient - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Recipient | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:AuditGenerateMetadataRecipient |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Recipient | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:AuditGenerateMetadataRecipient |
 
  
 Defines constraints on the AuditEvent Resource to record when a Generate Metadata ITI-106 Transaction happens at the Recipient. 
@@ -45,11 +45,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.GenerateMeta
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.GenerateMetadata.Audit.Recipient",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Recipient",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "AuditGenerateMetadataRecipient",
   "title" : "Audit Event for Generate Metadata ITI-106 Transaction at Recipient",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

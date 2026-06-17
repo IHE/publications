@@ -1,4 +1,4 @@
-# Clinical code of the List - Mobile access to Health Documents (MHD) v4.2.4
+# Clinical code of the List - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:DesignationType |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:DesignationType |
 
 Expresses contentType of submissionSet or the codeList of a Folder. Usually expressed in LOINC or SNOMED.
 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-designationType.
   "resourceType" : "StructureDefinition",
   "id" : "ihe-designationType",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-designationType",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "DesignationType",
   "title" : "Clinical code of the List",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
