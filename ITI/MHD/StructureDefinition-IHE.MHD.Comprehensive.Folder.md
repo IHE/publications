@@ -1,4 +1,4 @@
-# MHD Folder Comprehensive - Mobile access to Health Documents (MHD) v4.2.4
+# MHD Folder Comprehensive - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:FolderComprehensive |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:FolderComprehensive |
 
  
 A profile on the List resource for MHD Comprehensive Metadata Folder. Note UnContained has no impact on Folder. 
@@ -23,7 +23,7 @@ A profile on the List resource for MHD Comprehensive Metadata Folder. Note UnCon
 **Usages:**
 
 * Examples for this Profile: [List/ex-compFolder](List-ex-compFolder.md)
-* CapabilityStatements using this Profile: [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
+* CapabilityStatements using this Profile: [Document Responder (server) with Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md), [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
 
 You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.Comprehensive.Folder.json)
 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Comprehensiv
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Comprehensive.Folder",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "FolderComprehensive",
   "title" : "MHD Folder Comprehensive",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

@@ -1,4 +1,4 @@
-# Document Source (publisher) implementing the Generate Metadata Option - Mobile access to Health Documents (MHD) v4.2.4
+# Document Source (publisher) implementing the Generate Metadata Option - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Generate | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:IHE_MHD_DocumentSource_Generate |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Generate | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:IHE_MHD_DocumentSource_Generate |
 
  
 IHE ITI Mobile access to Health Documents (MHD) - Document Source (publisher) - with the Generate Metadata declared Options and may also declare other Options. 
@@ -31,12 +31,12 @@ The [Document Source](1331_actors_and_transactions.md#133111-document-source) us
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.MHD.DocumentSource.Generate",
   "url" : "https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentSource.Generate",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "IHE_MHD_DocumentSource_Generate",
   "title" : "Document Source (publisher) implementing the Generate Metadata Option",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

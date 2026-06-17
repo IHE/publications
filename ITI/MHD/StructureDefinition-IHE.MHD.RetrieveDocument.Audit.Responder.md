@@ -1,4 +1,4 @@
-# Audit Event for Retrieve Document Transaction at the Document Responder - Mobile access to Health Documents (MHD) v4.2.4
+# Audit Event for Retrieve Document Transaction at the Document Responder - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.RetrieveDocument.Audit.Responder | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:AuditRetrieveDocumentResponder |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.RetrieveDocument.Audit.Responder | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:AuditRetrieveDocumentResponder |
 
  
 Defines constraints on the Document Responder AuditEvent Resource to record when a Retrieve Document Transaction happens, as recorded by the Document Responder. 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.RetrieveDocu
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.RetrieveDocument.Audit.Responder",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.RetrieveDocument.Audit.Responder",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "AuditRetrieveDocumentResponder",
   "title" : "Audit Event for Retrieve Document Transaction at the Document Responder",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

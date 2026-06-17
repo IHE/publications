@@ -1,4 +1,4 @@
-# MHD SubmissionSet Comprehensive UnContained - Mobile access to Health Documents (MHD) v4.2.4
+# MHD SubmissionSet Comprehensive UnContained - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:SubmissionSetComprehensiveUnContained |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:SubmissionSetComprehensiveUnContained |
 
  
 A profile on the List resource for MHD UnContained Comprehensive SubmissionSet. 
@@ -27,7 +27,7 @@ A profile on the List resource for MHD UnContained Comprehensive SubmissionSet.
 * Derived from this Profile: [MHD SubmissionSet Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.SubmissionSet.md)
 * Use this Profile: [MHD UnContained Comprehensive Provide Document Bundle](StructureDefinition-IHE.MHD.UnContained.Comprehensive.ProvideBundle.md)
 * Examples for this Profile: [List/ex-compSubmissionSetFullUnContained](List-ex-compSubmissionSetFullUnContained.md)
-* CapabilityStatements using this Profile: [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
+* CapabilityStatements using this Profile: [Document Responder (server) with Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md), [Document Responder (server) - Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md) and [Document Responder (server)](CapabilityStatement-IHE.MHD.DocumentResponder.md)
 
 You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.UnContained.Comprehensive.SubmissionSet.json)
 
@@ -48,11 +48,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.UnContained.
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.UnContained.Comprehensive.SubmissionSet",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "SubmissionSetComprehensiveUnContained",
   "title" : "MHD SubmissionSet Comprehensive UnContained",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

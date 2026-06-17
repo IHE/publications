@@ -1,4 +1,4 @@
-# Audit Event for Provide Bundle Transaction at Source - Mobile access to Health Documents (MHD) v4.2.4
+# Audit Event for Provide Bundle Transaction at Source - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.ProvideBundle.Audit.Source | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:AuditProvideBundleSource |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.ProvideBundle.Audit.Source | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:AuditProvideBundleSource |
 
  
 Defines constraints on the AuditEvent Resource to record when a Provide Bundle Transaction happens at the Source. 
@@ -45,11 +45,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.ProvideBundl
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.ProvideBundle.Audit.Source",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.ProvideBundle.Audit.Source",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "AuditProvideBundleSource",
   "title" : "Audit Event for Provide Bundle Transaction at Source",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

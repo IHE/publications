@@ -1,4 +1,4 @@
-# Document Responder (server) - Mobile access to Health Documents (MHD) v4.2.4
+# Document Responder (server) - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:IHE_MHD_DocumentResponder |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:IHE_MHD_DocumentResponder |
 
  
 IHE ITI Mobile access to Health Documents (MHD) - Document Responder (server). 
@@ -29,12 +29,12 @@ This is the **Requirements** CapabilityStatement for a [Document Responder](1331
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.MHD.DocumentResponder",
   "url" : "https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "IHE_MHD_DocumentResponder",
   "title" : "Document Responder (server)",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

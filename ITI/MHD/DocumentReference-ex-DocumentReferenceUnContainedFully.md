@@ -1,4 +1,4 @@
-# DocumentReference for Comprehensive minimally filled metadata - Mobile access to Health Documents (MHD) v4.2.4
+# DocumentReference for Comprehensive minimally filled metadata - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -55,7 +55,7 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 | | | | | | | |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | - | **Event** | **Period** | **FacilityType** | **PracticeSetting** | **SourcePatientInfo** | **Related** |
-| * | account receivable | 2020-12-31 23:50:50-0500 --> 2020-12-31 23:50:50-0500 | Children's hospital | Adult mental illness - specialty (qualifier value) | [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md) | Identifier:[Uniform Resource Identifier (URI)](http://terminology.hl7.org/7.1.0/NamingSystem-uri.html)/urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759 |
+| * | account receivable | 2020-12-31 23:50:50-0500 --> 2020-12-31 23:50:50-0500 | Children's hospital | Adult mental illness - specialty (qualifier value) | [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md) | Identifier:[Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.5.0/NamingSystem-uri.html)/urn:oid:1.2.840.113556.1.8000.2554.17917.46600.21181.17878.33419.62048.57128.2759 |
 
 
 

@@ -1,4 +1,4 @@
-# The homeCommunityId where the artifact resides - Mobile access to Health Documents (MHD) v4.2.4
+# The homeCommunityId where the artifact resides - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-HomeCommunityId | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:HomeCommunityId |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-HomeCommunityId | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:HomeCommunityId |
 
 The globally unique, immutable, identifier of the homeCommunityId entity where this artifact resides. The format of the value is an OID.
 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-HomeCommunityId.
   "resourceType" : "StructureDefinition",
   "id" : "ihe-HomeCommunityId",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-HomeCommunityId",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "HomeCommunityId",
   "title" : "The homeCommunityId where the artifact resides",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

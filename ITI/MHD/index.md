@@ -1,4 +1,4 @@
-# MHD Home - Mobile access to Health Documents (MHD) v4.2.4
+# MHD Home - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * **MHD Home**
@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd | *Version*:4.2.4 |
-| Active as of 2026-06-15 | *Computable Name*:IHE_ITI_MHD |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:IHE_ITI_MHD |
 
 Applications specific to resource-constrained and mobile devices are an emerging platform for healthcare-enhancing software. The MHD Profile is not limited to mobile devices, using the term “mobile” only as a grouping for mobile applications, mobile devices or any other systems that are resource and platform-constrained. These constraints may drive the implementer to use simpler network interface technology. There are numerous deployed implementations of [Document Sharing Health Information Exchange](https://profiles.ihe.net/ITI/HIE-Whitepaper/index.html) that need a simpler network interface technology, for example those hosted by a Health Information Exchange (HIE), large health provider electronic health record (EHR), or personal health record (PHR).
 
@@ -78,11 +78,11 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
   "resourceType" : "ImplementationGuide",
   "id" : "ihe.iti.mhd",
   "url" : "https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd",
-  "version" : "4.2.4",
+  "version" : "4.2.5-comment",
   "name" : "IHE_ITI_MHD",
   "title" : "Mobile access to Health Documents (MHD)",
   "status" : "active",
-  "date" : "2026-06-15T14:55:16-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -165,7 +165,7 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       {
         "url" : "value",
-        "valueString" : "Trial-Implementation"
+        "valueString" : "ballot"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -477,7 +477,7 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       {
         "url" : "value",
-        "valueString" : "Trial-Implementation"
+        "valueString" : "ballot"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -1133,6 +1133,18 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
         "valueString" : "CapabilityStatement"
       }],
       "reference" : {
+        "reference" : "CapabilityStatement/IHE.MHD.DocumentConsumer.FullTextSearch"
+      },
+      "name" : "Document Consumer (client) with Full-Text Search Option",
+      "description" : "IHE ITI Mobile access to Health Documents (MHD) - Document Consumer (client) - with Full-Text Search Option.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient"
       },
       "name" : "Document Recipient",
@@ -1221,6 +1233,18 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       "name" : "Document Responder (server) - Target Communities Option",
       "description" : "IHE ITI Mobile access to Health Documents (MHD) - Document Responder (server) - Target Communities Option.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/IHE.MHD.DocumentResponder.FullTextSearch"
+      },
+      "name" : "Document Responder (server) with Full-Text Search Option",
+      "description" : "IHE ITI Mobile access to Health Documents (MHD) - Document Responder (server) - with Full-Text Search Option.",
       "exampleBoolean" : false
     },
     {
@@ -1685,6 +1709,18 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
         "valueString" : "Bundle"
       }],
       "reference" : {
+        "reference" : "Bundle/ex-findDocumentReferencesResponseFullTextSearch"
+      },
+      "name" : "Example of a Find Document References Response Message with the Full-Text Search Option",
+      "description" : "Example of a Find Document References Bundle search set containing a single DocumentReference and using the Full-Text Search Option",
+      "exampleCanonical" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      }],
+      "reference" : {
         "reference" : "Bundle/FindDocumentReferences"
       },
       "name" : "Example of a FindDocumentReferences Response Bundle",
@@ -1725,6 +1761,30 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       "name" : "FHIR status vs ebRIM Status Type Code",
       "description" : "map between XDS ebRIM Status Type Codes and MHD FHIR DocumentReference.status code.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ihe-full-text-search-match-snippet"
+      },
+      "name" : "Full-Text Search Match Snippet",
+      "description" : "This extension contains a text snippet describing the context of a full-text search match. It highlights relevant content that corresponds to the provided search terms and provides a concise preview of the search result.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ihe-full-text-search-match-total-hits"
+      },
+      "name" : "Full-Text Search Match Total Hits",
+      "description" : "This extension contains the total number of full-text search matches found within a document (e.g. a PDF).",
       "exampleBoolean" : false
     },
     {
@@ -1917,6 +1977,18 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       "name" : "MHD Find Document References Response message",
       "description" : "A profile on the Find Document References Response message for ITI-67",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch"
+      },
+      "name" : "MHD Find Document References Response message with Full-Text Search Option",
+      "description" : "A profile on the Find Document References Response message for ITI-67 with Full-Text Search Option",
       "exampleBoolean" : false
     },
     {
