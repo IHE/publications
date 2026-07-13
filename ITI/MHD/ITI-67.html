@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>2:3.67 Find Document References [ITI-67] - Mobile access to Health Documents (MHD) v4.2.3</title>
+    <title>2:3.67 Find Document References [ITI-67] - Mobile access to Health Documents (MHD) v4.2.5-comment</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -74,7 +74,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">Mobile access to Health Documents (MHD)</span>
             <br/>
-            <span style="display:inline-block;">4.2.3 - Trial-Implementation
+            <span style="display:inline-block;">4.2.5-comment - ballot
 
 
 
@@ -225,7 +225,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.3: Publication) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the IHE Mobile Access to Health Documents (v4.2.5-comment: Publication Ballot) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/MHD/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>2:3.67 Find Document References [ITI-67]</h2>
   
 
@@ -364,8 +364,124 @@ This parameter, of type token, specifies the specific practice setting of the Do
 <p><strong>status</strong>:
 This parameter, of type token, specifies the status of the DocumentReference Resource, or in Document Sharing nomenclature, the availabilityStatus of the Document Entry. The Document Consumer shall populate the identifier portion of the token using one of the short codes in Table 2:3.67.4.1.2.1-1. The system portion of the token shall not be populated.</p>
 
+<p><strong>targetCommunityIdList</strong>:
+This IHE extension on parameters defined as <a href="SearchParameter-IHE-TargetCommunityIdList.html">IHE-TargetCommunityIdList</a>, of type uri, specifies the homeCommunityId value supplied in the DocumentReference Resource. This parameter will only function when the <a href="1332_actor_options.html#13327-target-communities-option">Target Communities Option</a> is declared, and where the backend also supports it (e.g., <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html#18.2.6">XCA Target Communities</a>.)</p>
+
 <p><strong>type</strong>:
 This parameter, of type token, specifies the specific type of the DocumentReference resource or in Document Sharing nomenclature, the typeCode of the Document Entry. See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.2-query-parameters">ITI TF-2x: Appendix Z.2</a> for additional constraints on the use of the token search parameter type.</p>
+
+<div class="new-content">
+Section on new full text search option.
+</div>
+<h6 id="236741211-full-text-search-option">2:3.67.4.1.2.1.1 Full-Text Search Option</h6>
+
+<p>If the Full-Text Search Option is supported, the Document Consumer must be able to make use of the <strong>_content</strong> parameter that specifies terms or phrases that are used to search document content in the documents managed by the Document Responder. The Document Responder must match the full-text search parameters in combination with any metadata-based search parameters defined in the same query (i.e. only if a document matches the filter from <strong>_content</strong> query and the meta-data based filter parameters, the document is considered a match).</p>
+
+<p>The Document Responder shall support the semantics of the logical operators OR, AND defined in <a href="https://docs.oasis-open.org/odata/odata/v4.0/cs01/part1-protocol/odata-v4.0-cs01-part1-protocol.html#_The_$search_System">ODATA Search</a>, amended by the following rules:</p>
+
+<ul>
+    <li>All search terms are encoded as a single string (search string).</li>
+    <li>Each search term may include any uppercase and lowercase letters, digits and hyphens.</li>
+    <li>Each search term (and the entire search string) is encoded in UTF-8 (any escaping required for transmission is not included here).</li>
+    <li>Search terms are matched case-insensitively, i.e., the Document Responder shall ignore case differences.</li>
+    <li>Search terms are found at any position within a word (beginning, middle, end).</li>
+    <li>Instead of a single search term, multiple search terms can be combined as a so-called "phrase" by enclosing them in double quotation marks (") and separating them with spaces. If a document contains the search terms in the phrase in the same order and spelling (also separated by spaces), the document is considered a match. The content of a phrase is also searched case-insensitively.</li>
+    <li>Search terms (including entire phrases) can be combined into a logical expression using the Boolean operators (and keywords) <i>AND</i> and <i>OR</i>, and can be negated with <i>NOT</i> if needed:
+      <ul>
+        <li><i>AND</i>: Both search terms/phrases must be found in a document for it to be considered a match.</li>
+        <li><i>OR</i>: At least one of the two search terms/phrases must be found in a document for it to be considered a match.</li>
+        <li><i>NOT</i>: Any search term/phrase can be negated by prefixing it with <i>NOT</i>; the document is considered a match if the search term/phrase cannot be found in the document. This also applies to individual terms not combined with <i>AND</i>/<i>OR</i>.</li>
+        <li>Boolean keywords within phrases are treated as regular search terms. Phrases can be combined as a whole with the mentioned Boolean operators, just like individual search terms.</li>
+        <li>The precedence of the Boolean operators is as follows: <i>NOT</i> (highest) &gt; <i>AND</i> &gt; <i>OR</i> (lowest).</li>
+        <li>Simple round brackets "(" and ")" can be used to adjust the evaluation order (precedence) of individual search terms/phrases in a Boolean expression. Nested parentheses are not allowed.</li>
+      </ul>
+    </li>
+    <li>Multiple search terms/phrases must always be combined using <i>AND</i> or <i>OR</i>.</li>
+  </ul>
+
+<p>The Document Consumer must support at least a subset of the capabilities described above and may utilize metadata-based and content-based search parameters either independently or in combination.</p>
+
+<p>The MHD profile does not prescribe how the Document Responder should implement full-text search. In many cases, the Document Responder maintains a search index that is updated with each new, updated or deleted document. Alternatively, full-text search may be performed ad hoc or delegated to a specialized system.</p>
+
+<p><strong>Valid Query Examples</strong></p>
+
+<ul>
+  <li><strong>Single terms</strong>:
+    <ul>
+      <li><code>diabetes</code>: Searches for words in the document that contain the sequence "diabetes" (case-insensitive, possible matches include 'diabetes', 'Prediabetes').</li>
+      <li><code>hypertension</code>: Searches for words containing "hypertension" (case-insensitive, e.g., 'hypertension', 'Hypertension').</li>
+      <li><code>pain</code>: Searches for words containing "pain" (case-insensitive, e.g., 'pain', 'painful', but also 'Spain').</li>
+    </ul>
+  </li>
+  <li><strong>Phrases with quotation marks</strong>:
+    <ul>
+      <li><code>"diabetes"</code>: Searches for the exact word "diabetes" (case-insensitive, matches 'diabetes' and 'Diabetes').</li>
+      <li><code>"chronic pain"</code>: Searches for the exact phrase "chronic pain", including the space (case-insensitive).</li>
+      <li><code>"cardiovascular disease"</code>: Searches for the exact phrase "cardiovascular disease" (case-insensitive).</li>
+    </ul>
+  </li>
+  <li><strong>Use of Boolean operators</strong>:
+    <ul>
+      <li><code>diabetes AND hypertension</code>: Searches for documents containing both "diabetes" and "hypertension" (case-insensitive).</li>
+      <li><code>asthma OR "chronic pain"</code>: Searches for documents containing either "asthma" or the phrase "chronic pain" (both case-insensitive).</li>
+      <li><code>NOT cancer</code>: Searches for documents that do not contain the word or word part "cancer" (case-insensitive).</li>
+    </ul>
+  </li>
+  <li><strong>Use of parentheses to adjust evaluation order</strong>:
+    <ul>
+      <li><code>(diabetes OR hypertension) AND asthma</code>: Forces the "OR" to be evaluated before the "AND".</li>
+      <li><code>("chronic pain" OR asthma) AND NOT cancer</code>: Another example using parentheses and multiple boolean operators.</li>
+    </ul>
+  </li>
+  <li><strong>Query without parentheses, relying on operator precedence</strong>:
+    <ul>
+      <li><code>NOT diabetes AND asthma OR hypertension</code></li>
+      <li><em>Explanation</em>:
+        <ul>
+          <li>The <code>NOT</code> operator has the highest precedence and is evaluated first, so it checks that "diabetes" is not present.</li>
+          <li>The <code>AND</code> operator is next, so the query evaluation would ensure that "asthma" is present and "diabetes" is not.</li>
+          <li>The <code>OR</code> operator is evaluated last. A document matches if it contains "asthma" and not "diabetes", or if it contains "hypertension".</li>
+          <li>An equivalent query would be: <code>(NOT diabetes AND asthma) OR hypertension</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Invalid Query Examples</strong></p>
+
+<ul>
+  <li><strong>Invalid use of operators</strong>:
+    <ul>
+      <li><code>diabetes AND OR hypertension</code>
+        <br /><em>Reason</em>: Combining <code>AND</code> and <code>OR</code> without a search term in between is not allowed.</li>
+    </ul>
+  </li>
+  <li><strong>Missing quotation marks for phrases</strong>:
+    <ul>
+      <li><code>chronic pain AND asthma</code>
+        <br /><em>Reason</em>: A phrase like "chronic pain" must be enclosed in quotation marks to be recognized as a single term. Otherwise, the search would return an error.</li>
+    </ul>
+  </li>
+  <li><strong>Disallowed nested parentheses</strong>:
+    <ul>
+      <li><code>(diabetes OR (hypertension AND asthma))</code>
+        <br /><em>Reason</em>: Nested parentheses are not allowed. Only one level of parentheses is permitted.</li>
+    </ul>
+  </li>
+  <li><strong>Incomplete logical expressions</strong>:
+    <ul>
+      <li><code>NOT AND diabetes</code>
+        <br /><em>Reason</em>: <code>NOT</code> must precede a specific search term or phrase, not another operator.</li>
+    </ul>
+  </li>
+  <li><strong>Incorrect placement of parentheses</strong>:
+    <ul>
+      <li><code>diabetes OR )hypertension AND asthma(</code>
+        <br /><em>Reason</em>: Parentheses are incorrectly placed. Parentheses must be properly opened and closed.</li>
+    </ul>
+  </li>
+</ul>
 
 <h6 id="23674122-populating-expected-response-format">2:3.67.4.1.2.2 Populating Expected Response Format</h6>
 
@@ -393,10 +509,10 @@ This parameter, of type token, specifies the specific type of the DocumentRefere
 </code></pre></div></div>
 
 <h6 id="236741233-example-post-body">2:3.67.4.1.2.3.3 Example POST Body</h6>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST test.fhir.net/R4/fhir/DocumentReference/_search	  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST test.fhir.net/R4/fhir/DocumentReference/_search
 Host test.fhir.net
 Content-Type: application/x-www-form-urlencoded
-Accept: application/fhir+json; fhirVersion=4.0										  
+Accept: application/fhir+json; fhirVersion=4.0
 
 patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
 </code></pre></div></div>
@@ -491,6 +607,10 @@ patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
       <td>related (Note 4)</td>
       <td>$XDSDocumentEntryReferenceIdList</td>
     </tr>
+    <tr>
+      <td>targetCommunityIdList</td>
+      <td>$targetCommunityIdList</td>
+    </tr>
   </tbody>
 </table>
 
@@ -569,7 +689,7 @@ patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
 
 <p>Delayed Document Assembly is distinct from On-Demand Documents in that Delayed Document Assembly is a Documents that are static, clinician attested documents and the content of the document is identified prior to registration of the Document Entry. On-Demand Documents allows the content of the document to be identified at the time of receipt of the retrieval request (e.g., summary, or current). Delayed Document Assembly has been designed to be as transparent as possible to Document Consumer Actors. Document Consumers Actors may easily support Stable Documents whose assembly has been delayed just as if they were a regular Stable Document since the only constraint on Document Consumers brought by this Delayed Document Assembly Option is to support responses to queries with the presence of Stable Document Entries that have zero size and hash values.</p>
 
-<p>Delayed Document Assembly are indicated in the DocumentReference by the DocumentReference.content.attachment with an .size element of <code class="language-plaintext highlighter-rouge">0</code> (zero), and a .hash element with the fixed value <code class="language-plaintext highlighter-rouge">da39a3ee5e6b4b0d3255bfef95601890afd80709</code> (SHA1 hash of a zero length file). For more background on the <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-10.html#10.2.10">Delayed Document Assembly</a>. There is no need to declare a Delayed Document Assembly in MHD.</p>
+<p>Delayed Document Assembly are indicated in the DocumentReference by the DocumentReference.content.attachment with an .size element of <code class="language-plaintext highlighter-rouge">0</code> (zero), and a .hash element with the fixed value <code class="language-plaintext highlighter-rouge">2jmj7l5rSw0yVb/vlWAYkK/YBwk=</code> (SHA1 hash of a zero length file). For more background on the <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-10.html#10.2.10">Delayed Document Assembly</a>. There is no need to declare a Delayed Document Assembly in MHD.</p>
 
 <p>Informative note: When the Document Consumer retrieves the document using the Document location, then the retrieved document actual size and hash is updated in the DocumentReference. In this way the Document Consumer may retrieve the updated DocumentReference after successful retrieval of the document to find the size and hash for content integrity validation.</p>
 
@@ -582,6 +702,51 @@ patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
 <p>Where the DocumentReference Resource being returned is being translated from an XDS DocumentEntry, there will be identifiers in the DocumentEntry (e.g., ReferenceIdList) that may be represented in the DocumentReference as Resource References. The Document Responder is not required to convert identifiers into Resource References, but it is allowed to do this conversion. For example an identifier in ReferenceIdList may simply be copied into DocumentReference.content.related.identifier. Alternatively the ReferenceIdList may be resolved to a Resource Reference and that reference be placed into DocumentReference.content.related.reference.</p>
 
 <p>Identifiers in XDS are encoded using the <a href="https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.1.7">Document Sharing CXi Metadata datatype</a>, which will indicate the kind of identifier. This kind of identifier shall be used when mapping values into DocumentReference elements (See <a href="https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.9.1.2-xds-cxi-mapped-to-fhir-identifier-type">Appendix Z.9.1.2</a> ). Specifically the <code class="language-plaintext highlighter-rouge">CXi</code> Identifier Type Code of <code class="language-plaintext highlighter-rouge">urn:ihe:iti:xds:2015:encounterId</code> would indicate the Identifier value be mapped into DocumentReference.encounter.</p>
+
+<h6 id="236742216-target-communities-option">2:3.67.4.2.2.1.6 Target Communities Option</h6>
+
+<p>The Document Responder SHOULD populate the <strong>homeCommunityId</strong> extension when a value is available and policy allows it to be populated. The population of this element is identified in the <a href="1332_actor_options.html#13327-target-communities-option">Target Communities Option</a>.</p>
+
+<p>The Document Responder declaring the <strong>Target Communities Option</strong> shall support the <a href="SearchParameter-IHE-TargetCommunityIdList.html">targetCommunityIdList</a> search parameter, and shall return an error when the homeCommunityId can not be fulfilled, See <a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html#18.2.6">XCA Target Communities Option</a>. The Document Consumer declaring the <strong>Target Communities Option</strong> MAY use this search parameter. Actors not declaring the <strong>Target Communities Option</strong> may support the search parameter. Support for the Search parameter shall be declared in the product/implementation CapabilityStatement.</p>
+
+<div class="new-content">
+Section on new full text search option.
+</div>
+
+<h6 id="236742216-full-text-search-option">2:3.67.4.2.2.1.6 Full-Text Search Option</h6>
+
+<p>The <a href="./StructureDefinition-ihe-full-text-search-match-snippet.html">Full-Text Search Match Snippet</a> and the <a href="./StructureDefinition-ihe-full-text-search-match-total-hits.html">Full-Text Search Match Total Hits</a> extensions are used in the context of the Full-Text Search Option to provide a more detailed representation of search results.</p>
+
+<p>The Match Snippet extension is intended to extract relevant text excerpts (snippets) from a document that contain the searched term. These snippets are provided in the extension’s value element and highlight the matched term using the <i>&lt;mark&gt; &lt;/mark&gt;</i> tag. In addition, the page number of the document on which the match was found is indicated. A Document Responder shall return a snippet for each match found within a document. If the number of identified snippets exceeds ten, the Document Responder may return only the first ten snippets.</p>
+
+<p>The Match Total Hits extension provides an aggregated overview of the search results within a document. It indicates the total number of matches found across the entire document based on the full-text search. A Document Responder shall populate the Match Total Hits extension within the search element of each entry in the Bundle representing the full-text search result set. The Match Total Hits extension shall specify the total number of matches found within the document as an integer value. This value reflects the total number of matches across the entire document and is not limited to the number of returned snippets.</p>
+
+<p><strong>Full-Text Search Match Example</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"search"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"extension"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-snippet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"extension"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"snippet"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"valueString"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The patient was diagnosed with &lt;mark&gt;hypertension&lt;/mark&gt; and started on antihypertensive therapy."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pageNumber"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"valueString"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-total-hits"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"valueInteger"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"match"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
 <h6 id="23674222-resource-bundling">2:3.67.4.2.2.2 Resource Bundling</h6>
 
@@ -597,6 +762,8 @@ patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
 <ul>
   <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentConsumer.html">Document Consumer</a></li>
   <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentResponder.html">Document Responder</a></li>
+  <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentConsumer.FullTextSearch.html">Document Consumer with Full-Text Search Option</a></li>
+  <li>Requirements CapabilityStatement for <a href="CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.html">Document Responder with Full-Text Search Option</a></li>
 </ul>
 
 <h3 id="23675-security-considerations">2:3.67.5 Security Considerations</h3>
@@ -660,7 +827,7 @@ patient=9876&amp;status=current&amp;type=http://loinc.org|1234-5
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.3 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Oct 31, 2025 14:38-0500">2025-10-31</span>
+          IG &#169; 2020+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.mhd#4.2.5-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Tue, Jun 16, 2026 19:25-0500">2026-06-16</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

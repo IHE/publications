@@ -1,4 +1,4 @@
-# MHD Patient Types ValueSet - Mobile access to Health Documents (MHD) v4.2.3
+# MHD Patient Types ValueSet - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovidePatientActions | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:MHDprovidePatientActions |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovidePatientActions | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:MHDprovidePatientActions |
 
  
 A ValueSet of the allowed actions in a ITI-65 Provide Document Bundle for the Patient type Resource. Where Patient would typically be indicated as a GET (read), but might be created or updated depending on policy. 
@@ -46,69 +46,53 @@ A ValueSet of the allowed actions in a ITI-65 Provide Document Bundle for the Pa
   "resourceType" : "ValueSet",
   "id" : "MHDprovidePatientActions",
   "url" : "https://profiles.ihe.net/ITI/MHD/ValueSet/MHDprovidePatientActions",
-  "version" : "4.2.3",
+  "version" : "4.2.5-comment",
   "name" : "MHDprovidePatientActions",
   "title" : "MHD Patient Types ValueSet",
   "status" : "active",
   "experimental" : false,
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "A ValueSet of the allowed actions in a ITI-65 Provide Document Bundle for the Patient type Resource. Where Patient would typically be indicated as a GET (read), but might be created or updated depending on policy.",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "compose" : {
-    "include" : [
+    "include" : [{
+      "system" : "http://hl7.org/fhir/http-verb",
+      "concept" : [{
+        "code" : "GET"
+      },
       {
-        "system" : "http://hl7.org/fhir/http-verb",
-        "concept" : [
-          {
-            "code" : "GET"
-          },
-          {
-            "code" : "POST"
-          },
-          {
-            "code" : "PUT"
-          }
-        ]
-      }
-    ]
+        "code" : "POST"
+      },
+      {
+        "code" : "PUT"
+      }]
+    }]
   }
 }
 

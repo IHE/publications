@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExampleScenario xmlns="http://hl7.org/fhir">
+  <id value="UseCaseHajjPilgrimage"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: ExampleScenario UseCaseHajjPilgrimage</b></p><a name="UseCaseHajjPilgrimage"> </a><a name="hcUseCaseHajjPilgrimage"> </a><p><b>url</b>: <a href="ExampleScenario-UseCaseHajjPilgrimage.html">HajjPilgrimage</a></p><p><b>version</b>: 1.0.0-comment</p><p><b>name</b>: HajjPilgrimage</p><p><b>status</b>: Active</p><p><b>date</b>: 2026-06-14 15:36:12-0500</p><p><b>publisher</b>: IHE IT Infrastructure Technical Committee</p><p><b>contact</b>: <a href="https://www.ihe.net/ihe_domains/it_infrastructure/">https://www.ihe.net/ihe_domains/it_infrastructure/</a>, <a href="mailto:iti@ihe.net">iti@ihe.net</a>, IHE IT Infrastructure Technical Committee: <a href="mailto:iti@ihe.net">iti@ihe.net</a></p><p><b>jurisdiction</b>: <span title="Codes:{http://unstats.un.org/unsd/methods/m49/m49.htm 001}">Global (Whole world)</span></p><p><b>purpose</b>: </p><div><p>During the Hajj pilgrimage, the Kingdom of Saudi Arabia (KSA) hosts approximately two million pilgrims from across the globe as part of a mass gathering event. Temporary hospitals and clinics, comprising over a thousand beds, are established to provide care to the pilgrims over the four-week period of Hajj.</p>
+<p>Starting with Hajj 1445 AH (2024 CE), pilgrims from Oman, Malaysia, and Indonesia were able to share their health records utilizing the International Patient Summary (IPS) with verification of health documents provided through the WHO Global Digital Health Certification Network (GDHCN) infrastructure.</p>
+<p>Key Features:</p>
+<ul>
+<li>Trust established through WHO GDHCN trust network</li>
+<li>Multi-country interoperability (Oman, Malaysia, Indonesia to KSA)</li>
+<li>IPS-based continuity of care</li>
+<li>Consent captured and enforced through IPS Advanced Directives</li>
+<li>PIN protection for additional security on printed cards</li>
+<li>Support for both physical and digital VHL provisioning</li>
+</ul>
+<p>Some of the challenges faced during the pilot implementation, though not necessarily to be taken up in this profile, include:</p>
+<ul>
+<li>while not the main point of security, leveraging the PIN is a weakness, need to enable better options for future consideration (e.g. biometrics, other authorization methods). The <strong>Verifiable Credential Option</strong> (ITI-YY5 Section 2:3.YY5.4.1.5) addresses this by allowing the VHL Receiver to authenticate using a self-issued VC signed with its trust network key, eliminating reliance on a shared PIN for receiver authentication while retaining the passcode as an optional additional factor for the holder.</li>
+<li>in planning for expansion to umrah and general tourism, there will not in general be a health check which presents some process challenges such as not having a encounter point to record consent prior to a visit</li>
+<li>how to scale and automate some of the health checks (e.g. are vaccinations sufficient) using verifiable health documents (e.g. the IPS).</li>
+</ul>
+<p><img src="hajj-diagram.png" alt="Hajj Pilgrimage VHL Flow"/></p>
+</div><blockquote><p><b>process</b></p><p><b>title</b>: Hajj Pilgrimage VHL Flow</p><p><b>description</b>: </p><div><p>Process for sharing pilgrim health records during Hajj using VHL with WHO GDHCN trust infrastructure for cross-border verification.</p>
+</div><p><b>preConditions</b>: </p><div><p>Pilgrim has received health assessment in home country. Home country has registered PKI material with WHO GDHCN Trust Anchor. Pilgrim has provided consent (verbal or digital) to share health records.</p>
+</div><p><b>postConditions</b>: </p><div><p>KSA healthcare providers can access pilgrim health records as IPS.</p>
+</div><blockquote><p><b>step</b></p><h3>Operations</h3><table class="grid"><tr><td style="display: none">-</td><td><b>Number</b></td><td><b>Name</b></td><td><b>Description</b></td></tr><tr><td style="display: none">*</td><td>1</td><td>Pre-Departure Health Check</td><td><div><p>Pilgrims begin their journey in their home country where they receive a health check and are educated on the use of QR codes (a version of Verifiable Health Links) and provide the consent to share their health records. This consent may be provided verbally or recorded digitally. When recorded, there are two notions of consent recorded:</p>
+<ul>
+<li>for their home country in which they agree that health records from their home country can be shared with appropriate authorities during Hajj</li>
+<li>for KSA is to permit utilization of these health records within the Saudi System. These consent records are recorded into the IPS Advanced Directives section and are included with the IPS when it is shared.</li>
+</ul>
+</div></td></tr></table></blockquote><blockquote><p><b>step</b></p><h3>Operations</h3><table class="grid"><tr><td style="display: none">-</td><td><b>Number</b></td><td><b>Name</b></td><td><b>Description</b></td></tr><tr><td style="display: none">*</td><td>2</td><td>VHL Generation</td><td><div><p>The verifiable health link is provided by their home jurisdiction during their health check as a QR code.
+Depending on the digital infrastructure pilgrim's origin country, jurisdictional policies and digital capabilities (e.g. access to smart phones) of the pilgrim's origin country, the verifiable health link may be:</p>
+<ul>
+<li>generated and printed on the pilgrim's health card and distributed to the pilgrim at the time of the health check; or</li>
+<li>provisioned to the pilgrim through an existing digital health platform or wallet. For similar reasons, the verifiable health link may refer to:</li>
+<li>an instance of the IPS rendered as a PDF;</li>
+<li>an instance of the IPS rendered as JSON; or</li>
+<li>a folder containing at least the PDF of JSON rendering of the IPS as well associated digital signatures.</li>
+</ul>
+</div></td></tr></table></blockquote><blockquote><p><b>step</b></p><h3>Operations</h3><table class="grid"><tr><td style="display: none">-</td><td><b>Number</b></td><td><b>Name</b></td><td><b>Description</b></td></tr><tr><td style="display: none">*</td><td>3</td><td>VHL Provision During Care</td><td><div><p>During a care encounter in KSA, the pilgrim provides their verifiable health link as a QR code to their care provider. Once a VHL is shared by a pilgrim during a care encounter in KSA:</p>
+<ul>
+<li>the VHL is verified through the GDHCN infrastructure</li>
+<li>an mTLS connection is established between the KSA EMRs and the origin country national infrastructure using key material exchanged via GDHCN</li>
+<li>a manifest of IPS related files including a PDF and JSON renderings and associated digital signatures</li>
+<li>The EMR retrieves the requisite files</li>
+</ul>
+</div></td></tr></table></blockquote></blockquote></div>
+  </text>
+  <url value="https://profiles.ihe.net/ITI/VHL/ExampleScenario/UseCaseHajjPilgrimage"/>
+  <version value="1.0.0-comment"/>
+  <name value="HajjPilgrimage"/>
+  <status value="active"/>
+  <date value="2026-06-14T15:36:12-05:00"/>
+  <publisher value="IHE IT Infrastructure Technical Committee"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <contact>
+    <name value="IHE IT Infrastructure Technical Committee"/>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <purpose value="During the Hajj pilgrimage, the Kingdom of Saudi Arabia (KSA) hosts approximately two million pilgrims from across the globe as part of a mass gathering event. Temporary hospitals and clinics, comprising over a thousand beds, are established to provide care to the pilgrims over the four-week period of Hajj.&#xA;&#xA;Starting with Hajj 1445 AH (2024 CE), pilgrims from Oman, Malaysia, and Indonesia were able to share their health records utilizing the International Patient Summary (IPS) with verification of health documents provided through the WHO Global Digital Health Certification Network (GDHCN) infrastructure.&#xA;&#xA;Key Features:&#xA;- Trust established through WHO GDHCN trust network&#xA;- Multi-country interoperability (Oman, Malaysia, Indonesia to KSA)&#xA;- IPS-based continuity of care&#xA;- Consent captured and enforced through IPS Advanced Directives&#xA;- PIN protection for additional security on printed cards&#xA;- Support for both physical and digital VHL provisioning&#xA;&#xA;Some of the challenges faced during the pilot implementation, though not necessarily to be taken up in this profile, include:&#xA;&#xA;- while not the main point of security, leveraging the PIN is a weakness, need to enable better options for future consideration (e.g. biometrics, other authorization methods). The **Verifiable Credential Option** (ITI-YY5 Section 2:3.YY5.4.1.5) addresses this by allowing the VHL Receiver to authenticate using a self-issued VC signed with its trust network key, eliminating reliance on a shared PIN for receiver authentication while retaining the passcode as an optional additional factor for the holder.&#xA;- in planning for expansion to umrah and general tourism, there will not in general be a health check which presents some process challenges such as not having a encounter point to record consent prior to a visit&#xA;- how to scale and automate some of the health checks (e.g. are vaccinations sufficient) using verifiable health documents (e.g. the IPS).&#xA;&#xA;&#xA;![Hajj Pilgrimage VHL Flow](hajj-diagram.png)"/>
+  <process>
+    <title value="Hajj Pilgrimage VHL Flow"/>
+    <description value="Process for sharing pilgrim health records during Hajj using VHL with WHO GDHCN trust infrastructure for cross-border verification."/>
+    <preConditions value="Pilgrim has received health assessment in home country. Home country has registered PKI material with WHO GDHCN Trust Anchor. Pilgrim has provided consent (verbal or digital) to share health records."/>
+    <postConditions value="KSA healthcare providers can access pilgrim health records as IPS."/>
+    <step>
+      <operation>
+        <number value="1"/>
+        <name value="Pre-Departure Health Check"/>
+        <description value="Pilgrims begin their journey in their home country where they receive a health check and are educated on the use of QR codes (a version of Verifiable Health Links) and provide the consent to share their health records. This consent may be provided verbally or recorded digitally. When recorded, there are two notions of consent recorded:&#xD;&#xA;&#xD;&#xA;- for their home country in which they agree that health records from their home country can be shared with appropriate authorities during Hajj&#xD;&#xA;- for KSA is to permit utilization of these health records within the Saudi System. These consent records are recorded into the IPS Advanced Directives section and are included with the IPS when it is shared."/>
+      </operation>
+    </step>
+    <step>
+      <operation>
+        <number value="2"/>
+        <name value="VHL Generation"/>
+        <description value="The verifiable health link is provided by their home jurisdiction during their health check as a QR code.&#xD;&#xA;Depending on the digital infrastructure pilgrim's origin country, jurisdictional policies and digital capabilities (e.g. access to smart phones) of the pilgrim's origin country, the verifiable health link may be:&#xD;&#xA;&#xD;&#xA;- generated and printed on the pilgrim's health card and distributed to the pilgrim at the time of the health check; or&#xD;&#xA;- provisioned to the pilgrim through an existing digital health platform or wallet. For similar reasons, the verifiable health link may refer to:&#xD;&#xA;- an instance of the IPS rendered as a PDF;&#xD;&#xA;- an instance of the IPS rendered as JSON; or&#xD;&#xA;- a folder containing at least the PDF of JSON rendering of the IPS as well associated digital signatures."/>
+      </operation>
+    </step>
+    <step>
+      <operation>
+        <number value="3"/>
+        <name value="VHL Provision During Care"/>
+        <description value="During a care encounter in KSA, the pilgrim provides their verifiable health link as a QR code to their care provider. Once a VHL is shared by a pilgrim during a care encounter in KSA:&#xD;&#xA;&#xD;&#xA;- the VHL is verified through the GDHCN infrastructure&#xD;&#xA;- an mTLS connection is established between the KSA EMRs and the origin country national infrastructure using key material exchanged via GDHCN&#xD;&#xA;- a manifest of IPS related files including a PDF and JSON renderings and associated digital signatures&#xD;&#xA;- The EMR retrieves the requisite files"/>
+      </operation>
+    </step>
+  </process>
+</ExampleScenario>

@@ -1,4 +1,4 @@
-# MHD UnContained Comprehensive Provide Document Bundle - Mobile access to Health Documents (MHD) v4.2.3
+# MHD UnContained Comprehensive Provide Document Bundle - Mobile access to Health Documents (MHD) v4.2.5-comment
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle | *Version*:4.2.3 |
-| Active as of 2025-10-31 | *Computable Name*:UnContainedComprehensiveProvideDocumentBundle |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle | *Version*:4.2.5-comment |
+| Active as of 2026-06-16 | *Computable Name*:UnContainedComprehensiveProvideDocumentBundle |
 
  
 A profile on the Bundle transaction for ITI-65 Provide Document resources with UnContained allowed but requiring Comprehensive Metadata for MHD. 
@@ -33,7 +33,7 @@ A profile on the Bundle transaction for ITI-65 Provide Document resources with U
 * Derived from this Profile: [MHD Comprehensive Provide Document Bundle](StructureDefinition-IHE.MHD.Comprehensive.ProvideBundle.md)
 * Examples for this Profile: [Bundle/ex-unContainedComprehensiveProvideDocumentBundleComplete](Bundle-ex-unContainedComprehensiveProvideDocumentBundleComplete.md)
 
-You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/ihe.iti.mhd|current/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle)
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/ihe.iti.mhd|current/StructureDefinition/StructureDefinition-IHE.MHD.UnContained.Comprehensive.ProvideBundle.json)
 
 ### Formal Views of Profile Content
 
@@ -52,120 +52,96 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.UnContained.
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.UnContained.Comprehensive.ProvideBundle",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle",
-  "version" : "4.2.3",
+  "version" : "4.2.5-comment",
   "name" : "UnContainedComprehensiveProvideDocumentBundle",
   "title" : "MHD UnContained Comprehensive Provide Document Bundle",
   "status" : "active",
-  "date" : "2025-10-31T14:38:46-05:00",
+  "date" : "2026-06-16T19:25:56-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
-  "contact" : [
-    {
-      "telecom" : [
-        {
-          "system" : "url",
-          "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
-        }
-      ]
-    },
-    {
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    },
-    {
-      "name" : "IHE IT Infrastructure Technical Committee",
-      "telecom" : [
-        {
-          "system" : "email",
-          "value" : "iti@ihe.net"
-        }
-      ]
-    }
-  ],
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/it_infrastructure/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE IT Infrastructure Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "iti@ihe.net"
+    }]
+  }],
   "description" : "A profile on the Bundle transaction for ITI-65 Provide Document resources with UnContained allowed but requiring Comprehensive Metadata for MHD.\r\n\r\n- [UnContained Comprehensive Metadata](StructureDefinition-IHE.MHD.UnContained.Comprehensive.ProvideBundle.html): `https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle` \r\n  - note that Minimal Metadata does not require containment, so UnContained Minimal is the same as Minimal Metadata\r\n  - note that UnContained only applies to DocumentReference and SubmissionSet type Lists; so the following apply\r\n  - shall be a Transaction Bundle\r\n  - all resources shall be compliant with comprehensive unContained constraints, they may be marked comprehensive unContained\r\n  - shall create a [SubmissionSet type List](StructureDefinition-IHE.MHD.Minimal.SubmissionSet.html) that is either minimal, comprehensive, or unContained\r\n  - may create one or more [DocumentReference](StructureDefinition-IHE.MHD.Minimal.DocumentReference.html) that is either minimal, comprehensive, or unContained\r\n    - with a document as a [Binary](http://hl7.org/fhir/R4/binary.html)\r\n    - or, when implementing the **ITI-65 FHIR Document Publish** option, a [FHIR Document Bundle](http://hl7.org/fhir/R4/bundle.html)\r\n  - may create/update one or more [Folder type List](StructureDefinition-IHE.MHD.Minimal.Folder.html) that is either minimal, comprehensive, or unContained\r\n  - may create/update/read one [Patient](http://hl7.org/fhir/R4/patient.html)",
-  "jurisdiction" : [
-    {
-      "coding" : [
-        {
-          "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
-          "code" : "001",
-          "display" : "World"
-        }
-      ]
-    }
-  ],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
   "fhirVersion" : "4.0.1",
-  "mapping" : [
-    {
-      "identity" : "v2",
-      "uri" : "http://hl7.org/v2",
-      "name" : "HL7 v2 Mapping"
-    },
-    {
-      "identity" : "rim",
-      "uri" : "http://hl7.org/v3",
-      "name" : "RIM Mapping"
-    },
-    {
-      "identity" : "cda",
-      "uri" : "http://hl7.org/v3/cda",
-      "name" : "CDA (R2)"
-    },
-    {
-      "identity" : "w5",
-      "uri" : "http://hl7.org/fhir/fivews",
-      "name" : "FiveWs Pattern Mapping"
-    }
-  ],
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "cda",
+    "uri" : "http://hl7.org/v3/cda",
+    "name" : "CDA (R2)"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
   "kind" : "resource",
   "abstract" : false,
   "type" : "Bundle",
   "baseDefinition" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.ProvideBundle",
   "derivation" : "constraint",
   "differential" : {
-    "element" : [
-      {
-        "id" : "Bundle",
-        "path" : "Bundle"
-      },
-      {
-        "id" : "Bundle.entry:SubmissionSet",
-        "path" : "Bundle.entry",
-        "sliceName" : "SubmissionSet"
-      },
-      {
-        "id" : "Bundle.entry:SubmissionSet.resource",
-        "path" : "Bundle.entry.resource",
-        "type" : [
-          {
-            "code" : "List",
-            "profile" : [
-              "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet"
-            ]
-          }
-        ]
-      },
-      {
-        "id" : "Bundle.entry:DocumentRefs",
-        "path" : "Bundle.entry",
-        "sliceName" : "DocumentRefs"
-      },
-      {
-        "id" : "Bundle.entry:DocumentRefs.resource",
-        "path" : "Bundle.entry.resource",
-        "type" : [
-          {
-            "code" : "DocumentReference",
-            "profile" : [
-              "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"
-            ]
-          }
-        ]
-      }
-    ]
+    "element" : [{
+      "id" : "Bundle",
+      "path" : "Bundle"
+    },
+    {
+      "id" : "Bundle.entry:SubmissionSet",
+      "path" : "Bundle.entry",
+      "sliceName" : "SubmissionSet"
+    },
+    {
+      "id" : "Bundle.entry:SubmissionSet.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "List",
+        "profile" : ["https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:DocumentRefs",
+      "path" : "Bundle.entry",
+      "sliceName" : "DocumentRefs"
+    },
+    {
+      "id" : "Bundle.entry:DocumentRefs.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "DocumentReference",
+        "profile" : ["https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"]
+      }]
+    }]
   }
 }
 

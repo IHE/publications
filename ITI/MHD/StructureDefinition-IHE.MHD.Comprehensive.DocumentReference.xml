@@ -11,11 +11,11 @@
 <tr><td colspan="5" class="hierarchy"><br/><a href="https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views" title="Legend for this format"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3goXBCwdPqAP0wAAAldJREFUOMuNk0tIlFEYhp9z/vE2jHkhxXA0zJCMitrUQlq4lnSltEqCFhFG2MJFhIvIFpkEWaTQqjaWZRkp0g26URZkTpbaaOJkDqk10szoODP//7XIMUe0elcfnPd9zsfLOYplGrpRwZaqTtw3K7PtGem7Q6FoidbGgqHVy/HRb669R+56zx7eRV1L31JGxYbBtjKK93cxeqfyQHbehkZbUkK20goELEuIzEd+dHS+qz/Y8PTSif0FnGkbiwcAjHaU1+QWOptFiyCLp/LnKptpqIuXHx6rbR26kJcBX3yLgBfnd7CxwJmflpP2wUg0HIAoUUpZBmKzELGWcN8nAr6Gpu7tLU/CkwAaoKTWRSQyt89Q8w6J+oVQkKnBoblH7V0PPvUOvDYXfopE/SJmALsxnVm6LbkotrUtNowMeIrVrBcBpaMmdS0j9df7abpSuy7HWehwJdt1lhVwi/J58U5beXGAF6c3UXLycw1wdFklArBn87xdh0ZsZtArghBdAA3+OEDVubG4UEzP6x1FOWneHh2VDAHBAt80IbdXDcesNoCvs3E5AFyNSU5nbrDPZpcUEQQTFZiEVx+51fxMhhyJEAgvlriadIJZZksRuwBYMOPBbO3hePVVqgEJhFeUuFLhIPkRP6BQLIBrmMenujm/3g4zc398awIe90Zb5A1vREALqneMcYgP/xVQWlG+Ncu5vgwwlaUNx+3799rfe96u9K0JSDXcOzOTJg4B6IgmXfsygc7/Bvg9g9E58/cDVmGIBOP/zT8Bz1zqWqpbXIsd0O9hajXfL6u4BaOS6SeWAAAAAElFTkSuQmCC" alt="doco" style="background-color: inherit"/> Documentation for this format</a></td></tr></table></div>
   </text>
   <url value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.DocumentReference"/>
-  <version value="4.2.3"/>
+  <version value="4.2.5-comment"/>
   <name value="ComprehensiveDocumentReference"/>
   <title value="MHD DocumentReference Comprehensive"/>
   <status value="active"/>
-  <date value="2025-10-31T14:38:46-05:00"/>
+  <date value="2026-06-16T19:25:56-05:00"/>
   <publisher value="IHE IT Infrastructure Technical Committee"/>
   <contact>
     <telecom>
@@ -92,7 +92,7 @@
   <derivation value="constraint"/>
   <snapshot>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version">
-      <valueString value="4.2.3"/>
+      <valueString value="4.2.5-comment"/>
     </extension>
     <element id="DocumentReference">
       <path value="DocumentReference"/>
@@ -600,11 +600,16 @@
     </element>
     <element id="DocumentReference.extension">
       <path value="DocumentReference.extension"/>
-      <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -633,9 +638,45 @@
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="DocumentReference.extension:homeCommunityId">
+      <path value="DocumentReference.extension"/>
+      <sliceName value="homeCommunityId"/>
+      <short value="The homeCommunityId where the artifact resides"/>
+      <definition value="The globally unique, immutable, identifier of the homeCommunityId entity where this artifact resides. The format of the value is an OID."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-HomeCommunityId"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
       <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
+        <identity value="DocumentEntry-Mapping"/>
+        <map value="DocumentEntry.homeCommunityId"/>
       </mapping>
     </element>
     <element id="DocumentReference.modifierExtension">
@@ -737,7 +778,7 @@
       <slicing>
         <discriminator>
           <type value="value"/>
-          <path value="use"/>
+          <path value="type"/>
         </discriminator>
         <rules value="open"/>
       </slicing>
@@ -792,10 +833,10 @@
     <element id="DocumentReference.identifier:entryUUID">
       <path value="DocumentReference.identifier"/>
       <sliceName value="entryUUID"/>
-      <short value="Other identifiers for the document"/>
-      <definition value="Other identifiers associated with the document, including version independent identifiers."/>
+      <short value="Business identifier for the DocumentReference"/>
+      <definition value="The Business identifier for the DocumentReference which maps to the DocumentEntry.entryUUID in XDS. This is used to refer to the DocumentReference itself as a record of the Document's metadata, as opposed to the UniqueId element which identifies the document which is pointed at by the document reference."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="1"/>
       <base>
         <path value="DocumentReference.identifier"/>
         <min value="0"/>
@@ -804,6 +845,54 @@
       <type>
         <code value="Identifier"/>
         <profile value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.EntryUUID.Identifier"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="FiveWs.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="TXA-16?"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".id / .setId"/>
+      </mapping>
+      <mapping>
+        <identity value="xds"/>
+        <map value="DocumentEntry.entryUUID"/>
+      </mapping>
+    </element>
+    <element id="DocumentReference.identifier:uniqueId">
+      <path value="DocumentReference.identifier"/>
+      <sliceName value="uniqueId"/>
+      <short value="Unique identifier for the referenced Document"/>
+      <definition value="The unique identifier for the referenced Document which maps to the DocumentEntry.uniqueId in XDS. This is used to identify the document which is pointed at by the DocumentReference Resource, as opposed to the entryUUID element which identifies the DocumentReference Resource itself. If this is present, then the identifier SHALL be the same as the one found in masterIdentifier."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DocumentReference.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Identifier"/>
+        <profile value="https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UniqueIdIdentifier"/>
       </type>
       <constraint>
         <key value="ele-1"/>

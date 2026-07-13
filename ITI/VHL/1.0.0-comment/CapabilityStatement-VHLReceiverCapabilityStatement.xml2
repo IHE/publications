@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CapabilityStatement xmlns="http://hl7.org/fhir">
+  <id value="VHLReceiverCapabilityStatement"/>
+  <text>
+    <status value="extensions"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: CapabilityStatement VHLReceiverCapabilityStatement</b></p><a name="VHLReceiverCapabilityStatement"> </a><a name="hcVHLReceiverCapabilityStatement"> </a><h2 id="title">VHL Receiver Client Capability Statement</h2><ul><li>Implementation Guide Version: 1.0.0-comment </li><li>FHIR Version: 4.0.1 </li><li>Supported Formats: <code>application/fhir+json</code>, <code>application/fhir+xml</code></li><li>Published on: 2024-12-31 </li><li>Published by: IHE IT Infrastructure Technical Committee </li></ul><blockquote class="impl-note"><p><strong>Note to Implementers: FHIR Capabilities</strong></p><p>Any FHIR capability may be 'allowed' by the system unless explicitly marked as 'SHALL NOT'. A few items are marked as MAY in the Implementation Guide to highlight their potential relevance to the use case.</p></blockquote><h2 id="rest">FHIR RESTful Capabilities</h2><div class="panel panel-default"><div class="panel-heading"><h3 id="mode1" class="panel-title">Mode: <code>client</code></h3></div><div class="panel-body"><div><p>VHL Receiver retrieves document manifests (List resources) and optionally DocumentReference resources from VHL Sharers using VHL-authorized manifest URLs. The client extracts the manifest URL from the VHL payload (obtained via ITI-YY4 Provide VHL) and performs a FHIR search with mandatory parameters.</p>
+</div><div class="lead"><em>Security</em></div><blockquote><div><p>Implementations SHALL support ATNA Authenticate Node [ITI-19] for mutual TLS authentication. The VHL Receiver SHALL provide the VHL authorization token (folder ID) and MAY provide additional authentication tokens (OAuth 2.0, JWS signatures).</p>
+</div></blockquote></div></div><h3 id="resourcesCap1">Capabilities by Resource/Profile</h3><h4 id="resourcesSummary1">Summary</h4><p>The summary table lists the resources that are part of this configuration, and for each resource it lists:</p><ul><li>The relevant profiles (if any)</li><li>The interactions supported by each resource (<b><span class="bg-info">R</span></b>ead, <b><span class="bg-info">S</span></b>earch, <b><span class="bg-info">U</span></b>pdate, and <b><span class="bg-info">C</span></b>reate, are always shown, while <b><span class="bg-info">VR</span></b>ead, <b><span class="bg-info">P</span></b>atch, <b><span class="bg-info">D</span></b>elete, <b><span class="bg-info">H</span></b>istory on <b><span class="bg-info">I</span></b>nstance, or <b><span class="bg-info">H</span></b>istory on <b><span class="bg-info">T</span></b>ype are only present if at least one of the resources has support for them.</li><li><span>The required, recommended, and some optional search parameters (if any). </span></li><li>The linked resources enabled for <code>_include</code></li><li>The other resources enabled for <code>_revinclude</code></li><li>The operations on the resource (if any)</li></ul><div class="table-responsive"><table class="table table-condensed table-hover"><thead><tr><th><b>Resource Type</b></th><th><b>Profile</b></th><th class="text-center"><b title="GET a resource (read interaction)">R</b></th><th class="text-center"><b title="GET all set of resources of the type (search interaction)">S</b></th><th class="text-center"><b title="PUT a new resource version (update interaction)">U</b></th><th class="text-center"><b title="POST a new resource (create interaction)">C</b></th><th><b title="Required and recommended search parameters">Searches</b></th><th><code><b>_include</b></code></th><th><code><b>_revinclude</b></code></th><th><b>Operations</b></th></tr></thead><tbody><tr><td><a href="#List1-1">List</a></td><td><a href="http://hl7.org/fhir/R4/list.html">http://hl7.org/fhir/StructureDefinition/List</a></td><td class="text-center"/><td class="text-center">y</td><td class="text-center"/><td class="text-center"/><td>_id, code, status, patient</td><td><code>List:item</code></td><td/><td/></tr><tr><td><a href="#DocumentReference1-2">DocumentReference</a></td><td><a href="http://hl7.org/fhir/R4/documentreference.html">http://hl7.org/fhir/StructureDefinition/DocumentReference</a></td><td class="text-center">y</td><td class="text-center">y</td><td class="text-center"/><td class="text-center"/><td/><td/><td/><td/></tr></tbody></table></div><hr/><div class="panel panel-default"><div class="panel-heading"><h4 id="List1-1" class="panel-title"><span style="float: right;">Resource Conformance: unspecified </span>List</h4></div><div class="panel-body"><div class="container"><div class="row"><div class="col-lg-6"><span class="lead">Base System Profile</span><br/><a href="http://hl7.org/fhir/R4/list.html">List</a></div><div class="col-lg-3"><span class="lead">Profile Conformance</span><br/><b>SHALL</b></div><div class="col-lg-3"><span class="lead">Reference Policy</span><br/></div></div><p/><div class="row"><div class="col-lg-6"><span class="lead">Interaction summary</span><br/><ul><li>Supports <br/><code>search-type</code><div><p>Search for List resources using manifest URL from VHL payload. The VHL Receiver SHALL support searching with _id, code, and status parameters, and SHALL support chained search on the patient parameter (patient.identifier=system|value) to identify the patient. The VHL Receiver SHALL support the _include=List:item parameter to retrieve DocumentReference resources in a single request.</p>
+</div></li></ul></div></div><p/><div class="row"><div class="col-12"><span class="lead">Documentation</span><blockquote><div><p>The VHL Receiver searches for List resources using the manifest URL extracted from the VHL payload. The search SHALL include mandatory parameters: _id (folder ID), code, and status, and SHALL include the patient identifier using FHIR chained search on the patient parameter (i.e., patient.identifier=system|value). The VHL Receiver MAY request inclusion of DocumentReference resources via the _include parameter.</p>
+</div></blockquote></div></div><div class="row"><div class="col-lg-7"><span class="lead">Search Parameters</span><table class="table table-condensed table-hover"><thead><tr><th>Conformance</th><th>Parameter</th><th>Type</th><th>Documentation</th></tr></thead><tbody><tr><td><b>SHALL</b></td><td><a href="http://hl7.org/fhir/R4/resource.html#search">_id</a></td><td><code>token</code></td><td><div><p>Folder ID from VHL payload. This is the primary authorization mechanism. SHALL be supported and SHALL be included in every manifest retrieval request.</p>
+</div></td></tr><tr><td><b>SHALL</b></td><td>code</td><td><code>token</code></td><td><div><p>List type, typically 'folder'. SHALL be supported and SHALL be included in manifest URL from VHL payload.</p>
+</div></td></tr><tr><td><b>SHALL</b></td><td><a href="http://hl7.org/fhir/R4/list.html#search">status</a></td><td><code>token</code></td><td><div><p>List status, typically 'current'. SHALL be supported and SHALL be included in manifest URL from VHL payload.</p>
+</div></td></tr><tr><td><b>SHALL</b></td><td><a href="http://hl7.org/fhir/R4/list.html#search">patient</a></td><td><code>reference</code></td><td><div><p>Patient reference search parameter. SHALL be supported with FHIR chained search (patient.identifier=system|value) to identify the patient by identifier without requiring a direct Patient resource reference. SHALL be included in the manifest URL from the VHL payload.</p>
+</div></td></tr></tbody></table></div><div class="col-lg-5"> </div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h4 id="DocumentReference1-2" class="panel-title"><span style="float: right;">Resource Conformance: unspecified </span>DocumentReference</h4></div><div class="panel-body"><div class="container"><div class="row"><div class="col-lg-6"><span class="lead">Base System Profile</span><br/><a href="http://hl7.org/fhir/R4/documentreference.html">DocumentReference</a></div><div class="col-lg-3"><span class="lead">Profile Conformance</span><br/><b>SHALL</b></div><div class="col-lg-3"><span class="lead">Reference Policy</span><br/></div></div><p/><div class="row"><div class="col-lg-6"><span class="lead">Interaction summary</span><br/><ul><li>Supports <br/><code>read</code><div><p>Read individual DocumentReference resources by ID. Used when _include is not supported by the VHL Sharer or when retrieving updated metadata after the initial manifest retrieval.</p>
+</div><code>search-type</code><div><p>Search for DocumentReference resources. MAY be used to retrieve individual DocumentReferences when _include is not available or to apply additional filters after manifest retrieval.</p>
+</div></li></ul></div></div><p/><div class="row"><div class="col-12"><span class="lead">Documentation</span><blockquote><div><p>DocumentReference resources MAY be returned as included resources when _include=List:item is used in the List search. The VHL Receiver SHALL be capable of processing DocumentReference resources returned with search.mode='include' in the searchset Bundle.</p>
+</div></blockquote></div></div></div></div></div></div>
+  </text>
+  <url value="https://profiles.ihe.net/ITI/VHL/CapabilityStatement/VHLReceiverCapabilityStatement"/>
+  <version value="1.0.0-comment"/>
+  <name value="VHLReceiverCapabilityStatement"/>
+  <title value="VHL Receiver Client Capability Statement"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2024-12-31"/>
+  <publisher value="IHE IT Infrastructure Technical Committee"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.ihe.net/ihe_domains/it_infrastructure/"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <contact>
+    <name value="IHE IT Infrastructure Technical Committee"/>
+    <telecom>
+      <system value="email"/>
+      <value value="iti@ihe.net"/>
+    </telecom>
+  </contact>
+  <description value="Capability Statement for a VHL Receiver implementing the Retrieve Manifest [ITI-YY5] transaction as a client. This client searches for List resources using VHL-authorized manifest URLs and can request inclusion of DocumentReference resources via the _include parameter."/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <kind value="requirements"/>
+  <fhirVersion value="4.0.1"/>
+  <format value="application/fhir+json"/>
+  <format value="application/fhir+xml"/>
+  <rest>
+    <mode value="client"/>
+    <documentation value="VHL Receiver retrieves document manifests (List resources) and optionally DocumentReference resources from VHL Sharers using VHL-authorized manifest URLs. The client extracts the manifest URL from the VHL payload (obtained via ITI-YY4 Provide VHL) and performs a FHIR search with mandatory parameters."/>
+    <security>
+      <description value="Implementations SHALL support ATNA Authenticate Node [ITI-19] for mutual TLS authentication. The VHL Receiver SHALL provide the VHL authorization token (folder ID) and MAY provide additional authentication tokens (OAuth 2.0, JWS signatures)."/>
+    </security>
+    <resource>
+      <type value="List"/>
+      <profile value="http://hl7.org/fhir/StructureDefinition/List"/>
+      <documentation value="The VHL Receiver searches for List resources using the manifest URL extracted from the VHL payload. The search SHALL include mandatory parameters: _id (folder ID), code, and status, and SHALL include the patient identifier using FHIR chained search on the patient parameter (i.e., patient.identifier=system|value). The VHL Receiver MAY request inclusion of DocumentReference resources via the _include parameter."/>
+      <interaction>
+        <code value="search-type"/>
+        <documentation value="Search for List resources using manifest URL from VHL payload. The VHL Receiver SHALL support searching with _id, code, and status parameters, and SHALL support chained search on the patient parameter (patient.identifier=system|value) to identify the patient. The VHL Receiver SHALL support the _include=List:item parameter to retrieve DocumentReference resources in a single request."/>
+      </interaction>
+      <searchInclude value="List:item"/>
+      <searchParam>
+        <name value="_id"/>
+        <definition value="http://hl7.org/fhir/SearchParameter/Resource-id"/>
+        <type value="token"/>
+        <documentation value="Folder ID from VHL payload. This is the primary authorization mechanism. SHALL be supported and SHALL be included in every manifest retrieval request."/>
+      </searchParam>
+      <searchParam>
+        <name value="code"/>
+        <type value="token"/>
+        <documentation value="List type, typically 'folder'. SHALL be supported and SHALL be included in manifest URL from VHL payload."/>
+      </searchParam>
+      <searchParam>
+        <name value="status"/>
+        <definition value="http://hl7.org/fhir/SearchParameter/List-status"/>
+        <type value="token"/>
+        <documentation value="List status, typically 'current'. SHALL be supported and SHALL be included in manifest URL from VHL payload."/>
+      </searchParam>
+      <searchParam>
+        <name value="patient"/>
+        <definition value="http://hl7.org/fhir/SearchParameter/clinical-patient"/>
+        <type value="reference"/>
+        <documentation value="Patient reference search parameter. SHALL be supported with FHIR chained search (patient.identifier=system|value) to identify the patient by identifier without requiring a direct Patient resource reference. SHALL be included in the manifest URL from the VHL payload."/>
+      </searchParam>
+    </resource>
+    <resource>
+      <type value="DocumentReference"/>
+      <profile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      <documentation value="DocumentReference resources MAY be returned as included resources when _include=List:item is used in the List search. The VHL Receiver SHALL be capable of processing DocumentReference resources returned with search.mode='include' in the searchset Bundle."/>
+      <interaction>
+        <code value="read"/>
+        <documentation value="Read individual DocumentReference resources by ID. Used when _include is not supported by the VHL Sharer or when retrieving updated metadata after the initial manifest retrieval."/>
+      </interaction>
+      <interaction>
+        <code value="search-type"/>
+        <documentation value="Search for DocumentReference resources. MAY be used to retrieve individual DocumentReferences when _include is not available or to apply additional filters after manifest retrieval."/>
+      </interaction>
+    </resource>
+  </rest>
+</CapabilityStatement>
