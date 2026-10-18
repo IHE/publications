@@ -1,4 +1,4 @@
-# Audit Event Subtype for De-Identification - De-Identification Handbook v2.0.0-comment
+# Audit Event Subtype for De-Identification - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/ValueSet/IHE.BasicAudit.DeIdentification.Subtype | *Version*:2.0.0-comment |
-| Active as of 2026-06-12 | *Computable Name*:AuditEventSubtypeDeidentify |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/ValueSet/IHE.BasicAudit.DeIdentification.Subtype | *Version*:2.0.0 |
+| Active as of 2026-10-17 | *Computable Name*:AuditEventSubtypeDeidentify |
 
  
 Defines the AuditEvent Subtype for De-Identification events. This is used to indicate that the AuditEvent is specifically for a De-Identification event. The code is based on the ISO 21089 lifecycle code for de-identification. 
@@ -46,12 +46,12 @@ Defines the AuditEvent Subtype for De-Identification events. This is used to ind
   "resourceType" : "ValueSet",
   "id" : "IHE.BasicAudit.DeIdentification.Subtype",
   "url" : "https://profiles.ihe.net/ITI/DeId/ValueSet/IHE.BasicAudit.DeIdentification.Subtype",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "AuditEventSubtypeDeidentify",
   "title" : "Audit Event Subtype for De-Identification",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-12T10:54:51-05:00",
+  "date" : "2026-10-17T19:18:20-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -82,6 +82,7 @@ Defines the AuditEvent Subtype for De-Identification events. This is used to ind
   "compose" : {
     "include" : [{
       "system" : "http://terminology.hl7.org/CodeSystem/iso-21089-lifecycle",
+      "version" : "1.0.0",
       "concept" : [{
         "code" : "deidentify"
       },

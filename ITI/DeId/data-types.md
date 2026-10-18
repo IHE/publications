@@ -1,4 +1,4 @@
-# Data Types - De-Identification Handbook v2.0.0-comment
+# Data Types - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Data Types**

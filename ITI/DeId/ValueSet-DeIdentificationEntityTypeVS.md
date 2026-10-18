@@ -1,4 +1,4 @@
-# Entity Type for De-Identification valueset - De-Identification Handbook v2.0.0-comment
+# Entity Type for De-Identification valueset - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/ValueSet/DeIdentificationEntityTypeVS | *Version*:2.0.0-comment |
-| Active as of 2026-06-12 | *Computable Name*:DeIdentificationEntityTypeVS |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/ValueSet/DeIdentificationEntityTypeVS | *Version*:2.0.0 |
+| Active as of 2026-10-17 | *Computable Name*:DeIdentificationEntityTypeVS |
 
  
 ValueSet Entity Type for De-Identification 
@@ -46,12 +46,12 @@ This value set is not used here; it may be used elsewhere (e.g. specifications a
   "resourceType" : "ValueSet",
   "id" : "DeIdentificationEntityTypeVS",
   "url" : "https://profiles.ihe.net/ITI/DeId/ValueSet/DeIdentificationEntityTypeVS",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "DeIdentificationEntityTypeVS",
   "title" : "Entity Type for De-Identification valueset",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-12T10:54:51-05:00",
+  "date" : "2026-10-17T19:18:20-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

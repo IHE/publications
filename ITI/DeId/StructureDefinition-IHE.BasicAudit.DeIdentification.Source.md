@@ -1,4 +1,4 @@
-# Audit Event for De-Identification at Source - De-Identification Handbook v2.0.0-comment
+# Audit Event for De-Identification at Source - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/StructureDefinition/IHE.BasicAudit.DeIdentification.Source | *Version*:2.0.0-comment |
-| Active as of 2026-06-12 | *Computable Name*:AuditPrivacyDeIdentificationSource |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/StructureDefinition/IHE.BasicAudit.DeIdentification.Source | *Version*:2.0.0 |
+| Active as of 2026-10-17 | *Computable Name*:AuditPrivacyDeIdentificationSource |
 
  
 Defines constraints on the AuditEvent Resource to record when a De-Identification happens at the Source. Note that a De-Identification event often impacts many different patients, so many AuditEvent resources need to be created so that each Patient is individually represented. This prevents leakage of other patients' that were also De-Identified at the same time. 
@@ -53,11 +53,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.BasicAudit.DeIde
   "resourceType" : "StructureDefinition",
   "id" : "IHE.BasicAudit.DeIdentification.Source",
   "url" : "https://profiles.ihe.net/ITI/DeId/StructureDefinition/IHE.BasicAudit.DeIdentification.Source",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "AuditPrivacyDeIdentificationSource",
   "title" : "Audit Event for De-Identification at Source",
   "status" : "active",
-  "date" : "2026-06-12T10:54:51-05:00",
+  "date" : "2026-10-17T19:18:20-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

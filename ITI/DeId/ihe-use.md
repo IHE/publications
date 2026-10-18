@@ -1,4 +1,4 @@
-# IHE Use - De-Identification Handbook v2.0.0-comment
+# IHE Use - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **IHE Use**

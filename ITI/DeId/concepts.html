@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title>Concepts - De-Identification Handbook v2.0.0-comment</title>
+    <title>Concepts - De-Identification Handbook v2.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -22,7 +22,7 @@
       <!-- Placeholder for child template CSS declarations -->
 <link rel="stylesheet" href="assets/css/ihe.css"/>
 
-<script async="null" src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" type="text/javascript"> </script> 
+<script src="https://www.googletagmanager.com/gtag/js?id=G-HLBNC861DJ" type="text/javascript"> </script> 
 
 
     <script src="fhir-table-scripts.js" type="text/javascript"> </script>
@@ -72,7 +72,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">De-Identification Handbook</span>
             <br/>
-            <span style="display:inline-block;">2.0.0-comment - ballot
+            <span style="display:inline-block;">2.0.0 - release
 
 
 
@@ -220,7 +220,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-    <!-- ReleaseHeader --><p id="publish-box">This page is part of the De-Identification Handbook (v2.0.0-comment: Publication Ballot 1) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/DeId/history.html">Directory of published versions</a></p>  <!-- EndReleaseHeader -->
+    <!-- ReleaseHeader --><p id="publish-box">This page is part of the De-Identification Handbook (v2.0.0: Publication - <a data-no-external="true" href="https://confluence.hl7.org/display/HL7/HL7+Balloting" title="Normative Standard">Normative</a>) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/DeId/history.html">Directory of published versions</a></p>  <!-- EndReleaseHeader -->
   <h2>Concepts</h2>
   
 
@@ -943,7 +943,18 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>The figure above illustrates the concept of de-identification across various levels and also the outcomes (identifiability) of each process steps. De-Identification is the top level process above pseudonymization and anonymization. Pseudonymization is a particular type of de-identification focusing on transforming direct identifiers. The pseudonymization can be further categorized into reversible pseudonymization and irreversible pseudonymization. Reversible pseudonymization generates pseudonymized data that can be reidentified. Irreversible pseudonymization produces pseudonymized data that can no longer be reidentified at any time in the future.</p>
 
-<p>Anonymization, depending on the risk level and the data recipient's capabilities, can be separated into anonymization with non-negligible risk and anonymization with negligible risk processes. Critically, as established by CJEU Case C-413/23 P, anonymity is not absolute but relative and the determination whether data is anonymous depends on the recipient's realistic ability to re-identify individuals, not the data custodian's. This means the same dataset may be considered personal data for one recipient but anonymous for another, depending on their respective access to re-identification means. Therefore, anonymization must be assessed from the data recipient's perspective. The outcome of anonymization with non-negligible risk, when viewed from the recipient's perspective, can still considered as Irreversibly Pseudonymized data. Only anonymization with negligible risk—where the recipient lacks realistic re-identification capability—generates anonymous data, which is deemed as non-personal information in modern privacy laws.</p>
+<p>Anonymization, depending on the risk level and the data recipient's capabilities, can be separated into anonymization with non-negligible risk and anonymization with negligible risk processes. Whether the residual risk is negligible or non-negligible is not determined by a single metric but by a holistic assessment of multiple factors, including:</p>
+
+<ul>
+  <li><strong>Re-identification risk threshold and residual risk:</strong> The measured probability of re-identification (e.g., using k-anonymity, l-diversity, or similar metrics) compared against an acceptable threshold established for the use case.</li>
+  <li><strong>Security and privacy measures:</strong> The technical and organizational safeguards applied to the data environment, such as access controls, encryption, contractual restrictions, and audit mechanisms, which influence the practical likelihood of re-identification.</li>
+  <li><strong>Data recipient's capabilities and resources:</strong> The recipient's realistic access to auxiliary data sources, computational resources, and domain expertise that could facilitate re-identification.</li>
+  <li><strong>Data environment and context:</strong> The nature of the data (sensitivity, granularity, volume), the linkability to external datasets, and the intended use context.</li>
+</ul>
+
+<p>Critically, as established by CJEU Case C-413/23 P, anonymity is not absolute but relative and the determination whether data is anonymous depends on the recipient's realistic ability to re-identify individuals, not the data custodian's. This means the same dataset may be considered personal data for one recipient but anonymous for another, depending on their respective access to re-identification means. Therefore, anonymization must be assessed from the data recipient's perspective, taking all of the above factors into account.</p>
+
+<p>The outcome of anonymization with non-negligible risk—where the combined assessment of these factors indicates that re-identification remains a realistic possibility—when viewed from the recipient's perspective, can still be considered as Irreversibly Pseudonymized data. Only anonymization with negligible risk—where the holistic evaluation demonstrates that the recipient lacks realistic re-identification capability given the residual risk, security measures, and available resources—generates anonymous data, which is deemed as non-personal information in modern privacy laws. In other words, pseudonymized data—whether produced by a pseudonymization process or by an anonymization process with non-negligible risk—retains a significant re-identification risk and is still classified as personal data under applicable privacy regulations.</p>
 
 <p>Without specificity and knowledge of the recipient's capabilities, the term de-identification can be confusing, especially when targeting implementation for compliance purposes. To address this, this handbook adopts a more specific framework: reversible pseudonymization, irreversible pseudonymization, anonymization with non-negligible risk, and anonymization with negligible risk. These distinctions are applied especially in contexts where the level of identifiability or legal requirements must be precisely defined. Simultaneously, this handbook uses 'de-identification' as a general term when the specific level of identifiability is less critical, such as when outlining a general risk-based approach.</p>
 
@@ -1445,7 +1456,7 @@ processes must be adaptable.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &copy; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.deid#2.0.0-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Jun 12, 2026 10:54-0500">2026-06-12</span>
+          IG &copy; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.deid#2.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Sat, Oct 17, 2026 19:18-0500">2026-10-17</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

@@ -1,4 +1,4 @@
-# Entity Type for De-Identification - De-Identification Handbook v2.0.0-comment
+# Entity Type for De-Identification - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,15 +8,15 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/CodeSystem/DeIdentificationEntityType | *Version*:2.0.0-comment |
-| Active as of 2026-06-12 | *Computable Name*:DeIdentificationEntityType |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/CodeSystem/DeIdentificationEntityType | *Version*:2.0.0 |
+| Active as of 2026-10-17 | *Computable Name*:DeIdentificationEntityType |
 
  
 These AuditEvent.entity.type are related to De-Identification policy identification. 
 
  This Code system is referenced in the content logical definition of the following value sets: 
 
-* [DeIdentificationEntityTypeVS](ValueSet-DeIdentificationEntityTypeVS.md)
+* [Entity Type for De-Identification valueset](ValueSet-DeIdentificationEntityTypeVS.md)
 
 
 
@@ -27,12 +27,12 @@ These AuditEvent.entity.type are related to De-Identification policy identificat
   "resourceType" : "CodeSystem",
   "id" : "DeIdentificationEntityType",
   "url" : "https://profiles.ihe.net/ITI/DeId/CodeSystem/DeIdentificationEntityType",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "DeIdentificationEntityType",
   "title" : "Entity Type for De-Identification",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-12T10:54:51-05:00",
+  "date" : "2026-10-17T19:18:20-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

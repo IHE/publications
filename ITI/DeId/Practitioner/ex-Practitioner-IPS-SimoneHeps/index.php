@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.json2');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.json1');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.json');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml2');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml1');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.html');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Practitioner-ex-Practitioner-IPS-SimoneHeps.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

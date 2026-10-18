@@ -1,4 +1,4 @@
-# Family Planning Example - De-Identification Handbook v2.0.0-comment
+# Family Planning Example - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Family Planning Example**
