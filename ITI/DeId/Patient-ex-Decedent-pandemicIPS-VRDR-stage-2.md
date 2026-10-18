@@ -1,4 +1,4 @@
-# ex-Decedent-pandemicIPS-VRDR-stage-2 - De-Identification Handbook v2.0.0-comment
+# ex-Decedent-pandemicIPS-VRDR-stage-2 - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 Profiles: [Decedent](http://hl7.org/fhir/us/vrdr/STU3/StructureDefinition-vrdr-decedent.html), [Patient - Vital Records](http://hl7.org/fhir/us/vr-common-library/STU2/StructureDefinition-Patient-vr.html), [Patient](http://hl7.org/fhir/R4/patient.html)
 
-Pseudo Decedent(anonymous) Female, DoB: 1996-08-16 ( Social Beneficiary Identifier: SSN#123456789)
+Pseudo Decedent(anonymous) Female, DoB: 1996-08-16 ( Social Beneficiary Identifier: United States Social Security Number#123456789)
 
 -------
 

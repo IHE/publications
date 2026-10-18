@@ -3,7 +3,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-    <title>Process - De-Identification Handbook v2.0.0-comment</title>
+    <title>Process - De-Identification Handbook v2.0.0</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="http://hl7.org/fhir"/>
@@ -74,7 +74,7 @@
         <div id="ig-status">
           <p><span style="font-size:12pt;font-weight:bold">De-Identification Handbook</span>
             <br/>
-            <span style="display:inline-block;">2.0.0-comment - ballot
+            <span style="display:inline-block;">2.0.0 - release
 
 
 
@@ -222,7 +222,7 @@ h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) ".
 h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
 </style>
 <div class="col-12">
-  <!--ReleaseHeader--><p id="publish-box">This page is part of the De-Identification Handbook (v2.0.0-comment: Publication Ballot 1) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/DeId/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
+  <!--ReleaseHeader--><p id="publish-box">This page is part of the De-Identification Handbook (v2.0.0: Publication - <a data-no-external="true" href="https://confluence.hl7.org/display/HL7/HL7+Balloting" title="Normative Standard">Normative</a>) based on <a data-no-external="true" href="http://hl7.org/fhir/R4">FHIR (HL7® FHIR® Standard) R4</a>. This is the current published version.  For a full list of available versions, see the <a data-no-external="true" href="https://profiles.ihe.net/ITI/DeId/history.html">Directory of published versions</a></p><!--EndReleaseHeader-->
   <h2>Process</h2>
   
 
@@ -596,6 +596,26 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   </li>
   <li>
     <p><strong>Proportion of higher risk records (R<sub>a</sub><sup>d</sup>)</strong>: The proportion of records that have a re-identification probability higher than a threshold τ. R<sub>a</sub><sup>d</sup> = (1 / n) Σ<sub>j∈J</sub> f<sub>j</sub> × I(θ<sub>j</sub> &gt; τ)</p>
+  </li>
+</ul>
+
+<p>The choice of which metric to use depends on the data sharing model:</p>
+
+<ul>
+  <li><strong>Public release</strong>: Use the <strong>maximum probability of re-identification (R<sub>b</sub><sup>d</sup>)</strong>. Because the data is available without restriction and the possibility of attack is high, no single record should exceed the acceptable threshold.</li>
+  <li>
+    <p><strong>Non-public release</strong>: Use the <strong>strict average probability of re-identification (R<sub>c</sub><sup>d</sup>)</strong>. Under controlled sharing with contractual safeguards, it is generally acceptable to measure risk as the average across all records. However, "strict average" means this metric should be calculated using the <strong>population uniqueness</strong> (based on F<sub>j</sub>) rather than sample uniqueness (f<sub>j</sub>), because the attacker in a non-public setting typically does not know whether a specific target is in the sample. Relying on sample uniqueness in this context would overestimate risk and lead to unnecessary data distortion.</p>
+
+    <p><strong>Uniqueness</strong> is the proportion of records in the sample that are both sample unique and population unique <a href="references.html#IPC_ONTARIO">(IPC Ontario, 2025)</a>. A record is <strong>sample unique</strong> if it is the only record in the released dataset with a particular combination of quasi-identifiers (f<sub>j</sub> = 1). A record is <strong>population unique</strong> if it is the only record in the entire population with that combination (F<sub>j</sub> = 1). If a record meets both criteria, it is easier to match with a real person.</p>
+
+    <p>The strict average risk is calculated in two steps <a href="references.html#IPC_ONTARIO">(IPC Ontario, 2025)</a>:</p>
+
+    <ol>
+      <li><strong>Evaluate Uniqueness</strong>: If uniqueness is below the selected threshold, proceed to step 2. If uniqueness is above the threshold, the dataset is considered insufficiently protected—additional de-identification transformations are required and uniqueness must be reassessed.</li>
+      <li><strong>Evaluate Average Risk</strong>: If average risk is below the acceptable threshold, the overall re-identification risk is considered very low. If not, additional transformations or control measures are required, after which the assessment returns to this step.</li>
+    </ol>
+
+    <p>A dataset is considered to have a very low disclosure risk only when both conditions are satisfied: uniqueness is very low <strong>and</strong> average risk is very low.</p>
   </li>
 </ul>
 
@@ -991,7 +1011,7 @@ For multi-source data collection, governance should also require documented sour
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.deid#2.0.0-comment based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Fri, Jun 12, 2026 10:54-0500">2026-06-12</span>
+          IG &#169; 2021+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.ihe.net/ihe_domains/it_infrastructure/">IHE IT Infrastructure Technical Committee</a>.  Package ihe.iti.deid#2.0.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Sat, Oct 17, 2026 19:18-0500">2026-10-17</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

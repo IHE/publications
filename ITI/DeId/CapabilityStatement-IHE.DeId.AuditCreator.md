@@ -1,4 +1,4 @@
-# IHE DeId Audit Creator - De-Identification Handbook v2.0.0-comment
+# IHE DeId Audit Creator - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/CapabilityStatement/IHE.DeId.AuditCreator | *Version*:2.0.0-comment |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/CapabilityStatement/IHE.DeId.AuditCreator | *Version*:2.0.0 |
 | Active as of 2025-06-17 | *Computable Name*:IHE_DeId_AuditCreator |
 
  
@@ -30,7 +30,7 @@ This actor is derived off of the [Basic Audit Log Patterns (BALP)](https://profi
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.DeId.AuditCreator",
   "url" : "https://profiles.ihe.net/ITI/DeId/CapabilityStatement/IHE.DeId.AuditCreator",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "IHE_DeId_AuditCreator",
   "title" : "IHE DeId Audit Creator",
   "status" : "active",

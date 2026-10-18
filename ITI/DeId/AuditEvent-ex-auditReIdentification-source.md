@@ -1,4 +1,4 @@
-# Audit Example of authorized Re-Identification at source - De-Identification Handbook v2.0.0-comment
+# Audit Example of authorized Re-Identification at source - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,11 +8,11 @@
 
 Profile: [Audit Event for De-Identification at Source](StructureDefinition-IHE.BasicAudit.DeIdentification.Source.md)
 
-Security Label: [test health data (Details: v3 Code System ActReason code HTEST = 'test health data')](http://hl7.org/fhir/R4/v3/ActReason/cs.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 **type**: [DICOM: 110106](http://hl7.org/fhir/R4/codesystem-dicom-dcim.html#dicom-dcim-110106) (Export)
 
-**subtype**: [ISO 21089-2017 Health Record Lifecycle Events: reidentify](http://hl7.org/fhir/R4/codesystem-iso-21089-lifecycle.html#iso-21089-lifecycle-reidentify) (Re-identify Record Lifecycle Event), [FHIR Restful Interactions: read](http://hl7.org/fhir/R4/codesystem-restful-interaction.html#restful-interaction-read) (read)
+**subtype**: [ISO 21089 2017 Health Record Lifecycle Events: reidentify](http://terminology.hl7.org/7.4.0/CodeSystem-iso-21089-lifecycle.html#iso-21089-lifecycle-reidentify) (Re-identify Record Lifecycle Event), [FHIR Restful Interactions: read](http://hl7.org/fhir/R4/codesystem-restful-interaction.html#restful-interaction-read) (read)
 
 **action**: Read/View/Print
 
@@ -47,11 +47,11 @@ Security Label: [test health data (Details: v3 Code System ActReason code HTEST 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | - | **Site** | **Observer** | **Type** |
-| * | mobile app foo-bar | model number ABC, serial number 1234 | [Audit Event Source Type: 1](http://hl7.org/fhir/R4/codesystem-audit-source-type.html#audit-source-type-1)(User Device) |
+| * | mobile app foo-bar | model number ABC, serial number 1234 | [Audit Event Source Type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-security-source-type.html#security-source-type-1)(User Device) |
 
-> **entity****what**: [http://example.org/fhir/Patient/ex-patient](http://example.org/fhir/Patient/ex-patient)**type**: [Audit event entity type: 1](http://hl7.org/fhir/R4/codesystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://hl7.org/fhir/R4/codesystem-object-role.html#object-role-1) (Patient)
+> **entity****what**: [http://example.org/fhir/Patient/ex-patient](http://example.org/fhir/Patient/ex-patient)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-1) (Patient)
 
-> **entity****what**: De-Identification Algorithm Identifier for FooBar De-Identification Algorithm (Identifier: [Uniform Resource Identifier (URI)](http://terminology.hl7.org/6.5.0/NamingSystem-uri.html)/urn:uuid:bed39a2d-3212-4f24-a5c8-e4c168968057)**type**: [Entity Type for De-Identification: DeId-algorithm](CodeSystem-DeIdentificationEntityType.md#DeIdentificationEntityType-DeId-algorithm) (De-Identification Algorithm)
+> **entity****what**: De-Identification Algorithm Identifier for FooBar De-Identification Algorithm (Identifier: [Uniform Resource Identifier (URI)](http://terminology.hl7.org/7.4.0/NamingSystem-uri.html)/urn:uuid:bed39a2d-3212-4f24-a5c8-e4c168968057)**type**: [Entity Type for De-Identification: DeId-algorithm](CodeSystem-DeIdentificationEntityType.md#DeIdentificationEntityType-DeId-algorithm) (De-Identification Algorithm)
 
 
 

@@ -1,4 +1,4 @@
-# Process - De-Identification Handbook v2.0.0-comment
+# Process - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Process**
@@ -251,6 +251,20 @@ When using k-anonymity, data risk is calculated by analyzing the size of the "eq
 * **Maximum probability of re-identification (Rbd)**: The maximum probability of re-identification in the data set among all records. Rbd = maxj∈J(θj)
 * **Average probability of re-identification (Rcd)**: The proportion of records that can be correctly re-identified on average. This may be appropriate for more controlled sharing models. Rcd = (1 / n) Σj∈J fj θj
 * **Proportion of higher risk records (Rad)**: The proportion of records that have a re-identification probability higher than a threshold τ. Rad = (1 / n) Σj∈J fj × I(θj > τ)
+
+The choice of which metric to use depends on the data sharing model:
+
+* **Public release**: Use the **maximum probability of re-identification (Rbd)**. Because the data is available without restriction and the possibility of attack is high, no single record should exceed the acceptable threshold.
+* **Non-public release**: Use the **strict average probability of re-identification (Rcd)**. Under controlled sharing with contractual safeguards, it is generally acceptable to measure risk as the average across all records. However, "strict average" means this metric should be calculated using the **population uniqueness** (based on Fj) rather than sample uniqueness (fj), because the attacker in a non-public setting typically does not know whether a specific target is in the sample. Relying on sample uniqueness in this context would overestimate risk and lead to unnecessary data distortion.
+
+
+  **Uniqueness** is the proportion of records in the sample that are both sample unique and population unique [(IPC Ontario, 2025)](references.md#IPC_ONTARIO). A record is **sample unique** if it is the only record in the released dataset with a particular combination of quasi-identifiers (fj = 1). A record is **population unique** if it is the only record in the entire population with that combination (Fj = 1). If a record meets both criteria, it is easier to match with a real person.
+
+
+  The strict average risk is calculated in two steps [(IPC Ontario, 2025)](references.md#IPC_ONTARIO):
+
+
+  A dataset is considered to have a very low disclosure risk only when both conditions are satisfied: uniqueness is very low **and** average risk is very low.
 
 The foundational methods for these calculations are detailed in [(El Emam, K. 2013)](references.md#EL_EMAM_GUIDE). The selected metrics Rad, Rbd, Rcd become the value for Rd used in the overall risk calculation. The most challenging aspect of calculating re-identification risk is estimating the population equivalence class size Fj. A practical approach to avoid complex estimation is to use fj (the sample equivalence class size) even when the attacker does not know if the target is in the sample. While this approach overestimates the data risk, it may be acceptable for large dataset releases. However, in healthcare settings with relatively small datasets, simply using fj as a substitute is typically not acceptable due to the excessive conservatism it introduces.
 

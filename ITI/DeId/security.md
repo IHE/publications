@@ -1,4 +1,4 @@
-# Security Considerations - De-Identification Handbook v2.0.0-comment
+# Security Considerations - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Security Considerations**

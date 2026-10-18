@@ -1,4 +1,4 @@
-# ex-Decedent-pandemicIPS-VRDR - De-Identification Handbook v2.0.0-comment
+# ex-Decedent-pandemicIPS-VRDR - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 Profiles: [Decedent](http://hl7.org/fhir/us/vrdr/STU3/StructureDefinition-vrdr-decedent.html), [Patient - Vital Records](http://hl7.org/fhir/us/vr-common-library/STU2/StructureDefinition-Patient-vr.html), [Patient](http://hl7.org/fhir/R4/patient.html)
 
-Patricia Jordana(official) Female, DoB: 1996-05-01 ( Social Beneficiary Identifier: SSN#987654321)
+Patricia Jordana(official) Female, DoB: 1996-05-01 ( Social Beneficiary Identifier: United States Social Security Number#987654321)
 
 -------
 
@@ -18,7 +18,7 @@ Patricia Jordana(official) Female, DoB: 1996-05-01 ( Social Beneficiary Identifi
 | Contact Detail | * ph: 07 850 9900(Mobile)
 * Grenzstraße Oberhausen 46045 GM (home)
  |
-| Unknown: | * Joe Smith
+| Friend of family: | * Joe Smith
  |
 | Links: | * General Practitioner: [Yaser, Joseph](Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.md#http-//example.org/Practitioner/ex-Practitioner-pandemicIPS-VRDR)
  |

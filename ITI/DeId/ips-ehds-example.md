@@ -1,4 +1,4 @@
-# IPS EHDS2 - De-Identification Handbook v2.0.0-comment
+# IPS EHDS2 - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **IPS EHDS2**

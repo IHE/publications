@@ -1,4 +1,4 @@
-# Glossary - De-Identification Handbook v2.0.0-comment
+# Glossary - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Glossary**
@@ -9,13 +9,21 @@
 
 **Note 1:** The term is defined in a similar way under the PIPL ([Art. 73(4)](http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559_3.htm)).
 
-**Note 2:** An absolute concept of anonymization is not feasible in practice. This book interprets it as a relative concept, where the risk of re-identification, even with reasonable additional information, is minimized to a very low level.
+**Note 2:** An absolute concept of anonymization is not feasible in practice. This book interprets it as a relative concept, where the risk of re-identification, even with reasonable additional information, is minimized to a very low level. This is consistent with the [EDPB Guidelines 01/2025 on Anonymisation](references.md#edpb2025anon), which hold that anonymity is entity-specific: whether data is anonymous depends on whether an identified or identifiable natural person can be singled out by a given recipient, considering the means reasonably likely to be used. Under this approach, the same dataset may be anonymous for one entity but remain personal data for another.
 
 **anonymous identifier**: identifier of a person which does not allow the identification of the natural person(Source: [(ISO 25237, 2017)](references.md#ISO25237)).
+
+**data custodian**: person or entity that has custody, control or possession of electronically stored information (Source: [(ISO/IEC 27559, 2022)](references.md#ISOIEC27559)).
+
+**Note 1:** The GDPR equivalent is "controller", defined as the natural or legal person which determines the purposes and means of the processing of personal data ([GDPR Art. 4(7)](https://gdpr-info.eu/art-4-gdpr/)). While a data custodian emphasizes custody or possession of data, a controller emphasizes decision-making authority over its processing.
+
+**Note 2:** The PIPL equivalent is "personal information processor", defined as an organization or individual that independently determines the purpose, means, and other matters of processing personal information ([PIPL Art. 73(1)](http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559_3.htm)).
 
 **data linking**: matching and combining data from multiple databases (Source: [(ISO 25237, 2017)](references.md#ISO25237)).
 
 **Note 1**: The term "data linking" is identical to the term "linking" defined in the [(ISO/IEC 20889, 2018)](references.md#ISO20889).
+
+**data recipient**: person or organization by, with or to whom data is accessed, shared or released (Source: [(ISO/IEC 27559, 2022)](references.md#ISOIEC27559)).
 
 **data subject**: person to whom data refer (Source: [(ISO 25237, 2017)](references.md#ISO25237)).
 
