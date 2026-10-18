@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/SearchParameter-List-DesignationType.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/SearchParameter-List-DesignationType.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

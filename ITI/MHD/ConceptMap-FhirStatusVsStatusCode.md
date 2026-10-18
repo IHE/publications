@@ -1,4 +1,4 @@
-# FHIR status vs ebRIM Status Type Code - Mobile access to Health Documents (MHD) v4.2.5-comment
+# FHIR status vs ebRIM Status Type Code - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ConceptMap/FhirStatusVsStatusCode | *Version*:4.2.5-comment |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ConceptMap/FhirStatusVsStatusCode | *Version*:4.2.5 |
 | Active as of 2022-05-05 | *Computable Name*:FhirStatusVsStatusCode |
 
  
@@ -26,7 +26,7 @@ show the mapping between ebRIM Status Type Codes and FHIR .status code
   "resourceType" : "ConceptMap",
   "id" : "FhirStatusVsStatusCode",
   "url" : "https://profiles.ihe.net/ITI/MHD/ConceptMap/FhirStatusVsStatusCode",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "FhirStatusVsStatusCode",
   "title" : "FHIR status vs ebRIM Status Type Code",
   "status" : "active",

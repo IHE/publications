@@ -1,4 +1,4 @@
-# 2:3.68 Retrieve Document [ITI-68] - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 2:3.68 Retrieve Document [ITI-68] - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **2:3.68 Retrieve Document [ITI-68]**

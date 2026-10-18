@@ -1,4 +1,4 @@
-# MHD Folder Minimal - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD Folder Minimal - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:Folder |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:Folder |
 
  
 A profile on the List resource for MHD use as a Folder with minimal metadata constraints. 
@@ -46,11 +46,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Minimal.Fold
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Minimal.Folder",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.Folder",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "Folder",
   "title" : "MHD Folder Minimal",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

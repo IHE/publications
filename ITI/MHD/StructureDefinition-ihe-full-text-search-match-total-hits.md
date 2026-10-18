@@ -1,4 +1,4 @@
-# Full-Text Search Match Total Hits - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Full-Text Search Match Total Hits - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-total-hits | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:FullTextSearchMatchTotalHits |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-total-hits | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:FullTextSearchMatchTotalHits |
 
 This extension contains the total number of full-text search matches found within a document (e.g. a PDF).
 
@@ -43,11 +43,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-full-text-search
   "resourceType" : "StructureDefinition",
   "id" : "ihe-full-text-search-match-total-hits",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-total-hits",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "FullTextSearchMatchTotalHits",
   "title" : "Full-Text Search Match Total Hits",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

@@ -1,4 +1,4 @@
-# Dummy List example - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Dummy List example - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -6,12 +6,11 @@
 
 ## Example List: Dummy List example
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 | | |
 | :--- | :--- |
 | Mode: Working List | Status: Current |
-|  | |
 
 * **Items**: [DocumentReference: status = current](DocumentReference-ex-documentreference2.md)
 

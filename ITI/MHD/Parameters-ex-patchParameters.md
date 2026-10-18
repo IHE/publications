@@ -1,4 +1,4 @@
-# DocumentReference for Comprehensive metadata beeing replaced - Mobile access to Health Documents (MHD) v4.2.5-comment
+# DocumentReference for Comprehensive metadata beeing replaced - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

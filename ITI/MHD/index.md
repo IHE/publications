@@ -1,4 +1,4 @@
-# MHD Home - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD Home - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **MHD Home**
@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:IHE_ITI_MHD |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:IHE_ITI_MHD |
 
 Applications specific to resource-constrained and mobile devices are an emerging platform for healthcare-enhancing software. The MHD Profile is not limited to mobile devices, using the term “mobile” only as a grouping for mobile applications, mobile devices or any other systems that are resource and platform-constrained. These constraints may drive the implementer to use simpler network interface technology. There are numerous deployed implementations of [Document Sharing Health Information Exchange](https://profiles.ihe.net/ITI/HIE-Whitepaper/index.html) that need a simpler network interface technology, for example those hosted by a Health Information Exchange (HIE), large health provider electronic health record (EHR), or personal health record (PHR).
 
@@ -78,11 +78,11 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
   "resourceType" : "ImplementationGuide",
   "id" : "ihe.iti.mhd",
   "url" : "https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "IHE_ITI_MHD",
   "title" : "Mobile access to Health Documents (MHD)",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -122,7 +122,7 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "7.2.0"
+    "version" : "7.4.0"
   },
   {
     "id" : "hl7ext",
@@ -144,320 +144,12 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
     "id" : "iheformatcodefhir",
     "uri" : "https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir",
     "packageId" : "ihe.formatcode.fhir",
-    "version" : "1.5.x"
+    "version" : "1.6.0"
   }],
   "definition" : {
     "extension" : [{
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "copyrightyear"
-      },
-      {
-        "url" : "value",
-        "valueString" : "2020+"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "releaselabel"
-      },
-      {
-        "url" : "value",
-        "valueString" : "ballot"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "active-tables"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-contact"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-jurisdiction"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-publisher"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-version"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "show-inherited-invariants"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "usage-stats-opt-out"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "autoload-resources"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "shownav"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-liquid"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template/liquid"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-liquid"
-      },
-      {
-        "url" : "value",
-        "valueString" : "input/liquid"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-qa"
-      },
-      {
-        "url" : "value",
-        "valueString" : "temp/qa"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-temp"
-      },
-      {
-        "url" : "value",
-        "valueString" : "temp/pages"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-output"
-      },
-      {
-        "url" : "value",
-        "valueString" : "output"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-suppressed-warnings"
-      },
-      {
-        "url" : "value",
-        "valueString" : "input/ignoreWarnings.txt"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-history"
-      },
-      {
-        "url" : "value",
-        "valueString" : "https://profiles.ihe.net/ITI/MHD/history.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "template-html"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template-page.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "template-md"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template-page-md.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-context"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-copyright"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-license"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-wg"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "fmm-definition"
-      },
-      {
-        "url" : "value",
-        "valueString" : "http://hl7.org/fhir/versions.html#maturity"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "propagate-status"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "excludelogbinaryformat"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "tabbed-snapshots"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools.r4#1.1.2"
+      "valueCode" : "hl7.fhir.uv.tools.r4#1.3.0"
     },
     {
       "extension" : [{
@@ -477,7 +169,7 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       },
       {
         "url" : "value",
-        "valueString" : "ballot"
+        "valueString" : "trial-use"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -771,6 +463,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-AssociationTypeVsRelatesTo.html"
       }],
       "reference" : {
         "reference" : "ConceptMap/AssociationTypeVsRelatesTo"
@@ -783,6 +479,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Responder.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentLists.Audit.Responder"
@@ -795,6 +495,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentLists.Audit.Consumer.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentLists.Audit.Consumer"
@@ -807,6 +511,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Consumer.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferences.Audit.Consumer"
@@ -819,6 +527,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Responder.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferences.Audit.Responder"
@@ -831,6 +543,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.GenerateMetadata.Audit.Recipient.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Recipient"
@@ -843,6 +559,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.GenerateMetadata.Audit.Source.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.GenerateMetadata.Audit.Source"
@@ -855,6 +575,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.ProvideBundle.Audit.Recipient.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.ProvideBundle.Audit.Recipient"
@@ -867,6 +591,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.ProvideBundle.Audit.Source.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.ProvideBundle.Audit.Source"
@@ -879,6 +607,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.RetrieveDocument.Audit.Consumer.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.RetrieveDocument.Audit.Consumer"
@@ -891,6 +623,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.RetrieveDocument.Audit.Responder.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.RetrieveDocument.Audit.Responder"
@@ -903,6 +639,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.SimplifiedPublish.Audit.Recipient.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.SimplifiedPublish.Audit.Recipient"
@@ -915,6 +655,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.SimplifiedPublish.Audit.Source.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.SimplifiedPublish.Audit.Source"
@@ -927,6 +671,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditSimplifiedPublish-recipient.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditSimplifiedPublish-recipient"
@@ -939,6 +687,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditSimplifiedPublish-source.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditSimplifiedPublish-source"
@@ -951,6 +703,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditGenerateMetadata-recipient.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditGenerateMetadata-recipient"
@@ -963,6 +719,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditGenerateMetadata-source.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditGenerateMetadata-source"
@@ -975,6 +735,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditProvideBundle-recipient.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditProvideBundle-recipient"
@@ -987,6 +751,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditProvideBundle-source.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditProvideBundle-source"
@@ -999,6 +767,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditFindDocumentLists-consumer.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditFindDocumentLists-consumer"
@@ -1011,6 +783,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditFindDocumentLists-responder.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditFindDocumentLists-responder"
@@ -1023,6 +799,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditFindDocumentReferences-consumer.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditFindDocumentReferences-consumer"
@@ -1035,6 +815,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditFindDocumentReferences-responder.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditFindDocumentReferences-responder"
@@ -1047,6 +831,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditFindDocumentReferences-post-responder.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditFindDocumentReferences-post-responder"
@@ -1059,6 +847,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditRetrieveDocument-consumer.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditRetrieveDocument-consumer"
@@ -1071,6 +863,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditRetrieveDocument-responder.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditRetrieveDocument-responder"
@@ -1083,6 +879,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-authorOrg.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-authorOrg"
@@ -1095,6 +895,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-designationType.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-designationType"
@@ -1107,6 +911,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentConsumer.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentConsumer"
@@ -1119,6 +927,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentConsumer.Target.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentConsumer.Target"
@@ -1131,6 +943,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentConsumer.FullTextSearch.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentConsumer.FullTextSearch"
@@ -1143,6 +959,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient"
@@ -1155,6 +975,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.Comprehensive.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient.Comprehensive"
@@ -1167,6 +991,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.Generate.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient.Generate"
@@ -1179,6 +1007,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.Fdoc.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient.Fdoc"
@@ -1191,6 +1023,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.Simplified.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient.Simplified"
@@ -1203,6 +1039,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentRecipient.UnContained.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentRecipient.UnContained"
@@ -1215,6 +1055,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentResponder.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentResponder"
@@ -1227,6 +1071,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentResponder.Target.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentResponder.Target"
@@ -1239,6 +1087,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentResponder.FullTextSearch"
@@ -1251,6 +1103,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource"
@@ -1263,6 +1119,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource.Comprehensive"
@@ -1275,6 +1135,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.Fdoc.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource.Fdoc"
@@ -1287,6 +1151,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.Generate.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource.Generate"
@@ -1299,6 +1167,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.Simplified.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource.Simplified"
@@ -1311,6 +1183,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.MHD.DocumentSource.UnContained.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.MHD.DocumentSource.UnContained"
@@ -1323,6 +1199,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceComprehensive.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceComprehensive"
@@ -1335,6 +1215,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceComprehensiveDelayedAssembly"
@@ -1347,6 +1231,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceComprehensiveWithBinary.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceComprehensiveWithBinary"
@@ -1359,6 +1247,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceComprehensiveOnDemand.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceComprehensiveOnDemand"
@@ -1371,6 +1263,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Parameters"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Parameters-ex-patchParameters.html"
       }],
       "reference" : {
         "reference" : "Parameters/ex-patchParameters"
@@ -1383,6 +1279,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceUnContainedFully.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceUnContainedFully"
@@ -1395,6 +1295,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceUnContained.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceUnContained"
@@ -1407,6 +1311,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceMinimal.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceMinimal"
@@ -1419,6 +1327,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceMinimalEncounter.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceMinimalEncounter"
@@ -1431,6 +1343,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-DocumentReferenceSimplifiedPublish.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-DocumentReferenceSimplifiedPublish"
@@ -1443,6 +1359,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Binary"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Binary-ex-binary.html"
       }],
       "reference" : {
         "reference" : "Binary/ex-binary"
@@ -1455,6 +1375,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-dummyBundleDocAndBinary.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-dummyBundleDocAndBinary"
@@ -1467,6 +1391,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Device"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Device-ex-device.html"
       }],
       "reference" : {
         "reference" : "Device/ex-device"
@@ -1479,6 +1407,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-documentreference2.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-documentreference2"
@@ -1491,6 +1423,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-ex-documentreference.html"
       }],
       "reference" : {
         "reference" : "DocumentReference/ex-documentreference"
@@ -1503,6 +1439,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Encounter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Encounter-ex-encounter.html"
       }],
       "reference" : {
         "reference" : "Encounter/ex-encounter"
@@ -1515,6 +1455,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-list.html"
       }],
       "reference" : {
         "reference" : "List/ex-list"
@@ -1527,6 +1471,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Organization"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Organization-ex-organization.html"
       }],
       "reference" : {
         "reference" : "Organization/ex-organization"
@@ -1539,6 +1487,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-patient.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-patient"
@@ -1551,6 +1503,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Practitioner"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Practitioner-ex-practitioner.html"
       }],
       "reference" : {
         "reference" : "Practitioner/ex-practitioner"
@@ -1563,6 +1519,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.EntryUUID.Identifier.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.EntryUUID.Identifier"
@@ -1575,6 +1535,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Parameters"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Parameters-ex-input-binary.html"
       }],
       "reference" : {
         "reference" : "Parameters/ex-input-binary"
@@ -1587,6 +1551,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Parameters"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Parameters-ex-input-doc-bundle.html"
       }],
       "reference" : {
         "reference" : "Parameters/ex-input-doc-bundle"
@@ -1599,6 +1567,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-compEmailPackage.html"
       }],
       "reference" : {
         "reference" : "List/ex-compEmailPackage"
@@ -1611,6 +1583,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-compFolder.html"
       }],
       "reference" : {
         "reference" : "List/ex-compFolder"
@@ -1623,6 +1599,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-compSubmissionSetFull.html"
       }],
       "reference" : {
         "reference" : "List/ex-compSubmissionSetFull"
@@ -1635,6 +1615,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-compSubmissionSetList.html"
       }],
       "reference" : {
         "reference" : "List/ex-compSubmissionSetList"
@@ -1647,6 +1631,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Binary"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Binary-ex-b-binary.html"
       }],
       "reference" : {
         "reference" : "Binary/ex-b-binary"
@@ -1659,6 +1647,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-minimalFolder.html"
       }],
       "reference" : {
         "reference" : "List/ex-minimalFolder"
@@ -1671,6 +1663,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-fhir-document-bundle.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-fhir-document-bundle"
@@ -1683,6 +1679,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-findDocumentListsResponse.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-findDocumentListsResponse"
@@ -1695,6 +1695,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-findDocumentReferencesResponse.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-findDocumentReferencesResponse"
@@ -1707,6 +1711,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-findDocumentReferencesResponseFullTextSearch.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-findDocumentReferencesResponseFullTextSearch"
@@ -1719,6 +1727,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-FindDocumentReferences.html"
       }],
       "reference" : {
         "reference" : "Bundle/FindDocumentReferences"
@@ -1731,6 +1743,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-comprehensiveProvideDocumentBundleDocument.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleDocument"
@@ -1743,6 +1759,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-compSubmissionSetFullUnContained.html"
       }],
       "reference" : {
         "reference" : "List/ex-compSubmissionSetFullUnContained"
@@ -1755,6 +1775,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-FhirStatusVsStatusCode.html"
       }],
       "reference" : {
         "reference" : "ConceptMap/FhirStatusVsStatusCode"
@@ -1767,6 +1791,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-full-text-search-match-snippet.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-full-text-search-match-snippet"
@@ -1779,6 +1807,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-full-text-search-match-total-hits.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-full-text-search-match-total-hits"
@@ -1791,6 +1823,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "OperationDefinition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "OperationDefinition-generate-metadata.html"
       }],
       "reference" : {
         "reference" : "OperationDefinition/generate-metadata"
@@ -1803,6 +1839,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.GenerateMetadata.Parameters.In.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.GenerateMetadata.Parameters.In"
@@ -1815,6 +1855,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-IHE.MHD.MHDIdentifierType.html"
       }],
       "reference" : {
         "reference" : "CodeSystem/IHE.MHD.MHDIdentifierType"
@@ -1827,6 +1871,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-IHE.MHD.MHDIdentifierTypeVS.html"
       }],
       "reference" : {
         "reference" : "ValueSet/IHE.MHD.MHDIdentifierTypeVS"
@@ -1839,6 +1887,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-intendedRecipient.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-intendedRecipient"
@@ -1851,6 +1903,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.List.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.List"
@@ -1863,6 +1919,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Comprehensive.ProvideBundle.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Comprehensive.ProvideBundle"
@@ -1875,6 +1935,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Comprehensive.DocumentReference"
@@ -1887,6 +1951,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.UnContained.Comprehensive.DocumentReference.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.UnContained.Comprehensive.DocumentReference"
@@ -1899,6 +1967,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.SimplifiedPublish.DocumentReference.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.SimplifiedPublish.DocumentReference"
@@ -1911,6 +1983,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Minimal.DocumentReference.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Minimal.DocumentReference"
@@ -1923,6 +1999,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Patch.Parameters.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Patch.Parameters"
@@ -1935,6 +2015,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-DocumentReferenceStats.html"
       }],
       "reference" : {
         "reference" : "ValueSet/DocumentReferenceStats"
@@ -1947,6 +2031,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentListsResponseMessage.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentListsResponseMessage"
@@ -1959,6 +2047,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferencesComprehensiveResponseMessage"
@@ -1971,6 +2063,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentReferencesResponseMessage.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessage"
@@ -1983,6 +2079,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch"
@@ -1995,6 +2095,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Comprehensive.Folder.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Comprehensive.Folder"
@@ -2007,6 +2111,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-MHDprovideFolderActions.html"
       }],
       "reference" : {
         "reference" : "ValueSet/MHDprovideFolderActions"
@@ -2019,6 +2127,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Minimal.Folder.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Minimal.Folder"
@@ -2031,6 +2143,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-MHDlistTypes.html"
       }],
       "reference" : {
         "reference" : "CodeSystem/MHDlistTypes"
@@ -2043,6 +2159,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-MHDlistTypesVS.html"
       }],
       "reference" : {
         "reference" : "ValueSet/MHDlistTypesVS"
@@ -2055,6 +2175,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Minimal.ProvideBundle.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Minimal.ProvideBundle"
@@ -2067,6 +2191,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-MHDprovidePatientActions.html"
       }],
       "reference" : {
         "reference" : "ValueSet/MHDprovidePatientActions"
@@ -2079,6 +2207,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.ProvideDocumentBundleResponse"
@@ -2091,6 +2223,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Comprehensive.SubmissionSet.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Comprehensive.SubmissionSet"
@@ -2103,6 +2239,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.UnContained.Comprehensive.SubmissionSet.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.UnContained.Comprehensive.SubmissionSet"
@@ -2115,6 +2255,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.Minimal.SubmissionSet.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.Minimal.SubmissionSet"
@@ -2127,6 +2271,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.UnContained.Comprehensive.ProvideBundle.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle"
@@ -2139,6 +2287,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-comprehensiveProvideDocumentBundleComplete.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleComplete"
@@ -2151,6 +2303,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-unContainedComprehensiveProvideDocumentBundleComplete.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-unContainedComprehensiveProvideDocumentBundleComplete"
@@ -2163,6 +2319,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-comprehensiveProvideDocumentBundleMultiple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleMultiple"
@@ -2175,6 +2335,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-comprehensiveProvideDocumentBundleSimple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleSimple"
@@ -2187,6 +2351,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-comprehensiveProvideDocumentBundleReplace.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-comprehensiveProvideDocumentBundleReplace"
@@ -2199,6 +2367,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-minimalProvideDocumentBundleSimple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-minimalProvideDocumentBundleSimple"
@@ -2211,6 +2383,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-minimalProvideDocumentBundleSimpleContained.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-minimalProvideDocumentBundleSimpleContained"
@@ -2223,6 +2399,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-ProvideDocumentBundle-addToFolder.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-ProvideDocumentBundle-addToFolder"
@@ -2235,6 +2415,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-sourceId.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-sourceId"
@@ -2247,6 +2431,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-comprehensiveProvideDocumentBundleComplete.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-comprehensiveProvideDocumentBundleComplete"
@@ -2259,6 +2447,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-unContainedComprehensiveProvideDocumentBundleCompt"
@@ -2271,6 +2463,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-minimalProvideDocumentBundleSimple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-minimalProvideDocumentBundleSimple"
@@ -2283,6 +2479,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-minimalProvideDocumentBundleSimpleContained.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-minimalProvideDocumentBundleSimpleContained"
@@ -2295,6 +2495,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-comprehensiveProvideDocumentBundleMultiple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-comprehensiveProvideDocumentBundleMultiple"
@@ -2307,6 +2511,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-ex-response-comprehensiveProvideDocumentBundleSimple.html"
       }],
       "reference" : {
         "reference" : "Bundle/ex-response-comprehensiveProvideDocumentBundleSimple"
@@ -2319,6 +2527,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-DocumentReference-Creation.html"
       }],
       "reference" : {
         "reference" : "SearchParameter/DocumentReference-Creation"
@@ -2331,6 +2543,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-List-DesignationType.html"
       }],
       "reference" : {
         "reference" : "SearchParameter/List-DesignationType"
@@ -2343,6 +2559,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-IHE-TargetCommunityIdList.html"
       }],
       "reference" : {
         "reference" : "SearchParameter/IHE-TargetCommunityIdList"
@@ -2355,6 +2575,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-List-SourceId.html"
       }],
       "reference" : {
         "reference" : "SearchParameter/List-SourceId"
@@ -2366,7 +2590,27 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-DocumentReference-Full-Text-Search.html"
+      }],
+      "reference" : {
+        "reference" : "SearchParameter/DocumentReference-Full-Text-Search"
+      },
+      "name" : "search on the textual content of the represented document",
+      "description" : "Searches the textual content of the represented document. The search is performed against the content available via DocumentReference.content.attachment.url.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "List"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "List-ex-minimalSubmissionSet.html"
       }],
       "reference" : {
         "reference" : "List/ex-minimalSubmissionSet"
@@ -2379,6 +2623,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ihe-HomeCommunityId.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/ihe-HomeCommunityId"
@@ -2391,6 +2639,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.UniqueIdIdentifier.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.UniqueIdIdentifier"
@@ -2403,6 +2655,10 @@ MHD defines `Must Support` in StructureDefinition profiles as the element, when 
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.MHD.SubmissionSetUniqueIdIdentifier.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.MHD.SubmissionSetUniqueIdIdentifier"

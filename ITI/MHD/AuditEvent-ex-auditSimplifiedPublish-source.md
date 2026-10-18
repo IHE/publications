@@ -1,4 +1,4 @@
-# Audit Example of ITI-105 at source - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Audit Example of ITI-105 at source - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,9 +8,9 @@
 
 Profile: [Audit Event for Simplified Publish ITI-105 Transaction at Source](StructureDefinition-IHE.MHD.SimplifiedPublish.Audit.Source.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.2.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (RESTful Operation)
+**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.4.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (RESTful Operation)
 
 **subtype**: [FHIR Restful Interactions: create](http://hl7.org/fhir/R4/codesystem-restful-interaction.html#restful-interaction-create) (create), unknown: ITI-105 (Simplified Publish)
 
@@ -43,11 +43,11 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | - | **Site** | **Observer** | **Type** |
-| * | mobile app foo-bar | model number ABC, serial number 1234 | [Audit Event Source Type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-security-source-type.html#security-source-type-1)(User Device) |
+| * | mobile app foo-bar | model number ABC, serial number 1234 | [Audit Event Source Type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-security-source-type.html#security-source-type-1)(User Device) |
 
-> **entity****what**: [DocumentReference: masterIdentifier = OID:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.60220.62012; identifier = OID:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.60220.62012; status = current](DocumentReference-ex-DocumentReferenceSimplifiedPublish.md)**type**: [Audit event entity type: 2](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 4](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-4) (Domain Resource)
+> **entity****what**: [DocumentReference: masterIdentifier = OID:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.60220.62012; identifier = OID:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.60220.62012; status = current](DocumentReference-ex-DocumentReferenceSimplifiedPublish.md)**type**: [Audit event entity type: 2](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 4](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-4) (Domain Resource)
 
-> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-1) (Patient)
+> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-1) (Patient)
 
 
 

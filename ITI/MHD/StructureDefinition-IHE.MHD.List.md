@@ -1,4 +1,4 @@
-# MHD common List with designationType - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD common List with designationType - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.List | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:MhdList |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.List | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:MhdList |
 
  
 A profile on the List resource for MHD. Used with both Folder and SubmissionSet. 
@@ -40,11 +40,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.List.csv), [
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.List",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.List",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "MhdList",
   "title" : "MHD common List with designationType",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
