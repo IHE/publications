@@ -1,4 +1,4 @@
-# Example Comprehensive Folder - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Example Comprehensive Folder - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,9 +8,9 @@
 
 Profile: [MHD Folder Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.Folder.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-## Example Folder with comprehensive metadata
+### Example Folder with comprehensive metadata
 
 | | | | |
 | :--- | :--- | :--- | :--- |

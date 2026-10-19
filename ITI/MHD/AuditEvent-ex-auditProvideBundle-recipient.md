@@ -1,4 +1,4 @@
-# Audit Example of ITI-65 at recipient - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Audit Example of ITI-65 at recipient - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 Profile: [Audit Event for Provide Bundle Transaction at Recipient](StructureDefinition-IHE.MHD.ProvideBundle.Audit.Recipient.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 **type**: [DICOM: 110107](http://hl7.org/fhir/R4/codesystem-dicom-dcim.html#dicom-dcim-110107) (Import)
 
@@ -45,11 +45,11 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | - | **Site** | **Observer** | **Type** |
-| * | server.example.com | [Device](Device-ex-device.md) | [Audit Event Source Type: 4](http://terminology.hl7.org/7.2.0/CodeSystem-security-source-type.html#security-source-type-4)(Application Server) |
+| * | server.example.com | [Device](Device-ex-device.md) | [Audit Event Source Type: 4](http://terminology.hl7.org/7.4.0/CodeSystem-security-source-type.html#security-source-type-4)(Application Server) |
 
-> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-1) (Patient)
+> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-1) (Patient)
 
-> **entity****what**: [List for 'SubmissionSet as a FHIR List' for 'Unspecified Subject'](List-ex-minimalSubmissionSet.md)**type**: [Audit event entity type: 2](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 20](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-20) (Job)
+> **entity****what**: [List for 'SubmissionSet as a FHIR List' for 'Unspecified Subject'](List-ex-minimalSubmissionSet.md)**type**: [Audit event entity type: 2](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 20](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-20) (Job)
 
 
 

@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/List-ex-compSubmissionSetFull.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/List-ex-compSubmissionSetFull.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

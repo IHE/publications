@@ -1,4 +1,4 @@
-# uniqueId Identifier for SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5-comment
+# uniqueId Identifier for SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.SubmissionSetUniqueIdIdentifier | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:SubmissionSetUniqueIdIdentifier |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.SubmissionSetUniqueIdIdentifier | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:SubmissionSetUniqueIdIdentifier |
 
  
 uniqueId Identifier holding a OID 
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.SubmissionSe
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.SubmissionSetUniqueIdIdentifier",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.SubmissionSetUniqueIdIdentifier",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "SubmissionSetUniqueIdIdentifier",
   "title" : "uniqueId Identifier for SubmissionSet",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

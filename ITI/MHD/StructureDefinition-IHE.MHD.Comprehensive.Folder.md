@@ -1,4 +1,4 @@
-# MHD Folder Comprehensive - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD Folder Comprehensive - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:FolderComprehensive |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:FolderComprehensive |
 
  
 A profile on the List resource for MHD Comprehensive Metadata Folder. Note UnContained has no impact on Folder. 
@@ -44,11 +44,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Comprehensiv
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Comprehensive.Folder",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Comprehensive.Folder",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "FolderComprehensive",
   "title" : "MHD Folder Comprehensive",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

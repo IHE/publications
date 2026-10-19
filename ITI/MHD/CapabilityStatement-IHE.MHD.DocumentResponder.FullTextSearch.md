@@ -1,4 +1,4 @@
-# Document Responder (server) with Full-Text Search Option - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Document Responder (server) with Full-Text Search Option - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder.FullTextSearch | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:IHE_MHD_DocumentResponder_FullTextSearch |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder.FullTextSearch | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:IHE_MHD_DocumentResponder_FullTextSearch |
 
  
 IHE ITI Mobile access to Health Documents (MHD) - Document Responder (server) - with Full-Text Search Option. 
@@ -29,12 +29,12 @@ This is the **Requirements** CapabilityStatement for a [Document Responder](1331
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.MHD.DocumentResponder.FullTextSearch",
   "url" : "https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentResponder.FullTextSearch",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "IHE_MHD_DocumentResponder_FullTextSearch",
   "title" : "Document Responder (server) with Full-Text Search Option",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -93,12 +93,6 @@ This is the **Requirements** CapabilityStatement for a [Document Responder](1331
         "documentation" : "When the resource version last changed"
       },
       {
-        "name" : "_content",
-        "definition" : "http://hl7.org/fhir/SearchParameter/Resource-content",
-        "type" : "string",
-        "documentation" : "Parameters for content-based full-text search in documents that are referenced by DocumentReference."
-      },
-      {
         "name" : "author.given",
         "type" : "string",
         "documentation" : "These parameters, of type string, specify the name parts of the author person, which is associated with the DocumentReference Resource, or in Document Sharing nomenclature, the author of the Document Entry. See ITI TF-2x: Appendix Z.2 for use of the string data type."
@@ -143,6 +137,12 @@ This is the **Requirements** CapabilityStatement for a [Document Responder](1331
         "definition" : "http://hl7.org/fhir/SearchParameter/DocumentReference-format",
         "type" : "token",
         "documentation" : "Format/content rules for the document"
+      },
+      {
+        "name" : "full-text",
+        "definition" : "https://profiles.ihe.net/ITI/MHD/SearchParameter/DocumentReference-Full-Text-Search",
+        "type" : "string",
+        "documentation" : "Searches the textual content of the represented document available via DocumentReference.content.attachment.url"
       },
       {
         "name" : "identifier",

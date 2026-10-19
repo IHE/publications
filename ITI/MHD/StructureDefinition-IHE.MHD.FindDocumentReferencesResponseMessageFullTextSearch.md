@@ -1,4 +1,4 @@
-# MHD Find Document References Response message with Full-Text Search Option - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD Find Document References Response message with Full-Text Search Option - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:FindDocumentReferencesResponseFullTextSearch |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:FindDocumentReferencesResponseFullTextSearch |
 
  
 A profile on the Find Document References Response message for ITI-67 with Full-Text Search Option 
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.FindDocument
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "FindDocumentReferencesResponseFullTextSearch",
   "title" : "MHD Find Document References Response message with Full-Text Search Option",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

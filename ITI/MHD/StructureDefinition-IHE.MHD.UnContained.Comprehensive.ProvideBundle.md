@@ -1,4 +1,4 @@
-# MHD UnContained Comprehensive Provide Document Bundle - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD UnContained Comprehensive Provide Document Bundle - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:UnContainedComprehensiveProvideDocumentBundle |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:UnContainedComprehensiveProvideDocumentBundle |
 
  
 A profile on the Bundle transaction for ITI-65 Provide Document resources with UnContained allowed but requiring Comprehensive Metadata for MHD. 
@@ -52,11 +52,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.UnContained.
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.UnContained.Comprehensive.ProvideBundle",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.UnContained.Comprehensive.ProvideBundle",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "UnContainedComprehensiveProvideDocumentBundle",
   "title" : "MHD UnContained Comprehensive Provide Document Bundle",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

@@ -1,4 +1,4 @@
-# 1:33.2 Actor Options - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 1:33.2 Actor Options - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **1:33.2 Actor Options**
@@ -6,8 +6,6 @@
 ## 1:33.2 Actor Options
 
 Options that may be selected for each actor in this implementation guide, are listed in Table 1:33.2-1 below. Dependencies between options when applicable are specified in notes.
-
-Added full text search option to the table.
 
 | | |
 | :--- | :--- |
@@ -24,10 +22,12 @@ Added full text search option to the table.
 | [Generate Metadata](#13325-generate-metadata-option) | |
 | [ITI-65 FHIR documents Publish](#13326-iti-65-fhir-documents-publish-option) | |
 | Document Consumer | [UnContained Reference](#13323-uncontained-reference-option) |
-| [Target Communities](#13327-target-communities-option) | [Full-Text Search](#13327-full-text-search-option) |
+| [Target Communities](#13327-target-communities-option) | |
+| [Full-Text Search](#13327-full-text-search-option) | |
 | Document Responder | [XDS on FHIR](#13322-xds-on-fhir-option) |
 | [UnContained Reference](#13323-uncontained-reference-option) | |
-| [Target Communities](#13327-target-communities-option) | [Full-Text Search](#13327-full-text-search-option) |
+| [Target Communities](#13327-target-communities-option) | |
+| [Full-Text Search](#13327-full-text-search-option) | |
 
 The options in this guide are described in more detail in the sections below.
 

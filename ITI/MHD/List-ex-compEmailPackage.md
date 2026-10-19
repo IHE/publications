@@ -1,4 +1,4 @@
-# Example Comprehensive Email SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Example Comprehensive Email SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,9 +8,9 @@
 
 Profile: [MHD SubmissionSet Comprehensive](StructureDefinition-IHE.MHD.Comprehensive.SubmissionSet.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-## Example SubmissionSet for comprehensive metadata with an intendedRecipient
+### Example SubmissionSet for comprehensive metadata with an intendedRecipient
 
 | | | | |
 | :--- | :--- | :--- | :--- |

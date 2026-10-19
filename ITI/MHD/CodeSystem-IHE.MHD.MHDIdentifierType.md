@@ -1,4 +1,4 @@
-# IHE MHD Identifier Types - Mobile access to Health Documents (MHD) v4.2.5-comment
+# IHE MHD Identifier Types - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,15 +8,15 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:MHDIdentifierType |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:MHDIdentifierType |
 
  
 Code System for Identifier.type values defined in IHE MHD 
 
  This Code system is referenced in the content logical definition of the following value sets: 
 
-* [MHDIdentifierTypeVS](ValueSet-IHE.MHD.MHDIdentifierTypeVS.md)
+* [IHE MHD Identifier Types ValueSet](ValueSet-IHE.MHD.MHDIdentifierTypeVS.md)
 
 
 
@@ -27,12 +27,12 @@ Code System for Identifier.type values defined in IHE MHD
   "resourceType" : "CodeSystem",
   "id" : "IHE.MHD.MHDIdentifierType",
   "url" : "https://profiles.ihe.net/ITI/MHD/CodeSystem/IHE.MHD.MHDIdentifierType",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "MHDIdentifierType",
   "title" : "IHE MHD Identifier Types",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
