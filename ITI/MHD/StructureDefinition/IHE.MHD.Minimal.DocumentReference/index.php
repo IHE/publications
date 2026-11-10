@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.Minimal.DocumentReference.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

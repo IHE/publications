@@ -1,0 +1,1804 @@
+# Imaging Manifest for DICOM Objects (MADO) Implementation Guide - Manifest-based Access to DICOM Objects (MADO) v1.0.0
+
+* [**Table of Contents**](toc.md)
+* **Imaging Manifest for DICOM Objects (MADO) Implementation Guide**
+
+## Imaging Manifest for DICOM Objects (MADO) Implementation Guide
+
+| | |
+| :--- | :--- |
+| *Official URL*:https://profiles.ihe.net/RAD/MADO/ImplementationGuide/ihe.rad.mado | *Version*:1.0.0 |
+| Active as of 2026-09-03 | *Computable Name*:IHE_RAD_MADO |
+
+This profile addresses the access to DICOM Instances based on an imaging study manifest. The need for this profile was identified as part of the sharing of imaging studies and related reports as required under the EHDS Regulation.
+
+The access to DICOM Instances based on an imaging study manifest can be combined either with MHD (or MHDS) to deploy FHIR-based document sharing infrastructures or XDS.b, or some proprietary document sharing scheme. Such flexibility ensures a common and more effective way to access the DICOM Objects through a solid profiling of WADO-RS consistent with the XC-WADO Cross-Community profile and the IID (Invoke Image Display) profiles. The MADO Profile includes also a more robust imaging study manifest compared to the one introduced by XDS-I.b, supporting two complementary encodings based on the DICOM KOS IOD or FHIR Imaging Study resource, as well as profiling in a more precise way existing attributes and new attributes, such as those necessary to improve access to key images in a way compatible with the IHE KIN Profile.
+
+> Note: There are two components to the MADO Profile. This implementation guide only represents the FHIR part of the MADO specification. Where applicable, references/redirects are added that point to the PDF MADO specification that contains the Volume 1, Volume 2 and the DICOM part of Volume 3. Both components must be implemented to conform.
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "ImplementationGuide",
+  "id" : "ihe.rad.mado",
+  "url" : "https://profiles.ihe.net/RAD/MADO/ImplementationGuide/ihe.rad.mado",
+  "version" : "1.0.0",
+  "name" : "IHE_RAD_MADO",
+  "title" : "Manifest-based Access to DICOM Objects (MADO)",
+  "status" : "active",
+  "date" : "2026-09-03T19:52:58-05:00",
+  "publisher" : "IHE Radiology Technical Committee",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.ihe.net/ihe_domains/radiology/"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "email",
+      "value" : "rad@ihe.net"
+    }]
+  },
+  {
+    "name" : "IHE Radiology Technical Committee",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "rad@ihe.net"
+    }]
+  }],
+  "description" : "ImplementationGuide for IHE Radiology Technical Framework Supplement Manifest-based Access to DICOM Objects (MADO)",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "packageId" : "ihe.rad.mado",
+  "license" : "CC-BY-4.0",
+  "fhirVersion" : ["4.0.1"],
+  "dependsOn" : [{
+    "id" : "hl7tx",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment",
+      "valueMarkdown" : "Automatically added as a dependency - all IGs depend on HL7 Terminology"
+    }],
+    "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+    "packageId" : "hl7.terminology.r4",
+    "version" : "7.3.0"
+  },
+  {
+    "id" : "hl7ext",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment",
+      "valueMarkdown" : "Automatically added as a dependency - all IGs depend on the HL7 Extension Pack"
+    }],
+    "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
+    "packageId" : "hl7.fhir.uv.extensions.r4",
+    "version" : "5.3.0"
+  },
+  {
+    "id" : "ihe_iti_mhd",
+    "uri" : "https://profiles.ihe.net/ITI/MHD/ImplementationGuide/ihe.iti.mhd",
+    "packageId" : "ihe.iti.mhd",
+    "version" : "4.2.3"
+  },
+  {
+    "id" : "hl7_fhir_uv_xver_r5_r4",
+    "uri" : "http://hl7.org/fhir/uv/xver/ImplementationGuide/hl7.fhir.uv.xver-r5.r4",
+    "packageId" : "hl7.fhir.uv.xver-r5.r4",
+    "version" : "0.1.0"
+  },
+  {
+    "id" : "DICOM",
+    "uri" : "http://fhir.org/packages/fhir.dicom/ImplementationGuide/fhir.dicom",
+    "packageId" : "fhir.dicom",
+    "version" : "2025.3.20250714"
+  },
+  {
+    "id" : "ihe_formatcode_fhir",
+    "uri" : "https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir",
+    "packageId" : "ihe.formatcode.fhir",
+    "version" : "1.5.0"
+  }],
+  "definition" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "copyrightyear"
+      },
+      {
+        "url" : "value",
+        "valueString" : "2025+"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "releaselabel"
+      },
+      {
+        "url" : "value",
+        "valueString" : "trial-use"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "show-inherited-invariants"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "usage-stats-opt-out"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "logging"
+      },
+      {
+        "url" : "value",
+        "valueString" : "progress"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "shownav"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "active-tables"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-contact"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-jurisdiction"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-publisher"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-version"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "autoload-resources"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "pin-canonicals"
+      },
+      {
+        "url" : "value",
+        "valueString" : "pin-multiples"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-qa"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/qa"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-temp"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/pages"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-output"
+      },
+      {
+        "url" : "value",
+        "valueString" : "output"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-suppressed-warnings"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/ignoreWarnings.txt"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "path-history"
+      },
+      {
+        "url" : "value",
+        "valueString" : "https://profiles.ihe.net/RAD/MADO/history.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "template-html"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "template-md"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page-md.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-context"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-copyright"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-license"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "apply-wg"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "fmm-definition"
+      },
+      {
+        "url" : "value",
+        "valueString" : "http://hl7.org/fhir/versions.html#maturity"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "propagate-status"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "excludelogbinaryformat"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueString" : "tabbed-snapshots"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
+      "valueCode" : "hl7.fhir.uv.tools.r4#1.1.2"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "copyrightyear"
+      },
+      {
+        "url" : "value",
+        "valueString" : "2025+"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "releaselabel"
+      },
+      {
+        "url" : "value",
+        "valueString" : "trial-use"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "show-inherited-invariants"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "usage-stats-opt-out"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "logging"
+      },
+      {
+        "url" : "value",
+        "valueString" : "progress"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "shownav"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "active-tables"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-contact"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-jurisdiction"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-publisher"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-version"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "autoload-resources"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "pin-canonicals"
+      },
+      {
+        "url" : "value",
+        "valueString" : "pin-multiples"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-qa"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/qa"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-temp"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/pages"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-output"
+      },
+      {
+        "url" : "value",
+        "valueString" : "output"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-suppressed-warnings"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/ignoreWarnings.txt"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-history"
+      },
+      {
+        "url" : "value",
+        "valueString" : "https://profiles.ihe.net/RAD/MADO/history.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "template-html"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "template-md"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page-md.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-context"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-copyright"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-license"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-wg"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "fmm-definition"
+      },
+      {
+        "url" : "value",
+        "valueString" : "http://hl7.org/fhir/versions.html#maturity"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "propagate-status"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "excludelogbinaryformat"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "tabbed-snapshots"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    }],
+    "resource" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ActorDefinition-MadoImagingManifestResponder.html"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/MadoImagingManifestResponder"
+      },
+      "name" : "ActorDefinition: Imaging Manifest Responder",
+      "description" : "The actor responsible for producing the Imaging Manifest resources.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-mado-bundle-589331894518000.html"
+      }],
+      "reference" : {
+        "reference" : "Bundle/mado-bundle-589331894518000"
+      },
+      "name" : "Bundle: MADO FHIR document",
+      "description" : "An example of an FHIR Imaging Study Manifest.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoFhirBundle"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Device"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Device-MadoCreatorDeviceExample.html"
+      }],
+      "reference" : {
+        "reference" : "Device/MadoCreatorDeviceExample"
+      },
+      "name" : "Device: MADO creator",
+      "description" : "Example of a Device that represents the system that creates the MADO content.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoCreator"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Binary"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Binary-dicom-kos-mado--2047166865.html"
+      }],
+      "reference" : {
+        "reference" : "Binary/dicom-kos-mado--2047166865"
+      },
+      "name" : "dicom-kos-mado--2047166865",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Binary"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Binary-dicom-kos-mado--2047166866.html"
+      }],
+      "reference" : {
+        "reference" : "Binary/dicom-kos-mado--2047166866"
+      },
+      "name" : "dicom-kos-mado--2047166866",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-DocumentReferenceKOS.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/DocumentReferenceKOS"
+      },
+      "name" : "DocumentReference Example for DICOM KOS manifests",
+      "description" : "DocumentReference Example for DICOM KOS manifests",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoDicomKosDocumentReference"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-DocumentReferenceKOSwithTransform.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/DocumentReferenceKOSwithTransform"
+      },
+      "name" : "DocumentReference Example for DICOM KOS manifests",
+      "description" : "DocumentReference Example for DICOM KOS manifests",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoDicomKosDocumentReference"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-DocumentReferenceKOSNoRelated.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/DocumentReferenceKOSNoRelated"
+      },
+      "name" : "DocumentReference Example for DICOM KOS manifests and no related reference to the FHIR Imaging Study Manifest example",
+      "description" : "DocumentReference Example for DICOM KOS manifests with no related reference to the FHIR Imaging Study Manifest example",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoDicomKosDocumentReference"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-DocumentReferenceFHIR.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/DocumentReferenceFHIR"
+      },
+      "name" : "DocumentReference Example for FHIR Imaging Study Manifest",
+      "description" : "DocumentReference Example for FHIR Imaging Study Manifest",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoFhirDocumentReference"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-DocumentReferenceFHIRwithTransform.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/DocumentReferenceFHIRwithTransform"
+      },
+      "name" : "DocumentReference Example for FHIR Imaging Study Manifest with transform",
+      "description" : "DocumentReference Example for FHIR Imaging Study Manifest with transform service called to transform the KOS manifest into an FHIR Imaging Study Manifest",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoFhirDocumentReference"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoWebViewerEndpoint.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoWebViewerEndpoint"
+      },
+      "name" : "Endpoint: MADO profile for Web Viewer endpoints",
+      "description" : "This profile defines the Web Viewer endpoint for accessing imaging study content. The URL in the Endpoint\nSHALL be a fully populated URL that contains all the information required to the launch the viewer to this study.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoWadoEndpoint.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoWadoEndpoint"
+      },
+      "name" : "Endpoint: MADO WADO endpoint",
+      "description" : "This profile defines a WADO endpoint for accessing imaging study content. [MADO WADO Endpoint](Endpoint-wado-endpoint-with-url.html) holds an example of a endpoint with a \n`RetrieveLocationUid` and an address.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Endpoint"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Endpoint-wado-endpoint-with-url.html"
+      }],
+      "reference" : {
+        "reference" : "Endpoint/wado-endpoint-with-url"
+      },
+      "name" : "Endpoint: MADO WADO Endpoint",
+      "description" : "Example of a DICOM web endpoint supporting WADO.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoWadoEndpoint"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Endpoint"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Endpoint-EndpointWadoExampleNoAddress.html"
+      }],
+      "reference" : {
+        "reference" : "Endpoint/EndpointWadoExampleNoAddress"
+      },
+      "name" : "Endpoint: MADO WADO Endpoint example with no URL",
+      "description" : "Example implementation of an WADO endpoint holding a RetrieveLocationUID and no address.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoWadoEndpoint"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Endpoint"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Endpoint-webviewer-endpoint-example.html"
+      }],
+      "reference" : {
+        "reference" : "Endpoint/webviewer-endpoint-example"
+      },
+      "name" : "Endpoint: MADO Web Viewer Endpoint",
+      "description" : "Example of a web viewer endpoint whose address launches a viewer on the imaging study.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoWebViewerEndpoint"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Organization"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Organization-MadoCreatorOrganizationExample.html"
+      }],
+      "reference" : {
+        "reference" : "Organization/MadoCreatorOrganizationExample"
+      },
+      "name" : "Example of an organization that generated the manifest",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoCreatorOrganization"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ExamplePatient.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/ExamplePatient"
+      },
+      "name" : "Example patient",
+      "description" : "Example patient",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoAnatomicalRegionExtension.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoAnatomicalRegionExtension"
+      },
+      "name" : "Extension: Anatomical Region",
+      "description" : "The anatomical region in an ImagingStudy instance. This is additional information next to ImagingStudy.series.bodySite.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ext-R5-DocumentReference.bodySite.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ext-R5-DocumentReference.bodySite"
+      },
+      "name" : "Extension: DocumentReference.bodySite",
+      "description" : "Carries the R5 DocumentReference.bodySite.concept (CodeableReference) for use in R4. \nImported locally because hl7.fhir.uv.xver-r5.r4#0.1.0 does not include an extension \nfor it. Only the `concept` field has been mapped as this is the only element we need in\nthis IG.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ext-R5-DocumentReference.modality.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ext-R5-DocumentReference.modality"
+      },
+      "name" : "Extension: DocumentReference.modality (R5 cross-version)",
+      "description" : "Carries the R5 DocumentReference.modality element for use in R4. Imported locally because hl7.fhir.uv.xver-r5.r4#0.1.0 does not publish a DocumentReference.modality cross-version extension.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoKeyObjectDocumentTitle.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoKeyObjectDocumentTitle"
+      },
+      "name" : "Extension: MADO Document Title of Key Object Selection documents",
+      "description" : "The document title code of the Key Object Selection document [TID 2010](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_tid_2010.html) this instance refers to.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoNumberOfFrames.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoNumberOfFrames"
+      },
+      "name" : "Extension: Number of Frames",
+      "description" : "The number of frames in an ImagingStudy instance.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoRetrieveLocationUIDExtension.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoRetrieveLocationUIDExtension"
+      },
+      "name" : "Extension: Retrieve Location UID",
+      "description" : "The location UID of the source of the WADO URL. See XC-WADO and [Part03 table_A.35.4-1](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_A.35.4.3.html#table_A.35.4-1).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoAccessionNumberIdentifier.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoAccessionNumberIdentifier"
+      },
+      "name" : "MADO Accession Number Identifier",
+      "description" : "Profile for the Accession Number Identifier used in the MADO context. This profile is used for the Identifier that represents the Accession Number in the MADO context. It includes additional\nconstraints and extensions specific to the MADO context, such as the value set for the type of identifier and the fixed value for the system of the identifier.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoComposition.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoComposition"
+      },
+      "name" : "MADO Composition",
+      "description" : "A FHIR Composition profile for MADO manifests is needed as FHIR Bundles of type `document` require a `Composition` resource as the first entry. Instances of this profile can be rendered in normal document based system without the need for the Client to understand the MADO-specific profiles, while still allowing to represent the essential information of the manifest such as patient, modality, and anatomical region.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoCreator.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoCreator"
+      },
+      "name" : "MADO Creator",
+      "description" : "A profile for the Device resource that represents the creator of an FHIR Imaging Study Manifest. The primary goal is to communicate the fields:\n\n* type = MadoDeviceType#mado-creator \"MADO Creator\"\n* manufacturer\n* owner (Reference to MadoCreatorOrganization)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoCreatorOrganization.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoCreatorOrganization"
+      },
+      "name" : "MADO Creator Organization",
+      "description" : "Profile on Organization that specifies the required elements for the organization that creates MADO manifests.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-MadoDeviceType.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/MadoDeviceType"
+      },
+      "name" : "MADO Device Type Code System",
+      "description" : "Code system for the type of device used in the MADO context. This code system is used to specify the type of device used in the MADO context, such as the type of device used as the author of an ImagingStudy in the MADO context.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.RAD.MADO.DocumentConsumer.html"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/IHE.RAD.MADO.DocumentConsumer"
+      },
+      "name" : "MADO Document Consumer (client)",
+      "description" : "IHE RAD Manifest based Access to DICOM Objects(MADO) - Document Consumer (client). It extends MHD  [Document Consumer (client)](https://build.fhir.org/ig/IHE/ITI.MHD/CapabilityStatement-IHE.MHD.DocumentConsumer.html).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.RAD.MADO.DocumentResponder.html"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/IHE.RAD.MADO.DocumentResponder"
+      },
+      "name" : "MADO Document Responder (server)",
+      "description" : "IHE RAD Manifest based Access to DICOM Objects(MADO) - Document Responder (server). It extends MHD [Document Responder (client)](https://build.fhir.org/ig/IHE/ITI.MHD/CapabilityStatement-IHE.MHD.DocumentResponder.html).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-MadoEndpointConnectionTypes.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/MadoEndpointConnectionTypes"
+      },
+      "name" : "MADO Endpoint Connection Types Code System",
+      "description" : "Code system for the MADO-specific Endpoint connection types used in the MADO context.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoFhirBundle.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoFhirBundle"
+      },
+      "name" : "MADO FHIR Imaging Study Manifest Bundle",
+      "description" : "Profile for FHIR Bundles used as an FHIR Imaging Study Manifest in the MADO context. It includes constraints and extensions specific to FHIR Imaging Study Manifest, such as the type of study, the clinical specialty, and the anatomical region of interest.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoImagingStudy.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoImagingStudy"
+      },
+      "name" : "MADO Imaging Study",
+      "description" : "Profile for ImagingStudy resources that represent the imaging studies manifest in the MADO context. It includes additional constraints and extensions specific to the MADO context, such as the study modality, the clinical specialty, the anatomical region of interest, the presence of significant images.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoDicomKosDocumentReference.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoDicomKosDocumentReference"
+      },
+      "name" : "MADO MHD DocumentReference Profile for DICOM KOS Imaging Manifests",
+      "description" : "MADO specific profile for the IHE-MHD Document Reference for MADO DICOM KOS Manifests that includes the MADO specific content format, the extensions\nrelated to body-site and modality, and the definition on where `StudyInstanceUID` and `AccessionNumber` are stored. \n\nThis profile requires `context.period` and copies most of the restrictions defined in the [MHD DocumentReference Comprehensive](https://profiles.ihe.net/ITI/MHD/StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.html) \nprofiles (except `securityLabel`).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoFhirDocumentReference.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoFhirDocumentReference"
+      },
+      "name" : "MADO MHD DocumentReference Profile for FHIR Imaging Study Manifest",
+      "description" : "MADO specific profile for the IHE-MHD Document Reference for FHIR Imaging Study Manifest that includes the MADO specific content format, the extensions\nrelated to body-site and modality, and the definition on where `StudyInstanceUID` and `AccessionNumber` are stored.\n\nThis profile requires `context.period` and copies most of the restrictions defined in the [MHD DocumentReference Comprehensive](https://profiles.ihe.net/ITI/MHD/StructureDefinition-IHE.MHD.Comprehensive.DocumentReference.html) \nprofiles (except `securityLabel`).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoPatient.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoPatient"
+      },
+      "name" : "MADO Patient",
+      "description" : "Profile on Patient that specifies the required elements for the patient that is the subject of the manifest.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoReferencedAccessionNumberIdentifier.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoReferencedAccessionNumberIdentifier"
+      },
+      "name" : "MADO Referenced Accession Number Identifier",
+      "description" : "Profile for the Reference that contains the Accession Number Identifier used in the MADO context. This profile is used for the Reference that contains the Identifier that represents the Accession Number in the MADO context. It includes additional\nconstraints and extensions specific to the MADO context, such as the value set for the type of identifier and the fixed value for the system of the identifier.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoReferencedStudyInstanceUidIdentifier.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoReferencedStudyInstanceUidIdentifier"
+      },
+      "name" : "MADO Referenced Study Instance UID Identifier",
+      "description" : "Profile for the Reference that contains the Study Instance UID Identifier used in the MADO context. This profile is used for the Reference that contains the Identifier that represents the Study Instance UID in the MADO context. It includes additional\nconstraints and extensions specific to the MADO context, such as the value set for the type of identifier and the fixed value for the system of the identifier.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoRequestedProcedure.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoRequestedProcedure"
+      },
+      "name" : "MADO Requested Procedure",
+      "description" : "A profile for the ServiceRequest resource that represents the Requested Procedure (see 6.X.2.8.1 Referenced Request Macro Description).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:complex-type"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-MadoStudyInstanceUidIdentifier.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/MadoStudyInstanceUidIdentifier"
+      },
+      "name" : "MADO Study Instance UID Identifier",
+      "description" : "Profile for the Study Instance UID Identifier used in the MADO context. This profile is used for the Identifier that represents the Study Instance UID in the MADO context. It includes additional\nconstraints and extensions specific to the MADO context, such as the value set for the type of identifier and the fixed value for the system of the identifier.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-mado-bundle--2047166865.html"
+      }],
+      "reference" : {
+        "reference" : "Bundle/mado-bundle--2047166865"
+      },
+      "name" : "mado-bundle--2047166865",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-mado-bundle--2047166866.html"
+      }],
+      "reference" : {
+        "reference" : "Bundle/mado-bundle--2047166866"
+      },
+      "name" : "mado-bundle--2047166866",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-mado-documentreference-fhir--2047166865.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/mado-documentreference-fhir--2047166865"
+      },
+      "name" : "mado-documentreference-fhir--2047166865",
+      "description" : "Imaging Manifest for Imaging Study: Head CT on CT of Head, KO (urn:oid:1.2.250.1.59.40211.22756022.2.1.102)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-mado-documentreference-fhir--2047166866.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/mado-documentreference-fhir--2047166866"
+      },
+      "name" : "mado-documentreference-fhir--2047166866",
+      "description" : "Imaging Manifest for Imaging Study: Head CT on CT of Head (urn:oid:1.2.250.1.59.40211.22756022.2.1.101)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-mado-documentreference-kos--2047166865.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/mado-documentreference-kos--2047166865"
+      },
+      "name" : "mado-documentreference-kos--2047166865",
+      "description" : "Imaging Manifest for Imaging Study: Head CT on CT of Head, KO (urn:oid:1.2.250.1.59.40211.22756022.2.1.102)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DocumentReference"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DocumentReference-mado-documentreference-kos--2047166866.html"
+      }],
+      "reference" : {
+        "reference" : "DocumentReference/mado-documentreference-kos--2047166866"
+      },
+      "name" : "mado-documentreference-kos--2047166866",
+      "description" : "Imaging Manifest for Imaging Study: Head CT on CT of Head (urn:oid:1.2.250.1.59.40211.22756022.2.1.101)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-pat-mrn--1097192655.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/pat-mrn--1097192655"
+      },
+      "name" : "pat-mrn--1097192655",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ServiceRequest"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ServiceRequest-MadoRequestedProcedureExample.html"
+      }],
+      "reference" : {
+        "reference" : "ServiceRequest/MadoRequestedProcedureExample"
+      },
+      "name" : "Requested Procedure Example with Placer and Filler",
+      "description" : "Example of a MADO Requested Procedure (ServiceRequest) carrying the Accession Number, Placer Order Number, and Filler Order Number identifiers.",
+      "exampleCanonical" : "https://profiles.ihe.net/RAD/MADO/StructureDefinition/MadoRequestedProcedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-SearchParameterDocumentReferenceAccessionNumber.html"
+      }],
+      "reference" : {
+        "reference" : "SearchParameter/SearchParameterDocumentReferenceAccessionNumber"
+      },
+      "name" : "SearchParameterDocumentReferenceAccessionNumber",
+      "description" : "Searches for document references with a specific Accession Number.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-SearchParameterDocumentReferenceBodySite.html"
+      }],
+      "reference" : {
+        "reference" : "SearchParameter/SearchParameterDocumentReferenceBodySite"
+      },
+      "name" : "SearchParameterDocumentReferenceBodySite",
+      "description" : "Searches for document references with a specific anatomical region.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-SearchParameterDocumentReferenceModality.html"
+      }],
+      "reference" : {
+        "reference" : "SearchParameter/SearchParameterDocumentReferenceModality"
+      },
+      "name" : "SearchParameterDocumentReferenceModality",
+      "description" : "Searches for document references with a specific modality.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "SearchParameter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "SearchParameter-SearchParameterDocumentReferenceStudyInstanceUid.html"
+      }],
+      "reference" : {
+        "reference" : "SearchParameter/SearchParameterDocumentReferenceStudyInstanceUid"
+      },
+      "name" : "SearchParameterDocumentReferenceStudyInstanceUid",
+      "description" : "Searches for document references with a specific Study Instance UID.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-ValueSetAnatomicalRegion.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/ValueSetAnatomicalRegion"
+      },
+      "name" : "ValueSet: Anatomical Region",
+      "description" : "A shortlist of anatomical regions that can be used for searching reports and manifests. This set is defined in Table 6.X.6.4-1. In this case discrepancies, the values in the table have prevalence. It is planned to\nmove this ValueSet to IHE terminologies. When that is done, this definition will be removed.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-ProcedureEuImagingType.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/ProcedureEuImagingType"
+      },
+      "name" : "ValueSet: Imaging Procedure Type",
+      "description" : "This value set includes all imaging procedure types defined in SNOMED CT. The codes represent\ncombinations of the modality to be used and the procedure to be performed.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-MadoNarrativeNotEmpty.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/MadoNarrativeNotEmpty"
+      },
+      "name" : "ValueSet: Non-empty Narrative status codes",
+      "description" : "This value set includes all Narrative status codes that are not empty.",
+      "exampleBoolean" : false
+    }],
+    "page" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+        "valueUrl" : "toc.html"
+      }],
+      "nameUrl" : "toc.html",
+      "title" : "Table of Contents",
+      "generation" : "html",
+      "page" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "index.html"
+        }],
+        "nameUrl" : "index.html",
+        "title" : "Imaging Manifest for DICOM Objects (MADO) Implementation Guide",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "volume-1.html"
+        }],
+        "nameUrl" : "volume-1.html",
+        "title" : "Volume 1",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "volume-2.html"
+        }],
+        "nameUrl" : "volume-2.html",
+        "title" : "Volume 2",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "volume-3.html"
+        }],
+        "nameUrl" : "volume-3.html",
+        "title" : "Volume 3",
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "fhir-imaging-manifest.html"
+          }],
+          "nameUrl" : "fhir-imaging-manifest.html",
+          "title" : "FHIR Imaging Manifest",
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "manifest-envelope.html"
+          }],
+          "nameUrl" : "manifest-envelope.html",
+          "title" : "Manifest Envelopes for IHE-MHD",
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "mapping.html"
+          }],
+          "nameUrl" : "mapping.html",
+          "title" : "Mappings between MADO FHIR and MADO DICOM KOS",
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "download.html"
+        }],
+        "nameUrl" : "download.html",
+        "title" : "Download",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "testplan.html"
+        }],
+        "nameUrl" : "testplan.html",
+        "title" : "Test plan",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "issues.html"
+        }],
+        "nameUrl" : "issues.html",
+        "title" : "Significant Changes and Issues",
+        "generation" : "markdown"
+      }]
+    },
+    "parameter" : [{
+      "code" : "path-resource",
+      "value" : "input/resources"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "fsh-generated/resources"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/examples"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/capabilities"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/extensions"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/models"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/operations"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/profiles"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/vocabulary"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/testing"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/history"
+    },
+    {
+      "code" : "path-pages",
+      "value" : "template/config"
+    },
+    {
+      "code" : "path-pages",
+      "value" : "input/images"
+    },
+    {
+      "code" : "path-tx-cache",
+      "value" : "input-cache/txcache"
+    }]
+  }
+}
+
+```

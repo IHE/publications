@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/DocumentReference-ex-DocumentReferenceComprehensiveDelayedAssembly.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

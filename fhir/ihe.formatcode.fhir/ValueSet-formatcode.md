@@ -1,4 +1,4 @@
-# FormatCode ValueSet - IHE FormatCode Vocabulary v1.5.0
+# FormatCode ValueSet - IHE FormatCode Vocabulary v1.6.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode | *Version*:1.5.0 |
+| *Official URL*:http://ihe.net/fhir/ihe.formatcode.fhir/ValueSet/formatcode | *Version*:1.6.0 |
 | Active as of 2022-08-15 | *Computable Name*:IHE_FormatCode_vs |
 | *Other Identifiers:*OID:1.3.6.1.4.1.19376.1.2.7.1 | |
 | **Copyright/Legal**: IHE http://www.ihe.net/Governance/#Intellectual_Property | |
@@ -54,7 +54,7 @@ No Expansion for this valueset (Unknown Code System)
     "system" : "urn:ietf:rfc:3986",
     "value" : "urn:oid:1.3.6.1.4.1.19376.1.2.7.1"
   }],
-  "version" : "1.5.0",
+  "version" : "1.6.0",
   "name" : "IHE_FormatCode_vs",
   "title" : "IHE ValueSet of Format Codes for use with Document Sharing",
   "status" : "active",

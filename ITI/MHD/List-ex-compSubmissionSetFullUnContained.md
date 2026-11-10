@@ -1,4 +1,4 @@
-# Example UnContained Comprehensive Full SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Example UnContained Comprehensive Full SubmissionSet - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,14 +8,14 @@
 
 Profile: [MHD SubmissionSet Comprehensive UnContained](StructureDefinition-IHE.MHD.UnContained.Comprehensive.SubmissionSet.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-## Example SubmissionSet for comprehensive metadata
+### Example SubmissionSet for comprehensive metadata
 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | Date: 2004-12-25 23:50:50-0500 | Mode: Working List | Status: Current | Code: SubmissionSet as a FHIR List |
-| Subject:[John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)Source: | | | |
+| Subject:[John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md) | Source:[Anonymous Practitioner](Practitioner-ex-practitioner.md) | | |
 
 * **Items**: [DocumentReference: status = current](DocumentReference-ex-documentreference.md)
 * **Items**: [List for 'Unspecified List Type' for 'Unspecified Subject'](List-ex-list.md)

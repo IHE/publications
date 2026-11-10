@@ -1,4 +1,4 @@
-# HL7 v2 Example - De-Identification Handbook v2.0.0-comment
+# HL7 v2 Example - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **HL7 v2 Example**

@@ -1,4 +1,4 @@
-# Audit Example of ITI-67 at Consumer - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Audit Example of ITI-67 at Consumer - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,9 +8,9 @@
 
 Profile: [Audit Event for Find Document References Transaction at Document Consumer](StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Consumer.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.2.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (Restful Operation)
+**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.4.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (Restful Operation)
 
 **subtype**: unknown: ITI-67 (Find Document References), [FHIR Restful Interactions: search](http://hl7.org/fhir/R4/codesystem-restful-interaction.html#restful-interaction-search) (search)
 
@@ -45,11 +45,11 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | - | **Site** | **Observer** | **Type** |
-| * | fancy mobile app | [Device](Device-ex-device.md) | [Audit Event Source Type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-security-source-type.html#security-source-type-1)(User Device) |
+| * | fancy mobile app | [Device](Device-ex-device.md) | [Audit Event Source Type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-security-source-type.html#security-source-type-1)(User Device) |
 
-> **entity****type**: [Audit event entity type: 2](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 24](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-24) (Query)**description**: GET test.fhir.net/R4/fhir/DocumentReference?patient=9876&status=current&type=http://loinc.org|1234-5**query**: `R0VUIHRlc3QuZmhpci5uZXQvUjQvZmhpci9Eb2N1bWVudFJlZmVyZW5jZT9wYXRpZW50PTk4NzYmc3RhdHVzPWN1cnJlbnQmdHlwZT1odHRwOi8vbG9pbmMub3JnfDEyMzQtNQo=`
+> **entity****type**: [Audit event entity type: 2](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 24](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-24) (Query)**description**: GET test.fhir.net/R4/fhir/DocumentReference?patient=9876&status=current&type=http://loinc.org|1234-5**query**: `R0VUIHRlc3QuZmhpci5uZXQvUjQvZmhpci9Eb2N1bWVudFJlZmVyZW5jZT9wYXRpZW50PTk4NzYmc3RhdHVzPWN1cnJlbnQmdHlwZT1odHRwOi8vbG9pbmMub3JnfDEyMzQtNQo=`
 
-> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-1) (Patient)
+> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-1) (Patient)
 
 
 

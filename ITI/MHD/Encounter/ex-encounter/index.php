@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Encounter-ex-encounter.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Encounter-ex-encounter.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

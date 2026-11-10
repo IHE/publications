@@ -1,4 +1,4 @@
-# Artifacts Summary - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Artifacts Summary - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **Artifacts Summary**
@@ -50,6 +50,7 @@ These define the properties by which a RESTful server can be searched. They can 
 | [search on the IHE defined extension for SourceId](SearchParameter-List-SourceId.md) | This SearchParameter enables finding Lists by the SourceId of a submissionSet. |
 | [search on the IHE defined extension for designationType](SearchParameter-List-DesignationType.md) | This SearchParameter enables finding Lists by the designationType code in a submissionSet or folder. |
 | [search on the IHE defined extension for homeCommunityId](SearchParameter-IHE-TargetCommunityIdList.md) | This SearchParameter enables finding by the homeCommunityId where DocumentReference, submissionSet, or folder exist. |
+| [search on the textual content of the represented document](SearchParameter-DocumentReference-Full-Text-Search.md) | Searches the textual content of the represented document. The search is performed against the content available via DocumentReference.content.attachment.url. |
 
 ### Structures: Resource Profiles 
 

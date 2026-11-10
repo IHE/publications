@@ -1,4 +1,4 @@
-# Dummy Patient example - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Dummy Patient example - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -6,7 +6,7 @@
 
 ## Example Patient: Dummy Patient example
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 John Schmidt Other, DoB: 1923-07-25
 
@@ -14,6 +14,10 @@ John Schmidt Other, DoB: 1923-07-25
 
 | | |
 | :--- | :--- |
+| Alt. Name: | * John Jacob Jingle Heimer Schnidt (Old)
+* John Jacob Jingleheimer Schmidt (Official)
+* Jack Schmidt (Nickname)
+ |
 | Contact Detail | WI USA |
 
 

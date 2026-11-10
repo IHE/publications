@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/CapabilityStatement-IHE.MHD.DocumentSource.Comprehensive.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

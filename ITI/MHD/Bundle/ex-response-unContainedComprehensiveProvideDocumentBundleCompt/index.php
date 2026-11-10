@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Bundle-ex-response-unContainedComprehensiveProvideDocumentBundleCompt.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

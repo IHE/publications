@@ -1,4 +1,4 @@
-# 2:3.67 Find Document References [ITI-67] - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 2:3.67 Find Document References [ITI-67] - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **2:3.67 Find Document References [ITI-67]**
@@ -91,31 +91,21 @@ The Document Consumer shall include search parameter `patient` or `patient.ident
 
 **type**: This parameter, of type token, specifies the specific type of the DocumentReference resource or in Document Sharing nomenclature, the typeCode of the Document Entry. See [ITI TF-2x: Appendix Z.2](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.2-query-parameters) for additional constraints on the use of the token search parameter type.
 
-Section on new full text search option.
-
 ###### 2:3.67.4.1.2.1.1 Full-Text Search Option
 
-If the Full-Text Search Option is supported, the Document Consumer must be able to make use of the **_content** parameter that specifies terms or phrases that are used to search document content in the documents managed by the Document Responder. The Document Responder must match the full-text search parameters in combination with any metadata-based search parameters defined in the same query (i.e. only if a document matches the filter from **_content** query and the meta-data based filter parameters, the document is considered a match).
+If the Full-Text Search Option is supported, the `full-text` search parameter specifies terms or phrases used to search the textual content of the document available via `DocumentReference.content.attachment.url` in the documents managed by the Document Responder. The Document Responder must match the `full-text` search parameter in combination with any metadata-based search parameters defined in the same query (i.e. a document is considered a match only if it matches both the full-text search and the metadata-based filter parameters).
 
-The Document Responder shall support the semantics of the logical operators OR, AND defined in [ODATA Search](https://docs.oasis-open.org/odata/odata/v4.0/cs01/part1-protocol/odata-v4.0-cs01-part1-protocol.html#_The_$search_System), amended by the following rules:
+The Full-Text Search is performed on the human-readable textual content of the document. Technical representations such as XML or JSON, markup elements, identifiers, codes and other content that is not presented to the reader are not considered searchable content. Text extraction using OCR is optional.
 
-* All search terms are encoded as a single string (search string).
-* Each search term may include any uppercase and lowercase letters, digits and hyphens.
-* Each search term (and the entire search string) is encoded in UTF-8 (any escaping required for transmission is not included here).
-* Search terms are matched case-insensitively, i.e., the Document Responder shall ignore case differences.
-* Search terms are found at any position within a word (beginning, middle, end).
-* Instead of a single search term, multiple search terms can be combined as a so-called "phrase" by enclosing them in double quotation marks (") and separating them with spaces. If a document contains the search terms in the phrase in the same order and spelling (also separated by spaces), the document is considered a match. The content of a phrase is also searched case-insensitively.
-* Search terms (including entire phrases) can be combined into a logical expression using the Boolean operators (and keywords) *AND* and *OR*, and can be negated with *NOT* if needed: 
-* *AND*: Both search terms/phrases must be found in a document for it to be considered a match.
-* *OR*: At least one of the two search terms/phrases must be found in a document for it to be considered a match.
-* *NOT*: Any search term/phrase can be negated by prefixing it with *NOT*; the document is considered a match if the search term/phrase cannot be found in the document. This also applies to individual terms not combined with *AND*/*OR*.
-* Boolean keywords within phrases are treated as regular search terms. Phrases can be combined as a whole with the mentioned Boolean operators, just like individual search terms.
-* The precedence of the Boolean operators is as follows: *NOT* (highest) > *AND* > *OR* (lowest).
-* Simple round brackets "(" and ")" can be used to adjust the evaluation order (precedence) of individual search terms/phrases in a Boolean expression. Nested parentheses are not allowed.
- 
-* Multiple search terms/phrases must always be combined using *AND* or *OR*.
+The search rules for the [full-text search parameter](./SearchParameter-DocumentReference-Full-Text-Search.md) SHALL follow the [ODATA Search](https://docs.oasis-open.org/odata/odata/v4.0/cs01/part1-protocol/odata-v4.0-cs01-part1-protocol.html#_The_$search_System) specification with the following additions:
 
-The Document Consumer must support at least a subset of the capabilities described above and may utilize metadata-based and content-based search parameters either independently or in combination.
+* Search terms SHALL be matched case-insensitively.
+* Search terms SHALL be matched at any position within a word (beginning, middle, or end).
+* Search expressions SHALL support at least a single level of bracket nesting.
+
+The Document Responder SHALL support the `full-text` search parameter as described above for searching the textual content of the document available via `DocumentReference.content.attachment.url`.
+
+The Document Consumer SHALL support constructing valid full-text queries as described above with the exception that it MAY support only a subset of valid queries. For example, it might only support searching on simple strings.
 
 The MHD profile does not prescribe how the Document Responder should implement full-text search. In many cases, the Document Responder maintains a search index that is updated with each new, updated or deleted document. Alternatively, full-text search may be performed ad hoc or delegated to a specialized system.
 
@@ -328,13 +318,11 @@ The Document Responder SHOULD populate the **homeCommunityId** extension when a 
 
 The Document Responder declaring the **Target Communities Option** shall support the [targetCommunityIdList](SearchParameter-IHE-TargetCommunityIdList.md) search parameter, and shall return an error when the homeCommunityId can not be fulfilled, See [XCA Target Communities Option](https://profiles.ihe.net/ITI/TF/Volume1/ch-18.html#18.2.6). The Document Consumer declaring the **Target Communities Option** MAY use this search parameter. Actors not declaring the **Target Communities Option** may support the search parameter. Support for the Search parameter shall be declared in the product/implementation CapabilityStatement.
 
-Section on new full text search option.
-
 ###### 2:3.67.4.2.2.1.6 Full-Text Search Option
 
 The [Full-Text Search Match Snippet](./StructureDefinition-ihe-full-text-search-match-snippet.md) and the [Full-Text Search Match Total Hits](./StructureDefinition-ihe-full-text-search-match-total-hits.md) extensions are used in the context of the Full-Text Search Option to provide a more detailed representation of search results.
 
-The Match Snippet extension is intended to extract relevant text excerpts (snippets) from a document that contain the searched term. These snippets are provided in the extension’s value element and highlight the matched term using the *<mark> </mark>* tag. In addition, the page number of the document on which the match was found is indicated. A Document Responder shall return a snippet for each match found within a document. If the number of identified snippets exceeds ten, the Document Responder may return only the first ten snippets.
+The Match Snippet extension is intended to extract relevant text excerpts (snippets) from a document that contain the searched term. These snippets are provided in the extension’s value element and highlight the matched term using the *<mark> </mark>* tag. If the document format is page-oriented, such as PDF, the page number where the match was found is included as well. A Document Responder SHOULD return a snippet for each match found within a document. If the number of identified snippets exceeds ten, the Document Responder MAY return only the first ten snippets.
 
 The Match Total Hits extension provides an aggregated overview of the search results within a document. It indicates the total number of matches found across the entire document based on the full-text search. A Document Responder shall populate the Match Total Hits extension within the search element of each entry in the Bundle representing the full-text search result set. The Match Total Hits extension shall specify the total number of matches found within the document as an integer value. This value reflects the total number of matches across the entire document and is not limited to the number of returned snippets.
 

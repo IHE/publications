@@ -1,4 +1,4 @@
-# ex-Decedent-pandemicIPS-VRDR-stage-1 - De-Identification Handbook v2.0.0-comment
+# ex-Decedent-pandemicIPS-VRDR-stage-1 - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 Profiles: [Decedent](http://hl7.org/fhir/us/vrdr/STU3/StructureDefinition-vrdr-decedent.html), [Patient - Vital Records](http://hl7.org/fhir/us/vr-common-library/STU2/StructureDefinition-Patient-vr.html), [Patient](http://hl7.org/fhir/R4/patient.html)
 
-PseudoFamily(anonymous) Female, DoB: 1996-05-01 ( Social Beneficiary Identifier: SSN#123456789)
+PseudoFamily(anonymous) Female, DoB: 1996-05-01 ( Social Beneficiary Identifier: United States Social Security Number#123456789)
 
 -------
 
@@ -18,7 +18,7 @@ PseudoFamily(anonymous) Female, DoB: 1996-05-01 ( Social Beneficiary Identifier:
 | Contact Detail | * ph: 07 850 9900(Mobile)
 * Grenzstraße Oberhausen 46045 GM (home)
  |
-| Unknown: | * Joe Smith
+| Friend of family: | * Joe Smith
  |
 | Links: | * General Practitioner: [Yaser, Joseph](Bundle-e817cefe-a7c4-487a-8116-be23cf865f3f.md#http-//example.org/Practitioner/ex-Practitioner-pandemicIPS-VRDR-stage-1)
  |

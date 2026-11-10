@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/Parameters-ex-input-binary.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/Parameters-ex-input-binary.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

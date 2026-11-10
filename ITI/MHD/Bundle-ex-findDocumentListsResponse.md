@@ -1,4 +1,4 @@
-# Example of a Find Document Lists Response Message with a folder - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Example of a Find Document Lists Response Message with a folder - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -42,7 +42,7 @@
       },
       "text" : {
         "status" : "generated",
-        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"List_in-minimalFolder\"> </a><p class=\"res-header-id\"><b>Generated Narrative: List in-minimalFolder</b></p><a name=\"in-minimalFolder\"> </a><a name=\"hcin-minimalFolder\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Minimal.Folder.html\">MHD Folder Minimal</a></p><p style=\"margin-bottom: 0px\">Security Label: <a href=\"http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html\">test health data (Details: ActReason code HTEST = 'test health data')</a></p></div><table class=\"clstu\"><tr><td>Mode: Working List </td><td>Status: Current </td><td>Code: Folder as a FHIR List </td></tr><tr><td/></tr></table><table class=\"grid\"><tr style=\"backgound-color: #eeeeee\"><td><b>Items</b></td></tr><tr><td><a href=\"DocumentReference-ex-documentreference.html\">DocumentReference: status = current</a></td></tr></table></div>"
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><a name=\"List_in-minimalFolder\"> </a><p class=\"res-header-id\"><b>Generated Narrative: List in-minimalFolder</b></p><a name=\"in-minimalFolder\"> </a><a name=\"hcin-minimalFolder\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-IHE.MHD.Minimal.Folder.html\">MHD Folder Minimal</a></p><p style=\"margin-bottom: 0px\">Security Label: <a href=\"http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html\">test health data (Details: ActReason code HTEST = 'test health data')</a></p></div><table class=\"clstu\"><tr><td>Mode: Working List </td><td>Status: Current </td><td>Code: Folder as a FHIR List </td></tr></table><table class=\"grid\"><tr style=\"backgound-color: #eeeeee\"><td><b>Items</b></td></tr><tr><td><a href=\"DocumentReference-ex-documentreference.html\">DocumentReference: status = current</a></td></tr></table></div>"
       },
       "identifier" : [{
         "use" : "official",

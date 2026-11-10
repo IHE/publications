@@ -1,4 +1,4 @@
-# MHD SubmissionSet Minimal - Mobile access to Health Documents (MHD) v4.2.5-comment
+# MHD SubmissionSet Minimal - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.SubmissionSet | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:SubmissionSet |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.SubmissionSet | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:SubmissionSet |
 
  
 A profile on the List resource for MHD SubmissionSet. 
@@ -51,11 +51,11 @@ Other representations of profile: [CSV](StructureDefinition-IHE.MHD.Minimal.Subm
   "resourceType" : "StructureDefinition",
   "id" : "IHE.MHD.Minimal.SubmissionSet",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/IHE.MHD.Minimal.SubmissionSet",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "SubmissionSet",
   "title" : "MHD SubmissionSet Minimal",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

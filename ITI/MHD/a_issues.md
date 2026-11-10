@@ -1,4 +1,4 @@
-# Issues - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Issues - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **Issues**
@@ -7,7 +7,12 @@
 
 ### Significant changes in MHD Version 4.2.5
 
-* add **Full-Text Search Option** to search the full text of documents
+* add **Full-Text Search Option** to the Find Document References [ITI-67] transaction, enabling Document Consumers to search the textual content of documents in addition to metadata-based filtering
+* add [full-text](SearchParameter-DocumentReference-Full-Text-Search.md) search parameter with search semantics based on the [OData Search](https://docs.oasis-open.org/odata/odata/v4.0/cs01/part1-protocol/odata-v4.0-cs01-part1-protocol.html#_The_$search_System) specification (logical operators OR, AND, NOT, phrase searches, brackets)
+* add [Full-Text Search Match Snippet](StructureDefinition-ihe-full-text-search-match-snippet.md) and [Full-Text Search Match Total Hits](StructureDefinition-ihe-full-text-search-match-total-hits.md) extensions to convey match context and total number of matches in search results
+* add [Find Document References Response message profile](StructureDefinition-IHE.MHD.FindDocumentReferencesResponseMessageFullTextSearch.md) for the Full-Text Search Option, including a [response example](Bundle-ex-findDocumentReferencesResponseFullTextSearch.md)
+* add CapabilityStatements for [Document Consumer](CapabilityStatement-IHE.MHD.DocumentConsumer.FullTextSearch.md) and [Document Responder](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md) implementing the Full-Text Search Option
+* add guidance on searchable document content (related to [#280](https://github.com/IHE/ITI.MHD/issues/280))
 
 ### Significant changes in MHD Version 4.2.4
 

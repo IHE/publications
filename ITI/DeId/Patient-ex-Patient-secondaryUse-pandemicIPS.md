@@ -1,4 +1,4 @@
-# ex-Patient-secondaryUse-pandemicIPS - De-Identification Handbook v2.0.0-comment
+# ex-Patient-secondaryUse-pandemicIPS - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -6,7 +6,7 @@
 
 ## Example Patient: ex-Patient-secondaryUse-pandemicIPS
 
-Profile: [Patient (IPS)](http://hl7.org/fhir/uv/ips/STU2/StructureDefinition-Patient-uv-ips.html)
+Profile: [Patient (IPS)](http://hl7.org/fhir/uv/ips/2.0.1/StructureDefinition-Patient-uv-ips.html)
 
 Patricia Jordana(official) Female, DoB: 1996-05-01 ( urn:oid:1.3.6.1.4.1.21367.2011.2.5.5639#IHEEX-33159)
 
@@ -19,7 +19,7 @@ Patricia Jordana(official) Female, DoB: 1996-05-01 ( urn:oid:1.3.6.1.4.1.21367.2
 | Contact Detail | * ph: 07 850 9900(Mobile)
 * Grenzstraße Oberhausen 46045 GM (home)
  | | |
-| Unknown: | * Joe Smith
+| Friend of family: | * Joe Smith
  | | |
 | Links: | * General Practitioner: [Heps, Simone](Practitioner-ex-Practitioner-IPS-SimoneHeps.md)
  | | |

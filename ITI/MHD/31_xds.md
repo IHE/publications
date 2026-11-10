@@ -1,4 +1,4 @@
-# 3:4.2.4.1 Error Codes - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 3:4.2.4.1 Error Codes - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **3:4.2.4.1 Error Codes**

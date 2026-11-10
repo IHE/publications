@@ -1,4 +1,4 @@
-# DocumentReference for Minimal metadata with an encounter - Mobile access to Health Documents (MHD) v4.2.5-comment
+# DocumentReference for Minimal metadata with an encounter - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 Profile: [MHD DocumentReference Minimal](StructureDefinition-IHE.MHD.Minimal.DocumentReference.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 **masterIdentifier**: Identifier type for XDS UniqueId/urn:oid:1.2.840.113556.1.8000.2554.53432.348.12973.17740.34205.4355.50220.62012
 
@@ -16,7 +16,7 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 
 **status**: Current
 
-**custodian**: [Organization nowhere](Organization-ex-organization.md)
+**custodian**: [nowhere](Organization-ex-organization.md)
 
 > **content**
 

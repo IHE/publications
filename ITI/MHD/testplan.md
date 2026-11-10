@@ -1,4 +1,4 @@
-# Test Plan - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Test Plan - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **Test Plan**

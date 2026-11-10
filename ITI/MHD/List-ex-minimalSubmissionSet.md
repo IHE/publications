@@ -1,4 +1,4 @@
-# SubmissionSet for Minimal metadata - Mobile access to Health Documents (MHD) v4.2.5-comment
+# SubmissionSet for Minimal metadata - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,12 +8,11 @@
 
 Profile: [MHD SubmissionSet Minimal](StructureDefinition-IHE.MHD.Minimal.SubmissionSet.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | Date: 2004-12-25 23:50:50-0500 | Mode: Working List | Status: Current | Code: SubmissionSet as a FHIR List |
-|  | | | |
 
 * **Items**: [DocumentReference: status = current](DocumentReference-ex-documentreference.md)
 

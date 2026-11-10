@@ -1,4 +1,4 @@
-# 1:33.6 Cross Profile Considerations - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 1:33.6 Cross Profile Considerations - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **1:33.6 Cross Profile Considerations**

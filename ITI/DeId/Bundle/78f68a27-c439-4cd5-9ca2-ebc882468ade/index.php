@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json2');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json1');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml2');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml1');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.html');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0-comment/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml');
+  Redirect('https://profiles.ihe.net/ITI/DeId/2.0.0/Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

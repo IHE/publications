@@ -1,4 +1,4 @@
-# Full-Text Search Match Snippet - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Full-Text Search Match Snippet - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-snippet | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:FullTextSearchMatchSnippet |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-snippet | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:FullTextSearchMatchSnippet |
 
 This extension contains a text snippet describing the context of a full-text search match. It highlights relevant content that corresponds to the provided search terms and provides a concise preview of the search result.
 
@@ -43,11 +43,11 @@ Other representations of profile: [CSV](StructureDefinition-ihe-full-text-search
   "resourceType" : "StructureDefinition",
   "id" : "ihe-full-text-search-match-snippet",
   "url" : "https://profiles.ihe.net/ITI/MHD/StructureDefinition/ihe-full-text-search-match-snippet",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "FullTextSearchMatchSnippet",
   "title" : "Full-Text Search Match Snippet",
   "status" : "active",
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

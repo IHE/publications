@@ -1,4 +1,4 @@
-# AssociationType vs RelatesTo - Mobile access to Health Documents (MHD) v4.2.5-comment
+# AssociationType vs RelatesTo - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/ConceptMap/AssociationTypeVsRelatesTo | *Version*:4.2.5-comment |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/ConceptMap/AssociationTypeVsRelatesTo | *Version*:4.2.5 |
 | Active as of 2021-05-15 | *Computable Name*:AssociationTypeVsRelatesTo |
 
  
@@ -29,7 +29,7 @@ show the mapping between Association Types and relatesTo code
   "resourceType" : "ConceptMap",
   "id" : "AssociationTypeVsRelatesTo",
   "url" : "https://profiles.ihe.net/ITI/MHD/ConceptMap/AssociationTypeVsRelatesTo",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "AssociationTypeVsRelatesTo",
   "title" : "AssociationType vs RelatesTo",
   "status" : "active",

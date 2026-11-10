@@ -1,4 +1,4 @@
-# Artifacts Summary - IHE FormatCode Vocabulary v1.5.0
+# Artifacts Summary - IHE FormatCode Vocabulary v1.6.0
 
 * [**Table of Contents**](toc.md)
 * **Artifacts Summary**

@@ -1,4 +1,4 @@
-# De-Identification Handbook Home - De-Identification Handbook v2.0.0-comment
+# De-Identification Handbook Home - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **De-Identification Handbook Home**
@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/DeId/ImplementationGuide/ihe.iti.deid | *Version*:2.0.0-comment |
-| Active as of 2026-06-12 | *Computable Name*:IHE_ITI_DeId |
+| *Official URL*:https://profiles.ihe.net/ITI/DeId/ImplementationGuide/ihe.iti.deid | *Version*:2.0.0 |
+| Active as of 2026-10-17 | *Computable Name*:IHE_ITI_DeId |
 
 This handbook explains the PROCESS for removing individually identifiable information from healthcare data. This includes de-identification, pseudonymization, re-linking, design considerations, techniques, and risks. The intended audience is IHE Profile editors and healthcare information technology implementers needing a guide for designing and implementing de-identification systems.
 
@@ -87,11 +87,11 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
   "resourceType" : "ImplementationGuide",
   "id" : "ihe.iti.deid",
   "url" : "https://profiles.ihe.net/ITI/DeId/ImplementationGuide/ihe.iti.deid",
-  "version" : "2.0.0-comment",
+  "version" : "2.0.0",
   "name" : "IHE_ITI_DeId",
   "title" : "De-Identification Handbook",
   "status" : "active",
-  "date" : "2026-06-12T10:54:51-05:00",
+  "date" : "2026-10-17T19:18:20-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{
@@ -130,7 +130,7 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "7.1.0"
+    "version" : "7.4.0"
   },
   {
     "id" : "hl7ext",
@@ -152,7 +152,7 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
     "id" : "hl7ips",
     "uri" : "http://hl7.org/fhir/uv/ips/ImplementationGuide/hl7.fhir.uv.ips",
     "packageId" : "hl7.fhir.uv.ips",
-    "version" : "2.0.0"
+    "version" : "2.0.1"
   },
   {
     "id" : "ihepccodh",
@@ -174,327 +174,8 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
   }],
   "definition" : {
     "extension" : [{
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "copyrightyear"
-      },
-      {
-        "url" : "value",
-        "valueString" : "2021+"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "releaselabel"
-      },
-      {
-        "url" : "value",
-        "valueString" : "ballot"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "show-inherited-invariants"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "usage-stats-opt-out"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "logging"
-      },
-      {
-        "url" : "value",
-        "valueString" : "progress"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "shownav"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "active-tables"
-      },
-      {
-        "url" : "value",
-        "valueString" : "false"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-contact"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-jurisdiction"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-publisher"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-version"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "autoload-resources"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-liquid"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template/liquid"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-liquid"
-      },
-      {
-        "url" : "value",
-        "valueString" : "input/liquid"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-qa"
-      },
-      {
-        "url" : "value",
-        "valueString" : "temp/qa"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-temp"
-      },
-      {
-        "url" : "value",
-        "valueString" : "temp/pages"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-output"
-      },
-      {
-        "url" : "value",
-        "valueString" : "output"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-suppressed-warnings"
-      },
-      {
-        "url" : "value",
-        "valueString" : "input/ignoreWarnings.txt"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "path-history"
-      },
-      {
-        "url" : "value",
-        "valueString" : "https://profiles.ihe.net/ITI/DeId/history.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "template-html"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template-page.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "template-md"
-      },
-      {
-        "url" : "value",
-        "valueString" : "template-page-md.html"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-context"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-copyright"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-license"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "apply-wg"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "fmm-definition"
-      },
-      {
-        "url" : "value",
-        "valueString" : "http://hl7.org/fhir/versions.html#maturity"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "propagate-status"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "excludelogbinaryformat"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
-      "extension" : [{
-        "url" : "code",
-        "valueString" : "tabbed-snapshots"
-      },
-      {
-        "url" : "value",
-        "valueString" : "true"
-      }],
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
-    },
-    {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools.r4#1.1.2"
+      "valueCode" : "hl7.fhir.uv.tools.r4#1.3.0"
     },
     {
       "extension" : [{
@@ -514,7 +195,7 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       },
       {
         "url" : "value",
-        "valueString" : "ballot"
+        "valueString" : "release"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -819,6 +500,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-IHE.BasicAudit.DeIdentification.Source.html"
       }],
       "reference" : {
         "reference" : "StructureDefinition/IHE.BasicAudit.DeIdentification.Source"
@@ -831,6 +516,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-IHE.BasicAudit.DeIdentification.Subtype.html"
       }],
       "reference" : {
         "reference" : "ValueSet/IHE.BasicAudit.DeIdentification.Subtype"
@@ -843,6 +532,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditReIdentification-source.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditReIdentification-source"
@@ -855,6 +548,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "AuditEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AuditEvent-ex-auditDeIdentification-source.html"
       }],
       "reference" : {
         "reference" : "AuditEvent/ex-auditDeIdentification-source"
@@ -867,6 +564,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-DeIdentificationEntityType.html"
       }],
       "reference" : {
         "reference" : "CodeSystem/DeIdentificationEntityType"
@@ -879,6 +580,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-DeIdentificationEntityTypeVS.html"
       }],
       "reference" : {
         "reference" : "ValueSet/DeIdentificationEntityTypeVS"
@@ -891,6 +596,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-78f68a27-c439-4cd5-9ca2-ebc882468ade.html"
       }],
       "reference" : {
         "reference" : "Bundle/78f68a27-c439-4cd5-9ca2-ebc882468ade"
@@ -903,6 +612,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-e817cefe-a7c4-487a-8116-be23cf865f3f.html"
       }],
       "reference" : {
         "reference" : "Bundle/e817cefe-a7c4-487a-8116-be23cf865f3f"
@@ -915,6 +628,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-fc7b32fe-13b1-42e9-bca1-ff805587d072.html"
       }],
       "reference" : {
         "reference" : "Bundle/fc7b32fe-13b1-42e9-bca1-ff805587d072"
@@ -927,6 +644,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-80c516fd-9c84-4924-875b-bf0048979ae1.html"
       }],
       "reference" : {
         "reference" : "Bundle/80c516fd-9c84-4924-875b-bf0048979ae1"
@@ -939,6 +660,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-430e32bc-be3e-4c42-a17b-461ea4f402d4.html"
       }],
       "reference" : {
         "reference" : "Bundle/430e32bc-be3e-4c42-a17b-461ea4f402d4"
@@ -951,6 +676,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Bundle"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Bundle-6603561c-2888-4355-9df4-23675f6eb458.html"
       }],
       "reference" : {
         "reference" : "Bundle/6603561c-2888-4355-9df4-23675f6eb458"
@@ -963,6 +692,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Decedent-pandemicIPS-VRDR.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Decedent-pandemicIPS-VRDR"
@@ -975,6 +708,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Decedent-pandemicIPS-VRDR-stage-1.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Decedent-pandemicIPS-VRDR-stage-1"
@@ -987,6 +724,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Decedent-pandemicIPS-VRDR-stage-2.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Decedent-pandemicIPS-VRDR-stage-2"
@@ -999,6 +740,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Patient-secondaryUse-pandemicIPS.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Patient-secondaryUse-pandemicIPS"
@@ -1011,6 +756,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Patient-secondaryUse-pandemicIPS-stage-1.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Patient-secondaryUse-pandemicIPS-stage-1"
@@ -1023,6 +772,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-ex-Patient-secondaryUse-pandemicIPS-stage-2.html"
       }],
       "reference" : {
         "reference" : "Patient/ex-Patient-secondaryUse-pandemicIPS-stage-2"
@@ -1035,6 +788,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Practitioner"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Practitioner-ex-Practitioner-IPS-SimoneHeps.html"
       }],
       "reference" : {
         "reference" : "Practitioner/ex-Practitioner-IPS-SimoneHeps"
@@ -1047,6 +804,10 @@ The use of `mustSupport` in StructureDefinition profiles is equivalent to the IH
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CapabilityStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CapabilityStatement-IHE.DeId.AuditCreator.html"
       }],
       "reference" : {
         "reference" : "CapabilityStatement/IHE.DeId.AuditCreator"

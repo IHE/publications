@@ -1,4 +1,4 @@
-# Example Minimal Folder - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Example Minimal Folder - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,12 +8,11 @@
 
 Profile: [MHD Folder Minimal](StructureDefinition-IHE.MHD.Minimal.Folder.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
 | | | |
 | :--- | :--- | :--- |
 | Mode: Working List | Status: Current | Code: Folder as a FHIR List |
-|  | | |
 
 * **Items**: [DocumentReference: status = current](DocumentReference-ex-documentreference.md)
 

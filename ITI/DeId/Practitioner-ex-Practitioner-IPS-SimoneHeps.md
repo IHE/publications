@@ -1,4 +1,4 @@
-# ex-Practitioner-IPS-SimoneHeps - De-Identification Handbook v2.0.0-comment
+# ex-Practitioner-IPS-SimoneHeps - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -6,17 +6,17 @@
 
 ## Example Practitioner: ex-Practitioner-IPS-SimoneHeps
 
-Profile: [Practitioner (IPS)](http://hl7.org/fhir/uv/ips/STU2/StructureDefinition-Practitioner-uv-ips.html)
+Profile: [Practitioner (IPS)](http://hl7.org/fhir/uv/ips/2.0.1/StructureDefinition-Practitioner-uv-ips.html)
 
-**identifier**: `urn:oid:2.16.528.1.1007.3.1`/874635264 (use: official, ), `urn:oid:2.16.840.1.113883.2.4.6.3`/567IUI51C154 (use: usual, )
+Heps Simone MD(official) (urn:oid:2.16.840.1.113883.2.4.6.3#567IUI51C154 (use: usual))
 
-**name**: Heps Simone MD(Official)
+-------
 
-**address**: Galapagosweg 91 Den Burg 9105 PZ NLD (work)
-
-**gender**: Female
-
-**birthDate**: 1971-11-07
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Gender: | Female | Date of Birth: | 1971-11-07 |
+| Other Id: | `urn:oid:2.16.528.1.1007.3.1`/874635264 (use: official) | | |
+| Contact Detail | Galapagosweg 91 Den Burg 9105 PZ NLD (work) | | |
 
 
 

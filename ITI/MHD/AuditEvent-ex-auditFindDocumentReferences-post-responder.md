@@ -1,4 +1,4 @@
-# Audit Example of ITI-67 using POST recorded at responder - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Audit Example of ITI-67 using POST recorded at responder - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,9 +8,9 @@
 
 Profile: [Audit Event for Find Document References Transaction at Document Responder](StructureDefinition-IHE.MHD.FindDocumentReferences.Audit.Responder.md)
 
-Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.2.0/CodeSystem-v3-ActReason.html)
+Security Label: [test health data (Details: ActReason code HTEST = 'test health data')](http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActReason.html)
 
-**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.2.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (Restful Operation)
+**type**: [Audit Event ID: rest](http://terminology.hl7.org/7.4.0/CodeSystem-audit-event-type.html#audit-event-type-rest) (Restful Operation)
 
 **subtype**: unknown: ITI-67 (Find Document References), [FHIR Restful Interactions: search](http://hl7.org/fhir/R4/codesystem-restful-interaction.html#restful-interaction-search) (search)
 
@@ -45,11 +45,11 @@ Security Label: [test health data (Details: ActReason code HTEST = 'test health 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | - | **Site** | **Observer** | **Type** |
-| * | HIE MHD api example | http://server.example.com/fhir | [Audit Event Source Type: 4](http://terminology.hl7.org/7.2.0/CodeSystem-security-source-type.html#security-source-type-4)(Application Server) |
+| * | HIE MHD api example | http://server.example.com/fhir | [Audit Event Source Type: 4](http://terminology.hl7.org/7.4.0/CodeSystem-security-source-type.html#security-source-type-4)(Application Server) |
 
-> **entity****type**: [Audit event entity type: 2](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 24](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-24) (Query)**description**: POST test.fhir.net/R4/fhir/DocumentReference/_search Host test.fhir.net Content-Type: application/x-www-form-urlencoded Accept: application/fhir+json; fhirVersion=4.0 patient=9876&status=current&type=http://loinc.org|1234-5**query**: `UE9TVCB0ZXN0LmZoaXIubmV0L1I0L2ZoaXIvRG9jdW1lbnRSZWZlcmVuY2UvX3NlYXJjaApIb3N0IHRlc3QuZmhpci5uZXQKQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi94LXd3dy1mb3JtLXVybGVuY29kZWQKQWNjZXB0OiBhcHBsaWNhdGlvbi9maGlyK2pzb247IGZoaXJWZXJzaW9uPTQuMAoKcGF0aWVudD05ODc2JnN0YXR1cz1jdXJyZW50JnR5cGU9aHR0cDovL2xvaW5jLm9yZ3wxMjM0LTUK`
+> **entity****type**: [Audit event entity type: 2](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-2) (System Object)**role**: [AuditEventEntityRole: 24](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-24) (Query)**description**: POST test.fhir.net/R4/fhir/DocumentReference/_search Host test.fhir.net Content-Type: application/x-www-form-urlencoded Accept: application/fhir+json; fhirVersion=4.0 patient=9876&status=current&type=http://loinc.org|1234-5**query**: `UE9TVCB0ZXN0LmZoaXIubmV0L1I0L2ZoaXIvRG9jdW1lbnRSZWZlcmVuY2UvX3NlYXJjaApIb3N0IHRlc3QuZmhpci5uZXQKQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi94LXd3dy1mb3JtLXVybGVuY29kZWQKQWNjZXB0OiBhcHBsaWNhdGlvbi9maGlyK2pzb247IGZoaXJWZXJzaW9uPTQuMAoKcGF0aWVudD05ODc2JnN0YXR1cz1jdXJyZW50JnR5cGU9aHR0cDovL2xvaW5jLm9yZ3wxMjM0LTUK`
 
-> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.2.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.2.0/CodeSystem-object-role.html#object-role-1) (Patient)
+> **entity****what**: [John Schmidt Other, DoB: 1923-07-25](Patient-ex-patient.md)**type**: [Audit event entity type: 1](http://terminology.hl7.org/7.4.0/CodeSystem-audit-entity-type.html#audit-entity-type-1) (Person)**role**: [AuditEventEntityRole: 1](http://terminology.hl7.org/7.4.0/CodeSystem-object-role.html#object-role-1) (Patient)
 
 
 

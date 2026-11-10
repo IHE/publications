@@ -1,4 +1,4 @@
-# 1:33.1 Actors and Transactions - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 1:33.1 Actors and Transactions - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **1:33.1 Actors and Transactions**
@@ -57,9 +57,6 @@ The following CapabilityStatements define the actor capabilities
 
 * [Document Consumer](CapabilityStatement-IHE.MHD.DocumentConsumer.md)
 * [Document Consumer implementing Target Communities Option](CapabilityStatement-IHE.MHD.DocumentConsumer.Target.md)
-
-New option introduced.
-
 * [Document Consumer implementing Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentConsumer.FullTextSearch.md)
 
 #### 1:33.1.1.3 Document Recipient
@@ -83,9 +80,6 @@ The following CapabilityStatements define the actor capabilities
 
 * [Document Responder](CapabilityStatement-IHE.MHD.DocumentResponder.md)
 * [Document Responder implementing Target Communities Option](CapabilityStatement-IHE.MHD.DocumentResponder.Target.md)
-
-New option introduced.
-
 * [Document Responder implementing Full-Text Search Option](CapabilityStatement-IHE.MHD.DocumentResponder.FullTextSearch.md)
 
 ### 1:33.1.2 Transaction Descriptions

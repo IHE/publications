@@ -1,4 +1,4 @@
-# Significant Changes and Issues - De-Identification Handbook v2.0.0-comment
+# Significant Changes and Issues - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **Significant Changes and Issues**

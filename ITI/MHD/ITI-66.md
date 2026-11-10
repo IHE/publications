@@ -1,4 +1,4 @@
-# 2:3.66 Find Document Lists [ITI-66] - Mobile access to Health Documents (MHD) v4.2.5-comment
+# 2:3.66 Find Document Lists [ITI-66] - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * **2:3.66 Find Document Lists [ITI-66]**

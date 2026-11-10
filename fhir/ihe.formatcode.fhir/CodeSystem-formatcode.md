@@ -1,4 +1,4 @@
-# FormatCode CodeSystem - IHE FormatCode Vocabulary v1.5.0
+# FormatCode CodeSystem - IHE FormatCode Vocabulary v1.6.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode | *Version*:1.5.0 |
+| *Official URL*:http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode | *Version*:1.6.0 |
 | Active as of 2024-03-27 | *Computable Name*:IHE_FormatCode_codesystem |
 | *Other Identifiers:*OID:1.3.6.1.4.1.19376.1.2.3 | |
 | **Copyright/Legal**: Some content from IHE® Copyright © 2015 [IHE International, Inc](http://www.ihe.net/Governance/#Intellectual_Property). | |
@@ -18,7 +18,7 @@ The [IHE](http://www.ihe.net) FormatCode code system with canonical URI of http:
 
  This Code system is referenced in the content logical definition of the following value sets: 
 
-* [IHE_FormatCode_vs](ValueSet-formatcode.md)
+* [IHE ValueSet of Format Codes for use with Document Sharing](ValueSet-formatcode.md)
 
 
 
@@ -33,7 +33,7 @@ The [IHE](http://www.ihe.net) FormatCode code system with canonical URI of http:
     "system" : "urn:ietf:rfc:3986",
     "value" : "urn:oid:1.3.6.1.4.1.19376.1.2.3"
   }],
-  "version" : "1.5.0",
+  "version" : "1.6.0",
   "name" : "IHE_FormatCode_codesystem",
   "title" : "IHE Format Code set for use with Document Sharing",
   "status" : "active",
@@ -242,6 +242,18 @@ The [IHE](http://www.ihe.net) FormatCode code system with canonical URI of http:
       {
         "code" : "status",
         "valueCode" : "active"
+      }]
+    },
+    {
+      "code" : "urn:ihe:pcc:ic:2009",
+      "display" : "Immunization Registry Content (IRC)",
+      "property" : [{
+        "code" : "comment",
+        "valueString" : "1.3.6.1.4.1.19376.1.5.3.1.1.18.1.2"
+      },
+      {
+        "code" : "status",
+        "valueCode" : "deprecated"
       }]
     },
     {

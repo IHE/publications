@@ -1,4 +1,4 @@
-# Document Consumer (client) - Mobile access to Health Documents (MHD) v4.2.5-comment
+# Document Consumer (client) - Mobile access to Health Documents (MHD) v4.2.5
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,8 +8,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentConsumer | *Version*:4.2.5-comment |
-| Active as of 2026-06-16 | *Computable Name*:IHE_MHD_DocumentConsumer |
+| *Official URL*:https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentConsumer | *Version*:4.2.5 |
+| Active as of 2026-10-18 | *Computable Name*:IHE_MHD_DocumentConsumer |
 
  
 IHE ITI Mobile access to Health Documents (MHD) - Document Consumer (client). 
@@ -29,12 +29,12 @@ This is the **Requirements** CapabilityStatement for a [Document Consumer](1331_
   "resourceType" : "CapabilityStatement",
   "id" : "IHE.MHD.DocumentConsumer",
   "url" : "https://profiles.ihe.net/ITI/MHD/CapabilityStatement/IHE.MHD.DocumentConsumer",
-  "version" : "4.2.5-comment",
+  "version" : "4.2.5",
   "name" : "IHE_MHD_DocumentConsumer",
   "title" : "Document Consumer (client)",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-06-16T19:25:56-05:00",
+  "date" : "2026-10-18T17:32:41-05:00",
   "publisher" : "IHE IT Infrastructure Technical Committee",
   "contact" : [{
     "telecom" : [{

@@ -7,19 +7,19 @@ function Redirect($url)
 
 $accept = $_SERVER['HTTP_ACCEPT'];
 if (strpos($accept, 'application/json+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json2');
 elseif (strpos($accept, 'application/fhir+json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json1');
 elseif (strpos($accept, 'json') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.json');
 elseif (strpos($accept, 'application/xml+fhir') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml2');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml2');
 elseif (strpos($accept, 'application/fhir+xml') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml1');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml1');
 elseif (strpos($accept, 'html') !== false)
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.html');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.html');
 else 
-  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5-comment/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml');
+  Redirect('https://profiles.ihe.net/ITI/MHD/4.2.5/StructureDefinition-IHE.MHD.ProvideDocumentBundleResponse.xml');
 ?>
     
 You should not be seeing this page. If you do, PHP has failed badly.

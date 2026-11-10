@@ -1,4 +1,4 @@
-# ex-Patient-secondaryUse-pandemicIPS-stage-2 - De-Identification Handbook v2.0.0-comment
+# ex-Patient-secondaryUse-pandemicIPS-stage-2 - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -6,7 +6,7 @@
 
 ## Example Patient: ex-Patient-secondaryUse-pandemicIPS-stage-2
 
-Profile: [Patient (IPS)](http://hl7.org/fhir/uv/ips/STU2/StructureDefinition-Patient-uv-ips.html)
+Profile: [Patient (IPS)](http://hl7.org/fhir/uv/ips/2.0.1/StructureDefinition-Patient-uv-ips.html)
 
 PseudoFamily Female, DoB: 1996-08-16 ( urn:oid:1.3.6.1.4.1.21367.2011.2.5.5639#IHEEX-33159)
 

@@ -1,4 +1,4 @@
-# References - De-Identification Handbook v2.0.0-comment
+# References - De-Identification Handbook v2.0.0
 
 * [**Table of Contents**](toc.md)
 * **References**
@@ -11,6 +11,7 @@
 1. PIPL. (2021).**Personal Information Protection Law of the People’s Republic of China**. National People’s Congress of the People’s Republic of China (NPC).[http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm](http://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm)
 1. NIST 800-188. (2023).**De-identifying Government Datasets**(Special Publication No. 800-188; Numbers 800-188). National Institute of Standards and Technology.[https://doi.org/10.6028/nist.sp.800-188](https://doi.org/10.6028/nist.sp.800-188)
 1. European Data Protection Board. (2025).**Guidelines 01/2025 on Pseudonymisation**.[https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf](https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf)
+1. European Data Protection Board. (2025).**Guidelines 01/2025 on the Anonymisation of Personal Data**.[https://www.edpb.europa.eu/system/files/2025-06/edpb_guidelines_202501_anonymisation_en.pdf](https://www.edpb.europa.eu/system/files/2025-06/edpb_guidelines_202501_anonymisation_en.pdf)
 1. Information Commissioner’s Office. (2025).**Pseudonymisation**. Information Commissioner’s Office.[https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/anonymisation/pseudonymisation/#pseudonymiseddatastillpersonal](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/anonymisation/pseudonymisation/#pseudonymiseddatastillpersonal)
 1. Office for Civil Rights. (2025).**Methods for De-identification of PHI**. HHS.gov.[https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html#rationale](https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html#rationale)
 1. Hintze, M. (2017). Viewing the GDPR through a de-identification lens: a tool for compliance, clarification, and consistency.**International Data Privacy Law**,**8**(1), 86–101.[https://doi.org/10.1093/IDPL/IPX020](https://doi.org/10.1093/IDPL/IPX020)
@@ -34,7 +35,7 @@
 1. Dresden Anonymity.**A proposed vocabulary for pseudonymization and related concepts**.[Anonymity, Unlinkability, Undetectability, Unobservability, Pseudonymity, and Identity Management – A onsolidated Proposal for Terminology* (Version v0.31 Feb. 15, 2008)](http://dud.inf.tu-dresden.de/literatur/Anon_Terminology_v0.31.pdf)
 1. MIT Reidentification.**Shows that a large percentage of people can be re-identified with Date-of-Birth, Current ZIP Code, and Sex**.[Reidentification of Individuals in Chicago's Homicide Database A Technical and Legal Study](http://web.mit.edu/sem083/www/assignments/reidentification.html#_Toc354562093)
 1. European Medicines Agency. (2025, May 14).**External guidance on the implementation of the European Medicines Agency Policy 0070 on the publication of clinical data for medicinal products for human use**(Version 1.5).[https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/external-guidance-implementation-european-medicines-agency-policy-publication-clinical-data-medicinal-products-human-use-version-15_en.pdf](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/external-guidance-implementation-european-medicines-agency-policy-publication-clinical-data-medicinal-products-human-use-version-15_en.pdf)
-1. Information and Privacy Commissioner of Ontario. (2016, June).**De-identification Guidelines for Structured Data**.[https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf](https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf)
+1. Information and Privacy Commissioner of Ontario. (2025).**De-identification Guidelines for Structured Data**.[https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf](https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf)
 1. Branson, J., Good, N., Chen, JW. et al. (2020). Evaluating the re-identification risk of a clinical study report anonymized under EMA Policy 0070 and Health Canada Regulations.**Trials**21, 200.[https://doi.org/10.1186/s13063-020-4120-y](https://doi.org/10.1186/s13063-020-4120-y)
 1. Sweeney, L. (2002). k-anonymity: A model for protecting privacy.**International Journal on Uncertainty, Fuzziness and Knowledge-Based Systems**, 10(05), 557-570.[https://doi.org/10.1142/s0218488502001648](https://doi.org/10.1142/s0218488502001648)
 1. Dwork, C., & Roth, A. (2014). The algorithmic foundations of differential privacy.**Foundations and Trends® in Theoretical Computer Science**, 9(3-4), 211-407.[https://doi.org/10.1561/0400000042](https://doi.org/10.1561/0400000042)
@@ -48,6 +49,6 @@
 1. Future of Privacy Forum. (2020, April). A practical path toward genetic privacy. https://fpf.org/wp-content/uploads/2020/04/APracticalPathTowardGeneticPrivacy_April2020.pdf
 1. IHE International. (2025). IHE radiology technical framework, volume 1: Integration profiles (Rev. 23.0). https://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_TF_Vol1.pdf
 1. O'Keefe, C., Otorepec, S., Elliot, M., Mackey, E., & O'Hara, K. (2017).**The de-identification decision-making framework**. CSIRO Data61. https://doi.org/10.4225/08/59c169433efd4
-1. Information and Privacy Commissioner of Ontario. (2016). De-identification guidelines for structured data. https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf
+1. Information and Privacy Commissioner of Ontario. (2025). De-identification guidelines for structured data. https://www.ipc.on.ca/sites/default/files/legacy/2016/08/Deidentification-Guidelines-for-Structured-Data.pdf
 1. Jiang, Y., Mosquera, L., Jiang, B., Kong, L., & El Emam, K. (2022). Measuring re-identification risk using a synthetic estimator to enable data sharing.**PLOS ONE**,**17**(6), e0269097. https://doi.org/10.1371/journal.pone.0269097
 

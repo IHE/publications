@@ -1,4 +1,4 @@
-# FormatCode Home Page - IHE FormatCode Vocabulary v1.5.0
+# FormatCode Home Page - IHE FormatCode Vocabulary v1.6.0
 
 * [**Table of Contents**](toc.md)
 * **FormatCode Home Page**
@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir | *Version*:1.5.0 |
-| Active as of 2026-02-25 | *Computable Name*:IHE_FORMATCODE |
+| *Official URL*:https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir | *Version*:1.6.0 |
+| Active as of 2026-09-11 | *Computable Name*:IHE_FORMATCODE |
 
 This Implementation Guide publishes the IHE vocabulary for FormatCode and the IHE managed ValueSet for FormatCode. Given that the FormatCode is contributed to by many IHE domains, this IG is dedicated to the publication and management of the FormatCode vocabulary.
 
@@ -46,10 +46,10 @@ This publication includes IP covered under the following statements.
 
 * This material derives from the HL7 Terminology (THO). THO is copyright ©1989+ Health Level Seven International and is made available under the CC0 designation. For more licensing information see: [https://terminology.hl7.org/license.html](https://terminology.hl7.org/license.html)
 
-* [Provenance participant type](http://terminology.hl7.org/7.1.0/CodeSystem-provenance-participant-type.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
-* [ActReason](http://terminology.hl7.org/7.1.0/CodeSystem-v3-ActReason.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
-* [DataOperation](http://terminology.hl7.org/7.1.0/CodeSystem-v3-DataOperation.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
-* [HL7 Document Format Codes](http://terminology.hl7.org/7.1.0/CodeSystem-v3-HL7DocumentFormatCodes.html): [IHE_FormatCode_codesystem](CodeSystem-formatcode.md) and [IHE_FormatCode_vs](ValueSet-formatcode.md)
+* [Provenance participant type](http://terminology.hl7.org/7.3.0/CodeSystem-provenance-participant-type.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
+* [ActReason](http://terminology.hl7.org/7.3.0/CodeSystem-v3-ActReason.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
+* [DataOperation](http://terminology.hl7.org/7.3.0/CodeSystem-v3-DataOperation.html): [Bundle/history-IHE-formatcode.codesystem](Bundle-history-IHE-formatcode.codesystem.md) and [Bundle/history-IHE-formatcode.valueset](Bundle-history-IHE-formatcode.valueset.md)
+* [HL7 Document Format Codes](http://terminology.hl7.org/7.3.0/CodeSystem-v3-HL7DocumentFormatCodes.html): [IHE_FormatCode_codesystem](CodeSystem-formatcode.md) and [IHE_FormatCode_vs](ValueSet-formatcode.md)
 
 
 #### Globals
@@ -69,12 +69,12 @@ This publication includes IP covered under the following statements.
     "valueDate" : "2026-02-25"
   }],
   "url" : "https://profiles.ihe.net/fhir/ihe.formatcode.fhir/ImplementationGuide/ihe.formatcode.fhir",
-  "version" : "1.5.0",
+  "version" : "1.6.0",
   "name" : "IHE_FORMATCODE",
   "title" : "IHE FormatCode Vocabulary",
   "status" : "active",
   "experimental" : false,
-  "date" : "2026-02-25",
+  "date" : "2026-09-11T11:59:25-05:00",
   "publisher" : "Integrating the Healthcare Enterprise (IHE)",
   "contact" : [{
     "name" : "IHE",
@@ -108,7 +108,7 @@ This publication includes IP covered under the following statements.
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "7.1.0"
+    "version" : "7.3.0"
   },
   {
     "id" : "hl7ext",
@@ -118,7 +118,7 @@ This publication includes IP covered under the following statements.
     }],
     "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
     "packageId" : "hl7.fhir.uv.extensions.r4",
-    "version" : "5.2.0"
+    "version" : "5.3.0"
   }],
   "definition" : {
     "extension" : [{
@@ -431,7 +431,7 @@ This publication includes IP covered under the following statements.
     },
     {
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
-      "valueCode" : "hl7.fhir.uv.tools.r4#0.9.0"
+      "valueCode" : "hl7.fhir.uv.tools.r4#1.1.2"
     },
     {
       "extension" : [{
@@ -745,6 +745,10 @@ This publication includes IP covered under the following statements.
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-formatcode.html"
       }],
       "reference" : {
         "reference" : "CodeSystem/formatcode"
@@ -757,6 +761,10 @@ This publication includes IP covered under the following statements.
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-formatcode.html"
       }],
       "reference" : {
         "reference" : "ValueSet/formatcode"
